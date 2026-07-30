@@ -1,0 +1,322 @@
+/* ==========================================================================
+   FILE: css/base.css
+   Reset + layout frame + shared components (buttons, eyebrow, cards).
+========================================================================== */
+
+/* ---------- RESET ------------------------------------------------------ */
+
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+
+html{
+  font-size:16px;
+  scroll-behavior:smooth;
+  -webkit-text-size-adjust:100%;
+}
+
+body{
+  min-height:100vh;
+  font-family:var(--font);
+  font-size:var(--t-body);
+  font-weight:400;
+  line-height:1.6;
+  color:var(--text);
+  background:var(--bg);
+  overflow-x:hidden;
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+img,svg,video,canvas{ display:block; max-width:100%; }
+img{ height:auto; }
+input,button,textarea,select{ font:inherit; color:inherit; background:none; border:none; outline:none; }
+button{ cursor:pointer; }
+a{ color:inherit; text-decoration:none; }
+ul,ol{ list-style:none; }
+h1,h2,h3,h4,h5,h6{ font-weight:inherit; line-height:1.1; }
+:focus:not(:focus-visible){ outline:none; }
+:focus-visible{ outline:2px solid var(--violet-soft); outline-offset:3px; border-radius:4px; }
+[hidden]{ display:none !important; }
+
+@media (prefers-reduced-motion:reduce){
+  *{ animation-duration:.01ms !important; animation-iteration-count:1 !important;
+     transition-duration:.01ms !important; scroll-behavior:auto !important; }
+}
+
+/* ---------- AMBIENT BACKGROUND ----------------------------------------- */
+
+.bg-layer{
+  position:fixed;
+  inset:0;
+  z-index:var(--z-bg);
+  pointer-events:none;
+}
+
+.bg-layer::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(900px 520px at 78% -6%,  rgba(139,59,241,.22), transparent 62%),
+    radial-gradient(760px 460px at 12% 6%,   rgba(59,130,246,.14), transparent 60%),
+    radial-gradient(1000px 600px at 50% 108%,rgba(91,79,230,.10),  transparent 64%);
+}
+
+.bg-layer::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:.5;
+  background-image:
+    linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 25%,transparent 78%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 25%,transparent 78%);
+}
+
+.skip-link{
+  position:absolute;
+  left:-9999px;
+  top:12px;
+  z-index:var(--z-top);
+  padding:12px 18px;
+  border-radius:var(--r-sm);
+  background:var(--violet);
+  color:#fff;
+}
+.skip-link:focus{ left:16px; }
+
+/* ---------- FRAME ------------------------------------------------------- */
+
+.container{
+  width:min(100%,var(--container));
+  margin-inline:auto;
+  padding-inline:var(--gutter);
+  position:relative;
+}
+
+main{ position:relative; z-index:var(--z-body); }
+
+section{ position:relative; }
+section[id]{ scroll-margin-top:96px; }
+
+.section{ padding-block:var(--section-y); }
+
+/* ---------- SECTION HEADER ---------------------------------------------- */
+
+.section-head{
+  max-width:720px;
+  margin-inline:auto;
+  margin-bottom:var(--s6);
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:var(--s3);
+}
+
+.section-head h2{
+  font-size:var(--t-title);
+  font-weight:700;
+  letter-spacing:-.03em;
+  line-height:1.12;
+}
+
+.section-head p{
+  font-size:var(--t-lead);
+  line-height:1.65;
+  color:var(--text-2);
+  max-width:56ch;
+}
+
+/* ---------- EYEBROW ------------------------------------------------------ */
+
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:7px 14px;
+  border-radius:var(--r-pill);
+  border:1px solid rgba(139,59,241,.28);
+  background:rgba(139,59,241,.10);
+  color:var(--violet-soft);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  line-height:1;
+}
+
+.eyebrow::before{
+  content:"";
+  width:5px; height:5px;
+  border-radius:50%;
+  background:var(--violet-soft);
+  box-shadow:0 0 10px rgba(169,113,247,.9);
+}
+
+/* ---------- PILL (neutral label) ----------------------------------------- */
+
+.pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 14px;
+  border-radius:var(--r-pill);
+  border:1px solid var(--line);
+  background:var(--surface);
+  color:var(--text-2);
+  font-size:var(--t-micro);
+  line-height:1;
+}
+
+/* ---------- BUTTONS ------------------------------------------------------- */
+
+.btn{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  padding:13px 22px;
+  border-radius:var(--r-sm);
+  font-size:var(--t-body);
+  font-weight:600;
+  line-height:1;
+  white-space:nowrap;
+  transition:transform var(--fast) var(--ease),
+             box-shadow var(--fast) var(--ease),
+             background var(--fast) var(--ease),
+             border-color var(--fast) var(--ease);
+}
+
+.btn:active{ transform:translateY(0) scale(.99); }
+
+.btn--primary{
+  background:var(--grad-brand);
+  color:#fff;
+  box-shadow:var(--sh-brand);
+  overflow:hidden;
+}
+.btn--primary::after{
+  content:"";
+  position:absolute;
+  top:0; left:-130%;
+  width:55%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);
+  transition:left .65s var(--ease);
+}
+.btn--primary:hover{ transform:translateY(-2px); box-shadow:0 22px 52px rgba(107,63,232,.45); }
+.btn--primary:hover::after{ left:150%; }
+
+.btn--ghost{
+  border:1px solid var(--line);
+  background:var(--surface);
+  color:var(--text);
+}
+.btn--ghost:hover{
+  border-color:var(--line-strong);
+  background:var(--surface-2);
+  transform:translateY(-2px);
+}
+
+.btn--quiet{ color:var(--text-2); padding:13px 8px; }
+.btn--quiet:hover{ color:var(--text); }
+
+.btn--lg{ padding:16px 26px; font-size:16px; border-radius:var(--r-md); }
+.btn--block{ width:100%; }
+
+/* play button used beside "Watch 90 sec demo" */
+.btn-play{
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  color:var(--text);
+  font-weight:500;
+  font-size:var(--t-body);
+  transition:color var(--fast);
+}
+.btn-play i{
+  display:grid;
+  place-items:center;
+  width:38px; height:38px;
+  border-radius:50%;
+  border:1px solid var(--line-strong);
+  background:var(--surface);
+  transition:background var(--fast),border-color var(--fast),transform var(--fast);
+}
+.btn-play:hover i{ background:var(--surface-2); border-color:var(--violet-soft); transform:scale(1.06); }
+
+/* ---------- CARD ------------------------------------------------------------ */
+
+.card{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  background:var(--grad-card);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+}
+
+/* ---------- ICON ------------------------------------------------------------ */
+
+.icon{ width:20px; height:20px; flex:none; stroke-width:1.7; }
+.icon-sm{ width:16px; height:16px; flex:none; stroke-width:1.8; }
+.icon-lg{ width:24px; height:24px; flex:none; stroke-width:1.6; }
+
+.icon-tile{
+  display:grid;
+  place-items:center;
+  width:40px; height:40px;
+  border-radius:var(--r-sm);
+  border:1px solid var(--line);
+  background:var(--surface);
+  color:var(--violet-soft);
+  flex:none;
+}
+
+/* ---------- TICKS (no credit card / import in minutes …) --------------------- */
+
+.ticks{
+  display:flex;
+  flex-wrap:wrap;
+  gap:var(--s3);
+  color:var(--text-2);
+  font-size:var(--t-body);
+}
+.ticks li{ display:flex; align-items:center; gap:8px; }
+.ticks svg{ color:var(--violet-soft); }
+
+/* ---------- STATUS DOTS ------------------------------------------------------ */
+
+.dot{ width:6px; height:6px; border-radius:50%; flex:none; }
+.dot--green{ background:var(--green); box-shadow:0 0 8px rgba(46,212,122,.8); }
+.dot--amber{ background:var(--amber); box-shadow:0 0 8px rgba(245,165,36,.7); }
+.dot--red{   background:var(--red);   box-shadow:0 0 8px rgba(240,67,92,.7); }
+
+/* ---------- BRAND LOCKUP ------------------------------------------------------ */
+
+.brand{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  font-size:19px;
+  font-weight:700;
+  letter-spacing:-.01em;
+}
+.brand-mark{ width:26px; height:26px; flex:none; }
+
+/* ---------- MISC -------------------------------------------------------------- */
+
+.grad-text{
+  background:var(--grad-text);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:transparent;
+}
+
+.rule{ height:1px; background:var(--grad-rule); border:0; }
+
+.mono{ font-family:var(--font-mono); font-variant-numeric:tabular-nums; }

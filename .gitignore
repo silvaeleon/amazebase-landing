@@ -1,0 +1,16 @@
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+.claude/
+
+# Dev-only scratch files — never ship these
+_*
+hero-editor.js
+*-test.html
+*-tuning.html
+preview-standalone.html

@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AmazeBase — Run your Amazon business with confidence</title>
+
+<meta name="description" content="AmazeBase connects your products, advertising, inventory, suppliers, cash flow and forecasting into one intelligent workspace. Make better decisions, faster.">
+<meta name="theme-color" content="#030917">
+<meta property="og:title" content="AmazeBase">
+<meta property="og:description" content="The operating system for Amazon sellers.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/navigation.css">
+<link rel="stylesheet" href="css/hero.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/sections.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="bg-layer" aria-hidden="true"></div>
+
+<!-- ====================================================================
+     ICON SPRITE
+==================================================================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+  <linearGradient id="linkGrad" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%"  stop-color="#3B82F6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+  <linearGradient id="areaA" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"  stop-color="#3B82F6" stop-opacity=".34"/>
+    <stop offset="100%" stop-color="#3B82F6" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="areaB" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"  stop-color="#8B3BF1" stop-opacity=".28"/>
+    <stop offset="100%" stop-color="#8B3BF1" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="donutGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#2ED47A"/>
+    <stop offset="100%" stop-color="#3B82F6"/>
+  </linearGradient>
+  <linearGradient id="sparkFillGreen" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"  stop-color="#2ED47A" stop-opacity=".45"/>
+    <stop offset="100%" stop-color="#2ED47A" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="sparkFillBlue" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"  stop-color="#3B82F6" stop-opacity=".45"/>
+    <stop offset="100%" stop-color="#3B82F6" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="sparkFillPurple" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"  stop-color="#A971F7" stop-opacity=".45"/>
+    <stop offset="100%" stop-color="#A971F7" stop-opacity="0"/>
+  </linearGradient>
+</defs>
+
+  <symbol id="i-chevron"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-arrow"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-check"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></symbol>
+  <symbol id="i-play"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5.5v13l11-6.5z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-menu"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-x"        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+
+  <symbol id="i-grid"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h7v6H4zM13 4h7v10h-7zM4 12h7v8H4zM13 16h7v4h-7z"/></symbol>
+  <symbol id="i-box"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></symbol>
+  <symbol id="i-search"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></symbol>
+  <symbol id="i-mega"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l7 4V5L8 9H4zM19 9a4 4 0 010 6"/></symbol>
+  <symbol id="i-stack"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-dollar"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5v19M16.5 6.5H10a3.2 3.2 0 000 6.4h4a3.2 3.2 0 010 6.4H7"/></symbol>
+  <symbol id="i-truck"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.5h11v10h-11zM13.5 10h4l3 3.2v3.3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></symbol>
+  <symbol id="i-report"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></symbol>
+  <symbol id="i-spark"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+  <symbol id="i-bell"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8.5a6 6 0 10-12 0c0 6-2.5 7.5-2.5 7.5h17S18 14.5 18 8.5zM10.3 20a2 2 0 003.4 0"/></symbol>
+  <symbol id="i-gear"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.6 1.6 0 00-2.7 1.1v.2a2 2 0 11-4 0v-.1a1.6 1.6 0 00-2.8-1.1l-.1.1a2 2 0 11-2.8-2.8l.1-.1A1.6 1.6 0 003.7 15a2 2 0 110-4h.1a1.6 1.6 0 001.1-2.8l-.1-.1a2 2 0 112.8-2.8l.1.1A1.6 1.6 0 0010.5 4h.1a2 2 0 114 0v.1a1.6 1.6 0 002.7 1.1l.1-.1a2 2 0 112.8 2.8l-.1.1a1.6 1.6 0 001.1 2.7h.2a2 2 0 110 4h-.1a1.6 1.6 0 00-1.9 1.3z"/></symbol>
+  <symbol id="i-chart"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-trend"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></symbol>
+  <symbol id="i-rocket"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15s-1.5 3 1 5.5S11 20 11 20M14.5 4.5c3-2 6-1 6-1s1 3-1 6l-6 6-5-5 6-6z"/><circle cx="15" cy="9" r="1.4"/></symbol>
+  <symbol id="i-warn"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.5L2.5 20h19L12 4.5zM12 10v4.5M12 17.5v.01"/></symbol>
+  <symbol id="i-info"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></symbol>
+  <symbol id="i-checkc"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-4.8"/></symbol>
+  <symbol id="i-refresh"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 10-1.7 5M20 5v6h-6"/></symbol>
+  <symbol id="i-export"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M8 7l4-4 4 4M4 15v4a2 2 0 002 2h12a2 2 0 002-2v-4"/></symbol>
+  <symbol id="i-filter"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 8v6l-4 2v-8z"/></symbol>
+  <symbol id="i-db"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3.2"/><path d="M4 6v12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2V6M4 12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2"/></symbol>
+  <symbol id="i-globe"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 21.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"/></symbol>
+  <symbol id="i-case"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8.5 7V5a2 2 0 012-2h3a2 2 0 012 2v2M2.5 12.5h19"/></symbol>
+  <symbol id="i-msg"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-8 8 8.6 8.6 0 01-3.6-.8L3 21l1.8-6.4A8 8 0 1121 12z"/></symbol>
+  <symbol id="i-shield"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-9.5V5.5L12 2.5 4 5.5V12.5C4 18.5 12 22 12 22z"/></symbol>
+  <symbol id="i-link"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a4 4 0 006 .5l2.5-2.5a4.2 4.2 0 00-6-6L11 6.5M14 11a4 4 0 00-6-.5L5.5 13a4.2 4.2 0 006 6L13 17.5"/></symbol>
+
+  <symbol id="i-in"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12.5 17v-4a2.5 2.5 0 015 0v4"/></symbol>
+  <symbol id="i-tw"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M20 4L4 20"/></symbol>
+  <symbol id="i-gh"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4 1.4-4-2.2-5.6-2.6M15 21v-3.4a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 2.6 5.5 2.9 5.5 2.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 9.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></symbol>
+</svg>
+
+<!-- ====================================================================
+     HEADER
+==================================================================== -->
+<header class="site-header">
+<div class="container">
+<nav class="nav" aria-label="Primary">
+
+  <a href="#" class="brand">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+      <path d="M16 17.6l4.4 8.2h-8.8z" fill="#C56BF5" opacity=".85"/>
+    </svg>
+    <span data-brand>AmazeBase</span>
+  </a>
+
+  <ul class="nav-menu">
+    <li class="nav-item">
+      <a class="nav-link" href="#features">Product <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="#features"><svg class="icon-sm"><use href="#i-search"/></svg>Product Research</a>
+        <a href="#features"><svg class="icon-sm"><use href="#i-mega"/></svg>Advertising</a>
+        <a href="#features"><svg class="icon-sm"><use href="#i-box"/></svg>Inventory</a>
+        <a href="#features"><svg class="icon-sm"><use href="#i-dollar"/></svg>Financials</a>
+        <a href="#assistant"><svg class="icon-sm"><use href="#i-spark"/></svg>AI Assistant</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#compare">Solutions <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="#compare"><svg class="icon-sm"><use href="#i-rocket"/></svg>Private Label</a>
+        <a href="#compare"><svg class="icon-sm"><use href="#i-case"/></svg>Agencies</a>
+        <a href="#compare"><svg class="icon-sm"><use href="#i-globe"/></svg>Multi-Marketplace</a>
+      </div>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Resources <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="#"><svg class="icon-sm"><use href="#i-report"/></svg>Documentation</a>
+        <a href="#"><svg class="icon-sm"><use href="#i-msg"/></svg>Blog</a>
+        <a href="#"><svg class="icon-sm"><use href="#i-shield"/></svg>Security</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Company <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="#"><svg class="icon-sm"><use href="#i-info"/></svg>About</a>
+        <a href="#"><svg class="icon-sm"><use href="#i-msg"/></svg>Contact</a>
+      </div>
+    </li>
+  </ul>
+
+  <div class="nav-actions">
+    <a class="btn btn--quiet" href="#">Log in</a>
+    <a class="btn btn--primary" href="#pricing" data-magnetic>Join the Wait List</a>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="navMobile">
+      <svg class="icon"><use href="#i-menu"/></svg>
+    </button>
+  </div>
+
+</nav>
+</div>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="#features">Product</a>
+  <a href="#compare">Solutions</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#assistant">AI Assistant</a>
+  <a href="#">Company</a>
+  <a class="btn btn--primary btn--block" href="#pricing">Join the Wait List</a>
+</div>
+</header>
+
+<main id="main">
+
+<!-- ====================================================================
+     HERO
+==================================================================== -->
+<section class="hero">
+<div class="container">
+<div class="hero-panel">
+
+<div class="hero-light" aria-hidden="true"></div>
+
+
+
+
+
+<!-- ====================================================================
+     HERO GLOW CURVES — anchored to LAYOUT, not to a fixed viewBox.
+
+     WHY THIS CHANGED (2026-07-30): these used to live in one panel-wide
+     <svg viewBox="0 0 1300 760" preserveAspectRatio="slice">. slice scales
+     by max(W/1300, H/760) — and WHICH of those two terms wins flips as the
+     panel's aspect ratio changes. When it flips, the crop switches axis and
+     every curve jumps. The dashboard meanwhile is laid out by the CSS grid
+     in real pixels, so the two never tracked each other and drifted apart at
+     every viewport width. That is why the lines "moved all over the place".
+
+     Now each curve is a plain <img> positioned in PERCENTAGES of the box it
+     belongs to, so it scales with that box and nothing else:
+       .hero-fx   — spans the panel. Holds curves 2 and 4, which are pinned
+                    to the panel's left edge and bottom-right corner.
+       .stage-fx  — spans the dashboard column. Holds curves 1 and 3, which
+                    belong to the slab and must stay put relative to it.
+     Percentages were converted from the old viewBox numbers at the design
+     width; see css/hero.css for the values. -->
+<div class="hero-fx" aria-hidden="true">
+  <img class="fx fx-c2" src="Images/Curve 2.png" alt="">
+  <img class="fx fx-c4" src="Images/Curve 4.png" alt="">
+</div>
+
+<div class="hero-grid">
+
+  <div class="hero-copy" data-reveal>
+    <span class="eyebrow">The operating system for Amazon sellers</span>
+
+    <h1>Run your Amazon business with <span class="grad-text">confidence.</span></h1>
+
+    <p class="hero-sub">Everything connected. Everything in sync.<br>Make better decisions, faster.</p>
+
+    <div class="hero-cta">
+      <a class="btn btn--primary btn--lg" href="#pricing" data-magnetic>
+        Join the Wait List <svg class="icon-sm"><use href="#i-arrow"/></svg>
+      </a>
+      <a class="btn-play" href="#">
+        <i><svg class="icon-sm"><use href="#i-play"/></svg></i>
+        Watch 90 sec demo
+      </a>
+    </div>
+
+    <ul class="ticks">
+      <li><svg class="icon-sm"><use href="#i-check"/></svg>No credit card</li>
+      <li><svg class="icon-sm"><use href="#i-check"/></svg>Import in minutes</li>
+      <li><svg class="icon-sm"><use href="#i-check"/></svg>Cancel anytime</li>
+    </ul>
+
+    <div class="hero-floats">
+
+      <div class="float-card f1">
+        <div class="float-top">
+          <span class="float-label">Forecast Accuracy</span>
+          <span class="float-delta"><svg class="icon-sm" style="width:10px;height:10px"><use href="#i-trend"/></svg>8%</span>
+        </div>
+        <div class="float-value">94%</div>
+        <svg class="float-spark" viewBox="0 0 140 40" preserveAspectRatio="none">
+          <path fill="url(#sparkFillGreen)" d="M0.0,36.6 C1.7,36.7 6.7,37.8 10.0,37.0 C13.3,36.2 16.7,33.3 20.0,31.6 C23.3,30.0 26.7,27.8 30.0,27.0 C33.3,26.1 36.7,26.9 40.0,26.4 C43.3,25.8 46.7,24.6 50.0,23.8 C53.3,23.1 56.7,22.7 60.0,21.7 C63.3,20.7 66.7,19.3 70.0,17.9 C73.3,16.5 76.7,13.7 80.0,13.0 C83.3,12.3 86.7,13.4 90.0,13.7 C93.3,14.0 96.7,15.6 100.0,15.0 C103.3,14.3 106.7,10.9 110.0,9.7 C113.3,8.5 116.7,8.8 120.0,7.7 C123.3,6.6 126.7,3.5 130.0,3.0 C133.3,2.5 138.3,4.2 140.0,4.4 L140.0,37.0 L0.0,37.0 Z"/>
+          <path class="spark-line" stroke="#2ED47A" d="M0.0,36.6 C1.7,36.7 6.7,37.8 10.0,37.0 C13.3,36.2 16.7,33.3 20.0,31.6 C23.3,30.0 26.7,27.8 30.0,27.0 C33.3,26.1 36.7,26.9 40.0,26.4 C43.3,25.8 46.7,24.6 50.0,23.8 C53.3,23.1 56.7,22.7 60.0,21.7 C63.3,20.7 66.7,19.3 70.0,17.9 C73.3,16.5 76.7,13.7 80.0,13.0 C83.3,12.3 86.7,13.4 90.0,13.7 C93.3,14.0 96.7,15.6 100.0,15.0 C103.3,14.3 106.7,10.9 110.0,9.7 C113.3,8.5 116.7,8.8 120.0,7.7 C123.3,6.6 126.7,3.5 130.0,3.0 C133.3,2.5 138.3,4.2 140.0,4.4"/>
+        </svg>
+      </div>
+
+      <div class="float-card f2">
+        <div class="float-top">
+          <span class="float-label">ROAS</span>
+          <span class="float-delta"><svg class="icon-sm" style="width:10px;height:10px"><use href="#i-trend"/></svg>14%</span>
+        </div>
+        <div class="float-value">5.9x</div>
+        <svg class="float-spark" viewBox="0 0 140 40" preserveAspectRatio="none">
+          <path fill="url(#sparkFillBlue)" d="M0.0,37.0 C1.7,36.6 6.7,35.5 10.0,34.5 C13.3,33.6 16.7,32.5 20.0,31.4 C23.3,30.3 26.7,29.2 30.0,27.9 C33.3,26.6 36.7,24.9 40.0,23.6 C43.3,22.4 46.7,21.7 50.0,20.5 C53.3,19.3 56.7,16.9 60.0,16.3 C63.3,15.8 66.7,17.3 70.0,17.2 C73.3,17.0 76.7,16.5 80.0,15.6 C83.3,14.6 86.7,12.4 90.0,11.3 C93.3,10.1 96.7,9.8 100.0,8.6 C103.3,7.5 106.7,5.2 110.0,4.6 C113.3,4.0 116.7,5.2 120.0,5.0 C123.3,4.8 126.7,3.7 130.0,3.4 C133.3,3.0 138.3,3.1 140.0,3.0 L140.0,37.0 L0.0,37.0 Z"/>
+          <path class="spark-line" stroke="#7EB3FF" d="M0.0,37.0 C1.7,36.6 6.7,35.5 10.0,34.5 C13.3,33.6 16.7,32.5 20.0,31.4 C23.3,30.3 26.7,29.2 30.0,27.9 C33.3,26.6 36.7,24.9 40.0,23.6 C43.3,22.4 46.7,21.7 50.0,20.5 C53.3,19.3 56.7,16.9 60.0,16.3 C63.3,15.8 66.7,17.3 70.0,17.2 C73.3,17.0 76.7,16.5 80.0,15.6 C83.3,14.6 86.7,12.4 90.0,11.3 C93.3,10.1 96.7,9.8 100.0,8.6 C103.3,7.5 106.7,5.2 110.0,4.6 C113.3,4.0 116.7,5.2 120.0,5.0 C123.3,4.8 126.7,3.7 130.0,3.4 C133.3,3.0 138.3,3.1 140.0,3.0"/>
+        </svg>
+      </div>
+
+      <div class="float-card f3">
+        <div class="float-top">
+          <span class="float-label">Profit</span>
+          <span class="float-delta"><svg class="icon-sm" style="width:10px;height:10px"><use href="#i-trend"/></svg>18%</span>
+        </div>
+        <div class="float-value">+$18,240</div>
+        <svg class="float-spark" viewBox="0 0 140 40" preserveAspectRatio="none">
+          <path fill="url(#sparkFillPurple)" d="M0.0,37.0 C1.7,36.9 6.7,37.8 10.0,36.6 C13.3,35.5 16.7,31.1 20.0,30.1 C23.3,29.1 26.7,31.2 30.0,30.6 C33.3,29.9 36.7,26.8 40.0,26.2 C43.3,25.7 46.7,27.0 50.0,27.1 C53.3,27.1 56.7,27.7 60.0,26.5 C63.3,25.3 66.7,20.9 70.0,19.7 C73.3,18.5 76.7,20.2 80.0,19.5 C83.3,18.8 86.7,16.7 90.0,15.7 C93.3,14.6 96.7,14.1 100.0,13.3 C103.3,12.6 106.7,11.9 110.0,11.1 C113.3,10.3 116.7,8.9 120.0,8.5 C123.3,8.0 126.7,9.3 130.0,8.4 C133.3,7.5 138.3,3.9 140.0,3.0 L140.0,37.0 L0.0,37.0 Z"/>
+          <path class="spark-line" stroke="#A971F7" d="M0.0,37.0 C1.7,36.9 6.7,37.8 10.0,36.6 C13.3,35.5 16.7,31.1 20.0,30.1 C23.3,29.1 26.7,31.2 30.0,30.6 C33.3,29.9 36.7,26.8 40.0,26.2 C43.3,25.7 46.7,27.0 50.0,27.1 C53.3,27.1 56.7,27.7 60.0,26.5 C63.3,25.3 66.7,20.9 70.0,19.7 C73.3,18.5 76.7,20.2 80.0,19.5 C83.3,18.8 86.7,16.7 90.0,15.7 C93.3,14.6 96.7,14.1 100.0,13.3 C103.3,12.6 106.7,11.9 110.0,11.1 C113.3,10.3 116.7,8.9 120.0,8.5 C123.3,8.0 126.7,9.3 130.0,8.4 C133.3,7.5 138.3,3.9 140.0,3.0"/>
+        </svg>
+      </div>
+
+      <div class="float-card f4">
+        <div class="float-top">
+          <span class="float-label">Inventory</span>
+        </div>
+        <div class="float-inv">
+          <span class="float-check"><svg><use href="#i-shield"/></svg></span>
+          <span class="float-value" style="margin-top:0">Safe<small>42 days</small></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================ DASHBOARD ============================ -->
+  <div class="hero-stage" data-reveal>
+  <div class="stage-fx" aria-hidden="true">
+    <img class="fx fx-c1" src="Images/Curve 1.png" alt="">
+    <img class="fx fx-c3" src="Images/Curve 3.png" alt="">
+  </div>
+  <div class="hero-stage-inner">
+
+  <!-- The dashboard is now the rendered artwork, cropped out of
+       Images/Dashboard.png. That source is a full UI-kit sheet — the card
+       itself occupies x 11..1103, y 54..827 of the 1536x1024 original, with a
+       colour-palette column to its right and a notes strip below; those are
+       cropped away in assets/img/dashboard.jpg (1097x778).
+
+       It is positioned ABSOLUTELY over .dash rather than replacing it. .dash
+       stays in the DOM (visibility:hidden, see css/dashboard.css) and keeps
+       defining the hero panel's height. That matters: every hero curve is
+       placed in viewBox units derived from the panel's dimensions, so letting
+       the image resize the panel would shift all four of them.
+
+       The 3D transform mirrors .dash exactly, so the slab tilts the same way
+       and reacts to hover the same way. -->
+  <img class="dash-shot" src="assets/img/dashboard.jpg"
+       alt="AmazeBase dashboard showing revenue, profit, cash flow and inventory"
+       width="1097" height="778" decoding="async">
+
+  <div class="dash" data-tilt>
+  <div class="dash-edge-b" aria-hidden="true"></div>
+  <div class="dash-edge-r" aria-hidden="true"></div>
+  <div class="dash-face">
+
+    <div class="dash-bar">
+      <span class="dash-brand">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+        </svg>
+        <span data-brand>AmazeBase</span>
+      </span>
+      <div class="dash-bar-right">
+        <span class="dash-chip"><svg><use href="#i-calendar"/></svg>This month</span>
+        <span class="dash-chip"><svg><use href="#i-refresh"/></svg>vs. Last month</span>
+        <span class="dash-chip"><svg><use href="#i-export"/></svg>Export</span>
+        <span class="dash-avatar">MJ</span>
+      </div>
+    </div>
+
+    <div class="dash-body">
+
+      <aside class="dash-side">
+        <span class="dash-nav is-active"><svg><use href="#i-grid"/></svg>Overview</span>
+        <span class="dash-nav"><svg><use href="#i-box"/></svg>Products</span>
+        <span class="dash-nav"><svg><use href="#i-search"/></svg>Research</span>
+        <span class="dash-nav"><svg><use href="#i-mega"/></svg>Advertising</span>
+        <span class="dash-nav"><svg><use href="#i-stack"/></svg>Inventory</span>
+        <span class="dash-nav"><svg><use href="#i-calendar"/></svg>Forecasting</span>
+        <span class="dash-nav"><svg><use href="#i-dollar"/></svg>Financials</span>
+        <span class="dash-nav"><svg><use href="#i-truck"/></svg>Suppliers</span>
+        <span class="dash-nav"><svg><use href="#i-report"/></svg>Reports</span>
+        <span class="dash-nav"><svg><use href="#i-spark"/></svg>AI Assistant</span>
+        <span class="dash-nav"><svg><use href="#i-bell"/></svg>Alerts</span>
+        <span class="dash-nav"><svg><use href="#i-gear"/></svg>Settings</span>
+      </aside>
+
+      <div class="dash-main">
+
+        <div class="dash-kpis">
+          <div class="kpi">
+            <div class="kpi-label">Total Revenue</div>
+            <div class="kpi-value">$184,209</div>
+            <div class="kpi-foot">
+              <span class="kpi-delta">↑ 28.6%</span>
+              <svg class="kpi-spark" viewBox="0 0 52 18"><path d="M2.0,14.5 C2.7,14.3 4.7,13.8 6.0,13.4 C7.3,12.9 8.7,12.2 10.0,12.0 C11.3,11.7 12.7,11.9 14.0,11.7 C15.3,11.5 16.7,11.1 18.0,10.8 C19.3,10.5 20.7,10.1 22.0,9.9 C23.3,9.7 24.7,9.8 26.0,9.6 C27.3,9.3 28.7,8.8 30.0,8.4 C31.3,8.1 32.7,7.8 34.0,7.5 C35.3,7.2 36.7,6.8 38.0,6.6 C39.3,6.4 40.7,6.6 42.0,6.4 C43.3,6.3 44.7,5.7 46.0,5.5 C47.3,5.2 49.3,5.0 50.0,4.9"/></svg>
+            </div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Net Profit</div>
+            <div class="kpi-value">$47,263</div>
+            <div class="kpi-foot">
+              <span class="kpi-delta">↑ 18.7%</span>
+              <svg class="kpi-spark" viewBox="0 0 52 18"><path d="M2.0,13.8 C2.7,13.7 4.7,13.1 6.0,12.8 C7.3,12.5 8.7,12.1 10.0,12.0 C11.3,11.9 12.7,12.4 14.0,12.2 C15.3,12.0 16.7,11.1 18.0,10.7 C19.3,10.4 20.7,10.4 22.0,10.1 C23.3,9.9 24.7,9.4 26.0,9.2 C27.3,9.0 28.7,9.0 30.0,8.8 C31.3,8.6 32.7,8.3 34.0,7.9 C35.3,7.6 36.7,7.2 38.0,6.9 C39.3,6.6 40.7,6.6 42.0,6.3 C43.3,6.1 44.7,5.6 46.0,5.4 C47.3,5.1 49.3,5.0 50.0,4.9"/></svg>
+            </div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Cash Flow</div>
+            <div class="kpi-value">$23,156</div>
+            <div class="kpi-foot">
+              <span class="kpi-delta">↑ 21.3%</span>
+              <svg class="kpi-spark" viewBox="0 0 52 18"><path d="M2.0,15.1 C2.7,14.9 4.7,14.4 6.0,14.0 C7.3,13.6 8.7,13.1 10.0,12.7 C11.3,12.3 12.7,11.7 14.0,11.4 C15.3,11.2 16.7,11.4 18.0,11.3 C19.3,11.1 20.7,10.8 22.0,10.5 C23.3,10.2 24.7,9.9 26.0,9.5 C27.3,9.1 28.7,8.4 30.0,8.2 C31.3,7.9 32.7,8.2 34.0,8.0 C35.3,7.7 36.7,7.0 38.0,6.6 C39.3,6.3 40.7,6.1 42.0,5.9 C43.3,5.8 44.7,5.9 46.0,5.6 C47.3,5.4 49.3,4.7 50.0,4.5"/></svg>
+            </div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Inventory Value</div>
+            <div class="kpi-value">$96,147</div>
+            <div class="kpi-foot">
+              <span class="kpi-delta">↑ 16.4%</span>
+              <svg class="kpi-spark" viewBox="0 0 52 18"><path d="M2.0,14.7 C2.7,14.5 4.7,13.9 6.0,13.5 C7.3,13.2 8.7,12.9 10.0,12.6 C11.3,12.3 12.7,12.2 14.0,11.9 C15.3,11.6 16.7,11.1 18.0,10.8 C19.3,10.5 20.7,10.3 22.0,10.1 C23.3,10.0 24.7,10.0 26.0,9.7 C27.3,9.5 28.7,8.8 30.0,8.5 C31.3,8.2 32.7,8.3 34.0,8.1 C35.3,7.9 36.7,7.5 38.0,7.2 C39.3,6.9 40.7,6.7 42.0,6.3 C43.3,5.9 44.7,5.2 46.0,4.9 C47.3,4.6 49.3,4.6 50.0,4.6"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- profit chart -->
+        <div class="panel">
+          <div class="panel-head">
+            <span class="panel-title">Profit Overview</span>
+            <span class="panel-link">Last 30 days</span>
+          </div>
+          <div class="chart-value">
+            <b>$47,263</b><span>↑ 18.7%</span><em>vs last month</em>
+          </div>
+          <div class="chart-legend">
+            <span><i style="background:#3B82F6"></i>Revenue</span>
+            <span><i style="background:#8B3BF1"></i>Profit</span>
+          </div>
+          <svg class="chart" viewBox="0 0 460 150" preserveAspectRatio="none" role="img" aria-label="Revenue and profit trend for the last 30 days">
+            <line class="grid-line" x1="30" y1="14"  x2="450" y2="14"/>
+            <line class="grid-line" x1="30" y1="42"  x2="450" y2="42"/>
+            <line class="grid-line" x1="30" y1="70"  x2="450" y2="70"/>
+            <line class="grid-line" x1="30" y1="98"  x2="450" y2="98"/>
+            <line class="grid-line" x1="30" y1="126" x2="450" y2="126"/>
+            <text class="axis-text" x="4" y="17">$80K</text>
+            <text class="axis-text" x="4" y="45">$60K</text>
+            <text class="axis-text" x="4" y="73">$40K</text>
+            <text class="axis-text" x="4" y="101">$20K</text>
+            <text class="axis-text" x="12" y="129">$0</text>
+            <path class="area-a" d="M30.0,105.9 C32.4,105.2 39.7,103.0 44.5,101.8 C49.3,100.5 54.1,99.6 59.0,98.4 C63.8,97.2 68.6,95.5 73.4,94.6 C78.3,93.7 83.1,93.9 87.9,93.0 C92.8,92.1 97.6,89.5 102.4,89.2 C107.2,88.8 112.1,91.4 116.9,91.0 C121.7,90.5 126.6,88.1 131.4,86.5 C136.2,84.8 141.0,82.1 145.9,81.1 C150.7,80.0 155.5,80.9 160.3,80.1 C165.2,79.3 170.0,76.5 174.8,76.1 C179.7,75.8 184.5,78.3 189.3,77.8 C194.1,77.3 199.0,74.3 203.8,73.3 C208.6,72.3 213.4,72.8 218.3,71.9 C223.1,71.0 227.9,68.9 232.8,67.8 C237.6,66.7 242.4,65.5 247.2,65.1 C252.1,64.7 256.9,65.9 261.7,65.3 C266.6,64.8 271.4,62.9 276.2,61.8 C281.0,60.8 285.9,60.4 290.7,59.0 C295.5,57.6 300.3,54.8 305.2,53.6 C310.0,52.4 314.8,52.1 319.7,51.8 C324.5,51.6 329.3,52.9 334.1,52.0 C339.0,51.2 343.8,47.6 348.6,46.8 C353.4,46.0 358.3,47.8 363.1,47.1 C367.9,46.5 372.8,43.5 377.6,42.7 C382.4,41.9 387.2,42.7 392.1,42.2 C396.9,41.8 401.7,41.6 406.6,40.3 C411.4,39.0 416.2,35.5 421.0,34.5 C425.9,33.6 430.7,35.0 435.5,34.6 C440.3,34.2 447.6,32.5 450.0,32.1 L450.0,124 L30.0,124 Z"/>
+            <path class="area-b" d="M30.0,117.7 C32.4,117.4 39.7,116.3 44.5,115.9 C49.3,115.4 54.1,116.0 59.0,114.9 C63.8,113.9 68.6,110.4 73.4,109.7 C78.3,109.0 83.1,111.3 87.9,111.0 C92.8,110.7 97.6,108.8 102.4,107.6 C107.2,106.5 112.1,104.5 116.9,104.1 C121.7,103.8 126.6,105.8 131.4,105.5 C136.2,105.1 141.0,103.0 145.9,102.1 C150.7,101.2 155.5,100.3 160.3,100.1 C165.2,99.9 170.0,101.1 174.8,100.7 C179.7,100.3 184.5,98.6 189.3,97.6 C194.1,96.6 199.0,95.3 203.8,94.7 C208.6,94.1 213.4,94.5 218.3,94.0 C223.1,93.4 227.9,91.6 232.8,91.3 C237.6,90.9 242.4,91.9 247.2,91.7 C252.1,91.4 256.9,90.2 261.7,89.7 C266.6,89.2 271.4,89.2 276.2,88.5 C281.0,87.8 285.9,86.5 290.7,85.5 C295.5,84.5 300.3,83.0 305.2,82.4 C310.0,81.8 314.8,82.4 319.7,81.9 C324.5,81.5 329.3,80.2 334.1,79.7 C339.0,79.3 343.8,79.9 348.6,79.4 C353.4,78.8 358.3,77.0 363.1,76.6 C367.9,76.2 372.8,77.3 377.6,77.0 C382.4,76.7 387.2,75.6 392.1,74.8 C396.9,74.0 401.7,72.8 406.6,72.1 C411.4,71.4 416.2,70.8 421.0,70.4 C425.9,70.0 430.7,69.9 435.5,69.6 C440.3,69.4 447.6,69.0 450.0,68.9 L450.0,124 L30.0,124 Z"/>
+            <path class="series-a" d="M30.0,105.9 C32.4,105.2 39.7,103.0 44.5,101.8 C49.3,100.5 54.1,99.6 59.0,98.4 C63.8,97.2 68.6,95.5 73.4,94.6 C78.3,93.7 83.1,93.9 87.9,93.0 C92.8,92.1 97.6,89.5 102.4,89.2 C107.2,88.8 112.1,91.4 116.9,91.0 C121.7,90.5 126.6,88.1 131.4,86.5 C136.2,84.8 141.0,82.1 145.9,81.1 C150.7,80.0 155.5,80.9 160.3,80.1 C165.2,79.3 170.0,76.5 174.8,76.1 C179.7,75.8 184.5,78.3 189.3,77.8 C194.1,77.3 199.0,74.3 203.8,73.3 C208.6,72.3 213.4,72.8 218.3,71.9 C223.1,71.0 227.9,68.9 232.8,67.8 C237.6,66.7 242.4,65.5 247.2,65.1 C252.1,64.7 256.9,65.9 261.7,65.3 C266.6,64.8 271.4,62.9 276.2,61.8 C281.0,60.8 285.9,60.4 290.7,59.0 C295.5,57.6 300.3,54.8 305.2,53.6 C310.0,52.4 314.8,52.1 319.7,51.8 C324.5,51.6 329.3,52.9 334.1,52.0 C339.0,51.2 343.8,47.6 348.6,46.8 C353.4,46.0 358.3,47.8 363.1,47.1 C367.9,46.5 372.8,43.5 377.6,42.7 C382.4,41.9 387.2,42.7 392.1,42.2 C396.9,41.8 401.7,41.6 406.6,40.3 C411.4,39.0 416.2,35.5 421.0,34.5 C425.9,33.6 430.7,35.0 435.5,34.6 C440.3,34.2 447.6,32.5 450.0,32.1"/>
+            <path class="series-b" d="M30.0,117.7 C32.4,117.4 39.7,116.3 44.5,115.9 C49.3,115.4 54.1,116.0 59.0,114.9 C63.8,113.9 68.6,110.4 73.4,109.7 C78.3,109.0 83.1,111.3 87.9,111.0 C92.8,110.7 97.6,108.8 102.4,107.6 C107.2,106.5 112.1,104.5 116.9,104.1 C121.7,103.8 126.6,105.8 131.4,105.5 C136.2,105.1 141.0,103.0 145.9,102.1 C150.7,101.2 155.5,100.3 160.3,100.1 C165.2,99.9 170.0,101.1 174.8,100.7 C179.7,100.3 184.5,98.6 189.3,97.6 C194.1,96.6 199.0,95.3 203.8,94.7 C208.6,94.1 213.4,94.5 218.3,94.0 C223.1,93.4 227.9,91.6 232.8,91.3 C237.6,90.9 242.4,91.9 247.2,91.7 C252.1,91.4 256.9,90.2 261.7,89.7 C266.6,89.2 271.4,89.2 276.2,88.5 C281.0,87.8 285.9,86.5 290.7,85.5 C295.5,84.5 300.3,83.0 305.2,82.4 C310.0,81.8 314.8,82.4 319.7,81.9 C324.5,81.5 329.3,80.2 334.1,79.7 C339.0,79.3 343.8,79.9 348.6,79.4 C353.4,78.8 358.3,77.0 363.1,76.6 C367.9,76.2 372.8,77.3 377.6,77.0 C382.4,76.7 387.2,75.6 392.1,74.8 C396.9,74.0 401.7,72.8 406.6,72.1 C411.4,71.4 416.2,70.8 421.0,70.4 C425.9,70.0 430.7,69.9 435.5,69.6 C440.3,69.4 447.6,69.0 450.0,68.9"/>
+            <text class="axis-text" x="30"  y="142">May 1</text>
+            <text class="axis-text" x="130" y="142">May 8</text>
+            <text class="axis-text" x="235" y="142">May 15</text>
+            <text class="axis-text" x="340" y="142">May 22</text>
+            <text class="axis-text" x="424" y="142">May 29</text>
+          </svg>
+        </div>
+
+        <!-- right column -->
+        <div style="display:grid;gap:8px;align-content:start;min-width:0">
+
+          <div class="panel">
+            <div class="panel-head"><span class="panel-title">Inventory Health</span></div>
+            <div class="donut-wrap">
+              <div class="donut-meta">
+                <b>42</b>
+                <span>days of stock</span>
+                <span class="status"><i class="dot dot--green"></i>Healthy</span>
+              </div>
+              <svg class="donut" viewBox="0 0 100 100" role="img" aria-label="42 days of stock, healthy">
+                <circle class="track" cx="50" cy="50" r="40"/>
+                <circle class="value" cx="50" cy="50" r="40" stroke-dasharray="176 251"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <span class="panel-title">Alerts</span>
+              <span class="panel-link">View all</span>
+            </div>
+            <div class="alerts">
+              <div class="alert">
+                <span class="alert-ico is-red"><svg><use href="#i-warn"/></svg></span>
+                <div><b>Inventory risk</b><span>3 products below 14 days</span></div>
+              </div>
+              <div class="alert">
+                <span class="alert-ico is-amber"><svg><use href="#i-dollar"/></svg></span>
+                <div><b>Supplier payment</b><span>$12,500 due in 7 days</span></div>
+              </div>
+              <div class="alert">
+                <span class="alert-ico is-green"><svg><use href="#i-trend"/></svg></span>
+                <div><b>Campaign opportunity</b><span>Increase budget on 6 keywords</span></div>
+              </div>
+              <div class="alert">
+                <span class="alert-ico is-blue"><svg><use href="#i-box"/></svg></span>
+                <div><b>Restock recommended</b><span>8 products to reorder</span></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- top products -->
+        <div class="panel dash-table-wrap">
+          <div class="panel-head">
+            <span class="panel-title">Top Products</span>
+            <span class="panel-link">View all</span>
+          </div>
+          <table class="dash-table">
+            <thead>
+              <tr>
+                <th>Product</th><th>Revenue</th><th>Profit</th><th>Margin</th>
+                <th>Inventory</th><th>Forecast</th><th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="prod"><i></i>Portable Coffee Grinder</span></td>
+                <td>$23,590</td><td>$8,612</td><td>30.1%</td><td>486</td><td>42 days</td>
+                <td><span class="tag tag--green"><i class="dot dot--green"></i>Healthy</span></td>
+              </tr>
+              <tr>
+                <td><span class="prod"><i></i>Stainless Steel French Press</span></td>
+                <td>$24,680</td><td>$7,415</td><td>30.0%</td><td>352</td><td>35 days</td>
+                <td><span class="tag tag--green"><i class="dot dot--green"></i>Healthy</span></td>
+              </tr>
+              <tr>
+                <td><span class="prod"><i></i>Air Fryer Silicone Liners</span></td>
+                <td>$19,230</td><td>$6,192</td><td>32.2%</td><td>215</td><td>28 days</td>
+                <td><span class="tag tag--amber"><i class="dot dot--amber"></i>Low stock</span></td>
+              </tr>
+              <tr>
+                <td><span class="prod"><i></i>Digital Kitchen Scale</span></td>
+                <td>$15,340</td><td>$4,910</td><td>32.0%</td><td>120</td><td>16 days</td>
+                <td><span class="tag tag--amber"><i class="dot dot--amber"></i>Low stock</span></td>
+              </tr>
+              <tr>
+                <td><span class="prod"><i></i>Milk Frother Handheld</span></td>
+                <td>$12,550</td><td>$3,735</td><td>29.1%</td><td>74</td><td>12 days</td>
+                <td><span class="tag tag--red"><i class="dot dot--red"></i>Risk</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+
+</div>
+</div>
+</div>
+</section>
+
+<!-- ====================================================================
+     PIPELINE
+==================================================================== -->
+<section class="pipeline">
+<div class="container">
+  <div class="pipeline-box" data-reveal>
+    <h2>One workspace. Every decision.</h2>
+
+    <div class="pipeline-rail" data-reveal-stagger>
+      <!-- Custom neon icons. Source art lives in Images/*.png (1254px, ~1MB
+           each); the optimised RGBA copies actually used here are
+           assets/img/ico-*.png (128px, ~25KB). All 7 rail nodes now use them.
+           To add another: drop the PNG in Images/, crop to the drawn stroke
+           +34% margin, key the black backdrop into alpha, resize to 128px. -->
+      <div class="pipe-node"><i><img class="neon-ico" src="assets/img/ico-research.png" alt="" width="128" height="128" loading="lazy"></i><span>Research</span></div>
+      <div class="pipe-node"><i><img class="neon-ico" src="assets/img/ico-launch.png" alt="" width="128" height="128" loading="lazy"></i><span>Launch</span></div>
+      <div class="pipe-node"><i><img class="neon-ico" src="assets/img/ico-inventory.png" alt="" width="128" height="128" loading="lazy"></i><span>Inventory</span></div>
+      <div class="pipe-node"><i><img class="neon-ico" src="assets/img/ico-advertising.png" alt="" width="128" height="128" loading="lazy"></i><span>Advertising</span></div>
+      <div class="pipe-node"><i><img class="neon-ico" src="assets/img/ico-suppliers.png" alt="" width="128" height="128" loading="lazy"></i><span>Suppliers</span></div>
+      <div class="pipe-node"><i><img class="neon-ico" src="assets/img/ico-cashflow.png" alt="" width="128" height="128" loading="lazy"></i><span>Cash Flow</span></div>
+      <div class="pipe-node"><i><img class="neon-ico" src="assets/img/ico-profit.png" alt="" width="128" height="128" loading="lazy"></i><span>Profit</span></div>
+    </div>
+
+    <p class="pipeline-foot">All your data. Connected. In real time.</p>
+  </div>
+</div>
+</section>
+
+<!-- ====================================================================
+     COMPARE
+==================================================================== -->
+<section class="section" id="compare">
+<div class="container">
+<div class="compare-wrap">
+
+  <div class="compare-grid">
+
+    <div class="compare-card" data-reveal>
+      <h3>Most sellers juggle<br>too many tools.</h3>
+
+      <div class="compare-stage">
+        <svg class="compare-svg" viewBox="0 0 400 260" preserveAspectRatio="none" aria-hidden="true">
+          <path class="dash-link" d="M70,40 C130,70 150,110 120,130"/>
+          <path class="dash-link" d="M300,35 C250,80 200,90 130,125"/>
+          <path class="dash-link" d="M120,135 C180,150 240,120 330,110"/>
+          <path class="dash-link" d="M60,180 C120,170 130,150 125,138"/>
+          <path class="dash-link" d="M300,190 C240,180 180,165 130,140"/>
+          <path class="dash-link" d="M70,45 C40,110 45,150 58,178"/>
+        </svg>
+
+        <div class="tool-scatter">
+          <span class="tool t1"><img src="assets/img/logo-amazon.png" alt="">Seller Central</span>
+          <span class="tool t2"><img src="assets/img/logo-excel.png" alt="">Excel</span>
+          <span class="tool t3"><img src="assets/img/logo-helium10.png" alt="">Helium 10</span>
+          <span class="tool t4"><img src="assets/img/logo-gsheets.png" alt="">Google Sheets</span>
+          <span class="tool t5"><img src="assets/img/logo-gmail.png" alt="">Email threads</span>
+          <span class="tool t6"><svg class="icon-sm" style="color:var(--text-3)"><use href="#i-case"/></svg>Accounting</span>
+        </div>
+      </div>
+
+      <span class="compare-verdict is-bad">
+        <svg class="icon-sm"><use href="#i-x"/></svg>Disconnected. Manual. Unreliable.
+      </span>
+    </div>
+
+    <div class="compare-card" data-reveal>
+      <h3>You run your business.<br>We connect everything.</h3>
+
+      <div class="compare-stage">
+        <svg class="compare-svg" viewBox="0 0 400 260" preserveAspectRatio="none" aria-hidden="true">
+          <path class="live-link" d="M95,32 C150,42 160,90 176,118"/>
+          <path class="live-link" d="M95,120 C140,122 155,124 176,128"/>
+          <path class="live-link" d="M95,205 C150,196 160,160 176,140"/>
+          <path class="live-link" d="M305,32 C250,42 240,90 224,118"/>
+          <path class="live-link" d="M305,120 C260,122 245,124 224,128"/>
+          <path class="live-link" d="M305,205 C250,196 240,160 224,140"/>
+        </svg>
+
+        <span class="spoke s1"><img class="neon-ico" src="assets/img/ico-inventory.png" alt="" width="128" height="128" loading="lazy">Products</span>
+        <span class="spoke s2"><svg><use href="#i-stack"/></svg>Inventory</span>
+        <span class="spoke s3"><img class="neon-ico" src="assets/img/ico-advertising.png" alt="" width="128" height="128" loading="lazy">Advertising</span>
+        <span class="spoke s4"><img class="neon-ico" src="assets/img/ico-cashflow.png" alt="" width="128" height="128" loading="lazy">Financials</span>
+        <span class="spoke s5"><img class="neon-ico" src="assets/img/ico-suppliers.png" alt="" width="128" height="128" loading="lazy">Suppliers</span>
+        <span class="spoke s6"><svg><use href="#i-report"/></svg>Reports</span>
+
+        <div class="hub">
+          <svg><use href="#i-spark"/></svg>
+          <span data-brand>AmazeBase</span>
+        </div>
+      </div>
+
+      <span class="compare-verdict is-good">
+        <svg class="icon-sm"><use href="#i-checkc"/></svg>Connected. Automated. Intelligent.
+      </span>
+    </div>
+
+  </div>
+
+  <span class="vs-badge">VS</span>
+
+</div>
+</div>
+</section>
+
+<!-- ====================================================================
+     FEATURES
+==================================================================== -->
+<section class="section" id="features">
+<div class="container">
+
+  <div class="section-head" data-reveal>
+    <span class="eyebrow">Capabilities</span>
+    <h2>Everything you need to grow profitably</h2>
+    <p>Six connected systems that replace the spreadsheets, tabs and guesswork you're using today.</p>
+  </div>
+
+  <div class="feature-grid" data-reveal-stagger>
+
+    <article class="feature">
+      <div class="feature-thumb">
+        <img src="assets/img/feat-discover.png" alt="Magnifying glass over a rising trend chart" width="768" height="264" loading="lazy" decoding="async">
+      </div>
+      <h3>Discover Opportunities</h3>
+      <p>Find winning products and keywords before your competitors do, with real demand data.</p>
+      <a class="feature-link" href="#">Learn more <svg><use href="#i-arrow"/></svg></a>
+    </article>
+
+    <article class="feature">
+      <div class="feature-thumb">
+        <img src="assets/img/feat-decisions.png" alt="Analytics dashboard showing revenue and sales by channel" width="768" height="264" loading="lazy" decoding="async">
+      </div>
+      <h3>Make Better Decisions</h3>
+      <p>Real-time insights that show you what's working and what's quietly losing you money.</p>
+      <a class="feature-link" href="#">Learn more <svg><use href="#i-arrow"/></svg></a>
+    </article>
+
+    <article class="feature">
+      <div class="feature-thumb">
+        <img src="assets/img/feat-stock.png" alt="Stacked shipping boxes with restock indicators" width="768" height="264" loading="lazy" decoding="async">
+      </div>
+      <h3>Never Run Out of Stock</h3>
+      <p>AI-powered forecasting keeps the right stock in the right place at the right time.</p>
+      <a class="feature-link" href="#">Learn more <svg><use href="#i-arrow"/></svg></a>
+    </article>
+
+    <article class="feature">
+      <div class="feature-thumb">
+        <img src="assets/img/feat-profit.png" alt="Bar chart breaking down profit" width="768" height="264" loading="lazy" decoding="async">
+      </div>
+      <h3>Understand Profit</h3>
+      <p>True profit analytics after fees, ads, refunds, storage and every other real cost.</p>
+      <a class="feature-link" href="#">Learn more <svg><use href="#i-arrow"/></svg></a>
+    </article>
+
+    <article class="feature">
+      <div class="feature-thumb">
+        <img src="assets/img/feat-forecast.png" alt="Line chart forecasting an upward trend" width="768" height="264" loading="lazy" decoding="async">
+      </div>
+      <h3>Plan Months Ahead</h3>
+      <p>Predict cash flow, inventory needs and growth with confidence instead of hope.</p>
+      <a class="feature-link" href="#">Learn more <svg><use href="#i-arrow"/></svg></a>
+    </article>
+
+    <article class="feature">
+      <div class="feature-thumb">
+        <img src="assets/img/feat-ai.png" alt="Chat bubbles representing an AI assistant" width="768" height="264" loading="lazy" decoding="async">
+      </div>
+      <h3>AI That Knows Your Business</h3>
+      <p>Ask anything. Get instant, actionable answers based on your own connected data.</p>
+      <a class="feature-link" href="#assistant">Learn more <svg><use href="#i-arrow"/></svg></a>
+    </article>
+
+  </div>
+</div>
+</section>
+
+<!-- ====================================================================
+     AI ASSISTANT
+==================================================================== -->
+<section class="section" id="assistant">
+<div class="container">
+<div class="assistant-panel" data-reveal>
+
+  <div class="assistant-copy">
+    <span class="eyebrow">AI Assistant</span>
+    <h2>Stop reading reports.<br>Start asking questions.</h2>
+    <p>Your AI analyst understands your business and gives you answers you can act on.</p>
+    <a class="btn btn--primary btn--lg" href="#pricing" data-magnetic>
+      Try AI Assistant <svg class="icon-sm"><use href="#i-arrow"/></svg>
+    </a>
+  </div>
+
+  <div class="chat">
+
+    <div class="chat-row is-user">
+      <div class="bubble is-user">How much inventory should I order for Portable Coffee Grinder next month?</div>
+      <span class="chat-avatar is-user">MJ</span>
+    </div>
+
+    <div class="chat-row">
+      <span class="chat-avatar is-ai"><svg class="icon-sm"><use href="#i-spark"/></svg></span>
+      <div class="bubble is-ai">
+        <strong>I recommend ordering 640 units.</strong>
+        <p style="margin-top:6px;color:var(--text-2)">This will cover demand for 36 days, avoid stockouts, and maintain healthy cash flow.</p>
+
+        <div class="chat-metrics">
+          <div class="chat-metric"><span>Demand Forecast</span><b>620 units</b></div>
+          <div class="chat-metric"><span>Days of Coverage</span><b>36 days</b></div>
+          <div class="chat-metric"><span>Est. Profit</span><b class="is-green">$4,820</b></div>
+          <div class="chat-metric"><span>Cash Impact</span><b class="is-red">−$2,950</b></div>
+        </div>
+
+        <p class="chat-foot">Based on sales velocity, seasonality and current trends.</p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</div>
+</section>
+
+<!-- ====================================================================
+     PROOF
+==================================================================== -->
+<section class="section" style="padding-block:var(--s5)">
+<div class="container">
+<div class="proof-grid" data-reveal>
+
+  <div class="trust">
+    <p class="trust-lead">Trusted by serious Amazon sellers</p>
+
+    <div class="trust-stat">
+      <span class="icon-tile"><svg class="icon-sm"><use href="#i-report"/></svg></span>
+      <div><b data-counter="200">200K+</b><span>Reports processed</span></div>
+    </div>
+    <div class="trust-stat">
+      <span class="icon-tile"><svg class="icon-sm"><use href="#i-link"/></svg></span>
+      <div><b data-counter="40">40+</b><span>Seller Central integrations</span></div>
+    </div>
+    <div class="trust-stat">
+      <span class="icon-tile"><svg class="icon-sm"><use href="#i-db"/></svg></span>
+      <div><b data-counter="2">2M+</b><span>Products analyzed</span></div>
+    </div>
+    <div class="trust-stat">
+      <span class="icon-tile"><svg class="icon-sm"><use href="#i-dollar"/></svg></span>
+      <div><b data-counter="2">$2B+</b><span>In sales analyzed</span></div>
+    </div>
+  </div>
+
+  <figure class="quote">
+    <span class="quote-face">MJ</span>
+    <div>
+      <p>"AmazeBase replaced 6 different tools. I save 30+ hours every month."</p>
+      <cite>— Mike Johnson, 7-Figure Seller</cite>
+    </div>
+  </figure>
+
+</div>
+</div>
+</section>
+
+<!-- ====================================================================
+     PRICING
+==================================================================== -->
+<section class="section" id="pricing">
+<div class="container">
+<div class="pricing-grid" data-reveal>
+
+  <div class="price-lead">
+    <span class="eyebrow">Pricing</span>
+    <h2>Start your free trial today.</h2>
+    <p>Simple pricing. Massive value.</p>
+    <ul class="ticks">
+      <li><svg class="icon-sm"><use href="#i-check"/></svg>14-day free trial</li>
+      <li><svg class="icon-sm"><use href="#i-check"/></svg>Full access to all features</li>
+      <li><svg class="icon-sm"><use href="#i-check"/></svg>No credit card required</li>
+    </ul>
+  </div>
+
+  <div class="price-card is-featured">
+    <span class="price-badge">Most Popular</span>
+    <span class="price-name">Pro Plan</span>
+    <div class="price-fig"><b>$159</b><span>/month</span></div>
+    <p class="price-note">Everything you need to grow your Amazon business.</p>
+    <ul class="price-list">
+      <li><svg class="icon-sm"><use href="#i-check"/></svg>Unlimited products &amp; reports</li>
+      <li><svg class="icon-sm"><use href="#i-check"/></svg>Advertising &amp; profit analytics</li>
+      <li><svg class="icon-sm"><use href="#i-check"/></svg>Inventory &amp; cash flow forecasting</li>
+      <li><svg class="icon-sm"><use href="#i-check"/></svg>Supplier &amp; purchase order tracking</li>
+      <li><svg class="icon-sm"><use href="#i-check"/></svg>AI Assistant included</li>
+    </ul>
+    <a class="btn btn--primary btn--lg btn--block" href="#" data-magnetic>Join the Wait List</a>
+  </div>
+
+  <div class="price-card">
+    <span class="price-name">Enterprise</span>
+    <div class="price-fig"><b>Custom</b></div>
+    <p class="price-note">For high-volume sellers and teams with advanced needs.</p>
+    <ul class="price-list">
+      <li><svg class="icon-sm"><use href="#i-check"/></svg>Everything in Pro</li>
+      <li><svg class="icon-sm"><use href="#i-check"/></svg>Multi-marketplace &amp; multi-account</li>
+      <li><svg class="icon-sm"><use href="#i-check"/></svg>Team seats &amp; permissions</li>
+      <li><svg class="icon-sm"><use href="#i-check"/></svg>API access</li>
+      <li><svg class="icon-sm"><use href="#i-check"/></svg>Dedicated onboarding</li>
+    </ul>
+    <a class="btn btn--ghost btn--lg btn--block" href="#">Contact Sales</a>
+  </div>
+
+</div>
+</div>
+</section>
+
+</main>
+
+<!-- ====================================================================
+     FOOTER
+==================================================================== -->
+<footer class="footer">
+<div class="container">
+
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="brand">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+        </svg>
+        <span data-brand>AmazeBase</span>
+      </a>
+      <p>The operating system for Amazon sellers. Everything connected, everything in sync.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#">Integrations</a>
+      <a href="#">Security</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a href="#">Documentation</a>
+      <a href="#">Blog</a>
+      <a href="#">Support</a>
+      <a href="#">Status</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 <span data-brand>AmazeBase</span>. All rights reserved.</span>
+    <div class="footer-social">
+      <a href="#" aria-label="LinkedIn"><svg class="icon-sm"><use href="#i-in"/></svg></a>
+      <a href="#" aria-label="X"><svg class="icon-sm"><use href="#i-tw"/></svg></a>
+      <a href="#" aria-label="GitHub"><svg class="icon-sm"><use href="#i-gh"/></svg></a>
+    </div>
+  </div>
+
+</div>
+</footer>
+
+<button class="to-top" aria-label="Back to top">
+  <svg class="icon-sm" style="transform:rotate(-90deg)"><use href="#i-arrow"/></svg>
+</button>
+
+<script src="js/main.js" defer></script>
+
+</body>
+</html>

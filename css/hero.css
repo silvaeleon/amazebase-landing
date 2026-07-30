@@ -1,0 +1,406 @@
+/* ==========================================================================
+   FILE: css/hero.css
+   Hero panel · backlight · copy column · scattered metric cards
+========================================================================== */
+
+.hero{
+  position:relative;
+  padding-top:86px;
+  padding-bottom:28px;
+}
+
+/* the hero slab runs wider than the standard content grid */
+.hero > .container{ width:min(100%,1400px); padding-inline:20px; }
+
+/* ---------- THE PANEL ----------------------------------------------------
+   The mockup wraps the hero in a large rounded, bordered slab that the
+   backlight bleeds inside of.                                             */
+
+.hero-panel{
+  position:relative;
+  border-radius:34px;
+  border:1px solid rgba(255,255,255,.08);
+  background:linear-gradient(180deg,#050B1B 0%,#02060F 100%);
+  padding:40px 40px 44px 48px;
+  overflow:hidden;
+  isolation:isolate;
+}
+
+/* ---------- BACKLIGHT ------------------------------------------------------
+   No independent ambient wash. All light in this panel comes from the
+   streak system in .hero-arcs — glow accompanies the lines, it doesn't
+   exist on its own. .hero-light is kept only as a near-black base tint
+   so the panel isn't pure flat black where no streak passes.             */
+
+.hero-light{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:radial-gradient(ellipse 100% 70% at 50% 0%,rgba(20,26,48,.35),transparent 60%);
+}
+
+/* ---------- GLOW CURVES ------------------------------------------------------
+   Percentage-positioned images, NOT a fixed-viewBox SVG. See the note in
+   index.html: the old <svg preserveAspectRatio="slice"> rescaled by
+   max(W/1300, H/760), and which term won flipped with the panel's aspect
+   ratio — so the curves jumped every time the window changed while the
+   dashboard, laid out by the grid in px, stayed put.
+
+   Each curve is now sized as a % of the box it belongs to, so it tracks that
+   box at every width. width only; height:auto keeps each artwork's aspect.
+
+   All four now use the UNTOUCHED artwork from Images/, screened. No processed
+   copies, no extracted alpha channels, no re-encoding.
+
+   Curve 1 was briefly a processed PNG (background subtracted into an alpha
+   channel) composited with mix-blend-mode:normal. Two things were wrong with
+   that: normal blending AVERAGES the glow with the dark panel rather than
+   adding to it, which drained the cyan and blue; and the extraction itself
+   was a lossy step nobody asked for. Using the original with `screen` — the
+   same treatment as the other three — is both simpler and more faithful,
+   since screen maps the artwork's near-black backdrop to "no change".      */
+
+/* NO z-index ON THESE TWO — deliberately.
+
+   mix-blend-mode only blends an element with the backdrop inside its own
+   stacking context. Giving these wrappers a z-index made each one a stacking
+   context containing nothing but the images, so every curve was blending
+   against transparency — i.e. not blending at all — and the raw opaque
+   artwork was painted straight onto the panel as a dark rectangle.
+
+   With z-index left at auto they do not form a stacking context, so the
+   curves blend with .hero-panel behind them and `screen` finally drops each
+   file's dark backdrop. Paint order still works out: positioned elements with
+   z-index:auto paint below anything with a positive z-index, so these stay
+   under .hero-grid (2), .hero-copy (1) and .dash-shot (2) exactly as before. */
+.hero-fx{                 /* spans the whole panel */
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+.stage-fx{                /* spans the dashboard column only */
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+.fx{
+  position:absolute;
+  display:block;
+  height:auto;
+  max-width:none;
+  mix-blend-mode:screen;
+}
+
+/* panel-anchored: pinned to the panel's left edge and bottom-right corner */
+.fx-c2{ left:0;      top:72.7%;  width:34.6%; }
+.fx-c4{ left:72.2%;  top:66.0%;  width:29.9%; }
+
+/* stage-anchored: these belong to the slab and must not drift from it */
+/* Curve 1 uses "Images/Curve 1 cut.png" — the same artwork with its rectangular
+   backdrop cut away into a real transparent alpha channel, so the element is the
+   shape of the glow rather than a box. 87.8% of the file is fully transparent
+   and all four corners are alpha 0. RGB is untouched original pixels; only
+   opacity was added. "Images/Curve 1.png" is still there, unmodified.       */
+.fx-c1{ left:7.6%; top:27.0%; width:15.0%; }
+.fx-c3{ left:33.8%;  top:-6.3%;  width:31.8%; }
+
+/* ---------- CONTENT GRID ---------------------------------------------------- */
+
+.hero-grid{
+  position:relative;
+  z-index:2;
+  display:grid;
+  grid-template-columns:432px minmax(0,1fr);
+  gap:28px;
+  align-items:stretch;
+}
+
+/* ---------- COPY -------------------------------------------------------------- */
+
+/* z-index:1 puts the whole copy column ABOVE curve 1.
+
+   Why it was underneath: .hero-copy and .hero-stage are sibling grid items,
+   and .hero-stage has position:relative with no z-index — so it does not make
+   a stacking context, and its descendants compete directly here. .stage-fx
+   (curves 1 and 3) sits at z-index 0, which beat un-positioned flow content
+   like the text. Curve 1 only started overlapping once it was moved left and
+   scaled up past the column edge.
+
+   1 is deliberately chosen: above .stage-fx (0) so the text wins, but below
+   .dash-shot (2) so the dashboard still covers the curve as before.        */
+.hero-copy{
+  position:relative;
+  z-index:1;
+  padding-right:0;
+  display:flex;
+  flex-direction:column;
+}
+
+.hero h1{
+  margin-top:22px;
+  font-size:clamp(34px,3.05vw,43px);
+  font-weight:800;
+  line-height:1.11;
+  letter-spacing:-.032em;
+}
+.hero h1 .grad-text{ display:block; }
+
+.hero-sub{
+  margin-top:var(--s3);
+  font-size:17px;
+  line-height:1.65;
+  color:var(--text-2);
+}
+
+.hero-cta{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  margin-top:var(--s4);
+  flex-wrap:nowrap;
+  white-space:nowrap;
+}
+
+.hero .ticks{ margin-top:var(--s4); font-size:13px; gap:18px; flex-wrap:nowrap; white-space:nowrap; }
+
+/* ---------- SCATTERED METRIC CARDS ---------------------------------------------
+   Deliberately staggered, not a grid. Mirrors the mockup's loose cluster.
+   margin-top:auto pins the cluster to the bottom of the (now stretched)
+   column, so whatever height the dashboard settles at, this tracks it.    */
+
+.hero-floats{
+  position:relative;
+  margin-top:auto;
+  padding-top:var(--s5);
+  height:288px;
+  flex:none;
+}
+
+/* the hero eyebrow is sentence-case in the reference, not a caps label */
+.hero .eyebrow{
+  text-transform:none;
+  letter-spacing:.005em;
+  font-size:13px;
+  font-weight:500;
+  padding:8px 16px;
+  color:var(--text-2);
+  border-color:rgba(255,255,255,.12);
+  background:rgba(255,255,255,.035);
+}
+.hero .eyebrow::before{ display:none; }
+
+.float-card{
+  position:absolute;
+  width:196px;
+  padding:13px 15px 12px;
+  border-radius:15px;
+  border:1px solid rgba(255,255,255,.10);
+  background:linear-gradient(165deg,rgba(22,31,56,.94),rgba(9,14,30,.92));
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  transition:transform var(--mid) var(--ease),border-color var(--mid);
+}
+.float-card:hover{ border-color:rgba(139,59,241,.42); }
+
+/* non-overlapping scatter, each card independently rotated a few degrees */
+.float-card.f1{
+  top:0; left:0; rotate:-3deg;
+  box-shadow:0 20px 44px rgba(0,0,0,.55), 0 0 34px rgba(46,212,122,.16), inset 0 1px 0 rgba(255,255,255,.05);
+}
+.float-card.f2{
+  top:-4px; left:246px; rotate:2.2deg;
+  box-shadow:0 20px 44px rgba(0,0,0,.55), 0 0 28px rgba(59,130,246,.12), inset 0 1px 0 rgba(255,255,255,.05);
+}
+.float-card.f3{
+  top:162px; left:30px; rotate:2deg;
+  box-shadow:0 20px 44px rgba(0,0,0,.55), 0 0 36px rgba(139,59,241,.22), inset 0 1px 0 rgba(255,255,255,.05);
+}
+.float-card.f4{
+  top:142px; left:270px; width:172px; rotate:-2.4deg;
+  box-shadow:0 20px 44px rgba(0,0,0,.55), 0 0 26px rgba(46,212,122,.14), inset 0 1px 0 rgba(255,255,255,.05);
+}
+
+.float-card.f1:hover{ transform:translateY(-5px); }
+.float-card.f2:hover{ transform:translateY(-5px); }
+.float-card.f3:hover{ transform:translateY(-5px); }
+.float-card.f4:hover{ transform:translateY(-5px); }
+
+.float-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.float-label{
+  font-size:11.5px;
+  color:var(--text-2);
+  letter-spacing:.01em;
+}
+
+.float-delta{
+  display:inline-flex;
+  align-items:center;
+  gap:2px;
+  font-size:11px;
+  font-weight:600;
+  color:var(--green);
+}
+.float-delta svg{ width:10px; height:10px; }
+
+.float-value{
+  margin-top:5px;
+  font-size:27px;
+  font-weight:700;
+  letter-spacing:-.025em;
+  line-height:1.12;
+}
+.float-value small{
+  display:block;
+  margin-top:1px;
+  font-size:11.5px;
+  font-weight:500;
+  color:var(--text-3);
+  letter-spacing:0;
+}
+
+.float-check{
+  display:grid;
+  place-items:center;
+  width:34px; height:34px;
+  border-radius:10px;
+  background:linear-gradient(155deg,#3CE68F,#1FA25E);
+  box-shadow:0 0 18px rgba(46,212,122,.55), inset 0 1px 0 rgba(255,255,255,.35);
+  color:#fff;
+  flex:none;
+}
+.float-check svg{ width:18px; height:18px; stroke-width:2.6; }
+
+.float-inv{ display:flex; align-items:center; gap:12px; margin-top:2px; }
+
+.float-spark{ margin-top:9px; height:34px; width:100%; display:block; overflow:visible; }
+.float-spark .spark-line{ fill:none; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
+
+/* ---------- DASHBOARD STAGE -------------------------------------------------------
+   The dashboard is oversized and bleeds off the panel's right edge, exactly
+   as it does in the mockup.                                                   */
+
+.hero-stage{
+  position:relative;
+  min-width:0;
+}
+
+/* perspective must sit on the DIRECT parent of the transformed element */
+.hero-stage-inner{
+  position:relative;
+  width:100%;
+  perspective:1750px;
+  perspective-origin:26% 46%;
+}
+
+/* The dashboard screenshot.
+
+   PROPORTIONS PRESERVED: width + height:auto, never object-fit, so the
+   artwork's own 1.410:1 is kept and its text/charts are not squeezed. The
+   mockup's slab reads nearer 1.22, so the silhouette will not match exactly —
+   that was the accepted trade.
+
+   ROLL. rotateY alone cannot produce what the mockup shows. It forces the top
+   edge to rise and the bottom to fall by equal amounts, which is what the old
+   build did. Deriving it: at rotateY(-18deg) with perspective:1750px on an
+   810px slab, the right edge projects 1.077x and the left 0.933x, so the right
+   side is 15.4% taller and the top edge climbs 41px across 774px = 3.06deg.
+   Rolling clockwise by that same 3.06deg levels the top and makes the bottom
+   fall the full 6.1deg — top straight, bottom high on the left dropping to the
+   right, exactly as described. The old rotateZ(-.7deg) was both far too small
+   and the wrong direction.
+
+   WIDTH 97%: sized so the whole slab stays on screen. The perspective makes
+   this non-obvious — the near (right) edge scales up 1.077x, so the projected
+   right edge runs past the raw width. Projecting the four corners through the
+   full transform + perspective:1750px, the largest width whose right edge
+   still clears the panel's inner limit (stage 810 + 40px right padding = 850)
+   is 99.9%; 97% leaves a little margin. At 132% the projected right edge sat
+   at 1147px and nearly 300px was being clipped by .hero-panel's overflow.
+
+   CONSEQUENCE: on screen the slab is ~604px tall against a ~745px copy
+   column, so roughly 140px of dead space returns beneath it. Closing that now
+   means trimming the copy column, not enlarging the dashboard. */
+.dash-shot{
+  position:relative;
+  display:block;
+  width:97%;
+  height:auto;
+  max-width:none;
+  z-index:2;
+  border-radius:14px;
+  transform-style:preserve-3d;
+  transform:rotateY(-18deg) rotateX(4.5deg) rotateZ(3.06deg);
+  transform-origin:50% 50%;
+  transition:transform var(--slow) var(--ease);
+  filter:drop-shadow(0 34px 70px rgba(0,0,0,.55));
+}
+/* hover eases all three back proportionally, keeping the top edge level */
+.dash-shot:hover{ transform:rotateY(-13deg) rotateX(2.6deg) rotateZ(2.21deg); }
+
+/* ---------- RESPONSIVE --------------------------------------------------------------- */
+
+@media (max-width:1300px){
+  .hero-stage-inner{ width:880px; }
+}
+
+@media (max-width:1180px){
+  .hero-panel{ padding:var(--s5) var(--s4) var(--s6); }
+  .hero-grid{ grid-template-columns:1fr; gap:var(--s6); }
+  .hero-copy{ padding-right:0; max-width:620px; }
+  /* NOTE: this next line has never had any effect — the perspective is set on
+     .hero-stage-inner, not .hero-stage. Left in place rather than silently
+     changed, but .dash-shot is flattened explicitly below so the screenshot
+     sits square on narrow screens instead of staying tilted. */
+  .hero-stage{ perspective:none; }
+  .hero-stage-inner{ width:100%; margin-left:0; perspective:none; }
+  .dash-shot{ position:static; transform:none; height:auto; border-radius:10px; }
+  .dash-shot:hover{ transform:none; }
+  .hero-floats{ height:auto; padding-top:0; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--s2); }
+  .float-card{ position:static; width:auto; rotate:none; }
+  .float-card:hover{ transform:translateY(-4px); }
+}
+
+@media (max-width:900px){
+  .hero-floats{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+
+@media (max-width:680px){
+  .hero{ padding-top:88px; }
+  .hero-panel{ border-radius:22px; padding:var(--s4) var(--s3) var(--s5); }
+  .hero-cta{ gap:var(--s2); }
+}
+
+@media (max-width:440px){
+  .hero-floats{ grid-template-columns:1fr; }
+}
+
+/* ---------- POSITIONS CAPTURED FROM THE VISUAL EDITOR -------------------------
+   Preset A, window 1590px. Everything below was placed by hand in the browser.
+
+   .hero-floats uses scale + a negative bottom margin together, and the margin
+   is the important half. `scale` only changes how big the box LOOKS — its
+   layout box stays 288px tall, so the 17.7% it was shrunk by (51px) was still
+   being reserved as empty space and pushing the panel taller. transform-origin
+   moves to the top so all 51px of that slack falls at the bottom, and the
+   negative margin then reclaims it. Without this the cluster looks smaller but
+   frees no room at all, which is why the panel still had dead space below.  */
+
+.dash-shot{ left:3px; top:14px; }
+
+.hero-floats{
+  scale:0.823;
+  transform-origin:50% 0;
+  margin-bottom:-51px;        /* 288px * (1 - 0.823) — reclaims the scaled-away space */
+}
+
+.fx-c1{ left:-7.63%; top:20.83%; scale:1.255; rotate:-19.5deg; }
+.fx-c2{ left:-10.10%; top:79.79%; scale:0.447; rotate:13.5deg; }
+.fx-c3{ left:21.11%; top:-8.90%; rotate:13.5deg; }
+.fx-c4{ left:74.37%; top:71.02%; scale:1.030; rotate:-13.0deg; }

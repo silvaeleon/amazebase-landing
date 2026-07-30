@@ -1,0 +1,399 @@
+/* ==========================================================================
+   FILE: css/dashboard.css
+   The hero product shot. Real markup — no screenshot.
+========================================================================== */
+
+/* ==========================================================================
+   >>> TEMPORARY — DASHBOARD HIDDEN FROM VIEW <<<
+
+   TO BRING THE DASHBOARD BACK: delete the one rule below (the three lines
+   from ".dash{" to "}"). That is the only change. The dashboard's HTML and
+   all of its other styling are completely untouched.
+
+   display:none as of 2026-07-30. It was visibility:hidden while the glow
+   curves were being placed, so the markup dashboard kept defining the panel
+   height and the curve coordinates stayed stable. Now that the screenshot
+   (.dash-shot) is the real dashboard, the image must drive the height instead
+   — otherwise it centres inside a box sized for different content and leaves
+   dead space beneath it. NOTE: this changes the panel's height, so every
+   hero curve's viewBox position has shifted and they need re-placing.
+========================================================================== */
+
+.dash{
+  display:none;
+}
+
+/* ---------- 3D SHELL ---------------------------------------------------------
+   .dash is now the preserve-3d "slab": it holds two faces as direct children —
+   .dash-face (the front, with all the content) and .dash-edge-r / .dash-edge-b
+   (thin bevel faces rotated 90deg around the shared seam). Real extrusion,
+   not a flat rectangle pretending to be one.                                */
+
+.dash{
+  position:relative;
+  z-index:1;
+  font-size:12px;
+  transform-style:preserve-3d;
+  transform:rotateY(-18deg) rotateX(4.5deg) rotateZ(-.7deg);
+  transform-origin:50% 50%;
+  transition:transform var(--slow) var(--ease);
+  will-change:transform;
+}
+.dash:hover{ transform:rotateY(-13deg) rotateX(2.6deg) rotateZ(-.4deg); }
+
+/* grounding contact shadow — a slab tilted like this should visibly sit
+   above something, not float with no ground reference                    */
+.hero-stage::after{
+  content:"";
+  position:absolute;
+  left:6%; right:2%; bottom:-6%;
+  height:80px;
+  background:radial-gradient(ellipse 60% 100% at 50% 50%,rgba(0,0,0,.55),transparent 72%);
+  filter:blur(6px);
+  pointer-events:none;
+  z-index:-1;
+}
+
+.dash-face{
+  position:relative;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,.13);
+  background:linear-gradient(168deg,#0D1630 0%,#070D1E 55%,#050A18 100%);
+  overflow:hidden;
+  box-shadow:
+    -34px 40px 90px rgba(0,0,0,.62),
+    0 0 0 1px rgba(139,59,241,.14),
+    0 0 70px rgba(91,79,230,.20);
+}
+
+/* rim light along the top/left edge, as in the mockup */
+.dash-face::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  padding:1px;
+  background:linear-gradient(150deg,rgba(126,179,255,.55),rgba(139,59,241,.18) 38%,transparent 62%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+          mask-composite:exclude;
+  pointer-events:none;
+  z-index:3;
+}
+
+.dash-face::after{
+  content:"";
+  position:absolute; inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.055),transparent 42%);
+  pointer-events:none;
+}
+
+/* right bevel — the physically-sized side wall.
+   .dash rotates rotateY(-18deg); this strip additionally rotates 90deg
+   around its own right edge, so its TOTAL angle from the camera is
+   -18+90 = 72deg. A plane that steep foreshortens to cos(72deg) ≈ .31 of
+   its real width — so to read as a ~24px bevel on screen, the div itself
+   has to be physically ~78px wide. This is why the previous pass (a
+   22px div) all but disappeared: it was never wide enough to survive
+   the foreshortening.                                                     */
+.dash-edge-r{
+  position:absolute;
+  top:0; right:0; bottom:0;
+  width:78px;
+  border-radius:0 20px 20px 0;
+  background:linear-gradient(180deg,#475780 0%,#212C4C 16%,#0A0F1E 58%,#050810 100%);
+  transform-origin:100% 50%;
+  transform:rotateY(90deg);
+  box-shadow:inset 0 0 22px rgba(0,0,0,.55), 3px 0 30px rgba(139,179,255,.28);
+}
+.dash-edge-r::after{
+  content:"";
+  position:absolute; inset:0;
+  border-radius:inherit;
+  background:linear-gradient(180deg,rgba(178,206,255,.6),rgba(139,59,241,.22) 40%,transparent 68%);
+}
+.dash-edge-r::before{
+  content:"";
+  position:absolute; left:0; top:0; bottom:0; width:3px;
+  background:linear-gradient(180deg,#E4EEFF,rgba(178,113,247,.5) 48%,transparent 78%);
+  box-shadow:0 0 12px 1px rgba(200,220,255,.7);
+  opacity:.95;
+}
+
+/* bottom bevel — same physics: -90+4.5deg parent tilt = -85.5deg from
+   camera, cos(85.5deg) ≈ .077, so a modest 10px on-screen sliver needs a
+   much taller physical div (~130px) to survive that extreme foreshortening. */
+.dash-edge-b{
+  position:absolute;
+  left:0; right:0; bottom:0;
+  height:130px;
+  border-radius:0 0 20px 20px;
+  background:linear-gradient(180deg,#131A30 0%,#0A0F1E 40%,#050810 100%);
+  transform-origin:50% 100%;
+  transform:rotateX(-90deg);
+}
+
+/* ---------- CHROME BAR ---------------------------------------------------- */
+
+.dash-bar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--s2);
+  padding:9px 16px;
+  border-bottom:1px solid var(--line);
+  background:rgba(255,255,255,.02);
+}
+
+.dash-brand{ display:flex; align-items:center; gap:8px; font-weight:600; font-size:13px; }
+.dash-brand svg{ width:18px; height:18px; }
+
+.dash-bar-right{ display:flex; align-items:center; gap:8px; }
+
+.dash-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 10px;
+  border-radius:var(--r-xs);
+  border:1px solid var(--line);
+  background:var(--surface);
+  color:var(--text-2);
+  font-size:11px;
+  white-space:nowrap;
+}
+.dash-chip svg{ width:12px; height:12px; }
+
+.dash-avatar{
+  width:26px; height:26px;
+  border-radius:50%;
+  background:var(--grad-brand);
+  display:grid;
+  place-items:center;
+  font-size:10px;
+  font-weight:700;
+  color:#fff;
+  flex:none;
+}
+
+/* ---------- BODY LAYOUT ----------------------------------------------------- */
+
+.dash-body{
+  display:grid;
+  grid-template-columns:150px minmax(0,1fr);
+}
+
+/* ---------- SIDEBAR ---------------------------------------------------------- */
+
+.dash-side{
+  padding:12px 8px;
+  border-right:1px solid var(--line);
+  background:rgba(0,0,0,.20);
+  display:flex;
+  flex-direction:column;
+  gap:1px;
+}
+
+.dash-nav{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:6.5px 10px;
+  border-radius:var(--r-xs);
+  color:var(--text-3);
+  font-size:11.5px;
+  transition:background var(--fast),color var(--fast);
+}
+.dash-nav svg{ width:14px; height:14px; flex:none; }
+.dash-nav:hover{ color:var(--text-2); background:var(--surface); }
+.dash-nav.is-active{
+  color:var(--text);
+  background:linear-gradient(90deg,rgba(139,59,241,.20),rgba(139,59,241,.04));
+  box-shadow:inset 2px 0 0 var(--violet);
+}
+
+/* ---------- MAIN AREA --------------------------------------------------------- */
+
+.dash-main{
+  padding:10px;
+  display:grid;
+  gap:8px;
+  grid-template-columns:minmax(0,1.62fr) minmax(0,1fr);
+  align-content:start;
+}
+
+.dash-kpis{
+  grid-column:1 / -1;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+}
+
+.kpi{
+  padding:8px 10px;
+  border-radius:var(--r-sm);
+  border:1px solid var(--line);
+  background:var(--grad-card);
+}
+.kpi-label{ font-size:9.5px; color:var(--text-3); letter-spacing:.03em; }
+.kpi-value{ margin-top:3px; font-size:15px; font-weight:700; letter-spacing:-.02em; }
+.kpi-foot{
+  margin-top:3px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:8px;
+}
+.kpi-delta{ font-size:10.5px; font-weight:600; color:var(--green); white-space:nowrap; }
+.kpi-spark{ width:52px; height:18px; }
+.kpi-spark path{ fill:none; stroke:var(--blue-soft); stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+
+/* ---------- PANELS -------------------------------------------------------------- */
+
+.panel{
+  padding:10px 12px;
+  border-radius:var(--r-md);
+  border:1px solid var(--line);
+  background:var(--grad-card);
+  min-width:0;
+}
+
+.panel-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:6px;
+}
+.panel-title{ font-size:12.5px; font-weight:600; }
+.panel-link{ font-size:11px; color:var(--violet-soft); }
+
+/* ---------- PROFIT CHART ---------------------------------------------------------- */
+
+.chart-value{ display:flex; align-items:baseline; gap:10px; margin-bottom:6px; }
+.chart-value b{ font-size:19px; font-weight:700; letter-spacing:-.02em; }
+.chart-value span{ font-size:10.5px; color:var(--green); font-weight:600; }
+.chart-value em{ font-size:10.5px; color:var(--text-3); font-style:normal; }
+
+.chart{ width:100%; height:120px; display:block; }
+.chart .grid-line{ stroke:rgba(255,255,255,.055); stroke-width:1; }
+.chart .axis-text{ fill:var(--text-3); font-size:8px; font-family:var(--font); }
+.chart .series-a{ fill:none; stroke:var(--blue); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.chart .series-b{ fill:none; stroke:var(--violet); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.chart .area-a{ fill:url(#areaA); }
+.chart .area-b{ fill:url(#areaB); }
+
+.chart-legend{ display:flex; gap:14px; margin-bottom:5px; }
+.chart-legend span{ display:inline-flex; align-items:center; gap:6px; font-size:10.5px; color:var(--text-3); }
+.chart-legend i{ width:7px; height:7px; border-radius:50%; }
+
+/* ---------- DONUT ---------------------------------------------------------------- */
+
+.donut-wrap{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.donut{ width:60px; height:60px; flex:none; transform:rotate(-90deg); }
+.donut circle{ fill:none; stroke-width:9; stroke-linecap:round; }
+.donut .track{ stroke:rgba(255,255,255,.07); }
+.donut .value{ stroke:url(#donutGrad); }
+
+.donut-meta b{ display:block; font-size:22px; font-weight:700; letter-spacing:-.02em; line-height:1; }
+.donut-meta span{ font-size:10.5px; color:var(--text-3); }
+.donut-meta .status{
+  display:inline-flex; align-items:center; gap:6px;
+  margin-top:5px; font-size:10.5px; color:var(--green);
+}
+
+/* ---------- ALERTS ------------------------------------------------------------------ */
+
+.alerts{ display:flex; flex-direction:column; gap:5px; }
+.alert{ display:flex; gap:8px; align-items:flex-start; }
+.alert-ico{
+  width:19px; height:19px;
+  border-radius:6px;
+  display:grid; place-items:center;
+  flex:none;
+}
+.alert-ico svg{ width:10px; height:10px; }
+.alert-ico.is-red{ background:rgba(240,67,92,.14); color:var(--red); }
+.alert-ico.is-amber{ background:rgba(245,165,36,.14); color:var(--amber); }
+.alert-ico.is-green{ background:rgba(46,212,122,.14); color:var(--green); }
+.alert-ico.is-blue{ background:rgba(59,130,246,.14); color:var(--blue-soft); }
+.alert b{ display:block; font-size:10.5px; font-weight:600; line-height:1.3; }
+.alert span{ font-size:9.5px; color:var(--text-3); line-height:1.3; }
+
+/* ---------- TABLE -------------------------------------------------------------------- */
+
+.dash-table-wrap{ grid-column:1 / -1; overflow:hidden; }
+
+.dash-table{ width:100%; border-collapse:collapse; }
+.dash-table th{
+  text-align:right;
+  padding:0 8px 6px;
+  font-size:9.5px;
+  font-weight:500;
+  color:var(--text-3);
+  letter-spacing:.03em;
+  border-bottom:1px solid var(--line);
+  white-space:nowrap;
+}
+.dash-table th:first-child,
+.dash-table td:first-child{ text-align:left; }
+.dash-table td{
+  padding:5px 8px;
+  font-size:10.5px;
+  text-align:right;
+  border-bottom:1px solid rgba(255,255,255,.035);
+  white-space:nowrap;
+}
+.dash-table tr:last-child td{ border-bottom:0; }
+.dash-table .prod{ display:flex; align-items:center; gap:8px; }
+.dash-table .prod i{
+  width:18px; height:18px;
+  border-radius:5px;
+  background:var(--grad-brand);
+  opacity:.55;
+  flex:none;
+}
+
+.tag{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:3px 8px;
+  border-radius:var(--r-pill);
+  font-size:10px;
+  font-weight:600;
+}
+.tag--green{ background:rgba(46,212,122,.12); color:var(--green); }
+.tag--amber{ background:rgba(245,165,36,.12); color:var(--amber); }
+.tag--red{   background:rgba(240,67,92,.12);  color:var(--red); }
+
+/* ---------- RESPONSIVE ------------------------------------------------------------------ */
+
+@media (max-width:1120px){
+  .dash{ transform:none; }
+  .dash:hover{ transform:translateY(-4px); }
+}
+
+@media (max-width:820px){
+  .dash-body{ grid-template-columns:1fr; min-height:0; }
+  .dash-side{
+    flex-direction:row;
+    overflow-x:auto;
+    border-right:0;
+    border-bottom:1px solid var(--line);
+    padding:10px;
+    scrollbar-width:none;
+  }
+  .dash-side::-webkit-scrollbar{ display:none; }
+  .dash-nav{ white-space:nowrap; }
+  .dash-main{ grid-template-columns:1fr; }
+  .dash-kpis{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+
+@media (max-width:560px){
+  .dash-bar-right .dash-chip{ display:none; }
+  .dash-table th:nth-child(4),
+  .dash-table td:nth-child(4),
+  .dash-table th:nth-child(5),
+  .dash-table td:nth-child(5){ display:none; }
+}
