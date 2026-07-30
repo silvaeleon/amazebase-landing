@@ -1,111 +1,116 @@
-# Deploying the landing page — click-by-click
+# Deploying the landing page
 
-Everything on your side is already prepared. The folder
-`C:\Users\HP\Desktop\amazebase-landing` is a git repository with one commit
-containing 36 files. You do two things: publish it to GitHub, then point
-Railway at it.
+Two parts. **Part 1** you hand to Claude Code. **Part 2** you click yourself in
+the Railway dashboard, because the Chrome extension can't reach it (§3).
 
-**Time: about 10 minutes. Nothing here can affect your existing app.**
+Nothing here touches `amz_v2`, `server_v2.py`, or your live app service.
 
 ---
 
-## Part 1 — Publish to GitHub (GitHub Desktop)
+## Part 1 — Publish to GitHub (Claude Code does this)
 
-1. Open **GitHub Desktop**.
-2. Menu bar → **File → Add local repository…**
-3. Click **Choose…** and pick `C:\Users\HP\Desktop\amazebase-landing`,
-   then click **Add repository**.
-   - It should open straight to the repo. If it warns the folder is not a
-     repository, something went wrong — stop and tell me.
-4. You should see **"No local changes"** and one commit in the History tab.
-   That is correct — the commit is already made.
-5. Click the blue **Publish repository** button at the top.
-6. In the dialog:
-   - **Name:** `amazebase-landing`
-   - **Description:** optional
-   - **Keep this code private** — your choice. Either works; Railway can read
-     private repos once connected. Private is fine and is the safer default.
-   - Click **Publish repository**.
-7. Wait for the upload (~6 MB, should take under a minute).
+Upload **`CLAUDE-CODE-PROMPT.md`** (in this same folder) to Claude Code and
+tell it to follow it.
 
-Done. The code is on GitHub.
+That prompt already tells it to:
+
+- refuse to touch the `amz_v2` repo
+- refuse to add `railway.json` / `Procfile` / `package.json` / a `Caddyfile`
+- run read-only pre-checks first and abort on any mismatch
+- print **raw command output**, not a summary
+
+**When it reports back, paste the raw output to me.** Per §2 doctrine, a "done"
+or a summary instead of raw evidence is a red flag — I'll check the actual
+bytes before you go near Railway.
+
+What you're looking for in its output:
+
+- `origin` = `silvaeleon/amazebase-landing` — **not** `amz-analytics`
+- `## main...origin/main` with nothing ahead
+- `amz_v2` HEAD commit unchanged
+
+If it says the GitHub CLI isn't authenticated, it will stop and ask you to
+create an empty repo at https://github.com/new named `amazebase-landing`
+(no README, no .gitignore, no licence). Do that, then run it again.
 
 ---
 
-## Part 2 — Create the Railway service
+## Part 2 — Create the Railway service (you click)
 
 1. Go to **https://railway.com/dashboard** and sign in.
 
-2. **Create a NEW project** — do not add this to the project that runs your
-   app. Click **New Project** (top right).
-
-   > Why a new project: it keeps billing, variables and environments for the
-   > marketing site completely separate from the product. If you'd rather keep
-   > one project, you can instead open the existing project and click
-   > **+ Create → GitHub Repo**; the rest of the steps are identical. A new
-   > project is cleaner.
+2. Click **New Project** — a *new* project, not the one running your app.
+   Keeps billing, variables and environments separate from production.
 
 3. Choose **Deploy from GitHub repo**.
 
-4. If this is the first time, Railway will ask to install its GitHub app.
-   Click **Configure GitHub App**, and when GitHub asks which repositories to
-   grant access to, **make sure `amazebase-landing` is selected**, then Save.
-   - If you already granted "All repositories", it will just appear in the list.
+4. First time only: Railway asks to install its GitHub app. Click
+   **Configure GitHub App**, and when GitHub asks which repositories,
+   **make sure `amazebase-landing` is ticked**. Save.
 
-5. Pick **`amazebase-landing`** from the list.
+5. Pick **`amazebase-landing`**.
 
-6. Railway starts building immediately. Watch the **Deploy Logs**.
-   You are looking for it to detect a **static site** and build with **Caddy**.
-   It should finish in roughly a minute.
+6. It builds immediately. In the **Deploy Logs** you want to see it detect a
+   **static site** and build with **Caddy** — roughly a minute.
 
-   - You do **not** need to set a Root Directory. The repo root is the site.
-   - You do **not** need to set a Start Command. Leave every build setting alone.
+   - Do **not** set a Root Directory. The repo root is the site.
+   - Do **not** set a Start Command.
+   - Change no build settings at all.
 
-7. When the deploy goes green, open the service → **Settings → Networking →
-   Public Networking** → click **Generate Domain**.
-   - Leave the port field empty/default if it asks. Railway detects it.
+   If the logs mention Python, uvicorn, or Nixpacks — stop and send them to me.
+   That would mean it picked the wrong builder.
 
-8. Click the generated `*.up.railway.app` URL. The site should load with no
-   login prompt.
+7. Deploy green → open the service → **Settings → Networking →
+   Public Networking → Generate Domain**. Leave the port field default.
 
----
-
-## Part 3 — Check it (do this, it takes a minute)
-
-- [ ] Page loads, no login screen, no password prompt
-- [ ] Open it in a **private/incognito window** — proves it is genuinely public
-- [ ] Hero section shows the dashboard screenshot with the glow curves behind it
-- [ ] Scroll the whole page — feature icons and the partner logos all appear,
-      no broken-image icons
-- [ ] **No purple "⚙ Editor" button** in the bottom-left corner
-- [ ] Your app at its own Railway URL still works exactly as before
-
-If any image is missing, tell me which section and I will fix the path.
+8. Click the `*.up.railway.app` URL.
 
 ---
 
-## Later: your own domain
+## Part 3 — Check it
 
-Railway → service → **Settings → Networking → Custom Domain → + Add Domain**.
-Railway shows you a CNAME record; you add it at whoever sells you the domain.
-HTTPS is automatic. Say the word when you have a domain and I'll walk you
-through it.
+- [ ] Loads with **no login screen** — this service has no auth at all
+- [ ] Open in an **incognito window** — proves it's genuinely public
+- [ ] Hero shows the dashboard screenshot with the glow curves behind it
+- [ ] Scroll the whole page — feature icons and partner logos all render,
+      no broken-image boxes
+- [ ] **No purple "⚙ Editor" button** bottom-left
+- [ ] `https://amz-analytics-production.up.railway.app/health` still returns
+      `build="phase1-v3"`, `db_backend=postgresql` — proves the app is untouched
 
-## Later: wiring up signup
+Send me the URL and anything that looks wrong.
 
-When the signup button needs to talk to the app, the landing page will POST to
-your app's domain. That needs a CORS allowance on the FastAPI side for the
-landing page's origin. Separate job — ping me when you get there.
+---
+
+## After it's proven live
+
+Per §0, the work isn't finished until `PROJECT_STATE.md` records it. Once the
+site is up I'll write the CHANGELOG entry and a new section covering: the repo,
+the Railway service, the zero-config Caddy setup, and the commit SHA — with the
+evidence, not a "done".
+
+---
+
+## Later
+
+**Custom domain:** Railway → service → Settings → Networking → Custom Domain.
+It gives you a CNAME to add wherever you buy the domain. HTTPS is automatic.
+
+**Signup wiring:** when the signup button needs to reach the app, the page will
+POST to `amz-analytics-production.up.railway.app`. That needs a CORS allowance
+for this origin on the FastAPI side, and `PROVISIONING_ENABLED` is currently
+`false` (§3), so `/auth/register` returns 403 today. Separate concern, separate
+chat — §7 ownership rules apply.
 
 ---
 
 ## Making changes from now on
 
-Edit files in `C:\Users\HP\Desktop\amazebase-landing`, open GitHub Desktop,
-write a summary, **Commit to main**, then **Push origin**. Railway redeploys by
-itself within a minute or two. There is no build step to run.
+Edit files in `C:\Users\HP\Desktop\amazebase-landing`, then have Claude Code
+commit and push to `main`. Railway redeploys itself in a minute or two. No
+build step, no `verify_v3.py` gate — that rule is for `amz_v2`'s v3 front-end,
+not this repo.
 
-> Note: the original working folder `amz_v2\Landing Page` still holds the dev
-> tools and the 34 MB of source artwork. Keep using it for design work if you
-> like — but the deployed site is `amazebase-landing`, and only changes made
-> there go live.
+> The old working folder `amz_v2\Landing Page` still has the dev tools and the
+> 34 MB of source artwork. Fine to keep designing there — but only changes made
+> in `amazebase-landing` go live.
