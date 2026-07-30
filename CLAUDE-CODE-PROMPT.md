@@ -9,8 +9,8 @@ constraint before acting.
 
 `C:\Users\HP\Desktop\amazebase-landing` is the AmazeBase marketing landing
 page. It is a **separate repo from `amz-analytics`** and must stay that way.
-It is already a git repository with 2 commits on branch `main`, working tree
-clean, 37 tracked files, ~6.2 MB.
+It is already a git repository on branch `main`, working tree clean,
+38 tracked files, ~6.2 MB.
 
 It is 100% static: `index.html` + `css/` + `js/main.js` + `assets/img/` +
 `Images/` (4 curve PNGs). No Python, no build step, no backend, no npm.
@@ -55,8 +55,8 @@ Required results:
 - toplevel is `C:/Users/HP/Desktop/amazebase-landing` — **not** anything under
   `amz_v2`
 - branch is `main`, working tree clean
-- 2 commits present
-- exactly 37 tracked files
+- at least 3 commits present
+- exactly 38 tracked files
 - **no remote named `origin` yet** — if one exists, STOP and report it
 
 Then confirm no dev-only files leaked in:
