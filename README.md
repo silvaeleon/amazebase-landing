@@ -2,8 +2,6 @@
 
 The public marketing site. Static HTML/CSS/JS, no build step, no backend.
 
-## What's here
-
 ```
 index.html        the whole page
 css/              base, variables, navigation, hero, sections, responsive, dashboard
@@ -16,27 +14,25 @@ Only external dependency: Google Fonts (Inter), loaded via `<link>` in `index.ht
 
 ## Editing locally
 
-Open `index.html` in a browser. That's it — there is nothing to build or install.
+Open `index.html` in a browser. Nothing to build or install.
 
 ## Deployment
 
-Deployed on Railway as its own service, separate from the app.
+Served as a static site. The builder detects `index.html` in the repo root and
+serves the directory with Caddy — **no config file is needed**. That is why
+there is no `railway.json`, `Procfile`, `package.json`, or `Caddyfile` here.
+Adding one changes how it builds.
 
-Railway's builder (Railpack) sees `index.html` in the repo root, recognises this
-as a static site, and serves it with Caddy. **No config file is needed** — that
-is why there is no `railway.json`, `Procfile`, or `package.json` here. Adding one
-would change how it builds.
+## Note for future edits
 
-Push to `main` → Railway rebuilds and redeploys automatically.
+`css/dashboard.css` has `.dash{ display:none; }` near the top, marked TEMPORARY.
+**Leave it.** The hero deliberately uses the screenshot `assets/img/dashboard.jpg`
+instead of the older HTML dashboard; removing the rule makes both appear at once.
 
-## Notes for future edits
+Full-resolution source artwork is kept outside this repo — only the files the
+page actually loads are committed here.
 
-- `css/dashboard.css` has `.dash{ display:none; }` near the top, marked
-  TEMPORARY. **Leave it.** The hero deliberately uses the screenshot
-  `assets/img/dashboard.jpg` instead of the old HTML dashboard. Removing the
-  rule makes both appear at once.
-- The full-resolution source artwork (~34 MB) lives in the main `amz_v2` repo
-  under `Landing Page/Images/` and is deliberately not committed here — only the
-  files the page actually loads ship to production.
-- This repo is intentionally standalone. When the signup flow is wired up it
-  will call the app over the network; it does not need to share a repo with it.
+---
+
+Internal deployment and handover notes live in `_docs/`, which is deliberately
+untracked so it is never published with the site.
