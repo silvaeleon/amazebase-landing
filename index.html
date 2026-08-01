@@ -21,6 +21,7 @@
 <link rel="stylesheet" href="css/hero.css">
 <link rel="stylesheet" href="css/dashboard.css">
 <link rel="stylesheet" href="css/sections.css">
+<link rel="stylesheet" href="css/waitlist.css">
 <link rel="stylesheet" href="css/responsive.css">
 </head>
 
@@ -146,23 +147,23 @@
     <li class="nav-item">
       <a class="nav-link" href="#">Resources <svg class="chev"><use href="#i-chevron"/></svg></a>
       <div class="nav-drop">
-        <a href="#"><svg class="icon-sm"><use href="#i-report"/></svg>Documentation</a>
-        <a href="#"><svg class="icon-sm"><use href="#i-msg"/></svg>Blog</a>
-        <a href="#"><svg class="icon-sm"><use href="#i-shield"/></svg>Security</a>
+        <a href="docs.html"><svg class="icon-sm"><use href="#i-report"/></svg>Documentation</a>
+        <a href="blog.html"><svg class="icon-sm"><use href="#i-msg"/></svg>Blog</a>
+        <a href="security.html"><svg class="icon-sm"><use href="#i-shield"/></svg>Security</a>
       </div>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#">Company <svg class="chev"><use href="#i-chevron"/></svg></a>
       <div class="nav-drop">
-        <a href="#"><svg class="icon-sm"><use href="#i-info"/></svg>About</a>
-        <a href="#"><svg class="icon-sm"><use href="#i-msg"/></svg>Contact</a>
+        <a href="about.html"><svg class="icon-sm"><use href="#i-info"/></svg>About</a>
+        <a href="contact.html"><svg class="icon-sm"><use href="#i-msg"/></svg>Contact</a>
       </div>
     </li>
   </ul>
 
   <div class="nav-actions">
-    <a class="btn btn--quiet" href="#">Log in</a>
-    <a class="btn btn--primary" href="#pricing" data-magnetic>Join the Wait List</a>
+    <a class="btn btn--quiet" href="https://amz-analytics-production.up.railway.app/login">Log in</a>
+    <a class="btn btn--primary" href="#waitlist" data-waitlist-open data-source="nav" data-magnetic>Join the Wait List</a>
     <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="navMobile">
       <svg class="icon"><use href="#i-menu"/></svg>
     </button>
@@ -177,7 +178,7 @@
   <a href="#pricing">Pricing</a>
   <a href="#assistant">AI Assistant</a>
   <a href="#">Company</a>
-  <a class="btn btn--primary btn--block" href="#pricing">Join the Wait List</a>
+  <a class="btn btn--primary btn--block" href="#waitlist" data-waitlist-open data-source="nav-mobile">Join the Wait List</a>
 </div>
 </header>
 
@@ -230,7 +231,7 @@
     <p class="hero-sub">Everything connected. Everything in sync.<br>Make better decisions, faster.</p>
 
     <div class="hero-cta">
-      <a class="btn btn--primary btn--lg" href="#pricing" data-magnetic>
+      <a class="btn btn--primary btn--lg" href="#waitlist" data-waitlist-open data-source="hero" data-magnetic>
         Join the Wait List <svg class="icon-sm"><use href="#i-arrow"/></svg>
       </a>
       <a class="btn-play" href="#">
@@ -240,9 +241,9 @@
     </div>
 
     <ul class="ticks">
-      <li><svg class="icon-sm"><use href="#i-check"/></svg>No credit card</li>
+      <li><svg class="icon-sm"><use href="#i-check"/></svg>Early access</li>
       <li><svg class="icon-sm"><use href="#i-check"/></svg>Import in minutes</li>
-      <li><svg class="icon-sm"><use href="#i-check"/></svg>Cancel anytime</li>
+      <li><svg class="icon-sm"><use href="#i-check"/></svg>No commitment</li>
     </ul>
 
     <div class="hero-floats">
@@ -719,7 +720,7 @@
     <span class="eyebrow">AI Assistant</span>
     <h2>Stop reading reports.<br>Start asking questions.</h2>
     <p>Your AI analyst understands your business and gives you answers you can act on.</p>
-    <a class="btn btn--primary btn--lg" href="#pricing" data-magnetic>
+    <a class="btn btn--primary btn--lg" href="#waitlist" data-waitlist-open data-source="assistant" data-magnetic>
       Try AI Assistant <svg class="icon-sm"><use href="#i-arrow"/></svg>
     </a>
   </div>
@@ -803,12 +804,12 @@
 
   <div class="price-lead">
     <span class="eyebrow">Pricing</span>
-    <h2>Start your free trial today.</h2>
+    <h2>Join the wait list today.</h2>
     <p>Simple pricing. Massive value.</p>
     <ul class="ticks">
-      <li><svg class="icon-sm"><use href="#i-check"/></svg>14-day free trial</li>
+      <li><svg class="icon-sm"><use href="#i-check"/></svg>Early access when we launch</li>
       <li><svg class="icon-sm"><use href="#i-check"/></svg>Full access to all features</li>
-      <li><svg class="icon-sm"><use href="#i-check"/></svg>No credit card required</li>
+      <li><svg class="icon-sm"><use href="#i-check"/></svg>No payment details needed</li>
     </ul>
   </div>
 
@@ -824,7 +825,7 @@
       <li><svg class="icon-sm"><use href="#i-check"/></svg>Supplier &amp; purchase order tracking</li>
       <li><svg class="icon-sm"><use href="#i-check"/></svg>AI Assistant included</li>
     </ul>
-    <a class="btn btn--primary btn--lg btn--block" href="#" data-magnetic>Join the Wait List</a>
+    <a class="btn btn--primary btn--lg btn--block" href="#waitlist" data-waitlist-open data-source="pricing-pro" data-magnetic>Join the Wait List</a>
   </div>
 
   <div class="price-card">
@@ -838,7 +839,7 @@
       <li><svg class="icon-sm"><use href="#i-check"/></svg>API access</li>
       <li><svg class="icon-sm"><use href="#i-check"/></svg>Dedicated onboarding</li>
     </ul>
-    <a class="btn btn--ghost btn--lg btn--block" href="#">Contact Sales</a>
+    <a class="btn btn--ghost btn--lg btn--block" href="#waitlist" data-waitlist-open data-source="pricing-enterprise">Contact Sales</a>
   </div>
 
 </div>
@@ -869,23 +870,23 @@
       <a href="#features">Features</a>
       <a href="#pricing">Pricing</a>
       <a href="#">Integrations</a>
-      <a href="#">Security</a>
+      <a href="security.html">Security</a>
     </div>
 
     <div class="footer-col">
       <h4>Resources</h4>
-      <a href="#">Documentation</a>
-      <a href="#">Blog</a>
-      <a href="#">Support</a>
+      <a href="docs.html">Documentation</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Support</a>
       <a href="#">Status</a>
     </div>
 
     <div class="footer-col">
       <h4>Company</h4>
-      <a href="#">About</a>
-      <a href="#">Contact</a>
-      <a href="#">Privacy</a>
-      <a href="#">Terms</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
     </div>
   </div>
 
@@ -905,7 +906,102 @@
   <svg class="icon-sm" style="transform:rotate(-90deg)"><use href="#i-arrow"/></svg>
 </button>
 
+<!-- ══ WAITLIST DIALOG ══════════════════════════════════════════════════════
+     Opened by any [data-waitlist-open]. Uses <dialog> for free focus
+     trapping, Esc-to-close and inertness of the page behind it.
+     No inline handlers and no innerHTML anywhere — see js/waitlist.js. -->
+<dialog class="wl" id="waitlist" aria-labelledby="wl-title">
+  <form class="wl-panel" method="dialog" novalidate>
+
+    <button class="wl-x" type="button" data-waitlist-close aria-label="Close">
+      <svg class="icon-sm"><use href="#i-x"/></svg>
+    </button>
+
+    <span class="eyebrow">Early access</span>
+    <h2 class="wl-title" id="wl-title">Join the wait list</h2>
+    <p class="wl-sub">We&rsquo;ll email you when your marketplace opens up. No spam, and no payment details.</p>
+
+    <div class="wl-field">
+      <label for="wl-name">Name</label>
+      <input id="wl-name" name="name" type="text" autocomplete="name"
+             maxlength="120" required placeholder="Jane Smith">
+    </div>
+
+    <div class="wl-field">
+      <label for="wl-email">Work email</label>
+      <input id="wl-email" name="email" type="email" autocomplete="email"
+             maxlength="254" required placeholder="jane@company.com">
+    </div>
+
+    <div class="wl-field">
+      <label for="wl-market">Main marketplace</label>
+      <select id="wl-market" name="marketplace" required>
+        <option value="" selected disabled>Where do you sell most?</option>
+        <optgroup label="North America">
+          <option value="US">Amazon.com &mdash; United States</option>
+          <option value="CA">Amazon.ca &mdash; Canada</option>
+          <option value="MX">Amazon.com.mx &mdash; Mexico</option>
+          <option value="BR">Amazon.com.br &mdash; Brazil</option>
+        </optgroup>
+        <optgroup label="Europe">
+          <option value="UK">Amazon.co.uk &mdash; United Kingdom</option>
+          <option value="DE">Amazon.de &mdash; Germany</option>
+          <option value="FR">Amazon.fr &mdash; France</option>
+          <option value="IT">Amazon.it &mdash; Italy</option>
+          <option value="ES">Amazon.es &mdash; Spain</option>
+          <option value="NL">Amazon.nl &mdash; Netherlands</option>
+          <option value="SE">Amazon.se &mdash; Sweden</option>
+          <option value="PL">Amazon.pl &mdash; Poland</option>
+          <option value="BE">Amazon.com.be &mdash; Belgium</option>
+          <option value="IE">Amazon.ie &mdash; Ireland</option>
+          <option value="TR">Amazon.com.tr &mdash; Turkey</option>
+        </optgroup>
+        <optgroup label="Middle East &amp; India">
+          <option value="AE">Amazon.ae &mdash; United Arab Emirates</option>
+          <option value="SA">Amazon.sa &mdash; Saudi Arabia</option>
+          <option value="EG">Amazon.eg &mdash; Egypt</option>
+          <option value="IN">Amazon.in &mdash; India</option>
+        </optgroup>
+        <optgroup label="Asia Pacific">
+          <option value="JP">Amazon.co.jp &mdash; Japan</option>
+          <option value="AU">Amazon.com.au &mdash; Australia</option>
+          <option value="SG">Amazon.sg &mdash; Singapore</option>
+        </optgroup>
+        <option value="OTHER">Somewhere else</option>
+      </select>
+    </div>
+
+    <!-- Honeypot. Hidden from humans, irresistible to bots. A filled value
+         makes the server discard the submission silently. -->
+    <div class="wl-hp" aria-hidden="true">
+      <label for="wl-company-website">Company website</label>
+      <input id="wl-company-website" name="company_website" type="text"
+             tabindex="-1" autocomplete="off">
+    </div>
+
+    <p class="wl-error" data-waitlist-error hidden></p>
+
+    <button class="btn btn--primary btn--lg btn--block wl-submit" type="submit"
+            data-waitlist-submit>Join the wait list</button>
+
+    <p class="wl-legal">
+      By joining you agree we may email you about AmazeBase. We store your name,
+      email and marketplace for this purpose only, and you can ask us to delete
+      them at any time. See our <a href="privacy.html">Privacy Policy</a>.
+    </p>
+
+  </form>
+
+  <div class="wl-panel wl-done" data-waitlist-done hidden>
+    <div class="wl-tick"><svg class="icon-sm"><use href="#i-checkc"/></svg></div>
+    <h2 class="wl-title">You&rsquo;re on the list.</h2>
+    <p class="wl-sub">Thanks &mdash; we&rsquo;ll be in touch as soon as we open up your marketplace.</p>
+    <button class="btn btn--ghost btn--lg btn--block" type="button" data-waitlist-close>Close</button>
+  </div>
+</dialog>
+
 <script src="js/main.js" defer></script>
+<script src="js/waitlist.js" defer></script>
 
 </body>
 </html>

@@ -1,0 +1,58 @@
+/* ==========================================================================
+   FILE: css/page.css
+   Shared shell for the standalone placeholder pages (privacy, terms,
+   about, contact, docs, blog, security). Tokens only — no raw colours.
+========================================================================== */
+
+.page{
+  min-height:70vh;
+  padding-block:calc(var(--s8) + 40px) var(--s7);
+}
+
+.page-inner{ max-width:760px; }
+
+.page-title{
+  font-size:var(--t-title);
+  line-height:1.12;
+  margin:var(--s1) 0 var(--s2);
+}
+
+.page-lead{
+  font-size:var(--t-lead);
+  line-height:1.6;
+  color:var(--text-2);
+  margin:0 0 var(--s5);
+}
+
+.page-soon{
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:var(--s4);
+}
+
+.page-soon p{
+  margin:0 0 var(--s2);
+  color:var(--text-2);
+  font-size:var(--t-body);
+  line-height:1.65;
+}
+.page-soon p:last-child{ margin-bottom:0; }
+.page-soon b{ color:var(--text); }
+
+.page-soon-cta a{
+  color:var(--violet-soft);
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+.page-soon-cta a:hover{ color:var(--text); }
+
+/* The placeholder pages use a stripped-back footer. */
+.footer-links{ display:inline-flex; gap:var(--s2); }
+.footer-links a{ color:var(--text-3); }
+.footer-links a:hover{ color:var(--text); }
+
+@media (max-width:640px){
+  .page{ padding-block:calc(var(--s7) + 24px) var(--s6); }
+  .page-soon{ padding:var(--s3); }
+}
