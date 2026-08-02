@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Knowledge Hub &mdash; AmazeBase</title>
+<meta name="description" content="Actionable insights, proven strategies and expert guidance to help you grow a more profitable Amazon business.">
+<meta name="theme-color" content="#030917">
+<meta name="robots" content="noindex">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/navigation.css">
+<link rel="stylesheet" href="css/sections.css">
+<link rel="stylesheet" href="css/hub.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<div class="bg-layer" aria-hidden="true"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+  <linearGradient id="linkGrad" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%"  stop-color="#3B82F6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+  <linearGradient id="areaA" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"  stop-color="#3B82F6" stop-opacity=".34"/>
+    <stop offset="100%" stop-color="#3B82F6" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="areaB" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"  stop-color="#8B3BF1" stop-opacity=".28"/>
+    <stop offset="100%" stop-color="#8B3BF1" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="donutGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#2ED47A"/>
+    <stop offset="100%" stop-color="#3B82F6"/>
+  </linearGradient>
+  <linearGradient id="sparkFillGreen" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"  stop-color="#2ED47A" stop-opacity=".45"/>
+    <stop offset="100%" stop-color="#2ED47A" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="sparkFillBlue" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"  stop-color="#3B82F6" stop-opacity=".45"/>
+    <stop offset="100%" stop-color="#3B82F6" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="sparkFillPurple" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"  stop-color="#A971F7" stop-opacity=".45"/>
+    <stop offset="100%" stop-color="#A971F7" stop-opacity="0"/>
+  </linearGradient>
+</defs>
+
+  <symbol id="i-chevron"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-arrow"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-check"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></symbol>
+  <symbol id="i-play"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5.5v13l11-6.5z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-menu"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-x"        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+
+  <symbol id="i-grid"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h7v6H4zM13 4h7v10h-7zM4 12h7v8H4zM13 16h7v4h-7z"/></symbol>
+  <symbol id="i-box"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></symbol>
+  <symbol id="i-search"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></symbol>
+  <symbol id="i-mega"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l7 4V5L8 9H4zM19 9a4 4 0 010 6"/></symbol>
+  <symbol id="i-stack"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-dollar"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5v19M16.5 6.5H10a3.2 3.2 0 000 6.4h4a3.2 3.2 0 010 6.4H7"/></symbol>
+  <symbol id="i-truck"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.5h11v10h-11zM13.5 10h4l3 3.2v3.3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></symbol>
+  <symbol id="i-report"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></symbol>
+  <symbol id="i-spark"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+  <symbol id="i-bell"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8.5a6 6 0 10-12 0c0 6-2.5 7.5-2.5 7.5h17S18 14.5 18 8.5zM10.3 20a2 2 0 003.4 0"/></symbol>
+  <symbol id="i-gear"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.6 1.6 0 00-2.7 1.1v.2a2 2 0 11-4 0v-.1a1.6 1.6 0 00-2.8-1.1l-.1.1a2 2 0 11-2.8-2.8l.1-.1A1.6 1.6 0 003.7 15a2 2 0 110-4h.1a1.6 1.6 0 001.1-2.8l-.1-.1a2 2 0 112.8-2.8l.1.1A1.6 1.6 0 0010.5 4h.1a2 2 0 114 0v.1a1.6 1.6 0 002.7 1.1l.1-.1a2 2 0 112.8 2.8l-.1.1a1.6 1.6 0 001.1 2.7h.2a2 2 0 110 4h-.1a1.6 1.6 0 00-1.9 1.3z"/></symbol>
+  <symbol id="i-chart"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-trend"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></symbol>
+  <symbol id="i-rocket"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15s-1.5 3 1 5.5S11 20 11 20M14.5 4.5c3-2 6-1 6-1s1 3-1 6l-6 6-5-5 6-6z"/><circle cx="15" cy="9" r="1.4"/></symbol>
+  <symbol id="i-warn"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.5L2.5 20h19L12 4.5zM12 10v4.5M12 17.5v.01"/></symbol>
+  <symbol id="i-info"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></symbol>
+  <symbol id="i-checkc"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-4.8"/></symbol>
+  <symbol id="i-refresh"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 10-1.7 5M20 5v6h-6"/></symbol>
+  <symbol id="i-export"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M8 7l4-4 4 4M4 15v4a2 2 0 002 2h12a2 2 0 002-2v-4"/></symbol>
+  <symbol id="i-filter"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 8v6l-4 2v-8z"/></symbol>
+  <symbol id="i-db"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3.2"/><path d="M4 6v12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2V6M4 12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2"/></symbol>
+  <symbol id="i-globe"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 21.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"/></symbol>
+  <symbol id="i-case"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8.5 7V5a2 2 0 012-2h3a2 2 0 012 2v2M2.5 12.5h19"/></symbol>
+  <symbol id="i-msg"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-8 8 8.6 8.6 0 01-3.6-.8L3 21l1.8-6.4A8 8 0 1121 12z"/></symbol>
+  <symbol id="i-shield"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-9.5V5.5L12 2.5 4 5.5V12.5C4 18.5 12 22 12 22z"/></symbol>
+  <symbol id="i-link"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a4 4 0 006 .5l2.5-2.5a4.2 4.2 0 00-6-6L11 6.5M14 11a4 4 0 00-6-.5L5.5 13a4.2 4.2 0 006 6L13 17.5"/></symbol>
+
+  <symbol id="i-in"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12.5 17v-4a2.5 2.5 0 015 0v4"/></symbol>
+  <symbol id="i-tw"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M20 4L4 20"/></symbol>
+  <symbol id="i-gh"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4 1.4-4-2.2-5.6-2.6M15 21v-3.4a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 2.6 5.5 2.9 5.5 2.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 9.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></symbol>
+
+<header class="site-header">
+<div class="container">
+<nav class="nav" aria-label="Primary">
+
+  <a href="#" class="brand">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+      <path d="M16 17.6l4.4 8.2h-8.8z" fill="#C56BF5" opacity=".85"/>
+    </svg>
+    <span data-brand>AmazeBase</span>
+  </a>
+
+  <ul class="nav-menu">
+    <li class="nav-item">
+      <a class="nav-link" href="#features">Product <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="#features"><svg class="icon-sm"><use href="#i-search"/></svg>Product Research</a>
+        <a href="#features"><svg class="icon-sm"><use href="#i-mega"/></svg>Advertising</a>
+        <a href="#features"><svg class="icon-sm"><use href="#i-box"/></svg>Inventory</a>
+        <a href="#features"><svg class="icon-sm"><use href="#i-dollar"/></svg>Financials</a>
+        <a href="#assistant"><svg class="icon-sm"><use href="#i-spark"/></svg>AI Assistant</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#compare">Solutions <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="#compare"><svg class="icon-sm"><use href="#i-rocket"/></svg>Private Label</a>
+        <a href="#compare"><svg class="icon-sm"><use href="#i-case"/></svg>Agencies</a>
+        <a href="#compare"><svg class="icon-sm"><use href="#i-globe"/></svg>Multi-Marketplace</a>
+      </div>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+    <li class="nav-item">
+      <a class="nav-link" href="resources.html">Resources <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="docs.html"><svg class="icon-sm"><use href="#i-report"/></svg>Documentation</a>
+        <a href="blog.html"><svg class="icon-sm"><use href="#i-msg"/></svg>Blog</a>
+        <a href="security.html"><svg class="icon-sm"><use href="#i-shield"/></svg>Security</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Company <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="about.html"><svg class="icon-sm"><use href="#i-info"/></svg>About</a>
+        <a href="contact.html"><svg class="icon-sm"><use href="#i-msg"/></svg>Contact</a>
+      </div>
+    </li>
+  </ul>
+
+  <div class="nav-actions">
+    <a class="btn btn--quiet" href="https://amz-analytics-production.up.railway.app/login">Log in</a>
+    <a class="btn btn--primary" href="#waitlist" data-waitlist-open data-source="nav" data-magnetic>Join the Wait List</a>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="navMobile">
+      <svg class="icon"><use href="#i-menu"/></svg>
+    </button>
+  </div>
+
+</nav>
+</div>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="#features">Product</a>
+  <a href="#compare">Solutions</a>
+  <a href="#pricing">Pricing</a>
+  <a href="resources.html">Resources</a>
+  <a href="#assistant">AI Assistant</a>
+  <a href="#">Company</a>
+  <a class="btn btn--primary btn--block" href="#waitlist" data-waitlist-open data-source="nav-mobile">Join the Wait List</a>
+</div>
+</header>
+
+<main id="main">
+
+<!-- ══ HERO ═══════════════════════════════════════════════════════════════ -->
+<section class="hub-hero">
+<div class="container">
+
+  <span class="eyebrow">Knowledge Hub</span>
+  <h1 class="hub-h1">Amazon Seller<br><span class="grad">Knowledge Hub</span></h1>
+  <p class="hub-lead">
+    Actionable insights, proven strategies and expert guidance to help you
+    grow a more profitable Amazon business.
+  </p>
+
+  <form class="hub-search" role="search" novalidate>
+    <svg class="icon-sm hub-search-ico" aria-hidden="true"><use href="#i-search"/></svg>
+    <label class="sr-only" for="hub-q">Search resources</label>
+    <input id="hub-q" type="search" autocomplete="off"
+           placeholder="Search articles, guides, videos, podcasts&hellip;"
+           data-hub-search>
+    <button class="hub-search-x" type="button" data-hub-search-clear hidden
+            aria-label="Clear search">
+      <svg class="icon-sm"><use href="#i-x"/></svg>
+    </button>
+  </form>
+
+  <!-- Category tiles. Counts are computed from data/resources.json. -->
+  <div class="hub-cats" data-hub-categories></div>
+
+</div>
+</section>
+
+<!-- ══ BODY ═══════════════════════════════════════════════════════════════ -->
+<section class="hub-body">
+<div class="container hub-grid">
+
+  <!-- ── SIDEBAR ────────────────────────────────────────────────────────── -->
+  <aside class="hub-side">
+
+    <div class="hub-card">
+      <h2 class="hub-card-h">Browse by Format</h2>
+      <ul class="hub-formats" data-hub-formats></ul>
+    </div>
+
+    <div class="hub-card" data-hub-topics-card hidden>
+      <h2 class="hub-card-h">Popular Topics</h2>
+      <ul class="hub-topics" data-hub-topics></ul>
+    </div>
+
+    <div class="hub-card hub-ask">
+      <h2 class="hub-card-h">Can&rsquo;t find what you need?</h2>
+      <p>Request a topic or ask our experts to create content on what matters to you.</p>
+      <button class="btn btn--primary btn--block" type="button" data-request-open>
+        Request Content
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- ── MAIN COLUMN ────────────────────────────────────────────────────── -->
+  <div class="hub-main">
+
+    <div class="hub-sec-head">
+      <h2 class="hub-sec-h">Featured</h2>
+    </div>
+    <div class="hub-featured" data-hub-featured></div>
+
+    <div class="hub-sec-head">
+      <h2 class="hub-sec-h" data-hub-list-heading>Latest Resources</h2>
+      <div class="hub-tabs" role="tablist" data-hub-tabs>
+        <button class="hub-tab is-on" type="button" role="tab" data-sort="latest"
+                aria-selected="true">Latest</button>
+        <button class="hub-tab" type="button" role="tab" data-sort="reading"
+                aria-selected="false">Quickest reads</button>
+      </div>
+    </div>
+
+    <p class="hub-count" data-hub-count aria-live="polite"></p>
+    <div class="hub-list" data-hub-list></div>
+
+  </div>
+
+</div>
+</section>
+
+<!-- ══ TESTIMONIALS (hidden until real quotes exist) ══════════════════════ -->
+<section class="section" data-hub-testimonials-sec hidden>
+<div class="container">
+  <div class="hub-sec-head">
+    <h2 class="hub-sec-h">From the Seller Community</h2>
+  </div>
+  <div class="hub-quotes" data-hub-testimonials></div>
+</div>
+</section>
+
+<!-- ══ CTA ════════════════════════════════════════════════════════════════ -->
+<section class="section">
+<div class="container">
+  <div class="hub-cta">
+    <div>
+      <h2>Ready to put these insights into action?</h2>
+      <p>Join the wait list and be first in when we open your marketplace.</p>
+    </div>
+    <a class="btn btn--primary btn--lg" href="index.html#pricing">Join the Wait List</a>
+  </div>
+</div>
+</section>
+
+</main>
+
+<footer class="footer">
+<div class="container">
+
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="brand">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+        </svg>
+        <span data-brand>AmazeBase</span>
+      </a>
+      <p>The operating system for Amazon sellers. Everything connected, everything in sync.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#">Integrations</a>
+      <a href="security.html">Security</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a href="resources.html">Knowledge Hub</a>
+      <a href="docs.html">Documentation</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Support</a>
+      <a href="#">Status</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 <span data-brand>AmazeBase</span>. All rights reserved.</span>
+    <div class="footer-social">
+      <a href="#" aria-label="LinkedIn"><svg class="icon-sm"><use href="#i-in"/></svg></a>
+      <a href="#" aria-label="X"><svg class="icon-sm"><use href="#i-tw"/></svg></a>
+      <a href="#" aria-label="GitHub"><svg class="icon-sm"><use href="#i-gh"/></svg></a>
+    </div>
+  </div>
+
+</div>
+</footer>
+
+<!-- ══ REQUEST CONTENT DIALOG ═════════════════════════════════════════════ -->
+<dialog class="wl" id="request" aria-labelledby="rq-title">
+  <form class="wl-panel" method="dialog" novalidate>
+
+    <button class="wl-x" type="button" data-request-close aria-label="Close">
+      <svg class="icon-sm"><use href="#i-x"/></svg>
+    </button>
+
+    <span class="eyebrow">Request content</span>
+    <h2 class="wl-title" id="rq-title">What should we write about?</h2>
+    <p class="wl-sub">Tell us the problem you&rsquo;re trying to solve and we&rsquo;ll put it on the list.</p>
+
+    <div class="wl-field">
+      <label for="rq-topic">Topic or question</label>
+      <textarea id="rq-topic" name="topic" rows="4" maxlength="600" required
+                placeholder="e.g. How do I work out true profit after FBA storage fees?"></textarea>
+    </div>
+
+    <div class="wl-field">
+      <label for="rq-email">Your email <span class="wl-opt">(optional &mdash; so we can tell you when it&rsquo;s up)</span></label>
+      <input id="rq-email" name="email" type="email" autocomplete="email" maxlength="254"
+             placeholder="jane@company.com">
+    </div>
+
+    <div class="wl-hp" aria-hidden="true">
+      <label for="rq-company-website">Company website</label>
+      <input id="rq-company-website" name="company_website" type="text" tabindex="-1" autocomplete="off">
+    </div>
+
+    <p class="wl-error" data-request-error hidden></p>
+
+    <button class="btn btn--primary btn--lg btn--block" type="submit" data-request-submit>
+      Send request
+    </button>
+
+    <p class="wl-legal">
+      If you give us your email we&rsquo;ll use it only to tell you when this
+      content is published. See our <a href="privacy.html">Privacy Policy</a>.
+    </p>
+
+  </form>
+
+  <div class="wl-panel wl-done" data-request-done hidden>
+    <div class="wl-tick"><svg class="icon-sm"><use href="#i-checkc"/></svg></div>
+    <h2 class="wl-title">Request received.</h2>
+    <p class="wl-sub">Thanks &mdash; that goes straight onto our list.</p>
+    <button class="btn btn--ghost btn--lg btn--block" type="button" data-request-close>Close</button>
+  </div>
+</dialog>
+
+<script src="js/main.js" defer></script>
+<script src="js/hub.js" defer></script>
+</body>
+</html>

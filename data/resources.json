@@ -1,0 +1,50 @@
+{
+  "_README": [
+    "This file is the entire Knowledge Hub. resources.html reads it at load and",
+    "builds every card, count, filter and search result from it. There is no CMS",
+    "and no backend — to publish, add an entry below and push.",
+    "",
+    "EVERY COUNT ON THE PAGE IS COMPUTED FROM THIS ARRAY. Nothing is hardcoded.",
+    "An empty array renders honest empty states, not fake numbers. Do not add",
+    "placeholder resources to make the page look fuller — that is the same",
+    "false-advertising problem flagged on the landing page.",
+    "",
+    "REQUIRED per entry: id, title, summary, category, format, published, url.",
+    "OPTIONAL: author, minutes, featured, thumb, topics[].",
+    "",
+    "category must be one of the ids in `categories` below.",
+    "format   must be one of the ids in `formats` below.",
+    "published is ISO yyyy-mm-dd. Sorting is newest first.",
+    "featured: true promotes it to the 'Featured' block. The newest featured",
+    "entry becomes the large card; the next two fill the stack beside it.",
+    "url may be a relative path to a page in this repo, or an external link."
+  ],
+
+  "categories": [
+    { "id": "inventory",  "label": "Inventory",          "icon": "i-box",    "tint": "violet" },
+    { "id": "ppc",        "label": "PPC & Advertising",  "icon": "i-mega",   "tint": "blue"   },
+    { "id": "profit",     "label": "Profit & Finances",  "icon": "i-dollar", "tint": "green"  },
+    { "id": "growth",     "label": "Business Growth",    "icon": "i-rocket", "tint": "amber"  },
+    { "id": "tools",      "label": "Tools & Tutorials",  "icon": "i-gear",   "tint": "indigo" },
+    { "id": "research",   "label": "Product Research",   "icon": "i-search", "tint": "violet" }
+  ],
+
+  "formats": [
+    { "id": "article",    "label": "Articles",        "icon": "i-report" },
+    { "id": "video",      "label": "Videos",          "icon": "i-play"   },
+    { "id": "podcast",    "label": "Podcasts",        "icon": "i-mega"   },
+    { "id": "webinar",    "label": "Webinars",        "icon": "i-msg"    },
+    { "id": "guide",      "label": "Guides & Ebooks", "icon": "i-stack"  },
+    { "id": "template",   "label": "Templates",       "icon": "i-grid"   },
+    { "id": "case-study", "label": "Case Studies",    "icon": "i-trend"  }
+  ],
+
+  "resources": [],
+
+  "_testimonials_README": [
+    "Real quotes only, with the person's permission to be named and quoted.",
+    "Leave this empty until you have them — the strip hides itself when empty",
+    "rather than showing invented social proof."
+  ],
+  "testimonials": []
+}
