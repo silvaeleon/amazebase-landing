@@ -1,0 +1,269 @@
+/* ==========================================================================
+   FILE: css/article.css
+   Editorial article layout — dark. Tokens only, no raw colours.
+
+   Structure mirrors the MarketLens reference: split hero (headline left,
+   image right), deck, byline, then a narrow measure with a sticky right
+   rail carrying pull-stat cards.
+========================================================================== */
+
+/* ─────────────────────────────────────────────────────────────── HERO ── */
+
+.art-hero{ padding-block:calc(var(--s8) + 24px) var(--s4); }
+
+.art-back{ margin:0 0 var(--s3); font-size:var(--t-micro); }
+.art-back a{ color:var(--text-2); }
+.art-back a:hover{ color:var(--text); }
+
+.art-kicker{
+  display:flex; align-items:center; gap:10px;
+  margin:0 0 var(--s2);
+  font-size:var(--t-micro); color:var(--text-3);
+}
+.art-chip{
+  font-size:10px; font-weight:700; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--violet-soft);
+  background:rgba(139,59,241,.14);
+  border-radius:5px; padding:5px 9px;
+}
+
+.art-split{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
+  gap:var(--s5);
+  align-items:center;
+}
+
+.art-title{
+  font-size:clamp(34px,4.2vw,58px);
+  line-height:1.03;
+  letter-spacing:-.025em;
+  font-weight:800;
+  margin:0 0 var(--s3);
+}
+.art-title .accent{
+  background:var(--grad-text);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+
+.art-deck{
+  font-size:var(--t-lead);
+  line-height:1.6;
+  color:var(--text-2);
+  margin:0 0 var(--s3);
+  max-width:46ch;
+}
+
+.art-byline{
+  display:flex; align-items:center; gap:12px;
+  padding-top:var(--s3);
+  border-top:1px solid var(--line);
+}
+.art-avatar{
+  width:40px; height:40px; flex:0 0 auto;
+  display:grid; place-items:center;
+  border-radius:50%;
+  background:var(--grad-brand);
+  color:#fff; font-weight:700; font-size:14px;
+}
+.art-byline-name{ display:block; font-size:var(--t-micro); font-weight:600; }
+.art-byline-role{ display:block; font-size:11px; color:var(--text-3); }
+
+.art-figure{
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  background:var(--bg-raise);
+  line-height:0;
+}
+.art-figure svg, .art-figure img{ width:100%; height:auto; display:block; }
+
+/* ──────────────────────────────────────────────────── BODY + RAIL ── */
+
+.art-body{ padding-block:var(--s4) var(--s7); }
+
+.art-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 260px;
+  gap:var(--s5);
+  align-items:start;
+}
+
+.art-rail{ position:sticky; top:104px; display:flex; flex-direction:column; gap:var(--s2); }
+
+.stat-card{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+  padding:var(--s3);
+}
+.stat-label{
+  display:block;
+  font-size:10px; font-weight:700; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--text-3);
+  margin-bottom:8px;
+}
+.stat-fig{
+  display:block;
+  font-size:38px; line-height:1; font-weight:800;
+  letter-spacing:-.02em;
+  color:var(--amber);
+  margin-bottom:8px;
+}
+.stat-fig.is-violet{ color:var(--violet-soft); }
+.stat-fig.is-green{ color:var(--green); }
+.stat-note{ margin:0; font-size:var(--t-micro); line-height:1.5; color:var(--text-2); }
+
+/* Provenance line — these figures come from this article's own worked
+   examples, not from an industry survey. Say so. */
+.rail-source{
+  margin:0;
+  font-size:11px; line-height:1.5; color:var(--text-3);
+  padding-top:var(--s2);
+  border-top:1px solid var(--line);
+}
+
+/* ─────────────────────────────────────────────────────── PROSE ── */
+
+.article{ max-width:70ch; }
+
+.article p, .article li{
+  font-size:16.5px;
+  line-height:1.78;
+  color:var(--text-2);
+}
+.article p{ margin:0 0 var(--s3); }
+
+.article .lead{
+  font-size:19px;
+  line-height:1.68;
+  color:var(--text);
+}
+
+.article h2{
+  font-size:clamp(22px,2.2vw,28px);
+  line-height:1.25;
+  letter-spacing:-.015em;
+  color:var(--text);
+  margin:var(--s6) 0 var(--s2);
+}
+.article h2 .num{
+  display:block;
+  font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--violet-soft);
+  margin-bottom:10px;
+}
+
+.article strong{ color:var(--text); font-weight:600; }
+.article em{ color:var(--text); font-style:italic; }
+
+.article a{ color:var(--violet-soft); text-decoration:underline; text-underline-offset:3px; }
+.article a:hover{ color:var(--text); }
+
+.article ul, .article ol{ margin:0 0 var(--s3); padding-left:1.3em; }
+.article li{ margin-bottom:10px; }
+.article li::marker{ color:var(--text-3); }
+
+.article hr, .article .rule{
+  border:0; height:1px;
+  background:var(--grad-rule);
+  margin:var(--s5) 0;
+}
+
+/* Table of contents */
+.article .toc{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+  padding:var(--s3) var(--s3) calc(var(--s3) - 10px);
+  margin:0 0 var(--s5);
+}
+.article .toc h2{ font-size:var(--t-micro); margin:0 0 var(--s2); letter-spacing:.02em; }
+.article .toc ol{ margin:0; padding-left:1.2em; }
+.article .toc li{ margin-bottom:7px; font-size:var(--t-micro); }
+.article .toc a{ text-decoration:none; color:var(--text-2); }
+.article .toc a:hover{ color:var(--text); text-decoration:underline; }
+
+/* Callout / quote */
+.article .callout, .article blockquote{
+  margin:var(--s4) 0;
+  padding:var(--s3);
+  border:1px solid var(--line);
+  border-left:3px solid var(--violet-soft);
+  border-radius:12px;
+  background:rgba(139,59,241,.06);
+}
+.article .callout p:last-child, .article blockquote p:last-child{ margin-bottom:0; }
+
+/* Worked-example figure pairs */
+.article .figures{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:var(--s2); margin:var(--s3) 0 var(--s4);
+}
+.article .fig{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  padding:var(--s3);
+  text-align:center;
+}
+.article .fig .v{
+  display:block; font-size:28px; font-weight:800; line-height:1.1;
+  letter-spacing:-.02em; color:var(--text); margin-bottom:6px;
+}
+.article .fig .label{
+  display:block; font-size:11px; color:var(--text-3);
+  text-transform:uppercase; letter-spacing:.06em;
+}
+.article .fig.is-bad .v{ color:var(--red); }
+.article .fig.is-real .v{ color:var(--green); }
+
+/* Formula strip */
+.article .formula{
+  display:flex; flex-wrap:wrap; align-items:center; gap:10px;
+  margin:var(--s3) 0 var(--s4);
+  padding:var(--s3);
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--bg-raise);
+  font-family:var(--font-mono);
+  font-size:var(--t-micro);
+}
+.article .formula .k{ color:var(--text); }
+.article .formula .op{ color:var(--violet-soft); }
+
+/* ──────────────────────────────────────────────────────────── CTA ── */
+
+.art-cta{
+  margin-top:var(--s6);
+  padding:var(--s5) var(--s4);
+  border:1px solid var(--line-strong);
+  border-radius:20px;
+  background:linear-gradient(120deg,rgba(91,79,230,.20),rgba(139,59,241,.10));
+  text-align:center;
+}
+.art-cta h2{ margin:0 0 10px; font-size:26px; }
+.art-cta p{ margin:0 auto var(--s3); max-width:52ch; color:var(--text-2); }
+
+/* ───────────────────────────────────────────────────── RESPONSIVE ── */
+
+@media (max-width:1080px){
+  .art-grid{ grid-template-columns:1fr; }
+  .art-rail{
+    position:static;
+    flex-direction:row; flex-wrap:wrap;
+  }
+  .art-rail .stat-card{ flex:1 1 200px; }
+  .rail-source{ flex:1 1 100%; border-top:0; padding-top:0; }
+}
+
+@media (max-width:860px){
+  .art-split{ grid-template-columns:1fr; gap:var(--s3); }
+  .art-hero{ padding-block:calc(var(--s7) + 20px) var(--s3); }
+}
+
+@media (max-width:640px){
+  .article p, .article li{ font-size:16px; }
+  .article .lead{ font-size:17.5px; }
+  .art-cta{ padding:var(--s4) var(--s3); }
+}
