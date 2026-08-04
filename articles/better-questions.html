@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inventory Forecasting Isn&rsquo;t About Finding the Perfect Formula &mdash; AmazeBase</title>
+
+<meta name="description" content="One expert says use the simple reorder formula. Another says it's fundamentally flawed. Both are right — and that's why sellers struggle. A practical framework that takes the best from each.">
+<meta name="theme-color" content="#030917">
+<meta name="author" content="AmazeBase">
+<meta property="og:title" content="Inventory Forecasting Isn't About Finding the Perfect Formula — It's About Asking Better Questions">
+<meta property="og:description" content="Simplicity isn't wrong. Complexity isn't wrong either. The real mistake is assuming forecasting is a mathematical problem when it's a decision-making one.">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   ARTICLE — Amazon Inventory Forecasting
+   Self-contained. Tokens mirror css/variables.css so this page can either
+   stand alone OR have this <style> block deleted once it sits inside the
+   site's normal stylesheet chain.
+========================================================================== */
+
+:root{
+  --bg:#030917; --bg-deep:#01050E; --bg-raise:#060D1E;
+  --surface:rgba(255,255,255,.030); --surface-2:rgba(255,255,255,.055);
+  --surface-solid:#0A1224;
+  --line:rgba(255,255,255,.070); --line-strong:rgba(255,255,255,.140);
+
+  --text:#EEF1F8; --text-2:#98A2B8; --text-3:#616C84;
+
+  --violet:#8B3BF1; --violet-soft:#A971F7; --indigo:#5B4FE6;
+  --blue:#3B82F6; --blue-soft:#7EB3FF;
+  --green:#2ED47A; --amber:#F5A524; --red:#F0435C;
+
+  --grad-brand:linear-gradient(135deg,#5B4FE6 0%,#8B3BF1 100%);
+  --grad-text:linear-gradient(90deg,#6153E6 0%,#9D50F7 55%,#C56BF5 100%);
+  --grad-card:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  --grad-rule:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,monospace;
+
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px;
+  --s5:48px; --s6:64px; --s7:96px; --s8:128px;
+
+  --gutter:clamp(20px,4vw,40px);
+  --measure:720px;
+
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
+  --sh-2:0 18px 40px rgba(0,0,0,.42);
+  --sh-brand:0 16px 40px rgba(107,63,232,.35);
+  --ease:cubic-bezier(.22,.61,.36,1); --fast:.18s; --mid:.28s;
+
+  color-scheme:dark;
+  scrollbar-color:#26304A var(--bg);
+  scrollbar-width:thin;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation:none !important; transition:none !important; }
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+::selection{ background:var(--violet); color:#fff; }
+
+.skip-link{
+  position:absolute; left:-9999px; top:0;
+  background:var(--surface-solid); color:var(--text);
+  padding:12px 20px; border-radius:0 0 var(--r-sm) 0;
+  z-index:1000; text-decoration:none; font-weight:600;
+}
+.skip-link:focus{ left:0; }
+
+:focus-visible{
+  outline:2px solid var(--violet-soft);
+  outline-offset:3px;
+  border-radius:var(--r-xs);
+}
+
+/* ---------- ambient background ------------------------------------------ */
+.bg-layer{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(760px 520px at 18% -8%,  rgba(91,79,230,.20), transparent 62%),
+    radial-gradient(680px 480px at 88% 4%,   rgba(139,59,241,.15), transparent 60%),
+    radial-gradient(900px 700px at 50% 108%, rgba(59,130,246,.09), transparent 66%);
+}
+
+.wrap{ position:relative; z-index:1; }
+
+/* ---------- shell ------------------------------------------------------- */
+.article{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:0 var(--gutter) var(--s8);
+}
+
+/* ---------- header ------------------------------------------------------ */
+.article-head{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:clamp(64px,9vw,120px) var(--gutter) clamp(32px,4vw,48px);
+}
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--violet-soft);
+  background:var(--surface); border:1px solid var(--line);
+  padding:7px 14px; border-radius:var(--r-pill);
+  margin:0 0 var(--s3);
+}
+.eyebrow::before{
+  content:""; width:6px; height:6px; border-radius:50%;
+  background:var(--violet-soft);
+  box-shadow:0 0 10px rgba(169,113,247,.9);
+}
+
+h1{
+  font-size:clamp(34px,5vw,58px);
+  line-height:1.08;
+  letter-spacing:-.025em;
+  font-weight:800;
+  margin:0 0 var(--s3);
+  text-wrap:balance;
+}
+h1 .accent{
+  background:var(--grad-text);
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+}
+
+.deck{
+  font-size:clamp(18px,2.1vw,21px);
+  line-height:1.6;
+  color:var(--text-2);
+  margin:0 0 var(--s4);
+  max-width:62ch;
+}
+
+.meta{
+  display:flex; flex-wrap:wrap; align-items:center; gap:var(--s2);
+  font-size:14px; color:var(--text-3);
+  padding-top:var(--s3);
+  border-top:1px solid var(--line);
+}
+.meta .dot{ width:3px; height:3px; border-radius:50%; background:var(--text-3); }
+
+/* ---------- table of contents ------------------------------------------- */
+.toc{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:0 0 var(--s6);
+}
+.toc h2{
+  font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--text-3); margin:0 0 var(--s3); padding:0; border:0;
+}
+.toc ol{
+  list-style:none; margin:0; padding:0;
+  counter-reset:toc;
+  display:grid; gap:2px;
+}
+.toc li{ counter-increment:toc; margin:0; }
+.toc a{
+  display:flex; gap:14px; align-items:baseline;
+  color:var(--text-2); text-decoration:none;
+  font-size:15px; line-height:1.5;
+  padding:8px 10px; margin:0 -10px;
+  border-radius:var(--r-xs);
+  transition:color var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+.toc a::before{
+  content:counter(toc,decimal-leading-zero);
+  font-family:var(--font-mono); font-size:12px; font-weight:600;
+  color:var(--text-3); flex:none; min-width:22px;
+  transition:color var(--fast) var(--ease);
+}
+.toc a:hover{ color:var(--text); background:var(--surface); }
+.toc a:hover::before{ color:var(--violet-soft); }
+
+/* ---------- body typography --------------------------------------------- */
+.article p{ margin:0 0 1.1em; color:#D5DBE9; }
+.article p.lead{ font-size:20px; color:var(--text); }
+
+.article h2{
+  font-size:clamp(26px,3.2vw,34px);
+  line-height:1.2;
+  letter-spacing:-.02em;
+  font-weight:700;
+  color:var(--text);
+  margin:var(--s7) 0 var(--s3);
+  padding-top:var(--s5);
+  border-top:1px solid var(--line);
+  scroll-margin-top:32px;
+  text-wrap:balance;
+}
+.article h2:first-of-type{ margin-top:0; }
+
+.article h2 .num{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:13px; font-weight:600; letter-spacing:.16em;
+  color:var(--violet-soft);
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
+
+.article strong{ color:var(--text); font-weight:700; }
+
+.article ul{
+  margin:0 0 1.4em;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:10px;
+}
+.article ul li{
+  position:relative;
+  padding-left:26px;
+  color:#D5DBE9;
+  line-height:1.6;
+}
+.article ul li::before{
+  content:"";
+  position:absolute; left:6px; top:.68em;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--violet);
+  box-shadow:0 0 8px rgba(139,59,241,.55);
+}
+
+/* ---------- pull quote --------------------------------------------------- */
+blockquote{
+  margin:var(--s4) 0;
+  padding:var(--s3) var(--s4);
+  border-left:2px solid var(--violet);
+  background:linear-gradient(90deg,rgba(139,59,241,.10),transparent 80%);
+  border-radius:0 var(--r-md) var(--r-md) 0;
+}
+blockquote p{
+  margin:0;
+  font-size:20px;
+  line-height:1.5;
+  font-weight:600;
+  color:var(--text);
+}
+
+/* ---------- callouts ----------------------------------------------------- */
+.callout{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:var(--s4) 0 var(--s5);
+}
+.callout .label{
+  display:block;
+  font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--text-3);
+  margin-bottom:var(--s2);
+}
+.callout p:last-child, .callout ul:last-child{ margin-bottom:0; }
+
+.formula{
+  font-family:var(--font-mono);
+  font-size:clamp(15px,2.1vw,19px);
+  font-weight:600;
+  line-height:1.6;
+  color:var(--text);
+  background:var(--bg-deep);
+  border:1px solid var(--line-strong);
+  border-radius:var(--r-md);
+  padding:var(--s3);
+  margin:0 0 var(--s3);
+  text-align:center;
+  overflow-x:auto;
+}
+.formula .op{ color:var(--violet-soft); }
+
+/* ---------- numbers strip ------------------------------------------------ */
+.figures{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:var(--s2);
+  margin:var(--s4) 0 var(--s5);
+  padding:0; list-style:none;
+}
+.figures li{ padding:0; }
+.figures li::before{ display:none; }
+.fig{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:var(--s3) var(--s2);
+  text-align:center;
+}
+.fig .v{
+  display:block;
+  font-size:28px; font-weight:800; letter-spacing:-.02em; line-height:1.1;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.fig .k{
+  display:block;
+  font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.fig.is-bad .v{ color:var(--red); }
+.fig.is-real .v{ color:var(--green); }
+
+/* ---------- divider ------------------------------------------------------ */
+.rule{
+  height:1px; border:0;
+  background:var(--grad-rule);
+  margin:var(--s6) 0;
+}
+
+/* ---------- closing CTA -------------------------------------------------- */
+.cta{
+  max-width:var(--measure);
+  margin:var(--s7) auto 0;
+  padding:clamp(32px,5vw,56px) var(--gutter);
+  text-align:center;
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-xl);
+  box-shadow:var(--sh-2);
+}
+.cta h2{
+  font-size:clamp(24px,3vw,32px);
+  font-weight:700; letter-spacing:-.02em; line-height:1.2;
+  margin:0 0 var(--s2); padding:0; border:0;
+  text-wrap:balance;
+}
+.cta p{
+  color:var(--text-2);
+  max-width:52ch;
+  margin:0 auto var(--s4);
+  font-size:17px;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--grad-brand);
+  color:#fff; text-decoration:none;
+  font-weight:600; font-size:16px;
+  padding:14px 28px;
+  border-radius:var(--r-pill);
+  box-shadow:var(--sh-brand);
+  transition:transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+.btn:hover{ transform:translateY(-2px); box-shadow:0 22px 50px rgba(107,63,232,.45); }
+.btn svg{ width:18px; height:18px; }
+
+/* ---------- responsive --------------------------------------------------- */
+@media (max-width:640px){
+  body{ font-size:17px; }
+  .article p.lead{ font-size:18px; }
+  blockquote p{ font-size:18px; }
+  .article h2{ margin-top:var(--s6); padding-top:var(--s4); }
+}
+
+/* ---------- print -------------------------------------------------------- */
+@media print{
+  .bg-layer,.toc,.cta,.skip-link{ display:none; }
+  body{ background:#fff; color:#111; font-size:12pt; }
+  .article p,.article ul li{ color:#222; }
+  .article h2{ color:#000; }
+}
+.back-link{ margin:0 0 28px; font-size:13px; }
+.back-link a{ color:var(--text-2); text-decoration:none; }
+.back-link a:hover{ color:var(--text); }
+
+/* ── HERO IMAGE ─────────────────────────────────────────────────────── */
+.hero-shot{
+  margin:0 0 52px;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  background:var(--bg-raise);
+  line-height:0;
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+.hero-shot img{ width:100%; height:auto; display:block; }
+
+/* ── MISTAKE CARDS ──────────────────────────────────────────────────── */
+.mistake{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.mistake::before{
+  content:"";
+  position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+  background:var(--amber);
+}
+.mistake h2{ margin-top:0 !important; }
+.article .mistake h2:first-of-type{ margin-top:0; }
+
+/* ── PULL QUOTES ────────────────────────────────────────────────────── */
+blockquote{
+  margin:44px 0;
+  padding:0 0 0 26px;
+  border-left:3px solid var(--amber);
+  background:none;
+}
+blockquote p{
+  font-size:23px;
+  line-height:1.45;
+  font-style:italic;
+  font-weight:600;
+  color:var(--text);
+  margin:0;
+}
+
+/* ── MID-ARTICLE STRIP ──────────────────────────────────────────────── */
+.strip{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px; flex-wrap:wrap;
+  margin:44px 0;
+  padding:26px 30px;
+  border-radius:16px;
+  background:linear-gradient(120deg,#0A1224,#131A33);
+  border:1px solid var(--line-strong);
+}
+.strip h3{ margin:0 0 6px; font-size:19px; color:var(--text); }
+.strip p{ margin:0; font-size:14px; color:var(--text-2); }
+.strip-btn{
+  flex:0 0 auto;
+  display:inline-block;
+  padding:12px 22px;
+  border-radius:10px;
+  background:var(--amber);
+  color:#1A1200;
+  font-size:14px; font-weight:700;
+  text-decoration:none;
+  transition:filter .15s ease;
+}
+.strip-btn:hover{ filter:brightness(1.08); }
+
+@media (max-width:640px){
+  .mistake{ padding:24px 20px 8px; }
+  .mistake::before{ top:20px; bottom:20px; }
+  blockquote p{ font-size:20px; }
+  .strip{ padding:22px; }
+  .strip-btn{ width:100%; text-align:center; }
+}
+
+/* ── WIDE SHELL: content + rail, so the page uses the screen ─────────── */
+.shell{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 var(--gutter);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 300px;
+  gap:64px;
+  align-items:start;
+}
+.shell > .article{ max-width:none; margin:0; padding:0 0 var(--s8); }
+
+.rail{ position:sticky; top:40px; display:flex; flex-direction:column; gap:14px; }
+.rail-card{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+  padding:20px;
+}
+.rail-k{
+  display:block; margin-bottom:10px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.rail-v{
+  display:block; margin-bottom:10px;
+  font-size:34px; line-height:1; font-weight:800; letter-spacing:-.02em;
+  color:var(--green);
+}
+.rail-v.is-amber{ color:var(--amber); }
+.rail-v.is-violet{ color:var(--violet-soft); }
+.rail-card p{ margin:0; font-size:13px; line-height:1.55; color:var(--text-2); }
+.rail-src{
+  margin:0; padding-top:14px;
+  border-top:1px solid var(--line);
+  font-size:11px; line-height:1.5; color:var(--text-3);
+}
+
+/* header + hero align to the same shell */
+.article-head, .hero-shot{ max-width:1180px; }
+
+/* ── HERO: a band, not a giant square ───────────────────────────────── */
+.hero-shot{
+  margin:0 auto 56px;
+  padding:0 var(--gutter);
+  border:0; background:none; box-shadow:none;
+  border-radius:0;
+  overflow:visible;
+}
+.hero-shot img{
+  width:100%;
+  height:clamp(260px,32vw,400px);
+  object-fit:cover;
+  object-position:center 42%;
+  border-radius:18px;
+  border:1px solid var(--line-strong);
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+
+/* ── THE FIX callout ────────────────────────────────────────────────── */
+.fixbox{
+  margin:22px 0 4px;
+  padding:16px 18px;
+  border-radius:12px;
+  border:1px solid rgba(46,212,122,.28);
+  background:rgba(46,212,122,.07);
+}
+.fixbox-k{
+  display:block; margin-bottom:6px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--green);
+}
+.fixbox p{ margin:0 !important; color:var(--text) !important; }
+
+@media (max-width:1080px){
+  .shell{ grid-template-columns:1fr; gap:40px; max-width:820px; }
+  .rail{ position:static; flex-direction:row; flex-wrap:wrap; }
+  .rail-card{ flex:1 1 220px; }
+  .rail-src{ flex:1 1 100%; border-top:0; padding-top:0; }
+  .article-head, .hero-shot{ max-width:820px; }
+}
+@media (max-width:640px){
+  .shell{ gap:28px; }
+  .hero-shot img{ height:210px; }
+}
+
+/* ── STEP / METRIC CARDS (same treatment as .mistake) ───────────────── */
+.step, .metric{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.step::before, .metric::before{
+  content:""; position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0; background:var(--amber);
+}
+.metric::before{ background:var(--blue-soft); }
+.step h2, .metric h2, .step h3, .metric h3{ margin-top:0 !important; }
+.article .step h2:first-of-type, .article .metric h2:first-of-type{ margin-top:0; }
+
+.metric h3{
+  font-size:20px; line-height:1.3; color:var(--text);
+  margin:0 0 14px; letter-spacing:-.01em;
+}
+.metric h3 .num{
+  display:inline-block; margin-right:10px;
+  min-width:26px; height:26px; line-height:26px; text-align:center;
+  border-radius:7px;
+  background:rgba(126,179,255,.14); color:var(--blue-soft);
+  font-size:12px; font-weight:700;
+}
+
+/* ── WARNING CARDS ──────────────────────────────────────────────────── */
+.warn{
+  position:relative;
+  border:1px solid rgba(240,67,92,.30);
+  border-radius:14px;
+  background:rgba(240,67,92,.07);
+  padding:22px 24px 6px;
+  margin:0 0 18px;
+}
+.warn h3{
+  margin:0 0 10px; font-size:17px; color:var(--text); line-height:1.35;
+}
+.warn h3::before{ content:"\26A0"; margin-right:9px; color:var(--red); }
+
+/* ── LEAD-TIME TABLE ────────────────────────────────────────────────── */
+.ltable{
+  width:100%; border-collapse:collapse;
+  margin:0 0 var(--s3);
+  font-size:15px;
+}
+.ltable th, .ltable td{
+  padding:12px 14px;
+  border-bottom:1px solid var(--line);
+  text-align:left; color:var(--text-2);
+}
+.ltable th{
+  font-size:11px; text-transform:uppercase; letter-spacing:.09em;
+  color:var(--text-3); font-weight:700;
+}
+.ltable td:last-child, .ltable th:last-child{ text-align:right; font-variant-numeric:tabular-nums; }
+.ltable tr:last-child td{
+  border-bottom:0; border-top:1px solid var(--line-strong);
+  color:var(--text); font-weight:700;
+}
+
+/* ── ROUTINE CHECKLIST ──────────────────────────────────────────────── */
+.routine{ counter-reset:r; list-style:none; padding:0; margin:0 0 var(--s3); }
+.routine li{
+  counter-increment:r;
+  position:relative;
+  padding:14px 16px 14px 52px;
+  margin-bottom:8px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  color:var(--text);
+  font-size:15.5px; line-height:1.5;
+}
+.routine li::before{
+  content:counter(r);
+  position:absolute; left:16px; top:13px;
+  width:24px; height:24px; line-height:24px; text-align:center;
+  border-radius:7px;
+  background:var(--grad-brand); color:#fff;
+  font-size:12px; font-weight:700;
+}
+.routine li::marker{ content:none; }
+
+@media (max-width:640px){
+  .step, .metric{ padding:24px 20px 8px; }
+  .step::before, .metric::before{ top:20px; bottom:20px; }
+  .ltable{ font-size:14px; }
+  .ltable th, .ltable td{ padding:10px 8px; }
+}
+
+/* ── PROBLEM / ALTERNATIVE PAIRS ────────────────────────────────────── */
+.problem, .alt{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 14px;
+}
+.problem::before, .alt::before{
+  content:""; position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.problem::before{ background:var(--red); }
+.alt{ margin-bottom:34px; border-color:rgba(46,212,122,.24); background:rgba(46,212,122,.05); }
+.alt::before{ background:var(--green); }
+
+.problem h2, .alt h2, .problem h3, .alt h3{ margin-top:0 !important; }
+.article .problem h2:first-of-type, .article .alt h2:first-of-type{ margin-top:0; }
+
+.problem h2 .num{ color:var(--red); }
+.alt h2 .num{ color:var(--green); }
+
+/* ── DELIVERY / DEMAND SAMPLES ──────────────────────────────────────── */
+.samples{
+  display:flex; flex-wrap:wrap; gap:8px;
+  list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.samples li{
+  padding:9px 14px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  background:var(--bg-raise);
+  font-family:var(--font-mono);
+  font-size:14px;
+  color:var(--text-2);
+  margin:0;
+}
+.samples li::before{ content:none; }
+.samples li.is-hi{ border-color:rgba(240,67,92,.42); color:#FF9AA9; }
+
+/* ── SCENARIO TRIO ──────────────────────────────────────────────────── */
+.scenarios{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:12px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.scenarios li{ margin:0; padding:0; }
+.scenarios li::before{ content:none; }
+.scen{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  padding:18px;
+  text-align:center;
+}
+.scen .n{ display:block; font-size:26px; font-weight:800; letter-spacing:-.02em; color:var(--text); margin-bottom:5px; }
+.scen .l{ display:block; font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--text-3); }
+.scen.is-low .n{ color:var(--blue-soft); }
+.scen.is-mid .n{ color:var(--text); }
+.scen.is-high .n{ color:var(--amber); }
+
+/* ── SIDE-BY-SIDE COMPARISON ────────────────────────────────────────── */
+.versus{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.versus > div{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  padding:20px;
+}
+.versus h4{
+  margin:0 0 12px; font-size:13px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.07em; color:var(--text-3);
+}
+.versus .big{ display:block; font-size:24px; font-weight:800; letter-spacing:-.02em; color:var(--text); margin-bottom:4px; }
+.versus .sub{ display:block; font-size:13px; color:var(--text-2); }
+.versus .big.is-warn{ color:var(--amber); }
+
+/* ── FOUR PILLARS ───────────────────────────────────────────────────── */
+.pillars{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+  gap:10px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.pillars li{
+  margin:0; padding:20px 14px; text-align:center;
+  border:1px solid var(--line-strong);
+  border-radius:12px;
+  background:var(--bg-raise);
+  font-size:15px; font-weight:600; color:var(--text);
+}
+.pillars li::before{ content:none; }
+
+@media (max-width:640px){
+  .problem, .alt{ padding:24px 20px 8px; }
+  .problem::before, .alt::before{ top:20px; bottom:20px; }
+  .versus{ grid-template-columns:1fr; }
+}
+
+/* ── TWO-CAMP DEFENCE CARDS ─────────────────────────────────────────── */
+.camp{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 20px;
+}
+.camp::before{
+  content:""; position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.camp.is-simple::before{ background:var(--blue-soft); }
+.camp.is-complex::before{ background:var(--violet-soft); }
+.camp h2, .camp h3{ margin-top:0 !important; }
+.article .camp h2:first-of-type{ margin-top:0; }
+.camp.is-simple h2 .num{ color:var(--blue-soft); }
+.camp.is-complex h2 .num{ color:var(--violet-soft); }
+
+/* ── ASSUMPTION PAIR ────────────────────────────────────────────────── */
+.assume{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.assume > div{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--bg-raise);
+  padding:20px;
+}
+.assume h4{
+  margin:0 0 10px; font-size:11px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.09em; color:var(--text-3);
+}
+.assume .eq{
+  display:block; font-family:var(--font-mono); font-size:14px;
+  color:var(--text); margin-bottom:12px; line-height:1.5;
+}
+.assume .as{
+  display:block; font-size:13px; line-height:1.55; color:var(--text-2);
+  padding-top:12px; border-top:1px solid var(--line);
+}
+
+/* ── RANGE ROWS ─────────────────────────────────────────────────────── */
+.ranges{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.ranges li{
+  display:grid; grid-template-columns:1fr auto 1fr;
+  align-items:center; gap:16px;
+  margin:0 0 10px; padding:16px 18px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+}
+.ranges li::before{ content:none; }
+.ranges .no{ font-size:14px; color:var(--text-3); text-decoration:line-through; }
+.ranges .arrow{ color:var(--violet-soft); font-size:16px; }
+.ranges .yes{ font-size:15px; color:var(--text); font-weight:600; }
+
+/* ── STAGE LADDER ───────────────────────────────────────────────────── */
+.stages{ counter-reset:st; list-style:none; margin:0 0 var(--s3); padding:0; }
+.stages li{
+  counter-increment:st;
+  position:relative;
+  margin:0 0 10px; padding:20px 22px 20px 74px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+}
+.stages li::before{
+  content:"Stage " counter(st);
+  position:absolute; left:20px; top:20px;
+  width:40px; padding:5px 0; text-align:center;
+  border-radius:8px;
+  background:var(--grad-brand); color:#fff;
+  font-size:9px; font-weight:700; letter-spacing:.04em;
+  text-transform:uppercase; line-height:1.25;
+}
+.stages li::marker{ content:none; }
+.stages h4{ margin:0 0 8px; font-size:16px; color:var(--text); }
+.stages p{ margin:0 !important; font-size:14.5px; color:var(--text-2); }
+
+/* ── COMPANY A / B ──────────────────────────────────────────────────── */
+.duel{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.duel > div{
+  border:1px solid var(--line); border-radius:14px;
+  background:var(--grad-card); padding:22px;
+}
+.duel > div.wins{ border-color:rgba(46,212,122,.35); background:rgba(46,212,122,.06); }
+.duel h4{ margin:0 0 10px; font-size:14px; color:var(--text); }
+.duel p{ margin:0 !important; font-size:14px; line-height:1.6; color:var(--text-2); }
+.duel .tag{
+  display:inline-block; margin-top:12px; padding:4px 10px;
+  border-radius:5px; font-size:10px; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase;
+}
+.duel .tag.win{ background:rgba(46,212,122,.15); color:var(--green); }
+.duel .tag.lose{ background:rgba(240,67,92,.13); color:#FF9AA9; }
+
+@media (max-width:640px){
+  .camp{ padding:24px 20px 8px; }
+  .camp::before{ top:20px; bottom:20px; }
+  .assume, .duel{ grid-template-columns:1fr; }
+  .ranges li{ grid-template-columns:1fr; gap:6px; }
+  .ranges .arrow{ display:none; }
+}
+</style>
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="bg-layer" aria-hidden="true"></div>
+
+<div class="wrap">
+
+<p class="back-link"><a href="/resources.html">&larr; Knowledge Hub</a></p>
+
+<header class="article-head">
+  <p class="eyebrow">Inventory Planning</p>
+
+  <h1>Inventory Forecasting Isn&rsquo;t About Finding the Perfect Formula &mdash; <span class="accent">It&rsquo;s About Asking Better Questions</span></h1>
+
+  <p class="deck">
+    One expert tells you to calculate your reorder point with a simple formula.
+    Another tells you that formula is outdated and fundamentally flawed. One says
+    averages work. Another says averages are dangerous. So who&rsquo;s right? The
+    uncomfortable answer is both of them &mdash; and that&rsquo;s precisely why so many
+    sellers struggle.
+  </p>
+
+  <p class="meta">
+    <span>AmazeBase</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>6 min read</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>Inventory &amp; Cash Flow</span>
+  </p>
+</header>
+
+<figure class="hero-shot">
+  <img src="../assets/img/hero-better-questions.jpg"
+       alt="A dark globe wrapped in a glowing supply-chain network, with shipping containers orbiting it"
+       width="1280" height="1098" loading="eager" decoding="async">
+</figure>
+
+<div class="shell">
+<main id="main" class="article">
+
+  <p class="lead">
+    Most inventory articles fall into one of two camps. The first loves simplicity.
+    The second reacts by rejecting almost everything. Both are making the same
+    mistake &mdash; and it isn&rsquo;t the one you&rsquo;d expect.
+  </p>
+
+  <div class="callout">
+    <span class="label">Read the two sides first</span>
+    <p>
+      This piece argues with our own earlier articles. If you want the case for
+      the simple formula, read <a href="/articles/reorder-point.html">the reorder
+      point guide</a>. For the case against it, read
+      <a href="/articles/classic-formula-wrong.html">why the classic formula is wrong</a>.
+    </p>
+  </div>
+
+  <nav class="toc" aria-labelledby="toc-title">
+    <h2 id="toc-title">What&rsquo;s in this piece</h2>
+    <ol>
+      <li><a href="#simple">Simplicity isn&rsquo;t wrong</a></li>
+      <li><a href="#complex">Complexity isn&rsquo;t wrong either</a></li>
+      <li><a href="#mistake">The real mistake: looking for one formula</a></li>
+      <li><a href="#assumptions">Every formula is based on assumptions</a></li>
+      <li><a href="#cost">The missing variable nobody talks about</a></li>
+      <li><a href="#ranges">Think in ranges, not single numbers</a></li>
+      <li><a href="#stages">Build a forecast that matches your business</a></li>
+      <li><a href="#framework">A framework that takes the best from both</a></li>
+    </ol>
+  </nav>
+
+  <hr class="rule">
+
+  <h2 id="camps">The problem with inventory advice</h2>
+
+  <p>The first group gives you formulas. It&rsquo;s clean, easy to calculate, easy to explain. The problem? Businesses aren&rsquo;t simple.</p>
+
+  <p>The second group argues averages are misleading, lead times are unpredictable, demand constantly changes, cash matters, risk matters, everything is dynamic. They&rsquo;re also right. The problem? Sometimes they replace one oversimplification with another &mdash; complexity.</p>
+
+<section class="camp is-simple">
+  <h2 id="simple"><span class="num">In defence of</span>Simplicity isn&rsquo;t wrong</h2>
+
+  <p>Let&rsquo;s defend the humble reorder point formula for a moment. If you&rsquo;re a new seller with:</p>
+
+  <ul>
+    <li>one product</li>
+    <li>stable demand</li>
+    <li>predictable suppliers</li>
+  </ul>
+
+  <p>&hellip;the classic formula works surprisingly well. In fact it&rsquo;s infinitely better than what many businesses actually do: <strong>guess</strong>.</p>
+
+  <p>If you&rsquo;re placing purchase orders because &ldquo;it feels about right&rdquo;, then even a basic formula is a major improvement.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The point</span>
+    <p>Simple systems often outperform sophisticated systems that nobody actually uses.</p>
+  </div>
+</section>
+
+<section class="camp is-complex">
+  <h2 id="complex"><span class="num">In defence of</span>Complexity isn&rsquo;t wrong either</h2>
+
+  <p>Now let&rsquo;s defend the critics. Amazon isn&rsquo;t a traditional retail business. Sales can double because of:</p>
+
+  <ul class="samples">
+    <li>Prime Day</li><li>viral social media</li><li>ranking improvements</li>
+    <li>better reviews</li><li>PPC optimisation</li>
+  </ul>
+
+  <p>And lead times can suddenly increase because of:</p>
+
+  <ul class="samples">
+    <li class="is-hi">factory delays</li><li class="is-hi">customs inspections</li>
+    <li class="is-hi">port congestion</li><li class="is-hi">Amazon receiving bottlenecks</li>
+  </ul>
+
+  <p>Meanwhile your cash flow changes every two weeks.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The point</span>
+    <p>If your spreadsheet ignores all of that, it isn&rsquo;t forecasting reality. It&rsquo;s forecasting a fantasy.</p>
+  </div>
+</section>
+
+  <hr class="rule">
+
+  <h2 id="mistake">The real mistake: looking for one formula</h2>
+
+  <p>Here&rsquo;s the mistake I think both sides make. They assume inventory forecasting is a mathematical problem.</p>
+
+  <p>It isn&rsquo;t. It&rsquo;s a <strong>decision-making</strong> problem.</p>
+
+  <blockquote>
+    <p>Formulas don&rsquo;t make decisions. People do. The purpose of mathematics isn&rsquo;t to replace judgment &mdash; it&rsquo;s to improve it.</p>
+  </blockquote>
+
+  <h2 id="assumptions">Every formula is based on assumptions</h2>
+
+  <p>Consider these two approaches. Neither is universally correct, because both depend on assumptions.</p>
+
+  <div class="assume">
+    <div>
+      <h4>Classic</h4>
+      <span class="eq">average sales &times; lead time</span>
+      <span class="as">Assumes yesterday resembles tomorrow.</span>
+    </div>
+    <div>
+      <h4>Modern</h4>
+      <span class="eq">forecast demand during lead time</span>
+      <span class="as">Assumes you can accurately predict tomorrow.</span>
+    </div>
+  </div>
+
+  <p>Neither assumption is always true. Good operators understand the assumptions before trusting the numbers.</p>
+
+  <h2 id="question">A better question than &ldquo;which formula is best?&rdquo;</h2>
+
+  <div class="callout">
+    <span class="label">Ask this instead</span>
+    <p>Which assumptions are most likely to be wrong in <em>my</em> business?</p>
+  </div>
+
+  <p>That&rsquo;s where forecasting becomes interesting. Suppose your suppliers are incredibly reliable &mdash; lead time probably isn&rsquo;t your biggest uncertainty. Maybe demand is.</p>
+
+  <p>Or perhaps demand is extremely stable, but your suppliers constantly miss production deadlines. In that case, improving demand forecasting won&rsquo;t help much. You should focus on supply variability instead.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The shift</span>
+    <p>Forecasting starts by identifying uncertainty &mdash; not eliminating it.</p>
+  </div>
+
+  <h2 id="cost">The missing variable nobody talks about</h2>
+
+  <p>Both traditional and modern discussions often overlook something surprisingly important: <strong>the cost of being wrong</strong>.</p>
+
+  <div class="versus">
+    <div>
+      <h4>Product A</h4>
+      <span class="big">$12</span>
+      <span class="sub">Running out hurts.</span>
+    </div>
+    <div>
+      <h4>Product B</h4>
+      <span class="big is-warn">$250</span>
+      <span class="sub">Running out could cost thousands in lost profit every day.</span>
+    </div>
+  </div>
+
+  <p>Likewise, over-ordering low-cost inventory may not be a big issue. Over-ordering expensive inventory can tie up enough cash to delay future growth.</p>
+
+  <blockquote>
+    <p>Forecasting isn&rsquo;t only about probability. It&rsquo;s about consequences.</p>
+  </blockquote>
+
+  <h2 id="useful">The most useful formula is often the simplest</h2>
+
+  <p>Here&rsquo;s a controversial opinion. Your spreadsheet doesn&rsquo;t need to be perfect. It needs to help you notice when something changes.</p>
+
+  <ol class="routine">
+    <li>Are sales increasing?</li>
+    <li>Has lead time changed?</li>
+    <li>Is available cash decreasing?</li>
+    <li>Has Amazon slowed receiving?</li>
+    <li>Are promotions approaching?</li>
+    <li>Has my supplier become less reliable?</li>
+  </ol>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The habit</span>
+    <p>If those answers change, your forecast should change. That habit is often more valuable than any equation.</p>
+  </div>
+
+<aside class="strip">
+  <div>
+    <h3>Notice what changed, every week</h3>
+    <p>AmazeBase watches demand, lead time and cash together, so the questions answer themselves.</p>
+  </div>
+  <a class="strip-btn" href="/index.html#pricing">Join the Wait List</a>
+</aside>
+
+  <h2 id="ranges">Think in ranges, not single numbers</h2>
+
+  <p>One of the best ideas from modern forecasting is abandoning precision.</p>
+
+  <ul class="ranges">
+    <li>
+      <span class="no">&ldquo;I&rsquo;ll sell 48 units per day.&rdquo;</span>
+      <span class="arrow" aria-hidden="true">&rarr;</span>
+      <span class="yes">&ldquo;I&rsquo;ll probably sell somewhere between 42 and 58.&rdquo;</span>
+    </li>
+    <li>
+      <span class="no">&ldquo;My shipment takes 45 days.&rdquo;</span>
+      <span class="arrow" aria-hidden="true">&rarr;</span>
+      <span class="yes">&ldquo;It usually arrives between 42 and 58 days.&rdquo;</span>
+    </li>
+  </ul>
+
+  <div class="fixbox">
+    <span class="fixbox-k">Why it helps</span>
+    <p>Businesses operate inside ranges, not exact numbers. Say it that way and forecasting becomes much more realistic.</p>
+  </div>
+
+  <h2 id="stages">Build a forecast that matches your business</h2>
+
+  <p>A small private-label seller doesn&rsquo;t need the same forecasting system as a company managing 500 SKUs. Your process should grow with your business.</p>
+
+  <ol class="stages">
+    <li>
+      <h4>Keep it simple</h4>
+      <p>Use the classic reorder formula. Review inventory weekly.</p>
+    </li>
+    <li>
+      <h4>Adjust for reality</h4>
+      <p>Account for seasonality and promotions. Track supplier performance. Update demand assumptions regularly.</p>
+    </li>
+    <li>
+      <h4>Model uncertainty</h4>
+      <p>Forecast multiple demand scenarios. Model cash flow. Measure lead-time variability. Review every week.</p>
+    </li>
+    <li>
+      <h4>Automate the watching</h4>
+      <p>Use software to automate calculations and monitor exceptions, instead of manually updating spreadsheets.</p>
+    </li>
+  </ol>
+
+  <div class="fixbox">
+    <span class="fixbox-k">Notice something</span>
+    <p>None of these stages replaces the previous one. They build on it.</p>
+  </div>
+
+  <h2 id="worship">The best planners don&rsquo;t worship formulas</h2>
+
+  <p>Experienced operators rarely say &ldquo;this formula is correct&rdquo;. Instead they ask: <strong>&ldquo;What has changed since I last made this decision?&rdquo;</strong></p>
+
+  <blockquote>
+    <p>That mindset transforms forecasting. The spreadsheet becomes a conversation, not an answer.</p>
+  </blockquote>
+
+  <h2 id="goal">The forecast is never the goal</h2>
+
+  <p>Imagine two companies.</p>
+
+  <div class="duel">
+    <div>
+      <h4>Company A</h4>
+      <p>Produces an incredibly sophisticated forecast every month. Then ignores it.</p>
+      <span class="tag lose">Loses</span>
+    </div>
+    <div class="wins">
+      <h4>Company B</h4>
+      <p>Uses a much simpler model, but reviews it every Monday. Updates assumptions, adjusts purchase orders, talks to suppliers, plans promotions around inventory.</p>
+      <span class="tag win">Wins</span>
+    </div>
+  </div>
+
+  <div class="fixbox">
+    <span class="fixbox-k">Why</span>
+    <p>Not because its forecast is more accurate. Because its decisions improve continuously.</p>
+  </div>
+
+  <hr class="rule">
+
+  <h2 id="framework">A practical framework that takes the best from both worlds</h2>
+
+  <p>If there&rsquo;s one lesson worth taking from both schools of thought, it&rsquo;s this: <strong>use formulas as a starting point, not a conclusion.</strong></p>
+
+  <ol class="routine">
+    <li><strong>Start with the classic reorder point.</strong> It gives you a baseline and prevents guesswork.</li>
+    <li><strong>Challenge the assumptions.</strong> Are sales accelerating? Is lead time still realistic? Has anything changed?</li>
+    <li><strong>Think in scenarios.</strong> Calculate what happens if demand is 20% higher or lead time is two weeks longer.</li>
+    <li><strong>Check your cash.</strong> A mathematically perfect order that drains your reserves may still be the wrong decision.</li>
+    <li><strong>Review frequently.</strong> A forecast created six weeks ago is no longer a forecast &mdash; it&rsquo;s history.</li>
+  </ol>
+
+  <hr class="rule">
+
+  <h2 id="final">Final thoughts</h2>
+
+  <p>Inventory forecasting has been turned into a debate between simplicity and sophistication. It doesn&rsquo;t need to be.</p>
+
+  <p>The simple formulas are useful because they create structure. The more advanced approaches are valuable because they acknowledge uncertainty. The best businesses don&rsquo;t choose one side &mdash; they combine both. They start with mathematics. Then they apply experience. Then they question their assumptions. Then they update their decisions as reality changes.</p>
+
+  <blockquote>
+    <p>Great inventory planning isn&rsquo;t about having the smartest spreadsheet. It&rsquo;s about building a process that helps you make better decisions, week after week, even when the future refuses to cooperate.</p>
+  </blockquote>
+
+</main>
+
+<aside class="rail" aria-label="Key ideas from this article">
+
+  <div class="rail-card">
+    <span class="rail-k">The wrong question</span>
+    <span class="rail-v is-violet">Which?</span>
+    <p>&ldquo;Which formula should I use?&rdquo; Better: which of my assumptions is most likely to be wrong?</p>
+  </div>
+
+  <div class="rail-card">
+    <span class="rail-k">Cost of being wrong</span>
+    <span class="rail-v is-amber">$12 vs $250</span>
+    <p>Same stockout, wildly different consequence. Forecasting isn&rsquo;t only about probability.</p>
+  </div>
+
+  <div class="rail-card">
+    <span class="rail-k">Who wins</span>
+    <span class="rail-v">Weekly</span>
+    <p>A simple model reviewed every Monday beats a sophisticated one reviewed never.</p>
+  </div>
+
+  <p class="rail-src">Figures from this article&rsquo;s worked examples, not an industry survey.</p>
+
+</aside>
+</div>
+
+<aside class="cta">
+  <h2>Better questions, answered automatically</h2>
+  <p>
+    AmazeBase connects your sales, inventory, suppliers and cash flow so the
+    weekly questions get answered before you have to ask them.
+  </p>
+  <a class="btn" href="/index.html#pricing">
+    Join the Wait List
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M5 12h14M13 6l6 6-6 6"/>
+    </svg>
+  </a>
+</aside>
+
+</div><!-- /.wrap -->
+
+</body>
+</html>
