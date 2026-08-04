@@ -96,6 +96,26 @@
   ],
   "resources": [
     {
+      "id": "classic-reorder-formula-wrong",
+      "title": "Why the Classic Amazon Reorder Formula Is Wrong (For Most Sellers)",
+      "summary": "It isn't wrong because the maths is incorrect — it's wrong because its assumptions rarely match how Amazon businesses operate. Seven problems with the standard reorder point, and a better alternative for each.",
+      "category": "inventory",
+      "format": "article",
+      "author": "AmazeBase",
+      "published": "2026-08-05",
+      "minutes": 6,
+      "featured": true,
+      "url": "articles/classic-formula-wrong.html",
+      "topics": [
+        "Reorder Point",
+        "Lead Time",
+        "Safety Stock",
+        "Demand Scenarios",
+        "Cash Flow Management",
+        "Inventory Value"
+      ]
+    },
+    {
       "id": "reorder-point-formula",
       "title": "Amazon Inventory Reorder Point: The Simple Formula Every Seller Should Know",
       "summary": "Most stockouts begin weeks before you run out — at the moment you miss placing the next order. The reorder point formula, the five metrics to check weekly, and the warning signs to never ignore.",
