@@ -19,27 +19,101 @@
     "entry becomes the large card; the next two fill the stack beside it.",
     "url may be a relative path to a page in this repo, or an external link."
   ],
-
   "categories": [
-    { "id": "inventory",  "label": "Inventory",          "icon": "i-box",    "tint": "violet" },
-    { "id": "ppc",        "label": "PPC & Advertising",  "icon": "i-mega",   "tint": "blue"   },
-    { "id": "profit",     "label": "Profit & Finances",  "icon": "i-dollar", "tint": "green"  },
-    { "id": "growth",     "label": "Business Growth",    "icon": "i-rocket", "tint": "amber"  },
-    { "id": "tools",      "label": "Tools & Tutorials",  "icon": "i-gear",   "tint": "indigo" },
-    { "id": "research",   "label": "Product Research",   "icon": "i-search", "tint": "violet" }
+    {
+      "id": "inventory",
+      "label": "Inventory",
+      "icon": "i-box",
+      "tint": "violet"
+    },
+    {
+      "id": "ppc",
+      "label": "PPC & Advertising",
+      "icon": "i-mega",
+      "tint": "blue"
+    },
+    {
+      "id": "profit",
+      "label": "Profit & Finances",
+      "icon": "i-dollar",
+      "tint": "green"
+    },
+    {
+      "id": "growth",
+      "label": "Business Growth",
+      "icon": "i-rocket",
+      "tint": "amber"
+    },
+    {
+      "id": "tools",
+      "label": "Tools & Tutorials",
+      "icon": "i-gear",
+      "tint": "indigo"
+    },
+    {
+      "id": "research",
+      "label": "Product Research",
+      "icon": "i-search",
+      "tint": "violet"
+    }
   ],
-
   "formats": [
-    { "id": "article",    "label": "Articles",        "icon": "i-report" },
-    { "id": "video",      "label": "Videos",          "icon": "i-play"   },
-    { "id": "podcast",    "label": "Podcasts",        "icon": "i-mega"   },
-    { "id": "webinar",    "label": "Webinars",        "icon": "i-msg"    },
-    { "id": "guide",      "label": "Guides & Ebooks", "icon": "i-stack"  },
-    { "id": "template",   "label": "Templates",       "icon": "i-grid"   },
-    { "id": "case-study", "label": "Case Studies",    "icon": "i-trend"  }
+    {
+      "id": "article",
+      "label": "Articles",
+      "icon": "i-report"
+    },
+    {
+      "id": "video",
+      "label": "Videos",
+      "icon": "i-play"
+    },
+    {
+      "id": "podcast",
+      "label": "Podcasts",
+      "icon": "i-mega"
+    },
+    {
+      "id": "webinar",
+      "label": "Webinars",
+      "icon": "i-msg"
+    },
+    {
+      "id": "guide",
+      "label": "Guides & Ebooks",
+      "icon": "i-stack"
+    },
+    {
+      "id": "template",
+      "label": "Templates",
+      "icon": "i-grid"
+    },
+    {
+      "id": "case-study",
+      "label": "Case Studies",
+      "icon": "i-trend"
+    }
   ],
-
   "resources": [
+    {
+      "id": "reorder-point-formula",
+      "title": "Amazon Inventory Reorder Point: The Simple Formula Every Seller Should Know",
+      "summary": "Most stockouts begin weeks before you run out — at the moment you miss placing the next order. The reorder point formula, the five metrics to check weekly, and the warning signs to never ignore.",
+      "category": "inventory",
+      "format": "article",
+      "author": "AmazeBase",
+      "published": "2026-08-04",
+      "minutes": 5,
+      "featured": true,
+      "url": "articles/reorder-point.html",
+      "topics": [
+        "Reorder Point",
+        "Restock Planning",
+        "Safety Stock",
+        "Lead Time",
+        "Days of Supply"
+      ]
+    },
     {
       "id": "inventory-forecasting-mistakes",
       "title": "Inventory Forecasting: The Mistakes That Quietly Destroy Your Profit",
@@ -59,7 +133,6 @@
       ]
     }
   ],
-
   "_testimonials_README": [
     "Real quotes only, with the person's permission to be named and quoted.",
     "Leave this empty until you have them — the strip hides itself when empty",

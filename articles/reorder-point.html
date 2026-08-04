@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Amazon Inventory Reorder Point: The Simple Formula Every Seller Should Know &mdash; AmazeBase</title>
+
+<meta name="description" content="A practical reorder point formula for Amazon sellers — average daily sales, true total lead time, safety stock — plus the five metrics to check every week and the warning signs to never ignore.">
+<meta name="theme-color" content="#030917">
+<meta name="author" content="AmazeBase">
+<meta property="og:title" content="Amazon Inventory Reorder Point: The Simple Formula Every Seller Should Know">
+<meta property="og:description" content="Most stockouts don't begin when you run out. They begin weeks earlier, when you miss the moment to place the next order. Here's the formula that catches it.">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   ARTICLE — Amazon Inventory Forecasting
+   Self-contained. Tokens mirror css/variables.css so this page can either
+   stand alone OR have this <style> block deleted once it sits inside the
+   site's normal stylesheet chain.
+========================================================================== */
+
+:root{
+  --bg:#030917; --bg-deep:#01050E; --bg-raise:#060D1E;
+  --surface:rgba(255,255,255,.030); --surface-2:rgba(255,255,255,.055);
+  --surface-solid:#0A1224;
+  --line:rgba(255,255,255,.070); --line-strong:rgba(255,255,255,.140);
+
+  --text:#EEF1F8; --text-2:#98A2B8; --text-3:#616C84;
+
+  --violet:#8B3BF1; --violet-soft:#A971F7; --indigo:#5B4FE6;
+  --blue:#3B82F6; --blue-soft:#7EB3FF;
+  --green:#2ED47A; --amber:#F5A524; --red:#F0435C;
+
+  --grad-brand:linear-gradient(135deg,#5B4FE6 0%,#8B3BF1 100%);
+  --grad-text:linear-gradient(90deg,#6153E6 0%,#9D50F7 55%,#C56BF5 100%);
+  --grad-card:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  --grad-rule:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,monospace;
+
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px;
+  --s5:48px; --s6:64px; --s7:96px; --s8:128px;
+
+  --gutter:clamp(20px,4vw,40px);
+  --measure:720px;
+
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
+  --sh-2:0 18px 40px rgba(0,0,0,.42);
+  --sh-brand:0 16px 40px rgba(107,63,232,.35);
+  --ease:cubic-bezier(.22,.61,.36,1); --fast:.18s; --mid:.28s;
+
+  color-scheme:dark;
+  scrollbar-color:#26304A var(--bg);
+  scrollbar-width:thin;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation:none !important; transition:none !important; }
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+::selection{ background:var(--violet); color:#fff; }
+
+.skip-link{
+  position:absolute; left:-9999px; top:0;
+  background:var(--surface-solid); color:var(--text);
+  padding:12px 20px; border-radius:0 0 var(--r-sm) 0;
+  z-index:1000; text-decoration:none; font-weight:600;
+}
+.skip-link:focus{ left:0; }
+
+:focus-visible{
+  outline:2px solid var(--violet-soft);
+  outline-offset:3px;
+  border-radius:var(--r-xs);
+}
+
+/* ---------- ambient background ------------------------------------------ */
+.bg-layer{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(760px 520px at 18% -8%,  rgba(91,79,230,.20), transparent 62%),
+    radial-gradient(680px 480px at 88% 4%,   rgba(139,59,241,.15), transparent 60%),
+    radial-gradient(900px 700px at 50% 108%, rgba(59,130,246,.09), transparent 66%);
+}
+
+.wrap{ position:relative; z-index:1; }
+
+/* ---------- shell ------------------------------------------------------- */
+.article{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:0 var(--gutter) var(--s8);
+}
+
+/* ---------- header ------------------------------------------------------ */
+.article-head{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:clamp(64px,9vw,120px) var(--gutter) clamp(32px,4vw,48px);
+}
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--violet-soft);
+  background:var(--surface); border:1px solid var(--line);
+  padding:7px 14px; border-radius:var(--r-pill);
+  margin:0 0 var(--s3);
+}
+.eyebrow::before{
+  content:""; width:6px; height:6px; border-radius:50%;
+  background:var(--violet-soft);
+  box-shadow:0 0 10px rgba(169,113,247,.9);
+}
+
+h1{
+  font-size:clamp(34px,5vw,58px);
+  line-height:1.08;
+  letter-spacing:-.025em;
+  font-weight:800;
+  margin:0 0 var(--s3);
+  text-wrap:balance;
+}
+h1 .accent{
+  background:var(--grad-text);
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+}
+
+.deck{
+  font-size:clamp(18px,2.1vw,21px);
+  line-height:1.6;
+  color:var(--text-2);
+  margin:0 0 var(--s4);
+  max-width:62ch;
+}
+
+.meta{
+  display:flex; flex-wrap:wrap; align-items:center; gap:var(--s2);
+  font-size:14px; color:var(--text-3);
+  padding-top:var(--s3);
+  border-top:1px solid var(--line);
+}
+.meta .dot{ width:3px; height:3px; border-radius:50%; background:var(--text-3); }
+
+/* ---------- table of contents ------------------------------------------- */
+.toc{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:0 0 var(--s6);
+}
+.toc h2{
+  font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--text-3); margin:0 0 var(--s3); padding:0; border:0;
+}
+.toc ol{
+  list-style:none; margin:0; padding:0;
+  counter-reset:toc;
+  display:grid; gap:2px;
+}
+.toc li{ counter-increment:toc; margin:0; }
+.toc a{
+  display:flex; gap:14px; align-items:baseline;
+  color:var(--text-2); text-decoration:none;
+  font-size:15px; line-height:1.5;
+  padding:8px 10px; margin:0 -10px;
+  border-radius:var(--r-xs);
+  transition:color var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+.toc a::before{
+  content:counter(toc,decimal-leading-zero);
+  font-family:var(--font-mono); font-size:12px; font-weight:600;
+  color:var(--text-3); flex:none; min-width:22px;
+  transition:color var(--fast) var(--ease);
+}
+.toc a:hover{ color:var(--text); background:var(--surface); }
+.toc a:hover::before{ color:var(--violet-soft); }
+
+/* ---------- body typography --------------------------------------------- */
+.article p{ margin:0 0 1.1em; color:#D5DBE9; }
+.article p.lead{ font-size:20px; color:var(--text); }
+
+.article h2{
+  font-size:clamp(26px,3.2vw,34px);
+  line-height:1.2;
+  letter-spacing:-.02em;
+  font-weight:700;
+  color:var(--text);
+  margin:var(--s7) 0 var(--s3);
+  padding-top:var(--s5);
+  border-top:1px solid var(--line);
+  scroll-margin-top:32px;
+  text-wrap:balance;
+}
+.article h2:first-of-type{ margin-top:0; }
+
+.article h2 .num{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:13px; font-weight:600; letter-spacing:.16em;
+  color:var(--violet-soft);
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
+
+.article strong{ color:var(--text); font-weight:700; }
+
+.article ul{
+  margin:0 0 1.4em;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:10px;
+}
+.article ul li{
+  position:relative;
+  padding-left:26px;
+  color:#D5DBE9;
+  line-height:1.6;
+}
+.article ul li::before{
+  content:"";
+  position:absolute; left:6px; top:.68em;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--violet);
+  box-shadow:0 0 8px rgba(139,59,241,.55);
+}
+
+/* ---------- pull quote --------------------------------------------------- */
+blockquote{
+  margin:var(--s4) 0;
+  padding:var(--s3) var(--s4);
+  border-left:2px solid var(--violet);
+  background:linear-gradient(90deg,rgba(139,59,241,.10),transparent 80%);
+  border-radius:0 var(--r-md) var(--r-md) 0;
+}
+blockquote p{
+  margin:0;
+  font-size:20px;
+  line-height:1.5;
+  font-weight:600;
+  color:var(--text);
+}
+
+/* ---------- callouts ----------------------------------------------------- */
+.callout{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:var(--s4) 0 var(--s5);
+}
+.callout .label{
+  display:block;
+  font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--text-3);
+  margin-bottom:var(--s2);
+}
+.callout p:last-child, .callout ul:last-child{ margin-bottom:0; }
+
+.formula{
+  font-family:var(--font-mono);
+  font-size:clamp(15px,2.1vw,19px);
+  font-weight:600;
+  line-height:1.6;
+  color:var(--text);
+  background:var(--bg-deep);
+  border:1px solid var(--line-strong);
+  border-radius:var(--r-md);
+  padding:var(--s3);
+  margin:0 0 var(--s3);
+  text-align:center;
+  overflow-x:auto;
+}
+.formula .op{ color:var(--violet-soft); }
+
+/* ---------- numbers strip ------------------------------------------------ */
+.figures{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:var(--s2);
+  margin:var(--s4) 0 var(--s5);
+  padding:0; list-style:none;
+}
+.figures li{ padding:0; }
+.figures li::before{ display:none; }
+.fig{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:var(--s3) var(--s2);
+  text-align:center;
+}
+.fig .v{
+  display:block;
+  font-size:28px; font-weight:800; letter-spacing:-.02em; line-height:1.1;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.fig .k{
+  display:block;
+  font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.fig.is-bad .v{ color:var(--red); }
+.fig.is-real .v{ color:var(--green); }
+
+/* ---------- divider ------------------------------------------------------ */
+.rule{
+  height:1px; border:0;
+  background:var(--grad-rule);
+  margin:var(--s6) 0;
+}
+
+/* ---------- closing CTA -------------------------------------------------- */
+.cta{
+  max-width:var(--measure);
+  margin:var(--s7) auto 0;
+  padding:clamp(32px,5vw,56px) var(--gutter);
+  text-align:center;
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-xl);
+  box-shadow:var(--sh-2);
+}
+.cta h2{
+  font-size:clamp(24px,3vw,32px);
+  font-weight:700; letter-spacing:-.02em; line-height:1.2;
+  margin:0 0 var(--s2); padding:0; border:0;
+  text-wrap:balance;
+}
+.cta p{
+  color:var(--text-2);
+  max-width:52ch;
+  margin:0 auto var(--s4);
+  font-size:17px;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--grad-brand);
+  color:#fff; text-decoration:none;
+  font-weight:600; font-size:16px;
+  padding:14px 28px;
+  border-radius:var(--r-pill);
+  box-shadow:var(--sh-brand);
+  transition:transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+.btn:hover{ transform:translateY(-2px); box-shadow:0 22px 50px rgba(107,63,232,.45); }
+.btn svg{ width:18px; height:18px; }
+
+/* ---------- responsive --------------------------------------------------- */
+@media (max-width:640px){
+  body{ font-size:17px; }
+  .article p.lead{ font-size:18px; }
+  blockquote p{ font-size:18px; }
+  .article h2{ margin-top:var(--s6); padding-top:var(--s4); }
+}
+
+/* ---------- print -------------------------------------------------------- */
+@media print{
+  .bg-layer,.toc,.cta,.skip-link{ display:none; }
+  body{ background:#fff; color:#111; font-size:12pt; }
+  .article p,.article ul li{ color:#222; }
+  .article h2{ color:#000; }
+}
+.back-link{ margin:0 0 28px; font-size:13px; }
+.back-link a{ color:var(--text-2); text-decoration:none; }
+.back-link a:hover{ color:var(--text); }
+
+/* ── HERO IMAGE ─────────────────────────────────────────────────────── */
+.hero-shot{
+  margin:0 0 52px;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  background:var(--bg-raise);
+  line-height:0;
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+.hero-shot img{ width:100%; height:auto; display:block; }
+
+/* ── MISTAKE CARDS ──────────────────────────────────────────────────── */
+.mistake{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.mistake::before{
+  content:"";
+  position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+  background:var(--amber);
+}
+.mistake h2{ margin-top:0 !important; }
+.article .mistake h2:first-of-type{ margin-top:0; }
+
+/* ── PULL QUOTES ────────────────────────────────────────────────────── */
+blockquote{
+  margin:44px 0;
+  padding:0 0 0 26px;
+  border-left:3px solid var(--amber);
+  background:none;
+}
+blockquote p{
+  font-size:23px;
+  line-height:1.45;
+  font-style:italic;
+  font-weight:600;
+  color:var(--text);
+  margin:0;
+}
+
+/* ── MID-ARTICLE STRIP ──────────────────────────────────────────────── */
+.strip{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px; flex-wrap:wrap;
+  margin:44px 0;
+  padding:26px 30px;
+  border-radius:16px;
+  background:linear-gradient(120deg,#0A1224,#131A33);
+  border:1px solid var(--line-strong);
+}
+.strip h3{ margin:0 0 6px; font-size:19px; color:var(--text); }
+.strip p{ margin:0; font-size:14px; color:var(--text-2); }
+.strip-btn{
+  flex:0 0 auto;
+  display:inline-block;
+  padding:12px 22px;
+  border-radius:10px;
+  background:var(--amber);
+  color:#1A1200;
+  font-size:14px; font-weight:700;
+  text-decoration:none;
+  transition:filter .15s ease;
+}
+.strip-btn:hover{ filter:brightness(1.08); }
+
+@media (max-width:640px){
+  .mistake{ padding:24px 20px 8px; }
+  .mistake::before{ top:20px; bottom:20px; }
+  blockquote p{ font-size:20px; }
+  .strip{ padding:22px; }
+  .strip-btn{ width:100%; text-align:center; }
+}
+
+/* ── WIDE SHELL: content + rail, so the page uses the screen ─────────── */
+.shell{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 var(--gutter);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 300px;
+  gap:64px;
+  align-items:start;
+}
+.shell > .article{ max-width:none; margin:0; padding:0 0 var(--s8); }
+
+.rail{ position:sticky; top:40px; display:flex; flex-direction:column; gap:14px; }
+.rail-card{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+  padding:20px;
+}
+.rail-k{
+  display:block; margin-bottom:10px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.rail-v{
+  display:block; margin-bottom:10px;
+  font-size:34px; line-height:1; font-weight:800; letter-spacing:-.02em;
+  color:var(--green);
+}
+.rail-v.is-amber{ color:var(--amber); }
+.rail-v.is-violet{ color:var(--violet-soft); }
+.rail-card p{ margin:0; font-size:13px; line-height:1.55; color:var(--text-2); }
+.rail-src{
+  margin:0; padding-top:14px;
+  border-top:1px solid var(--line);
+  font-size:11px; line-height:1.5; color:var(--text-3);
+}
+
+/* header + hero align to the same shell */
+.article-head, .hero-shot{ max-width:1180px; }
+
+/* ── HERO: a band, not a giant square ───────────────────────────────── */
+.hero-shot{
+  margin:0 auto 56px;
+  padding:0 var(--gutter);
+  border:0; background:none; box-shadow:none;
+  border-radius:0;
+  overflow:visible;
+}
+.hero-shot img{
+  width:100%;
+  height:clamp(260px,32vw,400px);
+  object-fit:cover;
+  object-position:center 42%;
+  border-radius:18px;
+  border:1px solid var(--line-strong);
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+
+/* ── THE FIX callout ────────────────────────────────────────────────── */
+.fixbox{
+  margin:22px 0 4px;
+  padding:16px 18px;
+  border-radius:12px;
+  border:1px solid rgba(46,212,122,.28);
+  background:rgba(46,212,122,.07);
+}
+.fixbox-k{
+  display:block; margin-bottom:6px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--green);
+}
+.fixbox p{ margin:0 !important; color:var(--text) !important; }
+
+@media (max-width:1080px){
+  .shell{ grid-template-columns:1fr; gap:40px; max-width:820px; }
+  .rail{ position:static; flex-direction:row; flex-wrap:wrap; }
+  .rail-card{ flex:1 1 220px; }
+  .rail-src{ flex:1 1 100%; border-top:0; padding-top:0; }
+  .article-head, .hero-shot{ max-width:820px; }
+}
+@media (max-width:640px){
+  .shell{ gap:28px; }
+  .hero-shot img{ height:210px; }
+}
+
+/* ── STEP / METRIC CARDS (same treatment as .mistake) ───────────────── */
+.step, .metric{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.step::before, .metric::before{
+  content:""; position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0; background:var(--amber);
+}
+.metric::before{ background:var(--blue-soft); }
+.step h2, .metric h2, .step h3, .metric h3{ margin-top:0 !important; }
+.article .step h2:first-of-type, .article .metric h2:first-of-type{ margin-top:0; }
+
+.metric h3{
+  font-size:20px; line-height:1.3; color:var(--text);
+  margin:0 0 14px; letter-spacing:-.01em;
+}
+.metric h3 .num{
+  display:inline-block; margin-right:10px;
+  min-width:26px; height:26px; line-height:26px; text-align:center;
+  border-radius:7px;
+  background:rgba(126,179,255,.14); color:var(--blue-soft);
+  font-size:12px; font-weight:700;
+}
+
+/* ── WARNING CARDS ──────────────────────────────────────────────────── */
+.warn{
+  position:relative;
+  border:1px solid rgba(240,67,92,.30);
+  border-radius:14px;
+  background:rgba(240,67,92,.07);
+  padding:22px 24px 6px;
+  margin:0 0 18px;
+}
+.warn h3{
+  margin:0 0 10px; font-size:17px; color:var(--text); line-height:1.35;
+}
+.warn h3::before{ content:"\26A0"; margin-right:9px; color:var(--red); }
+
+/* ── LEAD-TIME TABLE ────────────────────────────────────────────────── */
+.ltable{
+  width:100%; border-collapse:collapse;
+  margin:0 0 var(--s3);
+  font-size:15px;
+}
+.ltable th, .ltable td{
+  padding:12px 14px;
+  border-bottom:1px solid var(--line);
+  text-align:left; color:var(--text-2);
+}
+.ltable th{
+  font-size:11px; text-transform:uppercase; letter-spacing:.09em;
+  color:var(--text-3); font-weight:700;
+}
+.ltable td:last-child, .ltable th:last-child{ text-align:right; font-variant-numeric:tabular-nums; }
+.ltable tr:last-child td{
+  border-bottom:0; border-top:1px solid var(--line-strong);
+  color:var(--text); font-weight:700;
+}
+
+/* ── ROUTINE CHECKLIST ──────────────────────────────────────────────── */
+.routine{ counter-reset:r; list-style:none; padding:0; margin:0 0 var(--s3); }
+.routine li{
+  counter-increment:r;
+  position:relative;
+  padding:14px 16px 14px 52px;
+  margin-bottom:8px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  color:var(--text);
+  font-size:15.5px; line-height:1.5;
+}
+.routine li::before{
+  content:counter(r);
+  position:absolute; left:16px; top:13px;
+  width:24px; height:24px; line-height:24px; text-align:center;
+  border-radius:7px;
+  background:var(--grad-brand); color:#fff;
+  font-size:12px; font-weight:700;
+}
+.routine li::marker{ content:none; }
+
+@media (max-width:640px){
+  .step, .metric{ padding:24px 20px 8px; }
+  .step::before, .metric::before{ top:20px; bottom:20px; }
+  .ltable{ font-size:14px; }
+  .ltable th, .ltable td{ padding:10px 8px; }
+}
+</style>
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="bg-layer" aria-hidden="true"></div>
+
+<div class="wrap">
+
+<p class="back-link"><a href="/resources.html">&larr; Knowledge Hub</a></p>
+
+<header class="article-head">
+  <p class="eyebrow">Inventory Planning</p>
+
+  <h1>Amazon Inventory Reorder Point: <span class="accent">The Simple Formula Every Seller Should Know</span></h1>
+
+  <p class="deck">
+    Most Amazon inventory problems don&rsquo;t begin when you run out of stock. They begin
+    weeks earlier, when you miss the right moment to place your next purchase order.
+    You don&rsquo;t need forecasting software to catch it &mdash; you need a few numbers and
+    the discipline to review them.
+  </p>
+
+  <p class="meta">
+    <span>AmazeBase</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>5 min read</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>Inventory &amp; Cash Flow</span>
+  </p>
+</header>
+
+<figure class="hero-shot">
+  <img src="../assets/img/hero-reorder-point.jpg"
+       alt="A dark globe wrapped in a glowing supply-chain network, with shipping containers orbiting it"
+       width="1280" height="1098" loading="eager" decoding="async">
+</figure>
+
+<div class="shell">
+<main id="main" class="article">
+
+  <p class="lead">
+    The good news is that you don&rsquo;t need complex forecasting software to know when
+    it&rsquo;s time to reorder. A few key numbers &mdash; and the discipline to review them
+    regularly &mdash; can help you avoid costly stockouts and unnecessary overstock.
+  </p>
+
+  <p>Here&rsquo;s a practical framework you can start using today.</p>
+
+  <nav class="toc" aria-labelledby="toc-title">
+    <h2 id="toc-title">What&rsquo;s in this guide</h2>
+    <ol>
+      <li><a href="#s1">Know your average daily sales</a></li>
+      <li><a href="#s2">Calculate your total lead time</a></li>
+      <li><a href="#s3">Calculate your reorder point</a></li>
+      <li><a href="#s4">Estimate safety stock</a></li>
+      <li><a href="#metrics">Five metrics to check every week</a></li>
+      <li><a href="#warnings">Three warning signs to never ignore</a></li>
+      <li><a href="#routine">A simple weekly routine</a></li>
+    </ol>
+  </nav>
+
+  <hr class="rule">
+
+<section class="step">
+  <h2 id="s1"><span class="num">Step 01</span>Know your average daily sales</h2>
+
+  <p>The first number you need is your current sales velocity. The formula is simple:</p>
+
+  <p class="formula"><span class="k">Average daily sales</span> <span class="op">=</span> <span class="k">units sold</span> <span class="op">&divide;</span> <span class="k">number of days</span></p>
+
+  <p><strong>Example.</strong> Units sold in the last 30 days: 1,200. Days: 30.</p>
+
+  <ul class="figures">
+    <li><div class="fig is-real"><span class="v">40/day</span><span class="k">1,200 &divide; 30</span></div></li>
+  </ul>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The fix</span>
+    <p>If your sales are growing quickly, don&rsquo;t rely on a 90-day average. Use the most recent 30 days &mdash; or even the last two weeks &mdash; to better reflect current demand.</p>
+  </div>
+</section>
+
+<section class="step">
+  <h2 id="s2"><span class="num">Step 02</span>Calculate your total lead time</h2>
+
+  <p>Many sellers only consider manufacturing time. Instead, add every stage of the process.</p>
+
+  <table class="ltable">
+    <thead>
+      <tr><th scope="col">Stage</th><th scope="col">Days</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Manufacturing</td><td>20</td></tr>
+      <tr><td>Supplier preparation</td><td>5</td></tr>
+      <tr><td>Ocean freight</td><td>28</td></tr>
+      <tr><td>Customs</td><td>7</td></tr>
+      <tr><td>Inland transport</td><td>3</td></tr>
+      <tr><td>Amazon receiving</td><td>6</td></tr>
+      <tr><td>Total lead time</td><td>69</td></tr>
+    </tbody>
+  </table>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The fix</span>
+    <p>This is the number that matters &mdash; not just what your supplier tells you.</p>
+  </div>
+</section>
+
+<section class="step">
+  <h2 id="s3"><span class="num">Step 03</span>Calculate your reorder point</h2>
+
+  <p>Now combine those two numbers.</p>
+
+  <p class="formula"><span class="k">Reorder point</span> <span class="op">=</span> <span class="k">average daily sales</span> <span class="op">&times;</span> <span class="k">lead time</span> <span class="op">+</span> <span class="k">safety stock</span></p>
+
+  <ul class="figures">
+    <li><div class="fig"><span class="v">40</span><span class="k">Daily sales</span></div></li>
+    <li><div class="fig"><span class="v">69</span><span class="k">Lead time (days)</span></div></li>
+    <li><div class="fig"><span class="v">400</span><span class="k">Safety stock</span></div></li>
+    <li><div class="fig is-real"><span class="v">3,160</span><span class="k">Reorder point</span></div></li>
+  </ul>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The fix</span>
+    <p>When your available inventory falls to 3,160 units, it&rsquo;s time to place your next order.</p>
+  </div>
+</section>
+
+<section class="step">
+  <h2 id="s4"><span class="num">Step 04</span>Estimate safety stock</h2>
+
+  <p>A simple starting point is to keep enough inventory to cover unexpected delays.</p>
+
+  <p class="formula"><span class="k">Safety stock</span> <span class="op">=</span> <span class="k">average daily sales</span> <span class="op">&times;</span> <span class="k">extra days of protection</span></p>
+
+  <p>If you want protection for an additional 10 days: <strong>40 &times; 10 = 400 units</strong>.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The fix</span>
+    <p>If your supply chain is highly unpredictable, you may need 20&ndash;30 days of protection instead of 10.</p>
+  </div>
+</section>
+
+  <hr class="rule">
+
+  <h2 id="metrics">Five metrics you should check every week</h2>
+
+  <p>Forecasting isn&rsquo;t just about formulas. It&rsquo;s also about spotting warning signs early.</p>
+
+<section class="metric">
+  <h3><span class="num">1</span>Days of supply</h3>
+  <p>Ask yourself: &ldquo;If I sold at my current pace, how many days would my inventory last?&rdquo;</p>
+  <p class="formula"><span class="k">Days of supply</span> <span class="op">=</span> <span class="k">available inventory</span> <span class="op">&divide;</span> <span class="k">average daily sales</span></p>
+  <ul class="figures">
+    <li><div class="fig"><span class="v">2,000</span><span class="k">Inventory</span></div></li>
+    <li><div class="fig"><span class="v">40/day</span><span class="k">Sales</span></div></li>
+    <li><div class="fig is-bad"><span class="v">50 days</span><span class="k">Days of supply</span></div></li>
+  </ul>
+  <div class="fixbox">
+    <span class="fixbox-k">The fix</span>
+    <p>If your lead time is 69 days and you have 50 days of supply, you&rsquo;re already in trouble.</p>
+  </div>
+</section>
+
+<section class="metric">
+  <h3><span class="num">2</span>Inventory trend</h3>
+  <p>Don&rsquo;t just look at today&rsquo;s inventory &mdash; compare it week by week. If your days of supply has been 90, then 80, then 70, then 60, then 50&hellip;</p>
+  <div class="fixbox">
+    <span class="fixbox-k">The fix</span>
+    <p>You&rsquo;re approaching your reorder point much faster than you might realise.</p>
+  </div>
+</section>
+
+<section class="metric">
+  <h3><span class="num">3</span>Sales velocity</h3>
+  <p>Has your daily sales rate changed? Compare the last 7 days against the last 30.</p>
+  <div class="fixbox">
+    <span class="fixbox-k">The fix</span>
+    <p>If you&rsquo;re selling 25% faster than your monthly average, your forecast probably needs updating.</p>
+  </div>
+</section>
+
+<section class="metric">
+  <h3><span class="num">4</span>Inbound inventory</h3>
+  <p>Inventory on the water isn&rsquo;t inventory you can sell. Always separate available inventory, reserved inventory and inbound inventory.</p>
+  <div class="fixbox">
+    <span class="fixbox-k">The fix</span>
+    <p>Many sellers assume inbound units will arrive exactly when planned. Amazon often has other ideas.</p>
+  </div>
+</section>
+
+<section class="metric">
+  <h3><span class="num">5</span>Weeks of cover after your shipment arrives</h3>
+  <p>Before placing an order, ask: &ldquo;When my shipment finally reaches Amazon, how many weeks of inventory will I have?&rdquo;</p>
+  <div class="fixbox">
+    <span class="fixbox-k">The fix</span>
+    <p>Ordering too much is almost as expensive as ordering too little.</p>
+  </div>
+</section>
+
+  <hr class="rule">
+
+  <h2 id="warnings">Three warning signs you should never ignore</h2>
+
+  <div class="warn">
+    <h3>Your sales are increasing faster than your inventory</h3>
+    <p>Demand is accelerating. Your reorder calculations may already be outdated.</p>
+  </div>
+
+  <div class="warn">
+    <h3>Your supplier keeps missing deadlines</h3>
+    <p>If production regularly slips by two weeks, stop using optimistic lead times in your calculations. Forecast reality &mdash; not promises.</p>
+  </div>
+
+  <div class="warn">
+    <h3>You&rsquo;re relying on memory instead of numbers</h3>
+    <p>If you&rsquo;re asking yourself &ldquo;I think we still have enough inventory&hellip;&rdquo;, it&rsquo;s time to calculate &mdash; not guess.</p>
+  </div>
+
+<aside class="strip">
+  <div>
+    <h3>Stop tracking this in spreadsheets</h3>
+    <p>AmazeBase watches days of supply, lead time and velocity for you, and tells you when to order.</p>
+  </div>
+  <a class="strip-btn" href="/index.html#pricing">Join the Wait List</a>
+</aside>
+
+  <h2 id="routine">A simple weekly inventory routine</h2>
+
+  <p>Every Monday morning, spend ten minutes answering these questions:</p>
+
+  <ol class="routine">
+    <li>What is my current average daily sales?</li>
+    <li>How many days of inventory do I have left?</li>
+    <li>Has demand increased?</li>
+    <li>Has my lead time changed?</li>
+    <li>Do I need to place a purchase order this week?</li>
+    <li>If demand suddenly increased by 20%, would I still avoid a stockout?</li>
+  </ol>
+
+  <p>Those six questions alone can prevent many of the inventory emergencies Amazon sellers face.</p>
+
+  <hr class="rule">
+
+  <h2 id="final">Final thoughts</h2>
+
+  <p>Inventory forecasting doesn&rsquo;t have to be complicated. You don&rsquo;t need advanced algorithms to make better decisions. You need reliable data, realistic assumptions and a consistent review process.</p>
+
+  <p>The sellers who avoid costly stockouts aren&rsquo;t always the ones with the most sophisticated spreadsheets. More often, they&rsquo;re the ones who ask the right questions before inventory becomes a problem.</p>
+
+  <blockquote>
+    <p>When it comes to inventory planning, being one week early is almost always better than being one day late.</p>
+  </blockquote>
+
+</main>
+
+<aside class="rail" aria-label="Key figures from this article">
+
+  <div class="rail-card">
+    <span class="rail-k">Worked example</span>
+    <span class="rail-v">3,160</span>
+    <p>Units. The reorder point for a product selling 40/day with a 69-day lead time and 400 units of safety stock.</p>
+  </div>
+
+  <div class="rail-card">
+    <span class="rail-k">True lead time</span>
+    <span class="rail-v is-amber">69 days</span>
+    <p>Manufacturing is only 20 of them. The rest is prep, freight, customs, inland transport and Amazon receiving.</p>
+  </div>
+
+  <div class="rail-card">
+    <span class="rail-k">The gap that hurts</span>
+    <span class="rail-v is-violet">50 vs 69</span>
+    <p>Days of supply against lead time. If the first number is smaller, you are already late to order.</p>
+  </div>
+
+  <p class="rail-src">Figures from this article&rsquo;s worked examples, not an industry survey.</p>
+
+</aside>
+</div>
+
+<aside class="cta">
+  <h2>Know your reorder point without the spreadsheet</h2>
+  <p>
+    AmazeBase connects your sales, inventory, suppliers and cash flow so every
+    reorder decision accounts for all of them at once.
+  </p>
+  <a class="btn" href="/index.html#pricing">
+    Join the Wait List
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M5 12h14M13 6l6 6-6 6"/>
+    </svg>
+  </a>
+</aside>
+
+</div><!-- /.wrap -->
+
+</body>
+</html>
