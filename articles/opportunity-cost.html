@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Opportunity Cost Every Amazon Seller Ignores &mdash; AmazeBase</title>
+
+<meta name="description" content="The most expensive decisions in your business are often the ones that never appear on your P&amp;L. Every purchase order eliminates alternatives — and almost nobody measures what those were worth.">
+<meta name="theme-color" content="#030917">
+<meta name="author" content="AmazeBase">
+<meta property="og:title" content="The Opportunity Cost Every Amazon Seller Ignores">
+<meta property="og:description" content="Ask a seller what a purchase order costs and they'll quote the invoice. They're wrong. The real cost is every alternative that order made impossible.">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   ARTICLE — Amazon Inventory Forecasting
+   Self-contained. Tokens mirror css/variables.css so this page can either
+   stand alone OR have this <style> block deleted once it sits inside the
+   site's normal stylesheet chain.
+========================================================================== */
+
+:root{
+  --bg:#030917; --bg-deep:#01050E; --bg-raise:#060D1E;
+  --surface:rgba(255,255,255,.030); --surface-2:rgba(255,255,255,.055);
+  --surface-solid:#0A1224;
+  --line:rgba(255,255,255,.070); --line-strong:rgba(255,255,255,.140);
+
+  --text:#EEF1F8; --text-2:#98A2B8; --text-3:#616C84;
+
+  --violet:#8B3BF1; --violet-soft:#A971F7; --indigo:#5B4FE6;
+  --blue:#3B82F6; --blue-soft:#7EB3FF;
+  --green:#2ED47A; --amber:#F5A524; --red:#F0435C;
+
+  --grad-brand:linear-gradient(135deg,#5B4FE6 0%,#8B3BF1 100%);
+  --grad-text:linear-gradient(90deg,#6153E6 0%,#9D50F7 55%,#C56BF5 100%);
+  --grad-card:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  --grad-rule:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,monospace;
+
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px;
+  --s5:48px; --s6:64px; --s7:96px; --s8:128px;
+
+  --gutter:clamp(20px,4vw,40px);
+  --measure:720px;
+
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
+  --sh-2:0 18px 40px rgba(0,0,0,.42);
+  --sh-brand:0 16px 40px rgba(107,63,232,.35);
+  --ease:cubic-bezier(.22,.61,.36,1); --fast:.18s; --mid:.28s;
+
+  color-scheme:dark;
+  scrollbar-color:#26304A var(--bg);
+  scrollbar-width:thin;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation:none !important; transition:none !important; }
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+::selection{ background:var(--violet); color:#fff; }
+
+.skip-link{
+  position:absolute; left:-9999px; top:0;
+  background:var(--surface-solid); color:var(--text);
+  padding:12px 20px; border-radius:0 0 var(--r-sm) 0;
+  z-index:1000; text-decoration:none; font-weight:600;
+}
+.skip-link:focus{ left:0; }
+
+:focus-visible{
+  outline:2px solid var(--violet-soft);
+  outline-offset:3px;
+  border-radius:var(--r-xs);
+}
+
+/* ---------- ambient background ------------------------------------------ */
+.bg-layer{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(760px 520px at 18% -8%,  rgba(91,79,230,.20), transparent 62%),
+    radial-gradient(680px 480px at 88% 4%,   rgba(139,59,241,.15), transparent 60%),
+    radial-gradient(900px 700px at 50% 108%, rgba(59,130,246,.09), transparent 66%);
+}
+
+.wrap{ position:relative; z-index:1; }
+
+/* ---------- shell ------------------------------------------------------- */
+.article{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:0 var(--gutter) var(--s8);
+}
+
+/* ---------- header ------------------------------------------------------ */
+.article-head{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:clamp(64px,9vw,120px) var(--gutter) clamp(32px,4vw,48px);
+}
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--violet-soft);
+  background:var(--surface); border:1px solid var(--line);
+  padding:7px 14px; border-radius:var(--r-pill);
+  margin:0 0 var(--s3);
+}
+.eyebrow::before{
+  content:""; width:6px; height:6px; border-radius:50%;
+  background:var(--violet-soft);
+  box-shadow:0 0 10px rgba(169,113,247,.9);
+}
+
+h1{
+  font-size:clamp(34px,5vw,58px);
+  line-height:1.08;
+  letter-spacing:-.025em;
+  font-weight:800;
+  margin:0 0 var(--s3);
+  text-wrap:balance;
+}
+h1 .accent{
+  background:var(--grad-text);
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+}
+
+.deck{
+  font-size:clamp(18px,2.1vw,21px);
+  line-height:1.6;
+  color:var(--text-2);
+  margin:0 0 var(--s4);
+  max-width:62ch;
+}
+
+.meta{
+  display:flex; flex-wrap:wrap; align-items:center; gap:var(--s2);
+  font-size:14px; color:var(--text-3);
+  padding-top:var(--s3);
+  border-top:1px solid var(--line);
+}
+.meta .dot{ width:3px; height:3px; border-radius:50%; background:var(--text-3); }
+
+/* ---------- table of contents ------------------------------------------- */
+.toc{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:0 0 var(--s6);
+}
+.toc h2{
+  font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--text-3); margin:0 0 var(--s3); padding:0; border:0;
+}
+.toc ol{
+  list-style:none; margin:0; padding:0;
+  counter-reset:toc;
+  display:grid; gap:2px;
+}
+.toc li{ counter-increment:toc; margin:0; }
+.toc a{
+  display:flex; gap:14px; align-items:baseline;
+  color:var(--text-2); text-decoration:none;
+  font-size:15px; line-height:1.5;
+  padding:8px 10px; margin:0 -10px;
+  border-radius:var(--r-xs);
+  transition:color var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+.toc a::before{
+  content:counter(toc,decimal-leading-zero);
+  font-family:var(--font-mono); font-size:12px; font-weight:600;
+  color:var(--text-3); flex:none; min-width:22px;
+  transition:color var(--fast) var(--ease);
+}
+.toc a:hover{ color:var(--text); background:var(--surface); }
+.toc a:hover::before{ color:var(--violet-soft); }
+
+/* ---------- body typography --------------------------------------------- */
+.article p{ margin:0 0 1.1em; color:#D5DBE9; }
+.article p.lead{ font-size:20px; color:var(--text); }
+
+.article h2{
+  font-size:clamp(26px,3.2vw,34px);
+  line-height:1.2;
+  letter-spacing:-.02em;
+  font-weight:700;
+  color:var(--text);
+  margin:var(--s7) 0 var(--s3);
+  padding-top:var(--s5);
+  border-top:1px solid var(--line);
+  scroll-margin-top:32px;
+  text-wrap:balance;
+}
+.article h2:first-of-type{ margin-top:0; }
+
+.article h2 .num{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:13px; font-weight:600; letter-spacing:.16em;
+  color:var(--violet-soft);
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
+
+.article strong{ color:var(--text); font-weight:700; }
+
+.article ul{
+  margin:0 0 1.4em;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:10px;
+}
+.article ul li{
+  position:relative;
+  padding-left:26px;
+  color:#D5DBE9;
+  line-height:1.6;
+}
+.article ul li::before{
+  content:"";
+  position:absolute; left:6px; top:.68em;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--violet);
+  box-shadow:0 0 8px rgba(139,59,241,.55);
+}
+
+/* ---------- pull quote --------------------------------------------------- */
+blockquote{
+  margin:var(--s4) 0;
+  padding:var(--s3) var(--s4);
+  border-left:2px solid var(--violet);
+  background:linear-gradient(90deg,rgba(139,59,241,.10),transparent 80%);
+  border-radius:0 var(--r-md) var(--r-md) 0;
+}
+blockquote p{
+  margin:0;
+  font-size:20px;
+  line-height:1.5;
+  font-weight:600;
+  color:var(--text);
+}
+
+/* ---------- callouts ----------------------------------------------------- */
+.callout{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:var(--s4) 0 var(--s5);
+}
+.callout .label{
+  display:block;
+  font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--text-3);
+  margin-bottom:var(--s2);
+}
+.callout p:last-child, .callout ul:last-child{ margin-bottom:0; }
+
+.formula{
+  font-family:var(--font-mono);
+  font-size:clamp(15px,2.1vw,19px);
+  font-weight:600;
+  line-height:1.6;
+  color:var(--text);
+  background:var(--bg-deep);
+  border:1px solid var(--line-strong);
+  border-radius:var(--r-md);
+  padding:var(--s3);
+  margin:0 0 var(--s3);
+  text-align:center;
+  overflow-x:auto;
+}
+.formula .op{ color:var(--violet-soft); }
+
+/* ---------- numbers strip ------------------------------------------------ */
+.figures{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:var(--s2);
+  margin:var(--s4) 0 var(--s5);
+  padding:0; list-style:none;
+}
+.figures li{ padding:0; }
+.figures li::before{ display:none; }
+.fig{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:var(--s3) var(--s2);
+  text-align:center;
+}
+.fig .v{
+  display:block;
+  font-size:28px; font-weight:800; letter-spacing:-.02em; line-height:1.1;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.fig .k{
+  display:block;
+  font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.fig.is-bad .v{ color:var(--red); }
+.fig.is-real .v{ color:var(--green); }
+
+/* ---------- divider ------------------------------------------------------ */
+.rule{
+  height:1px; border:0;
+  background:var(--grad-rule);
+  margin:var(--s6) 0;
+}
+
+/* ---------- closing CTA -------------------------------------------------- */
+.cta{
+  max-width:var(--measure);
+  margin:var(--s7) auto 0;
+  padding:clamp(32px,5vw,56px) var(--gutter);
+  text-align:center;
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-xl);
+  box-shadow:var(--sh-2);
+}
+.cta h2{
+  font-size:clamp(24px,3vw,32px);
+  font-weight:700; letter-spacing:-.02em; line-height:1.2;
+  margin:0 0 var(--s2); padding:0; border:0;
+  text-wrap:balance;
+}
+.cta p{
+  color:var(--text-2);
+  max-width:52ch;
+  margin:0 auto var(--s4);
+  font-size:17px;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--grad-brand);
+  color:#fff; text-decoration:none;
+  font-weight:600; font-size:16px;
+  padding:14px 28px;
+  border-radius:var(--r-pill);
+  box-shadow:var(--sh-brand);
+  transition:transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+.btn:hover{ transform:translateY(-2px); box-shadow:0 22px 50px rgba(107,63,232,.45); }
+.btn svg{ width:18px; height:18px; }
+
+/* ---------- responsive --------------------------------------------------- */
+@media (max-width:640px){
+  body{ font-size:17px; }
+  .article p.lead{ font-size:18px; }
+  blockquote p{ font-size:18px; }
+  .article h2{ margin-top:var(--s6); padding-top:var(--s4); }
+}
+
+/* ---------- print -------------------------------------------------------- */
+@media print{
+  .bg-layer,.toc,.cta,.skip-link{ display:none; }
+  body{ background:#fff; color:#111; font-size:12pt; }
+  .article p,.article ul li{ color:#222; }
+  .article h2{ color:#000; }
+}
+.back-link{ margin:0 0 28px; font-size:13px; }
+.back-link a{ color:var(--text-2); text-decoration:none; }
+.back-link a:hover{ color:var(--text); }
+
+/* ── HERO IMAGE ─────────────────────────────────────────────────────── */
+.hero-shot{
+  margin:0 0 52px;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  background:var(--bg-raise);
+  line-height:0;
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+.hero-shot img{ width:100%; height:auto; display:block; }
+
+/* ── MISTAKE CARDS ──────────────────────────────────────────────────── */
+.mistake{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.mistake::before{
+  content:"";
+  position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+  background:var(--amber);
+}
+.mistake h2{ margin-top:0 !important; }
+.article .mistake h2:first-of-type{ margin-top:0; }
+
+/* ── PULL QUOTES ────────────────────────────────────────────────────── */
+blockquote{
+  margin:44px 0;
+  padding:0 0 0 26px;
+  border-left:3px solid var(--amber);
+  background:none;
+}
+blockquote p{
+  font-size:23px;
+  line-height:1.45;
+  font-style:italic;
+  font-weight:600;
+  color:var(--text);
+  margin:0;
+}
+
+/* ── MID-ARTICLE STRIP ──────────────────────────────────────────────── */
+.strip{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px; flex-wrap:wrap;
+  margin:44px 0;
+  padding:26px 30px;
+  border-radius:16px;
+  background:linear-gradient(120deg,#0A1224,#131A33);
+  border:1px solid var(--line-strong);
+}
+.strip h3{ margin:0 0 6px; font-size:19px; color:var(--text); }
+.strip p{ margin:0; font-size:14px; color:var(--text-2); }
+.strip-btn{
+  flex:0 0 auto;
+  display:inline-block;
+  padding:12px 22px;
+  border-radius:10px;
+  background:var(--amber);
+  color:#1A1200;
+  font-size:14px; font-weight:700;
+  text-decoration:none;
+  transition:filter .15s ease;
+}
+.strip-btn:hover{ filter:brightness(1.08); }
+
+@media (max-width:640px){
+  .mistake{ padding:24px 20px 8px; }
+  .mistake::before{ top:20px; bottom:20px; }
+  blockquote p{ font-size:20px; }
+  .strip{ padding:22px; }
+  .strip-btn{ width:100%; text-align:center; }
+}
+
+/* ── WIDE SHELL: content + rail, so the page uses the screen ─────────── */
+.shell{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 var(--gutter);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 300px;
+  gap:64px;
+  align-items:start;
+}
+.shell > .article{ max-width:none; margin:0; padding:0 0 var(--s8); }
+
+.rail{ position:sticky; top:40px; display:flex; flex-direction:column; gap:14px; }
+.rail-card{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+  padding:20px;
+}
+.rail-k{
+  display:block; margin-bottom:10px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.rail-v{
+  display:block; margin-bottom:10px;
+  font-size:34px; line-height:1; font-weight:800; letter-spacing:-.02em;
+  color:var(--green);
+}
+.rail-v.is-amber{ color:var(--amber); }
+.rail-v.is-violet{ color:var(--violet-soft); }
+.rail-card p{ margin:0; font-size:13px; line-height:1.55; color:var(--text-2); }
+.rail-src{
+  margin:0; padding-top:14px;
+  border-top:1px solid var(--line);
+  font-size:11px; line-height:1.5; color:var(--text-3);
+}
+
+/* header + hero align to the same shell */
+.article-head, .hero-shot{ max-width:1180px; }
+
+/* ── HERO: a band, not a giant square ───────────────────────────────── */
+.hero-shot{
+  margin:0 auto 56px;
+  padding:0 var(--gutter);
+  border:0; background:none; box-shadow:none;
+  border-radius:0;
+  overflow:visible;
+}
+.hero-shot img{
+  width:100%;
+  height:clamp(260px,32vw,400px);
+  object-fit:cover;
+  object-position:center 42%;
+  border-radius:18px;
+  border:1px solid var(--line-strong);
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+
+/* ── THE FIX callout ────────────────────────────────────────────────── */
+.fixbox{
+  margin:22px 0 4px;
+  padding:16px 18px;
+  border-radius:12px;
+  border:1px solid rgba(46,212,122,.28);
+  background:rgba(46,212,122,.07);
+}
+.fixbox-k{
+  display:block; margin-bottom:6px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--green);
+}
+.fixbox p{ margin:0 !important; color:var(--text) !important; }
+
+@media (max-width:1080px){
+  .shell{ grid-template-columns:1fr; gap:40px; max-width:820px; }
+  .rail{ position:static; flex-direction:row; flex-wrap:wrap; }
+  .rail-card{ flex:1 1 220px; }
+  .rail-src{ flex:1 1 100%; border-top:0; padding-top:0; }
+  .article-head, .hero-shot{ max-width:820px; }
+}
+@media (max-width:640px){
+  .shell{ gap:28px; }
+  .hero-shot img{ height:210px; }
+}
+
+/* ── STEP / METRIC CARDS (same treatment as .mistake) ───────────────── */
+.step, .metric{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.step::before, .metric::before{
+  content:""; position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0; background:var(--amber);
+}
+.metric::before{ background:var(--blue-soft); }
+.step h2, .metric h2, .step h3, .metric h3{ margin-top:0 !important; }
+.article .step h2:first-of-type, .article .metric h2:first-of-type{ margin-top:0; }
+
+.metric h3{
+  font-size:20px; line-height:1.3; color:var(--text);
+  margin:0 0 14px; letter-spacing:-.01em;
+}
+.metric h3 .num{
+  display:inline-block; margin-right:10px;
+  min-width:26px; height:26px; line-height:26px; text-align:center;
+  border-radius:7px;
+  background:rgba(126,179,255,.14); color:var(--blue-soft);
+  font-size:12px; font-weight:700;
+}
+
+/* ── WARNING CARDS ──────────────────────────────────────────────────── */
+.warn{
+  position:relative;
+  border:1px solid rgba(240,67,92,.30);
+  border-radius:14px;
+  background:rgba(240,67,92,.07);
+  padding:22px 24px 6px;
+  margin:0 0 18px;
+}
+.warn h3{
+  margin:0 0 10px; font-size:17px; color:var(--text); line-height:1.35;
+}
+.warn h3::before{ content:"\26A0"; margin-right:9px; color:var(--red); }
+
+/* ── LEAD-TIME TABLE ────────────────────────────────────────────────── */
+.ltable{
+  width:100%; border-collapse:collapse;
+  margin:0 0 var(--s3);
+  font-size:15px;
+}
+.ltable th, .ltable td{
+  padding:12px 14px;
+  border-bottom:1px solid var(--line);
+  text-align:left; color:var(--text-2);
+}
+.ltable th{
+  font-size:11px; text-transform:uppercase; letter-spacing:.09em;
+  color:var(--text-3); font-weight:700;
+}
+.ltable td:last-child, .ltable th:last-child{ text-align:right; font-variant-numeric:tabular-nums; }
+.ltable tr:last-child td{
+  border-bottom:0; border-top:1px solid var(--line-strong);
+  color:var(--text); font-weight:700;
+}
+
+/* ── ROUTINE CHECKLIST ──────────────────────────────────────────────── */
+.routine{ counter-reset:r; list-style:none; padding:0; margin:0 0 var(--s3); }
+.routine li{
+  counter-increment:r;
+  position:relative;
+  padding:14px 16px 14px 52px;
+  margin-bottom:8px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  color:var(--text);
+  font-size:15.5px; line-height:1.5;
+}
+.routine li::before{
+  content:counter(r);
+  position:absolute; left:16px; top:13px;
+  width:24px; height:24px; line-height:24px; text-align:center;
+  border-radius:7px;
+  background:var(--grad-brand); color:#fff;
+  font-size:12px; font-weight:700;
+}
+.routine li::marker{ content:none; }
+
+@media (max-width:640px){
+  .step, .metric{ padding:24px 20px 8px; }
+  .step::before, .metric::before{ top:20px; bottom:20px; }
+  .ltable{ font-size:14px; }
+  .ltable th, .ltable td{ padding:10px 8px; }
+}
+
+/* ── PROBLEM / ALTERNATIVE PAIRS ────────────────────────────────────── */
+.problem, .alt{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 14px;
+}
+.problem::before, .alt::before{
+  content:""; position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.problem::before{ background:var(--red); }
+.alt{ margin-bottom:34px; border-color:rgba(46,212,122,.24); background:rgba(46,212,122,.05); }
+.alt::before{ background:var(--green); }
+
+.problem h2, .alt h2, .problem h3, .alt h3{ margin-top:0 !important; }
+.article .problem h2:first-of-type, .article .alt h2:first-of-type{ margin-top:0; }
+
+.problem h2 .num{ color:var(--red); }
+.alt h2 .num{ color:var(--green); }
+
+/* ── DELIVERY / DEMAND SAMPLES ──────────────────────────────────────── */
+.samples{
+  display:flex; flex-wrap:wrap; gap:8px;
+  list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.samples li{
+  padding:9px 14px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  background:var(--bg-raise);
+  font-family:var(--font-mono);
+  font-size:14px;
+  color:var(--text-2);
+  margin:0;
+}
+.samples li::before{ content:none; }
+.samples li.is-hi{ border-color:rgba(240,67,92,.42); color:#FF9AA9; }
+
+/* ── SCENARIO TRIO ──────────────────────────────────────────────────── */
+.scenarios{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:12px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.scenarios li{ margin:0; padding:0; }
+.scenarios li::before{ content:none; }
+.scen{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  padding:18px;
+  text-align:center;
+}
+.scen .n{ display:block; font-size:26px; font-weight:800; letter-spacing:-.02em; color:var(--text); margin-bottom:5px; }
+.scen .l{ display:block; font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--text-3); }
+.scen.is-low .n{ color:var(--blue-soft); }
+.scen.is-mid .n{ color:var(--text); }
+.scen.is-high .n{ color:var(--amber); }
+
+/* ── SIDE-BY-SIDE COMPARISON ────────────────────────────────────────── */
+.versus{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.versus > div{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  padding:20px;
+}
+.versus h4{
+  margin:0 0 12px; font-size:13px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.07em; color:var(--text-3);
+}
+.versus .big{ display:block; font-size:24px; font-weight:800; letter-spacing:-.02em; color:var(--text); margin-bottom:4px; }
+.versus .sub{ display:block; font-size:13px; color:var(--text-2); }
+.versus .big.is-warn{ color:var(--amber); }
+
+/* ── FOUR PILLARS ───────────────────────────────────────────────────── */
+.pillars{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+  gap:10px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.pillars li{
+  margin:0; padding:20px 14px; text-align:center;
+  border:1px solid var(--line-strong);
+  border-radius:12px;
+  background:var(--bg-raise);
+  font-size:15px; font-weight:600; color:var(--text);
+}
+.pillars li::before{ content:none; }
+
+@media (max-width:640px){
+  .problem, .alt{ padding:24px 20px 8px; }
+  .problem::before, .alt::before{ top:20px; bottom:20px; }
+  .versus{ grid-template-columns:1fr; }
+}
+
+/* ── TWO-CAMP DEFENCE CARDS ─────────────────────────────────────────── */
+.camp{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 20px;
+}
+.camp::before{
+  content:""; position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.camp.is-simple::before{ background:var(--blue-soft); }
+.camp.is-complex::before{ background:var(--violet-soft); }
+.camp h2, .camp h3{ margin-top:0 !important; }
+.article .camp h2:first-of-type{ margin-top:0; }
+.camp.is-simple h2 .num{ color:var(--blue-soft); }
+.camp.is-complex h2 .num{ color:var(--violet-soft); }
+
+/* ── ASSUMPTION PAIR ────────────────────────────────────────────────── */
+.assume{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.assume > div{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--bg-raise);
+  padding:20px;
+}
+.assume h4{
+  margin:0 0 10px; font-size:11px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.09em; color:var(--text-3);
+}
+.assume .eq{
+  display:block; font-family:var(--font-mono); font-size:14px;
+  color:var(--text); margin-bottom:12px; line-height:1.5;
+}
+.assume .as{
+  display:block; font-size:13px; line-height:1.55; color:var(--text-2);
+  padding-top:12px; border-top:1px solid var(--line);
+}
+
+/* ── RANGE ROWS ─────────────────────────────────────────────────────── */
+.ranges{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.ranges li{
+  display:grid; grid-template-columns:1fr auto 1fr;
+  align-items:center; gap:16px;
+  margin:0 0 10px; padding:16px 18px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+}
+.ranges li::before{ content:none; }
+.ranges .no{ font-size:14px; color:var(--text-3); text-decoration:line-through; }
+.ranges .arrow{ color:var(--violet-soft); font-size:16px; }
+.ranges .yes{ font-size:15px; color:var(--text); font-weight:600; }
+
+/* ── STAGE LADDER ───────────────────────────────────────────────────── */
+.stages{ counter-reset:st; list-style:none; margin:0 0 var(--s3); padding:0; }
+.stages li{
+  counter-increment:st;
+  position:relative;
+  margin:0 0 10px; padding:20px 22px 20px 74px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+}
+.stages li::before{
+  content:"Stage " counter(st);
+  position:absolute; left:20px; top:20px;
+  width:40px; padding:5px 0; text-align:center;
+  border-radius:8px;
+  background:var(--grad-brand); color:#fff;
+  font-size:9px; font-weight:700; letter-spacing:.04em;
+  text-transform:uppercase; line-height:1.25;
+}
+.stages li::marker{ content:none; }
+.stages h4{ margin:0 0 8px; font-size:16px; color:var(--text); }
+.stages p{ margin:0 !important; font-size:14.5px; color:var(--text-2); }
+
+/* ── COMPANY A / B ──────────────────────────────────────────────────── */
+.duel{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.duel > div{
+  border:1px solid var(--line); border-radius:14px;
+  background:var(--grad-card); padding:22px;
+}
+.duel > div.wins{ border-color:rgba(46,212,122,.35); background:rgba(46,212,122,.06); }
+.duel h4{ margin:0 0 10px; font-size:14px; color:var(--text); }
+.duel p{ margin:0 !important; font-size:14px; line-height:1.6; color:var(--text-2); }
+.duel .tag{
+  display:inline-block; margin-top:12px; padding:4px 10px;
+  border-radius:5px; font-size:10px; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase;
+}
+.duel .tag.win{ background:rgba(46,212,122,.15); color:var(--green); }
+.duel .tag.lose{ background:rgba(240,67,92,.13); color:#FF9AA9; }
+
+@media (max-width:640px){
+  .camp{ padding:24px 20px 8px; }
+  .camp::before{ top:20px; bottom:20px; }
+  .assume, .duel{ grid-template-columns:1fr; }
+  .ranges li{ grid-template-columns:1fr; gap:6px; }
+  .ranges .arrow{ display:none; }
+}
+
+/* ── BUSINESS A / B PROFILE CARDS ───────────────────────────────────── */
+.profiles{
+  display:grid; grid-template-columns:1fr 1fr; gap:14px;
+  margin:0 0 var(--s3);
+}
+.profile{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:26px 26px 10px;
+}
+.profile::before{
+  content:""; position:absolute; left:0; top:22px; bottom:22px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.profile.is-slow::before{ background:var(--red); }
+.profile.is-fast::before{ background:var(--green); }
+.profile h4{
+  margin:0 0 4px; font-size:17px; color:var(--text); letter-spacing:-.01em;
+}
+.profile .tagline{
+  display:block; margin-bottom:16px;
+  font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+}
+.profile.is-slow .tagline{ color:#FF9AA9; }
+.profile.is-fast .tagline{ color:var(--green); }
+.profile ul{ margin:0 0 16px; }
+.profile li{ font-size:14.5px; }
+
+/* ── CAPITAL CYCLE ──────────────────────────────────────────────────── */
+.cycle{
+  display:flex; flex-wrap:wrap; align-items:center; gap:8px;
+  list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.cycle li{
+  margin:0; padding:11px 15px;
+  border:1px solid var(--line-strong);
+  border-radius:9px;
+  background:var(--bg-raise);
+  font-size:14px; color:var(--text);
+}
+.cycle li::before{ content:none; }
+.cycle .sep{
+  border:0; background:none; padding:0 2px;
+  color:var(--violet-soft); font-size:15px;
+}
+
+/* ── WAITING LIST (where capital idles) ─────────────────────────────── */
+.waiting{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.waiting li{
+  position:relative;
+  margin:0 0 7px; padding:12px 16px 12px 42px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--amber);
+  border-radius:10px;
+  background:var(--grad-card);
+  font-size:15px; color:var(--text-2);
+}
+.waiting li::before{
+  content:"\23F1";
+  position:absolute; left:14px; top:12px;
+  color:var(--amber); font-size:14px;
+}
+
+/* ── QUESTION BLOCK ─────────────────────────────────────────────────── */
+.qbox{
+  margin:var(--s4) 0;
+  padding:26px 28px;
+  border:1px solid var(--line-strong);
+  border-radius:16px;
+  background:linear-gradient(120deg,rgba(91,79,230,.16),rgba(139,59,241,.07));
+}
+.qbox .label{
+  display:block; margin-bottom:12px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--violet-soft);
+}
+.qbox ul{ margin:0; padding-left:1.2em; }
+.qbox li{ font-size:15.5px; color:var(--text); margin-bottom:9px; }
+.qbox li::before{ content:none; }
+.qbox p{ margin:0 !important; font-size:19px; line-height:1.5; color:var(--text); font-weight:600; }
+
+@media (max-width:640px){
+  .profiles{ grid-template-columns:1fr; }
+  .profile{ padding:22px 20px 8px; }
+  .qbox{ padding:22px 20px; }
+}
+
+/* ── SPEC TABLE INSIDE PROFILE CARDS ────────────────────────────────── */
+.spec{ list-style:none; margin:0 0 16px; padding:0; }
+.spec li{
+  display:flex; justify-content:space-between; align-items:baseline; gap:14px;
+  margin:0; padding:9px 0;
+  border-bottom:1px solid var(--line);
+  font-size:14px;
+}
+.spec li:last-child{ border-bottom:0; }
+.spec li::before{ content:none; }
+.spec .sk{ color:var(--text-3); }
+.spec .sv{ color:var(--text); font-weight:600; text-align:right; font-variant-numeric:tabular-nums; }
+.spec .sv.hot{ color:#FF9AA9; }
+.spec .sv.cool{ color:var(--green); }
+
+/* ── LEDGER / TRADE-OFF LIST ────────────────────────────────────────── */
+.tradeoff{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.tradeoff li{
+  position:relative;
+  margin:0 0 7px; padding:12px 16px 12px 40px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--red);
+  border-radius:10px;
+  background:rgba(240,67,92,.05);
+  font-size:15px; color:var(--text-2);
+}
+.tradeoff li::before{
+  content:"\2715";
+  position:absolute; left:15px; top:12px;
+  color:var(--red); font-size:12px;
+}
+
+/* ── ALLOCATION OPTIONS ─────────────────────────────────────────────── */
+.options{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:10px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.options li{
+  margin:0; padding:16px;
+  border:1px solid var(--line-strong);
+  border-radius:12px;
+  background:var(--bg-raise);
+  font-size:14.5px; color:var(--text);
+  text-align:center;
+}
+.options li::before{ content:none; }
+
+@media (max-width:640px){
+  .spec li{ font-size:13.5px; }
+}
+
+/* ── FOREGONE / WHAT YOU GAVE UP ────────────────────────────────────── */
+.forgone{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:10px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.forgone li{
+  position:relative;
+  margin:0; padding:16px 16px 16px 42px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  font-size:14.5px; line-height:1.5; color:var(--text-2);
+}
+.forgone li::before{
+  content:"\2205";
+  position:absolute; left:15px; top:15px;
+  color:var(--text-3); font-size:15px;
+}
+
+/* ── OPTIONALITY / TWO POSTURES ─────────────────────────────────────── */
+.posture{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.posture > div{
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:22px;
+  background:var(--grad-card);
+}
+.posture > div.open{ border-color:rgba(46,212,122,.30); background:rgba(46,212,122,.06); }
+.posture > div.shut{ border-color:rgba(240,67,92,.28); background:rgba(240,67,92,.05); }
+.posture h4{ margin:0 0 8px; font-size:15px; color:var(--text); }
+.posture p{ margin:0 !important; font-size:14.5px; line-height:1.6; color:var(--text-2); }
+
+/* ── THE TWO QUESTIONS ──────────────────────────────────────────────── */
+.swap{
+  margin:var(--s4) 0;
+  border:1px solid var(--line-strong);
+  border-radius:16px;
+  overflow:hidden;
+}
+.swap > div{ padding:22px 26px; }
+.swap .from{ background:rgba(240,67,92,.06); border-bottom:1px solid var(--line-strong); }
+.swap .to{ background:rgba(46,212,122,.06); }
+.swap .lab{
+  display:block; margin-bottom:8px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+}
+.swap .from .lab{ color:#FF9AA9; }
+.swap .to .lab{ color:var(--green); }
+.swap p{ margin:0 !important; font-size:19px; line-height:1.45; font-weight:600; color:var(--text); }
+
+@media (max-width:640px){
+  .posture{ grid-template-columns:1fr; }
+  .swap > div{ padding:20px; }
+  .swap p{ font-size:17px; }
+}
+</style>
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="bg-layer" aria-hidden="true"></div>
+
+<div class="wrap">
+
+<p class="back-link"><a href="/resources.html">&larr; Knowledge Hub</a></p>
+
+<header class="article-head">
+  <p class="eyebrow">Profit &amp; Finances</p>
+
+  <h1>The Opportunity Cost <span class="accent">Every Amazon Seller Ignores</span></h1>
+
+  <p class="deck">
+    Ask an Amazon seller how much a purchase order costs and they&rsquo;ll give you a
+    number. They&rsquo;re wrong &mdash; not because the invoice is incorrect, but because
+    the real cost is much higher than the amount you paid your supplier. The most
+    expensive decisions in your business are often the ones that never appear on
+    your P&amp;L.
+  </p>
+
+  <p class="meta">
+    <span>AmazeBase</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>7 min read</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>Profit &amp; Finances</span>
+  </p>
+</header>
+
+<figure class="hero-shot">
+  <img src="../assets/img/hero-opportunity-cost.jpg"
+       alt="A dark globe wrapped in a glowing supply-chain network, with shipping containers orbiting it"
+       width="1280" height="1098" loading="eager" decoding="async">
+</figure>
+
+<div class="shell">
+<main id="main" class="article">
+
+  <p class="lead">
+    Every business decision has two costs. The first is obvious. The second is
+    almost invisible. Economists call it opportunity cost &mdash; the value of the
+    best alternative you gave up. For experienced Amazon sellers it&rsquo;s often the
+    largest expense in the business, and the one almost nobody measures.
+  </p>
+
+  <div class="callout">
+    <span class="label">Related reading</span>
+    <p>
+      This completes a set with <a href="/articles/capital-velocity.html">capital
+      velocity</a> and <a href="/articles/worst-investment.html">why your best
+      seller may be your worst investment</a>.
+    </p>
+  </div>
+
+  <nav class="toc" aria-labelledby="toc-title">
+    <h2 id="toc-title">What&rsquo;s in this piece</h2>
+    <ol>
+      <li><a href="#once">Every dollar can only be spent once</a></li>
+      <li><a href="#unseen">The most expensive decision is the one you never see</a></li>
+      <li><a href="#safe">The hidden price of playing it safe</a></li>
+      <li><a href="#compete">Every SKU is competing for capital</a></li>
+      <li><a href="#schedule">The best opportunities rarely arrive on schedule</a></li>
+      <li><a href="#growth">Growth has an opportunity cost too</a></li>
+      <li><a href="#roi">Why ROI alone isn&rsquo;t enough</a></li>
+      <li><a href="#optionality">Optionality is an asset</a></li>
+    </ol>
+  </nav>
+
+  <hr class="rule">
+
+  <h2 id="once">Every dollar can only be spent once</h2>
+
+  <p>Imagine your business has $500,000 available and you decide to place a purchase order for your best-selling product. Simple enough &mdash; until you ask a different question: <strong>what else could that $500,000 have done?</strong></p>
+
+  <p>Maybe it could have funded:</p>
+
+  <ul class="forgone">
+    <li>Two new product launches</li>
+    <li>A larger order unlocking supplier discounts</li>
+    <li>An aggressive Prime Day campaign</li>
+    <li>Expansion into Europe</li>
+    <li>A strategic acquisition</li>
+    <li>Building inventory before competitors</li>
+    <li>Negotiating better payment terms elsewhere</li>
+  </ul>
+
+  <blockquote>
+    <p>The purchase order didn&rsquo;t just buy inventory. It eliminated every one of those possibilities. That&rsquo;s the real cost.</p>
+  </blockquote>
+
+  <h2 id="unseen">The most expensive decision is often the one you never see</h2>
+
+  <p>Most financial reports tell you what happened &mdash; revenue, expenses, profit, cash. None of them tell you what <em>didn&rsquo;t</em> happen.</p>
+
+  <ul class="forgone">
+    <li>The product you never launched</li>
+    <li>The supplier discount you couldn&rsquo;t accept</li>
+    <li>The advertising campaign you postponed</li>
+    <li>The competitor&rsquo;s inventory you couldn&rsquo;t buy</li>
+    <li>The seasonal opportunity you missed</li>
+  </ul>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The gap</span>
+    <p>Those decisions never appear on an income statement. Yet they shape the future of the business.</p>
+  </div>
+
+  <h2 id="safe">The hidden price of playing it safe</h2>
+
+  <p>Successful sellers naturally become more cautious as they grow. The stakes get higher, purchase orders get bigger, payroll grows, mistakes get more expensive.</p>
+
+  <p>So many businesses respond by investing more heavily in what already works. More inventory, more advertising, more of the same products. It feels responsible &mdash; and sometimes it is. But sometimes it&rsquo;s simply avoiding uncertainty.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The irony</span>
+    <p>Over-investing in yesterday&rsquo;s winners can quietly prevent tomorrow&rsquo;s opportunities.</p>
+  </div>
+
+  <h2 id="compete">Every SKU is competing for capital</h2>
+
+  <p>Most sellers think products compete for sales. They don&rsquo;t &mdash; they compete for capital.</p>
+
+  <p>Imagine your catalogue has 80 products. Only a handful can receive meaningful investment this quarter. Every additional dollar allocated to one SKU is one less available for another. That means every product is effectively standing in line asking the same question:</p>
+
+  <div class="qbox">
+    <span class="label">What every SKU is asking</span>
+    <p>Why should the business invest in me instead of everything else?</p>
+  </div>
+
+  <p>Very few businesses force their products to answer that question. They simply invest based on habit.</p>
+
+  <h2 id="inventory">The opportunity cost of inventory</h2>
+
+  <p>Inventory feels productive. It&rsquo;s tangible, visible, it fills warehouses and creates a sense of security. But inventory is also cash wearing a different disguise.</p>
+
+  <p>Every pallet sitting on a shelf is money that cannot:</p>
+
+  <ul class="samples">
+    <li>Fund a new product</li><li>Increase advertising</li>
+    <li>Pay for automation</li><li>Improve packaging</li>
+    <li>Reduce supplier costs</li><li>Build strategic reserves</li>
+  </ul>
+
+  <blockquote>
+    <p>Inventory doesn&rsquo;t simply occupy warehouse space. It occupies future possibilities.</p>
+  </blockquote>
+
+<aside class="strip">
+  <div>
+    <h3>See what your next order costs you</h3>
+    <p>AmazeBase shows the capital each decision commits, and what it leaves you free to do.</p>
+  </div>
+  <a class="strip-btn" href="/index.html#pricing">Join the Wait List</a>
+</aside>
+
+  <h2 id="schedule">The best opportunities rarely arrive on schedule</h2>
+
+  <p>Imagine a supplier calls tomorrow offering a one-time 15% discount if you place a larger order immediately. Can you take it?</p>
+
+  <p>Now imagine a competitor exits the market and their remaining inventory becomes available at an exceptional price. Can you buy it? Or a new product suddenly shows extraordinary demand &mdash; can you launch quickly?</p>
+
+  <div class="posture">
+    <div class="open">
+      <h4>Capital available</h4>
+      <p>You see opportunities. You can move before anyone else has finished deliberating.</p>
+    </div>
+    <div class="shut">
+      <h4>Capital fully committed</h4>
+      <p>You see problems. The opportunity is real but you can only watch it pass.</p>
+    </div>
+  </div>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The point</span>
+    <p>Liquidity isn&rsquo;t just about safety. It&rsquo;s about optionality.</p>
+  </div>
+
+  <h2 id="growth">Growth has an opportunity cost too</h2>
+
+  <p>Even success has trade-offs. Imagine one product suddenly doubles in sales. Fantastic &mdash; but supporting that growth requires larger purchase orders, more advertising, higher safety stock, additional warehouse space and supplier expansion.</p>
+
+  <p>Before long, your fastest-growing product begins consuming every available dollar. You delay launching other products, reduce investment elsewhere, postpone strategic initiatives. The business becomes dependent on one opportunity while quietly sacrificing dozens of others.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The trade</span>
+    <p>Growth has a cost. Sometimes it&rsquo;s the opportunities you no longer have room to pursue.</p>
+  </div>
+
+  <h2 id="speed">Amazon rewards speed. Opportunity cost punishes delay.</h2>
+
+  <p>Many Amazon opportunities have expiration dates &mdash; seasonal products, trending keywords, supplier discounts, marketplace expansions, acquisitions. If capital is tied up elsewhere, timing disappears.</p>
+
+  <blockquote>
+    <p>In fast-moving businesses, delayed decisions are often equivalent to missed decisions.</p>
+  </blockquote>
+
+  <h2 id="roi">Why ROI alone isn&rsquo;t enough</h2>
+
+  <p>Return on investment is useful, but it tells only part of the story. Imagine two investments.</p>
+
+  <div class="versus">
+    <div>
+      <h4>Investment A</h4>
+      <span class="big">30%</span>
+      <span class="sub">The obvious choice on percentage alone.</span>
+    </div>
+    <div>
+      <h4>Investment B</h4>
+      <span class="big is-warn">24%</span>
+      <span class="sub">Lower return &mdash; but look at what else it does.</span>
+    </div>
+  </div>
+
+  <p>Most businesses immediately choose A. But what if Investment B returns cash in six weeks, requires half the management effort, creates cross-selling opportunities, improves supplier relationships, reduces operational complexity and supports future expansion?</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The reframe</span>
+    <p>The comparison isn&rsquo;t just about percentage returns &mdash; it&rsquo;s about strategic value. The best investments create more opportunities than they consume.</p>
+  </div>
+
+  <h2 id="committee">Think like an investment committee</h2>
+
+  <p>Large investment firms don&rsquo;t approve projects simply because they&rsquo;re profitable. They ask difficult questions:</p>
+
+  <div class="qbox">
+    <span class="label">Committee questions</span>
+    <ul>
+      <li>Is this the best use of capital?</li>
+      <li>What alternatives exist?</li>
+      <li>What risks are we accepting?</li>
+      <li>What opportunities are we giving up?</li>
+      <li>How will this affect future flexibility?</li>
+    </ul>
+  </div>
+
+  <p>Before approving every major purchase order, ask: <strong>if we couldn&rsquo;t buy this inventory, where else would we invest the money?</strong> The answer is often surprisingly revealing.</p>
+
+  <h2 id="compound">The businesses that compound keep their options open</h2>
+
+  <p>One characteristic appears repeatedly in companies that scale successfully: they maintain flexibility. Not because they dislike investing, but because they understand the future is unpredictable.</p>
+
+  <p>Opportunities rarely arrive according to quarterly planning meetings. Businesses with available capital can act immediately. Businesses without it must watch others move first.</p>
+
+  <blockquote>
+    <p>Capital isn&rsquo;t valuable only because it earns returns. It&rsquo;s valuable because it creates choices.</p>
+  </blockquote>
+
+  <h2 id="optionality">Optionality is an asset</h2>
+
+  <p>Financial statements list assets like cash, inventory, equipment and buildings. But there&rsquo;s another asset that rarely appears: <strong>the ability to choose</strong>. To launch. To negotiate. To acquire. To react. To pivot. To invest.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The balance</span>
+    <p>Every unnecessary commitment reduces those choices. Every efficient allocation expands them. Optionality may be one of the most valuable assets an Amazon business can build &mdash; it simply doesn&rsquo;t fit neatly into traditional accounting.</p>
+  </div>
+
+  <h2 id="question">Stop asking &ldquo;can we afford it?&rdquo;</h2>
+
+  <p>That&rsquo;s the wrong question. Most growing businesses can technically afford many investments.</p>
+
+  <div class="swap">
+    <div class="from">
+      <span class="lab">Focuses on affordability</span>
+      <p>&ldquo;Can we afford it?&rdquo;</p>
+    </div>
+    <div class="to">
+      <span class="lab">Focuses on allocation</span>
+      <p>&ldquo;Is this the best possible use of our capital right now?&rdquo;</p>
+    </div>
+  </div>
+
+  <p>Those questions sound similar. They&rsquo;re worlds apart.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The difference</span>
+    <p>Businesses become extraordinary not because they avoid bad decisions, but because they consistently choose better ones.</p>
+  </div>
+
+  <hr class="rule">
+
+  <h2 id="final">Final thoughts</h2>
+
+  <p>Every purchase order has a visible cost. Every advertising campaign has a visible cost. Every product launch has a visible cost. The decisions that shape the future of your business, however, are often defined by invisible ones &mdash; the opportunities postponed, the investments never made, the flexibility quietly lost.</p>
+
+  <p>Experienced sellers eventually discover that managing capital isn&rsquo;t just about maximising returns. It&rsquo;s about preserving the ability to pursue the next great opportunity when it appears.</p>
+
+  <blockquote>
+    <p>In business, the most expensive decision is rarely the one you made. It&rsquo;s often the one you unknowingly made impossible.</p>
+  </blockquote>
+
+</main>
+
+<aside class="rail" aria-label="Key ideas from this article">
+
+  <div class="rail-card">
+    <span class="rail-k">One order, seven alternatives</span>
+    <span class="rail-v is-amber">$500K</span>
+    <p>A single purchase order. It also cancelled two launches, a supplier discount, a Prime Day campaign, a market expansion and more.</p>
+  </div>
+
+  <div class="rail-card">
+    <span class="rail-k">ROI isn&rsquo;t the whole story</span>
+    <span class="rail-v">30% vs 24%</span>
+    <p>The lower return can win if it frees cash in six weeks, needs less management and opens further options.</p>
+  </div>
+
+  <div class="rail-card">
+    <span class="rail-k">The asset nobody books</span>
+    <span class="rail-v is-violet">Choice</span>
+    <p>Optionality never appears on a balance sheet, but it decides whether you can act when the opportunity arrives.</p>
+  </div>
+
+  <p class="rail-src">Figures from this article&rsquo;s worked examples, not an industry survey.</p>
+
+</aside>
+</div>
+
+<aside class="cta">
+  <h2>Know what each decision costs you</h2>
+  <p>
+    AmazeBase connects your sales, inventory, suppliers and cash flow so you can
+    see what a purchase order commits &mdash; and what it leaves you free to do.
+  </p>
+  <a class="btn" href="/index.html#pricing">
+    Join the Wait List
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M5 12h14M13 6l6 6-6 6"/>
+    </svg>
+  </a>
+</aside>
+
+</div><!-- /.wrap -->
+
+</body>
+</html>

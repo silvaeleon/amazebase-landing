@@ -96,6 +96,26 @@
   ],
   "resources": [
     {
+      "id": "opportunity-cost",
+      "title": "The Opportunity Cost Every Amazon Seller Ignores",
+      "summary": "Ask a seller what a purchase order costs and they'll quote the invoice. The real cost is every alternative that order made impossible — and it never appears on a P&L.",
+      "category": "profit",
+      "format": "article",
+      "author": "AmazeBase",
+      "published": "2026-08-09",
+      "minutes": 7,
+      "featured": true,
+      "url": "articles/opportunity-cost.html",
+      "topics": [
+        "Opportunity Cost",
+        "Capital Allocation",
+        "Optionality",
+        "Purchase Orders",
+        "Cash Flow Management",
+        "Portfolio Allocation"
+      ]
+    },
+    {
       "id": "best-seller-worst-investment",
       "title": "Your Best-Selling Product Might Be Your Worst Investment",
       "summary": "Why the SKU generating the most revenue isn't always the one that deserves your next dollar. Revenue measures popularity, not efficiency — and every purchase order is really an investment decision.",
