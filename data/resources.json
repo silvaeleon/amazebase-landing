@@ -137,6 +137,29 @@
   ],
   "resources": [
     {
+      "id": "products-that-compound",
+      "title": "Your Next Product Should Make Your Existing Business Stronger",
+      "summary": "Six unconnected products share nothing; six connected ones share fifteen advantages. The best launches don't just add revenue — they lower acquisition costs, deepen suppliers and make everything already built perform better.",
+      "category": "research",
+      "format": "article",
+      "level": "expert",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-09",
+      "minutes": 7,
+      "featured": true,
+      "url": "articles/products-that-compound.html",
+      "topics": [
+        "Product Research",
+        "Portfolio Allocation",
+        "Brand Building",
+        "Customer Lifetime Value",
+        "Compounding",
+        "Suppliers",
+        "Competitive Moat"
+      ]
+    },
+    {
       "id": "capital-allocation-products",
       "title": "Every Product Is a Capital Allocation Decision",
       "summary": "$2M of revenue on $1.8M of capital is a worse business than $800K on $180K. Most sellers ask whether a product can make money; the best ask whether it deserves capital that can only be spent once.",
