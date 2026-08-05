@@ -137,6 +137,29 @@
   ],
   "resources": [
     {
+      "id": "winning-markets",
+      "title": "Stop Looking for Winning Products. Start Looking for Winning Markets.",
+      "summary": "Products have life cycles; markets have ecosystems. The mistake isn't picking the wrong product — it's picking the right one in a market you'll never own. Knowledge compounds inside markets, not SKUs.",
+      "category": "research",
+      "format": "article",
+      "level": "expert",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-04",
+      "minutes": 7,
+      "featured": true,
+      "url": "articles/winning-markets.html",
+      "topics": [
+        "Product Research",
+        "Market Analysis",
+        "Brand Building",
+        "Portfolio Allocation",
+        "Customer Lifetime Value",
+        "Competitive Moat",
+        "Compounding"
+      ]
+    },
+    {
       "id": "product-research-wrong-data",
       "title": "Why Most Product Research Is Looking at the Wrong Data",
       "summary": "Search volume, revenue estimates and review counts all describe demand that already happened. Research isn't about finding good ideas — it's deciding which single opportunity deserves capital you can only spend once.",
