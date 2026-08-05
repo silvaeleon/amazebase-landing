@@ -73,16 +73,32 @@
     return "i-report";
   }
 
+  /* A resource may belong to more than one category. `categories` (array) wins
+     if present; `category` (string) is the original single-value form and is
+     still supported, so no existing entry needs rewriting. Everything that
+     reads a category goes through this — filtering, counting and search. */
+  function catsOf(r) {
+    if (r.categories && r.categories.length) return r.categories;
+    return r.category ? [r.category] : [];
+  }
+
+  function inCat(r, id) {
+    return catsOf(r).indexOf(id) !== -1;
+  }
+
   /* ---------------------------------------------------------------- FILTER */
 
   function visible() {
     var q = state.query.trim().toLowerCase();
     return state.all.filter(function (r) {
-      if (state.category && r.category !== state.category) return false;
+      if (state.category && !inCat(r, state.category)) return false;
       if (state.format   && r.format   !== state.format)   return false;
       if (state.topic && (r.topics || []).indexOf(state.topic) === -1) return false;
       if (!q) return true;
-      var hay = [r.title, r.summary, r.author, labelFor(state.categories, r.category)]
+      var catNames = catsOf(r).map(function (c) {
+                       return labelFor(state.categories, c);
+                     });
+      var hay = [r.title, r.summary, r.author].concat(catNames)
                   .concat(r.topics || []).join(" ").toLowerCase();
       return hay.indexOf(q) !== -1;
     }).sort(function (a, b) {
@@ -120,7 +136,7 @@
     var wrap = $("[data-hub-categories]");
     clear(wrap);
     state.categories.forEach(function (c) {
-      var n = countIn(function (r) { return r.category === c.id; });
+      var n = countIn(function (r) { return inCat(r, c.id); });
       var b = el("button", "hub-cat" + (state.category === c.id ? " is-on" : ""));
       b.type = "button";
       b.setAttribute("aria-pressed", state.category === c.id ? "true" : "false");

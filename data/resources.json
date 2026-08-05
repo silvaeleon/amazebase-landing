@@ -12,7 +12,9 @@
     "REQUIRED per entry: id, title, summary, category, format, published, url.",
     "OPTIONAL: author, minutes, featured, thumb, topics[].",
     "",
-    "category must be one of the ids in `categories` below.",
+    "category must be one of the ids in `categories` below. A resource that",
+    "  belongs in two places may instead use `categories`: [\"ppc\",\"inventory\"] —",
+    "  it then appears under, and counts toward, every category listed.",
     "format   must be one of the ids in `formats` below.",
     "published is ISO yyyy-mm-dd. Sorting is newest first.",
     "featured: true promotes it to the 'Featured' block. The newest featured",
@@ -95,6 +97,30 @@
     }
   ],
   "resources": [
+    {
+      "id": "advertising-is-inventory",
+      "title": "Every Advertising Decision Is Actually an Inventory Decision",
+      "summary": "The most expensive PPC mistake isn't overspending on ads — it's creating demand your supply chain can't support. Advertising doesn't report demand, it writes purchase orders your supplier hasn't seen yet.",
+      "categories": [
+        "ppc",
+        "inventory"
+      ],
+      "format": "article",
+      "author": "AmazeBase",
+      "published": "2026-08-22",
+      "minutes": 7,
+      "featured": true,
+      "url": "articles/advertising-is-inventory.html",
+      "topics": [
+        "Inventory Forecasting",
+        "Capital Allocation",
+        "Cash Flow",
+        "Lead Time",
+        "Campaign Strategy",
+        "Demand Forecasting",
+        "Stockouts"
+      ]
+    },
     {
       "id": "forecasting-not-math-podcast",
       "title": "Inventory Forecasting Is Not a Math Problem",
