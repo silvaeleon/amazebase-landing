@@ -96,6 +96,26 @@
   ],
   "resources": [
     {
+      "id": "attribution-vs-incrementality",
+      "title": "The Most Important PPC Question Isn't “Did It Generate Sales?” It's “Would Those Sales Have Happened Anyway?”",
+      "summary": "Attribution tells you where a sale was recorded. Incrementality tells you where value was created. Spend $100K, see $620K attributed — how much of it would have arrived anyway?",
+      "category": "ppc",
+      "format": "article",
+      "author": "AmazeBase",
+      "published": "2026-08-16",
+      "minutes": 6,
+      "featured": true,
+      "url": "articles/attribution-vs-incrementality.html",
+      "topics": [
+        "Incrementality",
+        "Attribution",
+        "ROAS",
+        "Customer Acquisition",
+        "Organic Ranking",
+        "Opportunity Cost"
+      ]
+    },
+    {
       "id": "advertising-portfolio",
       "title": "Stop Managing Campaigns. Start Managing an Advertising Portfolio.",
       "summary": "The best Amazon advertisers don't think like marketers — they think like investment managers. Your account isn't a collection of campaigns. It's a portfolio, and portfolios are managed differently.",
