@@ -428,3 +428,41 @@
 
 .hub-pill-n{ font-size:.74rem; color:var(--ink-3); font-variant-numeric:tabular-nums; }
 .hub-pill.is-on .hub-pill-n{ color:var(--ink-2); }
+
+
+/* ── Hero figure ──────────────────────────────────────────────────────
+   The hub's own version of the diagram that heads every article: four
+   clusters, one per active category, linked to one another. Decorative in
+   effect but described for screen readers, since it is the only image on
+   the page. Collapses below the copy on narrow screens rather than
+   shrinking to illegibility. */
+.hub-hero-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,.82fr);
+  gap:var(--s5);
+  align-items:center;
+}
+
+.hub-hero-copy{ min-width:0; }
+.hub-hero-copy .hub-lead{ max-width:52ch; }
+
+.hub-fig{
+  margin:0;
+  min-width:0;
+  border:1px solid var(--line);
+  border-radius:var(--r3);
+  background:var(--surface);
+  padding:var(--s4);
+}
+
+.hub-fig-svg{ width:100%; height:auto; display:block; }
+
+@media (max-width:960px){
+  .hub-hero-grid{ grid-template-columns:1fr; gap:var(--s4); }
+  .hub-fig{ order:-1; }
+  .hub-fig-svg{ max-height:200px; }
+}
+
+@media (max-width:640px){
+  .hub-fig{ display:none; }
+}
