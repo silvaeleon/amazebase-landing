@@ -137,6 +137,29 @@
   ],
   "resources": [
     {
+      "id": "attention-is-the-asset",
+      "title": "Your Most Valuable Asset Isn't Inventory. It's Attention.",
+      "summary": "Capital can be borrowed, inventory manufactured, staff hired. Attention can only be redirected — and in most growing businesses it, not money, is the binding constraint. What leaks it, and what systems are really for.",
+      "category": "growth",
+      "format": "article",
+      "level": "expert",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-08-29",
+      "minutes": 7,
+      "featured": true,
+      "url": "articles/attention-is-the-asset.html",
+      "topics": [
+        "Leadership",
+        "Decision Making",
+        "Operating Systems",
+        "Focus",
+        "Delegation",
+        "Scaling",
+        "Opportunity Cost"
+      ]
+    },
+    {
       "id": "growth-is-cash-flow",
       "title": "Growth Is Usually a Cash Flow Problem Disguised as a Sales Problem",
       "summary": "Past a certain size, demand stops being the constraint and capital becomes it. Why every sale creates nine future obligations, why profit can't pay a supplier deposit, and why allocation — not budgeting — is the CEO's real job.",
