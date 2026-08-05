@@ -137,6 +137,29 @@
   ],
   "resources": [
     {
+      "id": "risk-research",
+      "title": "Product Research Is Really Risk Research",
+      "summary": "A product with a 5% chance of a $500K loss is 12.5x riskier than one with a 20% chance of losing $10K. Upside creates growth; downside determines survival — and most research only models one of them.",
+      "category": "research",
+      "format": "article",
+      "level": "expert",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-11",
+      "minutes": 7,
+      "featured": true,
+      "url": "articles/risk-research.html",
+      "topics": [
+        "Product Research",
+        "Risk",
+        "Suppliers",
+        "Regulation",
+        "Concentration",
+        "Decision Making",
+        "Resilience"
+      ]
+    },
+    {
       "id": "overestimating-tam",
       "title": "Why Amazon Sellers Overestimate TAM (And Why Smaller Markets Often Build Bigger Businesses)",
       "summary": "Market size tells you how much money exists, not how much remains available. Sellers quote TAM because it's the biggest number, but businesses survive inside what they can realistically win and hold.",
