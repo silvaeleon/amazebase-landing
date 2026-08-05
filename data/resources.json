@@ -137,6 +137,29 @@
   ],
   "resources": [
     {
+      "id": "growth-vs-complexity",
+      "title": "Your Business Isn't Growing. It's Becoming More Complex.",
+      "summary": "Growth is linear. Complexity is exponential. Ten products aren't ten times harder — they're forty-five relationships. The challenge after your first million isn't more customers, it's stopping complexity from outrunning your systems.",
+      "category": "growth",
+      "format": "article",
+      "level": "expert",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-08-26",
+      "minutes": 8,
+      "featured": true,
+      "url": "articles/growth-vs-complexity.html",
+      "topics": [
+        "Scaling",
+        "Operating Systems",
+        "Decision Making",
+        "Leadership",
+        "Coordination Cost",
+        "Process Design",
+        "Competitive Moat"
+      ]
+    },
+    {
       "id": "decision-quality",
       "title": "You Don't Have a Sales Problem. You Have a Decision Quality Problem.",
       "summary": "The gap between a $500,000 business and a $50 million one isn't better products, advertising or people. It's thousands of marginally better decisions, compounding — and most problems are the delayed result of a decision made months earlier.",
