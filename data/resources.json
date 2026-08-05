@@ -96,6 +96,26 @@
   ],
   "resources": [
     {
+      "id": "forecasting-not-math-podcast",
+      "title": "Inventory Forecasting Is Not a Math Problem",
+      "summary": "Sellers who keep stocking out rarely have a formula problem — they have a decision problem. Why extra precision in the arithmetic doesn't fix a constraint that lives in cash, lead time and asymmetric risk.",
+      "category": "inventory",
+      "format": "podcast",
+      "author": "AmazeBase",
+      "published": "2026-08-21",
+      "minutes": 23,
+      "featured": true,
+      "url": "articles/forecasting-not-math-podcast.html",
+      "topics": [
+        "Demand Forecasting",
+        "Decision Making",
+        "Cash Flow",
+        "Lead Time",
+        "Safety Stock",
+        "Inventory Forecasting"
+      ]
+    },
+    {
       "id": "predicting-demand-podcast",
       "title": "How AI and Customer Interviews Predict Market Demand",
       "summary": "Forecasting demand before the data exists — what models can infer from weak signals, what only a conversation with a real buyer reveals, and why the two together beat either alone.",
