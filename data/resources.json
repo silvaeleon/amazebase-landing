@@ -96,6 +96,26 @@
   ],
   "resources": [
     {
+      "id": "campaigns-compete-internally",
+      "title": "Your PPC Campaigns Aren't Competing Against Your Competitors. They're Competing Against Each Other.",
+      "summary": "The biggest battle in your advertising account isn't in Amazon's auction. It's inside your own business — campaigns competing for inventory, capital, supplier capacity and attention.",
+      "category": "ppc",
+      "format": "article",
+      "author": "AmazeBase",
+      "published": "2026-08-13",
+      "minutes": 6,
+      "featured": true,
+      "url": "articles/campaigns-compete.html",
+      "topics": [
+        "Campaign Strategy",
+        "Capital Allocation",
+        "ROAS",
+        "Inventory Value",
+        "Opportunity Cost",
+        "Cash Flow Management"
+      ]
+    },
+    {
       "id": "ppc-capital-allocation",
       "title": "PPC Is Not a Marketing Problem. It's a Capital Allocation Problem.",
       "summary": "The biggest advertising decisions aren't made inside Campaign Manager. They're made when you decide where the next dollar goes — and advertising competes with every other investment in the business.",
