@@ -96,6 +96,26 @@
   ],
   "resources": [
     {
+      "id": "advertising-portfolio",
+      "title": "Stop Managing Campaigns. Start Managing an Advertising Portfolio.",
+      "summary": "The best Amazon advertisers don't think like marketers — they think like investment managers. Your account isn't a collection of campaigns. It's a portfolio, and portfolios are managed differently.",
+      "category": "ppc",
+      "format": "article",
+      "author": "AmazeBase",
+      "published": "2026-08-15",
+      "minutes": 6,
+      "featured": true,
+      "url": "articles/advertising-portfolio.html",
+      "topics": [
+        "Portfolio Allocation",
+        "Campaign Strategy",
+        "Capital Allocation",
+        "ROAS",
+        "Risk",
+        "Diversification"
+      ]
+    },
+    {
       "id": "highest-roas-trap",
       "title": "Your Highest ROAS Campaign May Be Holding Your Business Back",
       "summary": "The campaigns that look best on your dashboard are not always the ones creating the most value. ROAS measures attributed sales — not whether those sales were incremental.",
