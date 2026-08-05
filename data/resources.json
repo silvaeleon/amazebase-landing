@@ -137,6 +137,29 @@
   ],
   "resources": [
     {
+      "id": "dashboards-vs-decisions",
+      "title": "Most Dashboards Don't Help You Make Better Decisions. They Help You Feel Better About Bad Ones.",
+      "summary": "Sellers have more data than ever and many decide worse. Dashboards were built to display information, not to help anyone act — and a screen of red alerts every morning quietly trains an organisation to be reactive.",
+      "category": "growth",
+      "format": "article",
+      "level": "expert",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-08-31",
+      "minutes": 6,
+      "featured": true,
+      "url": "articles/dashboards-vs-decisions.html",
+      "topics": [
+        "Decision Making",
+        "KPIs",
+        "Business Intelligence",
+        "Attention",
+        "Signal vs Noise",
+        "Leadership",
+        "Operating Systems"
+      ]
+    },
+    {
       "id": "decision-speed",
       "title": "The Only Sustainable Competitive Advantage Isn't Your Product. It's Your Decision-Making Speed.",
       "summary": "Products, suppliers, costs and software all get copied eventually — most advantages have an expiry date. An organisation that decides and learns faster than its competitors doesn't, because every decision is also a chance to learn.",
