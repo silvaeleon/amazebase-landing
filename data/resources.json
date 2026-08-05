@@ -137,6 +137,29 @@
   ],
   "resources": [
     {
+      "id": "product-research-wrong-data",
+      "title": "Why Most Product Research Is Looking at the Wrong Data",
+      "summary": "Search volume, revenue estimates and review counts all describe demand that already happened. Research isn't about finding good ideas — it's deciding which single opportunity deserves capital you can only spend once.",
+      "category": "research",
+      "format": "article",
+      "level": "expert",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-03",
+      "minutes": 7,
+      "featured": true,
+      "url": "articles/product-research-wrong-data.html",
+      "topics": [
+        "Product Research",
+        "Capital Allocation",
+        "Opportunity Cost",
+        "Leading Indicators",
+        "Demand Forecasting",
+        "Decision Making",
+        "Market Analysis"
+      ]
+    },
+    {
       "id": "sum-of-decisions",
       "title": "Every Business Eventually Becomes the Sum of Its Decisions",
       "summary": "Revenue, products and markets are temporary. Companies form like sediment — one ordinary layer at a time — and organisations, unlike people, remember every decision. Improving one means negotiating with choices made years ago.",
