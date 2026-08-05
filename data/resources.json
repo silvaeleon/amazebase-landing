@@ -96,6 +96,26 @@
   ],
   "resources": [
     {
+      "id": "capital-velocity",
+      "title": "The Metric That Matters More Than Profit (And Almost No Amazon Seller Tracks It)",
+      "summary": "Two sellers, same revenue, same margin, same profit — and five years later they're not the same size. Profit tells you how much you earned. Capital velocity tells you how many chances your money had to earn it.",
+      "category": "profit",
+      "format": "article",
+      "author": "AmazeBase",
+      "published": "2026-08-07",
+      "minutes": 7,
+      "featured": true,
+      "url": "articles/capital-velocity.html",
+      "topics": [
+        "Capital Velocity",
+        "Cash Flow Management",
+        "Inventory Value",
+        "Purchase Orders",
+        "Margin",
+        "Portfolio Allocation"
+      ]
+    },
+    {
       "id": "better-questions-not-formulas",
       "title": "Inventory Forecasting Isn't About Finding the Perfect Formula — It's About Asking Better Questions",
       "summary": "One expert says use the simple reorder formula. Another says it's fundamentally flawed. Both are right. The real mistake is treating forecasting as a maths problem when it's a decision-making one.",

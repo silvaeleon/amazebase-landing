@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Metric That Matters More Than Profit &mdash; AmazeBase</title>
+
+<meta name="description" content="Why some Amazon businesses grow twice as fast as others on identical profit. Profit tells you how much you earned; capital velocity tells you how many chances your money had to earn it.">
+<meta name="theme-color" content="#030917">
+<meta name="author" content="AmazeBase">
+<meta property="og:title" content="The Metric That Matters More Than Profit (And Almost No Amazon Seller Tracks It)">
+<meta property="og:description" content="Two sellers. Same revenue, same margin, same profit. Five years later they won't be the same size. The difference isn't margin — it's how fast capital moves.">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   ARTICLE — Amazon Inventory Forecasting
+   Self-contained. Tokens mirror css/variables.css so this page can either
+   stand alone OR have this <style> block deleted once it sits inside the
+   site's normal stylesheet chain.
+========================================================================== */
+
+:root{
+  --bg:#030917; --bg-deep:#01050E; --bg-raise:#060D1E;
+  --surface:rgba(255,255,255,.030); --surface-2:rgba(255,255,255,.055);
+  --surface-solid:#0A1224;
+  --line:rgba(255,255,255,.070); --line-strong:rgba(255,255,255,.140);
+
+  --text:#EEF1F8; --text-2:#98A2B8; --text-3:#616C84;
+
+  --violet:#8B3BF1; --violet-soft:#A971F7; --indigo:#5B4FE6;
+  --blue:#3B82F6; --blue-soft:#7EB3FF;
+  --green:#2ED47A; --amber:#F5A524; --red:#F0435C;
+
+  --grad-brand:linear-gradient(135deg,#5B4FE6 0%,#8B3BF1 100%);
+  --grad-text:linear-gradient(90deg,#6153E6 0%,#9D50F7 55%,#C56BF5 100%);
+  --grad-card:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  --grad-rule:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,monospace;
+
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px;
+  --s5:48px; --s6:64px; --s7:96px; --s8:128px;
+
+  --gutter:clamp(20px,4vw,40px);
+  --measure:720px;
+
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
+  --sh-2:0 18px 40px rgba(0,0,0,.42);
+  --sh-brand:0 16px 40px rgba(107,63,232,.35);
+  --ease:cubic-bezier(.22,.61,.36,1); --fast:.18s; --mid:.28s;
+
+  color-scheme:dark;
+  scrollbar-color:#26304A var(--bg);
+  scrollbar-width:thin;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation:none !important; transition:none !important; }
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+::selection{ background:var(--violet); color:#fff; }
+
+.skip-link{
+  position:absolute; left:-9999px; top:0;
+  background:var(--surface-solid); color:var(--text);
+  padding:12px 20px; border-radius:0 0 var(--r-sm) 0;
+  z-index:1000; text-decoration:none; font-weight:600;
+}
+.skip-link:focus{ left:0; }
+
+:focus-visible{
+  outline:2px solid var(--violet-soft);
+  outline-offset:3px;
+  border-radius:var(--r-xs);
+}
+
+/* ---------- ambient background ------------------------------------------ */
+.bg-layer{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(760px 520px at 18% -8%,  rgba(91,79,230,.20), transparent 62%),
+    radial-gradient(680px 480px at 88% 4%,   rgba(139,59,241,.15), transparent 60%),
+    radial-gradient(900px 700px at 50% 108%, rgba(59,130,246,.09), transparent 66%);
+}
+
+.wrap{ position:relative; z-index:1; }
+
+/* ---------- shell ------------------------------------------------------- */
+.article{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:0 var(--gutter) var(--s8);
+}
+
+/* ---------- header ------------------------------------------------------ */
+.article-head{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:clamp(64px,9vw,120px) var(--gutter) clamp(32px,4vw,48px);
+}
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--violet-soft);
+  background:var(--surface); border:1px solid var(--line);
+  padding:7px 14px; border-radius:var(--r-pill);
+  margin:0 0 var(--s3);
+}
+.eyebrow::before{
+  content:""; width:6px; height:6px; border-radius:50%;
+  background:var(--violet-soft);
+  box-shadow:0 0 10px rgba(169,113,247,.9);
+}
+
+h1{
+  font-size:clamp(34px,5vw,58px);
+  line-height:1.08;
+  letter-spacing:-.025em;
+  font-weight:800;
+  margin:0 0 var(--s3);
+  text-wrap:balance;
+}
+h1 .accent{
+  background:var(--grad-text);
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+}
+
+.deck{
+  font-size:clamp(18px,2.1vw,21px);
+  line-height:1.6;
+  color:var(--text-2);
+  margin:0 0 var(--s4);
+  max-width:62ch;
+}
+
+.meta{
+  display:flex; flex-wrap:wrap; align-items:center; gap:var(--s2);
+  font-size:14px; color:var(--text-3);
+  padding-top:var(--s3);
+  border-top:1px solid var(--line);
+}
+.meta .dot{ width:3px; height:3px; border-radius:50%; background:var(--text-3); }
+
+/* ---------- table of contents ------------------------------------------- */
+.toc{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:0 0 var(--s6);
+}
+.toc h2{
+  font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--text-3); margin:0 0 var(--s3); padding:0; border:0;
+}
+.toc ol{
+  list-style:none; margin:0; padding:0;
+  counter-reset:toc;
+  display:grid; gap:2px;
+}
+.toc li{ counter-increment:toc; margin:0; }
+.toc a{
+  display:flex; gap:14px; align-items:baseline;
+  color:var(--text-2); text-decoration:none;
+  font-size:15px; line-height:1.5;
+  padding:8px 10px; margin:0 -10px;
+  border-radius:var(--r-xs);
+  transition:color var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+.toc a::before{
+  content:counter(toc,decimal-leading-zero);
+  font-family:var(--font-mono); font-size:12px; font-weight:600;
+  color:var(--text-3); flex:none; min-width:22px;
+  transition:color var(--fast) var(--ease);
+}
+.toc a:hover{ color:var(--text); background:var(--surface); }
+.toc a:hover::before{ color:var(--violet-soft); }
+
+/* ---------- body typography --------------------------------------------- */
+.article p{ margin:0 0 1.1em; color:#D5DBE9; }
+.article p.lead{ font-size:20px; color:var(--text); }
+
+.article h2{
+  font-size:clamp(26px,3.2vw,34px);
+  line-height:1.2;
+  letter-spacing:-.02em;
+  font-weight:700;
+  color:var(--text);
+  margin:var(--s7) 0 var(--s3);
+  padding-top:var(--s5);
+  border-top:1px solid var(--line);
+  scroll-margin-top:32px;
+  text-wrap:balance;
+}
+.article h2:first-of-type{ margin-top:0; }
+
+.article h2 .num{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:13px; font-weight:600; letter-spacing:.16em;
+  color:var(--violet-soft);
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
+
+.article strong{ color:var(--text); font-weight:700; }
+
+.article ul{
+  margin:0 0 1.4em;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:10px;
+}
+.article ul li{
+  position:relative;
+  padding-left:26px;
+  color:#D5DBE9;
+  line-height:1.6;
+}
+.article ul li::before{
+  content:"";
+  position:absolute; left:6px; top:.68em;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--violet);
+  box-shadow:0 0 8px rgba(139,59,241,.55);
+}
+
+/* ---------- pull quote --------------------------------------------------- */
+blockquote{
+  margin:var(--s4) 0;
+  padding:var(--s3) var(--s4);
+  border-left:2px solid var(--violet);
+  background:linear-gradient(90deg,rgba(139,59,241,.10),transparent 80%);
+  border-radius:0 var(--r-md) var(--r-md) 0;
+}
+blockquote p{
+  margin:0;
+  font-size:20px;
+  line-height:1.5;
+  font-weight:600;
+  color:var(--text);
+}
+
+/* ---------- callouts ----------------------------------------------------- */
+.callout{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:var(--s4) 0 var(--s5);
+}
+.callout .label{
+  display:block;
+  font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--text-3);
+  margin-bottom:var(--s2);
+}
+.callout p:last-child, .callout ul:last-child{ margin-bottom:0; }
+
+.formula{
+  font-family:var(--font-mono);
+  font-size:clamp(15px,2.1vw,19px);
+  font-weight:600;
+  line-height:1.6;
+  color:var(--text);
+  background:var(--bg-deep);
+  border:1px solid var(--line-strong);
+  border-radius:var(--r-md);
+  padding:var(--s3);
+  margin:0 0 var(--s3);
+  text-align:center;
+  overflow-x:auto;
+}
+.formula .op{ color:var(--violet-soft); }
+
+/* ---------- numbers strip ------------------------------------------------ */
+.figures{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:var(--s2);
+  margin:var(--s4) 0 var(--s5);
+  padding:0; list-style:none;
+}
+.figures li{ padding:0; }
+.figures li::before{ display:none; }
+.fig{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:var(--s3) var(--s2);
+  text-align:center;
+}
+.fig .v{
+  display:block;
+  font-size:28px; font-weight:800; letter-spacing:-.02em; line-height:1.1;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.fig .k{
+  display:block;
+  font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.fig.is-bad .v{ color:var(--red); }
+.fig.is-real .v{ color:var(--green); }
+
+/* ---------- divider ------------------------------------------------------ */
+.rule{
+  height:1px; border:0;
+  background:var(--grad-rule);
+  margin:var(--s6) 0;
+}
+
+/* ---------- closing CTA -------------------------------------------------- */
+.cta{
+  max-width:var(--measure);
+  margin:var(--s7) auto 0;
+  padding:clamp(32px,5vw,56px) var(--gutter);
+  text-align:center;
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-xl);
+  box-shadow:var(--sh-2);
+}
+.cta h2{
+  font-size:clamp(24px,3vw,32px);
+  font-weight:700; letter-spacing:-.02em; line-height:1.2;
+  margin:0 0 var(--s2); padding:0; border:0;
+  text-wrap:balance;
+}
+.cta p{
+  color:var(--text-2);
+  max-width:52ch;
+  margin:0 auto var(--s4);
+  font-size:17px;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--grad-brand);
+  color:#fff; text-decoration:none;
+  font-weight:600; font-size:16px;
+  padding:14px 28px;
+  border-radius:var(--r-pill);
+  box-shadow:var(--sh-brand);
+  transition:transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+.btn:hover{ transform:translateY(-2px); box-shadow:0 22px 50px rgba(107,63,232,.45); }
+.btn svg{ width:18px; height:18px; }
+
+/* ---------- responsive --------------------------------------------------- */
+@media (max-width:640px){
+  body{ font-size:17px; }
+  .article p.lead{ font-size:18px; }
+  blockquote p{ font-size:18px; }
+  .article h2{ margin-top:var(--s6); padding-top:var(--s4); }
+}
+
+/* ---------- print -------------------------------------------------------- */
+@media print{
+  .bg-layer,.toc,.cta,.skip-link{ display:none; }
+  body{ background:#fff; color:#111; font-size:12pt; }
+  .article p,.article ul li{ color:#222; }
+  .article h2{ color:#000; }
+}
+.back-link{ margin:0 0 28px; font-size:13px; }
+.back-link a{ color:var(--text-2); text-decoration:none; }
+.back-link a:hover{ color:var(--text); }
+
+/* ── HERO IMAGE ─────────────────────────────────────────────────────── */
+.hero-shot{
+  margin:0 0 52px;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  background:var(--bg-raise);
+  line-height:0;
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+.hero-shot img{ width:100%; height:auto; display:block; }
+
+/* ── MISTAKE CARDS ──────────────────────────────────────────────────── */
+.mistake{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.mistake::before{
+  content:"";
+  position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+  background:var(--amber);
+}
+.mistake h2{ margin-top:0 !important; }
+.article .mistake h2:first-of-type{ margin-top:0; }
+
+/* ── PULL QUOTES ────────────────────────────────────────────────────── */
+blockquote{
+  margin:44px 0;
+  padding:0 0 0 26px;
+  border-left:3px solid var(--amber);
+  background:none;
+}
+blockquote p{
+  font-size:23px;
+  line-height:1.45;
+  font-style:italic;
+  font-weight:600;
+  color:var(--text);
+  margin:0;
+}
+
+/* ── MID-ARTICLE STRIP ──────────────────────────────────────────────── */
+.strip{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px; flex-wrap:wrap;
+  margin:44px 0;
+  padding:26px 30px;
+  border-radius:16px;
+  background:linear-gradient(120deg,#0A1224,#131A33);
+  border:1px solid var(--line-strong);
+}
+.strip h3{ margin:0 0 6px; font-size:19px; color:var(--text); }
+.strip p{ margin:0; font-size:14px; color:var(--text-2); }
+.strip-btn{
+  flex:0 0 auto;
+  display:inline-block;
+  padding:12px 22px;
+  border-radius:10px;
+  background:var(--amber);
+  color:#1A1200;
+  font-size:14px; font-weight:700;
+  text-decoration:none;
+  transition:filter .15s ease;
+}
+.strip-btn:hover{ filter:brightness(1.08); }
+
+@media (max-width:640px){
+  .mistake{ padding:24px 20px 8px; }
+  .mistake::before{ top:20px; bottom:20px; }
+  blockquote p{ font-size:20px; }
+  .strip{ padding:22px; }
+  .strip-btn{ width:100%; text-align:center; }
+}
+
+/* ── WIDE SHELL: content + rail, so the page uses the screen ─────────── */
+.shell{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 var(--gutter);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 300px;
+  gap:64px;
+  align-items:start;
+}
+.shell > .article{ max-width:none; margin:0; padding:0 0 var(--s8); }
+
+.rail{ position:sticky; top:40px; display:flex; flex-direction:column; gap:14px; }
+.rail-card{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+  padding:20px;
+}
+.rail-k{
+  display:block; margin-bottom:10px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.rail-v{
+  display:block; margin-bottom:10px;
+  font-size:34px; line-height:1; font-weight:800; letter-spacing:-.02em;
+  color:var(--green);
+}
+.rail-v.is-amber{ color:var(--amber); }
+.rail-v.is-violet{ color:var(--violet-soft); }
+.rail-card p{ margin:0; font-size:13px; line-height:1.55; color:var(--text-2); }
+.rail-src{
+  margin:0; padding-top:14px;
+  border-top:1px solid var(--line);
+  font-size:11px; line-height:1.5; color:var(--text-3);
+}
+
+/* header + hero align to the same shell */
+.article-head, .hero-shot{ max-width:1180px; }
+
+/* ── HERO: a band, not a giant square ───────────────────────────────── */
+.hero-shot{
+  margin:0 auto 56px;
+  padding:0 var(--gutter);
+  border:0; background:none; box-shadow:none;
+  border-radius:0;
+  overflow:visible;
+}
+.hero-shot img{
+  width:100%;
+  height:clamp(260px,32vw,400px);
+  object-fit:cover;
+  object-position:center 42%;
+  border-radius:18px;
+  border:1px solid var(--line-strong);
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+
+/* ── THE FIX callout ────────────────────────────────────────────────── */
+.fixbox{
+  margin:22px 0 4px;
+  padding:16px 18px;
+  border-radius:12px;
+  border:1px solid rgba(46,212,122,.28);
+  background:rgba(46,212,122,.07);
+}
+.fixbox-k{
+  display:block; margin-bottom:6px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--green);
+}
+.fixbox p{ margin:0 !important; color:var(--text) !important; }
+
+@media (max-width:1080px){
+  .shell{ grid-template-columns:1fr; gap:40px; max-width:820px; }
+  .rail{ position:static; flex-direction:row; flex-wrap:wrap; }
+  .rail-card{ flex:1 1 220px; }
+  .rail-src{ flex:1 1 100%; border-top:0; padding-top:0; }
+  .article-head, .hero-shot{ max-width:820px; }
+}
+@media (max-width:640px){
+  .shell{ gap:28px; }
+  .hero-shot img{ height:210px; }
+}
+
+/* ── STEP / METRIC CARDS (same treatment as .mistake) ───────────────── */
+.step, .metric{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.step::before, .metric::before{
+  content:""; position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0; background:var(--amber);
+}
+.metric::before{ background:var(--blue-soft); }
+.step h2, .metric h2, .step h3, .metric h3{ margin-top:0 !important; }
+.article .step h2:first-of-type, .article .metric h2:first-of-type{ margin-top:0; }
+
+.metric h3{
+  font-size:20px; line-height:1.3; color:var(--text);
+  margin:0 0 14px; letter-spacing:-.01em;
+}
+.metric h3 .num{
+  display:inline-block; margin-right:10px;
+  min-width:26px; height:26px; line-height:26px; text-align:center;
+  border-radius:7px;
+  background:rgba(126,179,255,.14); color:var(--blue-soft);
+  font-size:12px; font-weight:700;
+}
+
+/* ── WARNING CARDS ──────────────────────────────────────────────────── */
+.warn{
+  position:relative;
+  border:1px solid rgba(240,67,92,.30);
+  border-radius:14px;
+  background:rgba(240,67,92,.07);
+  padding:22px 24px 6px;
+  margin:0 0 18px;
+}
+.warn h3{
+  margin:0 0 10px; font-size:17px; color:var(--text); line-height:1.35;
+}
+.warn h3::before{ content:"\26A0"; margin-right:9px; color:var(--red); }
+
+/* ── LEAD-TIME TABLE ────────────────────────────────────────────────── */
+.ltable{
+  width:100%; border-collapse:collapse;
+  margin:0 0 var(--s3);
+  font-size:15px;
+}
+.ltable th, .ltable td{
+  padding:12px 14px;
+  border-bottom:1px solid var(--line);
+  text-align:left; color:var(--text-2);
+}
+.ltable th{
+  font-size:11px; text-transform:uppercase; letter-spacing:.09em;
+  color:var(--text-3); font-weight:700;
+}
+.ltable td:last-child, .ltable th:last-child{ text-align:right; font-variant-numeric:tabular-nums; }
+.ltable tr:last-child td{
+  border-bottom:0; border-top:1px solid var(--line-strong);
+  color:var(--text); font-weight:700;
+}
+
+/* ── ROUTINE CHECKLIST ──────────────────────────────────────────────── */
+.routine{ counter-reset:r; list-style:none; padding:0; margin:0 0 var(--s3); }
+.routine li{
+  counter-increment:r;
+  position:relative;
+  padding:14px 16px 14px 52px;
+  margin-bottom:8px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  color:var(--text);
+  font-size:15.5px; line-height:1.5;
+}
+.routine li::before{
+  content:counter(r);
+  position:absolute; left:16px; top:13px;
+  width:24px; height:24px; line-height:24px; text-align:center;
+  border-radius:7px;
+  background:var(--grad-brand); color:#fff;
+  font-size:12px; font-weight:700;
+}
+.routine li::marker{ content:none; }
+
+@media (max-width:640px){
+  .step, .metric{ padding:24px 20px 8px; }
+  .step::before, .metric::before{ top:20px; bottom:20px; }
+  .ltable{ font-size:14px; }
+  .ltable th, .ltable td{ padding:10px 8px; }
+}
+
+/* ── PROBLEM / ALTERNATIVE PAIRS ────────────────────────────────────── */
+.problem, .alt{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 14px;
+}
+.problem::before, .alt::before{
+  content:""; position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.problem::before{ background:var(--red); }
+.alt{ margin-bottom:34px; border-color:rgba(46,212,122,.24); background:rgba(46,212,122,.05); }
+.alt::before{ background:var(--green); }
+
+.problem h2, .alt h2, .problem h3, .alt h3{ margin-top:0 !important; }
+.article .problem h2:first-of-type, .article .alt h2:first-of-type{ margin-top:0; }
+
+.problem h2 .num{ color:var(--red); }
+.alt h2 .num{ color:var(--green); }
+
+/* ── DELIVERY / DEMAND SAMPLES ──────────────────────────────────────── */
+.samples{
+  display:flex; flex-wrap:wrap; gap:8px;
+  list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.samples li{
+  padding:9px 14px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  background:var(--bg-raise);
+  font-family:var(--font-mono);
+  font-size:14px;
+  color:var(--text-2);
+  margin:0;
+}
+.samples li::before{ content:none; }
+.samples li.is-hi{ border-color:rgba(240,67,92,.42); color:#FF9AA9; }
+
+/* ── SCENARIO TRIO ──────────────────────────────────────────────────── */
+.scenarios{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:12px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.scenarios li{ margin:0; padding:0; }
+.scenarios li::before{ content:none; }
+.scen{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  padding:18px;
+  text-align:center;
+}
+.scen .n{ display:block; font-size:26px; font-weight:800; letter-spacing:-.02em; color:var(--text); margin-bottom:5px; }
+.scen .l{ display:block; font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--text-3); }
+.scen.is-low .n{ color:var(--blue-soft); }
+.scen.is-mid .n{ color:var(--text); }
+.scen.is-high .n{ color:var(--amber); }
+
+/* ── SIDE-BY-SIDE COMPARISON ────────────────────────────────────────── */
+.versus{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.versus > div{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  padding:20px;
+}
+.versus h4{
+  margin:0 0 12px; font-size:13px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.07em; color:var(--text-3);
+}
+.versus .big{ display:block; font-size:24px; font-weight:800; letter-spacing:-.02em; color:var(--text); margin-bottom:4px; }
+.versus .sub{ display:block; font-size:13px; color:var(--text-2); }
+.versus .big.is-warn{ color:var(--amber); }
+
+/* ── FOUR PILLARS ───────────────────────────────────────────────────── */
+.pillars{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+  gap:10px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.pillars li{
+  margin:0; padding:20px 14px; text-align:center;
+  border:1px solid var(--line-strong);
+  border-radius:12px;
+  background:var(--bg-raise);
+  font-size:15px; font-weight:600; color:var(--text);
+}
+.pillars li::before{ content:none; }
+
+@media (max-width:640px){
+  .problem, .alt{ padding:24px 20px 8px; }
+  .problem::before, .alt::before{ top:20px; bottom:20px; }
+  .versus{ grid-template-columns:1fr; }
+}
+
+/* ── TWO-CAMP DEFENCE CARDS ─────────────────────────────────────────── */
+.camp{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 20px;
+}
+.camp::before{
+  content:""; position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.camp.is-simple::before{ background:var(--blue-soft); }
+.camp.is-complex::before{ background:var(--violet-soft); }
+.camp h2, .camp h3{ margin-top:0 !important; }
+.article .camp h2:first-of-type{ margin-top:0; }
+.camp.is-simple h2 .num{ color:var(--blue-soft); }
+.camp.is-complex h2 .num{ color:var(--violet-soft); }
+
+/* ── ASSUMPTION PAIR ────────────────────────────────────────────────── */
+.assume{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.assume > div{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--bg-raise);
+  padding:20px;
+}
+.assume h4{
+  margin:0 0 10px; font-size:11px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.09em; color:var(--text-3);
+}
+.assume .eq{
+  display:block; font-family:var(--font-mono); font-size:14px;
+  color:var(--text); margin-bottom:12px; line-height:1.5;
+}
+.assume .as{
+  display:block; font-size:13px; line-height:1.55; color:var(--text-2);
+  padding-top:12px; border-top:1px solid var(--line);
+}
+
+/* ── RANGE ROWS ─────────────────────────────────────────────────────── */
+.ranges{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.ranges li{
+  display:grid; grid-template-columns:1fr auto 1fr;
+  align-items:center; gap:16px;
+  margin:0 0 10px; padding:16px 18px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+}
+.ranges li::before{ content:none; }
+.ranges .no{ font-size:14px; color:var(--text-3); text-decoration:line-through; }
+.ranges .arrow{ color:var(--violet-soft); font-size:16px; }
+.ranges .yes{ font-size:15px; color:var(--text); font-weight:600; }
+
+/* ── STAGE LADDER ───────────────────────────────────────────────────── */
+.stages{ counter-reset:st; list-style:none; margin:0 0 var(--s3); padding:0; }
+.stages li{
+  counter-increment:st;
+  position:relative;
+  margin:0 0 10px; padding:20px 22px 20px 74px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+}
+.stages li::before{
+  content:"Stage " counter(st);
+  position:absolute; left:20px; top:20px;
+  width:40px; padding:5px 0; text-align:center;
+  border-radius:8px;
+  background:var(--grad-brand); color:#fff;
+  font-size:9px; font-weight:700; letter-spacing:.04em;
+  text-transform:uppercase; line-height:1.25;
+}
+.stages li::marker{ content:none; }
+.stages h4{ margin:0 0 8px; font-size:16px; color:var(--text); }
+.stages p{ margin:0 !important; font-size:14.5px; color:var(--text-2); }
+
+/* ── COMPANY A / B ──────────────────────────────────────────────────── */
+.duel{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.duel > div{
+  border:1px solid var(--line); border-radius:14px;
+  background:var(--grad-card); padding:22px;
+}
+.duel > div.wins{ border-color:rgba(46,212,122,.35); background:rgba(46,212,122,.06); }
+.duel h4{ margin:0 0 10px; font-size:14px; color:var(--text); }
+.duel p{ margin:0 !important; font-size:14px; line-height:1.6; color:var(--text-2); }
+.duel .tag{
+  display:inline-block; margin-top:12px; padding:4px 10px;
+  border-radius:5px; font-size:10px; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase;
+}
+.duel .tag.win{ background:rgba(46,212,122,.15); color:var(--green); }
+.duel .tag.lose{ background:rgba(240,67,92,.13); color:#FF9AA9; }
+
+@media (max-width:640px){
+  .camp{ padding:24px 20px 8px; }
+  .camp::before{ top:20px; bottom:20px; }
+  .assume, .duel{ grid-template-columns:1fr; }
+  .ranges li{ grid-template-columns:1fr; gap:6px; }
+  .ranges .arrow{ display:none; }
+}
+
+/* ── BUSINESS A / B PROFILE CARDS ───────────────────────────────────── */
+.profiles{
+  display:grid; grid-template-columns:1fr 1fr; gap:14px;
+  margin:0 0 var(--s3);
+}
+.profile{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:26px 26px 10px;
+}
+.profile::before{
+  content:""; position:absolute; left:0; top:22px; bottom:22px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.profile.is-slow::before{ background:var(--red); }
+.profile.is-fast::before{ background:var(--green); }
+.profile h4{
+  margin:0 0 4px; font-size:17px; color:var(--text); letter-spacing:-.01em;
+}
+.profile .tagline{
+  display:block; margin-bottom:16px;
+  font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+}
+.profile.is-slow .tagline{ color:#FF9AA9; }
+.profile.is-fast .tagline{ color:var(--green); }
+.profile ul{ margin:0 0 16px; }
+.profile li{ font-size:14.5px; }
+
+/* ── CAPITAL CYCLE ──────────────────────────────────────────────────── */
+.cycle{
+  display:flex; flex-wrap:wrap; align-items:center; gap:8px;
+  list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.cycle li{
+  margin:0; padding:11px 15px;
+  border:1px solid var(--line-strong);
+  border-radius:9px;
+  background:var(--bg-raise);
+  font-size:14px; color:var(--text);
+}
+.cycle li::before{ content:none; }
+.cycle .sep{
+  border:0; background:none; padding:0 2px;
+  color:var(--violet-soft); font-size:15px;
+}
+
+/* ── WAITING LIST (where capital idles) ─────────────────────────────── */
+.waiting{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.waiting li{
+  position:relative;
+  margin:0 0 7px; padding:12px 16px 12px 42px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--amber);
+  border-radius:10px;
+  background:var(--grad-card);
+  font-size:15px; color:var(--text-2);
+}
+.waiting li::before{
+  content:"\23F1";
+  position:absolute; left:14px; top:12px;
+  color:var(--amber); font-size:14px;
+}
+
+/* ── QUESTION BLOCK ─────────────────────────────────────────────────── */
+.qbox{
+  margin:var(--s4) 0;
+  padding:26px 28px;
+  border:1px solid var(--line-strong);
+  border-radius:16px;
+  background:linear-gradient(120deg,rgba(91,79,230,.16),rgba(139,59,241,.07));
+}
+.qbox .label{
+  display:block; margin-bottom:12px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--violet-soft);
+}
+.qbox ul{ margin:0; padding-left:1.2em; }
+.qbox li{ font-size:15.5px; color:var(--text); margin-bottom:9px; }
+.qbox li::before{ content:none; }
+.qbox p{ margin:0 !important; font-size:19px; line-height:1.5; color:var(--text); font-weight:600; }
+
+@media (max-width:640px){
+  .profiles{ grid-template-columns:1fr; }
+  .profile{ padding:22px 20px 8px; }
+  .qbox{ padding:22px 20px; }
+}
+</style>
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="bg-layer" aria-hidden="true"></div>
+
+<div class="wrap">
+
+<p class="back-link"><a href="/resources.html">&larr; Knowledge Hub</a></p>
+
+<header class="article-head">
+  <p class="eyebrow">Profit &amp; Finances</p>
+
+  <h1>The Metric That Matters More Than Profit <span class="accent">(And Almost No Amazon Seller Tracks It)</span></h1>
+
+  <p class="deck">
+    Why some Amazon businesses grow twice as fast as others &mdash; even when they
+    make the same profit. There comes a point where chasing higher margins stops
+    producing meaningful results. The problem may not be your profit. It may be
+    the speed at which your business turns capital into new opportunities.
+  </p>
+
+  <p class="meta">
+    <span>AmazeBase</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>7 min read</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>Profit &amp; Finances</span>
+  </p>
+</header>
+
+<figure class="hero-shot">
+  <img src="../assets/img/hero-capital-velocity.jpg"
+       alt="A dark globe wrapped in a glowing supply-chain network, with shipping containers orbiting it"
+       width="1280" height="1098" loading="eager" decoding="async">
+</figure>
+
+<div class="shell">
+<main id="main" class="article">
+
+  <p class="lead">
+    You&rsquo;ve optimised your listings. You&rsquo;ve improved your PPC. You&rsquo;ve negotiated
+    better supplier pricing and reduced your FBA fees wherever possible. Yet growth
+    still feels slower than it should.
+  </p>
+
+  <p>Most Amazon sellers measure profitability. The best operators measure how efficiently capital moves through the business. It&rsquo;s a subtle distinction, but it completely changes how you evaluate products, purchase orders and growth opportunities.</p>
+
+  <nav class="toc" aria-labelledby="toc-title">
+    <h2 id="toc-title">What&rsquo;s in this piece</h2>
+    <ol>
+      <li><a href="#two">Imagine two businesses</a></li>
+      <li><a href="#speed">Money doesn&rsquo;t just have value &mdash; it has speed</a></li>
+      <li><a href="#slowest">The slowest part determines growth</a></li>
+      <li><a href="#trap">Why high margins can be a trap</a></li>
+      <li><a href="#inventory">Inventory is more than stock</a></li>
+      <li><a href="#question">The question nobody asks</a></li>
+      <li><a href="#hero">Your best seller may be slowing you down</a></li>
+      <li><a href="#po">Every purchase order is an investment decision</a></li>
+      <li><a href="#investor">Think like an investor, not a seller</a></li>
+    </ol>
+  </nav>
+
+  <hr class="rule">
+
+  <h2 id="two">Imagine two businesses</h2>
+
+  <p>Both generate $5 million in annual revenue, 20% gross margin, similar advertising performance and similar product categories. At the end of the year, both report roughly the same accounting profit. On paper, they&rsquo;re equally successful.</p>
+
+  <p>But look inside and they&rsquo;re completely different.</p>
+
+  <div class="profiles">
+    <div class="profile is-slow">
+      <h4>Business A</h4>
+      <span class="tagline">Capital sits still</span>
+      <ul>
+        <li>Imports six months of inventory at a time</li>
+        <li>Uses ocean freight with long lead times</li>
+        <li>Keeps large safety stock</li>
+        <li>Holds inventory for months before it sells</li>
+        <li>Waits two weeks for every payout before reordering</li>
+      </ul>
+    </div>
+    <div class="profile is-fast">
+      <h4>Business B</h4>
+      <span class="tagline">Capital keeps moving</span>
+      <ul>
+        <li>Forecasts demand accurately</li>
+        <li>Places smaller, more frequent purchase orders</li>
+        <li>Negotiates shorter production runs</li>
+        <li>Maintains lean inventory without frequent stockouts</li>
+        <li>Reinvests cash almost immediately after every payout</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The difference</span>
+    <p>Both make similar profits today. Five years from now they probably won&rsquo;t be the same size &mdash; because one has learned to make its money work harder.</p>
+  </div>
+
+  <h2 id="speed">Money doesn&rsquo;t just have value. It has speed.</h2>
+
+  <p>Think about a single dollar and the journey it takes:</p>
+
+  <ul class="cycle">
+    <li>Bank account</li><li class="sep" aria-hidden="true">&rarr;</li>
+    <li>Supplier</li><li class="sep" aria-hidden="true">&rarr;</li>
+    <li>Inventory</li><li class="sep" aria-hidden="true">&rarr;</li>
+    <li>Sales</li><li class="sep" aria-hidden="true">&rarr;</li>
+    <li>Amazon payout</li><li class="sep" aria-hidden="true">&rarr;</li>
+    <li>Next purchase order</li>
+  </ul>
+
+  <p>Eventually that same dollar completes its journey and begins another. Every complete cycle creates an opportunity for growth. The faster the cycle, the more opportunities your business creates.</p>
+
+  <blockquote>
+    <p>Profit tells you how much you earned. Capital velocity tells you how many times your money had the chance to earn it.</p>
+  </blockquote>
+
+  <h2 id="slowest">The slowest part of your business determines its growth</h2>
+
+  <p>Most sellers think growth is limited by sales. It usually isn&rsquo;t. Growth is limited by whatever keeps capital waiting.</p>
+
+  <ul class="waiting">
+    <li>Production</li>
+    <li>Shipping</li>
+    <li>Excess inventory</li>
+    <li>Cash tied up in slow-moving products</li>
+    <li>Simply making purchase decisions too late</li>
+  </ul>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The point</span>
+    <p>Every day your money spends waiting is a day it isn&rsquo;t creating value somewhere else. The businesses that grow fastest aren&rsquo;t the ones with the highest margins &mdash; they&rsquo;re the ones that eliminate waiting.</p>
+  </div>
+
+  <h2 id="trap">Why high margins can be a trap</h2>
+
+  <p>Imagine two products. Most dashboards immediately highlight Product A.</p>
+
+  <div class="profiles">
+    <div class="profile is-slow">
+      <h4>Product A</h4>
+      <span class="tagline">38% margin</span>
+      <ul>
+        <li>Nine-month inventory commitment</li>
+        <li>Large minimum order quantity</li>
+        <li>Slow inventory turnover</li>
+      </ul>
+    </div>
+    <div class="profile is-fast">
+      <h4>Product B</h4>
+      <span class="tagline">18% margin</span>
+      <ul>
+        <li>Six-week replenishment cycle</li>
+        <li>Smaller purchase orders</li>
+        <li>Fast inventory turnover</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>Higher margins seem better. But consider what happens over several years. Product B returns cash far more frequently. That cash gets reinvested. Each cycle generates another opportunity, then another, then another.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The fix</span>
+    <p>The lower-margin product may generate significantly more long-term value simply because capital never stops moving. High margins don&rsquo;t automatically create great businesses &mdash; efficient capital does.</p>
+  </div>
+
+  <h2 id="inventory">Inventory is more than stock</h2>
+
+  <p>Most people think inventory is an operational problem. It&rsquo;s actually a financial asset. Every pallet sitting in a warehouse represents capital making a decision &mdash; not your decision, its own.</p>
+
+  <p>Because while it sits there, that money cannot be used to:</p>
+
+  <ul class="samples">
+    <li>Launch another SKU</li><li>Increase advertising</li>
+    <li>Negotiate supplier discounts</li><li>Purchase seasonal inventory</li>
+    <li>Test new products</li><li>Expand into another marketplace</li>
+  </ul>
+
+  <blockquote>
+    <p>Inventory isn&rsquo;t just occupying warehouse space. It&rsquo;s occupying opportunity.</p>
+  </blockquote>
+
+<aside class="strip">
+  <div>
+    <h3>See where your capital is waiting</h3>
+    <p>AmazeBase connects inventory, suppliers and cash flow so idle money becomes visible.</p>
+  </div>
+  <a class="strip-btn" href="/index.html#pricing">Join the Wait List</a>
+</aside>
+
+  <h2 id="question">The question nobody asks</h2>
+
+  <p>Most Amazon dashboards answer useful questions &mdash; units sold, ACOS, TACOS, today&rsquo;s revenue, margin. But none answer what may be the most important one of all.</p>
+
+  <div class="qbox">
+    <span class="label">The question</span>
+    <p>Where is my capital spending time doing nothing?</p>
+  </div>
+
+  <p>That question changes everything. Because if you can identify where money waits, you can identify where growth slows.</p>
+
+  <h2 id="hero">Your best-selling product may be slowing your business down</h2>
+
+  <p>Every seller has a hero product. The one that generates the most sales, that everyone talks about, that appears first on every dashboard. But ask another question: <strong>how much capital does it consume?</strong></p>
+
+  <p>Some best sellers require massive inventory commitments, high advertising budgets, large safety stock, frequent air shipments and constant cash injections. They&rsquo;re fantastic products. They may also be your least efficient investments.</p>
+
+  <p>Meanwhile another SKU quietly produces smaller sales with minimal advertising, short lead times and rapid inventory turnover. It rarely gets attention. Yet it may generate a far better return on every dollar invested.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The fix</span>
+    <p>Revenue and investment quality are not the same thing.</p>
+  </div>
+
+  <h2 id="po">Every purchase order is an investment decision</h2>
+
+  <p>A purchase order isn&rsquo;t simply buying inventory. It&rsquo;s choosing where your capital will spend the next several months. Every dollar committed to one SKU is a dollar unavailable for another.</p>
+
+  <p>That means every purchase order answers a portfolio question. Should more capital go to fast-moving products, seasonal inventory, new launches, advertising, supplier discounts, or cash reserves?</p>
+
+  <ul class="ranges">
+    <li>
+      <span class="no">&ldquo;How much should I order?&rdquo;</span>
+      <span class="arrow" aria-hidden="true">&rarr;</span>
+      <span class="yes">&ldquo;Where will my next dollar create the greatest long-term return?&rdquo;</span>
+    </li>
+  </ul>
+
+  <p>Those are very different decisions.</p>
+
+  <h2 id="cost">The invisible cost of slow capital</h2>
+
+  <p>Amazon sellers routinely calculate storage fees, referral fees, FBA fees and PPC costs. Very few calculate the cost of waiting.</p>
+
+  <ul class="waiting">
+    <li>Waiting for production</li>
+    <li>Waiting for containers</li>
+    <li>Waiting for customs</li>
+    <li>Waiting for Amazon receiving</li>
+    <li>Waiting for inventory to sell</li>
+    <li>Waiting for Amazon payouts</li>
+  </ul>
+
+  <div class="fixbox">
+    <span class="fixbox-k">Why it compounds</span>
+    <p>Individually each delay seems manageable. Together they define how quickly your business compounds.</p>
+  </div>
+
+  <h2 id="investor">Think like an investor, not a seller</h2>
+
+  <p>Professional investors don&rsquo;t ask which company has the highest revenue. They ask which investment produces the highest return over time. Amazon businesses deserve the same mindset.</p>
+
+  <p>Your products aren&rsquo;t just products &mdash; they&rsquo;re investments. Each SKU competes for capital. Each purchase order competes for cash. Each advertising campaign competes for attention.</p>
+
+  <blockquote>
+    <p>Your role isn&rsquo;t simply to manage products. It&rsquo;s to allocate resources where they&rsquo;ll generate the greatest long-term value.</p>
+  </blockquote>
+
+  <h2 id="missing">The metric most dashboards are missing</h2>
+
+  <p>Imagine opening your dashboard tomorrow morning and finding it answered these instead:</p>
+
+  <div class="qbox">
+    <span class="label">Decision questions</span>
+    <ul>
+      <li>Which SKU traps the most capital?</li>
+      <li>Which product returns cash the fastest?</li>
+      <li>Which purchase order has the highest expected return?</li>
+      <li>Where is money waiting unnecessarily?</li>
+      <li>Which operational delay costs the business the most growth?</li>
+      <li>If you had an extra $100,000 today, where should it go?</li>
+    </ul>
+  </div>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The difference</span>
+    <p>Those aren&rsquo;t reporting questions &mdash; they&rsquo;re decision questions. Businesses rarely become extraordinary because they have better reports. They become extraordinary because they consistently make better decisions.</p>
+  </div>
+
+  <hr class="rule">
+
+  <h2 id="stop">Stop measuring profit alone</h2>
+
+  <p>Profit is essential. But profit is a snapshot &mdash; it tells you what happened. Capital velocity tells you what your business is capable of becoming.</p>
+
+  <p>A company that keeps money moving quickly gains advantages that don&rsquo;t immediately appear on a financial statement. It becomes more resilient, more flexible, more adaptable. It can launch products sooner, react to market changes faster, negotiate better and invest confidently. While competitors wait for cash to return, it&rsquo;s already putting that cash to work again.</p>
+
+  <h2 id="final">A different way to build an Amazon business</h2>
+
+  <p>The biggest shift experienced sellers can make isn&rsquo;t learning another PPC strategy or finding another supplier. It&rsquo;s changing how they see their business.</p>
+
+  <p>You&rsquo;re not managing inventory. <strong>You&rsquo;re managing capital.</strong> Inventory is simply one place that capital temporarily lives, and every decision either accelerates it or slows it down.</p>
+
+  <blockquote>
+    <p>Over the course of years, businesses aren&rsquo;t defined only by how much profit they make. They&rsquo;re defined by how many times they give every dollar the opportunity to create more.</p>
+  </blockquote>
+
+  <p>That&rsquo;s how small advantages compound. That&rsquo;s how ordinary businesses become exceptional ones. And that&rsquo;s why the metric that matters most isn&rsquo;t always the one everyone is measuring.</p>
+
+</main>
+
+<aside class="rail" aria-label="Key ideas from this article">
+
+  <div class="rail-card">
+    <span class="rail-k">Same profit, different future</span>
+    <span class="rail-v">$5M</span>
+    <p>Revenue, 20% margin, near-identical accounting profit. Five years on, the two businesses won&rsquo;t be the same size.</p>
+  </div>
+
+  <div class="rail-card">
+    <span class="rail-k">The margin trap</span>
+    <span class="rail-v is-amber">38% vs 18%</span>
+    <p>The lower-margin product can win. A six-week cycle recycles cash many times while a nine-month commitment recycles it once.</p>
+  </div>
+
+  <div class="rail-card">
+    <span class="rail-k">The question to add</span>
+    <span class="rail-v is-violet">Where?</span>
+    <p>Where is my capital spending time doing nothing? No standard dashboard answers it.</p>
+  </div>
+
+  <p class="rail-src">Figures from this article&rsquo;s worked examples, not an industry survey.</p>
+
+</aside>
+</div>
+
+<aside class="cta">
+  <h2>Find out where your money is waiting</h2>
+  <p>
+    AmazeBase connects your sales, inventory, suppliers and cash flow so you can
+    see which SKUs trap capital and which ones return it fastest.
+  </p>
+  <a class="btn" href="/index.html#pricing">
+    Join the Wait List
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M5 12h14M13 6l6 6-6 6"/>
+    </svg>
+  </a>
+</aside>
+
+</div><!-- /.wrap -->
+
+</body>
+</html>
