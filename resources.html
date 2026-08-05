@@ -224,10 +224,12 @@
   <!-- ── MAIN COLUMN ────────────────────────────────────────────────────── -->
   <div class="hub-main">
 
-    <div class="hub-sec-head">
-      <h2 class="hub-sec-h">Featured</h2>
+    <div data-hub-featured-sec>
+      <div class="hub-sec-head">
+        <h2 class="hub-sec-h">Featured</h2>
+      </div>
+      <div class="hub-featured" data-hub-featured></div>
     </div>
-    <div class="hub-featured" data-hub-featured></div>
 
     <div class="hub-sec-head">
       <h2 class="hub-sec-h" data-hub-list-heading>Latest Resources</h2>
@@ -239,7 +241,10 @@
       </div>
     </div>
 
-    <p class="hub-count" data-hub-count aria-live="polite"></p>
+    <div class="hub-countbar">
+      <p class="hub-count" data-hub-count aria-live="polite"></p>
+      <button class="hub-clear" type="button" data-hub-clear hidden>Clear filters</button>
+    </div>
     <div class="hub-list" data-hub-list></div>
 
   </div>

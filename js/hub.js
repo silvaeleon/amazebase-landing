@@ -93,6 +93,21 @@
     });
   }
 
+  /* Any active narrowing? The Featured block is only meaningful when the
+     visitor is browsing everything — once they filter, a "Featured" strip
+     showing items outside the filter directly contradicts what they clicked. */
+  function filtering() {
+    return !!(state.category || state.format || state.topic || state.query.trim());
+  }
+
+  function activeLabel() {
+    if (state.query.trim()) return "Results";
+    if (state.topic) return state.topic;
+    if (state.category) return labelFor(state.categories, state.category);
+    if (state.format) return labelFor(state.formats, state.format);
+    return "Latest Resources";
+  }
+
   function countIn(pred) {
     var n = 0;
     for (var i = 0; i < state.all.length; i++) if (pred(state.all[i])) n++;
@@ -197,7 +212,15 @@
   }
 
   function renderFeatured() {
+    var sec  = $("[data-hub-featured-sec]");
     var wrap = $("[data-hub-featured]");
+
+    if (filtering()) {           // was: featured ignored filters entirely
+      if (sec) sec.hidden = true;
+      clear(wrap);
+      return;
+    }
+    if (sec) sec.hidden = false;
     clear(wrap);
     var feat = state.all.filter(function (r) { return r.featured; })
                         .sort(function (a, b) { return String(b.published).localeCompare(String(a.published)); });
@@ -240,8 +263,7 @@
       return;
     }
 
-    var filtered = state.category || state.format || state.topic || state.query.trim();
-    countEl.textContent = filtered
+    countEl.textContent = filtering()
       ? plural(out.length, "resource", "resources") + " match"
       : plural(out.length, "resource", "resources");
 
@@ -293,12 +315,35 @@
     });
   }
 
+  function renderChrome() {
+    var head  = $("[data-hub-list-heading]");
+    var clr   = $("[data-hub-clear]");
+    if (head) head.textContent = activeLabel();
+    if (clr)  clr.hidden = !filtering();
+  }
+
   function renderAll() {
     renderCategories();
     renderFormats();
     renderTopics();
     renderFeatured();
     renderList();
+    renderChrome();
+  }
+
+  var clearBtnEl = $("[data-hub-clear]");
+  if (clearBtnEl) {
+    clearBtnEl.addEventListener("click", function () {
+      state.category = null;
+      state.format   = null;
+      state.topic    = null;
+      state.query    = "";
+      var inp = $("[data-hub-search]");
+      if (inp) inp.value = "";
+      var x = $("[data-hub-search-clear]");
+      if (x) x.hidden = true;
+      renderAll();
+    });
   }
 
   /* ---------------------------------------------------------------- SEARCH */
@@ -310,13 +355,15 @@
     input.addEventListener("input", function () {
       state.query = input.value;
       clearBtn.hidden = !input.value;
+      renderFeatured();
       renderList();
+      renderChrome();
     });
   }
   if (clearBtn) {
     clearBtn.addEventListener("click", function () {
       input.value = ""; state.query = ""; clearBtn.hidden = true;
-      renderList(); input.focus();
+      renderFeatured(); renderList(); renderChrome(); input.focus();
     });
   }
 
