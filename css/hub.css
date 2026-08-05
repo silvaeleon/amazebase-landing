@@ -449,18 +449,15 @@
 .hub-fig{
   margin:0;
   min-width:0;
-  border:1px solid var(--line);
-  border-radius:var(--r3);
-  background:var(--surface);
-  padding:var(--s4);
 }
 
-.hub-fig-svg{ width:100%; height:auto; display:block; }
+.hub-fig-img{ width:100%; height:auto; display:block;
+               border-radius:calc(var(--r3) - 4px); }
 
 @media (max-width:960px){
   .hub-hero-grid{ grid-template-columns:1fr; gap:var(--s4); }
   .hub-fig{ order:-1; }
-  .hub-fig-svg{ max-height:200px; }
+  .hub-fig-img{ max-height:240px; object-fit:contain; }
 }
 
 @media (max-width:640px){
