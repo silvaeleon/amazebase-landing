@@ -137,6 +137,29 @@
   ],
   "resources": [
     {
+      "id": "sum-of-decisions",
+      "title": "Every Business Eventually Becomes the Sum of Its Decisions",
+      "summary": "Revenue, products and markets are temporary. Companies form like sediment — one ordinary layer at a time — and organisations, unlike people, remember every decision. Improving one means negotiating with choices made years ago.",
+      "category": "growth",
+      "format": "article",
+      "level": "expert",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-02",
+      "minutes": 6,
+      "featured": true,
+      "url": "articles/sum-of-decisions.html",
+      "topics": [
+        "Decision Making",
+        "Compounding",
+        "Leadership",
+        "Culture",
+        "Long-term Thinking",
+        "Operating Systems",
+        "Competitive Moat"
+      ]
+    },
+    {
       "id": "ceo-job-changes",
       "title": "The CEO's Job Changes Every Year. Most Founders Never Notice.",
       "summary": "The skills that built the business are often the ones stopping it growing. Three versions of the founder — doing, coordinating, running out of hours — and the promotion after CEO that almost nobody takes.",
