@@ -96,6 +96,26 @@
   ],
   "resources": [
     {
+      "id": "inventory-optionality",
+      "title": "Your Inventory Isn't Costing You Storage Fees. It's Costing You Optionality.",
+      "summary": "The most expensive inventory in your warehouse isn't the one paying long-term storage fees. It's the one preventing your next opportunity.",
+      "category": "profit",
+      "format": "article",
+      "author": "AmazeBase",
+      "published": "2026-08-10",
+      "minutes": 7,
+      "featured": true,
+      "url": "articles/optionality.html",
+      "topics": [
+        "Optionality",
+        "Opportunity Cost",
+        "Capital Allocation",
+        "Inventory Value",
+        "Cash Flow Management",
+        "Purchase Orders"
+      ]
+    },
+    {
       "id": "opportunity-cost",
       "title": "The Opportunity Cost Every Amazon Seller Ignores",
       "summary": "Ask a seller what a purchase order costs and they'll quote the invoice. The real cost is every alternative that order made impossible — and it never appears on a P&L.",
