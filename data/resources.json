@@ -137,6 +137,32 @@
   ],
   "resources": [
     {
+      "id": "analyze-systems",
+      "title": "Most Sellers Analyze Products. Great Companies Analyze Systems.",
+      "summary": "Products are outcomes; systems are causes. The same seven steps that compound a business forward will consume it backwards — and no metric on your dashboard ever moves alone.",
+      "categories": [
+        "research",
+        "growth"
+      ],
+      "format": "article",
+      "level": "expert",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-13",
+      "minutes": 6,
+      "featured": true,
+      "url": "articles/analyze-systems.html",
+      "topics": [
+        "Product Research",
+        "Systems Thinking",
+        "Feedback Loops",
+        "Market Analysis",
+        "Constraints",
+        "Supply Chain",
+        "Decision Making"
+      ]
+    },
+    {
       "id": "research-after-you-found-it",
       "title": "The Best Product Research Starts After You Think You Found the Product",
       "summary": "The moment you're convinced you've found a winner is the moment your judgement is least reliable. Stage one asks whether it can work; stage two asks which assumptions it depends on, and what happens when they change.",
