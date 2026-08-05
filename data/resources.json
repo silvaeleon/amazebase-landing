@@ -96,6 +96,26 @@
   ],
   "resources": [
     {
+      "id": "campaign-cannibalisation",
+      "title": "Your PPC Campaigns Are Probably Stealing Sales From Each Other",
+      "summary": "The competition hurting your advertising performance may not be your competitors. Amazon reports each campaign individually — it almost never tells you how they interact.",
+      "category": "ppc",
+      "format": "article",
+      "author": "AmazeBase",
+      "published": "2026-08-18",
+      "minutes": 6,
+      "featured": true,
+      "url": "articles/campaign-cannibalisation.html",
+      "topics": [
+        "Cannibalisation",
+        "Attribution",
+        "Incrementality",
+        "Campaign Strategy",
+        "Keyword Overlap",
+        "Capital Allocation"
+      ]
+    },
+    {
       "id": "advertising-debt",
       "title": "Advertising Debt: The Hidden Liability Almost Every Amazon Business Is Building",
       "summary": "The most dangerous dependency in your business doesn't appear on your balance sheet. It's the gap between the sales you generate today and the sales you'd generate if advertising stopped tomorrow.",
