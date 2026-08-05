@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stop Optimizing ACOS &mdash; AmazeBase</title>
+
+<meta name="description" content="The most dangerous number in Amazon advertising isn't a high ACOS. It's believing ACOS should always go down. Why efficiency metrics make poor decision metrics.">
+<meta name="theme-color" content="#030917">
+<meta name="author" content="AmazeBase">
+<meta property="og:title" content="Stop Optimizing ACOS: Why Chasing a Lower ACOS Is Costing You More Money">
+<meta property="og:description" content="Some of the fastest-growing Amazon businesses deliberately increase their ACOS. Not because they enjoy spending — because ACOS is an efficiency metric, not a decision metric.">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   ARTICLE — Amazon Inventory Forecasting
+   Self-contained. Tokens mirror css/variables.css so this page can either
+   stand alone OR have this <style> block deleted once it sits inside the
+   site's normal stylesheet chain.
+========================================================================== */
+
+:root{
+  --bg:#030917; --bg-deep:#01050E; --bg-raise:#060D1E;
+  --surface:rgba(255,255,255,.030); --surface-2:rgba(255,255,255,.055);
+  --surface-solid:#0A1224;
+  --line:rgba(255,255,255,.070); --line-strong:rgba(255,255,255,.140);
+
+  --text:#EEF1F8; --text-2:#98A2B8; --text-3:#616C84;
+
+  --violet:#8B3BF1; --violet-soft:#A971F7; --indigo:#5B4FE6;
+  --blue:#3B82F6; --blue-soft:#7EB3FF;
+  --green:#2ED47A; --amber:#F5A524; --red:#F0435C;
+
+  --grad-brand:linear-gradient(135deg,#5B4FE6 0%,#8B3BF1 100%);
+  --grad-text:linear-gradient(90deg,#6153E6 0%,#9D50F7 55%,#C56BF5 100%);
+  --grad-card:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  --grad-rule:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,monospace;
+
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px;
+  --s5:48px; --s6:64px; --s7:96px; --s8:128px;
+
+  --gutter:clamp(20px,4vw,40px);
+  --measure:720px;
+
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
+  --sh-2:0 18px 40px rgba(0,0,0,.42);
+  --sh-brand:0 16px 40px rgba(107,63,232,.35);
+  --ease:cubic-bezier(.22,.61,.36,1); --fast:.18s; --mid:.28s;
+
+  color-scheme:dark;
+  scrollbar-color:#26304A var(--bg);
+  scrollbar-width:thin;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation:none !important; transition:none !important; }
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+::selection{ background:var(--violet); color:#fff; }
+
+.skip-link{
+  position:absolute; left:-9999px; top:0;
+  background:var(--surface-solid); color:var(--text);
+  padding:12px 20px; border-radius:0 0 var(--r-sm) 0;
+  z-index:1000; text-decoration:none; font-weight:600;
+}
+.skip-link:focus{ left:0; }
+
+:focus-visible{
+  outline:2px solid var(--violet-soft);
+  outline-offset:3px;
+  border-radius:var(--r-xs);
+}
+
+/* ---------- ambient background ------------------------------------------ */
+.bg-layer{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(760px 520px at 18% -8%,  rgba(91,79,230,.20), transparent 62%),
+    radial-gradient(680px 480px at 88% 4%,   rgba(139,59,241,.15), transparent 60%),
+    radial-gradient(900px 700px at 50% 108%, rgba(59,130,246,.09), transparent 66%);
+}
+
+.wrap{ position:relative; z-index:1; }
+
+/* ---------- shell ------------------------------------------------------- */
+.article{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:0 var(--gutter) var(--s8);
+}
+
+/* ---------- header ------------------------------------------------------ */
+.article-head{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:clamp(64px,9vw,120px) var(--gutter) clamp(32px,4vw,48px);
+}
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--violet-soft);
+  background:var(--surface); border:1px solid var(--line);
+  padding:7px 14px; border-radius:var(--r-pill);
+  margin:0 0 var(--s3);
+}
+.eyebrow::before{
+  content:""; width:6px; height:6px; border-radius:50%;
+  background:var(--violet-soft);
+  box-shadow:0 0 10px rgba(169,113,247,.9);
+}
+
+h1{
+  font-size:clamp(34px,5vw,58px);
+  line-height:1.08;
+  letter-spacing:-.025em;
+  font-weight:800;
+  margin:0 0 var(--s3);
+  text-wrap:balance;
+}
+h1 .accent{
+  background:var(--grad-text);
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+}
+
+.deck{
+  font-size:clamp(18px,2.1vw,21px);
+  line-height:1.6;
+  color:var(--text-2);
+  margin:0 0 var(--s4);
+  max-width:62ch;
+}
+
+.meta{
+  display:flex; flex-wrap:wrap; align-items:center; gap:var(--s2);
+  font-size:14px; color:var(--text-3);
+  padding-top:var(--s3);
+  border-top:1px solid var(--line);
+}
+.meta .dot{ width:3px; height:3px; border-radius:50%; background:var(--text-3); }
+
+/* ---------- table of contents ------------------------------------------- */
+.toc{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:0 0 var(--s6);
+}
+.toc h2{
+  font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--text-3); margin:0 0 var(--s3); padding:0; border:0;
+}
+.toc ol{
+  list-style:none; margin:0; padding:0;
+  counter-reset:toc;
+  display:grid; gap:2px;
+}
+.toc li{ counter-increment:toc; margin:0; }
+.toc a{
+  display:flex; gap:14px; align-items:baseline;
+  color:var(--text-2); text-decoration:none;
+  font-size:15px; line-height:1.5;
+  padding:8px 10px; margin:0 -10px;
+  border-radius:var(--r-xs);
+  transition:color var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+.toc a::before{
+  content:counter(toc,decimal-leading-zero);
+  font-family:var(--font-mono); font-size:12px; font-weight:600;
+  color:var(--text-3); flex:none; min-width:22px;
+  transition:color var(--fast) var(--ease);
+}
+.toc a:hover{ color:var(--text); background:var(--surface); }
+.toc a:hover::before{ color:var(--violet-soft); }
+
+/* ---------- body typography --------------------------------------------- */
+.article p{ margin:0 0 1.1em; color:#D5DBE9; }
+.article p.lead{ font-size:20px; color:var(--text); }
+
+.article h2{
+  font-size:clamp(26px,3.2vw,34px);
+  line-height:1.2;
+  letter-spacing:-.02em;
+  font-weight:700;
+  color:var(--text);
+  margin:var(--s7) 0 var(--s3);
+  padding-top:var(--s5);
+  border-top:1px solid var(--line);
+  scroll-margin-top:32px;
+  text-wrap:balance;
+}
+.article h2:first-of-type{ margin-top:0; }
+
+.article h2 .num{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:13px; font-weight:600; letter-spacing:.16em;
+  color:var(--violet-soft);
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
+
+.article strong{ color:var(--text); font-weight:700; }
+
+.article ul{
+  margin:0 0 1.4em;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:10px;
+}
+.article ul li{
+  position:relative;
+  padding-left:26px;
+  color:#D5DBE9;
+  line-height:1.6;
+}
+.article ul li::before{
+  content:"";
+  position:absolute; left:6px; top:.68em;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--violet);
+  box-shadow:0 0 8px rgba(139,59,241,.55);
+}
+
+/* ---------- pull quote --------------------------------------------------- */
+blockquote{
+  margin:var(--s4) 0;
+  padding:var(--s3) var(--s4);
+  border-left:2px solid var(--violet);
+  background:linear-gradient(90deg,rgba(139,59,241,.10),transparent 80%);
+  border-radius:0 var(--r-md) var(--r-md) 0;
+}
+blockquote p{
+  margin:0;
+  font-size:20px;
+  line-height:1.5;
+  font-weight:600;
+  color:var(--text);
+}
+
+/* ---------- callouts ----------------------------------------------------- */
+.callout{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:var(--s4) 0 var(--s5);
+}
+.callout .label{
+  display:block;
+  font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--text-3);
+  margin-bottom:var(--s2);
+}
+.callout p:last-child, .callout ul:last-child{ margin-bottom:0; }
+
+.formula{
+  font-family:var(--font-mono);
+  font-size:clamp(15px,2.1vw,19px);
+  font-weight:600;
+  line-height:1.6;
+  color:var(--text);
+  background:var(--bg-deep);
+  border:1px solid var(--line-strong);
+  border-radius:var(--r-md);
+  padding:var(--s3);
+  margin:0 0 var(--s3);
+  text-align:center;
+  overflow-x:auto;
+}
+.formula .op{ color:var(--violet-soft); }
+
+/* ---------- numbers strip ------------------------------------------------ */
+.figures{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:var(--s2);
+  margin:var(--s4) 0 var(--s5);
+  padding:0; list-style:none;
+}
+.figures li{ padding:0; }
+.figures li::before{ display:none; }
+.fig{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:var(--s3) var(--s2);
+  text-align:center;
+}
+.fig .v{
+  display:block;
+  font-size:28px; font-weight:800; letter-spacing:-.02em; line-height:1.1;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.fig .k{
+  display:block;
+  font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.fig.is-bad .v{ color:var(--red); }
+.fig.is-real .v{ color:var(--green); }
+
+/* ---------- divider ------------------------------------------------------ */
+.rule{
+  height:1px; border:0;
+  background:var(--grad-rule);
+  margin:var(--s6) 0;
+}
+
+/* ---------- closing CTA -------------------------------------------------- */
+.cta{
+  max-width:var(--measure);
+  margin:var(--s7) auto 0;
+  padding:clamp(32px,5vw,56px) var(--gutter);
+  text-align:center;
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-xl);
+  box-shadow:var(--sh-2);
+}
+.cta h2{
+  font-size:clamp(24px,3vw,32px);
+  font-weight:700; letter-spacing:-.02em; line-height:1.2;
+  margin:0 0 var(--s2); padding:0; border:0;
+  text-wrap:balance;
+}
+.cta p{
+  color:var(--text-2);
+  max-width:52ch;
+  margin:0 auto var(--s4);
+  font-size:17px;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--grad-brand);
+  color:#fff; text-decoration:none;
+  font-weight:600; font-size:16px;
+  padding:14px 28px;
+  border-radius:var(--r-pill);
+  box-shadow:var(--sh-brand);
+  transition:transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+.btn:hover{ transform:translateY(-2px); box-shadow:0 22px 50px rgba(107,63,232,.45); }
+.btn svg{ width:18px; height:18px; }
+
+/* ---------- responsive --------------------------------------------------- */
+@media (max-width:640px){
+  body{ font-size:17px; }
+  .article p.lead{ font-size:18px; }
+  blockquote p{ font-size:18px; }
+  .article h2{ margin-top:var(--s6); padding-top:var(--s4); }
+}
+
+/* ---------- print -------------------------------------------------------- */
+@media print{
+  .bg-layer,.toc,.cta,.skip-link{ display:none; }
+  body{ background:#fff; color:#111; font-size:12pt; }
+  .article p,.article ul li{ color:#222; }
+  .article h2{ color:#000; }
+}
+.back-link{ margin:0 0 28px; font-size:13px; }
+.back-link a{ color:var(--text-2); text-decoration:none; }
+.back-link a:hover{ color:var(--text); }
+
+/* ── HERO IMAGE ─────────────────────────────────────────────────────── */
+.hero-shot{
+  margin:0 0 52px;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  background:var(--bg-raise);
+  line-height:0;
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+.hero-shot img{ width:100%; height:auto; display:block; }
+
+/* ── MISTAKE CARDS ──────────────────────────────────────────────────── */
+.mistake{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.mistake::before{
+  content:"";
+  position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+  background:var(--amber);
+}
+.mistake h2{ margin-top:0 !important; }
+.article .mistake h2:first-of-type{ margin-top:0; }
+
+/* ── PULL QUOTES ────────────────────────────────────────────────────── */
+blockquote{
+  margin:44px 0;
+  padding:0 0 0 26px;
+  border-left:3px solid var(--amber);
+  background:none;
+}
+blockquote p{
+  font-size:23px;
+  line-height:1.45;
+  font-style:italic;
+  font-weight:600;
+  color:var(--text);
+  margin:0;
+}
+
+/* ── MID-ARTICLE STRIP ──────────────────────────────────────────────── */
+.strip{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px; flex-wrap:wrap;
+  margin:44px 0;
+  padding:26px 30px;
+  border-radius:16px;
+  background:linear-gradient(120deg,#0A1224,#131A33);
+  border:1px solid var(--line-strong);
+}
+.strip h3{ margin:0 0 6px; font-size:19px; color:var(--text); }
+.strip p{ margin:0; font-size:14px; color:var(--text-2); }
+.strip-btn{
+  flex:0 0 auto;
+  display:inline-block;
+  padding:12px 22px;
+  border-radius:10px;
+  background:var(--amber);
+  color:#1A1200;
+  font-size:14px; font-weight:700;
+  text-decoration:none;
+  transition:filter .15s ease;
+}
+.strip-btn:hover{ filter:brightness(1.08); }
+
+@media (max-width:640px){
+  .mistake{ padding:24px 20px 8px; }
+  .mistake::before{ top:20px; bottom:20px; }
+  blockquote p{ font-size:20px; }
+  .strip{ padding:22px; }
+  .strip-btn{ width:100%; text-align:center; }
+}
+
+/* ── WIDE SHELL: content + rail, so the page uses the screen ─────────── */
+.shell{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 var(--gutter);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 300px;
+  gap:64px;
+  align-items:start;
+}
+.shell > .article{ max-width:none; margin:0; padding:0 0 var(--s8); }
+
+.rail{ position:sticky; top:40px; display:flex; flex-direction:column; gap:14px; }
+.rail-card{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+  padding:20px;
+}
+.rail-k{
+  display:block; margin-bottom:10px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.rail-v{
+  display:block; margin-bottom:10px;
+  font-size:34px; line-height:1; font-weight:800; letter-spacing:-.02em;
+  color:var(--green);
+}
+.rail-v.is-amber{ color:var(--amber); }
+.rail-v.is-violet{ color:var(--violet-soft); }
+.rail-card p{ margin:0; font-size:13px; line-height:1.55; color:var(--text-2); }
+.rail-src{
+  margin:0; padding-top:14px;
+  border-top:1px solid var(--line);
+  font-size:11px; line-height:1.5; color:var(--text-3);
+}
+
+/* header + hero align to the same shell */
+.article-head, .hero-shot{ max-width:1180px; }
+
+/* ── HERO: a band, not a giant square ───────────────────────────────── */
+.hero-shot{
+  margin:0 auto 56px;
+  padding:0 var(--gutter);
+  border:0; background:none; box-shadow:none;
+  border-radius:0;
+  overflow:visible;
+}
+.hero-shot img{
+  width:100%;
+  height:clamp(260px,32vw,400px);
+  object-fit:cover;
+  object-position:center 42%;
+  border-radius:18px;
+  border:1px solid var(--line-strong);
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+
+/* ── THE FIX callout ────────────────────────────────────────────────── */
+.fixbox{
+  margin:22px 0 4px;
+  padding:16px 18px;
+  border-radius:12px;
+  border:1px solid rgba(46,212,122,.28);
+  background:rgba(46,212,122,.07);
+}
+.fixbox-k{
+  display:block; margin-bottom:6px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--green);
+}
+.fixbox p{ margin:0 !important; color:var(--text) !important; }
+
+@media (max-width:1080px){
+  .shell{ grid-template-columns:1fr; gap:40px; max-width:820px; }
+  .rail{ position:static; flex-direction:row; flex-wrap:wrap; }
+  .rail-card{ flex:1 1 220px; }
+  .rail-src{ flex:1 1 100%; border-top:0; padding-top:0; }
+  .article-head, .hero-shot{ max-width:820px; }
+}
+@media (max-width:640px){
+  .shell{ gap:28px; }
+  .hero-shot img{ height:210px; }
+}
+
+/* ── STEP / METRIC CARDS (same treatment as .mistake) ───────────────── */
+.step, .metric{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.step::before, .metric::before{
+  content:""; position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0; background:var(--amber);
+}
+.metric::before{ background:var(--blue-soft); }
+.step h2, .metric h2, .step h3, .metric h3{ margin-top:0 !important; }
+.article .step h2:first-of-type, .article .metric h2:first-of-type{ margin-top:0; }
+
+.metric h3{
+  font-size:20px; line-height:1.3; color:var(--text);
+  margin:0 0 14px; letter-spacing:-.01em;
+}
+.metric h3 .num{
+  display:inline-block; margin-right:10px;
+  min-width:26px; height:26px; line-height:26px; text-align:center;
+  border-radius:7px;
+  background:rgba(126,179,255,.14); color:var(--blue-soft);
+  font-size:12px; font-weight:700;
+}
+
+/* ── WARNING CARDS ──────────────────────────────────────────────────── */
+.warn{
+  position:relative;
+  border:1px solid rgba(240,67,92,.30);
+  border-radius:14px;
+  background:rgba(240,67,92,.07);
+  padding:22px 24px 6px;
+  margin:0 0 18px;
+}
+.warn h3{
+  margin:0 0 10px; font-size:17px; color:var(--text); line-height:1.35;
+}
+.warn h3::before{ content:"\26A0"; margin-right:9px; color:var(--red); }
+
+/* ── LEAD-TIME TABLE ────────────────────────────────────────────────── */
+.ltable{
+  width:100%; border-collapse:collapse;
+  margin:0 0 var(--s3);
+  font-size:15px;
+}
+.ltable th, .ltable td{
+  padding:12px 14px;
+  border-bottom:1px solid var(--line);
+  text-align:left; color:var(--text-2);
+}
+.ltable th{
+  font-size:11px; text-transform:uppercase; letter-spacing:.09em;
+  color:var(--text-3); font-weight:700;
+}
+.ltable td:last-child, .ltable th:last-child{ text-align:right; font-variant-numeric:tabular-nums; }
+.ltable tr:last-child td{
+  border-bottom:0; border-top:1px solid var(--line-strong);
+  color:var(--text); font-weight:700;
+}
+
+/* ── ROUTINE CHECKLIST ──────────────────────────────────────────────── */
+.routine{ counter-reset:r; list-style:none; padding:0; margin:0 0 var(--s3); }
+.routine li{
+  counter-increment:r;
+  position:relative;
+  padding:14px 16px 14px 52px;
+  margin-bottom:8px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  color:var(--text);
+  font-size:15.5px; line-height:1.5;
+}
+.routine li::before{
+  content:counter(r);
+  position:absolute; left:16px; top:13px;
+  width:24px; height:24px; line-height:24px; text-align:center;
+  border-radius:7px;
+  background:var(--grad-brand); color:#fff;
+  font-size:12px; font-weight:700;
+}
+.routine li::marker{ content:none; }
+
+@media (max-width:640px){
+  .step, .metric{ padding:24px 20px 8px; }
+  .step::before, .metric::before{ top:20px; bottom:20px; }
+  .ltable{ font-size:14px; }
+  .ltable th, .ltable td{ padding:10px 8px; }
+}
+
+/* ── PROBLEM / ALTERNATIVE PAIRS ────────────────────────────────────── */
+.problem, .alt{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 14px;
+}
+.problem::before, .alt::before{
+  content:""; position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.problem::before{ background:var(--red); }
+.alt{ margin-bottom:34px; border-color:rgba(46,212,122,.24); background:rgba(46,212,122,.05); }
+.alt::before{ background:var(--green); }
+
+.problem h2, .alt h2, .problem h3, .alt h3{ margin-top:0 !important; }
+.article .problem h2:first-of-type, .article .alt h2:first-of-type{ margin-top:0; }
+
+.problem h2 .num{ color:var(--red); }
+.alt h2 .num{ color:var(--green); }
+
+/* ── DELIVERY / DEMAND SAMPLES ──────────────────────────────────────── */
+.samples{
+  display:flex; flex-wrap:wrap; gap:8px;
+  list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.samples li{
+  padding:9px 14px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  background:var(--bg-raise);
+  font-family:var(--font-mono);
+  font-size:14px;
+  color:var(--text-2);
+  margin:0;
+}
+.samples li::before{ content:none; }
+.samples li.is-hi{ border-color:rgba(240,67,92,.42); color:#FF9AA9; }
+
+/* ── SCENARIO TRIO ──────────────────────────────────────────────────── */
+.scenarios{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:12px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.scenarios li{ margin:0; padding:0; }
+.scenarios li::before{ content:none; }
+.scen{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  padding:18px;
+  text-align:center;
+}
+.scen .n{ display:block; font-size:26px; font-weight:800; letter-spacing:-.02em; color:var(--text); margin-bottom:5px; }
+.scen .l{ display:block; font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--text-3); }
+.scen.is-low .n{ color:var(--blue-soft); }
+.scen.is-mid .n{ color:var(--text); }
+.scen.is-high .n{ color:var(--amber); }
+
+/* ── SIDE-BY-SIDE COMPARISON ────────────────────────────────────────── */
+.versus{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.versus > div{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  padding:20px;
+}
+.versus h4{
+  margin:0 0 12px; font-size:13px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.07em; color:var(--text-3);
+}
+.versus .big{ display:block; font-size:24px; font-weight:800; letter-spacing:-.02em; color:var(--text); margin-bottom:4px; }
+.versus .sub{ display:block; font-size:13px; color:var(--text-2); }
+.versus .big.is-warn{ color:var(--amber); }
+
+/* ── FOUR PILLARS ───────────────────────────────────────────────────── */
+.pillars{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+  gap:10px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.pillars li{
+  margin:0; padding:20px 14px; text-align:center;
+  border:1px solid var(--line-strong);
+  border-radius:12px;
+  background:var(--bg-raise);
+  font-size:15px; font-weight:600; color:var(--text);
+}
+.pillars li::before{ content:none; }
+
+@media (max-width:640px){
+  .problem, .alt{ padding:24px 20px 8px; }
+  .problem::before, .alt::before{ top:20px; bottom:20px; }
+  .versus{ grid-template-columns:1fr; }
+}
+
+/* ── TWO-CAMP DEFENCE CARDS ─────────────────────────────────────────── */
+.camp{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 20px;
+}
+.camp::before{
+  content:""; position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.camp.is-simple::before{ background:var(--blue-soft); }
+.camp.is-complex::before{ background:var(--violet-soft); }
+.camp h2, .camp h3{ margin-top:0 !important; }
+.article .camp h2:first-of-type{ margin-top:0; }
+.camp.is-simple h2 .num{ color:var(--blue-soft); }
+.camp.is-complex h2 .num{ color:var(--violet-soft); }
+
+/* ── ASSUMPTION PAIR ────────────────────────────────────────────────── */
+.assume{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.assume > div{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--bg-raise);
+  padding:20px;
+}
+.assume h4{
+  margin:0 0 10px; font-size:11px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.09em; color:var(--text-3);
+}
+.assume .eq{
+  display:block; font-family:var(--font-mono); font-size:14px;
+  color:var(--text); margin-bottom:12px; line-height:1.5;
+}
+.assume .as{
+  display:block; font-size:13px; line-height:1.55; color:var(--text-2);
+  padding-top:12px; border-top:1px solid var(--line);
+}
+
+/* ── RANGE ROWS ─────────────────────────────────────────────────────── */
+.ranges{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.ranges li{
+  display:grid; grid-template-columns:1fr auto 1fr;
+  align-items:center; gap:16px;
+  margin:0 0 10px; padding:16px 18px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+}
+.ranges li::before{ content:none; }
+.ranges .no{ font-size:14px; color:var(--text-3); text-decoration:line-through; }
+.ranges .arrow{ color:var(--violet-soft); font-size:16px; }
+.ranges .yes{ font-size:15px; color:var(--text); font-weight:600; }
+
+/* ── STAGE LADDER ───────────────────────────────────────────────────── */
+.stages{ counter-reset:st; list-style:none; margin:0 0 var(--s3); padding:0; }
+.stages li{
+  counter-increment:st;
+  position:relative;
+  margin:0 0 10px; padding:20px 22px 20px 74px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+}
+.stages li::before{
+  content:"Stage " counter(st);
+  position:absolute; left:20px; top:20px;
+  width:40px; padding:5px 0; text-align:center;
+  border-radius:8px;
+  background:var(--grad-brand); color:#fff;
+  font-size:9px; font-weight:700; letter-spacing:.04em;
+  text-transform:uppercase; line-height:1.25;
+}
+.stages li::marker{ content:none; }
+.stages h4{ margin:0 0 8px; font-size:16px; color:var(--text); }
+.stages p{ margin:0 !important; font-size:14.5px; color:var(--text-2); }
+
+/* ── COMPANY A / B ──────────────────────────────────────────────────── */
+.duel{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.duel > div{
+  border:1px solid var(--line); border-radius:14px;
+  background:var(--grad-card); padding:22px;
+}
+.duel > div.wins{ border-color:rgba(46,212,122,.35); background:rgba(46,212,122,.06); }
+.duel h4{ margin:0 0 10px; font-size:14px; color:var(--text); }
+.duel p{ margin:0 !important; font-size:14px; line-height:1.6; color:var(--text-2); }
+.duel .tag{
+  display:inline-block; margin-top:12px; padding:4px 10px;
+  border-radius:5px; font-size:10px; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase;
+}
+.duel .tag.win{ background:rgba(46,212,122,.15); color:var(--green); }
+.duel .tag.lose{ background:rgba(240,67,92,.13); color:#FF9AA9; }
+
+@media (max-width:640px){
+  .camp{ padding:24px 20px 8px; }
+  .camp::before{ top:20px; bottom:20px; }
+  .assume, .duel{ grid-template-columns:1fr; }
+  .ranges li{ grid-template-columns:1fr; gap:6px; }
+  .ranges .arrow{ display:none; }
+}
+
+/* ── BUSINESS A / B PROFILE CARDS ───────────────────────────────────── */
+.profiles{
+  display:grid; grid-template-columns:1fr 1fr; gap:14px;
+  margin:0 0 var(--s3);
+}
+.profile{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:26px 26px 10px;
+}
+.profile::before{
+  content:""; position:absolute; left:0; top:22px; bottom:22px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.profile.is-slow::before{ background:var(--red); }
+.profile.is-fast::before{ background:var(--green); }
+.profile h4{
+  margin:0 0 4px; font-size:17px; color:var(--text); letter-spacing:-.01em;
+}
+.profile .tagline{
+  display:block; margin-bottom:16px;
+  font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+}
+.profile.is-slow .tagline{ color:#FF9AA9; }
+.profile.is-fast .tagline{ color:var(--green); }
+.profile ul{ margin:0 0 16px; }
+.profile li{ font-size:14.5px; }
+
+/* ── CAPITAL CYCLE ──────────────────────────────────────────────────── */
+.cycle{
+  display:flex; flex-wrap:wrap; align-items:center; gap:8px;
+  list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.cycle li{
+  margin:0; padding:11px 15px;
+  border:1px solid var(--line-strong);
+  border-radius:9px;
+  background:var(--bg-raise);
+  font-size:14px; color:var(--text);
+}
+.cycle li::before{ content:none; }
+.cycle .sep{
+  border:0; background:none; padding:0 2px;
+  color:var(--violet-soft); font-size:15px;
+}
+
+/* ── WAITING LIST (where capital idles) ─────────────────────────────── */
+.waiting{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.waiting li{
+  position:relative;
+  margin:0 0 7px; padding:12px 16px 12px 42px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--amber);
+  border-radius:10px;
+  background:var(--grad-card);
+  font-size:15px; color:var(--text-2);
+}
+.waiting li::before{
+  content:"\23F1";
+  position:absolute; left:14px; top:12px;
+  color:var(--amber); font-size:14px;
+}
+
+/* ── QUESTION BLOCK ─────────────────────────────────────────────────── */
+.qbox{
+  margin:var(--s4) 0;
+  padding:26px 28px;
+  border:1px solid var(--line-strong);
+  border-radius:16px;
+  background:linear-gradient(120deg,rgba(91,79,230,.16),rgba(139,59,241,.07));
+}
+.qbox .label{
+  display:block; margin-bottom:12px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--violet-soft);
+}
+.qbox ul{ margin:0; padding-left:1.2em; }
+.qbox li{ font-size:15.5px; color:var(--text); margin-bottom:9px; }
+.qbox li::before{ content:none; }
+.qbox p{ margin:0 !important; font-size:19px; line-height:1.5; color:var(--text); font-weight:600; }
+
+@media (max-width:640px){
+  .profiles{ grid-template-columns:1fr; }
+  .profile{ padding:22px 20px 8px; }
+  .qbox{ padding:22px 20px; }
+}
+
+/* ── SPEC TABLE INSIDE PROFILE CARDS ────────────────────────────────── */
+.spec{ list-style:none; margin:0 0 16px; padding:0; }
+.spec li{
+  display:flex; justify-content:space-between; align-items:baseline; gap:14px;
+  margin:0; padding:9px 0;
+  border-bottom:1px solid var(--line);
+  font-size:14px;
+}
+.spec li:last-child{ border-bottom:0; }
+.spec li::before{ content:none; }
+.spec .sk{ color:var(--text-3); }
+.spec .sv{ color:var(--text); font-weight:600; text-align:right; font-variant-numeric:tabular-nums; }
+.spec .sv.hot{ color:#FF9AA9; }
+.spec .sv.cool{ color:var(--green); }
+
+/* ── LEDGER / TRADE-OFF LIST ────────────────────────────────────────── */
+.tradeoff{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.tradeoff li{
+  position:relative;
+  margin:0 0 7px; padding:12px 16px 12px 40px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--red);
+  border-radius:10px;
+  background:rgba(240,67,92,.05);
+  font-size:15px; color:var(--text-2);
+}
+.tradeoff li::before{
+  content:"\2715";
+  position:absolute; left:15px; top:12px;
+  color:var(--red); font-size:12px;
+}
+
+/* ── ALLOCATION OPTIONS ─────────────────────────────────────────────── */
+.options{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:10px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.options li{
+  margin:0; padding:16px;
+  border:1px solid var(--line-strong);
+  border-radius:12px;
+  background:var(--bg-raise);
+  font-size:14.5px; color:var(--text);
+  text-align:center;
+}
+.options li::before{ content:none; }
+
+@media (max-width:640px){
+  .spec li{ font-size:13.5px; }
+}
+
+/* ── FOREGONE / WHAT YOU GAVE UP ────────────────────────────────────── */
+.forgone{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:10px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.forgone li{
+  position:relative;
+  margin:0; padding:16px 16px 16px 42px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  font-size:14.5px; line-height:1.5; color:var(--text-2);
+}
+.forgone li::before{
+  content:"\2205";
+  position:absolute; left:15px; top:15px;
+  color:var(--text-3); font-size:15px;
+}
+
+/* ── OPTIONALITY / TWO POSTURES ─────────────────────────────────────── */
+.posture{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.posture > div{
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:22px;
+  background:var(--grad-card);
+}
+.posture > div.open{ border-color:rgba(46,212,122,.30); background:rgba(46,212,122,.06); }
+.posture > div.shut{ border-color:rgba(240,67,92,.28); background:rgba(240,67,92,.05); }
+.posture h4{ margin:0 0 8px; font-size:15px; color:var(--text); }
+.posture p{ margin:0 !important; font-size:14.5px; line-height:1.6; color:var(--text-2); }
+
+/* ── THE TWO QUESTIONS ──────────────────────────────────────────────── */
+.swap{
+  margin:var(--s4) 0;
+  border:1px solid var(--line-strong);
+  border-radius:16px;
+  overflow:hidden;
+}
+.swap > div{ padding:22px 26px; }
+.swap .from{ background:rgba(240,67,92,.06); border-bottom:1px solid var(--line-strong); }
+.swap .to{ background:rgba(46,212,122,.06); }
+.swap .lab{
+  display:block; margin-bottom:8px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+}
+.swap .from .lab{ color:#FF9AA9; }
+.swap .to .lab{ color:var(--green); }
+.swap p{ margin:0 !important; font-size:19px; line-height:1.45; font-weight:600; color:var(--text); }
+
+@media (max-width:640px){
+  .posture{ grid-template-columns:1fr; }
+  .swap > div{ padding:20px; }
+  .swap p{ font-size:17px; }
+}
+
+/* ── VISIBLE vs INVISIBLE COST STACK ────────────────────────────────── */
+.coststack{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.coststack > div{
+  border:1px solid var(--line);
+  border-radius:14px; padding:22px;
+  background:var(--grad-card);
+}
+.coststack > div.hidden-cost{
+  border-color:rgba(245,165,36,.32);
+  background:rgba(245,165,36,.06);
+}
+.coststack h4{
+  margin:0 0 14px; font-size:11px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.09em; color:var(--text-3);
+}
+.coststack .hidden-cost h4{ color:var(--amber); }
+.coststack ul{ margin:0; padding:0; list-style:none; }
+.coststack li{
+  margin:0 0 7px; padding:0 0 0 18px; position:relative;
+  font-size:14.5px; color:var(--text-2);
+}
+.coststack li::before{
+  content:"\2022"; position:absolute; left:2px; top:-1px; color:var(--text-3);
+}
+.coststack .hidden-cost li{ color:var(--text); }
+.coststack .hidden-cost li::before{ color:var(--amber); }
+
+@media (max-width:640px){ .coststack{ grid-template-columns:1fr; } }
+
+/* ── CAMPAIGN COMPARISON CARDS ──────────────────────────────────────── */
+.campaign{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:24px 26px;
+}
+.campaign::before{
+  content:""; position:absolute; left:0; top:22px; bottom:22px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.campaign.is-tidy::before{ background:var(--blue-soft); }
+.campaign.is-messy::before{ background:var(--amber); }
+.campaign h4{ margin:0 0 4px; font-size:16px; color:var(--text); }
+.campaign .verdict{
+  display:block; margin-bottom:16px;
+  font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+}
+.campaign.is-tidy .verdict{ color:var(--blue-soft); }
+.campaign.is-messy .verdict{ color:var(--amber); }
+.campaign .acos{
+  display:block; font-size:34px; font-weight:800; letter-spacing:-.02em;
+  line-height:1; margin-bottom:14px; color:var(--text);
+}
+
+/* ── DIMINISHING-RETURNS CURVE ──────────────────────────────────────── */
+.curve{
+  margin:0 0 var(--s3);
+  padding:22px 24px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--bg-raise);
+}
+.curve-bars{ display:flex; align-items:flex-end; gap:6px; height:96px; margin-bottom:12px; }
+.curve-bars span{
+  flex:1; border-radius:4px 4px 0 0;
+  background:linear-gradient(180deg,var(--violet-soft),rgba(139,59,241,.25));
+}
+.curve-cap{ margin:0 !important; font-size:13px; color:var(--text-3); text-align:center; }
+
+/* ── CAPTURE vs CREATE ──────────────────────────────────────────────── */
+.jobs{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.jobs > div{
+  border:1px solid var(--line); border-radius:14px;
+  background:var(--grad-card); padding:22px;
+}
+.jobs h4{ margin:0 0 6px; font-size:15px; color:var(--text); }
+.jobs .n{ display:block; font-size:26px; font-weight:800; letter-spacing:-.02em; margin-bottom:10px; }
+.jobs .captures .n{ color:var(--green); }
+.jobs .creates .n{ color:var(--amber); }
+.jobs p{ margin:0 !important; font-size:14px; line-height:1.6; color:var(--text-2); }
+
+@media (max-width:640px){
+  .jobs{ grid-template-columns:1fr; }
+  .campaign{ padding:20px; }
+}
+</style>
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="bg-layer" aria-hidden="true"></div>
+
+<div class="wrap">
+
+<p class="back-link"><a href="/resources.html">&larr; Knowledge Hub</a></p>
+
+<header class="article-head">
+  <p class="eyebrow">PPC &amp; Advertising</p>
+
+  <h1>Stop Optimizing ACOS: <span class="accent">Why Chasing a Lower ACOS Is Costing You More Money</span></h1>
+
+  <p class="deck">
+    The most dangerous number in Amazon advertising isn&rsquo;t a high ACOS. It&rsquo;s
+    believing ACOS should always go down. Some of the fastest-growing Amazon
+    businesses in the world deliberately increase theirs &mdash; not because they
+    enjoy spending money, but because they understand something many sellers don&rsquo;t.
+  </p>
+
+  <p class="meta">
+    <span>AmazeBase</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>6 min read</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>PPC &amp; Advertising</span>
+  </p>
+</header>
+
+<figure class="hero-shot">
+  <img src="../assets/img/hero-acos.jpg"
+       alt="A dark globe wrapped in a glowing supply-chain network, with shipping containers orbiting it"
+       width="1280" height="1098" loading="eager" decoding="async">
+</figure>
+
+<div class="shell">
+<main id="main" class="article">
+
+  <p class="lead">
+    Ask almost any Amazon seller how their advertising is performing and the first
+    number they&rsquo;ll mention is ACOS. Some businesses even reward marketing teams
+    for lowering it. At first glance that sounds perfectly reasonable &mdash; a lower
+    Advertising Cost of Sales should mean greater profitability. Not necessarily.
+  </p>
+
+  <blockquote>
+    <p>ACOS is an efficiency metric &mdash; not a decision metric. Confusing those two ideas can quietly cost your business hundreds of thousands of dollars.</p>
+  </blockquote>
+
+  <nav class="toc" aria-labelledby="toc-title">
+    <h2 id="toc-title">What&rsquo;s in this piece</h2>
+    <ol>
+      <li><a href="#trap">The ACOS trap</a></li>
+      <li><a href="#two">Two campaigns, two very different stories</a></li>
+      <li><a href="#objective">ACOS doesn&rsquo;t know your objective</a></li>
+      <li><a href="#worst">The campaign that looks worst may be your most valuable</a></li>
+      <li><a href="#capital">ACOS ignores capital</a></li>
+      <li><a href="#hidden">The hidden cost of chasing lower ACOS</a></li>
+      <li><a href="#curve">Every campaign lives somewhere on a curve</a></li>
+      <li><a href="#questions">Stop asking &ldquo;is this ACOS good?&rdquo;</a></li>
+    </ol>
+  </nav>
+
+  <hr class="rule">
+
+  <h2 id="trap">The ACOS trap</h2>
+
+  <p>Imagine you&rsquo;re driving a delivery truck and someone tells you: <em>&ldquo;The goal is to consume as little fuel as possible.&rdquo;</em></p>
+
+  <p>You slow down. Drive carefully. Avoid acceleration. Your fuel consumption improves dramatically. Mission accomplished &mdash; except you&rsquo;ve delivered half as many packages.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The parallel</span>
+    <p>That&rsquo;s exactly how many businesses manage PPC. Lower ACOS doesn&rsquo;t automatically mean better advertising. Sometimes it simply means you&rsquo;re driving slower.</p>
+  </div>
+
+  <h2 id="love">Why everyone loves ACOS</h2>
+
+  <p>Its popularity comes from one characteristic: it&rsquo;s easy. One number, easy to calculate, easy to compare, easy to put on a dashboard. Executives love it, agencies report it, software highlights it.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The real issue</span>
+    <p>The problem isn&rsquo;t the metric. It&rsquo;s the assumption that lower is always better. Business rarely works that way.</p>
+  </div>
+
+  <h2 id="two">Two campaigns, two very different stories</h2>
+
+  <div class="profiles">
+    <div class="campaign is-tidy">
+      <h4>Campaign A</h4>
+      <span class="verdict">Looks fantastic</span>
+      <span class="acos">11%</span>
+      <ul class="spec">
+        <li><span class="sk">Monthly spend</span><span class="sv">$3,000</span></li>
+        <li><span class="sk">Revenue</span><span class="sv">$27,000</span></li>
+      </ul>
+    </div>
+    <div class="campaign is-messy">
+      <h4>Campaign B</h4>
+      <span class="verdict">Looks like a problem</span>
+      <span class="acos">28%</span>
+      <ul class="spec">
+        <li><span class="sk">Monthly spend</span><span class="sv">$30,000</span></li>
+        <li><span class="sk">Revenue</span><span class="sv">$107,000</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <p>Many sellers immediately begin trying to &ldquo;fix&rdquo; Campaign B. But before touching it, ask a different question.</p>
+
+  <div class="qbox">
+    <span class="label">The question</span>
+    <p>Which campaign creates more value for the business?</p>
+  </div>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The risk</span>
+    <p>Campaign A is efficient. Campaign B may be responsible for nearly all of the company&rsquo;s growth. Without understanding <em>why</em> B has a higher ACOS, optimising it could reduce total profit.</p>
+  </div>
+
+  <h2 id="objective">ACOS doesn&rsquo;t know your objective</h2>
+
+  <p>Imagine three businesses. The first wants to maximise profit. The second wants to dominate a category. The third is launching a new product. Should they all have the same ACOS target?</p>
+
+  <ul class="scenarios">
+    <li><div class="scen is-low"><span class="n">Harvest</span><span class="l">Low target</span></div></li>
+    <li><div class="scen is-mid"><span class="n">Dominate</span><span class="l">Higher target</span></div></li>
+    <li><div class="scen is-high"><span class="n">Launch</span><span class="l">Highest target</span></ul></li>
+  </div>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The point</span>
+    <p>The correct ACOS depends entirely on what you&rsquo;re trying to achieve. The metric hasn&rsquo;t changed. The decision has.</p>
+  </div>
+
+  <h2 id="high">High ACOS isn&rsquo;t always a problem</h2>
+
+  <p>Suppose you&rsquo;re launching a premium product and your ACOS reaches 45%. Dashboards turn red. Warnings appear. Suggestions recommend reducing bids. But what if that campaign is:</p>
+
+  <ul class="samples">
+    <li>Building reviews</li><li>Improving organic ranking</li>
+    <li>Generating keyword relevance</li><li>Increasing repeat purchases</li>
+    <li>Creating brand awareness</li><li>Establishing share before competitors</li>
+  </ul>
+
+  <blockquote>
+    <p>ACOS only measures today&rsquo;s advertising efficiency. It knows nothing about tomorrow&rsquo;s value.</p>
+  </blockquote>
+
+  <h2 id="worst">The campaign that looks worst may be your most valuable</h2>
+
+  <div class="jobs">
+    <div class="captures">
+      <h4>Branded campaign</h4>
+      <span class="n">8%</span>
+      <p>Fantastic ACOS. But would those customers have purchased anyway? Many probably would. It <strong>captures</strong> existing demand.</p>
+    </div>
+    <div class="creates">
+      <h4>Generic keyword campaign</h4>
+      <span class="n">35%</span>
+      <p>Looks terrible. But it introduces your product to customers who&rsquo;ve never heard of your brand. It <strong>creates</strong> new demand.</p>
+    </div>
+  </div>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The blind spot</span>
+    <p>One captures existing customers. The other creates future ones. ACOS treats them as though they&rsquo;re doing the same job. They&rsquo;re not.</p>
+  </div>
+
+<aside class="strip">
+  <div>
+    <h3>Judge campaigns on value, not efficiency</h3>
+    <p>AmazeBase connects advertising to inventory, cash and margin so you can see what a campaign really costs.</p>
+  </div>
+  <a class="strip-btn" href="/index.html#pricing">Join the Wait List</a>
+</aside>
+
+  <h2 id="capital">ACOS ignores capital</h2>
+
+  <p>Advertising doesn&rsquo;t happen in isolation. Every sale generated by PPC requires inventory, cash, warehouse capacity, supplier production, forecasting and working capital.</p>
+
+  <p>Imagine two products with <strong>identical ACOS</strong>. One requires six months of inventory. The other replenishes every four weeks. Should advertising decisions be identical?</p>
+
+  <div class="versus">
+    <div>
+      <h4>Product one</h4>
+      <span class="big is-warn">6 months</span>
+      <span class="sub">Every extra sale may require millions in additional inventory investment.</span>
+    </div>
+    <div>
+      <h4>Product two</h4>
+      <span class="big">4 weeks</span>
+      <span class="sub">Every extra sale generates cash again almost immediately.</span>
+    </div>
+  </div>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The gap</span>
+    <p>ACOS has no idea. It is identical in both cases.</p>
+  </div>
+
+  <h2 id="hidden">The hidden cost of chasing lower ACOS</h2>
+
+  <p>Your marketing team proudly announces they reduced ACOS by 30%. How did they do it? They reduced bids, paused expensive keywords, eliminated exploratory campaigns and focused only on proven search terms.</p>
+
+  <p>Advertising became more efficient. But something else happened:</p>
+
+  <ul class="tradeoff">
+    <li>Sales slowed</li>
+    <li>Organic ranking weakened</li>
+    <li>Competitors captured market share</li>
+    <li>New keyword discovery stopped</li>
+    <li>Revenue flattened</li>
+  </ul>
+
+  <blockquote>
+    <p>The business optimised a metric &mdash; and accidentally slowed its growth.</p>
+  </blockquote>
+
+  <h2 id="curve">Every campaign lives somewhere on a curve</h2>
+
+  <p>Advertising isn&rsquo;t linear. The first dollars you spend usually produce exceptional returns. The next are slightly less efficient. Then slightly less again.</p>
+
+  <div class="curve">
+    <div class="curve-bars" aria-hidden="true">
+      <span style="height:100%"></span><span style="height:86%"></span>
+      <span style="height:72%"></span><span style="height:60%"></span>
+      <span style="height:49%"></span><span style="height:40%"></span>
+      <span style="height:32%"></span><span style="height:25%"></span>
+      <span style="height:19%"></span><span style="height:14%"></span>
+    </div>
+    <p class="curve-cap">Return on each additional dollar of spend, illustrative</p>
+  </div>
+
+  <p>That doesn&rsquo;t mean you should stop. It means every additional dollar deserves comparison with every other opportunity in the business. Should the next $10,000 go to:</p>
+
+  <ul class="options">
+    <li>This campaign?</li>
+    <li>Another campaign?</li>
+    <li>Another product?</li>
+    <li>Inventory?</li>
+    <li>International expansion?</li>
+    <li>A new launch?</li>
+  </ul>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The reframe</span>
+    <p>That&rsquo;s not an advertising question. That&rsquo;s capital allocation.</p>
+  </div>
+
+  <h2 id="questions">Stop asking &ldquo;is this ACOS good?&rdquo;</h2>
+
+  <div class="qbox">
+    <span class="label">Ask these instead</span>
+    <ul>
+      <li>What happens if we double this budget?</li>
+      <li>What happens if we stop advertising entirely?</li>
+      <li>Would these customers have bought anyway?</li>
+      <li>Can operations support additional demand?</li>
+      <li>Does this campaign improve long-term profitability?</li>
+      <li>Does it strengthen the business beyond today&rsquo;s sales?</li>
+    </ul>
+  </div>
+
+  <p>Those questions produce much better decisions than chasing an arbitrary percentage.</p>
+
+  <h2 id="green">The dangerous comfort of green dashboards</h2>
+
+  <p>Dashboards love green numbers. Low ACOS, low CPC, high ROAS &mdash; everything looks healthy.</p>
+
+  <blockquote>
+    <p>Businesses rarely fail because dashboards were too honest. They fail because management optimised what was easy to measure instead of what actually mattered.</p>
+  </blockquote>
+
+  <h2 id="investor">Think like an investor</h2>
+
+  <p>Imagine managing an investment fund. One investment returns 15% every year with almost no growth. Another returns only 8% initially but compounds rapidly over the next decade. Which deserves more capital?</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The parallel</span>
+    <p>Some campaigns maximise short-term efficiency. Others maximise long-term enterprise value. Confusing the two is one of the most common mistakes experienced sellers make.</p>
+  </div>
+
+  <h2 id="exec">ACOS is a dashboard metric. CEOs need decision metrics.</h2>
+
+  <p>Imagine replacing your ACOS report with questions like:</p>
+
+  <div class="qbox">
+    <span class="label">Executive questions</span>
+    <ul>
+      <li>Which campaign deserves another $25,000?</li>
+      <li>Which campaign creates the most incremental profit?</li>
+      <li>Which campaign accelerates organic ranking?</li>
+      <li>Which campaign requires inventory we can&rsquo;t currently support?</li>
+      <li>Which campaign creates customers rather than simply capturing them?</li>
+      <li>Which campaign would we start today if we rebuilt from scratch?</li>
+    </ul>
+  </div>
+
+  <p>Those aren&rsquo;t optimisation questions. They&rsquo;re executive questions &mdash; and executive questions build better businesses.</p>
+
+  <h2 id="future">The future of Amazon advertising isn&rsquo;t better optimisation</h2>
+
+  <p>For years, advertising software has competed to automate bids, adjust keywords, pause campaigns and increase efficiency. Those capabilities matter. But experienced businesses eventually discover that bidding isn&rsquo;t the hard part &mdash; deciding where capital should be deployed is.</p>
+
+  <blockquote>
+    <p>Advertising isn&rsquo;t a technical exercise. It&rsquo;s an investment strategy. Every campaign is competing for money that could be invested somewhere else.</p>
+  </blockquote>
+
+  <hr class="rule">
+
+  <h2 id="final">A different way to measure success</h2>
+
+  <p>The next time you review your advertising dashboard, resist the temptation to ask how to lower ACOS.</p>
+
+  <div class="swap">
+    <div class="from">
+      <span class="lab">The optimisation question</span>
+      <p>&ldquo;How do we lower ACOS?&rdquo;</p>
+    </div>
+    <div class="to">
+      <span class="lab">The business question</span>
+      <p>&ldquo;If we had another $100,000 to invest today, where would it create the greatest long-term value?&rdquo;</p>
+    </div>
+  </div>
+
+  <p>The objective of advertising isn&rsquo;t to produce the lowest ACOS. It&rsquo;s to increase the value of the business. Sometimes those goals align. Sometimes they&rsquo;re complete opposites, and knowing the difference is what separates campaign managers from business builders.</p>
+
+  <blockquote>
+    <p>The most dangerous number in Amazon advertising isn&rsquo;t a high ACOS. It&rsquo;s believing that a lower one automatically means you&rsquo;re making better decisions.</p>
+  </blockquote>
+
+</main>
+
+<aside class="rail" aria-label="Key figures from this article">
+
+  <div class="rail-card">
+    <span class="rail-k">Efficient vs valuable</span>
+    <span class="rail-v">11% vs 28%</span>
+    <p>Campaign A returns $27K on $3K. Campaign B returns $107K on $30K. The worse-looking ACOS may be funding all the growth.</p>
+  </div>
+
+  <div class="rail-card">
+    <span class="rail-k">Capture vs create</span>
+    <span class="rail-v is-amber">8% vs 35%</span>
+    <p>Branded search captures buyers you may already have had. Generic search creates buyers who never knew you existed.</p>
+  </div>
+
+  <div class="rail-card">
+    <span class="rail-k">Same ACOS, different cost</span>
+    <span class="rail-v is-violet">6mo vs 4wk</span>
+    <p>Identical advertising efficiency, wildly different capital requirement. ACOS cannot see this.</p>
+  </div>
+
+  <p class="rail-src">Figures from this article&rsquo;s worked examples, not an industry survey.</p>
+
+</aside>
+</div>
+
+<aside class="cta">
+  <h2>Judge campaigns by what they build</h2>
+  <p>
+    AmazeBase connects advertising to inventory, cash flow and margin so every
+    campaign decision accounts for what it actually costs the business.
+  </p>
+  <a class="btn" href="/index.html#pricing">
+    Join the Wait List
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M5 12h14M13 6l6 6-6 6"/>
+    </svg>
+  </a>
+</aside>
+
+</div><!-- /.wrap -->
+
+</body>
+</html>

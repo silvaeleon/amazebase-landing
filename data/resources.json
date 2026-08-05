@@ -96,6 +96,26 @@
   ],
   "resources": [
     {
+      "id": "stop-optimizing-acos",
+      "title": "Stop Optimizing ACOS: Why Chasing a Lower ACOS Is Costing You More Money",
+      "summary": "The most dangerous number in Amazon advertising isn't a high ACOS — it's believing ACOS should always go down. Why an efficiency metric makes a poor decision metric.",
+      "category": "ppc",
+      "format": "article",
+      "author": "AmazeBase",
+      "published": "2026-08-11",
+      "minutes": 6,
+      "featured": true,
+      "url": "articles/stop-optimizing-acos.html",
+      "topics": [
+        "ACOS",
+        "Campaign Strategy",
+        "Capital Allocation",
+        "Incrementality",
+        "Organic Ranking",
+        "Product Launch"
+      ]
+    },
+    {
       "id": "inventory-optionality",
       "title": "Your Inventory Isn't Costing You Storage Fees. It's Costing You Optionality.",
       "summary": "The most expensive inventory in your warehouse isn't the one paying long-term storage fees. It's the one preventing your next opportunity.",
