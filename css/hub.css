@@ -404,3 +404,27 @@
   transition:color .15s ease, border-color .15s ease;
 }
 .hub-clear:hover{ color:var(--text); border-color:var(--violet-soft); }
+
+
+/* ── Pill rails: experience level + language ──────────────────────────
+   Independent filter axes. Deliberately lighter than .hub-fmt so the
+   sidebar reads as one primary rail (Format) plus two secondary ones,
+   rather than three controls competing for the same attention. */
+.hub-pills{ list-style:none; margin:0; padding:0;
+            display:flex; flex-wrap:wrap; gap:6px; }
+
+.hub-pill{ display:inline-flex; align-items:baseline; gap:6px;
+           padding:6px 11px; border-radius:999px; cursor:pointer;
+           border:1px solid var(--line); background:transparent;
+           color:var(--ink-2); font:inherit; font-size:.86rem;
+           transition:border-color .15s, color .15s, background .15s; }
+
+.hub-pill:hover{ border-color:var(--brand); color:var(--ink-1); }
+
+.hub-pill:focus-visible{ outline:2px solid var(--brand); outline-offset:2px; }
+
+.hub-pill.is-on{ border-color:var(--brand); color:var(--ink-1);
+                 background:color-mix(in srgb, var(--brand) 14%, transparent); }
+
+.hub-pill-n{ font-size:.74rem; color:var(--ink-3); font-variant-numeric:tabular-nums; }
+.hub-pill.is-on .hub-pill-n{ color:var(--ink-2); }

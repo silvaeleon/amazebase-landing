@@ -23,8 +23,12 @@
     all: [],
     categories: [],
     formats: [],
+    levels: [],
+    languages: [],
     category: null,     // active category id, null = all
     format: null,       // active format id, null = all
+    level: null,        // active level id, null = all
+    language: null,     // active language id, null = all
     topic: null,        // active topic, null = all
     query: "",
     sort: "latest"
@@ -93,6 +97,8 @@
     return state.all.filter(function (r) {
       if (state.category && !inCat(r, state.category)) return false;
       if (state.format   && r.format   !== state.format)   return false;
+      if (state.level    && r.level    !== state.level)    return false;
+      if (state.language && r.language !== state.language) return false;
       if (state.topic && (r.topics || []).indexOf(state.topic) === -1) return false;
       if (!q) return true;
       var catNames = catsOf(r).map(function (c) {
@@ -113,7 +119,8 @@
      visitor is browsing everything — once they filter, a "Featured" strip
      showing items outside the filter directly contradicts what they clicked. */
   function filtering() {
-    return !!(state.category || state.format || state.topic || state.query.trim());
+    return !!(state.category || state.format || state.level ||
+              state.language || state.topic || state.query.trim());
   }
 
   function activeLabel() {
@@ -121,6 +128,8 @@
     if (state.topic) return state.topic;
     if (state.category) return labelFor(state.categories, state.category);
     if (state.format) return labelFor(state.formats, state.format);
+    if (state.level) return labelFor(state.levels, state.level);
+    if (state.language) return labelFor(state.languages, state.language);
     return "Latest Resources";
   }
 
@@ -182,6 +191,52 @@
       var n = countIn(function (r) { return r.format === f.id; });
       ul.appendChild(row(f.id, f.label, f.icon, n, state.format === f.id));
     });
+  }
+
+  /* Level and language are independent axes, not extra categories. They get
+     their own compact pill rails so a visitor can narrow by category, format,
+     level and language all at once without the four competing for one control. */
+  function renderPills(sel, list, active, set) {
+    var ul = $(sel);
+    if (!ul) return;
+    clear(ul);
+
+    function pill(id, label, n, on) {
+      var li = el("li");
+      var b  = el("button", "hub-pill" + (on ? " is-on" : ""));
+      b.type = "button";
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+      b.appendChild(el("span", "hub-pill-label", label));
+      b.appendChild(el("span", "hub-pill-n", n));
+      b.addEventListener("click", function () {
+        set(id);
+        renderAll();
+      });
+      li.appendChild(b);
+      return li;
+    }
+
+    ul.appendChild(pill(null, "All", state.all.length, active === null));
+    list.forEach(function (o) {
+      var n = countIn(function (r) { return r[o.field] === o.id; });
+      ul.appendChild(pill(o.id, o.label, n, active === o.id));
+    });
+  }
+
+  function withField(list, field) {
+    return list.map(function (o) {
+      return { id: o.id, label: o.label, field: field };
+    });
+  }
+
+  function renderLevels() {
+    renderPills("[data-hub-levels]", withField(state.levels, "level"),
+                state.level, function (id) { state.level = id; });
+  }
+
+  function renderLanguages() {
+    renderPills("[data-hub-languages]", withField(state.languages, "language"),
+                state.language, function (id) { state.language = id; });
   }
 
   function renderTopics() {
@@ -342,6 +397,8 @@
     renderCategories();
     renderFormats();
     renderTopics();
+    renderLevels();
+    renderLanguages();
     renderFeatured();
     renderList();
     renderChrome();
@@ -352,6 +409,8 @@
     clearBtnEl.addEventListener("click", function () {
       state.category = null;
       state.format   = null;
+      state.level    = null;
+      state.language = null;
       state.topic    = null;
       state.query    = "";
       var inp = $("[data-hub-search]");
@@ -467,6 +526,8 @@
     })
     .then(function (d) {
       state.categories = d.categories || [];
+      state.levels     = d.levels     || [];
+      state.languages  = d.languages  || [];
       state.formats    = d.formats || [];
       state.all        = d.resources || [];
       renderAll();

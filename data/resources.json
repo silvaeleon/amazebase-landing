@@ -9,8 +9,15 @@
     "placeholder resources to make the page look fuller — that is the same",
     "false-advertising problem flagged on the landing page.",
     "",
-    "REQUIRED per entry: id, title, summary, category, format, published, url.",
+    "REQUIRED per entry: id, title, summary, category, format, level,",
+    "  language, published, url.",
     "OPTIONAL: author, minutes, featured, thumb, topics[].",
+    "",
+    "level    must be one of the ids in `levels` below (beginner | expert).",
+    "language must be one of the ids in `languages` below (en | es | fr |",
+    "  pt | de). Category, format, level and language are four INDEPENDENT",
+    "  axes — a visitor can narrow by all four at once. Do not add levels or",
+    "  languages to `categories`; the sidebar renders each axis separately.",
     "",
     "category must be one of the ids in `categories` below. A resource that",
     "  belongs in two places may instead use `categories`: [\"ppc\",\"inventory\"] —",
@@ -42,7 +49,7 @@
     },
     {
       "id": "growth",
-      "label": "Business Growth",
+      "label": "Growth Playbook",
       "icon": "i-rocket",
       "tint": "amber"
     },
@@ -96,6 +103,38 @@
       "icon": "i-trend"
     }
   ],
+  "levels": [
+    {
+      "id": "beginner",
+      "label": "Beginner"
+    },
+    {
+      "id": "expert",
+      "label": "Expert"
+    }
+  ],
+  "languages": [
+    {
+      "id": "en",
+      "label": "English"
+    },
+    {
+      "id": "es",
+      "label": "Spanish"
+    },
+    {
+      "id": "fr",
+      "label": "French"
+    },
+    {
+      "id": "pt",
+      "label": "Portuguese"
+    },
+    {
+      "id": "de",
+      "label": "German"
+    }
+  ],
   "resources": [
     {
       "id": "ppc-flywheel",
@@ -116,7 +155,9 @@
         "Campaign Strategy",
         "Incrementality",
         "Competitive Moat"
-      ]
+      ],
+      "level": "expert",
+      "language": "en"
     },
     {
       "id": "stopping-too-soon",
@@ -137,7 +178,9 @@
         "ACOS",
         "Portfolio Allocation",
         "Statistical Significance"
-      ]
+      ],
+      "level": "expert",
+      "language": "en"
     },
     {
       "id": "advertising-is-inventory",
@@ -161,7 +204,9 @@
         "Campaign Strategy",
         "Demand Forecasting",
         "Stockouts"
-      ]
+      ],
+      "level": "expert",
+      "language": "en"
     },
     {
       "id": "forecasting-not-math-podcast",
@@ -181,7 +226,9 @@
         "Lead Time",
         "Safety Stock",
         "Inventory Forecasting"
-      ]
+      ],
+      "level": "expert",
+      "language": "en"
     },
     {
       "id": "predicting-demand-podcast",
@@ -200,7 +247,9 @@
         "Customer Research",
         "Demand Scenarios",
         "Inventory Forecasting"
-      ]
+      ],
+      "level": "expert",
+      "language": "en"
     },
     {
       "id": "wrong-kpi",
@@ -220,7 +269,9 @@
         "ROAS",
         "Opportunity Cost",
         "Capital Allocation"
-      ]
+      ],
+      "level": "expert",
+      "language": "en"
     },
     {
       "id": "campaign-cannibalisation",
@@ -240,7 +291,9 @@
         "Campaign Strategy",
         "Keyword Overlap",
         "Capital Allocation"
-      ]
+      ],
+      "level": "expert",
+      "language": "en"
     },
     {
       "id": "advertising-debt",
@@ -260,7 +313,9 @@
         "Incrementality",
         "Brand Building",
         "Risk"
-      ]
+      ],
+      "level": "expert",
+      "language": "en"
     },
     {
       "id": "attribution-vs-incrementality",
@@ -280,7 +335,9 @@
         "Customer Acquisition",
         "Organic Ranking",
         "Opportunity Cost"
-      ]
+      ],
+      "level": "expert",
+      "language": "en"
     },
     {
       "id": "advertising-portfolio",
@@ -300,7 +357,9 @@
         "ROAS",
         "Risk",
         "Diversification"
-      ]
+      ],
+      "level": "expert",
+      "language": "en"
     },
     {
       "id": "highest-roas-trap",
@@ -320,7 +379,9 @@
         "Customer Acquisition",
         "Organic Ranking",
         "Capital Allocation"
-      ]
+      ],
+      "level": "expert",
+      "language": "en"
     },
     {
       "id": "campaigns-compete-internally",
@@ -340,7 +401,9 @@
         "Inventory Value",
         "Opportunity Cost",
         "Cash Flow Management"
-      ]
+      ],
+      "level": "expert",
+      "language": "en"
     },
     {
       "id": "ppc-capital-allocation",
@@ -360,7 +423,9 @@
         "Cash Flow Management",
         "Purchase Orders",
         "Portfolio Allocation"
-      ]
+      ],
+      "level": "expert",
+      "language": "en"
     },
     {
       "id": "stop-optimizing-acos",
@@ -380,7 +445,9 @@
         "Incrementality",
         "Organic Ranking",
         "Product Launch"
-      ]
+      ],
+      "level": "expert",
+      "language": "en"
     },
     {
       "id": "inventory-optionality",
@@ -400,7 +467,9 @@
         "Inventory Value",
         "Cash Flow Management",
         "Purchase Orders"
-      ]
+      ],
+      "level": "expert",
+      "language": "en"
     },
     {
       "id": "opportunity-cost",
@@ -420,7 +489,9 @@
         "Purchase Orders",
         "Cash Flow Management",
         "Portfolio Allocation"
-      ]
+      ],
+      "level": "expert",
+      "language": "en"
     },
     {
       "id": "best-seller-worst-investment",
@@ -440,7 +511,9 @@
         "Inventory Value",
         "Opportunity Cost",
         "Margin"
-      ]
+      ],
+      "level": "expert",
+      "language": "en"
     },
     {
       "id": "capital-velocity",
@@ -460,7 +533,9 @@
         "Purchase Orders",
         "Margin",
         "Portfolio Allocation"
-      ]
+      ],
+      "level": "expert",
+      "language": "en"
     },
     {
       "id": "better-questions-not-formulas",
@@ -480,7 +555,9 @@
         "Cash Flow Management",
         "Lead Time",
         "Reorder Point"
-      ]
+      ],
+      "level": "expert",
+      "language": "en"
     },
     {
       "id": "classic-reorder-formula-wrong",
@@ -500,7 +577,9 @@
         "Demand Scenarios",
         "Cash Flow Management",
         "Inventory Value"
-      ]
+      ],
+      "level": "expert",
+      "language": "en"
     },
     {
       "id": "reorder-point-formula",
@@ -519,7 +598,9 @@
         "Safety Stock",
         "Lead Time",
         "Days of Supply"
-      ]
+      ],
+      "level": "expert",
+      "language": "en"
     },
     {
       "id": "inventory-forecasting-mistakes",
@@ -537,7 +618,9 @@
         "Restock Planning",
         "Cash Flow Management",
         "Safety Stock"
-      ]
+      ],
+      "level": "expert",
+      "language": "en"
     }
   ],
   "_testimonials_README": [
