@@ -96,6 +96,26 @@
   ],
   "resources": [
     {
+      "id": "wrong-kpi",
+      "title": "You're Measuring the Wrong KPI: Why Great Amazon Businesses Stop Chasing Advertising Metrics",
+      "summary": "The biggest mistake experienced sellers make isn't choosing the wrong KPI — it's asking the wrong question. Advertising dashboards describe yesterday; businesses must decide tomorrow.",
+      "category": "ppc",
+      "format": "article",
+      "author": "AmazeBase",
+      "published": "2026-08-19",
+      "minutes": 6,
+      "featured": true,
+      "url": "articles/wrong-kpi.html",
+      "topics": [
+        "KPIs",
+        "Decision Making",
+        "ACOS",
+        "ROAS",
+        "Opportunity Cost",
+        "Capital Allocation"
+      ]
+    },
+    {
       "id": "campaign-cannibalisation",
       "title": "Your PPC Campaigns Are Probably Stealing Sales From Each Other",
       "summary": "The competition hurting your advertising performance may not be your competitors. Amazon reports each campaign individually — it almost never tells you how they interact.",
