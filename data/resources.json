@@ -137,6 +137,29 @@
   ],
   "resources": [
     {
+      "id": "research-after-you-found-it",
+      "title": "The Best Product Research Starts After You Think You Found the Product",
+      "summary": "The moment you're convinced you've found a winner is the moment your judgement is least reliable. Stage one asks whether it can work; stage two asks which assumptions it depends on, and what happens when they change.",
+      "category": "research",
+      "format": "article",
+      "level": "expert",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 7,
+      "featured": true,
+      "url": "articles/research-after-you-found-it.html",
+      "topics": [
+        "Product Research",
+        "Decision Making",
+        "Risk",
+        "Confirmation Bias",
+        "Second-order Thinking",
+        "Assumptions",
+        "Capital Allocation"
+      ]
+    },
+    {
       "id": "risk-research",
       "title": "Product Research Is Really Risk Research",
       "summary": "A product with a 5% chance of a $500K loss is 12.5x riskier than one with a 20% chance of losing $10K. Upside creates growth; downside determines survival — and most research only models one of them.",
