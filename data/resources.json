@@ -137,6 +137,32 @@
   ],
   "resources": [
     {
+      "id": "portfolio-complexity",
+      "title": "The Hidden Cost of Complexity in Product Portfolios",
+      "summary": "Another SKU almost always adds revenue. Whether it adds value is a different question — every SKU is thirteen ongoing obligations, and a $40K product takes the same meeting slot as a $2M one.",
+      "categories": [
+        "research",
+        "growth"
+      ],
+      "format": "article",
+      "level": "expert",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-06",
+      "minutes": 7,
+      "featured": true,
+      "url": "articles/portfolio-complexity.html",
+      "topics": [
+        "Product Research",
+        "Portfolio Allocation",
+        "Scaling",
+        "Inventory Forecasting",
+        "Working Capital",
+        "Decision Making",
+        "Process Design"
+      ]
+    },
+    {
       "id": "launch-opportunity-cost",
       "title": "The Opportunity Cost of Every Product Launch",
       "summary": "The biggest cost of a launch isn't manufacturing, advertising or inventory — it's everything else the same capital could have done. A profitable decision is not necessarily a good one.",
