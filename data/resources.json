@@ -98,6 +98,27 @@
   ],
   "resources": [
     {
+      "id": "stopping-too-soon",
+      "title": "The Most Expensive PPC Mistake Isn't Spending Too Much. It's Stopping Too Soon.",
+      "summary": "Most sellers kill winning campaigns before they become great — confusing lack of evidence with evidence of failure, and discarding everything the campaign had learned every time they restart.",
+      "category": "ppc",
+      "format": "article",
+      "author": "AmazeBase",
+      "published": "2026-08-23",
+      "minutes": 7,
+      "featured": true,
+      "url": "articles/stopping-too-soon.html",
+      "topics": [
+        "Campaign Strategy",
+        "Decision Making",
+        "Learning Curve",
+        "Exploration",
+        "ACOS",
+        "Portfolio Allocation",
+        "Statistical Significance"
+      ]
+    },
+    {
       "id": "advertising-is-inventory",
       "title": "Every Advertising Decision Is Actually an Inventory Decision",
       "summary": "The most expensive PPC mistake isn't overspending on ads — it's creating demand your supply chain can't support. Advertising doesn't report demand, it writes purchase orders your supplier hasn't seen yet.",
