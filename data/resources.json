@@ -98,6 +98,27 @@
   ],
   "resources": [
     {
+      "id": "ppc-flywheel",
+      "title": "The Amazon PPC Flywheel: Why the Best Campaigns Become Better Over Time",
+      "summary": "Most sellers treat advertising like electricity — on, sales rise; off, sales stop. The best treat it as a flywheel, where every campaign leaves behind reviews, ranking, relevance and data that make the next one cheaper.",
+      "category": "ppc",
+      "format": "article",
+      "author": "AmazeBase",
+      "published": "2026-08-24",
+      "minutes": 7,
+      "featured": true,
+      "url": "articles/ppc-flywheel.html",
+      "topics": [
+        "Compounding",
+        "Brand Building",
+        "Organic Ranking",
+        "Customer Lifetime Value",
+        "Campaign Strategy",
+        "Incrementality",
+        "Competitive Moat"
+      ]
+    },
+    {
       "id": "stopping-too-soon",
       "title": "The Most Expensive PPC Mistake Isn't Spending Too Much. It's Stopping Too Soon.",
       "summary": "Most sellers kill winning campaigns before they become great — confusing lack of evidence with evidence of failure, and discarding everything the campaign had learned every time they restart.",
