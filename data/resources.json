@@ -137,6 +137,29 @@
   ],
   "resources": [
     {
+      "id": "decision-speed",
+      "title": "The Only Sustainable Competitive Advantage Isn't Your Product. It's Your Decision-Making Speed.",
+      "summary": "Products, suppliers, costs and software all get copied eventually — most advantages have an expiry date. An organisation that decides and learns faster than its competitors doesn't, because every decision is also a chance to learn.",
+      "category": "growth",
+      "format": "article",
+      "level": "expert",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-08-30",
+      "minutes": 7,
+      "featured": true,
+      "url": "articles/decision-speed.html",
+      "topics": [
+        "Decision Making",
+        "Competitive Moat",
+        "Compounding",
+        "Feedback Loops",
+        "Leadership",
+        "Scaling",
+        "Operating Systems"
+      ]
+    },
+    {
       "id": "attention-is-the-asset",
       "title": "Your Most Valuable Asset Isn't Inventory. It's Attention.",
       "summary": "Capital can be borrowed, inventory manufactured, staff hired. Attention can only be redirected — and in most growing businesses it, not money, is the binding constraint. What leaks it, and what systems are really for.",
