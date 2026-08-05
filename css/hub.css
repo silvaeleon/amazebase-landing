@@ -431,33 +431,57 @@
 
 
 /* ── Hero figure ──────────────────────────────────────────────────────
-   The hub's own version of the diagram that heads every article: four
-   clusters, one per active category, linked to one another. Decorative in
-   effect but described for screen readers, since it is the only image on
-   the page. Collapses below the copy on narrow screens rather than
-   shrinking to illegibility. */
+   The supplied globe render, sitting to the right of the heading.
+
+   It is sized to the COPY COLUMN rather than to a fixed height: the
+   picture is taken out of the row-height calculation and pinned to the
+   bottom of its grid cell, so its lower edge lands on the bottom of the
+   search bar no matter how the heading wraps or how the type scales.
+   No magic number to re-tune when the copy changes. */
 .hub-hero-grid{
   display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(0,.82fr);
+  grid-template-columns:minmax(0,1fr) minmax(0,.78fr);
   gap:var(--s5);
-  align-items:center;
+  align-items:stretch;
+  margin-bottom:var(--s5);
 }
 
 .hub-hero-copy{ min-width:0; }
 .hub-hero-copy .hub-lead{ max-width:52ch; }
 
+/* The search box carries the spacing below the hero on its own; inside the
+   grid that margin would push the copy column past the search bar and the
+   image would no longer line up with it. */
+.hub-hero-copy .hub-search{ margin-bottom:0; }
+
 .hub-fig{
+  position:relative;
   margin:0;
   min-width:0;
 }
 
-.hub-fig-img{ width:100%; height:auto; display:block;
-               border-radius:calc(var(--r3) - 4px); }
+.hub-fig picture{
+  position:absolute;
+  right:0; bottom:0; left:0;
+  display:block;
+}
 
+.hub-fig-img{
+  display:block;
+  margin-left:auto;
+  width:auto; height:auto;
+  max-width:100%;
+  max-height:100%;
+  border-radius:calc(var(--r3) - 4px);
+}
+
+/* Stacked: back into normal flow, capped so it cannot dominate the screen. */
 @media (max-width:960px){
   .hub-hero-grid{ grid-template-columns:1fr; gap:var(--s4); }
   .hub-fig{ order:-1; }
-  .hub-fig-img{ max-height:240px; object-fit:contain; }
+  .hub-fig picture{ position:static; }
+  .hub-fig-img{ max-height:220px; margin-inline:auto; }
+  .hub-hero-copy .hub-search{ margin-bottom:0; }
 }
 
 @media (max-width:640px){
