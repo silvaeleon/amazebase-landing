@@ -96,6 +96,25 @@
   ],
   "resources": [
     {
+      "id": "predicting-demand-podcast",
+      "title": "How AI and Customer Interviews Predict Market Demand",
+      "summary": "Forecasting demand before the data exists — what models can infer from weak signals, what only a conversation with a real buyer reveals, and why the two together beat either alone.",
+      "category": "inventory",
+      "format": "podcast",
+      "author": "AmazeBase",
+      "published": "2026-08-20",
+      "minutes": 23,
+      "featured": true,
+      "url": "articles/predicting-demand-podcast.html",
+      "topics": [
+        "Demand Forecasting",
+        "Product Launch",
+        "Customer Research",
+        "Demand Scenarios",
+        "Inventory Forecasting"
+      ]
+    },
+    {
       "id": "wrong-kpi",
       "title": "You're Measuring the Wrong KPI: Why Great Amazon Businesses Stop Chasing Advertising Metrics",
       "summary": "The biggest mistake experienced sellers make isn't choosing the wrong KPI — it's asking the wrong question. Advertising dashboards describe yesterday; businesses must decide tomorrow.",
