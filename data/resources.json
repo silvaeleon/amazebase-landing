@@ -137,6 +137,32 @@
   ],
   "resources": [
     {
+      "id": "think-like-investors",
+      "title": "Why Great Product Researchers Think Like Investors",
+      "summary": "A 40% shot at $500K is worth 4.2x more than a 95% shot at $50K. You aren't in the product business — you're in the capital allocation business, and products are just where the money ends up.",
+      "categories": [
+        "research",
+        "profit"
+      ],
+      "format": "article",
+      "level": "expert",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-14",
+      "minutes": 7,
+      "featured": true,
+      "url": "articles/think-like-investors.html",
+      "topics": [
+        "Product Research",
+        "Capital Allocation",
+        "Expected Value",
+        "Risk",
+        "Portfolio Allocation",
+        "Optionality",
+        "Decision Making"
+      ]
+    },
+    {
       "id": "analyze-systems",
       "title": "Most Sellers Analyze Products. Great Companies Analyze Systems.",
       "summary": "Products are outcomes; systems are causes. The same seven steps that compound a business forward will consume it backwards — and no metric on your dashboard ever moves alone.",
