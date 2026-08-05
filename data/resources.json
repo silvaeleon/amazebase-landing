@@ -137,6 +137,29 @@
   ],
   "resources": [
     {
+      "id": "ceo-job-changes",
+      "title": "The CEO's Job Changes Every Year. Most Founders Never Notice.",
+      "summary": "The skills that built the business are often the ones stopping it growing. Three versions of the founder — doing, coordinating, running out of hours — and the promotion after CEO that almost nobody takes.",
+      "category": "growth",
+      "format": "article",
+      "level": "expert",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-01",
+      "minutes": 6,
+      "featured": true,
+      "url": "articles/ceo-job-changes.html",
+      "topics": [
+        "Leadership",
+        "Scaling",
+        "Delegation",
+        "Operating Systems",
+        "Decision Making",
+        "Founder Bottleneck",
+        "Organisational Design"
+      ]
+    },
+    {
       "id": "dashboards-vs-decisions",
       "title": "Most Dashboards Don't Help You Make Better Decisions. They Help You Feel Better About Bad Ones.",
       "summary": "Sellers have more data than ever and many decide worse. Dashboards were built to display information, not to help anyone act — and a screen of red alerts every morning quietly trains an organisation to be reactive.",
