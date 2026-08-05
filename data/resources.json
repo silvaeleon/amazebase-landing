@@ -137,6 +137,32 @@
   ],
   "resources": [
     {
+      "id": "capital-allocation-products",
+      "title": "Every Product Is a Capital Allocation Decision",
+      "summary": "$2M of revenue on $1.8M of capital is a worse business than $800K on $180K. Most sellers ask whether a product can make money; the best ask whether it deserves capital that can only be spent once.",
+      "categories": [
+        "research",
+        "profit"
+      ],
+      "format": "article",
+      "level": "expert",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-08",
+      "minutes": 7,
+      "featured": true,
+      "url": "articles/capital-allocation-products.html",
+      "topics": [
+        "Capital Allocation",
+        "Return on Invested Capital",
+        "Product Research",
+        "Working Capital",
+        "Opportunity Cost",
+        "Cash Flow",
+        "Portfolio Allocation"
+      ]
+    },
+    {
       "id": "boring-products-win",
       "title": "The Best Products Usually Don't Look Exciting",
       "summary": "Excitement is public, so it attracts competition. Boring markets stay boring — and predictable demand, repeat purchasing and reliable forecasting are what actually compound into a business.",
