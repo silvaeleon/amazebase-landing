@@ -96,6 +96,26 @@
   ],
   "resources": [
     {
+      "id": "ppc-capital-allocation",
+      "title": "PPC Is Not a Marketing Problem. It's a Capital Allocation Problem.",
+      "summary": "The biggest advertising decisions aren't made inside Campaign Manager. They're made when you decide where the next dollar goes — and advertising competes with every other investment in the business.",
+      "category": "ppc",
+      "format": "article",
+      "author": "AmazeBase",
+      "published": "2026-08-12",
+      "minutes": 6,
+      "featured": true,
+      "url": "articles/ppc-capital-allocation.html",
+      "topics": [
+        "Capital Allocation",
+        "Campaign Strategy",
+        "ACOS",
+        "Cash Flow Management",
+        "Purchase Orders",
+        "Portfolio Allocation"
+      ]
+    },
+    {
       "id": "stop-optimizing-acos",
       "title": "Stop Optimizing ACOS: Why Chasing a Lower ACOS Is Costing You More Money",
       "summary": "The most dangerous number in Amazon advertising isn't a high ACOS — it's believing ACOS should always go down. Why an efficiency metric makes a poor decision metric.",

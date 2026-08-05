@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>The Metric That Matters More Than Profit &mdash; AmazeBase</title>
+<title>PPC Is Not a Marketing Problem. It&rsquo;s a Capital Allocation Problem. &mdash; AmazeBase</title>
 
-<meta name="description" content="Why some Amazon businesses grow twice as fast as others on identical profit. Profit tells you how much you earned; capital velocity tells you how many chances your money had to earn it.">
+<meta name="description" content="The biggest advertising decisions aren't made inside Campaign Manager. They're made when you decide where the next dollar goes — and advertising competes with every other investment in the business.">
 <meta name="theme-color" content="#030917">
 <meta name="author" content="AmazeBase">
-<meta property="og:title" content="The Metric That Matters More Than Profit (And Almost No Amazon Seller Tracks It)">
-<meta property="og:description" content="Two sellers. Same revenue, same margin, same profit. Five years later they won't be the same size. The difference isn't margin — it's how fast capital moves.">
+<meta property="og:title" content="PPC Is Not a Marketing Problem. It's a Capital Allocation Problem.">
+<meta property="og:description" content="Increase bids. Raise the budget. Launch a campaign. These feel like marketing decisions. Every one of them is really answering: where should the next dollar of the business be invested?">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 
@@ -948,6 +948,268 @@ blockquote p{
   .profile{ padding:22px 20px 8px; }
   .qbox{ padding:22px 20px; }
 }
+
+/* ── SPEC TABLE INSIDE PROFILE CARDS ────────────────────────────────── */
+.spec{ list-style:none; margin:0 0 16px; padding:0; }
+.spec li{
+  display:flex; justify-content:space-between; align-items:baseline; gap:14px;
+  margin:0; padding:9px 0;
+  border-bottom:1px solid var(--line);
+  font-size:14px;
+}
+.spec li:last-child{ border-bottom:0; }
+.spec li::before{ content:none; }
+.spec .sk{ color:var(--text-3); }
+.spec .sv{ color:var(--text); font-weight:600; text-align:right; font-variant-numeric:tabular-nums; }
+.spec .sv.hot{ color:#FF9AA9; }
+.spec .sv.cool{ color:var(--green); }
+
+/* ── LEDGER / TRADE-OFF LIST ────────────────────────────────────────── */
+.tradeoff{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.tradeoff li{
+  position:relative;
+  margin:0 0 7px; padding:12px 16px 12px 40px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--red);
+  border-radius:10px;
+  background:rgba(240,67,92,.05);
+  font-size:15px; color:var(--text-2);
+}
+.tradeoff li::before{
+  content:"\2715";
+  position:absolute; left:15px; top:12px;
+  color:var(--red); font-size:12px;
+}
+
+/* ── ALLOCATION OPTIONS ─────────────────────────────────────────────── */
+.options{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:10px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.options li{
+  margin:0; padding:16px;
+  border:1px solid var(--line-strong);
+  border-radius:12px;
+  background:var(--bg-raise);
+  font-size:14.5px; color:var(--text);
+  text-align:center;
+}
+.options li::before{ content:none; }
+
+@media (max-width:640px){
+  .spec li{ font-size:13.5px; }
+}
+
+/* ── FOREGONE / WHAT YOU GAVE UP ────────────────────────────────────── */
+.forgone{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:10px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.forgone li{
+  position:relative;
+  margin:0; padding:16px 16px 16px 42px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  font-size:14.5px; line-height:1.5; color:var(--text-2);
+}
+.forgone li::before{
+  content:"\2205";
+  position:absolute; left:15px; top:15px;
+  color:var(--text-3); font-size:15px;
+}
+
+/* ── OPTIONALITY / TWO POSTURES ─────────────────────────────────────── */
+.posture{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.posture > div{
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:22px;
+  background:var(--grad-card);
+}
+.posture > div.open{ border-color:rgba(46,212,122,.30); background:rgba(46,212,122,.06); }
+.posture > div.shut{ border-color:rgba(240,67,92,.28); background:rgba(240,67,92,.05); }
+.posture h4{ margin:0 0 8px; font-size:15px; color:var(--text); }
+.posture p{ margin:0 !important; font-size:14.5px; line-height:1.6; color:var(--text-2); }
+
+/* ── THE TWO QUESTIONS ──────────────────────────────────────────────── */
+.swap{
+  margin:var(--s4) 0;
+  border:1px solid var(--line-strong);
+  border-radius:16px;
+  overflow:hidden;
+}
+.swap > div{ padding:22px 26px; }
+.swap .from{ background:rgba(240,67,92,.06); border-bottom:1px solid var(--line-strong); }
+.swap .to{ background:rgba(46,212,122,.06); }
+.swap .lab{
+  display:block; margin-bottom:8px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+}
+.swap .from .lab{ color:#FF9AA9; }
+.swap .to .lab{ color:var(--green); }
+.swap p{ margin:0 !important; font-size:19px; line-height:1.45; font-weight:600; color:var(--text); }
+
+@media (max-width:640px){
+  .posture{ grid-template-columns:1fr; }
+  .swap > div{ padding:20px; }
+  .swap p{ font-size:17px; }
+}
+
+/* ── VISIBLE vs INVISIBLE COST STACK ────────────────────────────────── */
+.coststack{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.coststack > div{
+  border:1px solid var(--line);
+  border-radius:14px; padding:22px;
+  background:var(--grad-card);
+}
+.coststack > div.hidden-cost{
+  border-color:rgba(245,165,36,.32);
+  background:rgba(245,165,36,.06);
+}
+.coststack h4{
+  margin:0 0 14px; font-size:11px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.09em; color:var(--text-3);
+}
+.coststack .hidden-cost h4{ color:var(--amber); }
+.coststack ul{ margin:0; padding:0; list-style:none; }
+.coststack li{
+  margin:0 0 7px; padding:0 0 0 18px; position:relative;
+  font-size:14.5px; color:var(--text-2);
+}
+.coststack li::before{
+  content:"\2022"; position:absolute; left:2px; top:-1px; color:var(--text-3);
+}
+.coststack .hidden-cost li{ color:var(--text); }
+.coststack .hidden-cost li::before{ color:var(--amber); }
+
+@media (max-width:640px){ .coststack{ grid-template-columns:1fr; } }
+
+/* ── CAMPAIGN COMPARISON CARDS ──────────────────────────────────────── */
+.campaign{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:24px 26px;
+}
+.campaign::before{
+  content:""; position:absolute; left:0; top:22px; bottom:22px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.campaign.is-tidy::before{ background:var(--blue-soft); }
+.campaign.is-messy::before{ background:var(--amber); }
+.campaign h4{ margin:0 0 4px; font-size:16px; color:var(--text); }
+.campaign .verdict{
+  display:block; margin-bottom:16px;
+  font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+}
+.campaign.is-tidy .verdict{ color:var(--blue-soft); }
+.campaign.is-messy .verdict{ color:var(--amber); }
+.campaign .acos{
+  display:block; font-size:34px; font-weight:800; letter-spacing:-.02em;
+  line-height:1; margin-bottom:14px; color:var(--text);
+}
+
+/* ── DIMINISHING-RETURNS CURVE ──────────────────────────────────────── */
+.curve{
+  margin:0 0 var(--s3);
+  padding:22px 24px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--bg-raise);
+}
+.curve-bars{ display:flex; align-items:flex-end; gap:6px; height:96px; margin-bottom:12px; }
+.curve-bars span{
+  flex:1; border-radius:4px 4px 0 0;
+  background:linear-gradient(180deg,var(--violet-soft),rgba(139,59,241,.25));
+}
+.curve-cap{ margin:0 !important; font-size:13px; color:var(--text-3); text-align:center; }
+
+/* ── CAPTURE vs CREATE ──────────────────────────────────────────────── */
+.jobs{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.jobs > div{
+  border:1px solid var(--line); border-radius:14px;
+  background:var(--grad-card); padding:22px;
+}
+.jobs h4{ margin:0 0 6px; font-size:15px; color:var(--text); }
+.jobs .n{ display:block; font-size:26px; font-weight:800; letter-spacing:-.02em; margin-bottom:10px; }
+.jobs .captures .n{ color:var(--green); }
+.jobs .creates .n{ color:var(--amber); }
+.jobs p{ margin:0 !important; font-size:14px; line-height:1.6; color:var(--text-2); }
+
+@media (max-width:640px){
+  .jobs{ grid-template-columns:1fr; }
+  .campaign{ padding:20px; }
+}
+
+/* ── COMPETING CLAIMS ON THE SAME POOL ──────────────────────────────── */
+.claims{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:9px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.claims li{
+  margin:0; padding:15px 14px; text-align:center;
+  border:1px solid var(--line-strong);
+  border-radius:11px;
+  background:var(--bg-raise);
+  font-size:14px; color:var(--text);
+}
+.claims li::before{ content:none; }
+.claims li.is-ppc{
+  border-color:var(--violet-soft);
+  background:rgba(139,59,241,.12);
+  font-weight:600;
+}
+
+/* ── BUDGET vs ALLOCATION ───────────────────────────────────────────── */
+.mindset{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.mindset > div{
+  border:1px solid var(--line); border-radius:14px; padding:22px;
+  background:var(--grad-card);
+}
+.mindset > div.owns{ border-color:rgba(240,67,92,.26); background:rgba(240,67,92,.05); }
+.mindset > div.competes{ border-color:rgba(46,212,122,.28); background:rgba(46,212,122,.06); }
+.mindset h4{ margin:0 0 6px; font-size:15px; color:var(--text); }
+.mindset .says{
+  display:block; margin-bottom:10px; font-size:15px;
+  font-style:italic; color:var(--text);
+}
+.mindset p{ margin:0 !important; font-size:14px; line-height:1.6; color:var(--text-2); }
+
+/* ── BOTTLENECK CHECKS ──────────────────────────────────────────────── */
+.bottleneck{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.bottleneck li{
+  position:relative;
+  margin:0 0 7px; padding:13px 16px 13px 44px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--blue-soft);
+  border-radius:10px;
+  background:var(--grad-card);
+  font-size:15px; color:var(--text-2);
+}
+.bottleneck li::before{
+  content:"?";
+  position:absolute; left:15px; top:12px;
+  width:18px; height:18px; line-height:18px; text-align:center;
+  border-radius:50%;
+  background:rgba(126,179,255,.16); color:var(--blue-soft);
+  font-size:11px; font-weight:700;
+}
+
+@media (max-width:640px){ .mindset{ grid-template-columns:1fr; } }
 </style>
 </head>
 
@@ -961,28 +1223,27 @@ blockquote p{
 <p class="back-link"><a href="/resources.html">&larr; Knowledge Hub</a></p>
 
 <header class="article-head">
-  <p class="eyebrow">Profit &amp; Finances</p>
+  <p class="eyebrow">PPC &amp; Advertising</p>
 
-  <h1>The Metric That Matters More Than Profit <span class="accent">(And Almost No Amazon Seller Tracks It)</span></h1>
+  <h1>PPC Is Not a Marketing Problem. <span class="accent">It&rsquo;s a Capital Allocation Problem.</span></h1>
 
   <p class="deck">
-    Why some Amazon businesses grow twice as fast as others &mdash; even when they
-    make the same profit. There comes a point where chasing higher margins stops
-    producing meaningful results. The problem may not be your profit. It may be
-    the speed at which your business turns capital into new opportunities.
+    The biggest advertising decisions aren&rsquo;t made inside Campaign Manager. They&rsquo;re
+    made when you decide where the next dollar goes. Most Amazon sellers think
+    they&rsquo;re managing advertising &mdash; they&rsquo;re managing capital.
   </p>
 
   <p class="meta">
     <span>AmazeBase</span>
     <span class="dot" aria-hidden="true"></span>
-    <span>7 min read</span>
+    <span>6 min read</span>
     <span class="dot" aria-hidden="true"></span>
-    <span>Profit &amp; Finances</span>
+    <span>PPC &amp; Advertising</span>
   </p>
 </header>
 
 <figure class="hero-shot">
-  <img src="../assets/img/hero-capital-velocity.jpg"
+  <img src="../assets/img/hero-ppc-capital.jpg"
        alt="A dark globe wrapped in a glowing supply-chain network, with shipping containers orbiting it"
        width="1280" height="1098" loading="eager" decoding="async">
 </figure>
@@ -991,287 +1252,303 @@ blockquote p{
 <main id="main" class="article">
 
   <p class="lead">
-    You&rsquo;ve optimised your listings. You&rsquo;ve improved your PPC. You&rsquo;ve negotiated
-    better supplier pricing and reduced your FBA fees wherever possible. Yet growth
-    still feels slower than it should.
+    Every day, businesses make advertising decisions that appear tactical. Increase
+    bids. Launch another campaign. Raise the daily budget. Pause poor performers.
+    Expand keywords. These all feel like marketing decisions &mdash; but every one of
+    them is actually answering a much bigger question.
   </p>
 
-  <p>Most Amazon sellers measure profitability. The best operators measure how efficiently capital moves through the business. It&rsquo;s a subtle distinction, but it completely changes how you evaluate products, purchase orders and growth opportunities.</p>
+  <div class="qbox">
+    <span class="label">The real question</span>
+    <p>Where should the next dollar of the business be invested?</p>
+  </div>
+
+  <p>Once you look at PPC through that lens, the conversation changes completely. You&rsquo;re no longer optimising campaigns. You&rsquo;re allocating capital.</p>
+
+  <div class="callout">
+    <span class="label">Related reading</span>
+    <p>
+      Pairs with <a href="/articles/stop-optimizing-acos.html">stop optimizing ACOS</a>,
+      and extends the capital argument from
+      <a href="/articles/opportunity-cost.html">the opportunity cost sellers ignore</a>.
+    </p>
+  </div>
 
   <nav class="toc" aria-labelledby="toc-title">
     <h2 id="toc-title">What&rsquo;s in this piece</h2>
     <ol>
+      <li><a href="#job">Every dollar has a job</a></li>
+      <li><a href="#compared">The question nobody asks</a></li>
+      <li><a href="#platform">Campaign Manager doesn&rsquo;t know your business</a></li>
       <li><a href="#two">Imagine two businesses</a></li>
-      <li><a href="#speed">Money doesn&rsquo;t just have value &mdash; it has speed</a></li>
-      <li><a href="#slowest">The slowest part determines growth</a></li>
-      <li><a href="#trap">Why high margins can be a trap</a></li>
-      <li><a href="#inventory">Inventory is more than stock</a></li>
-      <li><a href="#question">The question nobody asks</a></li>
-      <li><a href="#hero">Your best seller may be slowing you down</a></li>
-      <li><a href="#po">Every purchase order is an investment decision</a></li>
-      <li><a href="#investor">Think like an investor, not a seller</a></li>
+      <li><a href="#bottleneck">PPC doesn&rsquo;t create unlimited value</a></li>
+      <li><a href="#investment">Advertising is an investment, not an expense</a></li>
+      <li><a href="#allocate">Great businesses allocate capital, not budgets</a></li>
+      <li><a href="#notppc">The best investment isn&rsquo;t always PPC</a></li>
     </ol>
   </nav>
 
   <hr class="rule">
 
+  <h2 id="job">Every dollar has a job</h2>
+
+  <p>Imagine your business has an extra $250,000 available this quarter. What should you do with it?</p>
+
+  <ul class="claims">
+    <li class="is-ppc">Increase PPC</li>
+    <li>Launch two new products</li>
+    <li>Place larger purchase orders</li>
+    <li>Expand into Europe</li>
+    <li>Hire another employee</li>
+    <li>Reduce debt</li>
+    <li>Improve packaging</li>
+    <li>Negotiate supplier discounts</li>
+  </ul>
+
+  <p>Every one of those options competes for exactly the same resource: <strong>capital</strong>. The mistake many businesses make is assuming the advertising budget exists independently. It doesn&rsquo;t.</p>
+
+  <blockquote>
+    <p>Every additional dollar you give PPC is one less dollar available somewhere else. That makes advertising a capital allocation decision long before it becomes a marketing decision.</p>
+  </blockquote>
+
+  <h2 id="compared">The question nobody asks</h2>
+
+  <p>You&rsquo;re reviewing your dashboard. One campaign has performed well. The natural reaction is to increase the budget. But pause for a moment &mdash; <em>compared to what?</em></p>
+
+  <div class="swap">
+    <div class="from">
+      <span class="lab">The campaign question</span>
+      <p>&ldquo;Should this campaign receive more budget?&rdquo;</p>
+    </div>
+    <div class="to">
+      <span class="lab">The business question</span>
+      <p>&ldquo;Is this the best investment available to the business today?&rdquo;</p>
+    </div>
+  </div>
+
+  <p>Those are completely different conversations.</p>
+
+  <h2 id="platform">Campaign Manager doesn&rsquo;t know your business</h2>
+
+  <p>Amazon&rsquo;s advertising platform is incredibly good at managing campaigns. It is not designed to manage businesses.</p>
+
+  <div class="coststack">
+    <div>
+      <h4>What it can tell you</h4>
+      <ul>
+        <li>Clicks and impressions</li>
+        <li>Conversions</li>
+        <li>Spend and sales</li>
+        <li>ACOS and ROAS</li>
+      </ul>
+    </div>
+    <div class="hidden-cost">
+      <h4>What it cannot see</h4>
+      <ul>
+        <li>Your cash position</li>
+        <li>Supplier constraints</li>
+        <li>Inventory availability</li>
+        <li>Working capital and upcoming POs</li>
+        <li>Seasonality and expansion plans</li>
+        <li>Your long-term strategy</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The limit</span>
+    <p>It optimises advertising. It cannot optimise capital.</p>
+  </div>
+
   <h2 id="two">Imagine two businesses</h2>
 
-  <p>Both generate $5 million in annual revenue, 20% gross margin, similar advertising performance and similar product categories. At the end of the year, both report roughly the same accounting profit. On paper, they&rsquo;re equally successful.</p>
-
-  <p>But look inside and they&rsquo;re completely different.</p>
+  <p>Both have an additional $100,000 available.</p>
 
   <div class="profiles">
     <div class="profile is-slow">
       <h4>Business A</h4>
-      <span class="tagline">Capital sits still</span>
+      <span class="tagline">All of it into advertising</span>
       <ul>
-        <li>Imports six months of inventory at a time</li>
-        <li>Uses ocean freight with long lead times</li>
-        <li>Keeps large safety stock</li>
-        <li>Holds inventory for months before it sells</li>
-        <li>Waits two weeks for every payout before reordering</li>
+        <li>Sales increase, revenue grows</li>
+        <li>Purchase orders become larger</li>
+        <li>Inventory requirements explode</li>
+        <li>Cash becomes tight</li>
+        <li>Six months later growth slows &mdash; it can&rsquo;t finance its own success</li>
       </ul>
     </div>
     <div class="profile is-fast">
       <h4>Business B</h4>
-      <span class="tagline">Capital keeps moving</span>
+      <span class="tagline">Spread across the business</span>
       <ul>
-        <li>Forecasts demand accurately</li>
-        <li>Places smaller, more frequent purchase orders</li>
-        <li>Negotiates shorter production runs</li>
-        <li>Maintains lean inventory without frequent stockouts</li>
-        <li>Reinvests cash almost immediately after every payout</li>
+        <li>Part into advertising</li>
+        <li>Rest strengthens inventory planning</li>
+        <li>Improves supplier payment terms</li>
+        <li>Launches another product</li>
+        <li>Revenue grows more slowly at first &mdash; three years later it&rsquo;s larger</li>
       </ul>
     </div>
   </div>
 
   <div class="fixbox">
-    <span class="fixbox-k">The difference</span>
-    <p>Both make similar profits today. Five years from now they probably won&rsquo;t be the same size &mdash; because one has learned to make its money work harder.</p>
+    <span class="fixbox-k">Why</span>
+    <p>Capital was allocated across the business rather than concentrated inside one department.</p>
   </div>
 
-  <h2 id="speed">Money doesn&rsquo;t just have value. It has speed.</h2>
+  <h2 id="bottleneck">PPC doesn&rsquo;t create unlimited value</h2>
 
-  <p>Think about a single dollar and the journey it takes:</p>
+  <p>Advertising creates demand. That&rsquo;s its job. But demand only creates value if the business can support it. Imagine increasing PPC by 40%. Sales immediately improve. Before celebrating:</p>
 
-  <ul class="cycle">
-    <li>Bank account</li><li class="sep" aria-hidden="true">&rarr;</li>
-    <li>Supplier</li><li class="sep" aria-hidden="true">&rarr;</li>
-    <li>Inventory</li><li class="sep" aria-hidden="true">&rarr;</li>
-    <li>Sales</li><li class="sep" aria-hidden="true">&rarr;</li>
-    <li>Amazon payout</li><li class="sep" aria-hidden="true">&rarr;</li>
-    <li>Next purchase order</li>
-  </ul>
-
-  <p>Eventually that same dollar completes its journey and begins another. Every complete cycle creates an opportunity for growth. The faster the cycle, the more opportunities your business creates.</p>
-
-  <blockquote>
-    <p>Profit tells you how much you earned. Capital velocity tells you how many times your money had the chance to earn it.</p>
-  </blockquote>
-
-  <h2 id="slowest">The slowest part of your business determines its growth</h2>
-
-  <p>Most sellers think growth is limited by sales. It usually isn&rsquo;t. Growth is limited by whatever keeps capital waiting.</p>
-
-  <ul class="waiting">
-    <li>Production</li>
-    <li>Shipping</li>
-    <li>Excess inventory</li>
-    <li>Cash tied up in slow-moving products</li>
-    <li>Simply making purchase decisions too late</li>
-  </ul>
-
-  <div class="fixbox">
-    <span class="fixbox-k">The point</span>
-    <p>Every day your money spends waiting is a day it isn&rsquo;t creating value somewhere else. The businesses that grow fastest aren&rsquo;t the ones with the highest margins &mdash; they&rsquo;re the ones that eliminate waiting.</p>
-  </div>
-
-  <h2 id="trap">Why high margins can be a trap</h2>
-
-  <p>Imagine two products. Most dashboards immediately highlight Product A.</p>
-
-  <div class="profiles">
-    <div class="profile is-slow">
-      <h4>Product A</h4>
-      <span class="tagline">38% margin</span>
-      <ul>
-        <li>Nine-month inventory commitment</li>
-        <li>Large minimum order quantity</li>
-        <li>Slow inventory turnover</li>
-      </ul>
-    </div>
-    <div class="profile is-fast">
-      <h4>Product B</h4>
-      <span class="tagline">18% margin</span>
-      <ul>
-        <li>Six-week replenishment cycle</li>
-        <li>Smaller purchase orders</li>
-        <li>Fast inventory turnover</li>
-      </ul>
-    </div>
-  </div>
-
-  <p>Higher margins seem better. But consider what happens over several years. Product B returns cash far more frequently. That cash gets reinvested. Each cycle generates another opportunity, then another, then another.</p>
-
-  <div class="fixbox">
-    <span class="fixbox-k">The fix</span>
-    <p>The lower-margin product may generate significantly more long-term value simply because capital never stops moving. High margins don&rsquo;t automatically create great businesses &mdash; efficient capital does.</p>
-  </div>
-
-  <h2 id="inventory">Inventory is more than stock</h2>
-
-  <p>Most people think inventory is an operational problem. It&rsquo;s actually a financial asset. Every pallet sitting in a warehouse represents capital making a decision &mdash; not your decision, its own.</p>
-
-  <p>Because while it sits there, that money cannot be used to:</p>
-
-  <ul class="samples">
-    <li>Launch another SKU</li><li>Increase advertising</li>
-    <li>Negotiate supplier discounts</li><li>Purchase seasonal inventory</li>
-    <li>Test new products</li><li>Expand into another marketplace</li>
+  <ul class="bottleneck">
+    <li>Can your supplier keep up?</li>
+    <li>Can inventory support the additional demand?</li>
+    <li>Can your warehouse process larger shipments?</li>
+    <li>Can your cash flow finance the next purchase order?</li>
   </ul>
 
   <blockquote>
-    <p>Inventory isn&rsquo;t just occupying warehouse space. It&rsquo;s occupying opportunity.</p>
+    <p>If the answer is no, advertising has exposed a bottleneck rather than solved one. More demand is only valuable when the rest of the business is prepared for it.</p>
   </blockquote>
+
+  <h2 id="competes">Every campaign competes with every product</h2>
+
+  <p>Your advertising manager asks for another $50,000 this month. Seems reasonable. Now your product team asks for exactly the same amount to launch a new SKU. Who should receive it?</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The answer</span>
+    <p>There isn&rsquo;t an advertising answer. There isn&rsquo;t a product answer. There&rsquo;s only a business answer. Capital doesn&rsquo;t care which department is asking &mdash; it flows toward wherever it will generate the highest long-term return.</p>
+  </div>
 
 <aside class="strip">
   <div>
-    <h3>See where your capital is waiting</h3>
-    <p>AmazeBase connects inventory, suppliers and cash flow so idle money becomes visible.</p>
+    <h3>Advertising in context, not isolation</h3>
+    <p>AmazeBase connects campaigns to inventory, suppliers and cash so you can compare them against everything else.</p>
   </div>
   <a class="strip-btn" href="/index.html#pricing">Join the Wait List</a>
 </aside>
 
-  <h2 id="question">The question nobody asks</h2>
+  <h2 id="investment">Advertising is an investment, not an expense</h2>
 
-  <p>Most Amazon dashboards answer useful questions &mdash; units sold, ACOS, TACOS, today&rsquo;s revenue, margin. But none answer what may be the most important one of all.</p>
+  <p>Many businesses still think about PPC as a monthly expense. That&rsquo;s a dangerous mindset &mdash; expenses disappear, investments are expected to generate future value.</p>
 
-  <div class="qbox">
-    <span class="label">The question</span>
-    <p>Where is my capital spending time doing nothing?</p>
-  </div>
+  <p>Advertising often creates benefits extending far beyond today&rsquo;s sales:</p>
 
-  <p>That question changes everything. Because if you can identify where money waits, you can identify where growth slows.</p>
-
-  <h2 id="hero">Your best-selling product may be slowing your business down</h2>
-
-  <p>Every seller has a hero product. The one that generates the most sales, that everyone talks about, that appears first on every dashboard. But ask another question: <strong>how much capital does it consume?</strong></p>
-
-  <p>Some best sellers require massive inventory commitments, high advertising budgets, large safety stock, frequent air shipments and constant cash injections. They&rsquo;re fantastic products. They may also be your least efficient investments.</p>
-
-  <p>Meanwhile another SKU quietly produces smaller sales with minimal advertising, short lead times and rapid inventory turnover. It rarely gets attention. Yet it may generate a far better return on every dollar invested.</p>
-
-  <div class="fixbox">
-    <span class="fixbox-k">The fix</span>
-    <p>Revenue and investment quality are not the same thing.</p>
-  </div>
-
-  <h2 id="po">Every purchase order is an investment decision</h2>
-
-  <p>A purchase order isn&rsquo;t simply buying inventory. It&rsquo;s choosing where your capital will spend the next several months. Every dollar committed to one SKU is a dollar unavailable for another.</p>
-
-  <p>That means every purchase order answers a portfolio question. Should more capital go to fast-moving products, seasonal inventory, new launches, advertising, supplier discounts, or cash reserves?</p>
-
-  <ul class="ranges">
-    <li>
-      <span class="no">&ldquo;How much should I order?&rdquo;</span>
-      <span class="arrow" aria-hidden="true">&rarr;</span>
-      <span class="yes">&ldquo;Where will my next dollar create the greatest long-term return?&rdquo;</span>
-    </li>
-  </ul>
-
-  <p>Those are very different decisions.</p>
-
-  <h2 id="cost">The invisible cost of slow capital</h2>
-
-  <p>Amazon sellers routinely calculate storage fees, referral fees, FBA fees and PPC costs. Very few calculate the cost of waiting.</p>
-
-  <ul class="waiting">
-    <li>Waiting for production</li>
-    <li>Waiting for containers</li>
-    <li>Waiting for customs</li>
-    <li>Waiting for Amazon receiving</li>
-    <li>Waiting for inventory to sell</li>
-    <li>Waiting for Amazon payouts</li>
+  <ul class="samples">
+    <li>Improved organic ranking</li><li>More reviews</li>
+    <li>Greater brand recognition</li><li>Higher customer lifetime value</li>
+    <li>More keyword relevance</li><li>Category authority</li>
   </ul>
 
   <div class="fixbox">
-    <span class="fixbox-k">Why it compounds</span>
-    <p>Individually each delay seems manageable. Together they define how quickly your business compounds.</p>
+    <span class="fixbox-k">The real challenge</span>
+    <p>Not minimising advertising &mdash; knowing which advertising creates lasting value and which simply buys temporary sales.</p>
   </div>
 
-  <h2 id="investor">Think like an investor, not a seller</h2>
+  <h2 id="allocate">Great businesses allocate capital, not budgets</h2>
 
-  <p>Professional investors don&rsquo;t ask which company has the highest revenue. They ask which investment produces the highest return over time. Amazon businesses deserve the same mindset.</p>
+  <p>Departments love budgets. Finance loves allocation. There&rsquo;s an important difference.</p>
 
-  <p>Your products aren&rsquo;t just products &mdash; they&rsquo;re investments. Each SKU competes for capital. Each purchase order competes for cash. Each advertising campaign competes for attention.</p>
+  <div class="mindset">
+    <div class="owns">
+      <h4>Budget</h4>
+      <span class="says">&ldquo;This is marketing&rsquo;s money.&rdquo;</span>
+      <p>Implies ownership. Departments defend what they already have.</p>
+    </div>
+    <div class="competes">
+      <h4>Allocation</h4>
+      <span class="says">&ldquo;This money belongs to the business.&rdquo;</span>
+      <p>Implies competition. Every dollar must justify itself against every alternative.</p>
+    </div>
+  </div>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The shift</span>
+    <p>Instead of defending budgets, departments compete to create the greatest value. Advertising becomes one investment among many &mdash; exactly where it belongs.</p>
+  </div>
+
+  <h2 id="isolation">Stop measuring campaign success in isolation</h2>
+
+  <p>Campaign A generates an outstanding return. But supporting the increased demand requires three additional containers, higher inventory financing, larger safety stock, air freight and additional warehouse staff.</p>
+
+  <p>Campaign B produces smaller sales but requires almost no additional investment. Which is actually creating more value?</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">The gap</span>
+    <p>Without considering the capital required to support growth, campaign analysis remains incomplete. Advertising cannot be separated from operations.</p>
+  </div>
+
+  <h2 id="committee">Think like an investment committee</h2>
+
+  <p>Large investment firms don&rsquo;t approve projects because they sound promising &mdash; every proposal competes against every other. Before increasing advertising spend, ask what you&rsquo;re giving up. Could that money generate greater returns by:</p>
+
+  <ul class="options">
+    <li>Launching another product?</li>
+    <li>Increasing manufacturing capacity?</li>
+    <li>Negotiating supplier discounts?</li>
+    <li>Expanding internationally?</li>
+    <li>Improving packaging?</li>
+    <li>Building inventory before Q4?</li>
+    <li>Hiring key employees?</li>
+  </ul>
 
   <blockquote>
-    <p>Your role isn&rsquo;t simply to manage products. It&rsquo;s to allocate resources where they&rsquo;ll generate the greatest long-term value.</p>
+    <p>Advertising should earn additional capital. It shouldn&rsquo;t automatically receive it.</p>
   </blockquote>
 
-  <h2 id="missing">The metric most dashboards are missing</h2>
+  <h2 id="notppc">The best investment isn&rsquo;t always PPC</h2>
 
-  <p>Imagine opening your dashboard tomorrow morning and finding it answered these instead:</p>
+  <p>This may sound surprising in an article about advertising. Sometimes the correct decision is to reduce advertising investment &mdash; not because campaigns are performing poorly, but because another opportunity produces a better return.</p>
 
-  <div class="qbox">
-    <span class="label">Decision questions</span>
-    <ul>
-      <li>Which SKU traps the most capital?</li>
-      <li>Which product returns cash the fastest?</li>
-      <li>Which purchase order has the highest expected return?</li>
-      <li>Where is money waiting unnecessarily?</li>
-      <li>Which operational delay costs the business the most growth?</li>
-      <li>If you had an extra $100,000 today, where should it go?</li>
-    </ul>
-  </div>
+  <ul class="options">
+    <li>Better product quality &rarr; stronger reviews</li>
+    <li>Better packaging &rarr; higher conversion</li>
+    <li>Shorter lead times &rarr; faster capital velocity</li>
+    <li>Another SKU &rarr; diversified risk</li>
+  </ul>
 
   <div class="fixbox">
-    <span class="fixbox-k">The difference</span>
-    <p>Those aren&rsquo;t reporting questions &mdash; they&rsquo;re decision questions. Businesses rarely become extraordinary because they have better reports. They become extraordinary because they consistently make better decisions.</p>
+    <span class="fixbox-k">The competition</span>
+    <p>Advertising competes with every improvement the business can make. It doesn&rsquo;t automatically win.</p>
   </div>
 
   <hr class="rule">
 
-  <h2 id="stop">Stop measuring profit alone</h2>
+  <h2 id="final">The question that changes everything</h2>
 
-  <p>Profit is essential. But profit is a snapshot &mdash; it tells you what happened. Capital velocity tells you what your business is capable of becoming.</p>
+  <div class="qbox">
+    <span class="label">Before the next budget increase</span>
+    <p>If we had another $100,000 today, would advertising still be the smartest place to invest it?</p>
+  </div>
 
-  <p>A company that keeps money moving quickly gains advantages that don&rsquo;t immediately appear on a financial statement. It becomes more resilient, more flexible, more adaptable. It can launch products sooner, react to market changes faster, negotiate better and invest confidently. While competitors wait for cash to return, it&rsquo;s already putting that cash to work again.</p>
+  <p>If the answer is yes, increase the budget confidently. If it&rsquo;s no, you&rsquo;ve just avoided one of the most common mistakes growing Amazon businesses make &mdash; treating advertising as though it exists outside the rest of the company.</p>
 
-  <h2 id="final">A different way to build an Amazon business</h2>
-
-  <p>The biggest shift experienced sellers can make isn&rsquo;t learning another PPC strategy or finding another supplier. It&rsquo;s changing how they see their business.</p>
-
-  <p>You&rsquo;re not managing inventory. <strong>You&rsquo;re managing capital.</strong> Inventory is simply one place that capital temporarily lives, and every decision either accelerates it or slows it down.</p>
+  <p>For years, Amazon advertising has focused on optimisation: better bids, better keywords, better targeting. Those improvements matter. But as businesses mature, the bottleneck shifts. Success no longer depends on managing campaigns more efficiently &mdash; it depends on allocating capital more intelligently.</p>
 
   <blockquote>
-    <p>Over the course of years, businesses aren&rsquo;t defined only by how much profit they make. They&rsquo;re defined by how many times they give every dollar the opportunity to create more.</p>
+    <p>Campaigns don&rsquo;t build companies. Decisions do. And every advertising decision is ultimately an investment decision.</p>
   </blockquote>
 
-  <p>That&rsquo;s how small advantages compound. That&rsquo;s how ordinary businesses become exceptional ones. And that&rsquo;s why the metric that matters most isn&rsquo;t always the one everyone is measuring.</p>
+  <p>The businesses that dominate the next decade won&rsquo;t necessarily have the smartest bidding algorithms. They&rsquo;ll have the clearest understanding of one simple question: where should the next dollar go? The answer won&rsquo;t always be PPC &mdash; but when it is, they&rsquo;ll know exactly why.</p>
 
 </main>
 
 <aside class="rail" aria-label="Key ideas from this article">
 
   <div class="rail-card">
-    <span class="rail-k">Same profit, different future</span>
-    <span class="rail-v">$5M</span>
-    <p>Revenue, 20% margin, near-identical accounting profit. Five years on, the two businesses won&rsquo;t be the same size.</p>
+    <span class="rail-k">One pool, eight claims</span>
+    <span class="rail-v is-violet">$250K</span>
+    <p>PPC is one of eight competing uses. The advertising budget does not exist independently of the others.</p>
   </div>
 
   <div class="rail-card">
-    <span class="rail-k">The margin trap</span>
-    <span class="rail-v is-amber">38% vs 18%</span>
-    <p>The lower-margin product can win. A six-week cycle recycles cash many times while a nine-month commitment recycles it once.</p>
+    <span class="rail-k">Same money, two outcomes</span>
+    <span class="rail-v is-amber">$100K</span>
+    <p>All into ads, and growth stalls when the business can&rsquo;t finance it. Spread across, and it&rsquo;s the larger company in three years.</p>
   </div>
 
   <div class="rail-card">
-    <span class="rail-k">The question to add</span>
-    <span class="rail-v is-violet">Where?</span>
-    <p>Where is my capital spending time doing nothing? No standard dashboard answers it.</p>
+    <span class="rail-k">Demand needs support</span>
+    <span class="rail-v">+40%</span>
+    <p>Raise PPC that much and the constraint moves to suppliers, warehouse and cash &mdash; not the campaign.</p>
   </div>
 
   <p class="rail-src">Figures from this article&rsquo;s worked examples, not an industry survey.</p>
@@ -1280,10 +1557,10 @@ blockquote p{
 </div>
 
 <aside class="cta">
-  <h2>Find out where your money is waiting</h2>
+  <h2>Where should the next dollar go?</h2>
   <p>
-    AmazeBase connects your sales, inventory, suppliers and cash flow so you can
-    see which SKUs trap capital and which ones return it fastest.
+    AmazeBase connects advertising to inventory, suppliers and cash flow so every
+    campaign competes on the same terms as everything else in the business.
   </p>
   <a class="btn" href="/index.html#pricing">
     Join the Wait List
