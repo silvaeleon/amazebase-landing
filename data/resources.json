@@ -137,6 +137,29 @@
   ],
   "resources": [
     {
+      "id": "systems-produce-outcomes",
+      "title": "Your Business Is Producing Exactly What It Was Designed to Produce",
+      "summary": "If the same mistakes keep returning, your systems are producing them as designed. Why replacing people rarely changes results, why symptoms surface far from their cause, and what to ask instead of who is to blame.",
+      "category": "growth",
+      "format": "article",
+      "level": "expert",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-08-27",
+      "minutes": 7,
+      "featured": true,
+      "url": "articles/systems-produce-outcomes.html",
+      "topics": [
+        "Operating Systems",
+        "Process Design",
+        "Leadership",
+        "Incentives",
+        "Root Cause",
+        "Decision Making",
+        "Scaling"
+      ]
+    },
+    {
       "id": "growth-vs-complexity",
       "title": "Your Business Isn't Growing. It's Becoming More Complex.",
       "summary": "Growth is linear. Complexity is exponential. Ten products aren't ten times harder — they're forty-five relationships. The challenge after your first million isn't more customers, it's stopping complexity from outrunning your systems.",
