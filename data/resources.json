@@ -96,6 +96,26 @@
   ],
   "resources": [
     {
+      "id": "advertising-debt",
+      "title": "Advertising Debt: The Hidden Liability Almost Every Amazon Business Is Building",
+      "summary": "The most dangerous dependency in your business doesn't appear on your balance sheet. It's the gap between the sales you generate today and the sales you'd generate if advertising stopped tomorrow.",
+      "category": "ppc",
+      "format": "article",
+      "author": "AmazeBase",
+      "published": "2026-08-17",
+      "minutes": 7,
+      "featured": true,
+      "url": "articles/advertising-debt.html",
+      "topics": [
+        "Advertising Debt",
+        "Dependency",
+        "Organic Ranking",
+        "Incrementality",
+        "Brand Building",
+        "Risk"
+      ]
+    },
+    {
       "id": "attribution-vs-incrementality",
       "title": "The Most Important PPC Question Isn't “Did It Generate Sales?” It's “Would Those Sales Have Happened Anyway?”",
       "summary": "Attribution tells you where a sale was recorded. Incrementality tells you where value was created. Spend $100K, see $620K attributed — how much of it would have arrived anyway?",
