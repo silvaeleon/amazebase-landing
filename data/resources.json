@@ -137,6 +137,32 @@
   ],
   "resources": [
     {
+      "id": "growth-is-cash-flow",
+      "title": "Growth Is Usually a Cash Flow Problem Disguised as a Sales Problem",
+      "summary": "Past a certain size, demand stops being the constraint and capital becomes it. Why every sale creates nine future obligations, why profit can't pay a supplier deposit, and why allocation — not budgeting — is the CEO's real job.",
+      "categories": [
+        "growth",
+        "profit"
+      ],
+      "format": "article",
+      "level": "expert",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-08-28",
+      "minutes": 7,
+      "featured": true,
+      "url": "articles/growth-is-cash-flow.html",
+      "topics": [
+        "Cash Flow",
+        "Capital Allocation",
+        "Working Capital",
+        "Inventory Forecasting",
+        "Scaling",
+        "Opportunity Cost",
+        "Cash Conversion Cycle"
+      ]
+    },
+    {
       "id": "systems-produce-outcomes",
       "title": "Your Business Is Producing Exactly What It Was Designed to Produce",
       "summary": "If the same mistakes keep returning, your systems are producing them as designed. Why replacing people rarely changes results, why symptoms surface far from their cause, and what to ask instead of who is to blame.",
