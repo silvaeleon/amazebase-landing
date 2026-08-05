@@ -137,6 +137,29 @@
   ],
   "resources": [
     {
+      "id": "overestimating-tam",
+      "title": "Why Amazon Sellers Overestimate TAM (And Why Smaller Markets Often Build Bigger Businesses)",
+      "summary": "Market size tells you how much money exists, not how much remains available. Sellers quote TAM because it's the biggest number, but businesses survive inside what they can realistically win and hold.",
+      "category": "research",
+      "format": "article",
+      "level": "expert",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-10",
+      "minutes": 6,
+      "featured": true,
+      "url": "articles/overestimating-tam.html",
+      "topics": [
+        "Product Research",
+        "Market Analysis",
+        "TAM",
+        "Niche Markets",
+        "Competitive Moat",
+        "Pricing Power",
+        "Brand Building"
+      ]
+    },
+    {
       "id": "products-that-compound",
       "title": "Your Next Product Should Make Your Existing Business Stronger",
       "summary": "Six unconnected products share nothing; six connected ones share fifteen advantages. The best launches don't just add revenue — they lower acquisition costs, deepen suppliers and make everything already built perform better.",
