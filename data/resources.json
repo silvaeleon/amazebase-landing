@@ -137,6 +137,29 @@
   ],
   "resources": [
     {
+      "id": "ad-growth-vs-supply-chain",
+      "title": "Ad Growth Versus Supply Chain Reality",
+      "summary": "Advertising moves demand in days; supply chains answer in months. What happens in that gap, and why scaling spend is really a purchase order nobody has written yet.",
+      "category": "ppc",
+      "format": "podcast",
+      "level": "expert",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-15",
+      "minutes": 23,
+      "featured": true,
+      "url": "articles/ad-growth-vs-supply-chain.html",
+      "topics": [
+        "Campaign Strategy",
+        "Inventory Forecasting",
+        "Cash Flow",
+        "Lead Time",
+        "Stockouts",
+        "Capital Allocation",
+        "Demand Forecasting"
+      ]
+    },
+    {
       "id": "think-like-investors",
       "title": "Why Great Product Researchers Think Like Investors",
       "summary": "A 40% shot at $500K is worth 4.2x more than a 95% shot at $50K. You aren't in the product business — you're in the capital allocation business, and products are just where the money ends up.",
