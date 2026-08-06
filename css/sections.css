@@ -811,3 +811,116 @@
 @media (max-width:640px){
   .sec-grid{ grid-template-columns:1fr; }
 }
+
+
+/* ── Modules ──────────────────────────────────────────────────────────
+   One block per product module. Alternating copy / figure so the eye
+   zig-zags down the page instead of reading eight identical rows.
+   Every figure is a real slot with a stated aspect ratio, waiting for
+   artwork.
+
+   Only capabilities marked live in the module guide appear here.
+   Anything still being built carries a .mod-tag--soon chip and says so
+   in words. Do not promote a chip without checking the guide. */
+.mod{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
+  gap:var(--s6);
+  align-items:center;
+  padding-block:var(--s6);
+  border-top:1px solid var(--line);
+}
+.mod:first-of-type{ border-top:0; }
+.mod.is-flipped .mod-copy{ order:2; }
+
+.mod-copy{ min-width:0; }
+
+.mod-eyebrow{
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:.74rem; font-weight:700; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--brand);
+  margin-bottom:var(--s2);
+}
+
+.mod-copy h3{
+  margin:0 0 var(--s2);
+  font-size:clamp(1.5rem,2.6vw,2rem);
+  line-height:1.15;
+  letter-spacing:-.02em;
+  color:var(--text);
+}
+
+.mod-lead{
+  margin:0 0 var(--s3);
+  font-size:var(--t-lead);
+  line-height:1.6;
+  color:var(--text-2);
+  max-width:54ch;
+}
+
+.mod-list{ margin:0 0 var(--s3); padding:0; list-style:none;
+           display:flex; flex-direction:column; gap:9px; }
+.mod-list li{
+  position:relative; padding-left:26px;
+  font-size:.96rem; line-height:1.55; color:var(--text-2);
+}
+.mod-list li::before{
+  content:""; position:absolute; left:0; top:7px;
+  width:14px; height:14px; border-radius:50%;
+  background:color-mix(in srgb, var(--brand) 18%, transparent);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--brand) 45%, transparent);
+}
+.mod-list b{ color:var(--text); font-weight:600; }
+
+.mod-benefit{
+  margin:0;
+  padding:var(--s3) var(--s4);
+  border-left:2px solid var(--brand);
+  border-radius:0 var(--r3) var(--r3) 0;
+  background:var(--surface);
+  font-size:.98rem;
+  line-height:1.6;
+  color:var(--text);
+}
+
+.mod-tag{
+  display:inline-block;
+  padding:3px 9px;
+  border-radius:999px;
+  font-size:.68rem; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase;
+  border:1px solid var(--line-strong);
+  color:var(--text-3);
+}
+.mod-tag--soon{
+  border-color:color-mix(in srgb, var(--amber,#fbbf24) 45%, transparent);
+  color:var(--amber,#fbbf24);
+}
+
+.mod-figure{
+  min-width:0;
+  aspect-ratio:16 / 11;
+  border:1px dashed var(--line-strong);
+  border-radius:var(--r4,18px);
+  background:var(--surface);
+  display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:var(--s4);
+}
+.mod-figure span{ font-size:.82rem; color:var(--text-3); line-height:1.55; }
+
+@media (max-width:900px){
+  .mod{ grid-template-columns:1fr; gap:var(--s4); padding-block:var(--s5); }
+  .mod.is-flipped .mod-copy{ order:0; }
+  .mod-figure{ aspect-ratio:16 / 9; }
+}
+
+
+/* The roadmap note under the AI Assistant heading. */
+.assistant-note{
+  font-size:.92rem !important;
+  line-height:1.6;
+  color:var(--text-3) !important;
+  border-left:2px solid var(--line-strong);
+  padding-left:var(--s3);
+}
+.assistant-copy .mod-tag{ margin-bottom:var(--s2); }

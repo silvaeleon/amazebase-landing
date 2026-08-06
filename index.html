@@ -126,13 +126,18 @@
 
   <ul class="nav-menu">
     <li class="nav-item">
-      <a class="nav-link" href="#features">Product <svg class="chev"><use href="#i-chevron"/></svg></a>
-      <div class="nav-drop">
-        <a href="#features"><svg class="icon-sm"><use href="#i-search"/></svg>Product Research</a>
-        <a href="#features"><svg class="icon-sm"><use href="#i-mega"/></svg>Advertising</a>
-        <a href="#features"><svg class="icon-sm"><use href="#i-box"/></svg>Inventory</a>
-        <a href="#features"><svg class="icon-sm"><use href="#i-dollar"/></svg>Financials</a>
-        <a href="#assistant"><svg class="icon-sm"><use href="#i-spark"/></svg>AI Assistant</a>
+      <a class="nav-link" href="#modules">Product <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop nav-drop--wide">
+        <a href="#advertising"><svg class="icon-sm"><use href="#i-mega"/></svg>Advertising &amp; PPC</a>
+        <a href="#financials"><svg class="icon-sm"><use href="#i-dollar"/></svg>Financials</a>
+        <a href="#ledger"><svg class="icon-sm"><use href="#i-stack"/></svg>Ledger</a>
+        <a href="#inventory"><svg class="icon-sm"><use href="#i-box"/></svg>Inventory</a>
+        <a href="#research"><svg class="icon-sm"><use href="#i-search"/></svg>Product Research</a>
+        <a href="#simulations"><svg class="icon-sm"><use href="#i-chart"/></svg>Simulations</a>
+        <a href="#sales"><svg class="icon-sm"><use href="#i-trend"/></svg>Sales</a>
+        <a href="#data"><svg class="icon-sm"><use href="#i-db"/></svg>Data &amp; Sync</a>
+        <a href="#security"><svg class="icon-sm"><use href="#i-shield"/></svg>Security</a>
+        <a href="#assistant"><svg class="icon-sm"><use href="#i-spark"/></svg>AI Assistant &mdash; soon</a>
       </div>
     </li>
     <li class="nav-item">
@@ -166,7 +171,7 @@
 </div>
 
 <div class="nav-mobile" id="navMobile">
-  <a href="#features">Product</a>
+  <a href="#modules">Product</a>
   <a href="#compare">Solutions</a>
   <a href="#pricing">Pricing</a>
   <a href="resources.html">Resources</a>
@@ -632,74 +637,178 @@
 </section>
 
 <!-- ====================================================================
-     FEATURES
+     PRODUCT MODULES
+     Source of truth: the Module Marketing Guide. Only capabilities marked
+     LIVE in that guide may appear as claims here. Anything marked wiring
+     or roadmap must carry the "soon" chip class and say so in words. See
+     the AI Assistant section below for the pattern.
+     Each module owns its own anchor so the Product menu lands in the
+     right place instead of dumping everyone at the top of one section.
 ==================================================================== -->
-<section class="section" id="features">
+<section class="section" id="modules">
 <div class="container">
 
   <div class="section-head" data-reveal>
-    <span class="eyebrow">Capabilities</span>
-    <h2>Everything you need to grow profitably</h2>
-    <p>Six connected systems that replace the spreadsheets, tabs and guesswork you're using today.</p>
+    <span class="eyebrow">The platform</span>
+    <h2>Amazon shows you what happened.<br>AmazeBase tells you what to do about it.</h2>
+    <p>Eight connected modules built on one spine: your real landed cost per unit.
+       Most tools optimise against ACoS. This one optimises against profit after the
+       actual cost of the units you sold.</p>
   </div>
 
-  <div class="feature-grid" data-reveal-stagger>
+  <article class="mod" id="advertising" data-reveal>
+    <div class="mod-copy">
+      <span class="mod-eyebrow">Advertising &amp; PPC</span>
+      <h3>Every PPC tool shows your ACoS. This one shows your break-even.</h3>
+      <p class="mod-lead">Not another dashboard. Every campaign, keyword, search term and placement is judged against the real break-even ACoS for that specific product &mdash; then given a verdict, the evidence, and the exact number to change it to.</p>
+      <ul class="mod-list">
+        <li><b>Seven verdicts, each with a written reason</b> &mdash; Scale, Optimize, Cut, Hold-flywheel, Negate, Harvest, Review</li>
+        <li><b>Every recommendation is a from &rarr; to</b>. Not &ldquo;raise the bid&rdquo; &mdash; &ldquo;$1.40 &rarr; $0.90&rdquo;, editable before you act</li>
+        <li><b>Hold-flywheel</b> stops you killing the campaign that&rsquo;s buying your organic rank</li>
+        <li><b>It won&rsquo;t let you negate on thin data</b> &mdash; it computes how many clicks you actually need from your own margin</li>
+        <li><b>Inventory gate</b> blocks a Scale when that product is at stockout risk</li>
+        <li><b>Amazon bulksheet round trip</b> &mdash; forty changes in one upload instead of an evening of clicking</li>
+      </ul>
+      <p class="mod-benefit"><b>And then it grades itself.</b> Every recommendation is stored, matured, and marked worked / didn&rsquo;t / inconclusive &mdash; with effects inside &plusmn;5% reported honestly as noise. Everyone gives you recommendations. Nobody else tells you whether theirs worked.</p>
+    </div>
+    <figure class="mod-figure">
+      <span>Graphic slot &mdash; 16:11<br>e.g. a verdict card showing bid $1.40 &rarr; $0.90 with its evidence line</span>
+    </figure>
+  </article>
 
-    <article class="feature">
-      <div class="feature-thumb">
-        <img src="assets/img/feat-discover.png" alt="Magnifying glass over a rising trend chart" width="768" height="264" loading="lazy" decoding="async">
-      </div>
-      <h3>Discover Opportunities</h3>
-      <p>Find winning products and keywords before your competitors do, with real demand data.</p>
-      <a class="feature-link" href="#">Learn more <svg><use href="#i-arrow"/></svg></a>
-    </article>
+  <article class="mod is-flipped" id="financials" data-reveal>
+    <div class="mod-copy">
+      <span class="mod-eyebrow">Financials</span>
+      <h3>Your sales report is not your profit.</h3>
+      <p class="mod-lead">Your settlement export, rebuilt into a real P&amp;L: revenue, minus Amazon&rsquo;s full fee stack, minus what the goods actually cost you, minus ads, refunds and the overheads you type in. By month. By SKU.</p>
+      <ul class="mod-list">
+        <li><b>Amazon fees broken into eight lines</b> &mdash; selling, FBA, inbound, international, removal, storage, subscription, other</li>
+        <li><b>Two profit numbers</b> &mdash; contribution profit and net profit, because they answer different questions</li>
+        <li><b>Drag-to-reorder KPI cards</b> with prior-period comparison</li>
+        <li><b>Charts that ask questions in English</b> &mdash; &ldquo;Am I buying my sales?&rdquo;, &ldquo;Does Amazon cover my overheads?&rdquo;</li>
+        <li><b>Overhead tracking</b> that flags the month where a recurring cost went missing</li>
+      </ul>
+      <p class="mod-benefit">Seller Central knows your sales and fees. It has no idea what your units cost, what you paid in freight and duty, or that you pay for software and a VA. <b>So &ldquo;revenue up 30%&rdquo; stops being a number you take on faith.</b></p>
+    </div>
+    <figure class="mod-figure">
+      <span>Graphic slot &mdash; 16:11<br>e.g. the P&amp;L waterfall from revenue down to net profit</span>
+    </figure>
+  </article>
 
-    <article class="feature">
-      <div class="feature-thumb">
-        <img src="assets/img/feat-decisions.png" alt="Analytics dashboard showing revenue and sales by channel" width="768" height="264" loading="lazy" decoding="async">
-      </div>
-      <h3>Make Better Decisions</h3>
-      <p>Real-time insights that show you what's working and what's quietly losing you money.</p>
-      <a class="feature-link" href="#">Learn more <svg><use href="#i-arrow"/></svg></a>
-    </article>
+  <article class="mod" id="ledger" data-reveal>
+    <div class="mod-copy">
+      <span class="mod-eyebrow">Ledger</span>
+      <h3>It knows your freight invoice is missing &mdash; and which PO it belongs to.</h3>
+      <p class="mod-lead">The system of record for every dollar spent acquiring inventory. Purchase orders, freight, customs, inspection, receipt &mdash; assembled into a true landed cost per unit. This is what makes every other number in the product real.</p>
+      <ul class="mod-list">
+        <li><b>Landed cost per unit</b> from manufacturing, freight, duty and inspection, divided by the units that actually arrived</li>
+        <li><b>Completeness score</b> driven by your incoterm &mdash; a CIF order should have customs attached, and it tells you when one doesn&rsquo;t</li>
+        <li><b>Confidence badge</b> &mdash; &ldquo;Ordered 500, received 480. Cost-per-unit reflects 480.&rdquo;</li>
+        <li><b>Smart attribution</b> &mdash; attach an invoice and it suggests the likely PO: &ldquo;matches SKU-A, 12d gap&rdquo;</li>
+        <li><b>Auto-route</b> scans your Amazon transactions and creates the fee rows for you</li>
+      </ul>
+      <p class="mod-benefit">Every &ldquo;profit&rdquo; figure in every Amazon tool is a guess until this exists. <b>Get landed cost wrong and your margins, your break-even ACoS and your reorder decisions are all wrong together.</b></p>
+    </div>
+    <figure class="mod-figure">
+      <span>Graphic slot &mdash; 16:11<br>e.g. the five-step PO strip: manufacturing &rsaquo; freight &rsaquo; customs &rsaquo; inspection &rsaquo; received</span>
+    </figure>
+  </article>
 
-    <article class="feature">
-      <div class="feature-thumb">
-        <img src="assets/img/feat-stock.png" alt="Stacked shipping boxes with restock indicators" width="768" height="264" loading="lazy" decoding="async">
-      </div>
-      <h3>Never Run Out of Stock</h3>
-      <p>AI-powered forecasting keeps the right stock in the right place at the right time.</p>
-      <a class="feature-link" href="#">Learn more <svg><use href="#i-arrow"/></svg></a>
-    </article>
+  <article class="mod is-flipped" id="inventory" data-reveal>
+    <div class="mod-copy">
+      <span class="mod-eyebrow">Inventory</span>
+      <h3>Not &ldquo;you&rsquo;re low on stock.&rdquo; The last day you can safely order.</h3>
+      <p class="mod-lead">Answers the two questions that cost the most money &mdash; when do I have to place the order, and how many units &mdash; then hands that decision straight to a pre-filled purchase order.</p>
+      <ul class="mod-list">
+        <li><b>Order-by date</b> is stockout minus your lead time, and turns red with &ldquo;overdue 14d&rdquo; when you&rsquo;ve missed it</li>
+        <li><b>Suggested quantity</b> from velocity, lead time and your cover target</li>
+        <li><b>Velocity window you choose</b> &mdash; 30, 60 or 90 days</li>
+        <li><b>Honest defaults</b> &mdash; &ldquo;using default 90d lead time &mdash; set yours&rdquo;, and the maths still runs either way</li>
+        <li><b>One click to a PO</b>, pre-filled with the reasoning that produced it</li>
+      </ul>
+      <p class="mod-benefit">A stockout is the most expensive mistake on Amazon: you lose the sales, then the rank, then months of ad budget buying the rank back. <b>Overstock is the second most expensive.</b> This module exists to give you one date and one number, early enough to act.</p>
+    </div>
+    <figure class="mod-figure">
+      <span>Graphic slot &mdash; 16:11<br>e.g. the reorder table with an overdue row highlighted</span>
+    </figure>
+  </article>
 
-    <article class="feature">
-      <div class="feature-thumb">
-        <img src="assets/img/feat-profit.png" alt="Bar chart breaking down profit" width="768" height="264" loading="lazy" decoding="async">
-      </div>
-      <h3>Understand Profit</h3>
-      <p>True profit analytics after fees, ads, refunds, storage and every other real cost.</p>
-      <a class="feature-link" href="#">Learn more <svg><use href="#i-arrow"/></svg></a>
-    </article>
+  <article class="mod" id="research" data-reveal>
+    <div class="mod-copy">
+      <span class="mod-eyebrow">Product Research</span>
+      <h3>A big market you can&rsquo;t profit in is not an opportunity.</h3>
+      <p class="mod-lead">A workbench for products you haven&rsquo;t launched. Import your existing research exports, score the opportunity across four dimensions, and model the unit economics down to the tariff line.</p>
+      <ul class="mod-list">
+        <li><b>Opportunity score</b> across market size, entry opportunity, discoverability and profitability &mdash; verdict Strong / Good / Marginal / Avoid</li>
+        <li><b>Four-step profit model</b> ending in landed cost, margin, ROI and a plain verdict</li>
+        <li><b>Tariff and Section 301 lines</b> &mdash; the ones that quietly kill China-sourced margin</li>
+        <li><b>Launch-phase TACoS</b>, because what you&rsquo;ll pay in quarter one isn&rsquo;t what you&rsquo;ll pay in year two</li>
+        <li><b>Compare candidates</b> across fourteen selectable columns</li>
+      </ul>
+      <p class="mod-benefit">Most research tools tell you the market is big. <b>None of them tell you whether you&rsquo;ll make money in it.</b> This runs the market data and the unit economics in the same place &mdash; before you wire the deposit.</p>
+    </div>
+    <figure class="mod-figure">
+      <span>Graphic slot &mdash; 16:11<br>e.g. the four-dimension opportunity score with its verdict</span>
+    </figure>
+  </article>
 
-    <article class="feature">
-      <div class="feature-thumb">
-        <img src="assets/img/feat-forecast.png" alt="Line chart forecasting an upward trend" width="768" height="264" loading="lazy" decoding="async">
-      </div>
-      <h3>Plan Months Ahead</h3>
-      <p>Predict cash flow, inventory needs and growth with confidence instead of hope.</p>
-      <a class="feature-link" href="#">Learn more <svg><use href="#i-arrow"/></svg></a>
-    </article>
+  <article class="mod is-flipped" id="simulations" data-reveal>
+    <div class="mod-copy">
+      <span class="mod-eyebrow">Simulations</span>
+      <h3>You can be profitable and still run out of money.</h3>
+      <p class="mod-lead">Simulates your business forward, fortnight by fortnight: place the order, pay the supplier in instalments, wait for production, wait for shipping, ramp sales, pay PPC, get paid by Amazon, reorder. Then shows you the two lines that matter.</p>
+      <ul class="mod-list">
+        <li><b>Three-leg lead time</b> &mdash; production, shipping, Amazon check-in, modelled separately</li>
+        <li><b>Supplier payment schedules</b> with trigger-based instalments</li>
+        <li><b>Automatic reorder placement</b> mid-simulation: &ldquo;reorder placed Fn7 &rarr; arrives Fn12&rdquo;</li>
+        <li><b>Three lenses</b> &mdash; cashflow, profitability, inventory &mdash; where a drop to zero is a stockout</li>
+        <li><b>Out-of-cash flags</b> per fortnight, in plain language</li>
+      </ul>
+      <p class="mod-benefit">Growth kills more Amazon businesses than failure does. You sell out, reorder bigger, and find the deposit is due before Amazon pays you. <b>This is where you discover that on a screen instead of in your bank account.</b></p>
+    </div>
+    <figure class="mod-figure">
+      <span>Graphic slot &mdash; 16:11<br>e.g. the cash line dipping below zero at a flagged fortnight</span>
+    </figure>
+  </article>
 
-    <article class="feature">
-      <div class="feature-thumb">
-        <img src="assets/img/feat-ai.png" alt="Chat bubbles representing an AI assistant" width="768" height="264" loading="lazy" decoding="async">
-      </div>
-      <h3>AI That Knows Your Business</h3>
-      <p>Ask anything. Get instant, actionable answers based on your own connected data.</p>
-      <a class="feature-link" href="#assistant">Learn more <svg><use href="#i-arrow"/></svg></a>
-    </article>
+  <article class="mod" id="sales" data-reveal>
+    <div class="mod-copy">
+      <span class="mod-eyebrow">Sales</span>
+      <h3>How much of this SKU&rsquo;s revenue are you renting?</h3>
+      <p class="mod-lead">Per-SKU performance with the split that actually changes decisions: how many units were bought organically, and how many you paid for.</p>
+      <ul class="mod-list">
+        <li><b>Organic vs PPC unit split</b> per SKU</li>
+        <li><b>Revenue, profit, margin, ACoS, TACoS, ROAS</b> and refund rate in one table</li>
+        <li><b>Monthly trend</b> per SKU by revenue, units, profit or TACoS</li>
+        <li><b>Jump straight into Ads or Financials</b> from any row</li>
+        <li><b>Honest labelling</b> &mdash; recent organic units are marked estimated, because the attribution window hasn&rsquo;t closed</li>
+      </ul>
+      <p class="mod-benefit">A SKU doing $40k a month where 80% of units come through ads is a completely different business from one where 20% do. <b>This shows you which one you own.</b></p>
+    </div>
+    <figure class="mod-figure">
+      <span>Graphic slot &mdash; 16:11<br>e.g. the organic / PPC split bar across top SKUs</span>
+    </figure>
+  </article>
 
-  </div>
+  <article class="mod is-flipped" id="data" data-reveal>
+    <div class="mod-copy">
+      <span class="mod-eyebrow">Data &amp; Sync</span>
+      <h3>If two Amazon reports disagree, we tell you.</h3>
+      <p class="mod-lead">Ten report types ingested, every row traceable to the file it came from. The foundation the rest of the product stands on.</p>
+      <ul class="mod-list">
+        <li><b>Re-upload is always safe</b> &mdash; deduplicated by content hash, so double-uploading can never corrupt your data</li>
+        <li><b>Locale-aware parsing</b> &mdash; European decimals, Spanish filenames and headers, day-first dates</li>
+        <li><b>Automatic reconciliation</b> cross-checks ad reports against settlement data and raises a flag when they disagree</li>
+        <li><b>Full provenance</b> &mdash; every row knows which file it came from and when</li>
+        <li><b>Organic rank import</b>, the one thing Amazon has no API for</li>
+      </ul>
+      <p class="mod-benefit">Amazon&rsquo;s own reports contradict each other more often than sellers realise. <b>You get told, rather than quietly getting a wrong answer.</b></p>
+    </div>
+    <figure class="mod-figure">
+      <span>Graphic slot &mdash; 16:11<br>e.g. the sync panel with one report flagged as never uploaded</span>
+    </figure>
+  </article>
+
 </div>
 </section>
 
@@ -865,10 +974,17 @@
 
   <div class="assistant-copy">
     <span class="eyebrow">AI Assistant</span>
+    <span class="mod-tag mod-tag--soon">On the roadmap</span>
     <h2>Stop reading reports.<br>Start asking questions.</h2>
-    <p>Your AI analyst understands your business and gives you answers you can act on.</p>
+    <p>Where we&rsquo;re taking the product next: ask a question in plain English and get
+       an answer built from your own connected data, with the numbers behind it.</p>
+    <p class="assistant-note">
+      This one isn&rsquo;t built yet &mdash; the illustration below is a design, not a
+      screenshot. Everything else on this page is running today. Join the wait list and
+      you&rsquo;ll be among the first to use it.
+    </p>
     <a class="btn btn--primary btn--lg" href="#waitlist" data-waitlist-open data-source="assistant" data-magnetic>
-      Try AI Assistant <svg class="icon-sm"><use href="#i-arrow"/></svg>
+      Join the Wait List <svg class="icon-sm"><use href="#i-arrow"/></svg>
     </a>
   </div>
 
@@ -892,7 +1008,7 @@
           <div class="chat-metric"><span>Cash Impact</span><b class="is-red">−$2,950</b></div>
         </div>
 
-        <p class="chat-foot">Based on sales velocity, seasonality and current trends.</p>
+        <p class="chat-foot">Illustrative example &mdash; the AI Assistant is not yet available.</p>
       </div>
     </div>
 
@@ -970,7 +1086,7 @@
       <li><svg class="icon-sm"><use href="#i-check"/></svg>Advertising &amp; profit analytics</li>
       <li><svg class="icon-sm"><use href="#i-check"/></svg>Inventory &amp; cash flow forecasting</li>
       <li><svg class="icon-sm"><use href="#i-check"/></svg>Supplier &amp; purchase order tracking</li>
-      <li><svg class="icon-sm"><use href="#i-check"/></svg>AI Assistant included</li>
+      <li><svg class="icon-sm"><use href="#i-check"/></svg>AI Assistant when it launches</li>
     </ul>
     <a class="btn btn--primary btn--lg btn--block" href="#waitlist" data-waitlist-open data-source="pricing-pro" data-magnetic>Join the Wait List</a>
   </div>
@@ -1014,7 +1130,7 @@
 
     <div class="footer-col">
       <h4>Product</h4>
-      <a href="#features">Features</a>
+      <a href="#modules">Product</a>
       <a href="#pricing">Pricing</a>
       <a href="#">Integrations</a>
     </div>

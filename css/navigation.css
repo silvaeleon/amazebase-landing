@@ -143,3 +143,11 @@
 @media (max-width:520px){
   .nav-actions .btn--primary{ padding:11px 16px; font-size:14px; }
 }
+
+
+/* Ten modules need two columns or the dropdown runs off the screen. */
+.nav-drop--wide{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(168px,1fr));
+  gap:2px 4px;
+}
