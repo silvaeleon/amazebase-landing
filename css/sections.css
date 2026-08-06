@@ -690,3 +690,124 @@
   transition:opacity var(--mid),transform var(--mid),visibility var(--mid);
 }
 .to-top.is-on{ opacity:1; visibility:visible; transform:translateY(0); }
+
+
+/* ── Security ─────────────────────────────────────────────────────────
+   Nine control groups. Deliberately plain: no badges, no seals, no
+   invented certifications. The reassurance comes from the specificity of
+   what is named, so the type does the work and the styling stays out of
+   the way. */
+.sec-lead{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,.72fr);
+  gap:var(--s5);
+  align-items:center;
+  margin-bottom:var(--s6);
+}
+.sec-lead-copy p{
+  margin:0 0 var(--s3);
+  color:var(--text-2);
+  font-size:var(--t-lead);
+  line-height:1.65;
+  max-width:52ch;
+}
+.sec-lead-copy p:last-child{ margin-bottom:0; }
+
+/* Slot for a graphic. Sized and labelled so it is obvious it is waiting
+   for artwork rather than broken. */
+.sec-figure{
+  min-width:0;
+  aspect-ratio:4 / 3;
+  border:1px dashed var(--line-strong);
+  border-radius:var(--r3);
+  background:var(--surface);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:var(--s4);
+}
+.sec-figure span{
+  font-size:.82rem;
+  color:var(--text-3);
+  line-height:1.5;
+}
+
+.sec-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:var(--s3);
+}
+
+.sec-card{
+  border:1px solid var(--line);
+  border-radius:var(--r3);
+  background:var(--surface);
+  padding:var(--s4);
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.sec-ico{
+  width:38px; height:38px;
+  border-radius:10px;
+  display:inline-flex; align-items:center; justify-content:center;
+  background:color-mix(in srgb, var(--brand) 14%, transparent);
+  color:var(--brand);
+  flex:0 0 auto;
+}
+.sec-ico svg{ width:19px; height:19px; }
+
+.sec-card h3{
+  margin:0;
+  font-size:1.02rem;
+  letter-spacing:-.01em;
+  color:var(--text);
+}
+
+.sec-card ul{
+  margin:0; padding:0; list-style:none;
+  display:flex; flex-direction:column; gap:7px;
+}
+.sec-card li{
+  position:relative;
+  padding-left:18px;
+  font-size:.91rem;
+  line-height:1.5;
+  color:var(--text-2);
+}
+.sec-card li::before{
+  content:"";
+  position:absolute; left:0; top:8px;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--brand);
+  opacity:.75;
+}
+
+.sec-foot{
+  margin-top:var(--s5);
+  padding:var(--s4);
+  border:1px solid var(--line);
+  border-radius:var(--r3);
+  background:var(--surface);
+}
+.sec-foot p{
+  margin:0;
+  font-size:.94rem;
+  line-height:1.65;
+  color:var(--text-2);
+}
+.sec-foot a{ color:var(--brand); }
+.sec-foot a:hover{ color:var(--text); }
+
+@media (max-width:1000px){
+  .sec-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:900px){
+  .sec-lead{ grid-template-columns:1fr; gap:var(--s4); }
+  .sec-figure{ aspect-ratio:16 / 9; }
+}
+@media (max-width:640px){
+  .sec-grid{ grid-template-columns:1fr; }
+}

@@ -704,6 +704,159 @@
 </section>
 
 <!-- ====================================================================
+     SECURITY
+     Every claim here maps to a control that is live today. Three things
+     are deliberately absent and must stay absent until they are true:
+     Content-Security-Policy (refactor in flight), any claim that
+     AmazeBase itself is SOC 2 certified (the host is, we are not), and
+     external penetration testing (automated scanning only so far).
+     Never add: thresholds, session lifetimes, endpoint names, or the
+     names of security vendors. Categories build trust; specifics build
+     a map for an attacker.
+==================================================================== -->
+<section class="section" id="security">
+<div class="container">
+
+  <div class="section-head" data-reveal>
+    <span class="eyebrow">Security</span>
+    <h2>Your Amazon data, treated like it&rsquo;s ours to protect</h2>
+    <p>You&rsquo;re about to connect years of sales, cost and supplier information to a
+       tool you didn&rsquo;t build. Here is exactly what protects it.</p>
+  </div>
+
+  <div class="sec-lead" data-reveal>
+    <div class="sec-lead-copy">
+      <p>Most software asks you to take security on faith. We&rsquo;d rather name the
+         controls and let you check them.</p>
+      <p>Everything below is running in the product today. Where something is still
+         being built, we say so rather than implying otherwise &mdash; because a
+         security page you can catch out is worse than no security page at all.</p>
+    </div>
+
+    <figure class="sec-figure">
+      <span>Graphic slot &mdash; 4:3<br>e.g. layered shield / encrypted data flow</span>
+    </figure>
+  </div>
+
+  <div class="sec-grid" data-reveal-stagger>
+
+    <article class="sec-card">
+      <span class="sec-ico"><svg><use href="#i-shield"/></svg></span>
+      <h3>Encryption</h3>
+      <ul>
+        <li>TLS 1.2+ on everything in transit</li>
+        <li>AES-256 at rest</li>
+        <li>Amazon credentials encrypted again at record level</li>
+        <li>HSTS enforced</li>
+      </ul>
+    </article>
+
+    <article class="sec-card">
+      <span class="sec-ico"><svg><use href="#i-check"/></svg></span>
+      <h3>Account security</h3>
+      <ul>
+        <li>Two-factor authentication, mandatory</li>
+        <li>Password complexity, history and expiry enforced</li>
+        <li>Automatic lockout after repeated failures</li>
+        <li>One-way password hashing</li>
+        <li>Short-lived sessions you can revoke</li>
+        <li>Rate limiting on authentication</li>
+      </ul>
+    </article>
+
+    <article class="sec-card">
+      <span class="sec-ico"><svg><use href="#i-grid"/></svg></span>
+      <h3>Access control</h3>
+      <ul>
+        <li>Tenant isolation checked on every request</li>
+        <li>Three-tier permissions</li>
+        <li>Per-module permissions</li>
+        <li>Owner-only administrative functions</li>
+        <li>Support access scoped, time-limited and logged</li>
+      </ul>
+    </article>
+
+    <article class="sec-card">
+      <span class="sec-ico"><svg><use href="#i-gear"/></svg></span>
+      <h3>Application hardening</h3>
+      <ul>
+        <li>CORS locked to an explicit allowlist</li>
+        <li>Full security header set</li>
+        <li>Upload type allowlist and size caps</li>
+        <li>Parameterised database access</li>
+        <li>XSS-aware rendering</li>
+      </ul>
+    </article>
+
+    <article class="sec-card">
+      <span class="sec-ico"><svg><use href="#i-bell"/></svg></span>
+      <h3>Monitoring</h3>
+      <ul>
+        <li>Audit trail of sign-ins and privileged actions</li>
+        <li>Emails hashed before they reach logs</li>
+        <li>Automated detection with real-time alerting</li>
+        <li>Dark-web credential monitoring</li>
+        <li>Manual log review on a fixed cycle</li>
+        <li>Written incident response plan</li>
+      </ul>
+    </article>
+
+    <article class="sec-card">
+      <span class="sec-ico"><svg><use href="#i-refresh"/></svg></span>
+      <h3>Testing</h3>
+      <ul>
+        <li>Static analysis and dependency scanning on every change</li>
+        <li>Scheduled dynamic scanning</li>
+        <li>Controls deliberately triggered and their audit records verified</li>
+      </ul>
+    </article>
+
+    <article class="sec-card">
+      <span class="sec-ico"><svg><use href="#i-db"/></svg></span>
+      <h3>Data governance</h3>
+      <ul>
+        <li>Classification and retention policy</li>
+        <li>Retention enforced automatically</li>
+        <li>You control deletion, with a recovery window</li>
+        <li>Pseudonymisation where financial records must be kept</li>
+      </ul>
+    </article>
+
+    <article class="sec-card">
+      <span class="sec-ico"><svg><use href="#i-globe"/></svg></span>
+      <h3>Infrastructure</h3>
+      <ul>
+        <li>Hosted on SOC 2 Type II infrastructure</li>
+        <li>Data processing agreement in place, provider assessed as subprocessor</li>
+        <li>Private internal networking</li>
+        <li>Built against Amazon&rsquo;s SP-API Data Protection Policy</li>
+      </ul>
+    </article>
+
+    <article class="sec-card">
+      <span class="sec-ico"><svg><use href="#i-info"/></svg></span>
+      <h3>What we don&rsquo;t claim</h3>
+      <ul>
+        <li>Our host holds SOC 2 Type II. AmazeBase itself is not certified</li>
+        <li>Scanning is automated; we haven&rsquo;t had an external penetration test yet</li>
+        <li>A stricter content security policy is in progress, not finished</li>
+      </ul>
+    </article>
+
+  </div>
+
+  <div class="sec-foot" data-reveal>
+    <p>We name controls, not configuration. Thresholds, session lifetimes, internal
+       endpoints and the tools we use stay private &mdash; publishing those would help
+       an attacker more than it helps you. See the
+       <a href="privacy.html">Privacy Policy</a> for how data is handled, and the
+       <a href="terms.html">Terms of Service</a> for the commitments behind it.</p>
+  </div>
+
+</div>
+</section>
+
+<!-- ====================================================================
      AI ASSISTANT
 ==================================================================== -->
 <section class="section" id="assistant">
