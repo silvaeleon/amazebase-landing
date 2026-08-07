@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Product &mdash; every module inside AmazeBase</title>
+
+<meta name="description" content="Every module inside AmazeBase: advertising, financials, ledger, inventory, product research, simulations, sales, data sync and security. All of it built on your real landed cost per unit.">
+<meta name="theme-color" content="#030917">
+<meta property="og:title" content="AmazeBase">
+<meta property="og:description" content="The operating system for Amazon sellers.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/navigation.css">
+<link rel="stylesheet" href="css/hero.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/sections.css">
+<link rel="stylesheet" href="css/waitlist.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="bg-layer" aria-hidden="true"></div>
+
+<!-- ====================================================================
+     ICON SPRITE
+==================================================================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+  <linearGradient id="linkGrad" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%"  stop-color="#3B82F6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+  <linearGradient id="areaA" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"  stop-color="#3B82F6" stop-opacity=".34"/>
+    <stop offset="100%" stop-color="#3B82F6" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="areaB" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"  stop-color="#8B3BF1" stop-opacity=".28"/>
+    <stop offset="100%" stop-color="#8B3BF1" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="donutGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#2ED47A"/>
+    <stop offset="100%" stop-color="#3B82F6"/>
+  </linearGradient>
+  <linearGradient id="sparkFillGreen" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"  stop-color="#2ED47A" stop-opacity=".45"/>
+    <stop offset="100%" stop-color="#2ED47A" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="sparkFillBlue" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"  stop-color="#3B82F6" stop-opacity=".45"/>
+    <stop offset="100%" stop-color="#3B82F6" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="sparkFillPurple" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"  stop-color="#A971F7" stop-opacity=".45"/>
+    <stop offset="100%" stop-color="#A971F7" stop-opacity="0"/>
+  </linearGradient>
+</defs>
+
+  <symbol id="i-chevron"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-arrow"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-check"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></symbol>
+  <symbol id="i-play"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5.5v13l11-6.5z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-menu"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-x"        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+
+  <symbol id="i-grid"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h7v6H4zM13 4h7v10h-7zM4 12h7v8H4zM13 16h7v4h-7z"/></symbol>
+  <symbol id="i-box"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></symbol>
+  <symbol id="i-search"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></symbol>
+  <symbol id="i-mega"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l7 4V5L8 9H4zM19 9a4 4 0 010 6"/></symbol>
+  <symbol id="i-stack"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-dollar"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5v19M16.5 6.5H10a3.2 3.2 0 000 6.4h4a3.2 3.2 0 010 6.4H7"/></symbol>
+  <symbol id="i-truck"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.5h11v10h-11zM13.5 10h4l3 3.2v3.3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></symbol>
+  <symbol id="i-report"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></symbol>
+  <symbol id="i-spark"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+  <symbol id="i-bell"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8.5a6 6 0 10-12 0c0 6-2.5 7.5-2.5 7.5h17S18 14.5 18 8.5zM10.3 20a2 2 0 003.4 0"/></symbol>
+  <symbol id="i-gear"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.6 1.6 0 00-2.7 1.1v.2a2 2 0 11-4 0v-.1a1.6 1.6 0 00-2.8-1.1l-.1.1a2 2 0 11-2.8-2.8l.1-.1A1.6 1.6 0 003.7 15a2 2 0 110-4h.1a1.6 1.6 0 001.1-2.8l-.1-.1a2 2 0 112.8-2.8l.1.1A1.6 1.6 0 0010.5 4h.1a2 2 0 114 0v.1a1.6 1.6 0 002.7 1.1l.1-.1a2 2 0 112.8 2.8l-.1.1a1.6 1.6 0 001.1 2.7h.2a2 2 0 110 4h-.1a1.6 1.6 0 00-1.9 1.3z"/></symbol>
+  <symbol id="i-chart"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-trend"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></symbol>
+  <symbol id="i-rocket"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15s-1.5 3 1 5.5S11 20 11 20M14.5 4.5c3-2 6-1 6-1s1 3-1 6l-6 6-5-5 6-6z"/><circle cx="15" cy="9" r="1.4"/></symbol>
+  <symbol id="i-warn"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.5L2.5 20h19L12 4.5zM12 10v4.5M12 17.5v.01"/></symbol>
+  <symbol id="i-info"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></symbol>
+  <symbol id="i-checkc"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-4.8"/></symbol>
+  <symbol id="i-refresh"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 10-1.7 5M20 5v6h-6"/></symbol>
+  <symbol id="i-export"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M8 7l4-4 4 4M4 15v4a2 2 0 002 2h12a2 2 0 002-2v-4"/></symbol>
+  <symbol id="i-filter"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 8v6l-4 2v-8z"/></symbol>
+  <symbol id="i-db"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3.2"/><path d="M4 6v12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2V6M4 12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2"/></symbol>
+  <symbol id="i-globe"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 21.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"/></symbol>
+  <symbol id="i-case"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8.5 7V5a2 2 0 012-2h3a2 2 0 012 2v2M2.5 12.5h19"/></symbol>
+  <symbol id="i-msg"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-8 8 8.6 8.6 0 01-3.6-.8L3 21l1.8-6.4A8 8 0 1121 12z"/></symbol>
+  <symbol id="i-shield"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-9.5V5.5L12 2.5 4 5.5V12.5C4 18.5 12 22 12 22z"/></symbol>
+  <symbol id="i-link"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a4 4 0 006 .5l2.5-2.5a4.2 4.2 0 00-6-6L11 6.5M14 11a4 4 0 00-6-.5L5.5 13a4.2 4.2 0 006 6L13 17.5"/></symbol>
+
+  <symbol id="i-in"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12.5 17v-4a2.5 2.5 0 015 0v4"/></symbol>
+  <symbol id="i-tw"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M20 4L4 20"/></symbol>
+  <symbol id="i-gh"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4 1.4-4-2.2-5.6-2.6M15 21v-3.4a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 2.6 5.5 2.9 5.5 2.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 9.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></symbol>
+</svg>
+
+<!-- ====================================================================
+     HEADER
+==================================================================== -->
+<header class="site-header">
+<div class="container">
+<nav class="nav" aria-label="Primary">
+
+  <a href="/index.html" class="brand" aria-label="AmazeBase home">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+      <path d="M16 17.6l4.4 8.2h-8.8z" fill="#C56BF5" opacity=".85"/>
+    </svg>
+    <span data-brand>AmazeBase</span>
+  </a>
+
+  <ul class="nav-menu">
+    <li class="nav-item">
+      <a class="nav-link" href="product.html#modules">Product <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop nav-drop--wide">
+        <a href="product.html#advertising"><svg class="icon-sm"><use href="#i-mega"/></svg>Advertising &amp; PPC</a>
+        <a href="product.html#financials"><svg class="icon-sm"><use href="#i-dollar"/></svg>Financials</a>
+        <a href="product.html#ledger"><svg class="icon-sm"><use href="#i-stack"/></svg>Ledger</a>
+        <a href="product.html#inventory"><svg class="icon-sm"><use href="#i-box"/></svg>Inventory</a>
+        <a href="product.html#research"><svg class="icon-sm"><use href="#i-search"/></svg>Product Research</a>
+        <a href="product.html#simulations"><svg class="icon-sm"><use href="#i-chart"/></svg>Simulations</a>
+        <a href="product.html#sales"><svg class="icon-sm"><use href="#i-trend"/></svg>Sales</a>
+        <a href="product.html#data"><svg class="icon-sm"><use href="#i-db"/></svg>Data &amp; Sync</a>
+        <a href="product.html#security"><svg class="icon-sm"><use href="#i-shield"/></svg>Security</a>
+        <a href="product.html#assistant"><svg class="icon-sm"><use href="#i-spark"/></svg>AI Assistant &mdash; soon</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="index.html#compare">Solutions <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="index.html#compare"><svg class="icon-sm"><use href="#i-rocket"/></svg>Private Label</a>
+        <a href="index.html#compare"><svg class="icon-sm"><use href="#i-case"/></svg>Agencies</a>
+        <a href="index.html#compare"><svg class="icon-sm"><use href="#i-globe"/></svg>Multi-Marketplace</a>
+      </div>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="index.html#pricing">Pricing</a></li>
+    <li class="nav-item"><a class="nav-link" href="resources.html">Resources</a></li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Company <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="about.html"><svg class="icon-sm"><use href="#i-info"/></svg>About</a>
+        <a href="contact.html"><svg class="icon-sm"><use href="#i-msg"/></svg>Contact</a>
+      </div>
+    </li>
+  </ul>
+
+  <div class="nav-actions">
+    <a class="btn btn--quiet" href="https://amz-analytics-production.up.railway.app/login">Log in</a>
+    <a class="btn btn--primary" href="#waitlist" data-waitlist-open data-source="nav" data-magnetic>Join the Wait List</a>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="navMobile">
+      <svg class="icon"><use href="#i-menu"/></svg>
+    </button>
+  </div>
+
+</nav>
+</div>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="product.html#modules">Product</a>
+  <a href="index.html#compare">Solutions</a>
+  <a href="index.html#pricing">Pricing</a>
+  <a href="resources.html">Resources</a>
+  <a href="product.html#assistant">AI Assistant</a>
+  <a href="#">Company</a>
+  <a class="btn btn--primary btn--block" href="#waitlist" data-waitlist-open data-source="nav-mobile">Join the Wait List</a>
+</div>
+</header>
+
+<main id="main">
+
+<!-- ====================================================================
+     PRODUCT MODULES
+     Source of truth: the Module Marketing Guide. Only capabilities marked
+     LIVE in that guide may appear as claims here. Anything marked wiring
+     or roadmap must carry the "soon" chip class and say so in words. See
+     the AI Assistant section below for the pattern.
+     Each module owns its own anchor so the Product menu lands in the
+     right place instead of dumping everyone at the top of one section.
+==================================================================== -->
+<section class="section" id="modules">
+<div class="container">
+
+  <div class="section-head" data-reveal>
+    <span class="eyebrow">The platform</span>
+    <h2>Amazon shows you what happened.<br>AmazeBase tells you what to do about it.</h2>
+    <p>Eight connected modules built on one spine: your real landed cost per unit.
+       Most tools optimise against ACoS. This one optimises against profit after the
+       actual cost of the units you sold.</p>
+  </div>
+
+  <article class="mod" id="advertising" data-reveal>
+    <div class="mod-copy">
+      <span class="mod-eyebrow">Advertising &amp; PPC</span>
+      <h3>Every PPC tool shows your ACoS. This one shows your break-even.</h3>
+      <p class="mod-lead">Not another dashboard. Every campaign, keyword, search term and placement is judged against the real break-even ACoS for that specific product &mdash; then given a verdict, the evidence, and the exact number to change it to.</p>
+      <ul class="mod-list">
+        <li><b>Seven verdicts, each with a written reason</b> &mdash; Scale, Optimize, Cut, Hold-flywheel, Negate, Harvest, Review</li>
+        <li><b>Every recommendation is a from &rarr; to</b>. Not &ldquo;raise the bid&rdquo; &mdash; &ldquo;$1.40 &rarr; $0.90&rdquo;, editable before you act</li>
+        <li><b>Hold-flywheel</b> stops you killing the campaign that&rsquo;s buying your organic rank</li>
+        <li><b>It won&rsquo;t let you negate on thin data</b> &mdash; it computes how many clicks you actually need from your own margin</li>
+        <li><b>Inventory gate</b> blocks a Scale when that product is at stockout risk</li>
+        <li><b>Amazon bulksheet round trip</b> &mdash; forty changes in one upload instead of an evening of clicking</li>
+      </ul>
+      <p class="mod-benefit"><b>And then it grades itself.</b> Every recommendation is stored, matured, and marked worked / didn&rsquo;t / inconclusive &mdash; with effects inside &plusmn;5% reported honestly as noise. Everyone gives you recommendations. Nobody else tells you whether theirs worked.</p>
+    </div>
+    <figure class="mod-figure">
+      <span>Graphic slot &mdash; 16:11<br>e.g. a verdict card showing bid $1.40 &rarr; $0.90 with its evidence line</span>
+    </figure>
+  </article>
+
+  <article class="mod is-flipped" id="financials" data-reveal>
+    <div class="mod-copy">
+      <span class="mod-eyebrow">Financials</span>
+      <h3>Your sales report is not your profit.</h3>
+      <p class="mod-lead">Your settlement export, rebuilt into a real P&amp;L: revenue, minus Amazon&rsquo;s full fee stack, minus what the goods actually cost you, minus ads, refunds and the overheads you type in. By month. By SKU.</p>
+      <ul class="mod-list">
+        <li><b>Amazon fees broken into eight lines</b> &mdash; selling, FBA, inbound, international, removal, storage, subscription, other</li>
+        <li><b>Two profit numbers</b> &mdash; contribution profit and net profit, because they answer different questions</li>
+        <li><b>Drag-to-reorder KPI cards</b> with prior-period comparison</li>
+        <li><b>Charts that ask questions in English</b> &mdash; &ldquo;Am I buying my sales?&rdquo;, &ldquo;Does Amazon cover my overheads?&rdquo;</li>
+        <li><b>Overhead tracking</b> that flags the month where a recurring cost went missing</li>
+      </ul>
+      <p class="mod-benefit">Seller Central knows your sales and fees. It has no idea what your units cost, what you paid in freight and duty, or that you pay for software and a VA. <b>So &ldquo;revenue up 30%&rdquo; stops being a number you take on faith.</b></p>
+    </div>
+    <figure class="mod-figure">
+      <span>Graphic slot &mdash; 16:11<br>e.g. the P&amp;L waterfall from revenue down to net profit</span>
+    </figure>
+  </article>
+
+  <article class="mod" id="ledger" data-reveal>
+    <div class="mod-copy">
+      <span class="mod-eyebrow">Ledger</span>
+      <h3>It knows your freight invoice is missing &mdash; and which PO it belongs to.</h3>
+      <p class="mod-lead">The system of record for every dollar spent acquiring inventory. Purchase orders, freight, customs, inspection, receipt &mdash; assembled into a true landed cost per unit. This is what makes every other number in the product real.</p>
+      <ul class="mod-list">
+        <li><b>Landed cost per unit</b> from manufacturing, freight, duty and inspection, divided by the units that actually arrived</li>
+        <li><b>Completeness score</b> driven by your incoterm &mdash; a CIF order should have customs attached, and it tells you when one doesn&rsquo;t</li>
+        <li><b>Confidence badge</b> &mdash; &ldquo;Ordered 500, received 480. Cost-per-unit reflects 480.&rdquo;</li>
+        <li><b>Smart attribution</b> &mdash; attach an invoice and it suggests the likely PO: &ldquo;matches SKU-A, 12d gap&rdquo;</li>
+        <li><b>Auto-route</b> scans your Amazon transactions and creates the fee rows for you</li>
+      </ul>
+      <p class="mod-benefit">Every &ldquo;profit&rdquo; figure in every Amazon tool is a guess until this exists. <b>Get landed cost wrong and your margins, your break-even ACoS and your reorder decisions are all wrong together.</b></p>
+    </div>
+    <figure class="mod-figure">
+      <span>Graphic slot &mdash; 16:11<br>e.g. the five-step PO strip: manufacturing &rsaquo; freight &rsaquo; customs &rsaquo; inspection &rsaquo; received</span>
+    </figure>
+  </article>
+
+  <article class="mod is-flipped" id="inventory" data-reveal>
+    <div class="mod-copy">
+      <span class="mod-eyebrow">Inventory</span>
+      <h3>Not &ldquo;you&rsquo;re low on stock.&rdquo; The last day you can safely order.</h3>
+      <p class="mod-lead">Answers the two questions that cost the most money &mdash; when do I have to place the order, and how many units &mdash; then hands that decision straight to a pre-filled purchase order.</p>
+      <ul class="mod-list">
+        <li><b>Order-by date</b> is stockout minus your lead time, and turns red with &ldquo;overdue 14d&rdquo; when you&rsquo;ve missed it</li>
+        <li><b>Suggested quantity</b> from velocity, lead time and your cover target</li>
+        <li><b>Velocity window you choose</b> &mdash; 30, 60 or 90 days</li>
+        <li><b>Honest defaults</b> &mdash; &ldquo;using default 90d lead time &mdash; set yours&rdquo;, and the maths still runs either way</li>
+        <li><b>One click to a PO</b>, pre-filled with the reasoning that produced it</li>
+      </ul>
+      <p class="mod-benefit">A stockout is the most expensive mistake on Amazon: you lose the sales, then the rank, then months of ad budget buying the rank back. <b>Overstock is the second most expensive.</b> This module exists to give you one date and one number, early enough to act.</p>
+    </div>
+    <figure class="mod-figure">
+      <span>Graphic slot &mdash; 16:11<br>e.g. the reorder table with an overdue row highlighted</span>
+    </figure>
+  </article>
+
+  <article class="mod" id="research" data-reveal>
+    <div class="mod-copy">
+      <span class="mod-eyebrow">Product Research</span>
+      <h3>A big market you can&rsquo;t profit in is not an opportunity.</h3>
+      <p class="mod-lead">A workbench for products you haven&rsquo;t launched. Import your existing research exports, score the opportunity across four dimensions, and model the unit economics down to the tariff line.</p>
+      <ul class="mod-list">
+        <li><b>Opportunity score</b> across market size, entry opportunity, discoverability and profitability &mdash; verdict Strong / Good / Marginal / Avoid</li>
+        <li><b>Four-step profit model</b> ending in landed cost, margin, ROI and a plain verdict</li>
+        <li><b>Tariff and Section 301 lines</b> &mdash; the ones that quietly kill China-sourced margin</li>
+        <li><b>Launch-phase TACoS</b>, because what you&rsquo;ll pay in quarter one isn&rsquo;t what you&rsquo;ll pay in year two</li>
+        <li><b>Compare candidates</b> across fourteen selectable columns</li>
+      </ul>
+      <p class="mod-benefit">Most research tools tell you the market is big. <b>None of them tell you whether you&rsquo;ll make money in it.</b> This runs the market data and the unit economics in the same place &mdash; before you wire the deposit.</p>
+    </div>
+    <figure class="mod-figure">
+      <span>Graphic slot &mdash; 16:11<br>e.g. the four-dimension opportunity score with its verdict</span>
+    </figure>
+  </article>
+
+  <article class="mod is-flipped" id="simulations" data-reveal>
+    <div class="mod-copy">
+      <span class="mod-eyebrow">Simulations</span>
+      <h3>You can be profitable and still run out of money.</h3>
+      <p class="mod-lead">Simulates your business forward, fortnight by fortnight: place the order, pay the supplier in instalments, wait for production, wait for shipping, ramp sales, pay PPC, get paid by Amazon, reorder. Then shows you the two lines that matter.</p>
+      <ul class="mod-list">
+        <li><b>Three-leg lead time</b> &mdash; production, shipping, Amazon check-in, modelled separately</li>
+        <li><b>Supplier payment schedules</b> with trigger-based instalments</li>
+        <li><b>Automatic reorder placement</b> mid-simulation: &ldquo;reorder placed Fn7 &rarr; arrives Fn12&rdquo;</li>
+        <li><b>Three lenses</b> &mdash; cashflow, profitability, inventory &mdash; where a drop to zero is a stockout</li>
+        <li><b>Out-of-cash flags</b> per fortnight, in plain language</li>
+      </ul>
+      <p class="mod-benefit">Growth kills more Amazon businesses than failure does. You sell out, reorder bigger, and find the deposit is due before Amazon pays you. <b>This is where you discover that on a screen instead of in your bank account.</b></p>
+    </div>
+    <figure class="mod-figure">
+      <span>Graphic slot &mdash; 16:11<br>e.g. the cash line dipping below zero at a flagged fortnight</span>
+    </figure>
+  </article>
+
+  <article class="mod" id="sales" data-reveal>
+    <div class="mod-copy">
+      <span class="mod-eyebrow">Sales</span>
+      <h3>How much of this SKU&rsquo;s revenue are you renting?</h3>
+      <p class="mod-lead">Per-SKU performance with the split that actually changes decisions: how many units were bought organically, and how many you paid for.</p>
+      <ul class="mod-list">
+        <li><b>Organic vs PPC unit split</b> per SKU</li>
+        <li><b>Revenue, profit, margin, ACoS, TACoS, ROAS</b> and refund rate in one table</li>
+        <li><b>Monthly trend</b> per SKU by revenue, units, profit or TACoS</li>
+        <li><b>Jump straight into Ads or Financials</b> from any row</li>
+        <li><b>Honest labelling</b> &mdash; recent organic units are marked estimated, because the attribution window hasn&rsquo;t closed</li>
+      </ul>
+      <p class="mod-benefit">A SKU doing $40k a month where 80% of units come through ads is a completely different business from one where 20% do. <b>This shows you which one you own.</b></p>
+    </div>
+    <figure class="mod-figure">
+      <span>Graphic slot &mdash; 16:11<br>e.g. the organic / PPC split bar across top SKUs</span>
+    </figure>
+  </article>
+
+  <article class="mod is-flipped" id="data" data-reveal>
+    <div class="mod-copy">
+      <span class="mod-eyebrow">Data &amp; Sync</span>
+      <h3>If two Amazon reports disagree, we tell you.</h3>
+      <p class="mod-lead">Ten report types ingested, every row traceable to the file it came from. The foundation the rest of the product stands on.</p>
+      <ul class="mod-list">
+        <li><b>Re-upload is always safe</b> &mdash; deduplicated by content hash, so double-uploading can never corrupt your data</li>
+        <li><b>Locale-aware parsing</b> &mdash; European decimals, Spanish filenames and headers, day-first dates</li>
+        <li><b>Automatic reconciliation</b> cross-checks ad reports against settlement data and raises a flag when they disagree</li>
+        <li><b>Full provenance</b> &mdash; every row knows which file it came from and when</li>
+        <li><b>Organic rank import</b>, the one thing Amazon has no API for</li>
+      </ul>
+      <p class="mod-benefit">Amazon&rsquo;s own reports contradict each other more often than sellers realise. <b>You get told, rather than quietly getting a wrong answer.</b></p>
+    </div>
+    <figure class="mod-figure">
+      <span>Graphic slot &mdash; 16:11<br>e.g. the sync panel with one report flagged as never uploaded</span>
+    </figure>
+  </article>
+
+</div>
+</section>
+
+<!-- ====================================================================
+     SECURITY
+     Every claim here maps to a control that is live today. Three things
+     are deliberately absent and must stay absent until they are true:
+     Content-Security-Policy (refactor in flight), any claim that
+     AmazeBase itself is SOC 2 certified (the host is, we are not), and
+     external penetration testing (automated scanning only so far).
+     Never add: thresholds, session lifetimes, endpoint names, or the
+     names of security vendors. Categories build trust; specifics build
+     a map for an attacker.
+==================================================================== -->
+<section class="section" id="security">
+<div class="container">
+
+  <div class="section-head" data-reveal>
+    <span class="eyebrow">Security</span>
+    <h2>Your Amazon data, treated like it&rsquo;s ours to protect</h2>
+    <p>You&rsquo;re about to connect years of sales, cost and supplier information to a
+       tool you didn&rsquo;t build. Here is exactly what protects it.</p>
+  </div>
+
+  <div class="sec-lead" data-reveal>
+    <div class="sec-lead-copy">
+      <p>Most software asks you to take security on faith. We&rsquo;d rather name the
+         controls and let you check them.</p>
+      <p>Everything below is running in the product today. Where something is still
+         being built, we say so rather than implying otherwise &mdash; because a
+         security page you can catch out is worse than no security page at all.</p>
+    </div>
+
+    <figure class="sec-figure">
+      <span>Graphic slot &mdash; 4:3<br>e.g. layered shield / encrypted data flow</span>
+    </figure>
+  </div>
+
+  <div class="sec-grid" data-reveal-stagger>
+
+    <article class="sec-card">
+      <span class="sec-ico"><svg><use href="#i-shield"/></svg></span>
+      <h3>Encryption</h3>
+      <ul>
+        <li>TLS 1.2+ on everything in transit</li>
+        <li>AES-256 at rest</li>
+        <li>Amazon credentials encrypted again at record level</li>
+        <li>HSTS enforced</li>
+      </ul>
+    </article>
+
+    <article class="sec-card">
+      <span class="sec-ico"><svg><use href="#i-check"/></svg></span>
+      <h3>Account security</h3>
+      <ul>
+        <li>Two-factor authentication, mandatory</li>
+        <li>Password complexity, history and expiry enforced</li>
+        <li>Automatic lockout after repeated failures</li>
+        <li>One-way password hashing</li>
+        <li>Short-lived sessions you can revoke</li>
+        <li>Rate limiting on authentication</li>
+      </ul>
+    </article>
+
+    <article class="sec-card">
+      <span class="sec-ico"><svg><use href="#i-grid"/></svg></span>
+      <h3>Access control</h3>
+      <ul>
+        <li>Tenant isolation checked on every request</li>
+        <li>Three-tier permissions</li>
+        <li>Per-module permissions</li>
+        <li>Owner-only administrative functions</li>
+        <li>Support access scoped, time-limited and logged</li>
+      </ul>
+    </article>
+
+    <article class="sec-card">
+      <span class="sec-ico"><svg><use href="#i-gear"/></svg></span>
+      <h3>Application hardening</h3>
+      <ul>
+        <li>CORS locked to an explicit allowlist</li>
+        <li>Full security header set</li>
+        <li>Upload type allowlist and size caps</li>
+        <li>Parameterised database access</li>
+        <li>XSS-aware rendering</li>
+      </ul>
+    </article>
+
+    <article class="sec-card">
+      <span class="sec-ico"><svg><use href="#i-bell"/></svg></span>
+      <h3>Monitoring</h3>
+      <ul>
+        <li>Audit trail of sign-ins and privileged actions</li>
+        <li>Emails hashed before they reach logs</li>
+        <li>Automated detection with real-time alerting</li>
+        <li>Dark-web credential monitoring</li>
+        <li>Manual log review on a fixed cycle</li>
+        <li>Written incident response plan</li>
+      </ul>
+    </article>
+
+    <article class="sec-card">
+      <span class="sec-ico"><svg><use href="#i-refresh"/></svg></span>
+      <h3>Testing</h3>
+      <ul>
+        <li>Static analysis and dependency scanning on every change</li>
+        <li>Scheduled dynamic scanning</li>
+        <li>Controls deliberately triggered and their audit records verified</li>
+      </ul>
+    </article>
+
+    <article class="sec-card">
+      <span class="sec-ico"><svg><use href="#i-db"/></svg></span>
+      <h3>Data governance</h3>
+      <ul>
+        <li>Classification and retention policy</li>
+        <li>Retention enforced automatically</li>
+        <li>You control deletion, with a recovery window</li>
+        <li>Pseudonymisation where financial records must be kept</li>
+      </ul>
+    </article>
+
+    <article class="sec-card">
+      <span class="sec-ico"><svg><use href="#i-globe"/></svg></span>
+      <h3>Infrastructure</h3>
+      <ul>
+        <li>Hosted on SOC 2 Type II infrastructure</li>
+        <li>Data processing agreement in place, provider assessed as subprocessor</li>
+        <li>Private internal networking</li>
+        <li>Built against Amazon&rsquo;s SP-API Data Protection Policy</li>
+      </ul>
+    </article>
+
+    <article class="sec-card">
+      <span class="sec-ico"><svg><use href="#i-info"/></svg></span>
+      <h3>What we don&rsquo;t claim</h3>
+      <ul>
+        <li>Our host holds SOC 2 Type II. AmazeBase itself is not certified</li>
+        <li>Scanning is automated; we haven&rsquo;t had an external penetration test yet</li>
+        <li>A stricter content security policy is in progress, not finished</li>
+      </ul>
+    </article>
+
+  </div>
+
+  <div class="sec-foot" data-reveal>
+    <p>We name controls, not configuration. Thresholds, session lifetimes, internal
+       endpoints and the tools we use stay private &mdash; publishing those would help
+       an attacker more than it helps you. See the
+       <a href="privacy.html">Privacy Policy</a> for how data is handled, and the
+       <a href="terms.html">Terms of Service</a> for the commitments behind it.</p>
+  </div>
+
+</div>
+</section>
+
+<!-- ====================================================================
+     AI ASSISTANT
+==================================================================== -->
+<section class="section" id="assistant">
+<div class="container">
+<div class="assistant-panel" data-reveal>
+
+  <div class="assistant-copy">
+    <span class="eyebrow">AI Assistant</span>
+    <span class="mod-tag mod-tag--soon">On the roadmap</span>
+    <h2>Stop reading reports.<br>Start asking questions.</h2>
+    <p>Where we&rsquo;re taking the product next: ask a question in plain English and get
+       an answer built from your own connected data, with the numbers behind it.</p>
+    <p class="assistant-note">
+      This one isn&rsquo;t built yet &mdash; the illustration below is a design, not a
+      screenshot. Everything else on this page is running today. Join the wait list and
+      you&rsquo;ll be among the first to use it.
+    </p>
+    <a class="btn btn--primary btn--lg" href="#waitlist" data-waitlist-open data-source="assistant" data-magnetic>
+      Join the Wait List <svg class="icon-sm"><use href="#i-arrow"/></svg>
+    </a>
+  </div>
+
+  <div class="chat">
+
+    <div class="chat-row is-user">
+      <div class="bubble is-user">How much inventory should I order for Portable Coffee Grinder next month?</div>
+      <span class="chat-avatar is-user">MJ</span>
+    </div>
+
+    <div class="chat-row">
+      <span class="chat-avatar is-ai"><svg class="icon-sm"><use href="#i-spark"/></svg></span>
+      <div class="bubble is-ai">
+        <strong>I recommend ordering 640 units.</strong>
+        <p style="margin-top:6px;color:var(--text-2)">This will cover demand for 36 days, avoid stockouts, and maintain healthy cash flow.</p>
+
+        <div class="chat-metrics">
+          <div class="chat-metric"><span>Demand Forecast</span><b>620 units</b></div>
+          <div class="chat-metric"><span>Days of Coverage</span><b>36 days</b></div>
+          <div class="chat-metric"><span>Est. Profit</span><b class="is-green">$4,820</b></div>
+          <div class="chat-metric"><span>Cash Impact</span><b class="is-red">−$2,950</b></div>
+        </div>
+
+        <p class="chat-foot">Illustrative example &mdash; the AI Assistant is not yet available.</p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</div>
+</section>
+
+</main>
+
+<!-- ====================================================================
+     FOOTER
+==================================================================== -->
+<footer class="footer">
+<div class="container">
+
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/index.html" class="brand" aria-label="AmazeBase home">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+        </svg>
+        <span data-brand>AmazeBase</span>
+      </a>
+      <p>The operating system for Amazon sellers. Everything connected, everything in sync.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="product.html#modules">Product</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="#">Integrations</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a href="resources.html">Knowledge Hub</a>
+      <a href="contact.html">Support</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 <span data-brand>AmazeBase</span>. All rights reserved.</span>
+    <div class="footer-social">
+      <a href="#" aria-label="LinkedIn"><svg class="icon-sm"><use href="#i-in"/></svg></a>
+      <a href="#" aria-label="X"><svg class="icon-sm"><use href="#i-tw"/></svg></a>
+      <a href="#" aria-label="GitHub"><svg class="icon-sm"><use href="#i-gh"/></svg></a>
+    </div>
+  </div>
+
+</div>
+</footer>
+
+<button class="to-top" aria-label="Back to top">
+  <svg class="icon-sm" style="transform:rotate(-90deg)"><use href="#i-arrow"/></svg>
+</button>
+
+<!-- ══ WAITLIST DIALOG ══════════════════════════════════════════════════════
+     Opened by any [data-waitlist-open]. Uses <dialog> for free focus
+     trapping, Esc-to-close and inertness of the page behind it.
+     No inline handlers and no innerHTML anywhere — see js/waitlist.js. -->
+<dialog class="wl" id="waitlist" aria-labelledby="wl-title">
+  <form class="wl-panel" method="dialog" novalidate>
+
+    <button class="wl-x" type="button" data-waitlist-close aria-label="Close">
+      <svg class="icon-sm"><use href="#i-x"/></svg>
+    </button>
+
+    <span class="eyebrow">Early access</span>
+    <h2 class="wl-title" id="wl-title">Join the wait list</h2>
+    <p class="wl-sub">We&rsquo;ll email you when your marketplace opens up. No spam, and no payment details.</p>
+
+    <div class="wl-field">
+      <label for="wl-name">Name</label>
+      <input id="wl-name" name="name" type="text" autocomplete="name"
+             maxlength="120" required placeholder="Jane Smith">
+    </div>
+
+    <div class="wl-field">
+      <label for="wl-email">Work email</label>
+      <input id="wl-email" name="email" type="email" autocomplete="email"
+             maxlength="254" required placeholder="jane@company.com">
+    </div>
+
+    <div class="wl-field">
+      <label for="wl-market">Main marketplace</label>
+      <select id="wl-market" name="marketplace" required>
+        <option value="" selected disabled>Where do you sell most?</option>
+        <optgroup label="North America">
+          <option value="US">Amazon.com &mdash; United States</option>
+          <option value="CA">Amazon.ca &mdash; Canada</option>
+          <option value="MX">Amazon.com.mx &mdash; Mexico</option>
+          <option value="BR">Amazon.com.br &mdash; Brazil</option>
+        </optgroup>
+        <optgroup label="Europe">
+          <option value="UK">Amazon.co.uk &mdash; United Kingdom</option>
+          <option value="DE">Amazon.de &mdash; Germany</option>
+          <option value="FR">Amazon.fr &mdash; France</option>
+          <option value="IT">Amazon.it &mdash; Italy</option>
+          <option value="ES">Amazon.es &mdash; Spain</option>
+          <option value="NL">Amazon.nl &mdash; Netherlands</option>
+          <option value="SE">Amazon.se &mdash; Sweden</option>
+          <option value="PL">Amazon.pl &mdash; Poland</option>
+          <option value="BE">Amazon.com.be &mdash; Belgium</option>
+          <option value="IE">Amazon.ie &mdash; Ireland</option>
+          <option value="TR">Amazon.com.tr &mdash; Turkey</option>
+        </optgroup>
+        <optgroup label="Middle East &amp; India">
+          <option value="AE">Amazon.ae &mdash; United Arab Emirates</option>
+          <option value="SA">Amazon.sa &mdash; Saudi Arabia</option>
+          <option value="EG">Amazon.eg &mdash; Egypt</option>
+          <option value="IN">Amazon.in &mdash; India</option>
+        </optgroup>
+        <optgroup label="Asia Pacific">
+          <option value="JP">Amazon.co.jp &mdash; Japan</option>
+          <option value="AU">Amazon.com.au &mdash; Australia</option>
+          <option value="SG">Amazon.sg &mdash; Singapore</option>
+        </optgroup>
+        <option value="OTHER">Somewhere else</option>
+      </select>
+    </div>
+
+    <!-- Honeypot. Hidden from humans, irresistible to bots. A filled value
+         makes the server discard the submission silently. -->
+    <div class="wl-hp" aria-hidden="true">
+      <label for="wl-company-website">Company website</label>
+      <input id="wl-company-website" name="company_website" type="text"
+             tabindex="-1" autocomplete="off">
+    </div>
+
+    <p class="wl-error" data-waitlist-error hidden></p>
+
+    <button class="btn btn--primary btn--lg btn--block wl-submit" type="submit"
+            data-waitlist-submit>Join the wait list</button>
+
+    <p class="wl-legal">
+      By joining you agree we may email you about AmazeBase. We store your name,
+      email and marketplace for this purpose only, and you can ask us to delete
+      them at any time. See our <a href="privacy.html">Privacy Policy</a>.
+    </p>
+
+  </form>
+
+  <div class="wl-panel wl-done" data-waitlist-done hidden>
+    <div class="wl-tick"><svg class="icon-sm"><use href="#i-checkc"/></svg></div>
+    <h2 class="wl-title">You&rsquo;re on the list.</h2>
+    <p class="wl-sub">Thanks &mdash; we&rsquo;ll be in touch as soon as we open up your marketplace.</p>
+    <button class="btn btn--ghost btn--lg btn--block" type="button" data-waitlist-close>Close</button>
+  </div>
+</dialog>
+
+<script src="js/main.js" defer></script>
+<script src="js/waitlist.js" defer></script>
+
+</body>
+</html>
