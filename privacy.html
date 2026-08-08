@@ -1,68 +1,916 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Privacy Policy &mdash; AmazeBase</title>
-<meta name="description" content="How we handle your personal data.">
+<title>Privacy Policy — AmazeBase</title>
+
+<meta name="description" content="How Silbros Trading LLC collects, uses, protects and retains information when you use AmazeBase.">
 <meta name="theme-color" content="#030917">
-<meta name="robots" content="noindex">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="Privacy Policy — AmazeBase">
+<meta property="og:description" content="How we collect, use, protect and retain information.">
+<meta property="og:type" content="website">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="css/variables.css">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/navigation.css">
 <link rel="stylesheet" href="css/sections.css">
-<link rel="stylesheet" href="css/page.css">
 <link rel="stylesheet" href="css/responsive.css">
+
+<style>
+/* ==========================================================================
+   Legal document page — uses the site tokens only. No new colours.
+========================================================================== */
+
+.legal-wrap{
+  position:relative;
+  z-index:var(--z-body);
+  padding-block:calc(var(--section-y) + 56px) var(--section-y);
+}
+
+.legal-grid{
+  display:grid;
+  grid-template-columns:248px minmax(0,1fr);
+  gap:clamp(32px,5vw,72px);
+  align-items:start;
+}
+
+/* ---------- header block ---------- */
+
+.legal-head{ margin-bottom:var(--s6); max-width:820px; }
+
+.legal-eyebrow{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:6px 14px;
+  margin-bottom:var(--s3);
+  border:1px solid var(--line);
+  border-radius:var(--r-pill);
+  background:var(--surface);
+  font-size:var(--t-micro);
+  font-weight:600;
+  letter-spacing:.02em;
+  color:var(--text-2);
+}
+.legal-eyebrow svg{ width:15px; height:15px; color:var(--violet-soft); }
+
+.legal-title{
+  font-size:var(--t-title);
+  font-weight:800;
+  letter-spacing:-.02em;
+  margin-bottom:var(--s3);
+}
+
+.legal-dates{
+  display:flex; flex-wrap:wrap; gap:var(--s1) var(--s3);
+  padding-top:var(--s3);
+  border-top:1px solid var(--line);
+  font-size:var(--t-micro);
+  color:var(--text-3);
+}
+.legal-dates b{ color:var(--text-2); font-weight:600; }
+
+.legal-intro{ color:var(--text-2); font-size:var(--t-lead); line-height:1.65; }
+.legal-intro strong{ color:var(--text); font-weight:600; }
+.legal-intro p + p{ margin-top:var(--s2); }
+
+/* ---------- table of contents ---------- */
+
+.legal-toc{
+  position:sticky; top:104px;
+  padding:var(--s3);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  background:var(--grad-card);
+  box-shadow:var(--sh-1);
+}
+.legal-toc h2{
+  font-size:var(--t-micro);
+  font-weight:700;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--text-3);
+  margin-bottom:var(--s2);
+}
+.legal-toc ol{ counter-reset:toc; display:flex; flex-direction:column; gap:2px; }
+.legal-toc a{
+  display:block;
+  padding:5px 8px;
+  border-radius:var(--r-xs);
+  font-size:var(--t-micro);
+  line-height:1.4;
+  color:var(--text-2);
+  transition:color var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+.legal-toc a::before{
+  counter-increment:toc;
+  content:counter(toc) ".";
+  display:inline-block;
+  min-width:20px;
+  color:var(--text-3);
+  font-variant-numeric:tabular-nums;
+}
+.legal-toc a:hover{ color:var(--text); background:var(--surface-2); }
+
+/* ---------- body ---------- */
+
+.legal-body{ max-width:820px; }
+
+.legal-body section{
+  padding-top:var(--s5);
+  margin-top:var(--s5);
+  border-top:1px solid var(--line);
+}
+.legal-body section:first-child{ padding-top:0; margin-top:0; border-top:0; }
+
+.legal-body h2{
+  display:flex; gap:12px;
+  font-size:22px; font-weight:700;
+  letter-spacing:-.01em;
+  line-height:1.25;
+  margin-bottom:var(--s2);
+  scroll-margin-top:110px;
+}
+.legal-body h2 .num{
+  flex:none;
+  background:var(--grad-text);
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+  font-variant-numeric:tabular-nums;
+}
+
+.legal-body h3{
+  font-size:16px; font-weight:600;
+  color:var(--text);
+  margin:var(--s4) 0 var(--s1);
+}
+
+.legal-body p{ color:var(--text-2); margin-bottom:var(--s2); }
+.legal-body p:last-child{ margin-bottom:0; }
+.legal-body strong{ color:var(--text); font-weight:600; }
+
+.legal-body ul{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:6px 24px;
+  margin:var(--s2) 0 var(--s3);
+}
+.legal-body ul.stack{ grid-template-columns:1fr; }
+.legal-body li{
+  position:relative;
+  padding-left:18px;
+  font-size:var(--t-body);
+  color:var(--text-2);
+  line-height:1.55;
+}
+.legal-body li::before{
+  content:"";
+  position:absolute; left:2px; top:.6em;
+  width:5px; height:5px;
+  border-radius:50%;
+  background:var(--violet-soft);
+  opacity:.75;
+}
+
+.legal-note{
+  padding:var(--s3);
+  margin:var(--s3) 0;
+  border:1px solid var(--line);
+  border-left:2px solid var(--violet);
+  border-radius:var(--r-md);
+  background:var(--surface);
+}
+.legal-note p{ margin:0; color:var(--text); }
+
+.legal-contact{
+  padding:var(--s4);
+  margin-top:var(--s3);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  background:var(--grad-card);
+}
+.legal-contact .co{ font-weight:600; color:var(--text); margin-bottom:var(--s1); }
+.legal-contact address{ font-style:normal; color:var(--text-2); line-height:1.75; }
+.legal-contact a{ color:var(--blue-soft); }
+.legal-contact a:hover{ text-decoration:underline; }
+
+.legal-foot-note{
+  margin-top:var(--s5);
+  padding-top:var(--s3);
+  border-top:1px solid var(--line);
+  font-size:var(--t-micro);
+  color:var(--text-3);
+}
+
+@media (max-width:960px){
+  .legal-grid{ grid-template-columns:1fr; }
+  .legal-toc{ position:static; }
+  .legal-toc ol{ display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); }
+}
+</style>
 </head>
+
 <body>
 
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="bg-layer" aria-hidden="true"></div>
+
+<!-- ICON SPRITE (subset used by this page) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+</defs>
+  <symbol id="i-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-arrow"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-menu"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-search"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></symbol>
+  <symbol id="i-mega"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l7 4V5L8 9H4zM19 9a4 4 0 010 6"/></symbol>
+  <symbol id="i-box"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></symbol>
+  <symbol id="i-dollar"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5v19M16.5 6.5H10a3.2 3.2 0 000 6.4h4a3.2 3.2 0 010 6.4H7"/></symbol>
+  <symbol id="i-spark"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+  <symbol id="i-rocket"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15s-1.5 3 1 5.5S11 20 11 20M14.5 4.5c3-2 6-1 6-1s1 3-1 6l-6 6-5-5 6-6z"/><circle cx="15" cy="9" r="1.4"/></symbol>
+  <symbol id="i-case"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8.5 7V5a2 2 0 012-2h3a2 2 0 012 2v2M2.5 12.5h19"/></symbol>
+  <symbol id="i-globe"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 21.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"/></symbol>
+  <symbol id="i-report"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></symbol>
+  <symbol id="i-msg"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-8 8 8.6 8.6 0 01-3.6-.8L3 21l1.8-6.4A8 8 0 1121 12z"/></symbol>
+  <symbol id="i-shield"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-9.5V5.5L12 2.5 4 5.5V12.5C4 18.5 12 22 12 22z"/></symbol>
+  <symbol id="i-info"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></symbol>
+  <symbol id="i-in"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12.5 17v-4a2.5 2.5 0 015 0v4"/></symbol>
+  <symbol id="i-tw"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M20 4L4 20"/></symbol>
+  <symbol id="i-gh"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4 1.4-4-2.2-5.6-2.6M15 21v-3.4a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 2.6 5.5 2.9 5.5 2.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 9.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></symbol>
+</svg>
+
+<!-- ====================================================================
+     HEADER
+==================================================================== -->
 <header class="site-header">
-<nav class="nav container">
+<div class="container">
+<nav class="nav" aria-label="Primary">
+
   <a href="index.html" class="brand">
-    <span class="brand-mark"></span>
-    <span class="brand-name">AmazeBase</span>
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+      <path d="M16 17.6l4.4 8.2h-8.8z" fill="#C56BF5" opacity=".85"/>
+    </svg>
+    <span data-brand>AmazeBase</span>
   </a>
+
+  <ul class="nav-menu">
+    <li class="nav-item">
+      <a class="nav-link" href="index.html#features">Product <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="index.html#features"><svg class="icon-sm"><use href="#i-search"/></svg>Product Research</a>
+        <a href="index.html#features"><svg class="icon-sm"><use href="#i-mega"/></svg>Advertising</a>
+        <a href="index.html#features"><svg class="icon-sm"><use href="#i-box"/></svg>Inventory</a>
+        <a href="index.html#features"><svg class="icon-sm"><use href="#i-dollar"/></svg>Financials</a>
+        <a href="index.html#assistant"><svg class="icon-sm"><use href="#i-spark"/></svg>AI Assistant</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="index.html#compare">Solutions <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="index.html#compare"><svg class="icon-sm"><use href="#i-rocket"/></svg>Private Label</a>
+        <a href="index.html#compare"><svg class="icon-sm"><use href="#i-case"/></svg>Agencies</a>
+        <a href="index.html#compare"><svg class="icon-sm"><use href="#i-globe"/></svg>Multi-Marketplace</a>
+      </div>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="index.html#pricing">Pricing</a></li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Resources <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="#"><svg class="icon-sm"><use href="#i-report"/></svg>Documentation</a>
+        <a href="#"><svg class="icon-sm"><use href="#i-msg"/></svg>Blog</a>
+        <a href="#"><svg class="icon-sm"><use href="#i-shield"/></svg>Security</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Company <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="#"><svg class="icon-sm"><use href="#i-info"/></svg>About</a>
+        <a href="#"><svg class="icon-sm"><use href="#i-msg"/></svg>Contact</a>
+      </div>
+    </li>
+  </ul>
+
   <div class="nav-actions">
-    <a class="btn btn--quiet" href="index.html">&larr; Back to site</a>
-    <a class="btn btn--primary" href="index.html#pricing">Join the Wait List</a>
+    <a class="btn btn--quiet" href="#">Log in</a>
+    <a class="btn btn--primary" href="index.html#pricing" data-magnetic>Join the Wait List</a>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="navMobile">
+      <svg class="icon"><use href="#i-menu"/></svg>
+    </button>
   </div>
+
 </nav>
+</div>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="index.html#features">Product</a>
+  <a href="index.html#compare">Solutions</a>
+  <a href="index.html#pricing">Pricing</a>
+  <a href="index.html#pricing">Join the Wait List</a>
+</div>
 </header>
 
-<main class="page" id="main">
-<div class="container page-inner">
+<!-- ====================================================================
+     MAIN
+==================================================================== -->
+<main id="main" class="legal-wrap">
+<div class="container">
 
-  <span class="eyebrow">Legal</span>
-  <h1 class="page-title">Privacy Policy</h1>
-  <p class="page-lead">What we collect and why, how long we keep it, and how to have it deleted.</p>
+  <div class="legal-head">
+    <span class="legal-eyebrow"><svg><use href="#i-shield"/></svg> Legal</span>
+    <h1 class="legal-title">Privacy Policy</h1>
 
-  <div class="page-soon">
-    <p><b>This page is still being written.</b></p>
-    <p>If you have joined the wait list we hold your name, email address and the marketplace you selected, and we use them only to contact you about AmazeBase. To have that deleted, email us and we will remove it.</p>
-    <p class="page-soon-cta">
-      In the meantime, <a href="index.html#features">see what AmazeBase does</a>
-      or <a href="index.html#pricing">join the wait list</a>.
-    </p>
+    <div class="legal-intro">
+      <p><strong>Silbros Trading LLC</strong> (“Silbros Trading,” “we,” “us,” or “our”) operates
+      <strong>AmazeBase</strong>, a web-based e-commerce business intelligence and operations
+      platform (the “Platform”).</p>
+      <p>This Privacy Policy explains how we collect, use, disclose, protect, and retain information
+      when you use the Platform, our website, or related services. By using the Platform, you
+      acknowledge the practices described in this Privacy Policy.</p>
+    </div>
+
+    <div class="legal-dates">
+      <span><b>Effective Date:</b> 6 August 2026</span>
+      <span><b>Last Updated:</b> 6 August 2026</span>
+    </div>
+  </div>
+
+  <div class="legal-grid">
+
+    <!-- ---------- TABLE OF CONTENTS ---------- -->
+    <aside class="legal-toc" aria-label="Contents">
+      <h2>Contents</h2>
+      <ol>
+        <li><a href="#s1">Information We Collect</a></li>
+        <li><a href="#s2">How We Use Information</a></li>
+        <li><a href="#s3">Customer Data</a></li>
+        <li><a href="#s4">Aggregated and Anonymized Information</a></li>
+        <li><a href="#s5">Third-Party Services and Integrations</a></li>
+        <li><a href="#s6">Amazon Integration</a></li>
+        <li><a href="#s7">Sharing of Information</a></li>
+        <li><a href="#s8">Data Security</a></li>
+        <li><a href="#s9">Data Retention</a></li>
+        <li><a href="#s10">Data Deletion</a></li>
+        <li><a href="#s11">Data Export</a></li>
+        <li><a href="#s12">Cookies and Similar Technologies</a></li>
+        <li><a href="#s13">Communications</a></li>
+        <li><a href="#s14">Children’s Privacy</a></li>
+        <li><a href="#s15">International Data Transfers</a></li>
+        <li><a href="#s16">Your Privacy Rights</a></li>
+        <li><a href="#s17">Business Customer Data</a></li>
+        <li><a href="#s18">Third-Party Websites</a></li>
+        <li><a href="#s19">Changes to This Policy</a></li>
+        <li><a href="#s20">Contact Us</a></li>
+      </ol>
+    </aside>
+
+    <!-- ---------- BODY ---------- -->
+    <div class="legal-body">
+
+      <section>
+        <h2 id="s1"><span class="num">1.</span> Information We Collect</h2>
+        <p>We collect information necessary to provide, secure, maintain, and improve the Platform.
+        The information we collect may include the following categories.</p>
+
+        <h3>1.1  Account Information</h3>
+        <p>When you create an account, we may collect:</p>
+        <ul>
+          <li>Name</li>
+          <li>Email address</li>
+          <li>Account credentials</li>
+          <li>Authentication information</li>
+          <li>Multi-factor authentication information</li>
+          <li>Company or business name</li>
+          <li>Account and user permissions</li>
+          <li>Subscription information</li>
+        </ul>
+        <div class="legal-note"><p>We do not store passwords in readable form.</p></div>
+
+        <h3>1.2  Business and E-Commerce Information</h3>
+        <p>Depending on the features you use and the integrations you authorize, the Platform may
+        process business information including:</p>
+        <ul>
+          <li>Product information</li>
+          <li>SKU and ASIN information</li>
+          <li>Inventory information</li>
+          <li>Sales information</li>
+          <li>Order information</li>
+          <li>Advertising information</li>
+          <li>Campaign information</li>
+          <li>Search-term information</li>
+          <li>Keyword information</li>
+          <li>Placement information</li>
+          <li>Financial information</li>
+          <li>Fees and expenses</li>
+          <li>Supplier information</li>
+          <li>Purchase order information</li>
+          <li>Forecasts and simulations</li>
+          <li>Product costs</li>
+          <li>Pricing information</li>
+          <li>Profitability information</li>
+          <li>Business performance metrics</li>
+        </ul>
+        <p>The exact information collected depends on the integrations and features used by each
+        Customer.</p>
+
+        <h3>1.3  Information Obtained From Amazon</h3>
+        <p>If you connect an Amazon account to the Platform, we may receive information from Amazon
+        through authorized Amazon APIs and other authorized mechanisms. This may include information
+        relating to:</p>
+        <ul>
+          <li>Seller accounts</li>
+          <li>Products</li>
+          <li>Orders</li>
+          <li>Inventory</li>
+          <li>Sales</li>
+          <li>Advertising</li>
+          <li>Campaigns</li>
+          <li>Search terms</li>
+          <li>Keywords</li>
+          <li>Placements</li>
+          <li>Fees</li>
+          <li>Financial information</li>
+          <li>Reports</li>
+          <li>Other information made available through the permissions authorized by the Customer</li>
+        </ul>
+        <p>AmazeBase accesses Amazon information only after the Customer has authorized the
+        applicable connection and permissions. The availability and scope of Amazon information are
+        controlled by Amazon and may change as Amazon changes its APIs, permissions, policies, or
+        services. Customers remain responsible for maintaining appropriate authorization for their
+        connected Amazon accounts.</p>
+
+        <h3>1.4  Information Uploaded by Customers</h3>
+        <p>Customers may voluntarily upload information to the Platform, including:</p>
+        <ul>
+          <li>Spreadsheets</li>
+          <li>Reports</li>
+          <li>Business records</li>
+          <li>Product information</li>
+          <li>Financial information</li>
+          <li>Supplier information</li>
+          <li>Notes</li>
+          <li>Other supported files</li>
+        </ul>
+        <p>Customers are responsible for ensuring that they have the legal right to provide such
+        information to the Platform.</p>
+
+        <h3>1.5  Information Created Within the Platform</h3>
+        <p>The Platform may generate or store information created by Customers, including:</p>
+        <ul>
+          <li>Forecasts</li>
+          <li>Simulations</li>
+          <li>Planning scenarios</li>
+          <li>Notes</li>
+          <li>Product groupings</li>
+          <li>Product aliases</li>
+          <li>Purchase orders</li>
+          <li>Analytical configurations</li>
+          <li>Business assumptions</li>
+          <li>Recommendations</li>
+          <li>Other user-generated content</li>
+        </ul>
+
+        <h3>1.6  Payment Information</h3>
+        <p>When you purchase a subscription, payment information may be processed by third-party
+        payment processors. We may receive information such as:</p>
+        <ul>
+          <li>Payment status</li>
+          <li>Subscription plan</li>
+          <li>Billing dates</li>
+          <li>Transaction identifiers</li>
+          <li>Limited payment information</li>
+        </ul>
+        <p>We do not intend to store complete payment card numbers on our own systems when payment
+        processing is handled by third-party payment providers. The payment processor’s own privacy
+        policy and terms may also apply.</p>
+
+        <h3>1.7  Technical and Usage Information</h3>
+        <p>We may automatically collect information about how the Platform is accessed and used,
+        including:</p>
+        <ul>
+          <li>IP address</li>
+          <li>Browser type</li>
+          <li>Device information</li>
+          <li>Operating system</li>
+          <li>Login times</li>
+          <li>Authentication events</li>
+          <li>Pages and features accessed</li>
+          <li>Errors and diagnostic information</li>
+          <li>Security events</li>
+          <li>Approximate geographic information</li>
+          <li>Cookies and similar technologies</li>
+        </ul>
+        <p>This information helps us operate, secure, troubleshoot, and improve the Platform.</p>
+      </section>
+
+      <section>
+        <h2 id="s2"><span class="num">2.</span> How We Use Information</h2>
+        <p>We use information collected through the Platform for legitimate business purposes,
+        including to:</p>
+        <ul>
+          <li>Create and manage user accounts</li>
+          <li>Provide Platform functionality</li>
+          <li>Process authorized integrations</li>
+          <li>Retrieve and process authorized third-party data</li>
+          <li>Provide analytics and reporting</li>
+          <li>Generate forecasts and simulations</li>
+          <li>Provide inventory and financial analysis</li>
+          <li>Provide advertising analysis</li>
+          <li>Process subscriptions and payments</li>
+          <li>Provide customer support</li>
+          <li>Authenticate users</li>
+          <li>Protect accounts and systems</li>
+          <li>Detect fraud and abuse</li>
+          <li>Monitor and improve performance</li>
+          <li>Develop new features</li>
+          <li>Troubleshoot technical problems</li>
+          <li>Maintain backups</li>
+          <li>Comply with legal obligations</li>
+          <li>Enforce our Terms of Service</li>
+          <li>Protect the rights, property, and safety of our Company, Customers, and others</li>
+        </ul>
+        <div class="legal-note">
+          <p>We do not sell Customer Data as a commodity to unrelated third parties.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2 id="s3"><span class="num">3.</span> Customer Data</h2>
+        <p>For purposes of this Privacy Policy, “Customer Data” means information provided, uploaded,
+        generated, or authorized by a Customer for processing through the Platform.</p>
+        <p><strong>Customers retain ownership of their Customer Data.</strong> We process Customer
+        Data primarily to provide the services requested by the Customer. We do not use Customer Data
+        to take ownership of a Customer’s underlying business information or intellectual property.</p>
+      </section>
+
+      <section>
+        <h2 id="s4"><span class="num">4.</span> Aggregated and Anonymized Information</h2>
+        <p>We may create aggregated, statistical, or anonymized information from information
+        processed through the Platform. Where information is anonymized, we take reasonable measures
+        designed to prevent it from being reasonably associated with an identifiable Customer or
+        individual. Examples may include:</p>
+        <ul>
+          <li>Average inventory levels</li>
+          <li>Average advertising metrics</li>
+          <li>General profitability benchmarks</li>
+          <li>Aggregate business trends</li>
+          <li>Statistical industry comparisons</li>
+          <li>Product-category trends</li>
+          <li>Platform usage statistics</li>
+          <li>Performance benchmarks</li>
+        </ul>
+        <p>We may use aggregated and appropriately anonymized information to:</p>
+        <ul>
+          <li>Develop benchmarks</li>
+          <li>Produce statistical reports</li>
+          <li>Improve the Platform</li>
+          <li>Develop new features</li>
+          <li>Conduct research and analysis</li>
+          <li>Develop analytical models</li>
+          <li>Improve forecasting and simulations</li>
+          <li>Develop machine-learning or statistical models</li>
+          <li>Understand general market and customer trends</li>
+        </ul>
+        <p>Aggregated or anonymized information will not intentionally be used to identify an
+        individual Customer or disclose that Customer’s confidential business information.</p>
+      </section>
+
+      <section>
+        <h2 id="s5"><span class="num">5.</span> Third-Party Services and Integrations</h2>
+        <p>AmazeBase may integrate with third-party services, including marketplaces, advertising
+        platforms, payment providers, hosting providers, analytics services, authentication services,
+        and other business software.</p>
+        <p>When you connect a third-party service, information may be exchanged between that service
+        and AmazeBase as necessary to provide the requested functionality. Your use of third-party
+        services is also subject to the applicable third party’s terms and privacy policies.
+        Third-party services may independently collect information from you according to their own
+        policies. We do not control the privacy practices of third-party services.</p>
+      </section>
+
+      <section>
+        <h2 id="s6"><span class="num">6.</span> Amazon Integration</h2>
+        <p>AmazeBase may integrate with Amazon services using Amazon-authorized APIs and
+        authentication mechanisms. When a Customer authorizes an Amazon connection, AmazeBase may
+        receive information made available through the permissions granted by the Customer. The
+        Platform may use Amazon-provided authorization credentials or tokens to maintain an
+        authorized connection where permitted by Amazon.</p>
+        <p>Customers may disconnect an Amazon account from AmazeBase at any time, subject to the
+        technical requirements of the applicable Amazon service. Disconnecting an integration may
+        prevent AmazeBase from receiving additional information from that service, but may not
+        automatically delete information previously processed through the Platform.</p>
+        <p>Information obtained through Amazon is handled in accordance with this Privacy Policy and
+        applicable Amazon requirements.</p>
+      </section>
+
+      <section>
+        <h2 id="s7"><span class="num">7.</span> Sharing of Information</h2>
+        <p>We may disclose information in the following circumstances.</p>
+
+        <h3>Service Providers</h3>
+        <p>We may share information with trusted service providers that perform services on our
+        behalf, such as:</p>
+        <ul>
+          <li>Cloud hosting</li>
+          <li>Database infrastructure</li>
+          <li>Payment processing</li>
+          <li>Authentication</li>
+          <li>Email delivery</li>
+          <li>Security monitoring</li>
+          <li>Analytics</li>
+          <li>Customer support</li>
+          <li>Backup and recovery</li>
+          <li>Technical infrastructure</li>
+        </ul>
+        <p>Service providers are permitted to process information only as necessary to provide
+        services to us and are expected to maintain appropriate security measures.</p>
+
+        <h3>Legal Requirements</h3>
+        <p>We may disclose information where reasonably necessary to:</p>
+        <ul>
+          <li>Comply with applicable law</li>
+          <li>Respond to lawful governmental requests</li>
+          <li>Comply with court orders</li>
+          <li>Protect our legal rights</li>
+          <li>Investigate fraud or security incidents</li>
+          <li>Enforce our Terms of Service</li>
+          <li>Protect the safety of users or others</li>
+        </ul>
+
+        <h3>Business Transfers</h3>
+        <p>If Silbros Trading LLC is involved in a merger, acquisition, financing, reorganization,
+        sale of assets, bankruptcy, or similar transaction, information may be transferred as part of
+        that transaction, subject to applicable law.</p>
+      </section>
+
+      <section>
+        <h2 id="s8"><span class="num">8.</span> Data Security</h2>
+        <p>We take the security of Customer Data seriously. We use commercially reasonable
+        administrative, technical, and organizational safeguards designed to protect information
+        against unauthorized access, alteration, disclosure, or destruction. Depending on the type of
+        information and applicable system, safeguards may include:</p>
+        <ul>
+          <li>Encryption of information in transit</li>
+          <li>Encryption of sensitive information at rest</li>
+          <li>Access controls</li>
+          <li>Multi-factor authentication</li>
+          <li>Authentication protections</li>
+          <li>Role-based permissions</li>
+          <li>Logging and monitoring</li>
+          <li>Backup and recovery procedures</li>
+          <li>Security updates</li>
+          <li>Infrastructure security controls</li>
+          <li>Limitation of access based on business need</li>
+        </ul>
+        <p>No method of transmission or electronic storage can be guaranteed to be completely secure.
+        Accordingly, while we take reasonable measures to protect information, we cannot guarantee
+        absolute security.</p>
+      </section>
+
+      <section>
+        <h2 id="s9"><span class="num">9.</span> Data Retention</h2>
+        <p>We retain information for as long as reasonably necessary to:</p>
+        <ul>
+          <li>Provide the Platform</li>
+          <li>Maintain Customer accounts</li>
+          <li>Provide customer support</li>
+          <li>Maintain security</li>
+          <li>Prevent fraud and abuse</li>
+          <li>Meet legal and regulatory obligations</li>
+          <li>Resolve disputes</li>
+          <li>Enforce agreements</li>
+          <li>Maintain legitimate business records</li>
+          <li>Maintain anonymized statistical information</li>
+        </ul>
+        <p>When an account is deleted, we will take reasonable steps to delete or anonymize personal
+        information associated with that account in accordance with our policies and applicable legal
+        requirements. Certain information may remain in backups for a limited period before being
+        overwritten or securely deleted.</p>
+        <p>Information that has been irreversibly anonymized may be retained indefinitely because it
+        can no longer reasonably be associated with an identifiable individual or Customer.</p>
+      </section>
+
+      <section>
+        <h2 id="s10"><span class="num">10.</span> Data Deletion</h2>
+        <p>Customers may request deletion of their account and associated personal information.
+        Authorized account administrators may also manage or request deletion of Customer Data and
+        user information. Deletion requests may be subject to:</p>
+        <ul>
+          <li>Legal retention requirements</li>
+          <li>Fraud prevention requirements</li>
+          <li>Security requirements</li>
+          <li>Dispute resolution</li>
+          <li>Backup retention processes</li>
+          <li>Information already irreversibly anonymized</li>
+        </ul>
+        <p>Where applicable, we may retain limited information necessary to demonstrate compliance
+        with legal obligations or protect our legitimate interests.</p>
+      </section>
+
+      <section>
+        <h2 id="s11"><span class="num">11.</span> Data Export</h2>
+        <p>Customers may export eligible Customer Data using functionality provided by the Platform
+        or by contacting us. The availability and format of exports may depend on the type of
+        information and the applicable Platform functionality. Information obtained from third-party
+        services may also be subject to the limitations imposed by those services.</p>
+      </section>
+
+      <section>
+        <h2 id="s12"><span class="num">12.</span> Cookies and Similar Technologies</h2>
+        <p>AmazeBase may use cookies and similar technologies to:</p>
+        <ul>
+          <li>Maintain user sessions</li>
+          <li>Authenticate users</li>
+          <li>Remember preferences</li>
+          <li>Protect accounts</li>
+          <li>Understand Platform usage</li>
+          <li>Diagnose technical problems</li>
+          <li>Improve Platform performance</li>
+        </ul>
+        <p>We may also use third-party services that employ cookies or similar technologies. Users
+        may be able to control certain cookies through their browser settings. Disabling certain
+        cookies may affect Platform functionality.</p>
+      </section>
+
+      <section>
+        <h2 id="s13"><span class="num">13.</span> Communications</h2>
+        <p>We may use contact information to communicate with Customers regarding:</p>
+        <ul>
+          <li>Account activity</li>
+          <li>Security events</li>
+          <li>Password or authentication issues</li>
+          <li>Subscription status</li>
+          <li>Service changes</li>
+          <li>Technical issues</li>
+          <li>Customer support</li>
+          <li>Legal notices</li>
+        </ul>
+        <p>Where permitted by law, we may also send information about new features, products, or
+        services. Users may opt out of non-essential marketing communications while continuing to
+        receive essential transactional and service communications.</p>
+      </section>
+
+      <section>
+        <h2 id="s14"><span class="num">14.</span> Children’s Privacy</h2>
+        <p>The Platform is intended for businesses and is not directed toward children. We do not
+        knowingly collect personal information from children under the age of 13. If we become aware
+        that we have collected personal information from a child under 13 without appropriate
+        authorization, we will take reasonable steps to delete it.</p>
+      </section>
+
+      <section>
+        <h2 id="s15"><span class="num">15.</span> International Data Transfers</h2>
+        <p>Silbros Trading LLC is based in the United States. Depending on the Customer’s location
+        and the services used to operate the Platform, information may be processed or stored in the
+        United States or other countries where our service providers operate.</p>
+        <p>Privacy and data protection laws may differ between jurisdictions. Where required by
+        applicable law, we will implement appropriate safeguards for international transfers of
+        personal information.</p>
+      </section>
+
+      <section>
+        <h2 id="s16"><span class="num">16.</span> Your Privacy Rights</h2>
+        <p>Depending on your location and applicable law, you may have rights concerning your
+        personal information. These may include the right to:</p>
+        <ul>
+          <li>Request access to personal information</li>
+          <li>Request correction of inaccurate information</li>
+          <li>Request deletion</li>
+          <li>Request information about how personal information is used</li>
+          <li>Request information about categories shared with third parties</li>
+          <li>Obtain a copy of certain information</li>
+          <li>Object to or restrict certain processing</li>
+          <li>Withdraw consent where processing is based on consent</li>
+          <li>Appeal certain privacy decisions</li>
+          <li>Opt out of certain forms of marketing</li>
+        </ul>
+        <p>The availability of these rights depends on applicable law and your relationship with
+        Silbros Trading LLC. To exercise a privacy right, contact us using the information provided
+        below. We may need to verify your identity before fulfilling certain requests.</p>
+      </section>
+
+      <section>
+        <h2 id="s17"><span class="num">17.</span> Business Customer Data</h2>
+        <p>Many Customers of AmazeBase will use the Platform in connection with their businesses.
+        When a Customer uploads or connects information relating to its own employees, customers,
+        suppliers, contractors, or other individuals, the Customer is generally responsible for
+        ensuring that it has the appropriate authority and legal basis to provide that information to
+        AmazeBase.</p>
+        <p>Customers should not upload personal information that is unnecessary for the intended use
+        of the Platform. Customers are responsible for complying with applicable privacy and data
+        protection laws relating to information they provide to the Platform.</p>
+      </section>
+
+      <section>
+        <h2 id="s18"><span class="num">18.</span> Third-Party Websites</h2>
+        <p>The Platform may contain links to websites or services operated by third parties. We are
+        not responsible for the privacy practices, content, or security of third-party websites.
+        Users should review the privacy policies of those services before providing personal
+        information.</p>
+      </section>
+
+      <section>
+        <h2 id="s19"><span class="num">19.</span> Changes to This Privacy Policy</h2>
+        <p>We may update this Privacy Policy from time to time. When we make material changes, we may
+        provide notice through the Platform, by email, or by other reasonable means. The “Last
+        Updated” date at the beginning of this Privacy Policy indicates when the policy was most
+        recently revised.</p>
+        <p>Your continued use of the Platform after an updated Privacy Policy becomes effective
+        constitutes acceptance of the updated policy to the extent permitted by law.</p>
+      </section>
+
+      <section>
+        <h2 id="s20"><span class="num">20.</span> Contact Us</h2>
+        <p>If you have questions about this Privacy Policy or want to exercise applicable privacy
+        rights, contact us at:</p>
+        <div class="legal-contact">
+          <div class="co">Silbros Trading LLC</div>
+          <address>
+            1209 Mountain Road PL NE #11990<br>
+            Albuquerque, NM 87110<br>
+            United States<br>
+            <a href="mailto:contact@silbrostrading.com">contact@silbrostrading.com</a>
+          </address>
+        </div>
+      </section>
+
+      <p class="legal-foot-note">
+        AmazeBase is a product of Silbros Trading LLC. This Privacy Policy applies to the AmazeBase
+        Platform and related services.
+      </p>
+
+    </div>
   </div>
 
 </div>
 </main>
 
+<!-- ====================================================================
+     FOOTER
+==================================================================== -->
 <footer class="footer">
-<div class="container footer-bottom">
-  <span>&copy; 2026 AmazeBase. All rights reserved.</span>
-  <span class="footer-links">
-    <a href="privacy.html">Privacy</a>
-    <a href="terms.html">Terms</a>
-    <a href="contact.html">Contact</a>
-  </span>
+<div class="container">
+
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="index.html" class="brand">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+        </svg>
+        <span data-brand>AmazeBase</span>
+      </a>
+      <p>The operating system for Amazon sellers. Everything connected, everything in sync.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="index.html#features">Features</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="#">Integrations</a>
+      <a href="#">Security</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a href="#">Documentation</a>
+      <a href="#">Blog</a>
+      <a href="#">Support</a>
+      <a href="#">Status</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="#">Terms</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 <span data-brand>AmazeBase</span>. All rights reserved.</span>
+    <div class="footer-social">
+      <a href="#" aria-label="LinkedIn"><svg class="icon-sm"><use href="#i-in"/></svg></a>
+      <a href="#" aria-label="X"><svg class="icon-sm"><use href="#i-tw"/></svg></a>
+      <a href="#" aria-label="GitHub"><svg class="icon-sm"><use href="#i-gh"/></svg></a>
+    </div>
+  </div>
+
 </div>
 </footer>
+
+<button class="to-top" aria-label="Back to top">
+  <svg class="icon-sm" style="transform:rotate(-90deg)"><use href="#i-arrow"/></svg>
+</button>
+
+<script src="js/main.js" defer></script>
 
 </body>
 </html>
