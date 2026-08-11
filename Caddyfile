@@ -1,0 +1,93 @@
+# ==========================================================================
+# Caddyfile — AmazeBase landing page
+#
+# Overrides Railpack's built-in static-site config so we can send stricter
+# security headers. Based on Railpack's own template (railpack/core/providers/
+# staticfile/Caddyfile.template) — the serving behaviour below is unchanged;
+# only the header block is tightened.
+#
+# If this file is deleted, Railway falls back to the Railpack default and the
+# site still serves — it just loses the hardened headers.
+# ==========================================================================
+{
+	admin off
+	persist_config off
+	auto_https off
+
+	log {
+		format json
+	}
+
+	servers {
+		trusted_proxies static private_ranges
+	}
+}
+
+:{$PORT:80} {
+	log {
+		format json
+	}
+
+	respond /health 200
+
+	header {
+		# --- Clickjacking -------------------------------------------------
+		# Nobody may embed this page in a frame. Without this, an attacker can
+		# iframe the site and overlay an invisible form on top of the real
+		# waitlist form. frame-ancestors is the modern rule; X-Frame-Options
+		# is the same instruction for older browsers.
+		X-Frame-Options "DENY"
+
+		# --- Force HTTPS for a year, including future subdomains ----------
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+		# --- Don't let a browser guess a file's type ----------------------
+		X-Content-Type-Options "nosniff"
+		X-XSS-Protection "1; mode=block"
+
+		# --- Don't leak the full URL to other sites -----------------------
+		Referrer-Policy "strict-origin-when-cross-origin"
+
+		# --- Turn off device APIs this site never uses --------------------
+		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), interest-cohort=()"
+
+		# --- Content Security Policy --------------------------------------
+		# Deliberately strict. The whole site has ZERO inline <script> blocks
+		# and ZERO inline event handlers, so script-src is locked to 'self':
+		# even if someone found a way to inject a <script> tag, the browser
+		# would refuse to run it.
+		#
+		#   script-src  'self'  -> only our own js/ files, nothing injected
+		#   style-src   needs 'unsafe-inline' — 18 inline style="" attributes
+		#               remain in the HTML. Inline STYLES cannot execute code,
+		#               so this is a formatting concession, not a script hole.
+		#               Removing those attributes would let us drop it.
+		#   connect-src -> only the app that owns the waitlist table
+		#   frame-ancestors 'none' -> the clickjacking rule above
+		#   object-src 'none' -> no Flash/Java/embed legacy plugins
+		#   base-uri 'self' -> an injected <base> tag can't redirect our URLs
+		Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self' https://amz-analytics-production.up.railway.app; form-action 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests"
+
+		# Don't advertise the server software.
+		-Server
+	}
+
+	root * {$RAILPACK_STATIC_FILE_ROOT:.}
+
+	file_server {
+		hide .git
+		hide .env*
+	}
+
+	encode {
+		gzip
+		zstd
+	}
+
+	try_files {path} {path}.html {path}/index.html
+
+	handle_errors {
+		rewrite * /{err.status_code}.html
+		file_server
+	}
+}

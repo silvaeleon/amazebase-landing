@@ -49,11 +49,26 @@
       open(opener.getAttribute("data-source"));
       return;
     }
+    /* Fallback: ANY link pointing at the waitlist opens the dialog, even if
+       whoever authored it forgot data-waitlist-open. Before this, a forgotten
+       attribute silently cost a signup — the link just scrolled the page. */
+    var link = e.target.closest('a[href$="#waitlist"]');
+    if (link) {
+      e.preventDefault();
+      open(link.getAttribute("data-source") || "link");
+      return;
+    }
     if (e.target.closest("[data-waitlist-close]")) {
       e.preventDefault();
       close();
     }
   });
+
+  /* Arriving with #waitlist in the URL opens the form. This is what makes the
+     cross-page CTAs work: pages without the dialog (about, contact, privacy,
+     terms, resources) link to index.html#waitlist and the form opens on
+     arrival, instead of dumping the visitor at the pricing table. */
+  if (window.location.hash === "#waitlist") open("deep-link");
 
   /* Click on the backdrop (the dialog element itself, not the panel) closes. */
   dialog.addEventListener("click", function (e) {
