@@ -769,31 +769,33 @@
 <div class="proof-grid" data-reveal>
 
   <div class="trust">
-    <p class="trust-lead">Trusted by serious Amazon sellers</p>
+    <p class="trust-lead">What is actually built</p>
 
     <div class="trust-stat">
+      <span class="icon-tile"><svg class="icon-sm"><use href="#i-db"/></svg></span>
+      <div><b data-counter="8">8</b><span>Connected modules, live today</span></div>
+    </div>
+    <div class="trust-stat">
       <span class="icon-tile"><svg class="icon-sm"><use href="#i-report"/></svg></span>
-      <div><b data-counter="200">200K+</b><span>Reports processed</span></div>
+      <div><b data-counter="10">10</b><span>Amazon reports ingested</span></div>
     </div>
     <div class="trust-stat">
       <span class="icon-tile"><svg class="icon-sm"><use href="#i-link"/></svg></span>
-      <div><b data-counter="40">40+</b><span>Seller Central integrations</span></div>
-    </div>
-    <div class="trust-stat">
-      <span class="icon-tile"><svg class="icon-sm"><use href="#i-db"/></svg></span>
-      <div><b data-counter="2">2M+</b><span>Products analyzed</span></div>
+      <div><b data-counter="7">7</b><span>PPC verdicts, each with its evidence</span></div>
     </div>
     <div class="trust-stat">
       <span class="icon-tile"><svg class="icon-sm"><use href="#i-dollar"/></svg></span>
-      <div><b data-counter="2">$2B+</b><span>In sales analyzed</span></div>
+      <div><b data-counter="0">0</b><span>Invented numbers on this page</span></div>
     </div>
   </div>
 
   <figure class="quote">
-    <span class="quote-face">MJ</span>
+    <span class="quote-face">AB</span>
     <div>
-      <p>"AmazeBase replaced 6 different tools. I save 30+ hours every month."</p>
-      <cite>— Mike Johnson, 7-Figure Seller</cite>
+      <p>AmazeBase has not launched, so there are no customer logos or usage
+      figures to show you. Everything on this site is either running today or
+      labelled as roadmap &mdash; including this note.</p>
+      <cite>&mdash; Why this space is empty</cite>
     </div>
   </figure>
 
@@ -974,11 +976,21 @@
       </select>
     </div>
 
-    <!-- Honeypot. Hidden from humans, irresistible to bots. A filled value
-         makes the server discard the submission silently. -->
+    <!-- Honeypots. Hidden from humans, irresistible to bots. A filled value
+         makes the server discard the submission silently.
+         TWO fields with unrelated names, so there is no single trick for a
+         bot to learn. The form also times itself: waitlist.js sends how many
+         milliseconds the dialog was open, and a human cannot fill this in
+         under a second. Adding signals is safe on its own -- the app ignores
+         fields it does not know about -- but NEVER rename or remove
+         company_website without changing the app first, or the trap stops
+         working silently. -->
     <div class="wl-hp" aria-hidden="true">
       <label for="wl-company-website">Company website</label>
       <input id="wl-company-website" name="company_website" type="text"
+             tabindex="-1" autocomplete="off">
+      <label for="wl-referral-code">Referral code</label>
+      <input id="wl-referral-code" name="referral_code" type="text"
              tabindex="-1" autocomplete="off">
     </div>
 

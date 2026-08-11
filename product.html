@@ -687,11 +687,21 @@
       </select>
     </div>
 
-    <!-- Honeypot. Hidden from humans, irresistible to bots. A filled value
-         makes the server discard the submission silently. -->
+    <!-- Honeypots. Hidden from humans, irresistible to bots. A filled value
+         makes the server discard the submission silently.
+         TWO fields with unrelated names, so there is no single trick for a
+         bot to learn. The form also times itself: waitlist.js sends how many
+         milliseconds the dialog was open, and a human cannot fill this in
+         under a second. Adding signals is safe on its own -- the app ignores
+         fields it does not know about -- but NEVER rename or remove
+         company_website without changing the app first, or the trap stops
+         working silently. -->
     <div class="wl-hp" aria-hidden="true">
       <label for="wl-company-website">Company website</label>
       <input id="wl-company-website" name="company_website" type="text"
+             tabindex="-1" autocomplete="off">
+      <label for="wl-referral-code">Referral code</label>
+      <input id="wl-referral-code" name="referral_code" type="text"
              tabindex="-1" autocomplete="off">
     </div>
 

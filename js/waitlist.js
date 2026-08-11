@@ -25,11 +25,16 @@
   var submit  = dialog.querySelector("[data-waitlist-submit]");
   var sourceField = "hero";
   var sending = false;
+  /* When the dialog was opened. A human takes seconds to fill three fields;
+     a script takes milliseconds. Sent with the submission so the app can
+     reject the impossibly fast ones. */
+  var openedAt = 0;
 
   /* ------------------------------------------------------------- OPEN/CLOSE */
 
   function open(source) {
     sourceField = source || "unknown";
+    openedAt = Date.now();
     showError("");
     form.hidden = false;
     done.hidden = true;
@@ -116,7 +121,11 @@
         email: email,
         marketplace: market,
         source: sourceField,
-        company_website: form.elements.company_website.value
+        elapsed_ms: openedAt ? Date.now() - openedAt : null,
+        company_website: form.elements.company_website.value,
+        referral_code: form.elements.referral_code
+          ? form.elements.referral_code.value
+          : ""
       })
     })
       .then(function (res) {
