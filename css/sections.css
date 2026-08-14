@@ -924,3 +924,9 @@
   padding-left:var(--s3);
 }
 .assistant-copy .mod-tag{ margin-bottom:var(--s2); }
+
+/* Art icons in the trust strip. The artwork carries its own dark ground, so
+   the tile's own border and surface would double up behind it -- strip both
+   and let the image be the tile. Size stays 36px, so nothing reflows. */
+.trust-stat .icon-tile.is-art{ padding:0; border:0; background:none; overflow:hidden; border-radius:var(--r-sm); }
+.trust-stat .icon-tile.is-art img{ width:100%; height:100%; object-fit:cover; display:block; }
