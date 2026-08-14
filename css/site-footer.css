@@ -1,0 +1,131 @@
+/* ==========================================================================
+   SITE FOOTER — standalone
+   The 44 pages under articles/ are self-contained: their own <style> block,
+   their own token set, no link to the site's stylesheet chain and no icon
+   sprite. Linking sections.css into them to get the footer would drag in
+   every other component's rules and risk class collisions with the article
+   template.
+
+   So this file carries the footer and nothing else: the .footer rules lifted
+   from sections.css, plus the four shared helpers the footer markup needs
+   (.container, .brand, .brand-mark, .icon-sm) that otherwise live in
+   base.css.
+
+   It is loaded ONLY by the article pages. The seven top-level pages keep
+   getting these rules from sections.css and base.css as before, so nothing
+   about them changes. Every token used here is already defined in each
+   article's own <style> block -- checked, none missing.
+   ========================================================================== */
+
+/* ---------- helpers the footer markup needs ------------------------------ */
+.container{
+  width:min(100%,var(--container,1280px));
+  margin-inline:auto;
+  padding-inline:var(--gutter,clamp(20px,4vw,40px));
+  position:relative;
+}
+.brand{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  font-size:19px;
+  font-weight:700;
+  letter-spacing:-.01em;
+  color:var(--text);
+  text-decoration:none;
+}
+.brand-mark{ width:26px; height:26px; flex:none; }
+
+/* The article template underlines every <a>; base.css does not, so on the
+   seven top-level pages the footer links are clean. Reset it here or the
+   same markup reads underlined on articles/ and plain everywhere else. */
+.footer a{ text-decoration:none; }
+.icon-sm{ width:16px; height:16px; flex:none; stroke-width:1.8; }
+
+/* ---------- the footer itself, as sections.css defines it ---------------- */
+.footer{
+  margin-top:var(--s7);
+  border-top:1px solid var(--line);
+  padding-top:var(--s6);
+  padding-bottom:var(--s4);
+  background:linear-gradient(180deg,transparent,rgba(139,59,241,.05));
+}
+
+.footer-top{
+  display:grid;
+  grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));
+  gap:var(--s5);
+  padding-bottom:var(--s5);
+}
+
+.footer-brand p{
+  margin-top:var(--s2);
+  font-size:13.5px;
+  line-height:1.6;
+  color:var(--text-3);
+  max-width:34ch;
+}
+
+.footer-col h4{
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--text-3);
+  margin-bottom:var(--s2);
+}
+.footer-col a{
+  display:block;
+  padding:5px 0;
+  font-size:13.5px;
+  color:var(--text-2);
+  transition:color var(--fast);
+}
+.footer-col a:hover{ color:var(--text); }
+
+.footer-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--s3);
+  padding-top:var(--s3);
+  border-top:1px solid var(--line);
+  font-size:12.5px;
+  color:var(--text-3);
+  flex-wrap:wrap;
+}
+.footer-social{ display:flex; gap:var(--s2); }
+.footer-social a{
+  display:grid;
+  place-items:center;
+  width:32px; height:32px;
+  border-radius:var(--r-xs);
+  border:1px solid var(--line);
+  background:var(--surface);
+  color:var(--text-2);
+  transition:color var(--fast),border-color var(--fast);
+}
+.footer-social a:hover{ color:var(--text); border-color:var(--line-strong); }
+
+/* ---------- BACK TO TOP ------------------------------------------------------- */
+
+/* ---------- responsive rules that mention the footer -------------------- */
+@media (max-width:940px){
+  .feature-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .footer-top{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--s4); }
+  .trust{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--s3); }
+  .trust-lead{ grid-column:1 / -1; border-right:0; max-width:none; padding-right:0; }
+  .pipeline-rail{ grid-template-columns:repeat(4,minmax(0,1fr)); row-gap:var(--s4); }
+  .pipeline-rail::before{ display:none; }
+}
+@media (max-width:680px){
+  .feature-grid{ grid-template-columns:1fr; }
+  .chat-metrics{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .bubble{ max-width:none; }
+  .assistant-panel{ padding:var(--s4) var(--s3); }
+  .pipeline-rail{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .quote{ flex-direction:column; text-align:center; }
+  .footer-bottom{ justify-content:center; text-align:center; }
+  .trust{ grid-template-columns:1fr; }
+  .vs-badge{ width:44px; height:44px; font-size:12px; }
+}
