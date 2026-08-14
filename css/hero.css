@@ -355,7 +355,12 @@
 
 @media (max-width:1180px){
   .hero-panel{ padding:var(--s5) var(--s4) var(--s6); }
-  .hero-grid{ grid-template-columns:1fr; gap:var(--s6); }
+  /* minmax(0,1fr), not 1fr. A bare 1fr means minmax(AUTO,1fr), and that auto
+     floors the track at the widest child's MIN-CONTENT -- which the nowrap CTA
+     row and tick list push to ~445px. On a 390px screen the track was wider
+     than its own container, so the right-hand end of the hero copy was simply
+     cut off. */
+  .hero-grid{ grid-template-columns:minmax(0,1fr); gap:var(--s6); }
   .hero-copy{ padding-right:0; max-width:620px; }
   /* NOTE: this next line has never had any effect — the perspective is set on
      .hero-stage-inner, not .hero-stage. Left in place rather than silently
@@ -375,6 +380,12 @@
 }
 
 @media (max-width:680px){
+  /* Both are nowrap by design on wide screens, so the CTA row and the tick
+     list each read as a single line. Under 680px there is no room, and nowrap
+     stops being a layout choice and starts being clipped text: "Everything in
+     s", "Wat", "No". Let them wrap. */
+  .hero-cta{ flex-wrap:wrap; white-space:normal; }
+  .ticks{ flex-wrap:wrap; white-space:normal; }
   .hero{ padding-top:88px; }
   .hero-panel{ border-radius:22px; padding:var(--s4) var(--s3) var(--s5); }
   .hero-cta{ gap:var(--s2); }

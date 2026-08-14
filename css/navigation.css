@@ -141,7 +141,12 @@
 }
 
 @media (max-width:520px){
-  .nav-actions .btn--primary{ padding:11px 16px; font-size:14px; }
+  /* Brand (157px) + this button (223px) = 380px inside a 350px bar, so the
+     header overflowed and pushed the hamburger off-screen -- there was no way
+     to open the menu at all. The mobile drawer carries its own full-width
+     Join the Wait List, so hiding this one removes a duplicate rather than a
+     route to the form. */
+  .nav-actions .btn--primary{ display:none; }
 }
 
 
