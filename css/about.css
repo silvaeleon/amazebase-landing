@@ -1,0 +1,120 @@
+/* ==========================================================================
+   ABOUT PAGE
+   Only what about.html needs. Everything else on the page reuses the shared
+   components: .section, .section-head, .mod / .mod-copy / .mod-figure,
+   .sec-grid / .sec-card, .quote. Nothing here is loaded by any other page,
+   so it cannot affect the home page or the product page.
+
+   PICTURE SLOTS. Every place meant to hold artwork is a .mod-figure, the
+   same dashed 16:11 box the product page already uses for its graphic
+   slots. Replace the <span> inside one with an <img> and it is done --
+   the box keeps its own aspect ratio, so nothing reflows when you do.
+   ========================================================================== */
+
+/* Clear the fixed site header. .hero on the home page does this with
+   padding-top:86px; the About page opens with a plain .section, which has no
+   such allowance, so the eyebrow was sliding under the nav bar. */
+#about{ padding-top:86px; }
+
+/* the About hero carries an h1 where a section-head normally has an h2 */
+.section-head h1{
+  font-size:clamp(30px,3.4vw,46px);
+  font-weight:800;
+  line-height:1.14;
+  letter-spacing:-.02em;
+  margin:0 0 var(--s3);
+}
+
+/* wider slots for full-bleed artwork and infographics */
+.mod-figure.is-wide{ aspect-ratio:21 / 9; }
+.mod-figure.is-tall{ aspect-ratio:4 / 5; }
+
+/* a single line that carries weight on its own */
+.ab-statement{
+  text-align:center;
+  font-size:clamp(19px,1.7vw,24px);
+  font-weight:600;
+  line-height:1.45;
+  color:var(--text-1);
+  max-width:34ch;
+  margin:var(--s5) auto 0;
+}
+.ab-statement em{ font-style:normal; color:var(--brand-2,#A93BF1); }
+
+/* "Instead of / We want you to hear" -- two cards, one wrong, one right */
+.ab-contrast{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:var(--s3);
+  margin-top:var(--s4);
+}
+.ab-contrast article{
+  border:1px solid var(--line);
+  border-radius:var(--r3);
+  background:var(--surface);
+  padding:var(--s4);
+}
+.ab-contrast .ab-label{
+  display:block;
+  font-size:.72rem;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--text-3);
+  margin-bottom:10px;
+}
+.ab-contrast p{ margin:0; font-size:1.02rem; line-height:1.5; }
+.ab-contrast .is-bad{ border-color:rgba(255,90,90,.28); }
+.ab-contrast .is-bad p{ color:var(--text-2); }
+.ab-contrast .is-good{ border-color:rgba(110,231,168,.30); }
+.ab-contrast .is-good p{ color:var(--text-1); font-weight:600; }
+
+/* the data -> decision loop */
+.ab-flow{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:var(--s3);
+  counter-reset:abflow;
+}
+.ab-flow article{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:var(--r3);
+  background:var(--surface);
+  padding:var(--s4);
+}
+.ab-flow article::before{
+  counter-increment:abflow;
+  content:counter(abflow);
+  position:absolute; top:14px; right:16px;
+  font-size:.72rem; font-weight:700; color:var(--text-3);
+}
+.ab-flow h3{
+  margin:0 0 6px;
+  font-size:.78rem;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+  color:var(--brand-2,#A93BF1);
+}
+.ab-flow p{ margin:0; color:var(--text-2); font-size:.98rem; }
+
+/* the belief / standard lists */
+.ab-list{ list-style:none; margin:var(--s4) 0 0; padding:0; display:grid; gap:12px; }
+.ab-list li{
+  display:grid;
+  grid-template-columns:22px 1fr;
+  gap:12px;
+  align-items:start;
+  color:var(--text-2);
+  line-height:1.55;
+}
+.ab-list li svg{ width:18px; height:18px; margin-top:3px; color:var(--brand-2,#A93BF1); flex:none; }
+.ab-list li b{ color:var(--text-1); }
+
+@media (max-width:900px){
+  .ab-flow{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:640px){
+  .ab-contrast,
+  .ab-flow{ grid-template-columns:1fr; }
+  .mod-figure.is-wide{ aspect-ratio:16 / 10; }
+}
