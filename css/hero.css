@@ -469,8 +469,13 @@
      list each read as a single line. Under 680px there is no room, and nowrap
      stops being a layout choice and starts being clipped text: "Everything in
      s", "Wat", "No". Let them wrap. */
-  .hero-cta{ flex-wrap:wrap; white-space:normal; }
-  .ticks{ flex-wrap:wrap; white-space:normal; }
+  /* .hero .ticks, not .ticks. The base rule near the top of this file is
+     `.hero .ticks{ ... white-space:nowrap }` -- specificity 0,2,0. A bare
+     `.ticks` here is 0,1,0 and loses, so this override never applied and the
+     tick row has been running 64px past a 390px screen ever since it was
+     written. Same for the CTA row. */
+  .hero .hero-cta{ flex-wrap:wrap; white-space:normal; }
+  .hero .ticks{ flex-wrap:wrap; white-space:normal; }
   .hero{ padding-top:88px; }
   .hero-panel{ border-radius:22px; padding:var(--s4) var(--s3) var(--s5); }
   .hero-cta{ gap:var(--s2); }
