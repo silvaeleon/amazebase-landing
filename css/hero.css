@@ -297,7 +297,20 @@
 /* perspective must sit on the DIRECT parent of the transformed element */
 .hero-stage-inner{
   position:relative;
-  width:100%;
+  /* 880px AT EVERY DESKTOP WIDTH, not width:100%.
+
+     This box used to be fluid above 1300px and pinned to 880px below it, so
+     the dashboard came out 702px wide at 1272 and 644px at 1440+ -- 9%
+     smaller on the bigger monitor, and it stopped bleeding off the panel's
+     right edge, leaving a dead slab of empty panel. Every offset in the
+     HERO COMPOSITION block was measured against the 880px box, so any other
+     value silently invalidates all of them.
+
+     Pinning it here makes the whole hero pixel-identical from 1300px upward:
+     .hero-panel is capped at 1360, .hero-copy is a fixed 432px grid track,
+     and this is the last box that moved. Below 1180 the stacked layout
+     overrides it back to 100%. */
+  width:880px;
   perspective:1750px;
   perspective-origin:26% 46%;
 }
@@ -408,10 +421,6 @@
 .dash-shot:hover{ transform:rotateY(-13deg) rotateX(2.6deg) rotateZ(2.21deg); }
 
 /* ---------- RESPONSIVE --------------------------------------------------------------- */
-
-@media (max-width:1300px){
-  .hero-stage-inner{ width:880px; }
-}
 
 @media (max-width:1180px){
   .hero-panel{ padding:var(--s5) var(--s4) var(--s6); }
