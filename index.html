@@ -765,78 +765,287 @@
 <!-- ====================================================================
      COMPARE
 ==================================================================== -->
-<section class="section" id="compare">
-<div class="container">
-<div class="compare-wrap">
+<!-- =====================================================================
+     AMAZEBASE — "Most sellers juggle too many tools." VS section.
+     SELF-CONTAINED. Paste this whole block in place of the existing
+     <section class="section" id="compare">...</section> and delete that one.
 
-  <div class="compare-grid">
+     · CSS is inline and namespaced .abc-* — cannot collide with your sheets.
+     · Logos are embedded as data URIs. No image files, no paths to fix.
+     · Each card's diagram is ONE SVG, so the connector lines and the things
+       they point at share a single coordinate space. Lines land on their
+       target by construction, not by tuning. The old build drew the lines in a
+       400x260 viewBox with preserveAspectRatio="none" while positioning the
+       chips separately in percentages — two coordinate systems that were never
+       reconciled, which is why nothing connected.
 
-    <div class="compare-card" data-reveal>
-      <h3>Most sellers juggle<br>too many tools.</h3>
+     TO RESIZE: change the variables in the RESIZE block. Nothing else.
+===================================================================== -->
+<section class="abc" id="compare">
+<style>
+.abc{
+  /* ================= RESIZE — the only knobs ================= */
+  --abc-width:     1200px;  /* max width of the two cards together */
+  --abc-gap:         20px;  /* space between the two cards         */
+  --abc-title:       19px;  /* card headings                        */
+  --abc-pad:         18px;  /* padding inside each card             */
+  --abc-stage:      2.67;   /* diagram aspect w/h (viewBox 560x210).*/
+                            /* make the section shorter.            */
+  --abc-page:    #030917;   /* must match your page background      */
+  --abc-section-y:   16px;  /* space above and below the section    */
+  /* =========================================================== */
 
-      <div class="compare-stage">
-        <svg class="compare-svg" viewBox="0 0 400 260" preserveAspectRatio="none" aria-hidden="true">
-          <path class="dash-link" d="M70,40 C130,70 150,110 120,130"/>
-          <path class="dash-link" d="M300,35 C250,80 200,90 130,125"/>
-          <path class="dash-link" d="M120,135 C180,150 240,120 330,110"/>
-          <path class="dash-link" d="M60,180 C120,170 130,150 125,138"/>
-          <path class="dash-link" d="M300,190 C240,180 180,165 130,140"/>
-          <path class="dash-link" d="M70,45 C40,110 45,150 58,178"/>
-        </svg>
+  display:block!important; padding-block:var(--abc-section-y)!important;
+  font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif!important;
+  -webkit-font-smoothing:antialiased;
+}
+.abc,.abc *{ box-sizing:border-box!important; }
+/* neutralise host rules on bare element selectors, incl. !important ones */
+.abc h3,.abc p,.abc span{
+  margin:0!important; padding:0!important; border:0!important;
+  background:none!important; font:inherit!important; color:inherit!important;
+  letter-spacing:normal!important; text-transform:none!important;
+  position:static!important; width:auto!important; transform:none!important;
+}
+.abc svg{ display:block!important; }
 
-        <div class="tool-scatter">
-          <span class="tool t1"><img src="assets/img/logo-amazon.png" alt="">Seller Central</span>
-          <span class="tool t2"><img src="assets/img/logo-excel.png" alt="">Excel</span>
-          <span class="tool t3"><img src="assets/img/logo-helium10.png" alt="">Helium 10</span>
-          <span class="tool t4"><img src="assets/img/logo-gsheets.png" alt="">Google Sheets</span>
-          <span class="tool t5"><img src="assets/img/logo-gmail.png" alt="">Email threads</span>
-          <span class="tool t6"><svg class="icon-sm" style="color:var(--text-3)"><use href="#i-case"/></svg>Accounting</span>
+.abc .abc-wrap{ position:relative!important; width:100%!important;
+  max-width:var(--abc-width)!important; margin-inline:auto!important;
+  padding-inline:clamp(16px,4vw,40px)!important; }
+.abc .abc-grid{ display:grid!important; grid-template-columns:1fr 1fr!important;
+  gap:var(--abc-gap)!important; align-items:stretch!important; }
+
+/* ---------------- the two cards are NOT the same colour ----------------
+   Sampled from the reference: left fill #040B18 / border #192234 (neutral,
+   dead); right fill #081221 / border #191E3F (lighter, violet-leaning). The
+   old build used one identical gradient and border for both, so the colour
+   carried none of the argument. */
+.abc .abc-card{
+  position:relative!important; border-radius:16px!important;
+  padding:var(--abc-pad)!important; display:flex!important;
+  flex-direction:column!important; align-items:center!important;
+}
+/* A CARD'S OWN FILL IS PART OF THE CARD, not "the background behind it".
+   An earlier pass made these transparent, which made the whole block depend on
+   the page supplying a dark backdrop — on a light page every border, label and
+   dashed line vanished. The fills are OPAQUE and stated as absolute colours,
+   taken from the reference (left #040B18 neutral, right #081221 lighter and
+   violet-leaning), not as translucent white overlays that inherit whatever is
+   underneath. The block now renders identically on any page.
+
+   What this block still does NOT paint is anything OUTSIDE these two cards and
+   the VS badge — no section background, no ambient wash, no shadow that leaves
+   a card. That part of the containment rule stands. */
+.abc .abc-card--bad{
+  background:linear-gradient(180deg,#050C1A,#030A16)!important;
+  border:1px solid rgba(255,255,255,.085)!important;
+}
+/* CONTAINMENT RULE: this block paints nothing outside the two cards and the VS
+   badge. The previous version had a 44px box-shadow bleeding past the card and a
+   strong radial behind the heading; dropped into a real page both stack with the
+   page's own ambient lighting and produce a visible seam at the section edge.
+   Page-level lighting is a single global layer and is not this block's business. */
+.abc .abc-card--good{
+  background:linear-gradient(180deg,#0B1628,#06101E)!important;
+  border:1px solid rgba(128,116,236,.26)!important;
+}
+.abc .abc-card h3{
+  font-size:var(--abc-title)!important; font-weight:700!important;
+  letter-spacing:-.02em!important; line-height:1.3!important;
+  color:#EEF1F8!important; text-align:center!important; margin-bottom:6px!important;
+}
+
+/* ---------------- the diagrams ---------------- */
+.abc .abc-stage{ width:100%!important; margin-top:2px!important; }
+.abc .abc-svg{ width:100%!important; height:auto!important;
+  aspect-ratio:var(--abc-stage)!important;
+  font-family:inherit!important; font-size:11px!important; font-weight:500!important; }
+
+/* LEFT — tool boxes recede. Reference interior #060D1B against a card fill of
+   #040B18: almost no difference, defined by a soft border. The old build used
+   an opaque rgba(12,18,36,.94) that sat LIGHTER than the card, so the chips
+   popped forward — backwards for the "messy" side. */
+.abc .abc-tool rect{ fill:rgba(255,255,255,.022)!important;
+  stroke:rgba(255,255,255,.085)!important; stroke-width:1!important; }
+.abc .abc-tool text{ fill:#95A0B8!important; }
+.abc .abc-dash{ fill:none!important; stroke:rgba(255,255,255,.16)!important;
+  stroke-width:1!important; stroke-dasharray:3.5 4.5!important; }
+
+/* RIGHT — every tile carries its OWN colour. Sampled from the reference:
+   Products #050F29/blue, Inventory #1E1F60/indigo, Advertising #2E9A5F/green,
+   Suppliers #14367E, Reports #1E347C, AI #321965. The old build gave all six
+   the identical rgba(12,18,36,.94) with a white 7% border. */
+.abc .abc-node .abc-tile{
+  fill:color-mix(in srgb,var(--c) 16%,transparent)!important;
+  stroke:color-mix(in srgb,var(--c) 58%,transparent)!important; stroke-width:1!important;
+}
+.abc .abc-node .abc-gi{ fill:none!important; stroke:var(--c)!important;
+  stroke-width:1.5!important; stroke-linecap:round!important; stroke-linejoin:round!important; }
+.abc .abc-node text{ fill:#C3CBDC!important; }
+/* glow. In the old build .spoke, .tool and .compare-verdict all computed to
+   box-shadow:none — only the hub and the badge glowed, so everything else read
+   flat and printed. */
+.abc .abc-node{ filter:drop-shadow(0 0 7px color-mix(in srgb,var(--c) 34%,transparent))!important; }
+
+.abc .abc-hub rect{ fill:url(#abcHubF)!important;
+  stroke:rgba(150,110,244,.42)!important; stroke-width:1!important; }
+.abc .abc-hub text{ fill:#FFF!important; font-size:14px!important; font-weight:700!important;
+  letter-spacing:-.02em!important; }
+.abc .abc-link{ fill:none!important; stroke-width:1.7!important; }
+
+/* ---------------- verdict pills ----------------
+   Reference fills #2D161C and #122C2A with text peaking #FA5C4A / #72F4A5.
+   The old build used .10 alpha and softer text, roughly half the tint. */
+.abc .abc-verdict{
+  display:inline-flex!important; align-items:center!important; gap:8px!important;
+  margin-top:auto!important; padding:8px 15px!important; border-radius:999px!important;
+  font-size:12.5px!important; font-weight:600!important; white-space:nowrap!important;
+}
+.abc .abc-verdict svg{ width:15px!important; height:15px!important; flex:none!important; }
+.abc .abc-verdict--bad{ color:#FF6A55!important; background:rgba(250,92,74,.13)!important;
+  border:1px solid rgba(250,92,74,.42)!important;
+  box-shadow:0 0 20px rgba(250,92,74,.14)!important; }
+.abc .abc-verdict--good{ color:#72F4A5!important; background:rgba(114,244,165,.11)!important;
+  border:1px solid rgba(114,244,165,.40)!important;
+  box-shadow:0 0 20px rgba(114,244,165,.14)!important; }
+
+/* ---------------- VS badge ----------------
+   Reference ring is a TWO-TONE gradient — #5673DC blue-violet upper-left into
+   #714FD1 violet lower-right — over a navy-purple fill #0A0C2A. The old build
+   used one flat rgba(139,59,241,.45) ring on a neutral #080E20. */
+.abc .abc-vs{
+  position:absolute!important; left:50%!important; top:50%!important;
+  transform:translate(-50%,-50%)!important; z-index:5!important;
+  display:grid!important; place-items:center!important;
+  width:54px!important; height:54px!important; border-radius:50%!important;
+  border:1.5px solid transparent!important;
+  background:
+    linear-gradient(#0A0C2A,#0A0C2A) padding-box,
+    linear-gradient(135deg,#5673DC 0%,#6459D4 45%,#714FD1 100%) border-box!important;
+  box-shadow:0 0 26px rgba(105,80,215,.55)!important;
+  color:#FFF!important; font-size:13px!important; font-weight:700!important;
+  letter-spacing:.04em!important;
+}
+
+@media (max-width:860px){
+  .abc .abc-grid{ grid-template-columns:1fr!important; }
+  .abc .abc-vs{ display:none!important; }
+}
+</style>
+
+  <div class="abc-wrap">
+    <div class="abc-grid">
+
+      <div class="abc-card abc-card--bad">
+        <h3>Most sellers juggle too many tools.</h3>
+        <div class="abc-stage">
+          <svg class="abc-svg" viewBox="0 0 560 210" role="img"
+               aria-label="Eight disconnected tools linked by broken dotted lines">
+      <path class="abc-dash" d="M83,44 Q147,58 210,37"/>
+      <path class="abc-dash" d="M210,37 Q264,20 317,41"/>
+      <path class="abc-dash" d="M317,41 Q373,67 434,58"/>
+      <path class="abc-dash" d="M83,44 Q92,95 64,138"/>
+      <path class="abc-dash" d="M64,138 Q126,160 189,143"/>
+      <path class="abc-dash" d="M189,143 Q251,124 314,140"/>
+      <path class="abc-dash" d="M314,140 Q373,168 436,153"/>
+      <path class="abc-dash" d="M434,58 Q450,105 436,153"/>
+      <path class="abc-dash" d="M210,37 Q176,85 189,143"/>
+      <path class="abc-dash" d="M317,41 Q339,91 314,140"/>
+      <path class="abc-dash" d="M83,44 Q146,83 189,143"/>
+      <path class="abc-dash" d="M434,58 Q358,75 314,140"/>
+      <path class="abc-dash" d="M64,138 Q189,106 314,140"/>
+      <path class="abc-dash" d="M210,37 Q317,106 434,58"/>
+      <path class="abc-dash" d="M317,41 Q234,68 189,143"/>
+      <path class="abc-dash" d="M83,44 Q199,-23 317,41"/>
+      <path class="abc-dash" d="M189,143 Q314,106 436,153"/>
+      <path class="abc-dash" d="M210,37 Q250,101 314,140"/>
+      <path class="abc-dash" d="M64,138 Q249,179 436,153"/>
+      <g class="abc-tool"><rect x="22" y="22" width="122" height="44" rx="10"/><image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAYAAACohjseAAAEbklEQVR42u2ZT0gjVxzHv+/N5K8xVsWNa1rBpCJtPCxCWyIUwW7BQ6EnW5SlpZeFKhRv1otgwYJIL3rMQdjeXMQqFDztwZZCS82mFKWaKigR17i6bF3/JZn37SHJdO26l5qxKvOBITDz5uV95/fe9/ebN4CNjY2NjY2NjY3N/4MAwOssUF73CF57gfqFrAMhIKWEEMI8p5SCUupqr8GiMMMwXnpdCGGpUMsECiFA5ruura1FNBpFOByG1+vF1tYWFhYWEI/HX2hrBSz1IYSgEIIul4sjIyPc3d3lWczNzbGhocG8x4qxWCJQSkkpJaemps4UppRiLpcjSS4uLtLv95sP5dIL1DSNANjZ2UmS3N/fp1KKy8vLHBgY4PDwMPf29qiU4vHxMUnyzp07BEBd16+OwOnpaTNiBwcHDAaDZpuenh6S5NHREZVSHB0dtUxgydNE0RGHhoYwOzuLxsZGrKysYHNz02wzPz+fT8KF1OHxeK5OHiy6YSKRQCKRMM83NTUhFAohEAggGo2eck0rHVS3MkWUlZWhr68P3d3dCIVCcLvdp0Q9n/ivjMBi8vb7/ZiZmUFbW5t5bWdnB/F4HLquo729/cLKNUtMZmxsjCR5eHhIkozFYgwEAgTAlpYWkuTJyQlJcnx8/GqYjBAChmGgsrISXV1dUErB7XZjY2MDvb29yGQy0DQNVVVVp9aeldNVllogANTX16O6utoc+Pr6OjKZDLxeLwzDQCQSOSWwvLwcJC0zm5JWMADY3NxMwzBoGAaVUkyn06yrqyMABoNBJpNJZrNZZrNZKqWYSqVYU1NjVclW2hoUAH0+Hzc3N2kYhrnOlpaWGIvFuLa2ZhYAuVzOvD4xMUEB0KHrFJdVoCb/MZn+/n5TiGEYp2rReDxumhBJ7uyk2dHRUejnEkYwPzWlKVLXJIUQHBwc5KNHW2aBnU6nOTExYbrp5OQkV1dXGWluJgCGAy421TrpdZbOTc/9PigE4NA0DH7owy9rJ5h9mAGgoEnAUEB1VRUaQiGQRCqVwvb2dqFMK+RLXxmePt3H3ff8eONmDm83CBweAbe/OQKpSvLCer7oifxvY8DJxFc+3v/Cy9dvuAoRlS+0dzokHZow78sfOt8MuvjBrTK2hj38YcBD4N9t/uP4zl1cMx/F5HYG7359DI8mkRyRmPzchdsRHX6vq1AwaQAkMlkiawCKEhVeJ96PuPHtXQcefOlAhQd4Jyzx3UNhzo5Ls2UhRV4soOGTVidGPwZu3Mzhr22JX9eB5LbC42cSUgC1FURTrcSt1xS8lcDvf2rouUf8mMzgs7Zy3P/5AM+Oc5dvT0aIfIeKgNvpxEdvafi0VSEaAjz+LKALgAQyAo+f6HjwB3DvJ4nvf8sCyEGXAjklAJRuE8qSTaeiwRSLpUqfA69WEq94gJwidvYFUk+A40zW/PviDBCFEfEyCyx2LGU+YIovfxDA8w/jin6bKE7dommwECFewFcR++OLLdDGxsbGxsbGxsbG5kz+BoefJt86dAN9AAAAAElFTkSuQmCC" x="32" y="33.0" width="22" height="22"/><text x="62" y="42.0">amazon</text><text x="62" y="57.0">Seller Central</text></g>
+      <g class="abc-tool"><rect x="170" y="20" width="80" height="34" rx="10"/><image href="data:image/png;base64,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" x="180" y="26.0" width="22" height="22"/><text x="210" y="41.0">Excel</text></g>
+      <g class="abc-tool"><rect x="272" y="24" width="90" height="34" rx="10"/><image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAYAAACohjseAAAE3klEQVR42u2ZTWgdVRTHf+fOTJKX95omaWkLNQvbRamLIloQEUXqoiCCiwouXKi4cCV1o1VxI1gtKn4guigK6kqFFBFaqUi7KaRC6QeobUDbGqumpfnq+8ybmXtczHuPeXkvz77kpW3SuTCbmblz7v+ec/7nf+6IqioreBhW+EgAJgATgAnABOBtA9BqdLUz3OUATCvAHLPCPKhAaEEkAnfmUsCxP8o1by5rgKEFIQJ2JWt5/fsc9715lSOj7QF0b8U8qwIr+sr+Y0Xe/ynP2EQIoZLuluWbgwqYyvq/PlFi3+EcZ/708bqFwYwwdU2xdpmSTNVzJ8Z8Xj6Q5ehoGeNAX8YQKgQ22oAlJRnVKDc6BSj+LasRmXx5vMjR0yUGMkJvl0TAFtHQteVBEXAkMhgPp3bD0NoK5TeZ39slOCkhtO3XvAV7sGpo+FSJb0+UEInAhW3ubpwZx6ZC3jiYY7poa9HRzLM3FODZ8YAnP57kif3TnBwLcEzk1fB/8qO6YMdAtqTsO5zn3r0TfHi0gCOypLndVoimPMGkhOHTJQ79Osuz96d4ZWeaoQGnthHxsNWKZxwTPftipMg7P+YY/TfAuMKmtc6Sk5fbLjFYCwMZYTaAT4/kGT5VYveOXl54OE2mW9BYakklbw/+MsveH3KM/O7jeLA6Yyj6SmCXnp0XpGSqIdeXMUwXldeGs2x/6yoj5/3ac1WYKii79k/z2CdTjFzwWZUWUt7imfGGadHAguvAYJ9hdMzn54tlBAhVEYHxa5YDp0qke4S+ns4x4w0V21opwqYr8k5d/BvoS0nHmfGmdBPNejXl5gFbEMkYibziztmW6r25hV8qz2xlJzUmGKxp3t+1a6OjAAu+EuQskyLRquNxkLMU/XoXhgoz+SZJJ4CvTHraQDb5cmsbBV87D7C6mduHPJ7Zkaanx9SpemOgVLJs2+jVvADQnxKef6i3JqTjAG2orO41eC51cx7c3EW+hY3tQ15buSUr/d9EWyEaWiW0ijRRyYriGMGJJYkqBKHOL7tF8BxZlI3Eg9fb4ggwMZPnykQWMQaNyWtBUGsZ7E+zfnAVWuntyn7I+b+v1uZrjGNUwXUNmzeuxRipzbk8mWVyOj+vjXVrVrFmdbpOEi4aYBhaXMfw2XfHefXdYbyBDEGswLmOwZ/Osfu5nXzw4uP4YUiX63Dxnwm2PfVeFHISLxOC9QM2rOvn3Dd76Ev3EIQhnuuw76sjfPT5Ybz+Jjamcrz90i72PP1IbU0dzcFqdxDOKeqhVprgJsEeVgR6A+3Nc4hb/c68NpaSZKrhZWgsUbZFiVFpEqItqL5dGx0FqLFr7r1W77OAOdf7/rI8+L3lxHYCMAF4C0g1EcFxDI4xdSXBMQZ1DKbJCZljokZpbh3Uynca26XWNkSW8N9EqewTzhQIHVPXyYaOgZkChdlyfRNslXK2QEM7IQJ+wHSqu6F2FmbLkQ3T3Eap7LdX1q5Hi6oqIsJvFy5z+uxfuF1u3cJEIPQDtmzawD1b7sCqYkTI5kscGjnXyO8CapVUt8ejD2zFc53anJOjlxg9P47jNdoIygF3bx3irjvX19aUiO32zl0Ua7WpyNVK/ph4uwTYVocyQkMeWqtYbWHDSNNcv209mNTBBGACMAGYAEwAJgATgMt3/AfOH3IjdPkcrQAAAABJRU5ErkJggg==" x="282" y="30.0" width="22" height="22"/><text x="312" y="45.0">Helium 10</text></g>
+      <g class="abc-tool"><rect x="386" y="36" width="96" height="44" rx="10"/><image href="data:image/png;base64,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" x="396" y="47.0" width="22" height="22"/><text x="426" y="56.0">Google</text><text x="426" y="71.0">Sheets</text></g>
+      <g class="abc-tool"><rect x="14" y="116" width="100" height="44" rx="10"/><g transform="translate(24,127.0)"><path d="M11,3 19,7v6c0,4-3.4,6.6-8,8-4.6-1.4-8-4-8-8V7Z" fill="none" stroke="#A472F0" stroke-width="1.6"/><circle cx="11" cy="11" r="2.6" fill="#A472F0"/></g><text x="54" y="136.0">Inventory</text><text x="54" y="151.0">App</text></g>
+      <g class="abc-tool"><rect x="146" y="126" width="86" height="34" rx="10"/><image href="data:image/png;base64,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" x="156" y="132.0" width="22" height="22"/><text x="186" y="147.0">PPC Tool</text></g>
+      <g class="abc-tool"><rect x="256" y="118" width="116" height="44" rx="10"/><g transform="translate(266,129.0)"><circle cx="11" cy="11" r="8.4" fill="none" stroke="#4C8DF0" stroke-width="1.6"/><path d="M7.4,11.6 10.2,14.2 15,8.6" fill="none" stroke="#4C8DF0" stroke-width="1.8" stroke-linecap="round"/></g><text x="296" y="138.0">Accounting</text><text x="296" y="153.0">Software</text></g>
+      <g class="abc-tool"><rect x="398" y="136" width="76" height="34" rx="10"/><g transform="translate(408,142.0)"><rect x="3" y="8" width="16" height="11" rx="1.6" fill="none" stroke="#3F86E6" stroke-width="1.6"/><path d="M11,3 20,8H2Z" fill="#3F86E6"/><path d="M7,12v4M11,12v4M15,12v4" stroke="#3F86E6" stroke-width="1.5"/></g><text x="438" y="157.0">Bank</text></g>
+          </svg>
         </div>
+        <span class="abc-verdict abc-verdict--bad">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+               stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          Disconnected. Manual. Unreliable.
+        </span>
       </div>
 
-      <span class="compare-verdict is-bad">
-        <svg class="icon-sm"><use href="#i-x"/></svg>Disconnected. Manual. Unreliable.
-      </span>
-    </div>
+      <div class="abc-card abc-card--good">
+        <h3>You run your business.<br>We connect everything.</h3>
+        <div class="abc-stage">
+          <svg class="abc-svg" viewBox="0 0 560 210" role="img"
+               aria-label="AmazeBase connected to Products, Inventory, Advertising, Financials, Suppliers, Reports and the AI Assistant">
+            <defs>
+              <linearGradient id="abcHubF" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#0C1326"/><stop offset="1" stop-color="#040A17"/>
+              </linearGradient>
+              <linearGradient id="abcMark" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#7C5CF0"/><stop offset="1" stop-color="#D45BE0"/>
+              </linearGradient>
+              <filter id="abcHubGlow" x="-60%" y="-60%" width="220%" height="220%">
+                <feGaussianBlur stdDeviation="9"/>
+              </filter>
+              <marker id="abcA_prod" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,1.5 L10,5 L0,8.5Z" fill="#6FAEDC"/></marker>
+              <marker id="abcA_inv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,1.5 L10,5 L0,8.5Z" fill="#BE79FE"/></marker>
+              <marker id="abcA_adv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,1.5 L10,5 L0,8.5Z" fill="#9ABFD9"/></marker>
+              <marker id="abcA_fin" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,1.5 L10,5 L0,8.5Z" fill="#678EDB"/></marker>
+              <marker id="abcA_sup" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,1.5 L10,5 L0,8.5Z" fill="#9A55C8"/></marker>
+              <marker id="abcA_rep" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,1.5 L10,5 L0,8.5Z" fill="#A959C4"/></marker>
+              <marker id="abcA_ai" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,1.5 L10,5 L0,8.5Z" fill="#C079E0"/></marker>
+            </defs>
 
-    <div class="compare-card" data-reveal>
-      <h3>You run your business.<br>We connect everything.</h3>
+            <!-- connectors leave a hub EDGE and terminate on their tile -->
+            <path class="abc-link" d="M211,76 C186,76 168,58 138,56" stroke="#6FAEDC" style="filter:drop-shadow(0 0 3px #6FAEDC)" marker-end="url(#abcA_prod)"/>
+            <path class="abc-link" d="M211,96 L136,96" stroke="#BE79FE" style="filter:drop-shadow(0 0 3px #BE79FE)" marker-end="url(#abcA_inv)"/>
+            <path class="abc-link" d="M211,116 C186,116 168,138 138,138" stroke="#9ABFD9" style="filter:drop-shadow(0 0 3px #9ABFD9)" marker-end="url(#abcA_adv)"/>
+            <path class="abc-link" d="M349,76 C374,76 404,58 434,56" stroke="#678EDB" style="filter:drop-shadow(0 0 3px #678EDB)" marker-end="url(#abcA_fin)"/>
+            <path class="abc-link" d="M349,96 L442,96" stroke="#9A55C8" style="filter:drop-shadow(0 0 3px #9A55C8)" marker-end="url(#abcA_sup)"/>
+            <path class="abc-link" d="M349,116 C374,116 404,138 434,138" stroke="#A959C4" style="filter:drop-shadow(0 0 3px #A959C4)" marker-end="url(#abcA_rep)"/>
+            <path class="abc-link" d="M280,142 L280,154" stroke="#C079E0" style="filter:drop-shadow(0 0 3px #C079E0)" marker-end="url(#abcA_ai)"/>
 
-      <div class="compare-stage">
-        <svg class="compare-svg" viewBox="0 0 400 260" preserveAspectRatio="none" aria-hidden="true">
-          <path class="live-link" d="M95,32 C150,42 160,90 176,118"/>
-          <path class="live-link" d="M95,120 C140,122 155,124 176,128"/>
-          <path class="live-link" d="M95,205 C150,196 160,160 176,140"/>
-          <path class="live-link" d="M305,32 C250,42 240,90 224,118"/>
-          <path class="live-link" d="M305,120 C260,122 245,124 224,128"/>
-          <path class="live-link" d="M305,205 C250,196 240,160 224,140"/>
-        </svg>
+            <!-- hub: RECTANGULAR, 138x92 = 1.50. Measured off the reference at 7x
+                 zoom: 128x86 = 1.49. An earlier pass called it square and built it
+                 104x104, which was wrong in both directions. The mark is a stroked
+                 rounded arch with a violet-to-magenta grade, not a filled triangle. -->
+            <rect x="211" y="50" width="138" height="92" rx="16"
+                  fill="#7C5CF0" opacity=".16" filter="url(#abcHubGlow)"/>
+            <g class="abc-hub">
+              <rect x="211" y="50" width="138" height="92" rx="16"/>
+              <path d="M269.5,82 L278.6,67.5 Q280,65.2 281.4,67.5 L290.5,82"
+                    fill="none" stroke="url(#abcMark)" stroke-width="4.2"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+              <text x="280" y="113" text-anchor="middle">AmazeBase</text>
+            </g>
 
-        <span class="spoke s1"><img class="neon-ico" src="assets/img/ico-inventory.png" alt="" width="128" height="128" loading="lazy">Products</span>
-        <span class="spoke s2"><svg><use href="#i-stack"/></svg>Inventory</span>
-        <span class="spoke s3"><img class="neon-ico" src="assets/img/ico-advertising.png" alt="" width="128" height="128" loading="lazy">Advertising</span>
-        <span class="spoke s4"><img class="neon-ico" src="assets/img/ico-cashflow.png" alt="" width="128" height="128" loading="lazy">Financials</span>
-        <span class="spoke s5"><img class="neon-ico" src="assets/img/ico-suppliers.png" alt="" width="128" height="128" loading="lazy">Suppliers</span>
-        <span class="spoke s6"><svg><use href="#i-report"/></svg>Reports</span>
-
-        <div class="hub">
-          <svg><use href="#i-spark"/></svg>
-          <span data-brand>AmazeBase</span>
+      <g class="abc-node" style="--c:#3B82F6"><rect class="abc-tile" x="16" y="39" width="34" height="34" rx="10"/><g class="abc-gi" transform="translate(22,45)"><path d="M4,7.6 11,4l7,3.6v7L11,18 4,14.6Z"/><path d="M4,7.6 11,11.2 18,7.6M11,11.2V18"/></g><text x="58" y="61">Products</text></g>
+      <g class="abc-node" style="--c:#7C6CF0"><rect class="abc-tile" x="24" y="79" width="34" height="34" rx="10"/><g class="abc-gi" transform="translate(30,85)"><path d="M11,3 19,7.4 11,11.8 3,7.4Z"/><path d="M3,11.4 11,15.8 19,11.4"/></g><text x="66" y="101">Inventory</text></g>
+      <g class="abc-node" style="--c:#2ED47A"><rect class="abc-tile" x="16" y="119" width="34" height="34" rx="10"/><g class="abc-gi" transform="translate(22,125)"><path d="M4,9v4h3l6,4V5L7,9Z"/><path d="M16,8.4a4.6,4.6 0 0 1 0,5.2"/></g><text x="58" y="141">Advertising</text></g>
+      <g class="abc-node" style="--c:#3B82F6"><rect class="abc-tile" x="444" y="39" width="34" height="34" rx="10"/><g class="abc-gi" transform="translate(450,45)"><circle cx="11" cy="11" r="7.6"/><path d="M11,6.4v9.2M13.6,8.4H9.8a1.8,1.8 0 0 0 0,3.6h2.4a1.8,1.8 0 0 1 0,3.6H8.4"/></g><text x="486" y="61">Financials</text></g>
+      <g class="abc-node" style="--c:#4C8DF0"><rect class="abc-tile" x="452" y="79" width="34" height="34" rx="10"/><g class="abc-gi" transform="translate(458,85)"><path d="M2,6h10v9H2Z"/><path d="M12,9h4l3,3v3h-7Z"/><circle cx="6" cy="16.6" r="1.7"/><circle cx="15.4" cy="16.6" r="1.7"/></g><text x="494" y="101">Suppliers</text></g>
+      <g class="abc-node" style="--c:#8B5CF6"><rect class="abc-tile" x="444" y="119" width="34" height="34" rx="10"/><g class="abc-gi" transform="translate(450,125)"><path d="M5,3h8l4,4v12H5Z"/><path d="M13,3v4h4"/><path d="M8,12h6M8,15h4"/></g><text x="486" y="141">Reports</text></g>
+      <g class="abc-node" style="--c:#A855F7"><rect class="abc-tile" x="226" y="158" width="34" height="34" rx="10"/><g class="abc-gi" transform="translate(232,164)"><path d="M11,3.6 12.8,9.2 18.4,11 12.8,12.8 11,18.4 9.2,12.8 3.6,11 9.2,9.2Z"/></g><text x="268" y="180">AI Assistant</text></g>
+          </svg>
         </div>
+        <span class="abc-verdict abc-verdict--good">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+               stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+          Connected. Automated. Intelligent.
+        </span>
       </div>
 
-      <span class="compare-verdict is-good">
-        <svg class="icon-sm"><use href="#i-checkc"/></svg>Connected. Automated. Intelligent.
-      </span>
     </div>
-
+    <span class="abc-vs">VS</span>
   </div>
-
-  <span class="vs-badge">VS</span>
-
-</div>
-</div>
 </section>
+<!-- ================= end AmazeBase compare section ================= -->
+
 
 <!-- ====================================================================
      FEATURES
