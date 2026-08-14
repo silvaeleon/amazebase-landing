@@ -25,6 +25,22 @@
   border:1px solid rgba(255,255,255,.08);
   background:linear-gradient(180deg,#050B1B 0%,#02060F 100%);
   padding:40px 40px 44px 48px;
+  /* PINNED TO THE WIDTH THE HERO WAS COMPOSED AT.
+
+     The panel used to grow to 1360px while .hero-copy stayed a fixed 432px
+     track and .hero-stage-inner a fixed 880px. All 128px of that extra width
+     landed on the right as dead panel: the gap between the dashboard's right
+     edge and the panel's right edge went from 27px at 1272 to 155px at
+     1440+. Worse, the glows are positioned as a % of the PANEL, so .dg-3
+     slid 118px further right into that empty strip and sat there as a blob
+     with nothing behind it to light.
+
+     1232 is the panel's width at 1272, the window the composition was tuned
+     in. Pinning it makes the hero identical on every monitor from 1440 up,
+     and lines the panel up with the 1200px .abp-/.abc- blocks below (16px
+     inset) instead of overhanging them by 80px. */
+  max-width:1232px;
+  margin-inline:auto;
   overflow:hidden;
   isolation:isolate;
 }
