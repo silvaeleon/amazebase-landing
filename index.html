@@ -190,6 +190,27 @@
 <div class="container">
 <div class="hero-panel">
 
+<!-- Backlight for the WHOLE hero. FOUR INDEPENDENT LAYERS, each its own
+     element so it can be nudged on its own. Every position lives in
+     css/hero.css under BACKLIGHT, as custom properties on the element:
+       --x  horizontal centre, % of the panel
+       --y  vertical centre,   % of the panel
+       --w  width,             % of the panel (height follows the artwork)
+       --o  opacity
+     Moving one glow means changing one line.
+
+     This sits FIRST in the panel and carries no z-index of its own, so the
+     glows paint behind the copy column (z-index:1) and behind the dashboard
+     stage by DOM order -- while still being individually raisable via the
+     editor's Depth control. See the note in css/hero.css. -->
+<div class="hero-glows" aria-hidden="true">
+  <img class="dg dg-1" src="assets/img/glow-1-left-blue.webp" alt="" decoding="async">
+  <img class="dg dg-2" src="assets/img/glow-2-top-magenta.webp" alt="" decoding="async">
+  <img class="dg dg-3" src="assets/img/glow-3-right-violet.webp" alt="" decoding="async">
+  <img class="dg dg-4" src="assets/img/glow-4-bottomright-purple.webp" alt="" decoding="async">
+  <img class="dg dg-1 dup-1" src="assets/img/glow-1-left-blue.webp" alt="" decoding="async">
+</div>
+
 <div class="hero-light" aria-hidden="true"></div>
 
 
@@ -215,15 +236,9 @@
                     belong to the slab and must stay put relative to it.
      Percentages were converted from the old viewBox numbers at the design
      width; see css/hero.css for the values. -->
-<div class="hero-fx" aria-hidden="true">
-  <img class="fx fx-c2" src="Images/Curve 2.png" alt="">
-  <img class="fx fx-c4" src="Images/Curve 4.png" alt="">
-</div>
-
 <div class="hero-grid">
 
   <div class="hero-copy" data-reveal>
-    <span class="eyebrow">The operating system for Amazon sellers</span>
 
     <h1>Run your Amazon business with <span class="grad-text">confidence.</span></h1>
 
@@ -298,10 +313,6 @@
 
   <!-- ============================ DASHBOARD ============================ -->
   <div class="hero-stage" data-reveal>
-  <div class="stage-fx" aria-hidden="true">
-    <img class="fx fx-c1" src="Images/Curve 1.png" alt="">
-    <img class="fx fx-c3" src="Images/Curve 3.png" alt="">
-  </div>
   <div class="hero-stage-inner">
 
   <!-- The dashboard is now the rendered artwork, cropped out of
@@ -327,12 +338,6 @@
          --o  opacity
        Moving one glow means changing one line. The defaults reproduce the
        composition the four source files were drawn in. -->
-  <div class="dash-glows" aria-hidden="true">
-    <img class="dg dg-1" src="assets/img/glow-1-left-blue.webp" alt="" decoding="async">
-    <img class="dg dg-2" src="assets/img/glow-2-top-magenta.webp" alt="" decoding="async">
-    <img class="dg dg-3" src="assets/img/glow-3-right-violet.webp" alt="" decoding="async">
-  </div>
-
   <img class="dash-shot" src="assets/img/dashboard.jpg"
        alt="AmazeBase dashboard showing revenue, profit, cash flow and inventory"
        width="1097" height="778" decoding="async">

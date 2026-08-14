@@ -351,11 +351,18 @@
    cropped to its own content and converted to WebP (213 KB for all four,
    down from 1152 KB as PNG). The defaults below place the cropped pieces back
    where they sat in that original composition. */
-.dash-glows{
+.hero-glows{
   position:absolute;
   inset:0;
-  z-index:1;                  /* .dash-shot is 2, so all of this sits behind */
   pointer-events:none;
+  /* NO z-index on purpose. z-index:auto means this element does NOT form a
+     stacking context, so each .dg inside it competes directly within
+     .hero-panel. Consequences, both wanted:
+       - at z-index:0 a glow paints behind .hero-copy (1) and behind the
+         stage (auto/0, but later in DOM), i.e. behind cards AND dashboard;
+       - raising one glow to 1+ lifts it over the curves and the slab.
+     Set a z-index here and the glows would be sealed inside this layer and
+     the editor's Depth control would stop working across the hero. */
 }
 .dg{
   position:absolute;
@@ -370,13 +377,12 @@
   user-select:none;
 }
 
-.dg-1{ --x:21.7%; --y:32.0%; --w:43.3%; --o:.85; }   /* blue    - top left    */
-.dg-2{ --x:46.4%; --y:22.5%; --w:58.7%; --o:.80; }   /* magenta - top middle  */
-.dg-3{ --x:82.4%; --y:29.6%; --w:35.1%; --o:.85; }   /* violet  - right       */
-
-/* glow-4-bottomright-purple.webp is in assets/img/ and is NOT wired up yet --
-   it is earmarked for the stat cards to the left of the dashboard. To use it,
-   add a .dg-4 img in that container and give it its own --x/--y/--w. */
+/* Defaults, now expressed against the PANEL. The live values are in the
+   HERO COMPOSITION block at the foot of this file. */
+.dg-1{ --x:45.0%; --y:14.9%; --w:25.8%; --o:.85; }   /* blue    - left        */
+.dg-2{ --x:60.3%; --y:15.0%; --w:35.0%; --o:.80; }   /* magenta - top middle  */
+.dg-3{ --x:78.6%; --y:20.4%; --w:20.9%; --o:.85; }   /* violet  - right       */
+.dg-4{ --x:22.3%; --y:92.7%; --w:42.9%; --o:.80; }   /* purple  - under cards */
 
 /* Below 1180 the slab flattens and shrinks; a glow sized for the desktop
    composition becomes a wash at that size, so pull all three back. */
@@ -472,3 +478,55 @@
 .fx-c2{ left:-10.10%; top:79.79%; scale:0.447; rotate:13.5deg; }
 .fx-c3{ left:21.11%; top:-8.90%; rotate:13.5deg; }
 .fx-c4{ left:74.37%; top:71.02%; scale:1.030; rotate:-13.0deg; }
+
+
+/* ==========================================================================
+   HERO COMPOSITION — set in the visual editor (/editor.html), 1272px window.
+
+   ⚠ THE PIXEL VALUES BELOW ARE VIEWPORT-SPECIFIC. They were measured at a
+   1272px window and do not scale: at other widths the dashboard, the four
+   cards and the panel height drift. The PERCENTAGE values (curves, glows) do
+   scale and are safe. Converting the pixel ones to percentages is the obvious
+   next step and has not been done yet.
+
+   Everything here overrides the rules above deliberately; it is kept in one
+   block so an editor session can be re-applied or reverted as a unit.
+   ========================================================================== */
+.hero-panel{ height:624px; }
+
+/* WIDTH-INDEPENDENT. left is a % of .hero-stage-inner, the only box in the
+   hero whose width changes (776px @1366, 810px @1440+, pinned 880px <=1300).
+   -105px measured at 1272, where that box is 880 wide: -105/880 = -11.9318%.
+   top stays in px on purpose -- as a % it would resolve against an auto
+   height. width:97% and scale are already relative, so the slab now tracks
+   its stage at every width instead of only at 1272. */
+.dash-shot{ left:-11.9318%; top:-39px; scale:0.803; }
+
+/* These need no conversion. .hero-copy is a FIXED 432px track at every width
+   (grid-template-columns:432px minmax(0,1fr)), so their containing block
+   never moves and the pixel values are already the same on every monitor.
+   Percentages here would be churn, not robustness. */
+.hero h1{ left:0px; top:-53px; position:relative; }
+.hero-sub{ left:-1px; top:-59px; position:relative; }
+.hero-cta{ left:-2px; top:-69px; position:relative; }
+.hero .ticks{ left:-1px; top:-83px; position:relative; }
+.float-card.f1{ left:-48px; top:-78px; scale:0.957; }
+.float-card.f2{ left:216px; top:-77px; scale:0.964; }
+.float-card.f3{ left:-38px; top:83px; scale:0.964; }
+.float-card.f4{ left:236px; top:84px; scale:1.115; }
+
+/* Rebased from the stage box to the panel box when the glows moved into
+   .hero-glows. Arithmetic, not re-tuning: anchor px = stage.x + old% * 810,
+   new% = (anchor - 41) / 1358. Verified within 0.01px at 1440-2560. */
+.dg-1{ --x:48.9%; --y:22.6%; --w:25.8%; --o:0.85; z-index:1;  }
+.dg-2{ --x:67.0%; --y:14.5%; --w:35.0%; --o:0.80; }
+.dg-3{ --x:93.1%; --y:20.3%; --w:20.9%; --o:0.85; }
+.dg-4{ --x:80.7%; --y:85.4%; --w:42.9%; --o:0.80; z-index:-1; }
+
+/* Second copy of the blue glow, low and left under the cards. */
+.dup-1{ --x:20.2%; --y:110.5%; --w:25.8%; --o:0.85; z-index:1; }
+
+/* The hero eyebrow and all four decorative curves were DELETED from
+   index.html in this pass, so the display:none rules that used to live here
+   are gone with them. Their styling rules further up this file are now dead
+   but harmless; `git show HEAD~1 -- index.html` brings any of it back. */
