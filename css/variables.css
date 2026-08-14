@@ -57,14 +57,25 @@
      not a number anyone chose; it was two paddings meeting. 216 is not even on
      the spacing scale below.
 
-     Now 64px per side => a 128px gap between sections. That is on the scale,
-     and inside the 120-160px the design notes call for. It also lines the
-     .pipeline section up automatically, since that uses --s6 (64px) already.
+     64px per side (=> a 128px gap) was the next answer, and it is the right
+     one for a conventional marketing page: on the scale, inside the 120-160px
+     the design notes call for. It is NOT the right one for this page. The
+     reference mockup was measured at roughly 32px between sections -- a
+     quarter of that -- because it reads as a dashboard, not as SaaS marketing.
+     Density is the point. So: 16px per side => a 32px gap.
+
+     Kept as a clamp so narrow windows do not collapse; the floor is the same
+     fraction of the old floor.
 
      If you change this, remember to think in DOUBLES: the visible gap is
-     2 x this value everywhere except hero->pipeline (hero has its own 28px
-     bottom padding, giving 28+64 = 92px there). */
-  --section-y:       clamp(48px,4.45vw,64px);
+     2 x this value. The two exceptions are deliberate --
+       hero -> pipeline   hero carries its own 39px bottom padding, and the
+                          pipeline block its own 16px top, giving 55px. That
+                          is the one boundary the mockup keeps generous.
+       the .abp / .abc blocks are self-contained and set their own 16px, so
+                          they are NOT governed by this variable. Changing it
+                          will not move them. */
+  --section-y:       clamp(12px,1.11vw,16px);
 
   /* ---------- FRAME ---------------------------------------------------- */
   --container:       1280px;

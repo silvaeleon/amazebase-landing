@@ -108,7 +108,10 @@ section[id]{ scroll-margin-top:96px; }
 .section-head{
   max-width:720px;
   margin-inline:auto;
-  margin-bottom:var(--s6);
+  /* Was --s6 (64px). At that size the rule under a heading read as a SECOND
+     section gap immediately after the first, which is much of why the page
+     felt loose even where the section padding was defensible. */
+  margin-bottom:var(--s4);
   text-align:center;
   display:flex;
   flex-direction:column;

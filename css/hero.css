@@ -6,7 +6,10 @@
 .hero{
   position:relative;
   padding-top:86px;
-  padding-bottom:28px;
+  /* 39 here + the pipeline block's own 16px top = the 55px the mockup keeps
+     at this one boundary. The pipeline block is self-contained; do not edit
+     it to change this -- change this. */
+  padding-bottom:39px;
 }
 
 /* the hero slab runs wider than the standard content grid */
