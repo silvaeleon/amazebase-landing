@@ -930,3 +930,18 @@
    and let the image be the tile. Size stays 36px, so nothing reflows. */
 .trust-stat .icon-tile.is-art{ padding:0; border:0; background:none; overflow:hidden; border-radius:var(--r-sm); }
 .trust-stat .icon-tile.is-art img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+/* Photo avatars. The source JPG is a circular portrait on a white square;
+   avatar-mj.webp is cropped to the circle and alpha-masked to it, so the
+   corners are transparent and nothing white can peek past the radius.
+   The gradient and the "MJ" letterforms are dropped, and object-fit:cover
+   keeps the face centred at whatever size the element already is. */
+.quote-face.has-photo,
+.chat-avatar.has-photo{ background:none; overflow:hidden; padding:0; }
+.quote-face.has-photo img,
+.chat-avatar.has-photo img{
+  width:100%; height:100%;
+  object-fit:cover;
+  border-radius:50%;
+  display:block;
+}
