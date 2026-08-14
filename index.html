@@ -318,6 +318,21 @@
 
        The 3D transform mirrors .dash exactly, so the slab tilts the same way
        and reacts to hover the same way. -->
+  <!-- Backlight behind the dashboard. THREE INDEPENDENT LAYERS, each its own
+       element so it can be nudged on its own. Every position lives in
+       css/hero.css under BACKLIGHT, as custom properties on the element:
+         --x  horizontal centre, % of the stage
+         --y  vertical centre,   % of the stage
+         --w  width,             % of the stage (height follows the artwork)
+         --o  opacity
+       Moving one glow means changing one line. The defaults reproduce the
+       composition the four source files were drawn in. -->
+  <div class="dash-glows" aria-hidden="true">
+    <img class="dg dg-1" src="assets/img/glow-1-left-blue.webp" alt="" decoding="async">
+    <img class="dg dg-2" src="assets/img/glow-2-top-magenta.webp" alt="" decoding="async">
+    <img class="dg dg-3" src="assets/img/glow-3-right-violet.webp" alt="" decoding="async">
+  </div>
+
   <img class="dash-shot" src="assets/img/dashboard.jpg"
        alt="AmazeBase dashboard showing revenue, profit, cash flow and inventory"
        width="1097" height="778" decoding="async">

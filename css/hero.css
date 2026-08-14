@@ -330,6 +330,60 @@
    CONSEQUENCE: on screen the slab is ~604px tall against a ~745px copy
    column, so roughly 140px of dead space returns beneath it. Closing that now
    means trimming the copy column, not enlarging the dashboard. */
+/* ---------- BACKLIGHT ----------------------------------------------------- */
+/* Three glow layers behind the dashboard slab. Three ELEMENTS rather than one
+   flattened image, so any of them can be repositioned without re-exporting
+   artwork. Same technique as the .fx curves above: absolutely placed, screen
+   blended, pointer-events off via the parent.
+
+   They deliberately do NOT carry the slab's 3D transform. A light source that
+   tilts with the object it lights reads as a sticker; these stay flat and let
+   the slab move over them.
+
+   TO MOVE ONE, change its --x / --y / --w on its own line below. That is the
+   entire API -- nothing else needs touching.
+     --x  horizontal centre, % of the stage
+     --y  vertical centre,   % of the stage
+     --w  width,             % of the stage (height follows the artwork)
+     --o  opacity
+
+   The source art was four layers of one 1572x1194 composition; each has been
+   cropped to its own content and converted to WebP (213 KB for all four,
+   down from 1152 KB as PNG). The defaults below place the cropped pieces back
+   where they sat in that original composition. */
+.dash-glows{
+  position:absolute;
+  inset:0;
+  z-index:1;                  /* .dash-shot is 2, so all of this sits behind */
+  pointer-events:none;
+}
+.dg{
+  position:absolute;
+  left:var(--x);
+  top:var(--y);
+  width:var(--w);
+  height:auto;
+  max-width:none;
+  translate:-50% -50%;
+  mix-blend-mode:screen;
+  opacity:var(--o,.85);
+  user-select:none;
+}
+
+.dg-1{ --x:21.7%; --y:32.0%; --w:43.3%; --o:.85; }   /* blue    - top left    */
+.dg-2{ --x:46.4%; --y:22.5%; --w:58.7%; --o:.80; }   /* magenta - top middle  */
+.dg-3{ --x:82.4%; --y:29.6%; --w:35.1%; --o:.85; }   /* violet  - right       */
+
+/* glow-4-bottomright-purple.webp is in assets/img/ and is NOT wired up yet --
+   it is earmarked for the stat cards to the left of the dashboard. To use it,
+   add a .dg-4 img in that container and give it its own --x/--y/--w. */
+
+/* Below 1180 the slab flattens and shrinks; a glow sized for the desktop
+   composition becomes a wash at that size, so pull all three back. */
+@media (max-width:1180px){
+  .dg{ opacity:calc(var(--o,.85) * .7); }
+}
+
 .dash-shot{
   position:relative;
   display:block;
