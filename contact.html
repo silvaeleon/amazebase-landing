@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Contact &mdash; AmazeBase</title>
-<meta name="description" content="Get in touch with the AmazeBase team.">
+
+<meta name="description" content="Contact AmazeBase. Built and operated by Silbros Trading LLC, Albuquerque, New Mexico. Email contact@silbrostrading.com.">
 <meta name="theme-color" content="#030917">
-<meta name="robots" content="noindex">
+<meta property="og:title" content="AmazeBase">
+<meta property="og:description" content="The operating system for Amazon sellers.">
+<meta property="og:type" content="website">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,54 +18,416 @@
 <link rel="stylesheet" href="css/variables.css">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/navigation.css">
+<link rel="stylesheet" href="css/hero.css">
+<link rel="stylesheet" href="css/dashboard.css">
 <link rel="stylesheet" href="css/sections.css">
-<link rel="stylesheet" href="css/page.css">
+<link rel="stylesheet" href="css/waitlist.css">
 <link rel="stylesheet" href="css/responsive.css">
+<link rel="stylesheet" href="css/contact.css">
 </head>
+
 <body>
 
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="bg-layer" aria-hidden="true"></div>
+
+<!-- ====================================================================
+     ICON SPRITE
+==================================================================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+  <linearGradient id="linkGrad" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%"  stop-color="#3B82F6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+  <linearGradient id="areaA" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"  stop-color="#3B82F6" stop-opacity=".34"/>
+    <stop offset="100%" stop-color="#3B82F6" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="areaB" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"  stop-color="#8B3BF1" stop-opacity=".28"/>
+    <stop offset="100%" stop-color="#8B3BF1" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="donutGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#2ED47A"/>
+    <stop offset="100%" stop-color="#3B82F6"/>
+  </linearGradient>
+  <linearGradient id="sparkFillGreen" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"  stop-color="#2ED47A" stop-opacity=".45"/>
+    <stop offset="100%" stop-color="#2ED47A" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="sparkFillBlue" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"  stop-color="#3B82F6" stop-opacity=".45"/>
+    <stop offset="100%" stop-color="#3B82F6" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="sparkFillPurple" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"  stop-color="#A971F7" stop-opacity=".45"/>
+    <stop offset="100%" stop-color="#A971F7" stop-opacity="0"/>
+  </linearGradient>
+</defs>
+
+  <symbol id="i-chevron"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-arrow"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-check"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></symbol>
+  <symbol id="i-play"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5.5v13l11-6.5z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-menu"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-x"        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+
+  <symbol id="i-grid"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h7v6H4zM13 4h7v10h-7zM4 12h7v8H4zM13 16h7v4h-7z"/></symbol>
+  <symbol id="i-box"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></symbol>
+  <symbol id="i-search"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></symbol>
+  <symbol id="i-mega"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l7 4V5L8 9H4zM19 9a4 4 0 010 6"/></symbol>
+  <symbol id="i-stack"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-dollar"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5v19M16.5 6.5H10a3.2 3.2 0 000 6.4h4a3.2 3.2 0 010 6.4H7"/></symbol>
+  <symbol id="i-truck"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.5h11v10h-11zM13.5 10h4l3 3.2v3.3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></symbol>
+  <symbol id="i-report"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></symbol>
+  <symbol id="i-spark"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+  <symbol id="i-bell"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8.5a6 6 0 10-12 0c0 6-2.5 7.5-2.5 7.5h17S18 14.5 18 8.5zM10.3 20a2 2 0 003.4 0"/></symbol>
+  <symbol id="i-gear"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.6 1.6 0 00-2.7 1.1v.2a2 2 0 11-4 0v-.1a1.6 1.6 0 00-2.8-1.1l-.1.1a2 2 0 11-2.8-2.8l.1-.1A1.6 1.6 0 003.7 15a2 2 0 110-4h.1a1.6 1.6 0 001.1-2.8l-.1-.1a2 2 0 112.8-2.8l.1.1A1.6 1.6 0 0010.5 4h.1a2 2 0 114 0v.1a1.6 1.6 0 002.7 1.1l.1-.1a2 2 0 112.8 2.8l-.1.1a1.6 1.6 0 001.1 2.7h.2a2 2 0 110 4h-.1a1.6 1.6 0 00-1.9 1.3z"/></symbol>
+  <symbol id="i-chart"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-trend"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></symbol>
+  <symbol id="i-rocket"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15s-1.5 3 1 5.5S11 20 11 20M14.5 4.5c3-2 6-1 6-1s1 3-1 6l-6 6-5-5 6-6z"/><circle cx="15" cy="9" r="1.4"/></symbol>
+  <symbol id="i-warn"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.5L2.5 20h19L12 4.5zM12 10v4.5M12 17.5v.01"/></symbol>
+  <symbol id="i-info"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></symbol>
+  <symbol id="i-checkc"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-4.8"/></symbol>
+  <symbol id="i-refresh"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 10-1.7 5M20 5v6h-6"/></symbol>
+  <symbol id="i-export"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M8 7l4-4 4 4M4 15v4a2 2 0 002 2h12a2 2 0 002-2v-4"/></symbol>
+  <symbol id="i-filter"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 8v6l-4 2v-8z"/></symbol>
+  <symbol id="i-db"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3.2"/><path d="M4 6v12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2V6M4 12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2"/></symbol>
+  <symbol id="i-globe"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 21.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"/></symbol>
+  <symbol id="i-case"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8.5 7V5a2 2 0 012-2h3a2 2 0 012 2v2M2.5 12.5h19"/></symbol>
+  <symbol id="i-msg"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-8 8 8.6 8.6 0 01-3.6-.8L3 21l1.8-6.4A8 8 0 1121 12z"/></symbol>
+  <symbol id="i-shield"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-9.5V5.5L12 2.5 4 5.5V12.5C4 18.5 12 22 12 22z"/></symbol>
+  <symbol id="i-link"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a4 4 0 006 .5l2.5-2.5a4.2 4.2 0 00-6-6L11 6.5M14 11a4 4 0 00-6-.5L5.5 13a4.2 4.2 0 006 6L13 17.5"/></symbol>
+
+  <symbol id="i-in"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12.5 17v-4a2.5 2.5 0 015 0v4"/></symbol>
+  <symbol id="i-tw"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M20 4L4 20"/></symbol>
+  <symbol id="i-gh"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4 1.4-4-2.2-5.6-2.6M15 21v-3.4a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 2.6 5.5 2.9 5.5 2.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 9.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></symbol>
+</svg>
+
+<!-- ====================================================================
+     HEADER
+==================================================================== -->
 <header class="site-header">
-<nav class="nav container">
-  <a href="index.html" class="brand">
-    <span class="brand-mark"></span>
-    <span class="brand-name">AmazeBase</span>
+<div class="container">
+<nav class="nav" aria-label="Primary">
+
+  <a href="/index.html" class="brand" aria-label="AmazeBase home">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+      <path d="M16 17.6l4.4 8.2h-8.8z" fill="#C56BF5" opacity=".85"/>
+    </svg>
+    <span data-brand>AmazeBase</span>
   </a>
+
+  <ul class="nav-menu">
+    <li class="nav-item">
+      <a class="nav-link" href="product.html#modules">Product <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop nav-drop--wide">
+        <a href="product.html#advertising"><svg class="icon-sm"><use href="#i-mega"/></svg>Advertising &amp; PPC</a>
+        <a href="product.html#financials"><svg class="icon-sm"><use href="#i-dollar"/></svg>Financials</a>
+        <a href="product.html#ledger"><svg class="icon-sm"><use href="#i-stack"/></svg>Ledger</a>
+        <a href="product.html#inventory"><svg class="icon-sm"><use href="#i-box"/></svg>Inventory</a>
+        <a href="product.html#research"><svg class="icon-sm"><use href="#i-search"/></svg>Product Research</a>
+        <a href="product.html#simulations"><svg class="icon-sm"><use href="#i-chart"/></svg>Simulations</a>
+        <a href="product.html#sales"><svg class="icon-sm"><use href="#i-trend"/></svg>Sales</a>
+        <a href="product.html#data"><svg class="icon-sm"><use href="#i-db"/></svg>Data &amp; Sync</a>
+        <a href="product.html#security"><svg class="icon-sm"><use href="#i-shield"/></svg>Security</a>
+        <a href="product.html#assistant"><svg class="icon-sm"><use href="#i-spark"/></svg>AI Assistant &mdash; soon</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="index.html#compare">Solutions <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="index.html#compare"><svg class="icon-sm"><use href="#i-rocket"/></svg>Private Label</a>
+        <a href="index.html#compare"><svg class="icon-sm"><use href="#i-case"/></svg>Agencies</a>
+        <a href="index.html#compare"><svg class="icon-sm"><use href="#i-globe"/></svg>Multi-Marketplace</a>
+      </div>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="index.html#pricing">Pricing</a></li>
+    <li class="nav-item"><a class="nav-link" href="resources.html">Resources</a></li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Company <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="about.html"><svg class="icon-sm"><use href="#i-info"/></svg>About</a>
+        <a href="contact.html"><svg class="icon-sm"><use href="#i-msg"/></svg>Contact</a>
+      </div>
+    </li>
+  </ul>
+
   <div class="nav-actions">
-    <a class="btn btn--quiet" href="index.html">&larr; Back to site</a>
-    <a class="btn btn--primary" href="index.html#waitlist">Join the Wait List</a>
+    <a class="btn btn--quiet" href="https://amz-analytics-production.up.railway.app/login">Log in</a>
+    <a class="btn btn--primary" href="#waitlist" data-waitlist-open data-source="nav" data-magnetic>Join the Wait List</a>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="navMobile">
+      <svg class="icon"><use href="#i-menu"/></svg>
+    </button>
   </div>
+
 </nav>
+</div>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="product.html#modules">Product</a>
+  <a href="index.html#compare">Solutions</a>
+  <a href="index.html#pricing">Pricing</a>
+  <a href="resources.html">Resources</a>
+  <a href="product.html#assistant">AI Assistant</a>
+  <a href="#">Company</a>
+  <a class="btn btn--primary btn--block" href="#waitlist" data-waitlist-open data-source="nav-mobile">Join the Wait List</a>
+</div>
 </header>
 
-<main class="page" id="main">
-<div class="container page-inner">
+<main id="main">
 
-  <span class="eyebrow">Company</span>
-  <h1 class="page-title">Contact</h1>
-  <p class="page-lead">Questions, partnerships, or press &mdash; we would like to hear from you.</p>
+<!-- ====================================================================
+     CONTACT
+==================================================================== -->
+<section class="section" id="contact">
+<div class="container">
 
-  <div class="page-soon">
-    <p><b>This page is still being written.</b></p>
-    <p>A contact form is coming. Until then, join the wait list and reply to the email you receive.</p>
-    <p class="page-soon-cta">
-      In the meantime, <a href="index.html#features">see what AmazeBase does</a>
-      or <a href="index.html#waitlist">join the wait list</a>.
-    </p>
+  <div class="section-head" data-reveal>
+    <span class="eyebrow">Company</span>
+    <h1>Get in touch.</h1>
+    <p>Questions, partnerships or press &mdash; we would like to hear from you.</p>
+  </div>
+
+  <!-- .is-flipped puts the figure on the LEFT and the details on the right -->
+  <article class="mod is-flipped" data-reveal>
+
+    <div class="mod-copy">
+      <span class="mod-eyebrow">Our details</span>
+      <h3>Silbros Trading LLC</h3>
+      <p class="mod-lead">AmazeBase is built and operated by Silbros Trading LLC.</p>
+
+      <div class="ct-details">
+
+        <div class="ct-row">
+          <span class="sec-ico"><svg><use href="#i-globe"/></svg></span>
+          <div>
+            <span class="ct-label">Registered office</span>
+            <address class="ct-value">
+              <span class="ct-company">Silbros Trading LLC</span><br>
+              1209 Mountain Road Pl NE # 11990<br>
+              Albuquerque, NM 87110<br>
+              United States
+            </address>
+          </div>
+        </div>
+
+        <div class="ct-row">
+          <span class="sec-ico"><svg><use href="#i-msg"/></svg></span>
+          <div>
+            <span class="ct-label">Email</span>
+            <p class="ct-value">
+              <a href="mailto:contact@silbrostrading.com">contact@silbrostrading.com</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="ct-row">
+          <span class="sec-ico"><svg><use href="#i-spark"/></svg></span>
+          <div>
+            <span class="ct-label">Early access</span>
+            <p class="ct-value">
+              Join the wait list and reply to the email you receive &mdash; it reaches
+              the same inbox.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="mod-benefit">We read everything that arrives.
+         <b>If you are a seller, tell us what you are stuck on</b> &mdash; that is the
+         feedback the product is shaped by.</p>
+
+      <p style="margin-top:var(--s4)">
+        <a class="btn btn--primary btn--lg" href="#waitlist" data-waitlist-open data-source="contact" data-magnetic>
+          Join the Wait List <svg class="icon-sm"><use href="#i-arrow"/></svg>
+        </a>
+      </p>
+    </div>
+
+    <figure class="mod-figure ct-figure">
+      <span>Picture slot &mdash; 4:5 portrait<br>
+            e.g. the team, the office, or a branded graphic.<br>
+            Replace this &lt;span&gt; with an &lt;img&gt; and nothing reflows.</span>
+    </figure>
+
+  </article>
+
+</div>
+</section>
+
+</main>
+
+
+<!-- ====================================================================
+     FOOTER
+==================================================================== -->
+<footer class="footer">
+<div class="container">
+
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/index.html" class="brand" aria-label="AmazeBase home">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+        </svg>
+        <span data-brand>AmazeBase</span>
+      </a>
+      <p>The operating system for Amazon sellers. Everything connected, everything in sync.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="product.html#modules">Product</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="#">Integrations</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a href="resources.html">Knowledge Hub</a>
+      <a href="contact.html">Support</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 <span data-brand>AmazeBase</span>. All rights reserved.</span>
+    <div class="footer-social">
+      <a href="#" aria-label="LinkedIn"><svg class="icon-sm"><use href="#i-in"/></svg></a>
+      <a href="#" aria-label="X"><svg class="icon-sm"><use href="#i-tw"/></svg></a>
+      <a href="#" aria-label="GitHub"><svg class="icon-sm"><use href="#i-gh"/></svg></a>
+    </div>
   </div>
 
 </div>
-</main>
-
-<footer class="footer">
-<div class="container footer-bottom">
-  <span>&copy; 2026 AmazeBase. All rights reserved.</span>
-  <span class="footer-links">
-    <a href="privacy.html">Privacy</a>
-    <a href="terms.html">Terms</a>
-    <a href="contact.html">Contact</a>
-  </span>
-</div>
 </footer>
+
+<button class="to-top" aria-label="Back to top">
+  <svg class="icon-sm" style="transform:rotate(-90deg)"><use href="#i-arrow"/></svg>
+</button>
+
+<!-- ══ WAITLIST DIALOG ══════════════════════════════════════════════════════
+     Opened by any [data-waitlist-open]. Uses <dialog> for free focus
+     trapping, Esc-to-close and inertness of the page behind it.
+     No inline handlers and no innerHTML anywhere — see js/waitlist.js. -->
+<dialog class="wl" id="waitlist" aria-labelledby="wl-title">
+  <form class="wl-panel" method="dialog" novalidate>
+
+    <button class="wl-x" type="button" data-waitlist-close aria-label="Close">
+      <svg class="icon-sm"><use href="#i-x"/></svg>
+    </button>
+
+    <span class="eyebrow">Early access</span>
+    <h2 class="wl-title" id="wl-title">Join the wait list</h2>
+    <p class="wl-sub">We&rsquo;ll email you when your marketplace opens up. No spam, and no payment details.</p>
+
+    <div class="wl-field">
+      <label for="wl-name">Name</label>
+      <input id="wl-name" name="name" type="text" autocomplete="name"
+             maxlength="120" required placeholder="Jane Smith">
+    </div>
+
+    <div class="wl-field">
+      <label for="wl-email">Work email</label>
+      <input id="wl-email" name="email" type="email" autocomplete="email"
+             maxlength="254" required placeholder="jane@company.com">
+    </div>
+
+    <div class="wl-field">
+      <label for="wl-market">Main marketplace</label>
+      <select id="wl-market" name="marketplace" required>
+        <option value="" selected disabled>Where do you sell most?</option>
+        <optgroup label="North America">
+          <option value="US">Amazon.com &mdash; United States</option>
+          <option value="CA">Amazon.ca &mdash; Canada</option>
+          <option value="MX">Amazon.com.mx &mdash; Mexico</option>
+          <option value="BR">Amazon.com.br &mdash; Brazil</option>
+        </optgroup>
+        <optgroup label="Europe">
+          <option value="UK">Amazon.co.uk &mdash; United Kingdom</option>
+          <option value="DE">Amazon.de &mdash; Germany</option>
+          <option value="FR">Amazon.fr &mdash; France</option>
+          <option value="IT">Amazon.it &mdash; Italy</option>
+          <option value="ES">Amazon.es &mdash; Spain</option>
+          <option value="NL">Amazon.nl &mdash; Netherlands</option>
+          <option value="SE">Amazon.se &mdash; Sweden</option>
+          <option value="PL">Amazon.pl &mdash; Poland</option>
+          <option value="BE">Amazon.com.be &mdash; Belgium</option>
+          <option value="IE">Amazon.ie &mdash; Ireland</option>
+          <option value="TR">Amazon.com.tr &mdash; Turkey</option>
+        </optgroup>
+        <optgroup label="Middle East &amp; India">
+          <option value="AE">Amazon.ae &mdash; United Arab Emirates</option>
+          <option value="SA">Amazon.sa &mdash; Saudi Arabia</option>
+          <option value="EG">Amazon.eg &mdash; Egypt</option>
+          <option value="IN">Amazon.in &mdash; India</option>
+        </optgroup>
+        <optgroup label="Asia Pacific">
+          <option value="JP">Amazon.co.jp &mdash; Japan</option>
+          <option value="AU">Amazon.com.au &mdash; Australia</option>
+          <option value="SG">Amazon.sg &mdash; Singapore</option>
+        </optgroup>
+        <option value="OTHER">Somewhere else</option>
+      </select>
+    </div>
+
+    <!-- Honeypots. Hidden from humans, irresistible to bots. A filled value
+         makes the server discard the submission silently.
+         TWO fields with unrelated names, so there is no single trick for a
+         bot to learn. The form also times itself: waitlist.js sends how many
+         milliseconds the dialog was open, and a human cannot fill this in
+         under a second. Adding signals is safe on its own -- the app ignores
+         fields it does not know about -- but NEVER rename or remove
+         company_website without changing the app first, or the trap stops
+         working silently. -->
+    <div class="wl-hp" aria-hidden="true">
+      <label for="wl-company-website">Company website</label>
+      <input id="wl-company-website" name="company_website" type="text"
+             tabindex="-1" autocomplete="off">
+      <label for="wl-referral-code">Referral code</label>
+      <input id="wl-referral-code" name="referral_code" type="text"
+             tabindex="-1" autocomplete="off">
+    </div>
+
+    <p class="wl-error" data-waitlist-error hidden></p>
+
+    <button class="btn btn--primary btn--lg btn--block wl-submit" type="submit"
+            data-waitlist-submit>Join the wait list</button>
+
+    <p class="wl-legal">
+      By joining you agree we may email you about AmazeBase. We store your name,
+      email and marketplace for this purpose only, and you can ask us to delete
+      them at any time. See our <a href="privacy.html">Privacy Policy</a>.
+    </p>
+
+  </form>
+
+  <div class="wl-panel wl-done" data-waitlist-done hidden>
+    <div class="wl-tick"><svg class="icon-sm"><use href="#i-checkc"/></svg></div>
+    <h2 class="wl-title">You&rsquo;re on the list.</h2>
+    <p class="wl-sub">Thanks &mdash; we&rsquo;ll be in touch as soon as we open up your marketplace.</p>
+    <button class="btn btn--ghost btn--lg btn--block" type="button" data-waitlist-close>Close</button>
+  </div>
+</dialog>
+
+<script src="js/main.js" defer></script>
+<script src="js/waitlist.js" defer></script>
 
 </body>
 </html>

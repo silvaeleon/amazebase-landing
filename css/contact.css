@@ -1,0 +1,58 @@
+/* ==========================================================================
+   CONTACT PAGE
+   Loaded by contact.html only, so it cannot affect any other page.
+   The layout itself is the shared .mod / .mod-copy / .mod-figure pair, so
+   the picture slot on the left behaves exactly like the ones on the About
+   and Product pages: swap the <span> inside for an <img> and nothing
+   reflows, because the box holds its own aspect ratio.
+   ========================================================================== */
+
+/* Clear the fixed site header -- a plain .section has no allowance of its
+   own; .hero on the home page uses the same 86px. */
+#contact{ padding-top:86px; }
+
+.section-head h1{
+  font-size:clamp(30px,3.4vw,46px);
+  font-weight:800;
+  line-height:1.14;
+  letter-spacing:-.02em;
+  margin:0 0 var(--s3);
+}
+
+/* the picture slot beside the details -- taller than the 16:11 default so
+   it sits level with the block of text rather than ending halfway up it */
+.ct-figure{ aspect-ratio:4 / 5; }
+
+/* the details themselves */
+.ct-details{ display:grid; gap:var(--s3); margin:0; }
+
+.ct-row{
+  display:grid;
+  grid-template-columns:38px 1fr;
+  gap:14px;
+  align-items:start;
+}
+.ct-row .sec-ico{ margin:0; }
+
+.ct-label{
+  display:block;
+  font-size:.72rem;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--text-3);
+  margin-bottom:5px;
+}
+.ct-value{
+  margin:0;
+  color:var(--text-1);
+  font-size:1.02rem;
+  line-height:1.6;
+  font-style:normal;   /* the address sits in an <address> element */
+}
+.ct-value a{ color:var(--text-1); text-decoration:none; border-bottom:1px solid var(--line-strong); }
+.ct-value a:hover{ color:#fff; border-bottom-color:currentColor; }
+.ct-company{ font-weight:700; }
+
+@media (max-width:900px){
+  .ct-figure{ aspect-ratio:16 / 10; }
+}
