@@ -8,7 +8,8 @@
    PICTURE SLOTS. Every place meant to hold artwork is a .mod-figure, the
    same dashed 16:11 box the product page already uses for its graphic
    slots. Replace the <span> inside one with an <img> and it is done --
-   the box keeps its own aspect ratio, so nothing reflows when you do.
+   .mod-figure img in sections.css pins the image to the box, so the slot is
+   exactly as tall filled as it is empty and nothing reflows when you do.
    ========================================================================== */
 
 /* Clear the fixed site header. .hero on the home page does this with
