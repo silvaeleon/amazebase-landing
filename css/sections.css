@@ -749,6 +749,13 @@
   gap:var(--s3);
 }
 
+/* Product's security grid runs eight cards as two rows of four. Scoped to a
+   modifier because about.html shares .sec-grid with only three cards, and a
+   global four-column rule would leave it a hole. The max-width:1000px and
+   640px rules below come later in the file at the same specificity, so they
+   still win and this steps 4 -> 2 -> 1. Measured, not assumed. */
+.sec-grid--4{ grid-template-columns:repeat(4,minmax(0,1fr)); }
+
 .sec-card{
   border:1px solid var(--line);
   border-radius:var(--r3);
