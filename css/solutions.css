@@ -1,0 +1,139 @@
+/* ==========================================================================
+   SOLUTIONS PAGE
+   Loaded only by solutions.html. Everything structural on this page reuses
+   the shared components — .section, .section-head, .mod / .mod-copy /
+   .mod-figure, .btn — so it inherits the rest of the site's spacing, type
+   and motion without redefining any of it. What lives here is only the two
+   things that page needs and nothing else has: the three-way audience
+   switcher at the top, and the closing block.
+
+   Motion follows the conventions already in the site rather than inventing
+   new ones: entrances come from [data-reveal] / [data-reveal-stagger] in
+   responsive.css, and interaction uses --fast with --ease, the same curve
+   the buttons and nav already use.
+   ========================================================================== */
+
+/* Clear the fixed site header, the same way about.html and contact.html do
+   on their opening sections. Without it the eyebrow renders behind the nav. */
+#solutions{ padding-top:86px; }
+
+
+/* ── the three-way switcher ───────────────────────────────────────────── */
+
+.sol-switch{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:var(--s3);
+  margin-top:var(--s5);
+}
+
+.sol-card{
+  display:flex;
+  flex-direction:column;
+  gap:var(--s1);
+  padding:var(--s4);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  background:var(--surface);
+  text-decoration:none;
+  color:inherit;
+  /* Named properties, never `all` — transitioning `all` here would also
+     animate the border colour change on focus and fight the focus ring. */
+  transition:transform var(--fast) var(--ease),
+             border-color var(--fast) var(--ease),
+             background var(--fast) var(--ease);
+}
+
+/* Hover is gated: on touch devices a tap fires :hover and the card sticks
+   in its lifted state until you tap elsewhere. */
+@media (hover:hover) and (pointer:fine){
+  .sol-card:hover{
+    transform:translateY(-3px);
+    border-color:var(--line-strong);
+    background:var(--surface-2);
+  }
+}
+
+/* Press feedback. The whole card is the target, so it should acknowledge
+   the press the way .btn does — subtle, and faster than the hover. */
+.sol-card:active{ transform:translateY(0) scale(.99); }
+
+.sol-ico{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:44px; height:44px;
+  border-radius:var(--r-md);
+  background:color-mix(in srgb, var(--violet) 18%, transparent);
+  border:1px solid color-mix(in srgb, var(--violet) 34%, transparent);
+  margin-bottom:var(--s2);
+}
+.sol-ico svg{ width:20px; height:20px; color:var(--violet-soft); }
+
+.sol-card h2{
+  font-size:clamp(19px,1.5vw,22px);
+  font-weight:600;
+  letter-spacing:-.02em;
+  color:var(--text);
+}
+.sol-card p{
+  font-size:.95rem;
+  line-height:1.6;
+  color:var(--text-2);
+  margin:0;
+}
+.sol-go{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-top:var(--s2);
+  font-size:.86rem;
+  font-weight:600;
+  color:var(--violet-soft);
+}
+.sol-go svg{ width:15px; height:15px; transition:transform var(--fast) var(--ease); }
+@media (hover:hover) and (pointer:fine){
+  .sol-card:hover .sol-go svg{ transform:translateX(3px); }
+}
+
+
+/* ── closing block ────────────────────────────────────────────────────── */
+
+.sol-close{
+  max-width:60ch;
+  margin-inline:auto;
+  text-align:center;
+}
+.sol-close h2{
+  font-size:clamp(26px,2.6vw,38px);
+  font-weight:700;
+  letter-spacing:-.02em;
+  line-height:1.2;
+  color:var(--text);
+}
+.sol-close p{
+  margin:var(--s3) auto 0;
+  font-size:1.02rem;
+  line-height:1.7;
+  color:var(--text-2);
+}
+.sol-close .btn{ margin-top:var(--s4); }
+
+
+/* ── responsive ───────────────────────────────────────────────────────── */
+
+@media (max-width:1000px){
+  .sol-switch{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:640px){
+  .sol-switch{ grid-template-columns:1fr; gap:var(--s2); margin-top:var(--s4); }
+  .sol-card{ padding:var(--s3); }
+}
+
+/* The site already neutralises reveal transforms under reduced motion in
+   responsive.css; this covers the interaction states added above. */
+@media (prefers-reduced-motion:reduce){
+  .sol-card:hover,
+  .sol-card:active{ transform:none; }
+  .sol-card:hover .sol-go svg{ transform:none; }
+}
