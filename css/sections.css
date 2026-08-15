@@ -733,6 +733,16 @@
   line-height:1.5;
 }
 
+/* Same reason as .mod-figure img above: an <img> here is a flex item sized by
+   its intrinsic height, and intrinsic height beats aspect-ratio, so the slot
+   would grow when filled. Pin it to the content box and keep the artwork whole. */
+.sec-figure img{
+  display:block;
+  width:100%; height:100%;
+  min-width:0; min-height:0;
+  object-fit:contain;
+}
+
 .sec-grid{
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
