@@ -756,6 +756,13 @@
    still win and this steps 4 -> 2 -> 1. Measured, not assumed. */
 .sec-grid--4{ grid-template-columns:repeat(4,minmax(0,1fr)); }
 
+/* Clear the fixed site header. index.html does this with .hero{padding-top:86px}
+   and about/contact each set it on their opening section; product.html opens
+   with a plain .section, so "The platform" eyebrow was rendering 48.8px behind
+   the nav bar. Same 86px the other pages use. #modules exists only on
+   product.html, so this cannot reach any other page. */
+#modules{ padding-top:86px; }
+
 .sec-card{
   border:1px solid var(--line);
   border-radius:var(--r3);
