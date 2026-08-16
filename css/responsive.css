@@ -259,3 +259,11 @@
 @media (max-width:640px){
   .hub-fig{ display:block; }
 }
+
+/* v3 addendum ── module pacing on phones: flipped modules have their
+   figure first in the DOM, so stacked pages showed two images
+   back-to-back across module boundaries. Text first, image last, in
+   every module. */
+@media (max-width:900px){
+  .mod > .mod-figure{ order:2; }
+}
