@@ -33,7 +33,7 @@ svg{display:block}
 <body>
 <div id="stage"><div class="pad" id="pad"></div></div>
 
-<script>
+<script type="module">
 const BLUE='#3B82F6', AMBER='#C9820A', VIOLET='#A971F7', RED='#F0435C';
 /* Teal is only used where three series must be told apart at once. Blue+violet
    fails the validator all-pairs at deltaE 0.6 under protanopia; blue/amber/teal
@@ -54,6 +54,12 @@ stage.style.width=SPEC.w+'px'; stage.style.height=SPEC.h+'px';
 document.body.style.width=SPEC.w+'px'; document.body.style.height=SPEC.h+'px';
 document.documentElement.style.setProperty('--k',SPEC.k);
 const K=SPEC.k, px=v=>v*K;
+
+/* Nothing may measure until the webfont has landed. With @import the font
+   arrives after first layout, so the header height - and every fit() under it -
+   differed from render to render. That non-determinism is how a broken frame
+   shipped after a good one was reviewed. */
+await document.fonts.ready;
 
 /* fit() measures the box FIRST so one viewBox unit is one CSS pixel. That is
    what lets absolutely positioned HTML labels land exactly on the shapes the
@@ -146,7 +152,12 @@ function g2(){
 /* ══ 3 — a healthy headline, three series that disagree ══════════════ */
 function g3(){
   head('Revenue','Trailing 24 months','+64%','24-month change');
-  const box=plot('1 1 auto'); const {s,W,H}=fit(box);
+  const box=plot('1 1 auto');
+  const row=document.createElement('div');
+  row.style.cssText=`display:grid;grid-template-columns:repeat(3,1fr);gap:${px(11)}px;
+    height:${px(112)}px;flex:none;margin-top:${px(13)}px`;
+  pad.appendChild(row);          // appended first: fit() must measure the FINAL box
+  const {s,W,H}=fit(box);
   const REV=[100,101,99,104,106,105,110,113,112,118,121,120,126,129,133,131,138,142,140,147,152,155,159,164];
   for(let i=1;i<=3;i++){const y=(H-px(9))*(i/4)+px(2);
     s.appendChild(el('line',{x1:0,x2:W,y1:y,y2:y,stroke:GRID,'stroke-width':px(.7)}));}
@@ -159,10 +170,6 @@ function g3(){
   s.appendChild(el('path',{d:dOf(P),fill:'none',stroke:BLUE,'stroke-width':px(2.2),'stroke-linecap':'round','stroke-linejoin':'round'}));
   endDot(s,P,BLUE);
 
-  const row=document.createElement('div');
-  row.style.cssText=`display:grid;grid-template-columns:repeat(3,1fr);gap:${px(11)}px;
-    height:${px(112)}px;flex:none;margin-top:${px(13)}px`;
-  pad.appendChild(row);
   [['Gross margin','31%','22%',AMBER,'↓',[31,31,30,30,30,29,29,29,28,28,27,27,27,26,26,25,25,24,24,23,23,23,22,22],'percent of revenue'],
    ['Stock cover','9.4w','3.1w',VIOLET,'↓',[9.4,9.3,9.1,8.8,8.6,8.1,7.9,7.4,7.2,6.8,6.5,6.1,5.9,5.5,5.2,4.9,4.6,4.3,4.1,3.9,3.6,3.4,3.2,3.1],'weeks of cover'],
    ['Ad spend / revenue','11%','24%',RED,'↑',[11,11,12,12,13,13,14,14,15,16,16,17,17,18,19,19,20,21,21,22,22,23,23,24],'percent of revenue']
@@ -279,7 +286,16 @@ function g6(){
 /* ══ 7 — your trajectory against comparable sellers ══════════════════ */
 function g7(){
   head('Your trajectory','against comparable sellers');
-  const box=plot(); const {s,W,H}=fit(box);
+  const box=plot();
+  const lg=document.createElement('div');
+  lg.style.cssText=`flex:none;display:flex;gap:${px(18)}px;margin-top:${px(12)}px`;
+  lg.innerHTML=`<span style="display:flex;align-items:center;gap:${px(6)}px">
+      <span class="dot" style="background:${BLUE}"></span><span class="t-mut">You</span></span>
+    <span style="display:flex;align-items:center;gap:${px(6)}px">
+      <span style="width:${px(12)}px;height:${px(5.5)}px;border-radius:${px(2)}px;background:rgba(169,113,247,.42)"></span>
+      <span class="t-mut">Comparable sellers, middle range</span></span>`;
+  pad.appendChild(lg);
+  const {s,W,H}=fit(box);
   const hi=[58,59,58,61,63,62,65,67,68,67,70,72,73,74,76,77,79,80,82,84],
         lo=[42,43,41,44,46,45,47,49,48,50,52,51,54,55,54,56,58,57,59,61],
         me=[47,49,48,53,56,54,60,64,63,69,73,71,78,83,81,88,93,91,99,107];
@@ -295,14 +311,6 @@ function g7(){
   const P=me.map((v,i)=>[X(i),Y(v)]);
   s.appendChild(el('path',{d:dOf(P),fill:'none',stroke:BLUE,'stroke-width':px(2.2),'stroke-linecap':'round','stroke-linejoin':'round'}));
   endDot(s,P,BLUE);
-  const lg=document.createElement('div');
-  lg.style.cssText=`flex:none;display:flex;gap:${px(18)}px;margin-top:${px(12)}px`;
-  lg.innerHTML=`<span style="display:flex;align-items:center;gap:${px(6)}px">
-      <span class="dot" style="background:${BLUE}"></span><span class="t-mut">You</span></span>
-    <span style="display:flex;align-items:center;gap:${px(6)}px">
-      <span style="width:${px(12)}px;height:${px(5.5)}px;border-radius:${px(2)}px;background:rgba(169,113,247,.42)"></span>
-      <span class="t-mut">Comparable sellers, middle range</span></span>`;
-  pad.appendChild(lg);
 }
 
 /* ══ 8 — feedback becoming a change ══════════════════════════════════ */
@@ -685,7 +693,14 @@ function g17(){
 /* ══ 18 — Simulations: profitable, and still out of money ═══════════ */
 function g18(){
   head('Profit and cash','fortnight by fortnight');
-  const box=plot(); const {s,W,H}=fit(box);
+  const box=plot();
+  const lg=document.createElement('div');
+  lg.style.cssText=`flex:none;display:flex;gap:${px(18)}px;margin-top:${px(12)}px`;
+  lg.innerHTML=[['Profit',BLUE],['Cash in the bank',AMBER]].map(([t,c])=>
+    `<span style="display:flex;align-items:center;gap:${px(6)}px">
+      <span class="dot" style="background:${c}"></span><span class="t-mut">${t}</span></span>`).join('');
+  pad.appendChild(lg);
+  const {s,W,H}=fit(box);
   const profit=[3,5,6,8,9,11,12,14,15,17,18,20,21,23,24,26,27,29,30,32];
   const cash  =[22,19,14,8,3,-2,-7,-11,-9,-4,2,7,13,18,22,27,31,36,40,45];
   const all=[...profit,...cash], mn=Math.min(...all), mx=Math.max(...all);
@@ -709,12 +724,6 @@ function g18(){
   s.appendChild(el('circle',{cx:X(dipI),cy:Y(cash[dipI]),r:px(4.4),fill:RED}));
   over(box,X(dipI)-px(52),px(2),px(104),px(13),
     `<div class="t-eyb" style="color:${RED};text-align:center;white-space:nowrap">FORTNIGHT 8</div>`);
-  const lg=document.createElement('div');
-  lg.style.cssText=`flex:none;display:flex;gap:${px(18)}px;margin-top:${px(12)}px`;
-  lg.innerHTML=[['Profit',BLUE],['Cash in the bank',AMBER]].map(([t,c])=>
-    `<span style="display:flex;align-items:center;gap:${px(6)}px">
-      <span class="dot" style="background:${c}"></span><span class="t-mut">${t}</span></span>`).join('');
-  pad.appendChild(lg);
 }
 
 /* ══ 19 — Sales: how much of this revenue are you renting ═══════════ */
@@ -941,6 +950,15 @@ function g24(){
 ({1:g1,2:g2,3:g3,4:g4,5:g5,6:g6,7:g7,8:g8,9:g9,10:g10,11:g11,12:g12,
   13:g13,14:g14,15:g15,16:g16,17:g17,18:g18,19:g19,20:g20,21:g21,22:g22,
   23:g23,24:g24})[id]();
+/* Guard: no SVG may exceed the box it was fitted to. This is the exact failure
+   that shipped - a stale measurement leaving the chart drawn over its siblings. */
+const spill=[...document.querySelectorAll('svg')].filter(sv=>{
+  const p=sv.parentElement; if(!p) return false;
+  const a=sv.getBoundingClientRect(), b=p.getBoundingClientRect();
+  return a.height>b.height+1 || a.width>b.width+1 || a.bottom>b.bottom+1;
+}).map(sv=>{const a=sv.getBoundingClientRect(),b=sv.parentElement.getBoundingClientRect();
+  return `svg ${Math.round(a.width)}x${Math.round(a.height)} in box ${Math.round(b.width)}x${Math.round(b.height)}`;});
+if(spill.length) document.body.dataset.spill=JSON.stringify(spill);
 document.body.dataset.ready='1';
 </script>
 </body></html>
