@@ -180,3 +180,42 @@
   section.abp{ --abp-icon:34px; --abp-label:11.5px; --abp-pad-y:28px; }
   section.abp .abp-rail{ gap:22px 12px!important; }
 }
+
+/* ==========================================================================
+   MOBILE PASS v2 — Leon's review of the first pass, 2026-08-16.
+========================================================================== */
+
+/* A ── Hero: dashboard leads. First thing on the page, wider than the
+   panel padding, tilted like the desktop composition, glows behind it. */
+@media (max-width:680px){
+  .hero-stage{ order:-1; }
+  .hero-grid{ gap:var(--s4); }
+  .hero-stage-inner{ perspective:1100px; }
+  .dash-shot{
+    position:relative; z-index:2;
+    width:calc(100% + 30px); margin-left:-15px;
+    transform:rotateY(-8deg) rotateX(2deg) rotateZ(1.2deg);
+  }
+  /* glows return, repositioned behind the dashboard at the top of the
+     panel instead of scattered over the headline */
+  .hero-glows{ display:block; }
+  .dg-1{ --x:18%; --y:5%;  --w:55%; --o:.75; z-index:0; }
+  .dg-2{ --x:62%; --y:3%;  --w:70%; --o:.70; z-index:0; }
+  .dg-3{ --x:92%; --y:8%;  --w:45%; --o:.75; z-index:0; }
+  .dg-4,.dup-1{ display:none; }
+}
+
+/* B ── .abc VS badge: card heights differ when stacked, so dead-centre
+   misses the seam. Open the seam up and pad both card edges so the badge
+   always sits in clear space, never on text. */
+@media (max-width:860px){
+  section.abc .abc-grid{ gap:30px!important; }
+  section.abc .abc-card--bad{ padding-bottom:44px!important; }
+  section.abc .abc-card--good{ padding-top:58px!important; }
+}
+
+/* C ── the metric cards sat flush against the tick list above them (the
+   stacked layout zeroes the cluster's top padding). Give them air. */
+@media (max-width:1180px){
+  .hero-floats{ margin-top:22px; }
+}
