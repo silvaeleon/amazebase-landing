@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#0B101E}
+body{font-family:Inter,system-ui,sans-serif;color:#EEF1F8;overflow:hidden}
+
+/* Type is written in DISPLAYED pixels and multiplied by --k, the downscale
+   factor of this canvas, so every graphic reads at the same size on the
+   page whether it lands in a 518px slot or a 1136px band. */
+#stage{position:relative;overflow:hidden;background:#0B101E}
+.pad{position:absolute;inset:0;padding:calc(20px * var(--k)) calc(22px * var(--k));display:flex;flex-direction:column}
+
+.t-ttl{font-size:calc(15px * var(--k));font-weight:600;letter-spacing:-.02em;color:#EEF1F8}
+.t-sub{font-size:calc(10px * var(--k));color:#616C84;margin-top:calc(2px * var(--k))}
+.t-lbl{font-size:calc(10.5px * var(--k));font-weight:500;color:#98A2B8}
+.t-mut{font-size:calc(8.5px * var(--k));color:#616C84}
+.t-big{font-size:calc(26px * var(--k));font-weight:700;letter-spacing:-.03em;line-height:1;color:#EEF1F8}
+.t-mid{font-size:calc(19px * var(--k));font-weight:700;letter-spacing:-.03em;line-height:1;color:#EEF1F8}
+.t-eyb{font-size:calc(8.5px * var(--k));letter-spacing:.14em;color:#616C84}
+
+.card{background:rgba(255,255,255,.030);border:1px solid rgba(255,255,255,.070);
+      border-radius:calc(7px * var(--k))}
+.chip{display:flex;align-items:center;gap:calc(5px * var(--k));
+      background:rgba(255,255,255,.030);border:1px solid rgba(255,255,255,.070);
+      border-radius:calc(5px * var(--k));padding:calc(6px * var(--k)) calc(9px * var(--k))}
+.dot{width:calc(5.5px * var(--k));height:calc(5.5px * var(--k));border-radius:50%;flex:none}
+.hd{display:flex;align-items:flex-start;justify-content:space-between;
+    margin-bottom:calc(11px * var(--k));flex:none}
+svg{display:block}
+</style></head>
+<body>
+<div id="stage"><div class="pad" id="pad"></div></div>
+
+<script>
+const BLUE='#3B82F6', AMBER='#C9820A', VIOLET='#A971F7', RED='#F0435C';
+/* Teal is only used where three series must be told apart at once. Blue+violet
+   fails the validator all-pairs at deltaE 0.6 under protanopia; blue/amber/teal
+   clears at 16.0. */
+const TEAL='#0EA5A5';
+const INK='#EEF1F8', INK3='#616C84';
+const LINE='rgba(255,255,255,.070)', LINE2='rgba(255,255,255,.140)', GRID='rgba(255,255,255,.055)';
+const BG='#0B101E', NS='http://www.w3.org/2000/svg';
+
+const WIDE={w:2272,h:900,k:2.00};    // displays at 1136 wide
+const TALL={w:1536,h:1000,k:2.97};   // displays at  518 wide
+const id=+(location.hash.slice(1)||1);
+const PORT={w:1000,h:1280,k:2.04};   // displays at  490 wide (contact, 4:5)
+const SEC={w:1200,h:856,k:2.87};     // displays at  418 wide (product security, 4:3)
+const SPEC=({1:WIDE,9:WIDE,11:WIDE,12:PORT,21:SEC})[id]||TALL;
+const stage=document.getElementById('stage'), pad=document.getElementById('pad');
+stage.style.width=SPEC.w+'px'; stage.style.height=SPEC.h+'px';
+document.body.style.width=SPEC.w+'px'; document.body.style.height=SPEC.h+'px';
+document.documentElement.style.setProperty('--k',SPEC.k);
+const K=SPEC.k, px=v=>v*K;
+
+/* fit() measures the box FIRST so one viewBox unit is one CSS pixel. That is
+   what lets absolutely positioned HTML labels land exactly on the shapes the
+   SVG draws — the earlier version let the SVG letterbox and everything slid. */
+function fit(box){
+  const r=box.getBoundingClientRect(), W=Math.round(r.width), H=Math.round(r.height);
+  const s=document.createElementNS(NS,'svg');
+  s.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  s.setAttribute('width',W); s.setAttribute('height',H);
+  s.style.cssText='position:absolute;left:0;top:0';
+  box.appendChild(s);
+  return {s,W,H};
+}
+function over(box,x,y,w,h,html,extra){
+  const d=document.createElement('div');
+  d.style.cssText=`position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;`+(extra||'');
+  d.innerHTML=html; box.appendChild(d); return d;
+}
+function el(n,a){const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);return e;}
+function pts(vals,W,H,padT,padB,padR){
+  padR=padR||0;const lo=Math.min(...vals),hi=Math.max(...vals),sp=(hi-lo)||1,ih=H-padT-padB,iw=W-padR;
+  return vals.map((v,i)=>[(i/(vals.length-1))*iw, padT+ih-((v-lo)/sp)*ih]);
+}
+const dOf=P=>P.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+function endDot(s,P,col,r){r=r||px(4.5);const l=P[P.length-1];
+  s.appendChild(el('circle',{cx:l[0],cy:l[1],r:r*1.55,fill:BG}));
+  s.appendChild(el('circle',{cx:l[0],cy:l[1],r:r,fill:col}));}
+function head(t,sub,right,rsub){
+  const h=document.createElement('div'); h.className='hd';
+  h.innerHTML=`<div><div class="t-ttl">${t}</div>${sub?`<div class="t-sub">${sub}</div>`:''}</div>`+
+   (right?`<div style="text-align:right"><div class="t-big">${right}</div>${rsub?`<div class="t-sub">${rsub}</div>`:''}</div>`:'');
+  pad.appendChild(h); return h;
+}
+function plot(flex,mt){const d=document.createElement('div');
+  d.style.cssText=`flex:${flex||'1 1 auto'};min-height:0;position:relative;${mt?`margin-top:${px(mt)}px`:''}`;
+  pad.appendChild(d); return d;}
+
+/* ══ 1 — scattered inputs resolving into one decision  (WIDE) ═════════ */
+function g1(){
+  const box=plot(); const {s,W,H}=fit(box);
+  const cols=[BLUE,VIOLET,AMBER,RED];
+  const tx=W*0.775, ty=H*0.5, cw=px(96), ch=px(44);
+  let seed=11; const rnd=()=>((seed=seed*16807%2147483647)/2147483647);
+  const nodes=[];
+  for(let i=0;i<80;i++) nodes.push({x:px(6)+rnd()*(W*0.46), y:px(4)+rnd()*(H-px(8)),
+    r:px(1.4)+rnd()*px(3.2), c:cols[Math.floor(rnd()*4)]});
+  nodes.forEach(n=>{
+    const mx=n.x+(tx-n.x)*0.62, my=n.y+(ty-n.y)*0.62;
+    s.appendChild(el('path',{d:`M${n.x},${n.y} Q${mx},${my} ${tx-cw-px(6)},${ty+(n.y-ty)*0.12}`,
+      stroke:'rgba(255,255,255,.055)','stroke-width':px(.8),fill:'none'}));
+  });
+  nodes.forEach(n=>{
+    s.appendChild(el('circle',{cx:n.x,cy:n.y,r:n.r*1.6,fill:BG}));
+    s.appendChild(el('circle',{cx:n.x,cy:n.y,r:n.r,fill:'none',stroke:n.c,'stroke-width':px(1.3),opacity:.85}));
+  });
+  s.appendChild(el('ellipse',{cx:tx,cy:ty,rx:cw*1.85,ry:ch*2.35,fill:'none',stroke:'rgba(59,130,246,.16)','stroke-width':px(1.4)}));
+  s.appendChild(el('ellipse',{cx:tx,cy:ty,rx:cw*1.42,ry:ch*1.75,fill:'none',stroke:'rgba(59,130,246,.30)','stroke-width':px(1.4)}));
+  s.appendChild(el('rect',{x:tx-cw,y:ty-ch,width:cw*2,height:ch*2,rx:px(10),fill:'#101A30',stroke:BLUE,'stroke-width':px(1.5)}));
+  over(box,tx-cw,ty-ch,cw*2,ch*2,
+    `<div class="t-mid">One decision</div>`,
+    `display:flex;align-items:center;justify-content:center`);
+}
+
+/* ══ 2 — the page's own list of inputs, converging ═══════════════════ */
+function g2(){
+  head('Every input, one place','the inputs this page names');
+  const box=plot(); const {s,W,H}=fit(box);
+  const items=['Sales','Advertising','Inventory','Costs','Fees','Cash flow','Suppliers','Forecasts'];
+  const cols=[BLUE,VIOLET,AMBER,RED,BLUE,VIOLET,AMBER,RED];
+  const cw=W*0.40, rh=px(26), gap=(H-items.length*rh)/(items.length-1);
+  const tx=W-px(50), ty=H/2, rr=px(34);
+  items.forEach((t,i)=>{
+    const y=i*(rh+gap)+rh/2;
+    s.appendChild(el('path',{d:`M${cw},${y} C${cw+px(50)},${y} ${tx-rr-px(70)},${ty} ${tx-rr-px(4)},${ty}`,
+      stroke:'rgba(255,255,255,.11)','stroke-width':px(1.1),fill:'none'}));
+  });
+  items.forEach((t,i)=>{
+    const y=i*(rh+gap);
+    over(box,0,y,cw,rh,
+      `<span class="dot" style="background:${cols[i]}"></span><span class="t-lbl">${t}</span>`,
+      `display:flex;align-items:center;gap:${px(5)}px;background:rgba(255,255,255,.030);
+       border:1px solid ${LINE};border-radius:${px(5)}px;padding:0 ${px(9)}px`);
+  });
+  s.appendChild(el('circle',{cx:tx,cy:ty,r:rr*1.45,fill:'none',stroke:'rgba(59,130,246,.22)','stroke-width':px(1.4)}));
+  s.appendChild(el('circle',{cx:tx,cy:ty,r:rr,fill:'#101A30',stroke:BLUE,'stroke-width':px(1.5)}));
+  over(box,tx-rr,ty-rr,rr*2,rr*2,`<div class="t-lbl" style="color:${INK};text-align:center">Decision</div>`,
+    `display:flex;align-items:center;justify-content:center`);
+}
+
+/* ══ 3 — a healthy headline, three series that disagree ══════════════ */
+function g3(){
+  head('Revenue','Trailing 24 months','+64%','24-month change');
+  const box=plot('1 1 auto'); const {s,W,H}=fit(box);
+  const REV=[100,101,99,104,106,105,110,113,112,118,121,120,126,129,133,131,138,142,140,147,152,155,159,164];
+  for(let i=1;i<=3;i++){const y=(H-px(9))*(i/4)+px(2);
+    s.appendChild(el('line',{x1:0,x2:W,y1:y,y2:y,stroke:GRID,'stroke-width':px(.7)}));}
+  s.appendChild(el('line',{x1:0,x2:W,y1:H-px(4),y2:H-px(4),stroke:LINE2,'stroke-width':px(.7)}));
+  const P=pts(REV,W,H,px(6),px(9),px(6));
+  const g=el('linearGradient',{id:'ga',x1:0,y1:0,x2:0,y2:1});
+  g.innerHTML='<stop offset="0" stop-color="#3B82F6" stop-opacity=".26"/><stop offset="1" stop-color="#3B82F6" stop-opacity="0"/>';
+  s.appendChild(g);
+  s.appendChild(el('path',{d:dOf(P)+` L${P[P.length-1][0]},${H-px(4)} L0,${H-px(4)} Z`,fill:'url(#ga)'}));
+  s.appendChild(el('path',{d:dOf(P),fill:'none',stroke:BLUE,'stroke-width':px(2.2),'stroke-linecap':'round','stroke-linejoin':'round'}));
+  endDot(s,P,BLUE);
+
+  const row=document.createElement('div');
+  row.style.cssText=`display:grid;grid-template-columns:repeat(3,1fr);gap:${px(11)}px;
+    height:${px(112)}px;flex:none;margin-top:${px(13)}px`;
+  pad.appendChild(row);
+  [['Gross margin','31%','22%',AMBER,'↓',[31,31,30,30,30,29,29,29,28,28,27,27,27,26,26,25,25,24,24,23,23,23,22,22],'percent of revenue'],
+   ['Stock cover','9.4w','3.1w',VIOLET,'↓',[9.4,9.3,9.1,8.8,8.6,8.1,7.9,7.4,7.2,6.8,6.5,6.1,5.9,5.5,5.2,4.9,4.6,4.3,4.1,3.9,3.6,3.4,3.2,3.1],'weeks of cover'],
+   ['Ad spend / revenue','11%','24%',RED,'↑',[11,11,12,12,13,13,14,14,15,16,16,17,17,18,19,19,20,21,21,22,22,23,23,24],'percent of revenue']
+  ].forEach(([t,fr,to,col,gl,data,foot])=>{
+    const c=document.createElement('div'); c.className='card';
+    c.style.cssText+=`padding:${px(9)}px ${px(10)}px ${px(7)}px;display:flex;flex-direction:column`;
+    c.innerHTML=`<div class="t-lbl">${t}</div>
+      <div style="display:flex;align-items:baseline;gap:${px(5)}px;margin:${px(5)}px 0 ${px(2)}px">
+        <span class="t-mut" style="text-decoration:line-through">${fr}</span>
+        <span class="t-mid">${to}</span>
+        <span style="color:${col};font-size:${px(11)}px;font-weight:700">${gl}</span></div>
+      <div style="flex:1 1 auto;min-height:0;position:relative"></div>
+      <div class="t-mut" style="margin-top:${px(4)}px">${foot}</div>`;
+    row.appendChild(c);
+    const {s:ss,W:w2,H:h2}=fit(c.children[2]);
+    const PP=pts(data,w2,h2,px(4),px(4),px(4));
+    ss.appendChild(el('path',{d:dOf(PP),fill:'none',stroke:col,'stroke-width':px(1.8),'stroke-linecap':'round','stroke-linejoin':'round'}));
+    endDot(ss,PP,col,px(3.4));
+  });
+}
+
+/* ══ 4 — one clean answer above, the machinery below ═════════════════ */
+function g4(){
+  const card=document.createElement('div'); card.className='card';
+  card.style.cssText+=`flex:none;padding:${px(15)}px ${px(16)}px;
+    border-color:rgba(59,130,246,.42);background:rgba(59,130,246,.07)`;
+  card.innerHTML=`<div class="t-eyb" style="color:${BLUE}">THE ANSWER</div>
+    <div class="t-ttl" style="margin-top:${px(6)}px">Reorder SKU A-1140 this week</div>
+    <div class="t-sub" style="margin-top:${px(5)}px">Cover falls below lead time on day 19</div>`;
+  pad.appendChild(card);
+
+  const wl=document.createElement('div');
+  wl.style.cssText=`flex:none;display:flex;align-items:center;gap:${px(9)}px;margin:${px(16)}px 0 ${px(13)}px`;
+  wl.innerHTML=`<div style="height:1px;flex:1;background:${LINE2}"></div>
+    <div class="t-eyb" style="white-space:nowrap">EVERYTHING UNDERNEATH IT</div>
+    <div style="height:1px;flex:1;background:${LINE2}"></div>`;
+  pad.appendChild(wl);
+
+  const grid=document.createElement('div');
+  grid.style.cssText=`flex:1 1 auto;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);
+    grid-auto-rows:1fr;column-gap:${px(12)}px;opacity:.55;overflow:hidden`;
+  pad.appendChild(grid);
+  ['velocity 7d / 28d','seasonal index','lead time p80','freight in transit','safety stock','open POs',
+   'return rate','fee schedule','landed unit cost','FX on supplier','storage tier','ad-driven units',
+   'organic units','stockout risk','margin after fees','cash conversion','reorder point','supplier MOQ',
+   'shelf-life cap','competitor price','buy-box share','forecast error','promo lift','warehouse cap',
+   'refund lag','coupon burn','inbound defects','replen cadence','tier breakpoints','net terms'
+  ].forEach((r,i)=>{
+    const d=document.createElement('div');
+    d.style.cssText=`display:flex;align-items:center;gap:${px(5)}px;min-width:0`;
+    d.innerHTML=`<span style="width:${px(3.6)}px;height:${px(3.6)}px;border-radius:50%;
+      background:${[BLUE,VIOLET,AMBER,RED][i%4]};opacity:.8;flex:none"></span>
+      <span class="t-mut" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r}</span>`;
+    grid.appendChild(d);
+  });
+}
+
+/* ══ 5 — what is missing, and what it would unlock ═══════════════════ */
+function g5(){
+  head('Inputs connected','','4 of 6','');
+  const bar=document.createElement('div');
+  bar.style.cssText=`flex:none;height:${px(8)}px;display:flex;gap:${px(2)}px;margin-bottom:${px(14)}px`;
+  for(let i=0;i<6;i++){const g=document.createElement('div');
+    g.style.cssText=`flex:1;border-radius:${px(4)}px;background:${i<4?BLUE:'rgba(255,255,255,.09)'}`;
+    bar.appendChild(g);}
+  pad.appendChild(bar);
+
+  const list=document.createElement('div');
+  list.style.cssText=`flex:1 1 auto;min-height:0;display:flex;flex-direction:column;gap:${px(6)}px`;
+  pad.appendChild(list);
+  [['Orders',1],['Advertising',1],['Inventory',1],['Fees',1],['Supplier costs',0],['Freight',0]]
+  .forEach(([t,ok])=>{
+    const r=document.createElement('div'); r.className='card';
+    r.style.cssText+=`flex:1 1 0;min-height:0;display:flex;align-items:center;gap:${px(9)}px;
+      padding:0 ${px(12)}px;${ok?'':'border-color:rgba(201,130,10,.45);background:rgba(201,130,10,.06)'}`;
+    r.innerHTML=`<span style="color:${ok?BLUE:AMBER};font-size:${px(11)}px;font-weight:700;width:${px(12)}px">${ok?'✓':'!'}</span>
+      <span class="t-lbl" style="flex:1">${t}</span>
+      <span class="t-mut">${ok?'connected':'missing'}</span>`;
+    list.appendChild(r);
+  });
+
+  const unlock=document.createElement('div'); unlock.className='card';
+  unlock.style.cssText+=`flex:none;margin-top:${px(12)}px;padding:${px(11)}px ${px(13)}px;
+    border-color:rgba(201,130,10,.45)`;
+  unlock.innerHTML=`<div class="t-eyb" style="color:${AMBER}">WHAT THE MISSING TWO WOULD UNLOCK</div>
+    <div class="t-lbl" style="color:${INK};margin-top:${px(5)}px">True landed margin per SKU</div>`;
+  pad.appendChild(unlock);
+}
+
+/* ══ 6 — narrowing to the handful worth opening today ════════════════ */
+function g6(){
+  head('Narrowing the field','every SKU and campaign, down to today');
+  const box=plot(); const {s,W,H}=fit(box);
+  const steps=[['Everything','1,284',1.00,BLUE],['Unusual','206',0.74,VIOLET],
+               ['Explained','61',0.58,AMBER],['Worth opening today','7',0.44,RED]];
+  const bh=H*0.175, gapY=(H-steps.length*bh)/(steps.length-1);
+  steps.forEach(([t,n,f,c],i)=>{
+    const y=i*(bh+gapY), w=W*f, x=(W-w)/2;
+    if(i<steps.length-1){
+      const nw=W*steps[i+1][2], nx=(W-nw)/2;
+      s.appendChild(el('path',{d:`M${x+px(6)},${y+bh} L${nx+px(6)},${y+bh+gapY}`,stroke:LINE,'stroke-width':px(.8)}));
+      s.appendChild(el('path',{d:`M${x+w-px(6)},${y+bh} L${nx+nw-px(6)},${y+bh+gapY}`,stroke:LINE,'stroke-width':px(.8)}));
+    }
+    s.appendChild(el('rect',{x,y,width:w,height:bh,rx:px(7),fill:'rgba(255,255,255,.030)',stroke:LINE,'stroke-width':px(.7)}));
+    s.appendChild(el('rect',{x,y,width:px(2.6),height:bh,rx:px(1.3),fill:c}));
+    over(box,x,y,w,bh,
+      `<span class="t-lbl" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t}</span>
+       <span class="t-mid" style="flex:none">${n}</span>`,
+      `display:flex;align-items:center;justify-content:space-between;
+       padding:0 ${px(12)}px 0 ${px(13)}px;gap:${px(8)}px`);
+  });
+}
+
+/* ══ 7 — your trajectory against comparable sellers ══════════════════ */
+function g7(){
+  head('Your trajectory','against comparable sellers');
+  const box=plot(); const {s,W,H}=fit(box);
+  const hi=[58,59,58,61,63,62,65,67,68,67,70,72,73,74,76,77,79,80,82,84],
+        lo=[42,43,41,44,46,45,47,49,48,50,52,51,54,55,54,56,58,57,59,61],
+        me=[47,49,48,53,56,54,60,64,63,69,73,71,78,83,81,88,93,91,99,107];
+  const all=[...hi,...lo,...me], mn=Math.min(...all), mx=Math.max(...all);
+  const Y=v=>px(8)+(H-px(20))*(1-(v-mn)/(mx-mn)), X=i=>(i/(hi.length-1))*(W-px(6));
+  for(let i=1;i<=3;i++){const y=(H-px(10))*(i/4)+px(3);
+    s.appendChild(el('line',{x1:0,x2:W,y1:y,y2:y,stroke:GRID,'stroke-width':px(.7)}));}
+  const band=hi.map((v,i)=>`${i?'L':'M'}${X(i)},${Y(v)}`).join(' ')+' '+
+             lo.slice().reverse().map((v,i)=>`L${X(lo.length-1-i)},${Y(v)}`).join(' ')+' Z';
+  s.appendChild(el('path',{d:band,fill:'rgba(169,113,247,.11)'}));
+  [hi,lo].forEach(a=>s.appendChild(el('path',{d:a.map((v,i)=>`${i?'L':'M'}${X(i)},${Y(v)}`).join(' '),
+    fill:'none',stroke:'rgba(169,113,247,.55)','stroke-width':px(1.1),'stroke-dasharray':`${px(4)} ${px(3)}`})));
+  const P=me.map((v,i)=>[X(i),Y(v)]);
+  s.appendChild(el('path',{d:dOf(P),fill:'none',stroke:BLUE,'stroke-width':px(2.2),'stroke-linecap':'round','stroke-linejoin':'round'}));
+  endDot(s,P,BLUE);
+  const lg=document.createElement('div');
+  lg.style.cssText=`flex:none;display:flex;gap:${px(18)}px;margin-top:${px(12)}px`;
+  lg.innerHTML=`<span style="display:flex;align-items:center;gap:${px(6)}px">
+      <span class="dot" style="background:${BLUE}"></span><span class="t-mut">You</span></span>
+    <span style="display:flex;align-items:center;gap:${px(6)}px">
+      <span style="width:${px(12)}px;height:${px(5.5)}px;border-radius:${px(2)}px;background:rgba(169,113,247,.42)"></span>
+      <span class="t-mut">Comparable sellers, middle range</span></span>`;
+  pad.appendChild(lg);
+}
+
+/* ══ 8 — feedback becoming a change ══════════════════════════════════ */
+function g8(){
+  head('Shaped by sellers','what we heard, and what changed');
+  const wrap=document.createElement('div');
+  wrap.style.cssText=`flex:1 1 auto;min-height:0;display:grid;
+    grid-template-columns:1fr ${px(24)}px 1fr;gap:${px(10)}px;align-items:stretch`;
+  pad.appendChild(wrap);
+
+  const left=document.createElement('div');
+  left.style.cssText=`display:flex;flex-direction:column;gap:${px(9)}px`;
+  [['Seller call','“I check cover before I check sales.”',VIOLET],
+   ['Support thread','“Tell me why it changed, not just that it did.”',AMBER],
+   ['Beta session','“I only have ten minutes in the morning.”',BLUE]
+  ].forEach(([src,q,c])=>{
+    const d=document.createElement('div'); d.className='card';
+    d.style.cssText+=`flex:1 1 0;min-height:0;padding:${px(10)}px ${px(12)}px;
+      border-left:${px(2.5)}px solid ${c};display:flex;flex-direction:column;justify-content:center`;
+    d.innerHTML=`<div class="t-eyb">${src.toUpperCase()}</div>
+      <div class="t-lbl" style="margin-top:${px(4)}px;line-height:1.4">${q}</div>`;
+    left.appendChild(d);
+  });
+  wrap.appendChild(left);
+
+  const arr=document.createElement('div');
+  arr.style.cssText=`display:flex;align-items:center;justify-content:center;color:${INK3};font-size:${px(18)}px`;
+  arr.textContent='→'; wrap.appendChild(arr);
+
+  const right=document.createElement('div'); right.className='card';
+  right.style.cssText+=`padding:${px(13)}px ${px(14)}px;border-color:rgba(59,130,246,.42);
+    background:rgba(59,130,246,.07);display:flex;flex-direction:column;justify-content:center;gap:${px(9)}px`;
+  right.innerHTML=`<div class="t-eyb" style="color:${BLUE}">WHAT CHANGED</div>
+    <div class="t-lbl" style="color:${INK};line-height:1.4">Cover moved above sales on the daily view</div>
+    <div style="height:1px;background:${LINE}"></div>
+    <div class="t-lbl" style="color:${INK};line-height:1.4">Every card leads with why it moved</div>
+    <div style="height:1px;background:${LINE}"></div>
+    <div class="t-lbl" style="color:${INK};line-height:1.4">A ten-minute morning pass</div>`;
+  wrap.appendChild(right);
+}
+
+/* ══ 9 — the six stages as a closed loop  (WIDE) ═════════════════════ */
+function g9(){
+  const box=plot(); const {s,W,H}=fit(box);
+  const stages=[['Data','What happened?',BLUE],['Context','Why might it have happened?',BLUE],
+                ['Analysis','What matters?',VIOLET],['Focus','What deserves attention?',VIOLET],
+                ['Action','What should you do next?',AMBER],['Learning','What happened as a result?',AMBER]];
+  const cw=px(96), ch=px(40);
+  const cx=W/2, cy=H/2, rx=W/2-cw-px(6), ry=H/2-ch-px(4);
+  s.appendChild(el('ellipse',{cx,cy,rx,ry,fill:'none',stroke:LINE,'stroke-width':px(1.2)}));
+  const A=i=>-Math.PI/2+i*(Math.PI*2/6);
+  const pos=stages.map((_,i)=>[cx+rx*Math.cos(A(i)), cy+ry*Math.sin(A(i))]);
+  pos.forEach((p,i)=>{
+    const a0=A(i+0.5), mx=cx+rx*Math.cos(a0), my=cy+ry*Math.sin(a0);
+    const q=pos[(i+1)%6], ang=Math.atan2(q[1]-p[1],q[0]-p[0])*180/Math.PI;
+    const col=i===5?AMBER:'rgba(255,255,255,.32)', t=px(5);
+    s.appendChild(el('path',{d:`M${-t},${-t*0.85} L${t},0 L${-t},${t*0.85} Z`,fill:col,
+      transform:`translate(${mx},${my}) rotate(${ang})`}));
+  });
+  pos.forEach((p,i)=>{
+    const [t,q]=stages[i];
+    s.appendChild(el('rect',{x:p[0]-cw,y:p[1]-ch,width:cw*2,height:ch*2,rx:px(9),
+      fill:'#0E1424',stroke:i===5?AMBER:LINE,'stroke-width':px(i===5?1.5:1)}));
+    over(box,p[0]-cw,p[1]-ch,cw*2,ch*2,
+      `<div class="t-lbl" style="color:${INK};font-weight:600">${t}</div>
+       <div class="t-mut" style="margin-top:${px(3)}px;line-height:1.35">${q}</div>`,
+      `display:flex;flex-direction:column;align-items:center;justify-content:center;
+       text-align:center;padding:0 ${px(8)}px`);
+  });
+  over(box,cx-px(120),cy-px(8),px(240),px(16),
+    `<div class="t-eyb" style="color:${AMBER}">LEARNING FEEDS BACK INTO DATA</div>`,
+    `display:flex;align-items:center;justify-content:center`);
+}
+
+/* ══ 10 — one seller's lesson becomes a card others can act on ═══════ */
+function g10(){
+  head('One lesson, many sellers','');
+  const wrap=document.createElement('div');
+  wrap.style.cssText='flex:1 1 auto;min-height:0;display:flex;flex-direction:column;justify-content:space-evenly';
+  pad.appendChild(wrap);
+  const src=document.createElement('div'); src.className='card';
+  src.style.cssText+=`padding:${px(12)}px ${px(14)}px;border-left:${px(2.5)}px solid ${VIOLET}`;
+  src.innerHTML=`<div class="t-eyb">ONE SELLER LEARNED THIS</div>
+    <div class="t-lbl" style="color:${INK};margin-top:${px(6)}px;line-height:1.4">
+      Cutting bids on a stocked-out SKU recovered rank faster than pausing it</div>`;
+  wrap.appendChild(src);
+  const sp=document.createElement('div');
+  sp.style.cssText=`display:flex;justify-content:center;color:${INK3};font-size:${px(16)}px;margin:${px(11)}px 0`;
+  sp.textContent='↓'; wrap.appendChild(sp);
+  const grid=document.createElement('div');
+  grid.style.cssText=`display:grid;grid-template-columns:repeat(3,1fr);gap:${px(10)}px`;
+  wrap.appendChild(grid);
+  [[BLUE,86],[AMBER,64],[RED,72]].forEach(([c,w],i)=>{
+    const d=document.createElement('div'); d.className='card';
+    d.style.cssText+=`padding:${px(11)}px;display:flex;flex-direction:column;gap:${px(7)}px`;
+    d.innerHTML=`<div style="display:flex;align-items:center;gap:${px(6)}px">
+        <span class="dot" style="background:${c}"></span><span class="t-mut">Another seller</span></div>
+      <div class="t-lbl" style="color:${INK};line-height:1.35">Acts on it</div>
+      <div style="height:${px(3)}px;border-radius:${px(2)}px;background:${c};opacity:.55;width:${w}%"></div>`;
+    grid.appendChild(d);
+  });
+}
+
+/* ══ 11 — the closing horizon  (WIDE) ════════════════════════════════ */
+function g11(){
+  const box=plot(); const {s,W,H}=fit(box);
+  const stops=['Bring the information together','Understand the business as a whole',
+               'Learn from your own history','Learn from other sellers','Decide with less wasted effort'];
+  const cols=[BLUE,BLUE,VIOLET,VIOLET,AMBER];
+  const gy=H*0.80, step=W/stops.length;
+  const g=el('linearGradient',{id:'gh',x1:0,y1:0,x2:0,y2:1});
+  g.innerHTML='<stop offset="0" stop-color="#3B82F6" stop-opacity="0"/><stop offset=".55" stop-color="#3B82F6" stop-opacity=".07"/><stop offset="1" stop-color="#3B82F6" stop-opacity=".22"/>';
+  s.appendChild(g);
+  s.appendChild(el('rect',{x:0,y:0,width:W,height:gy,fill:'url(#gh)'}));
+  // receding rules, so the upper band reads as depth rather than dead space
+  for(let i=1;i<=4;i++){
+    const y=gy-(gy*0.92)*Math.pow(i/5,1.7);
+    s.appendChild(el('line',{x1:0,x2:W,y1:y,y2:y,stroke:'rgba(255,255,255,.045)','stroke-width':px(.7)}));
+  }
+  s.appendChild(el('line',{x1:0,x2:W,y1:gy,y2:gy,stroke:'rgba(59,130,246,.60)','stroke-width':px(1.6)}));
+  stops.forEach((t,i)=>{
+    const x=step*(i+0.5), h=px(42)+i*px(46);
+    s.appendChild(el('line',{x1:x,x2:x,y1:gy,y2:gy-h,stroke:LINE2,'stroke-width':px(.9)}));
+    s.appendChild(el('circle',{cx:x,cy:gy-h,r:px(11),fill:'none',stroke:cols[i],'stroke-width':px(1),opacity:.35}));
+    s.appendChild(el('circle',{cx:x,cy:gy-h,r:px(7),fill:BG}));
+    s.appendChild(el('circle',{cx:x,cy:gy-h,r:px(4.4),fill:cols[i]}));
+    over(box,x-step*0.46,gy-h-px(30),step*0.92,px(16),
+      `<div class="t-eyb" style="color:${cols[i]}">0${i+1}</div>`,`text-align:center`);
+    over(box,x-step*0.46,gy+px(14),step*0.92,H-gy-px(14),
+      `<div class="t-lbl" style="line-height:1.4">${t}</div>`,`text-align:center`);
+  });
+}
+
+
+/* ══ 12 — contact: a message arrives, is read, shapes the product (4:5) ═ */
+function g12(){
+  const box=plot(); const {s,W,H}=fit(box);
+  const cols=[BLUE,VIOLET,AMBER,RED,BLUE];
+  const cx=W/2;
+  const zone1=H*0.40, node=H*0.615, markY=H*0.845;
+
+  // ── the messages that arrive
+  const cards=[[0.02,0.02],[0.46,0.10],[0.10,0.20],[0.52,0.285],[0.04,0.375]];
+  const cw=W*0.44, ch=H*0.075;
+  cards.forEach(([fx,fy],i)=>{
+    const x=W*0.03+fx*W, y=H*0.015+fy*H;
+    s.appendChild(el('path',{d:`M${x+cw/2},${y+ch} C${x+cw/2},${y+ch+H*0.07} ${cx},${node-H*0.10} ${cx},${node-px(16)}`,
+      stroke:'rgba(255,255,255,.075)','stroke-width':px(.9),fill:'none'}));
+    s.appendChild(el('rect',{x,y,width:cw,height:ch,rx:px(7),
+      fill:'#0E1424',stroke:LINE,'stroke-width':px(.8)}));
+    s.appendChild(el('circle',{cx:x+px(13),cy:y+ch/2,r:px(3.4),fill:cols[i]}));
+    // abstract message lines — no real words
+    s.appendChild(el('rect',{x:x+px(23),y:y+ch*0.30,width:cw*0.58,height:px(2.6),rx:px(1.3),fill:'rgba(255,255,255,.20)'}));
+    s.appendChild(el('rect',{x:x+px(23),y:y+ch*0.56,width:cw*0.36,height:px(2.6),rx:px(1.3),fill:'rgba(255,255,255,.11)'}));
+  });
+
+  // ── read: one point everything reaches
+  s.appendChild(el('circle',{cx,cy:node,r:px(30),fill:'none',stroke:'rgba(59,130,246,.16)','stroke-width':px(1.2)}));
+  s.appendChild(el('circle',{cx,cy:node,r:px(20),fill:'none',stroke:'rgba(59,130,246,.34)','stroke-width':px(1.2)}));
+  s.appendChild(el('circle',{cx,cy:node,r:px(11),fill:'#101A30',stroke:BLUE,'stroke-width':px(1.5)}));
+  s.appendChild(el('circle',{cx,cy:node,r:px(4),fill:BLUE}));
+
+  // ── and becomes the product
+  s.appendChild(el('path',{d:`M${cx},${node+px(32)} L${cx},${markY-px(46)}`,
+    stroke:LINE2,'stroke-width':px(1),'stroke-dasharray':`${px(4)} ${px(4)}`}));
+  s.appendChild(el('path',{d:`M${cx-px(5)},${markY-px(52)} L${cx},${markY-px(60)} L${cx+px(5)},${markY-px(52)} Z`,fill:INK3}));
+
+  const g=el('linearGradient',{id:'mk',x1:0,y1:0,x2:1,y2:1});
+  g.innerHTML='<stop offset="0" stop-color="#5B4FE6"/><stop offset="1" stop-color="#A93BF1"/>';
+  s.appendChild(g);
+  const gl=el('radialGradient',{id:'mkglow'});
+  gl.innerHTML='<stop offset="0" stop-color="#A93BF1" stop-opacity=".26"/><stop offset="1" stop-color="#A93BF1" stop-opacity="0"/>';
+  s.appendChild(gl);
+  s.appendChild(el('circle',{cx,cy:markY,r:px(58),fill:'url(#mkglow)'}));
+  const S=px(2.35);   // the brand mark, from the site's own 32x32 path
+  const gEl=el('g',{transform:`translate(${cx-16*S},${markY-16*S}) scale(${S})`});
+  gEl.appendChild(el('path',{d:'M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z',fill:'url(#mk)'}));
+  gEl.appendChild(el('path',{d:'M16 17.6l4.4 8.2h-8.8z',fill:'#C56BF5',opacity:'.85'}));
+  s.appendChild(gEl);
+
+  // ── three stage labels, condensed from this page's own sentence
+  [[zone1*0.52,'Arrives'],[node,'Read'],[markY,'Shapes the product']].forEach(([y,t])=>{
+    over(box,W*0.62,y-px(7),W*0.38,px(14),
+      `<div class="t-eyb" style="text-align:right;white-space:nowrap">${t.toUpperCase()}</div>`);
+  });
+}
+
+
+/* ══ 13 — PPC: a verdict, its evidence, the new number ═══════════════ */
+function g13(){
+  head('Campaign verdict','judged against this product’s break-even ACoS');
+  const card=document.createElement('div'); card.className='card';
+  card.style.cssText+=`flex:none;padding:${px(14)}px ${px(15)}px;border-color:rgba(59,130,246,.42);
+    background:rgba(59,130,246,.07)`;
+  card.innerHTML=`
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:${px(10)}px">
+      <div class="t-lbl" style="color:${INK}">exact match &middot; "collagen powder unflavored"</div>
+      <div class="t-eyb" style="color:${BLUE};border:1px solid rgba(59,130,246,.45);
+        border-radius:${px(4)}px;padding:${px(3)}px ${px(7)}px;white-space:nowrap">OPTIMIZE</div>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:${px(10)}px;margin-top:${px(11)}px">
+      <span class="t-mid" style="color:${INK3};text-decoration:line-through">$1.40</span>
+      <span style="color:${INK3};font-size:${px(15)}px">&rarr;</span>
+      <span class="t-big">$0.90</span>
+      <span class="t-mut">new bid</span>
+    </div>
+    <div style="height:1px;background:${LINE};margin:${px(12)}px 0 ${px(10)}px"></div>
+    <div class="t-mut" style="line-height:1.6">Break-even ACoS 27% &middot; actual 41% &middot; 118 clicks,
+      3 orders &middot; spend $165 over 14 days</div>`;
+  pad.appendChild(card);
+
+  const lab=document.createElement('div');
+  lab.style.cssText=`flex:none;margin:${px(15)}px 0 ${px(8)}px`;
+  lab.innerHTML=`<div class="t-eyb">SEVEN VERDICTS, EACH WITH A WRITTEN REASON</div>`;
+  pad.appendChild(lab);
+
+  const row=document.createElement('div');
+  row.style.cssText=`flex:1 1 auto;min-height:0;display:grid;
+    grid-template-columns:repeat(4,1fr);grid-auto-rows:1fr;gap:${px(8)}px`;
+  pad.appendChild(row);
+  [['Scale',0],['Optimize',1],['Cut',0],['Hold-flywheel',0],['Negate',0],['Harvest',0],['Review',0]]
+  .forEach(([t,on])=>{
+    const c=document.createElement('div');
+    c.style.cssText=`display:flex;align-items:center;gap:${px(6)}px;border-radius:${px(5)}px;
+      min-width:0;padding:0 ${px(11)}px;border:1px solid ${on?'rgba(59,130,246,.45)':LINE};
+      background:${on?'rgba(59,130,246,.10)':'rgba(255,255,255,.030)'}`;
+    c.innerHTML=`<span class="dot" style="background:${on?BLUE:'rgba(255,255,255,.18)'}"></span>
+      <span class="t-lbl" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;${on?`color:${INK}`:''}">${t}</span>`;
+    row.appendChild(c);
+  });
+}
+
+/* ══ 14 — Financials: revenue down to net profit ═════════════════════ */
+function g14(){
+  head('From revenue to net profit','one month, one SKU');
+  const box=plot(); const {s,W,H}=fit(box);
+  const steps=[['Revenue',48200,BLUE,1],['Amazon fees',-13100,RED,0],['Cost of goods',-16400,RED,0],
+               ['Advertising',-7300,RED,0],['Refunds',-1900,RED,0],['Overheads',-2600,RED,0],
+               ['Net profit',6900,BLUE,1]];
+  const top=48200, base=H-px(30), scale=(base-px(6))/top;
+  const bw=W/steps.length*0.62, gap=W/steps.length;
+  let run=0;
+  steps.forEach(([t,v,c,isTotal],i)=>{
+    const x=gap*i+(gap-bw)/2;
+    let y0,y1;
+    if(isTotal){ y0=base; y1=base-Math.abs(v)*scale; }
+    else { y0=base-run*scale; y1=base-(run+v)*scale; }
+    const yTop=Math.min(y0,y1), h=Math.max(Math.abs(y1-y0),px(1.5));
+    s.appendChild(el('rect',{x,y:yTop,width:bw,height:h,rx:px(2.5),fill:c,opacity:isTotal?.95:.75}));
+    if(!isTotal) run+=v; else run=v;
+    if(i<steps.length-1&&!isTotal){
+      const yc=base-run*scale;
+      s.appendChild(el('line',{x1:x+bw,x2:gap*(i+1)+(gap-bw)/2,y1:yc,y2:yc,
+        stroke:'rgba(255,255,255,.20)','stroke-width':px(.7),'stroke-dasharray':`${px(2.5)} ${px(2.5)}`}));
+    }
+    over(box,gap*i,yTop-px(15),gap,px(12),
+      `<div class="t-mut" style="text-align:center;white-space:nowrap">${v<0?'−':''}$${Math.abs(v/1000).toFixed(1)}k</div>`);
+    over(box,gap*i,base+px(7),gap,px(24),
+      `<div class="t-mut" style="text-align:center;line-height:1.3">${t}</div>`);
+  });
+  s.appendChild(el('line',{x1:0,x2:W,y1:base,y2:base,stroke:LINE2,'stroke-width':px(.8)}));
+}
+
+/* ══ 15 — Ledger: the PO journey and what it lands at ════════════════ */
+function g15(){
+  head('One purchase order','manufacturing to received');
+  const strip=document.createElement('div');
+  strip.style.cssText=`flex:none;display:flex;align-items:center;gap:${px(4)}px`;
+  pad.appendChild(strip);
+  [['Manufacturing',2],['Freight',2],['Customs',1],['Inspection',0],['Received',0]]
+  .forEach(([t,st],i,a)=>{
+    const col=st===2?BLUE:st===1?AMBER:'rgba(255,255,255,.16)';
+    const c=document.createElement('div');
+    c.style.cssText=`flex:1;display:flex;flex-direction:column;gap:${px(7)}px;min-width:0`;
+    c.innerHTML=`<div style="height:${px(4)}px;border-radius:${px(2)}px;background:${col}"></div>
+      <div class="t-mut" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t}</div>`;
+    strip.appendChild(c);
+    if(i<a.length-1){const sp=document.createElement('div');
+      sp.style.cssText=`color:${INK3};font-size:${px(9)}px;padding-bottom:${px(14)}px`;
+      sp.textContent='›'; strip.appendChild(sp);}
+  });
+
+  const note=document.createElement('div');
+  note.style.cssText=`flex:none;margin-top:${px(13)}px`;
+  note.innerHTML=`<div class="card" style="padding:${px(10)}px ${px(12)}px;
+    border-color:rgba(201,130,10,.45);background:rgba(201,130,10,.06);display:flex;
+    align-items:center;gap:${px(9)}px">
+    <span style="color:${AMBER};font-weight:700;font-size:${px(11)}px">!</span>
+    <span class="t-lbl" style="color:${INK}">Freight invoice missing</span>
+    <span class="t-mut" style="margin-left:auto">PO-2291</span></div>`;
+  pad.appendChild(note);
+
+  const lab=document.createElement('div');
+  lab.style.cssText=`flex:none;margin:${px(16)}px 0 ${px(9)}px`;
+  lab.innerHTML=`<div class="t-eyb">LANDED COST PER UNIT</div>`;
+  pad.appendChild(lab);
+
+  const build=document.createElement('div');
+  build.style.cssText=`flex:1 1 auto;min-height:0;display:flex;flex-direction:column;gap:${px(6)}px`;
+  pad.appendChild(build);
+  [['Manufacturing','$4.12',BLUE],['Freight','$0.94',VIOLET],['Duty','$0.38',AMBER],['Inspection','$0.11',RED]]
+  .forEach(([t,v,c])=>{
+    const r=document.createElement('div');
+    r.style.cssText=`flex:1 1 0;min-height:0;display:flex;align-items:center;gap:${px(9)}px;
+      padding:0 ${px(12)}px;background:rgba(255,255,255,.030);border:1px solid ${LINE};border-radius:${px(5)}px`;
+    r.innerHTML=`<span class="dot" style="background:${c}"></span>
+      <span class="t-lbl" style="flex:1">${t}</span><span class="t-lbl" style="color:${INK}">${v}</span>`;
+    build.appendChild(r);
+  });
+  const tot=document.createElement('div');
+  tot.style.cssText=`flex:none;margin-top:${px(9)}px;display:flex;align-items:baseline;
+    justify-content:space-between;padding:0 ${px(12)}px`;
+  tot.innerHTML=`<span class="t-lbl" style="color:${INK}">Landed, per unit that arrived</span>
+    <span class="t-mid">$5.55</span>`;
+  pad.appendChild(tot);
+}
+
+/* ══ 16 — Inventory: the last day you can safely order ═══════════════ */
+function g16(){
+  head('Order-by date','stockout minus your lead time');
+  const tbl=document.createElement('div');
+  tbl.style.cssText=`flex:1 1 auto;min-height:0;display:flex;flex-direction:column;gap:${px(6)}px`;
+  pad.appendChild(tbl);
+  const hdr=document.createElement('div');
+  hdr.style.cssText=`flex:none;display:grid;grid-template-columns:1.5fr 1.5fr 1fr 1fr;
+    gap:${px(8)}px;padding:0 ${px(12)}px ${px(2)}px`;
+  hdr.innerHTML=['SKU','Order by','Qty','Cover']
+    .map((t,i)=>`<div class="t-eyb" style="text-align:${i>1?'right':'left'}">${t.toUpperCase()}</div>`).join('');
+  tbl.appendChild(hdr);
+  [['A-1140','overdue 14d',940,'3.1w',2],['B-0072','in 3 days',780,'5.4w',1],
+   ['C-2318','12 Sep',620,'8.2w',0],['D-0455','28 Sep',300,'9.6w',0],
+   ['E-1901','04 Oct',1450,'11.0w',0],['F-3320','19 Oct',260,'13.4w',0]]
+  .forEach(([sku,when,qty,cover,sev])=>{
+    const c=sev===2?RED:sev===1?AMBER:null;
+    const r=document.createElement('div');
+    r.style.cssText=`flex:1 1 0;min-height:0;display:grid;grid-template-columns:1.5fr 1.5fr 1fr 1fr;
+      gap:${px(8)}px;align-items:center;padding:0 ${px(12)}px;border-radius:${px(5)}px;
+      border:1px solid ${c?(sev===2?'rgba(240,67,92,.45)':'rgba(201,130,10,.45)'):LINE};
+      background:${c?(sev===2?'rgba(240,67,92,.07)':'rgba(201,130,10,.06)'):'rgba(255,255,255,.030)'}`;
+    r.innerHTML=`<span class="t-lbl" style="color:${INK}">${sku}</span>
+      <span class="t-lbl" style="color:${c||INK3};display:flex;align-items:center;gap:${px(5)}px">
+        ${c?`<span style="font-weight:700">${sev===2?'!':'•'}</span>`:''}${when}</span>
+      <span class="t-lbl" style="text-align:right">${qty.toLocaleString()}</span>
+      <span class="t-lbl" style="text-align:right">${cover}</span>`;
+    tbl.appendChild(r);
+  });
+}
+
+/* ══ 17 — Research: four dimensions, one verdict ════════════════════ */
+function g17(){
+  head('Opportunity score','four dimensions, one verdict','Good','');
+  const list=document.createElement('div');
+  list.style.cssText=`flex:1 1 auto;min-height:0;display:flex;flex-direction:column;
+    justify-content:space-evenly;gap:${px(10)}px`;
+  pad.appendChild(list);
+  [['Market size',82,BLUE],['Entry opportunity',64,BLUE],
+   ['Discoverability',48,AMBER],['Profitability',31,RED]]
+  .forEach(([t,v,c])=>{
+    const r=document.createElement('div');
+    r.style.cssText=`display:flex;flex-direction:column;gap:${px(6)}px`;
+    r.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:baseline">
+        <span class="t-lbl">${t}</span><span class="t-lbl" style="color:${INK}">${v}</span></div>
+      <div style="height:${px(8)}px;border-radius:${px(4)}px;background:rgba(255,255,255,.06);overflow:hidden">
+        <div style="height:100%;width:${v}%;border-radius:${px(4)}px;background:${c}"></div></div>`;
+    list.appendChild(r);
+  });
+  const scale=document.createElement('div');
+  scale.style.cssText=`flex:none;margin-top:${px(14)}px;display:flex;gap:${px(6)}px`;
+  pad.appendChild(scale);
+  [['Strong',0],['Good',1],['Marginal',0],['Avoid',0]].forEach(([t,on])=>{
+    const c=document.createElement('div');
+    c.style.cssText=`flex:1;text-align:center;padding:${px(8)}px ${px(4)}px;border-radius:${px(5)}px;
+      border:1px solid ${on?'rgba(59,130,246,.45)':LINE};
+      background:${on?'rgba(59,130,246,.10)':'rgba(255,255,255,.030)'}`;
+    c.innerHTML=`<span class="t-lbl" ${on?`style="color:${INK}"`:''}>${t}</span>`;
+    scale.appendChild(c);
+  });
+}
+
+/* ══ 18 — Simulations: profitable, and still out of money ═══════════ */
+function g18(){
+  head('Profit and cash','fortnight by fortnight');
+  const box=plot(); const {s,W,H}=fit(box);
+  const profit=[3,5,6,8,9,11,12,14,15,17,18,20,21,23,24,26,27,29,30,32];
+  const cash  =[22,19,14,8,3,-2,-7,-11,-9,-4,2,7,13,18,22,27,31,36,40,45];
+  const all=[...profit,...cash], mn=Math.min(...all), mx=Math.max(...all);
+  const Y=v=>px(8)+(H-px(30))*(1-(v-mn)/(mx-mn)), X=i=>(i/(profit.length-1))*(W-px(6));
+  const zero=Y(0);
+  // the region below zero
+  s.appendChild(el('rect',{x:0,y:zero,width:W,height:H-px(22)-zero,fill:'rgba(240,67,92,.07)'}));
+  s.appendChild(el('line',{x1:0,x2:W,y1:zero,y2:zero,stroke:'rgba(240,67,92,.55)','stroke-width':px(1)}));
+  over(box,0,zero+px(3),W,px(11),`<div class="t-mut" style="color:${RED}">zero cash</div>`);
+  [[profit,BLUE],[cash,AMBER]].forEach(([a,c])=>{
+    const P=a.map((v,i)=>[X(i),Y(v)]);
+    s.appendChild(el('path',{d:dOf(P),fill:'none',stroke:c,'stroke-width':px(2.2),
+      'stroke-linecap':'round','stroke-linejoin':'round'}));
+    endDot(s,P,c);
+  });
+  // flag the fortnight it goes under
+  const dipI=cash.indexOf(Math.min(...cash));
+  s.appendChild(el('line',{x1:X(dipI),x2:X(dipI),y1:px(4),y2:Y(cash[dipI]),
+    stroke:'rgba(240,67,92,.45)','stroke-width':px(.9),'stroke-dasharray':`${px(3)} ${px(3)}`}));
+  s.appendChild(el('circle',{cx:X(dipI),cy:Y(cash[dipI]),r:px(7),fill:BG}));
+  s.appendChild(el('circle',{cx:X(dipI),cy:Y(cash[dipI]),r:px(4.4),fill:RED}));
+  over(box,X(dipI)-px(52),px(2),px(104),px(13),
+    `<div class="t-eyb" style="color:${RED};text-align:center;white-space:nowrap">FORTNIGHT 8</div>`);
+  const lg=document.createElement('div');
+  lg.style.cssText=`flex:none;display:flex;gap:${px(18)}px;margin-top:${px(12)}px`;
+  lg.innerHTML=[['Profit',BLUE],['Cash in the bank',AMBER]].map(([t,c])=>
+    `<span style="display:flex;align-items:center;gap:${px(6)}px">
+      <span class="dot" style="background:${c}"></span><span class="t-mut">${t}</span></span>`).join('');
+  pad.appendChild(lg);
+}
+
+/* ══ 19 — Sales: how much of this revenue are you renting ═══════════ */
+function g19(){
+  head('Organic vs paid units','per SKU');
+  const list=document.createElement('div');
+  list.style.cssText=`flex:1 1 auto;min-height:0;display:flex;flex-direction:column;
+    justify-content:space-evenly`;
+  pad.appendChild(list);
+  [['A-1140',82,18],['B-0072',61,39],['C-2318',47,53],
+   ['D-0455',35,65],['E-1901',24,76],['F-3320',12,88]]
+  .forEach(([sku,org,ppc])=>{
+    const r=document.createElement('div');
+    r.style.cssText=`display:flex;align-items:center;gap:${px(11)}px`;
+    r.innerHTML=`<span class="t-lbl" style="width:${px(48)}px;flex:none">${sku}</span>
+      <span style="flex:1;display:flex;gap:${px(2)}px;height:${px(15)}px">
+        <span style="width:${org}%;background:${BLUE};border-radius:${px(3)}px 0 0 ${px(3)}px"></span>
+        <span style="width:${ppc}%;background:${AMBER};border-radius:0 ${px(3)}px ${px(3)}px 0"></span>
+      </span>
+      <span class="t-lbl" style="width:${px(34)}px;text-align:right;flex:none;color:${INK}">${ppc}%</span>`;
+    list.appendChild(r);
+  });
+  const lg=document.createElement('div');
+  lg.style.cssText=`flex:none;display:flex;gap:${px(18)}px;margin-top:${px(13)}px`;
+  lg.innerHTML=[['Organic units',BLUE],['Paid units',AMBER]].map(([t,c])=>
+    `<span style="display:flex;align-items:center;gap:${px(6)}px">
+      <span class="dot" style="background:${c}"></span><span class="t-mut">${t}</span></span>`).join('')
+    +`<span class="t-mut" style="margin-left:auto">% shown is paid</span>`;
+  pad.appendChild(lg);
+}
+
+/* ══ 20 — Data & Sync: ten reports, one never uploaded ══════════════ */
+function g20(){
+  head('Report sync','ten types, every row traceable to its file','9 / 10','');
+  const list=document.createElement('div');
+  list.style.cssText=`flex:1 1 auto;min-height:0;display:flex;flex-direction:column;gap:${px(4)}px`;
+  pad.appendChild(list);
+  [['Business report',1],['Settlement',1],['Advertised product',1],['Search term',1],
+   ['Inventory ledger',1],['Returns',1],['Fee preview',1],['Storage fees',1],
+   ['Bulk campaign',1],['Placement report',0]]
+  .forEach(([t,ok])=>{
+    const r=document.createElement('div');
+    r.style.cssText=`flex:1 1 0;min-height:0;display:flex;align-items:center;gap:${px(9)}px;
+      padding:0 ${px(12)}px;border-radius:${px(5)}px;
+      border:1px solid ${ok?LINE:'rgba(201,130,10,.45)'};
+      background:${ok?'rgba(255,255,255,.030)':'rgba(201,130,10,.06)'}`;
+    r.innerHTML=`<span style="color:${ok?BLUE:AMBER};font-weight:700;font-size:${px(10)}px;
+        width:${px(11)}px">${ok?'✓':'!'}</span>
+      <span class="t-lbl" style="flex:1">${t}</span>
+      <span class="t-mut" style="color:${ok?INK3:AMBER}">${ok?'up to date':'never uploaded'}</span>`;
+    list.appendChild(r);
+  });
+  const note=document.createElement('div');
+  note.style.cssText=`flex:none;margin-top:${px(12)}px`;
+  note.innerHTML=`<div class="t-mut">Re-upload is always safe &mdash; deduplicated by content hash</div>`;
+  pad.appendChild(note);
+}
+
+
+/* ══ 21 — Security: the controls named, and what is not claimed ═════ */
+function g21(){
+  head('Eight control groups','named, so you can check them');
+  const grid=document.createElement('div');
+  grid.style.cssText=`flex:1 1 auto;min-height:0;display:grid;grid-template-columns:1fr 1fr;
+    grid-auto-rows:1fr;gap:${px(6)}px ${px(8)}px`;
+  pad.appendChild(grid);
+  [['Encryption',BLUE],['Account security',BLUE],['Access control',VIOLET],
+   ['Application hardening',VIOLET],['Monitoring',AMBER],['Testing',AMBER],
+   ['Data governance',RED],['Infrastructure',RED]]
+  .forEach(([t,c])=>{
+    const d=document.createElement('div');
+    d.style.cssText=`display:flex;align-items:center;gap:${px(7)}px;min-width:0;
+      padding:0 ${px(10)}px;border-radius:${px(5)}px;border:1px solid ${LINE};
+      background:rgba(255,255,255,.030)`;
+    d.innerHTML=`<span class="dot" style="background:${c}"></span>
+      <span class="t-lbl" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t}</span>`;
+    grid.appendChild(d);
+  });
+}
+
+
+/* ══ 22 — Solutions/Inventory: where the stock actually is ═══════════ */
+function g22(){
+  head('Where the stock actually is','one SKU, three locations','1,077','units on hand');
+
+  const LOC=[['FBA',612,BLUE,'sellable now'],
+             ['AWD',285,AMBER,'reserve, 6d to move'],
+             ['3PL',180,TEAL,'pre-Amazon, 11d in']];
+  const total=LOC.reduce((a,[,v])=>a+v,0);
+
+  // one bar, three segments, a 2px surface gap between each
+  const bar=document.createElement('div');
+  bar.style.cssText=`flex:none;display:flex;gap:2px;height:${px(22)}px;margin-bottom:${px(9)}px`;
+  LOC.forEach(([t,v,c],i)=>{
+    const seg=document.createElement('div');
+    const r=px(4);
+    seg.style.cssText=`width:${(v/total*100)}%;background:${c};display:flex;align-items:center;
+      justify-content:center;
+      border-radius:${i===0?`${r}px 0 0 ${r}px`:i===LOC.length-1?`0 ${r}px ${r}px 0`:'0'}`;
+    seg.innerHTML=`<span style="font-size:${px(9)}px;font-weight:700;color:#0B101E">${t}</span>`;
+    bar.appendChild(seg);
+  });
+  pad.appendChild(bar);
+
+  const pct=document.createElement('div');
+  pct.style.cssText=`flex:none;display:flex;gap:2px;margin-bottom:${px(16)}px`;
+  LOC.forEach(([,v])=>{
+    const d=document.createElement('div');
+    d.style.cssText=`width:${(v/total*100)}%;text-align:center`;
+    d.innerHTML=`<span class="t-mut">${Math.round(v/total*100)}%</span>`;
+    pct.appendChild(d);
+  });
+  pad.appendChild(pct);
+
+  const grid=document.createElement('div');
+  grid.style.cssText=`flex:1 1 auto;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);gap:${px(10)}px`;
+  pad.appendChild(grid);
+  LOC.forEach(([t,v,c,note])=>{
+    const d=document.createElement('div'); d.className='card';
+    d.style.cssText+=`padding:${px(12)}px ${px(13)}px;display:flex;flex-direction:column;justify-content:center;gap:${px(6)}px`;
+    d.innerHTML=`<div style="display:flex;align-items:center;gap:${px(7)}px">
+        <span class="dot" style="background:${c}"></span><span class="t-lbl">${t}</span></div>
+      <div class="t-mid">${v.toLocaleString()}</div>
+      <div class="t-mut" style="line-height:1.4">${note}</div>`;
+    grid.appendChild(d);
+  });
+
+  const strip=document.createElement('div'); strip.className='card';
+  strip.style.cssText+=`flex:none;margin-top:${px(12)}px;padding:${px(13)}px ${px(14)}px;
+    border-color:rgba(59,130,246,.42);background:rgba(59,130,246,.07);
+    display:flex;align-items:center;justify-content:space-between;gap:${px(12)}px`;
+  strip.innerHTML=`<div>
+      <div class="t-eyb" style="color:${BLUE}">LAST DAY YOU CAN SAFELY ORDER</div>
+      <div class="t-ttl" style="margin-top:${px(5)}px">12 September</div></div>
+    <div style="text-align:right">
+      <div class="t-mid">5.4w</div>
+      <div class="t-mut" style="margin-top:${px(3)}px">cover, at current velocity</div></div>`;
+  pad.appendChild(strip);
+}
+
+
+/* ══ 23 — Agencies: every client, every marketplace ══════════════════ */
+function g23(){
+  head('Every client, every marketplace','one login','7', 'accounts');
+  const hdr=document.createElement('div');
+  hdr.style.cssText=`flex:none;display:grid;grid-template-columns:1.35fr 1.5fr .85fr .7fr;
+    gap:${px(8)}px;padding:0 ${px(12)}px ${px(4)}px`;
+  hdr.innerHTML=['Client','Marketplaces','Revenue','Margin']
+    .map((t,i)=>`<div class="t-eyb" style="text-align:${i>1?'right':'left'}">${t.toUpperCase()}</div>`).join('');
+  pad.appendChild(hdr);
+
+  const list=document.createElement('div');
+  list.style.cssText=`flex:1 1 auto;min-height:0;display:flex;flex-direction:column;gap:${px(6)}px`;
+  pad.appendChild(list);
+
+  [['Northvale',['US','CA','MX'],'$412k','24%',0],
+   ['Bright & Co.',['US','UK','DE'],'$286k','19%',0],
+   ['Harrow Goods',['UK'],'$104k','31%',0],
+   ['Sunfield',['US','DE','FR','IT'],'$338k','12%',1],
+   ['Pellam',['US'],'$77k','27%',0],
+   ['Okada Trading',['JP','US'],'$191k','22%',0]]
+  .forEach(([name,mkts,rev,margin,flag])=>{
+    const r=document.createElement('div');
+    r.style.cssText=`flex:1 1 0;min-height:0;display:grid;grid-template-columns:1.35fr 1.5fr .85fr .7fr;
+      gap:${px(8)}px;align-items:center;padding:0 ${px(12)}px;border-radius:${px(5)}px;
+      border:1px solid ${flag?'rgba(201,130,10,.45)':LINE};
+      background:${flag?'rgba(201,130,10,.06)':'rgba(255,255,255,.030)'}`;
+    const chips=mkts.map(m=>`<span style="font-size:${px(8)}px;font-weight:600;color:${INK};
+      border:1px solid ${LINE2};border-radius:${px(3)}px;padding:${px(2)}px ${px(5)}px">${m}</span>`).join('');
+    r.innerHTML=`<span class="t-lbl" style="color:${INK};display:flex;align-items:center;gap:${px(6)}px">
+        ${flag?`<span style="color:${AMBER};font-weight:700">!</span>`:''}${name}</span>
+      <span style="display:flex;gap:${px(4)}px;flex-wrap:wrap">${chips}</span>
+      <span class="t-lbl" style="text-align:right">${rev}</span>
+      <span class="t-lbl" style="text-align:right;color:${flag?AMBER:INK}">${margin}</span>`;
+    list.appendChild(r);
+  });
+
+  const foot=document.createElement('div');
+  foot.style.cssText=`flex:none;margin-top:${px(11)}px;display:flex;gap:${px(18)}px`;
+  foot.innerHTML=`<span class="t-mut">14 marketplaces</span>
+    <span class="t-mut">one set of landed costs per account</span>
+    <span class="t-mut" style="margin-left:auto;color:${AMBER}">1 needs attention</span>`;
+  pad.appendChild(foot);
+}
+
+/* ══ 24 — Agencies: what you changed, and what it did ════════════════ */
+function g24(){
+  head('What you changed, and what it did','the part clients remember');
+  const list=document.createElement('div');
+  list.style.cssText=`flex:1 1 auto;min-height:0;display:flex;flex-direction:column;gap:${px(9)}px`;
+  pad.appendChild(list);
+
+  [['Cut bid on “collagen powder unflavored”',
+    '$1.40 → $0.90 · break-even ACoS 27%, actual was 41%',
+    'ACoS 41% → 26%', TEAL, 'WORKED'],
+   ['Paused ads on SKU C-2318',
+    'stockout risk inside the 12-day lead time',
+    'held rank, saved $1,840', TEAL, 'WORKED'],
+   ['Raised price 8% on A-1140',
+    'margin 22% against a competitor 14% higher',
+    'units −4%, profit +19%', TEAL, 'WORKED'],
+   ['Moved 300 units FBA → AWD',
+    'long-term storage fee due in 21 days',
+    'fee avoided, cover down 1.1w', AMBER, 'MIXED']]
+  .forEach(([change,evidence,result,col,grade])=>{
+    const c=document.createElement('div'); c.className='card';
+    c.style.cssText+=`flex:1 1 0;min-height:0;padding:${px(11)}px ${px(13)}px;
+      display:flex;flex-direction:column;justify-content:center;gap:${px(5)}px;
+      border-left:${px(2.5)}px solid ${col}`;
+    c.innerHTML=`<div style="display:flex;align-items:baseline;justify-content:space-between;gap:${px(10)}px">
+        <span class="t-lbl" style="color:${INK}">${change}</span>
+        <span class="t-eyb" style="color:${col};white-space:nowrap">${grade}</span></div>
+      <div class="t-mut" style="line-height:1.45">${evidence}</div>
+      <div class="t-lbl" style="color:${col}">${result}</div>`;
+    list.appendChild(c);
+  });
+
+  const foot=document.createElement('div');
+  foot.style.cssText=`flex:none;margin-top:${px(11)}px`;
+  foot.innerHTML=`<div class="t-mut">Every recommendation stored, matured and graded &mdash; not claimed</div>`;
+  pad.appendChild(foot);
+}
+
+({1:g1,2:g2,3:g3,4:g4,5:g5,6:g6,7:g7,8:g8,9:g9,10:g10,11:g11,12:g12,
+  13:g13,14:g14,15:g15,16:g16,17:g17,18:g18,19:g19,20:g20,21:g21,22:g22,
+  23:g23,24:g24})[id]();
+document.body.dataset.ready='1';
+</script>
+</body></html>
