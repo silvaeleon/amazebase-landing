@@ -99,3 +99,84 @@
   section.abp .abp-rail{ grid-template-columns:repeat(4,1fr)!important; row-gap:26px!important; }
   section.abp .abp-seg{ display:none!important; }
 }
+
+/* ==========================================================================
+   MOBILE PASS — phone findings from Leon's device, 2026-08-16.
+   Everything below is additive and scoped to stacked/narrow layouts.
+========================================================================== */
+
+/* 1 ── Feature cards: the art must never paint under the text.
+   .feature-thumb img{max-height:100%} silently fails (percentage against a
+   centered grid item), so the art overflowed its 96px area at every width
+   below ~1300px. Cap it in px instead. */
+.feature-thumb img{ max-height:96px; }
+@media (max-width:680px){
+  .feature-thumb{ height:128px; }
+  .feature-thumb img{ max-height:128px; }
+}
+
+/* 2 ── Hero, stacked layouts: neutralise the desktop composition block.
+   The editor-tuned values at the foot of hero.css are unconditional and
+   were measured on the 880px desktop stage. In the stacked layout they
+   clipped the panel to 624px (amputating the dashboard and cards), shrank
+   the dashboard to 80%, and left 53-83px of ghost space under the copy. */
+@media (max-width:1180px){
+  .hero-panel{ height:auto; }
+  .dash-shot{ left:auto; top:auto; scale:none; }
+  .hero-floats{ scale:none; margin-bottom:0; }
+  .float-card.f1,.float-card.f2,.float-card.f3,.float-card.f4{ scale:none; }
+  .float-card.f4{ width:auto; }
+  .hero h1,.hero-sub,.hero-cta,.hero .ticks{ left:0; top:0; }
+}
+@media (max-width:680px){
+  /* glow positions are percentages of the desktop panel; on a tall narrow
+     panel they land on the headline text. Off on phones. */
+  .hero-glows{ display:none; }
+}
+@media (max-width:440px){
+  /* keep the metric cards as a 2x2 cluster like the desktop composition,
+     not a single tall stack */
+  .hero-floats{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .float-card{ padding:11px 12px 10px; }
+}
+
+/* 3 ── .abp on phones: title and caption sit in the flow instead of
+   straddling the frame (the knockout rectangles read as glitches on the
+   gradient background), and the icon rail centres its rows. */
+@media (max-width:940px){
+  section.abp .abp-title{ position:static!important; transform:none!important;
+    translate:none!important; margin:0 auto 6px!important; background:none!important;
+    padding:0 8px!important; text-align:center!important; }
+  section.abp .abp-caption{ position:static!important; transform:none!important;
+    translate:none!important; margin:14px auto 0!important; background:none!important;
+    white-space:normal!important; text-align:center!important; }
+  section.abp .abp-rail{ display:flex!important; flex-wrap:wrap!important;
+    justify-content:center!important; gap:26px 26px!important; }
+  section.abp .abp-node{ flex:0 0 auto!important; }
+}
+
+/* 4 ── .abc: bring the VS badge back when the two cards stack. The block
+   hides it at <=860px; centred on the seam it still reads correctly. */
+@media (max-width:860px){
+  section.abc .abc-vs{ display:grid!important; }
+}
+
+/* 5 ── Pricing: heading and lead first, cards after. The order:-1 above
+   was written for the side-by-side layout; once everything stacks it put
+   the Pro card in front of the section heading. */
+@media (max-width:1120px){
+  .price-card.is-featured{ order:0; }
+}
+
+/* 6 ── Mechanical: anchor jumps clear the fixed header, and the burger
+   meets the 44px tap-target floor. */
+[id]{ scroll-margin-top:84px; }
+.nav-toggle{ width:44px; height:44px; }
+
+/* 3b ── .abp phone sizing: smaller icons/labels so the rail fits 4+3 on a
+   390px screen, and a tighter frame. The block reads everything through its
+   own CSS variables, so resizing from outside uses its intended knobs. */
+@media (max-width:480px){
+  section.abp{ --abp-icon:34px; --abp-label:11.5px; --abp-pad-y:28px; }
+  section.abp .abp-rail{ gap:22px 12px!important; }
+}
