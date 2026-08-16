@@ -219,3 +219,43 @@
 @media (max-width:1180px){
   .hero-floats{ margin-top:22px; }
 }
+
+/* ==========================================================================
+   MOBILE PASS v3 — Leon's review round three, 2026-08-16.
+========================================================================== */
+
+/* A ── .abc VS badge, third attempt: absolute centring can never track the
+   seam because the stacked cards differ in height. Flatten the grid into
+   the wrap (display:contents) and let the badge sit in the flow between
+   the two cards, pulled over both edges so it visibly joins them. */
+@media (max-width:860px){
+  section.abc .abc-wrap{ display:grid!important; grid-template-columns:1fr!important; gap:0!important; }
+  section.abc .abc-grid{ display:contents!important; }
+  section.abc .abc-card--bad{ order:1!important; }
+  section.abc .abc-vs{ order:2!important; position:static!important;
+    transform:none!important; justify-self:center!important;
+    margin:-16px auto!important; }
+  section.abc .abc-card--good{ order:3!important; }
+  /* the seam padding from the first pass stays, so the overlap covers
+     card padding, never text */
+}
+
+/* B ── picture slots on phones: stop reserving a ratio the artwork does
+   not have. The slot hugs the image instead, so every graphic runs the
+   full width of the screen with no letterboxing. Element-prefixed to
+   outrank the per-page ratio overrides regardless of load order. */
+@media (max-width:900px){
+  figure.mod-figure,
+  figure.mod-figure.is-wide,
+  figure.mod-figure.is-tall,
+  figure.mod-figure.ct-figure,
+  figure.sec-figure{ aspect-ratio:auto; padding:10px; }
+  figure.mod-figure img,
+  figure.sec-figure img{ height:auto; }
+}
+
+/* C ── resources: the hero image was hidden entirely on phones; show it,
+   inheriting the capped, centred stacked treatment. */
+@media (max-width:640px){
+  .hub-fig{ display:block; }
+}
