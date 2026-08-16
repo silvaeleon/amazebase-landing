@@ -267,3 +267,20 @@
 @media (max-width:900px){
   .mod > .mod-figure{ order:2; }
 }
+
+/* v3 addendum 2 ── phone menu polish: Log in reads as a real button in
+   its own colour (site blue, vs the purple primary), and the open menu
+   extends to the bottom of the screen so the page's own wait-list
+   button no longer shows stacked beneath the menu's. */
+.nav-mobile{ inset:70px 0 0 0; }
+.nav-mobile .btn--quiet{
+  border:1.5px solid rgba(59,130,246,.55);
+  background:rgba(59,130,246,.10);
+  color:#8FB8FA;
+  text-align:center;
+}
+.nav-mobile .btn--quiet:hover{
+  border-color:rgba(59,130,246,.85);
+  background:rgba(59,130,246,.16);
+  color:#B9D4FC;
+}
