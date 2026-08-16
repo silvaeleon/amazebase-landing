@@ -87,3 +87,15 @@
   .hub{ width:126px; height:84px; font-size:13px; }
   .price-fig b{ font-size:36px; }
 }
+
+/* .abp mobile rescue — external override, block untouched */
+@media (max-width:940px){
+  section.abp .abp-frame{ -webkit-mask:none!important; mask:none!important; }
+  section.abp .abp-box::before{ display:none!important; }
+  section.abp .abp-title,
+  section.abp .abp-caption{ background:var(--abp-page)!important; }
+  section.abp .abp-title{ font-size:calc(var(--abp-title) * .77)!important; white-space:normal!important;
+    width:min(88%,420px)!important; text-align:center!important; }
+  section.abp .abp-rail{ grid-template-columns:repeat(4,1fr)!important; row-gap:26px!important; }
+  section.abp .abp-seg{ display:none!important; }
+}
