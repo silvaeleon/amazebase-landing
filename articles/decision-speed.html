@@ -521,9 +521,12 @@ blockquote p{
 }
 .hero-shot img{
   width:100%;
-  height:clamp(260px,32vw,400px);
-  object-fit:cover;
-  object-position:center 42%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
   border-radius:18px;
   border:1px solid var(--line-strong);
   box-shadow:0 30px 80px rgba(1,5,14,.55);
@@ -553,7 +556,6 @@ blockquote p{
 }
 @media (max-width:640px){
   .shell{ gap:28px; }
-  .hero-shot img{ height:210px; }
 }
 
 /* ── STEP / METRIC CARDS (same treatment as .mistake) ───────────────── */
@@ -1711,7 +1713,8 @@ blockquote p{
 }
 
 /* --- additions for this piece ------------------------------------- */
-.hero-shot svg{ width:100%; height:clamp(240px,27vw,330px); display:block; }
+.art-diagram{ margin:0 0 var(--s5); }
+.art-diagram svg{ width:100%; height:auto; display:block; }
 
 .loop2{ margin:var(--s5) 0; display:grid; gap:8px;
         grid-template-columns:repeat(4,1fr); align-items:stretch; }
@@ -1765,36 +1768,9 @@ blockquote p{
 </header>
 
 <figure class="hero-shot">
-  <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="none">
-    <title id="heroTitle">Over the same five years, one company makes sixty meaningful decisions and its competitor makes forty. Each tick is one decision, and therefore one chance to learn. The faster company gets twenty extra attempts.</title>
-    <defs>
-      <linearGradient id="gBg9" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#0b1225"/>
-        <stop offset="1" stop-color="#0a1730"/>
-      </linearGradient>
-    </defs>
-    <rect width="1180" height="320" fill="url(#gBg9)"/>
-
-    <g stroke="#4ade80" stroke-width="2" stroke-linecap="round" opacity=".95"><line x1="90.0" y1="99" x2="90.0" y2="125"/><line x1="105.6" y1="99" x2="105.6" y2="125"/><line x1="121.2" y1="99" x2="121.2" y2="125"/><line x1="136.8" y1="99" x2="136.8" y2="125"/><line x1="152.4" y1="99" x2="152.4" y2="125"/><line x1="168.0" y1="99" x2="168.0" y2="125"/><line x1="183.6" y1="99" x2="183.6" y2="125"/><line x1="199.2" y1="99" x2="199.2" y2="125"/><line x1="214.7" y1="99" x2="214.7" y2="125"/><line x1="230.3" y1="99" x2="230.3" y2="125"/><line x1="245.9" y1="99" x2="245.9" y2="125"/><line x1="261.5" y1="99" x2="261.5" y2="125"/><line x1="277.1" y1="99" x2="277.1" y2="125"/><line x1="292.7" y1="99" x2="292.7" y2="125"/><line x1="308.3" y1="99" x2="308.3" y2="125"/><line x1="323.9" y1="99" x2="323.9" y2="125"/><line x1="339.5" y1="99" x2="339.5" y2="125"/><line x1="355.1" y1="99" x2="355.1" y2="125"/><line x1="370.7" y1="99" x2="370.7" y2="125"/><line x1="386.3" y1="99" x2="386.3" y2="125"/><line x1="401.9" y1="99" x2="401.9" y2="125"/><line x1="417.5" y1="99" x2="417.5" y2="125"/><line x1="433.1" y1="99" x2="433.1" y2="125"/><line x1="448.6" y1="99" x2="448.6" y2="125"/><line x1="464.2" y1="99" x2="464.2" y2="125"/><line x1="479.8" y1="99" x2="479.8" y2="125"/><line x1="495.4" y1="99" x2="495.4" y2="125"/><line x1="511.0" y1="99" x2="511.0" y2="125"/><line x1="526.6" y1="99" x2="526.6" y2="125"/><line x1="542.2" y1="99" x2="542.2" y2="125"/><line x1="557.8" y1="99" x2="557.8" y2="125"/><line x1="573.4" y1="99" x2="573.4" y2="125"/><line x1="589.0" y1="99" x2="589.0" y2="125"/><line x1="604.6" y1="99" x2="604.6" y2="125"/><line x1="620.2" y1="99" x2="620.2" y2="125"/><line x1="635.8" y1="99" x2="635.8" y2="125"/><line x1="651.4" y1="99" x2="651.4" y2="125"/><line x1="666.9" y1="99" x2="666.9" y2="125"/><line x1="682.5" y1="99" x2="682.5" y2="125"/><line x1="698.1" y1="99" x2="698.1" y2="125"/><line x1="713.7" y1="99" x2="713.7" y2="125"/><line x1="729.3" y1="99" x2="729.3" y2="125"/><line x1="744.9" y1="99" x2="744.9" y2="125"/><line x1="760.5" y1="99" x2="760.5" y2="125"/><line x1="776.1" y1="99" x2="776.1" y2="125"/><line x1="791.7" y1="99" x2="791.7" y2="125"/><line x1="807.3" y1="99" x2="807.3" y2="125"/><line x1="822.9" y1="99" x2="822.9" y2="125"/><line x1="838.5" y1="99" x2="838.5" y2="125"/><line x1="854.1" y1="99" x2="854.1" y2="125"/><line x1="869.7" y1="99" x2="869.7" y2="125"/><line x1="885.3" y1="99" x2="885.3" y2="125"/><line x1="900.8" y1="99" x2="900.8" y2="125"/><line x1="916.4" y1="99" x2="916.4" y2="125"/><line x1="932.0" y1="99" x2="932.0" y2="125"/><line x1="947.6" y1="99" x2="947.6" y2="125"/><line x1="963.2" y1="99" x2="963.2" y2="125"/><line x1="978.8" y1="99" x2="978.8" y2="125"/><line x1="994.4" y1="99" x2="994.4" y2="125"/><line x1="1010.0" y1="99" x2="1010.0" y2="125"/></g>
-    <g stroke="#5f7398" stroke-width="2" stroke-linecap="round" opacity=".9"><line x1="90.0" y1="201" x2="90.0" y2="227"/><line x1="113.6" y1="201" x2="113.6" y2="227"/><line x1="137.2" y1="201" x2="137.2" y2="227"/><line x1="160.8" y1="201" x2="160.8" y2="227"/><line x1="184.4" y1="201" x2="184.4" y2="227"/><line x1="207.9" y1="201" x2="207.9" y2="227"/><line x1="231.5" y1="201" x2="231.5" y2="227"/><line x1="255.1" y1="201" x2="255.1" y2="227"/><line x1="278.7" y1="201" x2="278.7" y2="227"/><line x1="302.3" y1="201" x2="302.3" y2="227"/><line x1="325.9" y1="201" x2="325.9" y2="227"/><line x1="349.5" y1="201" x2="349.5" y2="227"/><line x1="373.1" y1="201" x2="373.1" y2="227"/><line x1="396.7" y1="201" x2="396.7" y2="227"/><line x1="420.3" y1="201" x2="420.3" y2="227"/><line x1="443.8" y1="201" x2="443.8" y2="227"/><line x1="467.4" y1="201" x2="467.4" y2="227"/><line x1="491.0" y1="201" x2="491.0" y2="227"/><line x1="514.6" y1="201" x2="514.6" y2="227"/><line x1="538.2" y1="201" x2="538.2" y2="227"/><line x1="561.8" y1="201" x2="561.8" y2="227"/><line x1="585.4" y1="201" x2="585.4" y2="227"/><line x1="609.0" y1="201" x2="609.0" y2="227"/><line x1="632.6" y1="201" x2="632.6" y2="227"/><line x1="656.2" y1="201" x2="656.2" y2="227"/><line x1="679.7" y1="201" x2="679.7" y2="227"/><line x1="703.3" y1="201" x2="703.3" y2="227"/><line x1="726.9" y1="201" x2="726.9" y2="227"/><line x1="750.5" y1="201" x2="750.5" y2="227"/><line x1="774.1" y1="201" x2="774.1" y2="227"/><line x1="797.7" y1="201" x2="797.7" y2="227"/><line x1="821.3" y1="201" x2="821.3" y2="227"/><line x1="844.9" y1="201" x2="844.9" y2="227"/><line x1="868.5" y1="201" x2="868.5" y2="227"/><line x1="892.1" y1="201" x2="892.1" y2="227"/><line x1="915.6" y1="201" x2="915.6" y2="227"/><line x1="939.2" y1="201" x2="939.2" y2="227"/><line x1="962.8" y1="201" x2="962.8" y2="227"/><line x1="986.4" y1="201" x2="986.4" y2="227"/><line x1="1010.0" y1="201" x2="1010.0" y2="227"/></g>
-
-    <line x1="90" y1="163" x2="1010" y2="163" stroke="#1e2c4a" stroke-width="1"/>
-
-    <g font-family="Inter, sans-serif" font-weight="700">
-      <text x="90" y="72" font-size="13" fill="#4ade80" letter-spacing="1.4">COMPANY A &mdash; ONE DECISION A MONTH</text>
-      <text x="1030" y="118" font-size="20" fill="#4ade80">60</text>
-      <text x="90" y="262" font-size="13" fill="#8fa3c8" letter-spacing="1.4">COMPANY B &mdash; ONE EVERY SIX WEEKS</text>
-      <text x="1030" y="220" font-size="20" fill="#8fa3c8">40</text>
-    </g>
-
-    <g font-family="Inter, sans-serif" font-weight="600">
-      <text x="1075" y="118" font-size="11.5" fill="#5f7398">decisions</text>
-      <text x="1075" y="220" font-size="11.5" fill="#5f7398">decisions</text>
-      <text x="550" y="300" font-size="13" fill="#c7d4ec" text-anchor="middle">Same five years. Twenty more chances to learn.</text>
-      <text x="550" y="46" font-size="11.5" fill="#5f7398" text-anchor="middle"
-            letter-spacing="2">EACH TICK IS ONE DECISION</text>
-    </g>
-  </svg>
+  <img src="../assets/img/hero-decision-speed.webp"
+       alt="Two dark cars on a wet road at night, the leading one running on a bright blue line through glowing rings while the one behind trails amber"
+       width="1672" height="941" loading="eager" decoding="async">
 </figure>
 
 <div class="shell">
@@ -1823,6 +1799,39 @@ blockquote p{
     manufacturing costs. Exclusive suppliers. Superior branding. Advertising
     expertise. Access to capital.
   </p>
+
+  <figure class="art-diagram">
+    <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="none">
+      <title id="heroTitle">Over the same five years, one company makes sixty meaningful decisions and its competitor makes forty. Each tick is one decision, and therefore one chance to learn. The faster company gets twenty extra attempts.</title>
+      <defs>
+        <linearGradient id="gBg9" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#0b1225"/>
+          <stop offset="1" stop-color="#0a1730"/>
+        </linearGradient>
+      </defs>
+      <rect width="1180" height="320" fill="url(#gBg9)"/>
+
+      <g stroke="#4ade80" stroke-width="2" stroke-linecap="round" opacity=".95"><line x1="90.0" y1="99" x2="90.0" y2="125"/><line x1="105.6" y1="99" x2="105.6" y2="125"/><line x1="121.2" y1="99" x2="121.2" y2="125"/><line x1="136.8" y1="99" x2="136.8" y2="125"/><line x1="152.4" y1="99" x2="152.4" y2="125"/><line x1="168.0" y1="99" x2="168.0" y2="125"/><line x1="183.6" y1="99" x2="183.6" y2="125"/><line x1="199.2" y1="99" x2="199.2" y2="125"/><line x1="214.7" y1="99" x2="214.7" y2="125"/><line x1="230.3" y1="99" x2="230.3" y2="125"/><line x1="245.9" y1="99" x2="245.9" y2="125"/><line x1="261.5" y1="99" x2="261.5" y2="125"/><line x1="277.1" y1="99" x2="277.1" y2="125"/><line x1="292.7" y1="99" x2="292.7" y2="125"/><line x1="308.3" y1="99" x2="308.3" y2="125"/><line x1="323.9" y1="99" x2="323.9" y2="125"/><line x1="339.5" y1="99" x2="339.5" y2="125"/><line x1="355.1" y1="99" x2="355.1" y2="125"/><line x1="370.7" y1="99" x2="370.7" y2="125"/><line x1="386.3" y1="99" x2="386.3" y2="125"/><line x1="401.9" y1="99" x2="401.9" y2="125"/><line x1="417.5" y1="99" x2="417.5" y2="125"/><line x1="433.1" y1="99" x2="433.1" y2="125"/><line x1="448.6" y1="99" x2="448.6" y2="125"/><line x1="464.2" y1="99" x2="464.2" y2="125"/><line x1="479.8" y1="99" x2="479.8" y2="125"/><line x1="495.4" y1="99" x2="495.4" y2="125"/><line x1="511.0" y1="99" x2="511.0" y2="125"/><line x1="526.6" y1="99" x2="526.6" y2="125"/><line x1="542.2" y1="99" x2="542.2" y2="125"/><line x1="557.8" y1="99" x2="557.8" y2="125"/><line x1="573.4" y1="99" x2="573.4" y2="125"/><line x1="589.0" y1="99" x2="589.0" y2="125"/><line x1="604.6" y1="99" x2="604.6" y2="125"/><line x1="620.2" y1="99" x2="620.2" y2="125"/><line x1="635.8" y1="99" x2="635.8" y2="125"/><line x1="651.4" y1="99" x2="651.4" y2="125"/><line x1="666.9" y1="99" x2="666.9" y2="125"/><line x1="682.5" y1="99" x2="682.5" y2="125"/><line x1="698.1" y1="99" x2="698.1" y2="125"/><line x1="713.7" y1="99" x2="713.7" y2="125"/><line x1="729.3" y1="99" x2="729.3" y2="125"/><line x1="744.9" y1="99" x2="744.9" y2="125"/><line x1="760.5" y1="99" x2="760.5" y2="125"/><line x1="776.1" y1="99" x2="776.1" y2="125"/><line x1="791.7" y1="99" x2="791.7" y2="125"/><line x1="807.3" y1="99" x2="807.3" y2="125"/><line x1="822.9" y1="99" x2="822.9" y2="125"/><line x1="838.5" y1="99" x2="838.5" y2="125"/><line x1="854.1" y1="99" x2="854.1" y2="125"/><line x1="869.7" y1="99" x2="869.7" y2="125"/><line x1="885.3" y1="99" x2="885.3" y2="125"/><line x1="900.8" y1="99" x2="900.8" y2="125"/><line x1="916.4" y1="99" x2="916.4" y2="125"/><line x1="932.0" y1="99" x2="932.0" y2="125"/><line x1="947.6" y1="99" x2="947.6" y2="125"/><line x1="963.2" y1="99" x2="963.2" y2="125"/><line x1="978.8" y1="99" x2="978.8" y2="125"/><line x1="994.4" y1="99" x2="994.4" y2="125"/><line x1="1010.0" y1="99" x2="1010.0" y2="125"/></g>
+      <g stroke="#5f7398" stroke-width="2" stroke-linecap="round" opacity=".9"><line x1="90.0" y1="201" x2="90.0" y2="227"/><line x1="113.6" y1="201" x2="113.6" y2="227"/><line x1="137.2" y1="201" x2="137.2" y2="227"/><line x1="160.8" y1="201" x2="160.8" y2="227"/><line x1="184.4" y1="201" x2="184.4" y2="227"/><line x1="207.9" y1="201" x2="207.9" y2="227"/><line x1="231.5" y1="201" x2="231.5" y2="227"/><line x1="255.1" y1="201" x2="255.1" y2="227"/><line x1="278.7" y1="201" x2="278.7" y2="227"/><line x1="302.3" y1="201" x2="302.3" y2="227"/><line x1="325.9" y1="201" x2="325.9" y2="227"/><line x1="349.5" y1="201" x2="349.5" y2="227"/><line x1="373.1" y1="201" x2="373.1" y2="227"/><line x1="396.7" y1="201" x2="396.7" y2="227"/><line x1="420.3" y1="201" x2="420.3" y2="227"/><line x1="443.8" y1="201" x2="443.8" y2="227"/><line x1="467.4" y1="201" x2="467.4" y2="227"/><line x1="491.0" y1="201" x2="491.0" y2="227"/><line x1="514.6" y1="201" x2="514.6" y2="227"/><line x1="538.2" y1="201" x2="538.2" y2="227"/><line x1="561.8" y1="201" x2="561.8" y2="227"/><line x1="585.4" y1="201" x2="585.4" y2="227"/><line x1="609.0" y1="201" x2="609.0" y2="227"/><line x1="632.6" y1="201" x2="632.6" y2="227"/><line x1="656.2" y1="201" x2="656.2" y2="227"/><line x1="679.7" y1="201" x2="679.7" y2="227"/><line x1="703.3" y1="201" x2="703.3" y2="227"/><line x1="726.9" y1="201" x2="726.9" y2="227"/><line x1="750.5" y1="201" x2="750.5" y2="227"/><line x1="774.1" y1="201" x2="774.1" y2="227"/><line x1="797.7" y1="201" x2="797.7" y2="227"/><line x1="821.3" y1="201" x2="821.3" y2="227"/><line x1="844.9" y1="201" x2="844.9" y2="227"/><line x1="868.5" y1="201" x2="868.5" y2="227"/><line x1="892.1" y1="201" x2="892.1" y2="227"/><line x1="915.6" y1="201" x2="915.6" y2="227"/><line x1="939.2" y1="201" x2="939.2" y2="227"/><line x1="962.8" y1="201" x2="962.8" y2="227"/><line x1="986.4" y1="201" x2="986.4" y2="227"/><line x1="1010.0" y1="201" x2="1010.0" y2="227"/></g>
+
+      <line x1="90" y1="163" x2="1010" y2="163" stroke="#1e2c4a" stroke-width="1"/>
+
+      <g font-family="Inter, sans-serif" font-weight="700">
+        <text x="90" y="72" font-size="13" fill="#4ade80" letter-spacing="1.4">COMPANY A &mdash; ONE DECISION A MONTH</text>
+        <text x="1030" y="118" font-size="20" fill="#4ade80">60</text>
+        <text x="90" y="262" font-size="13" fill="#8fa3c8" letter-spacing="1.4">COMPANY B &mdash; ONE EVERY SIX WEEKS</text>
+        <text x="1030" y="220" font-size="20" fill="#8fa3c8">40</text>
+      </g>
+
+      <g font-family="Inter, sans-serif" font-weight="600">
+        <text x="1075" y="118" font-size="11.5" fill="#5f7398">decisions</text>
+        <text x="1075" y="220" font-size="11.5" fill="#5f7398">decisions</text>
+        <text x="550" y="300" font-size="13" fill="#c7d4ec" text-anchor="middle">Same five years. Twenty more chances to learn.</text>
+        <text x="550" y="46" font-size="11.5" fill="#5f7398" text-anchor="middle"
+              letter-spacing="2">EACH TICK IS ONE DECISION</text>
+      </g>
+    </svg>
+  </figure>
 
   <p>All of these matter. But they share one thing: eventually, someone else can copy them. Maybe not perfectly, maybe not immediately, but given enough time nearly every competitive advantage becomes available to competitors.</p>
 

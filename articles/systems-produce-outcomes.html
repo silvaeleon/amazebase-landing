@@ -521,9 +521,12 @@ blockquote p{
 }
 .hero-shot img{
   width:100%;
-  height:clamp(260px,32vw,400px);
-  object-fit:cover;
-  object-position:center 42%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
   border-radius:18px;
   border:1px solid var(--line-strong);
   box-shadow:0 30px 80px rgba(1,5,14,.55);
@@ -553,7 +556,6 @@ blockquote p{
 }
 @media (max-width:640px){
   .shell{ gap:28px; }
-  .hero-shot img{ height:210px; }
 }
 
 /* ── STEP / METRIC CARDS (same treatment as .mistake) ───────────────── */
@@ -1711,7 +1713,8 @@ blockquote p{
 }
 
 /* --- additions for this piece ------------------------------------- */
-.hero-shot svg{ width:100%; height:clamp(240px,27vw,330px); display:block; }
+.art-diagram{ margin:0 0 var(--s5); }
+.art-diagram svg{ width:100%; height:auto; display:block; }
 
 .chain{ margin:var(--s5) 0; border:1px solid var(--line); border-radius:var(--r3);
         background:var(--surface); padding:var(--s4); }
@@ -1779,69 +1782,9 @@ blockquote p{
 </header>
 
 <figure class="hero-shot">
-  <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="xMidYMid meet">
-    <title id="heroTitle">Three different teams feed into one unchanged system, and all three produce the same defective output. Replacing the people does not change the result, because the system was never redesigned.</title>
-    <defs>
-      <linearGradient id="gBg6" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#0b1225"/>
-        <stop offset="1" stop-color="#0a1730"/>
-      </linearGradient>
-      <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5"
-              markerWidth="6" markerHeight="6" orient="auto">
-        <path d="M0 0 L10 5 L0 10 z" fill="#5f7398"/>
-      </marker>
-    </defs>
-    <rect width="1180" height="320" fill="url(#gBg6)"/>
-
-    <g font-family="Inter, sans-serif" font-size="12.5" font-weight="700"
-       fill="#5f7398" letter-spacing="1.8">
-      <text x="150" y="40" text-anchor="middle">DIFFERENT PEOPLE</text>
-      <text x="590" y="40" text-anchor="middle">SAME SYSTEM</text>
-      <text x="1030" y="40" text-anchor="middle">SAME OUTPUT</text>
-    </g>
-
-    <g stroke="#5f7398" stroke-width="1.6" marker-end="url(#ah)">
-      <line x1="235" y1="105" x2="415" y2="140"/>
-      <line x1="235" y1="165" x2="415" y2="165"/>
-      <line x1="235" y1="225" x2="415" y2="190"/>
-      <line x1="765" y1="140" x2="915" y2="105"/>
-      <line x1="765" y1="165" x2="915" y2="165"/>
-      <line x1="765" y1="190" x2="915" y2="225"/>
-    </g>
-
-    <g stroke-width="2.5" fill="#0b1225">
-      <circle cx="150" cy="105" r="26" stroke="#4ade80"/>
-      <circle cx="150" cy="165" r="26" stroke="#7dd3fc"/>
-      <circle cx="150" cy="225" r="26" stroke="#a78bfa"/>
-    </g>
-    <g font-family="Inter, sans-serif" font-size="14" font-weight="700" text-anchor="middle">
-      <text x="150" y="111" fill="#4ade80">A</text>
-      <text x="150" y="171" fill="#7dd3fc">B</text>
-      <text x="150" y="231" fill="#a78bfa">C</text>
-    </g>
-
-    <rect x="430" y="92" width="320" height="146" rx="14"
-          fill="#101b33" stroke="#f87171" stroke-width="2"/>
-    <g font-family="Inter, sans-serif" text-anchor="middle">
-      <text x="590" y="150" font-size="15" font-weight="800" fill="#e8eefc"
-            letter-spacing="1.2">THE SYSTEM</text>
-      <text x="590" y="176" font-size="12.5" font-weight="600" fill="#8fa3c8">processes,
-        incentives, approvals</text>
-      <text x="590" y="204" font-size="12" font-weight="700" fill="#f87171"
-            letter-spacing="1.4">NEVER REDESIGNED</text>
-    </g>
-
-    <g fill="none" stroke="#f87171" stroke-width="2.5" stroke-linecap="round">
-      <path d="M1020 96 l20 20 M1040 96 l-20 20"/>
-      <path d="M1020 156 l20 20 M1040 156 l-20 20"/>
-      <path d="M1020 216 l20 20 M1040 216 l-20 20"/>
-    </g>
-    <g font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#8fa3c8">
-      <text x="1062" y="111">same defect</text>
-      <text x="1062" y="171">same defect</text>
-      <text x="1062" y="231">same defect</text>
-    </g>
-  </svg>
+  <img src="../assets/img/hero-systems-produce-outcomes.webp"
+       alt="A machine feeding four hoppers of different coloured material through gears onto a conveyor of identical grey blocks"
+       width="1672" height="941" loading="eager" decoding="async">
 </figure>
 
 <div class="shell">
@@ -1869,6 +1812,72 @@ blockquote p{
     an important message. Again. Inventory runs out earlier than expected. Again.
     Advertising spends too aggressively. Again.
   </p>
+
+  <figure class="art-diagram">
+    <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="xMidYMid meet">
+      <title id="heroTitle">Three different teams feed into one unchanged system, and all three produce the same defective output. Replacing the people does not change the result, because the system was never redesigned.</title>
+      <defs>
+        <linearGradient id="gBg6" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#0b1225"/>
+          <stop offset="1" stop-color="#0a1730"/>
+        </linearGradient>
+        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5"
+                markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0 0 L10 5 L0 10 z" fill="#5f7398"/>
+        </marker>
+      </defs>
+      <rect width="1180" height="320" fill="url(#gBg6)"/>
+
+      <g font-family="Inter, sans-serif" font-size="12.5" font-weight="700"
+         fill="#5f7398" letter-spacing="1.8">
+        <text x="150" y="40" text-anchor="middle">DIFFERENT PEOPLE</text>
+        <text x="590" y="40" text-anchor="middle">SAME SYSTEM</text>
+        <text x="1030" y="40" text-anchor="middle">SAME OUTPUT</text>
+      </g>
+
+      <g stroke="#5f7398" stroke-width="1.6" marker-end="url(#ah)">
+        <line x1="235" y1="105" x2="415" y2="140"/>
+        <line x1="235" y1="165" x2="415" y2="165"/>
+        <line x1="235" y1="225" x2="415" y2="190"/>
+        <line x1="765" y1="140" x2="915" y2="105"/>
+        <line x1="765" y1="165" x2="915" y2="165"/>
+        <line x1="765" y1="190" x2="915" y2="225"/>
+      </g>
+
+      <g stroke-width="2.5" fill="#0b1225">
+        <circle cx="150" cy="105" r="26" stroke="#4ade80"/>
+        <circle cx="150" cy="165" r="26" stroke="#7dd3fc"/>
+        <circle cx="150" cy="225" r="26" stroke="#a78bfa"/>
+      </g>
+      <g font-family="Inter, sans-serif" font-size="14" font-weight="700" text-anchor="middle">
+        <text x="150" y="111" fill="#4ade80">A</text>
+        <text x="150" y="171" fill="#7dd3fc">B</text>
+        <text x="150" y="231" fill="#a78bfa">C</text>
+      </g>
+
+      <rect x="430" y="92" width="320" height="146" rx="14"
+            fill="#101b33" stroke="#f87171" stroke-width="2"/>
+      <g font-family="Inter, sans-serif" text-anchor="middle">
+        <text x="590" y="150" font-size="15" font-weight="800" fill="#e8eefc"
+              letter-spacing="1.2">THE SYSTEM</text>
+        <text x="590" y="176" font-size="12.5" font-weight="600" fill="#8fa3c8">processes,
+          incentives, approvals</text>
+        <text x="590" y="204" font-size="12" font-weight="700" fill="#f87171"
+              letter-spacing="1.4">NEVER REDESIGNED</text>
+      </g>
+
+      <g fill="none" stroke="#f87171" stroke-width="2.5" stroke-linecap="round">
+        <path d="M1020 96 l20 20 M1040 96 l-20 20"/>
+        <path d="M1020 156 l20 20 M1040 156 l-20 20"/>
+        <path d="M1020 216 l20 20 M1040 216 l-20 20"/>
+      </g>
+      <g font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#8fa3c8">
+        <text x="1062" y="111">same defect</text>
+        <text x="1062" y="171">same defect</text>
+        <text x="1062" y="231">same defect</text>
+      </g>
+    </svg>
+  </figure>
 
   <p>Your first instinct is probably the same as every founder&rsquo;s. Someone made a mistake. Someone needs more training. Someone wasn&rsquo;t paying attention. Someone should have known better.</p>
 

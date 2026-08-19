@@ -521,9 +521,12 @@ blockquote p{
 }
 .hero-shot img{
   width:100%;
-  height:clamp(260px,32vw,400px);
-  object-fit:cover;
-  object-position:center 42%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
   border-radius:18px;
   border:1px solid var(--line-strong);
   box-shadow:0 30px 80px rgba(1,5,14,.55);
@@ -553,7 +556,6 @@ blockquote p{
 }
 @media (max-width:640px){
   .shell{ gap:28px; }
-  .hero-shot img{ height:210px; }
 }
 
 /* ── STEP / METRIC CARDS (same treatment as .mistake) ───────────────── */
@@ -1711,7 +1713,8 @@ blockquote p{
 }
 
 /* --- additions for this piece ------------------------------------- */
-.hero-shot svg{ width:100%; height:clamp(240px,27vw,330px); display:block; }
+.art-diagram{ margin:0 0 var(--s5); }
+.art-diagram svg{ width:100%; height:auto; display:block; }
 
 .ladder{ margin:var(--s5) 0; border:1px solid var(--line); border-radius:var(--r3);
          background:var(--surface); overflow:hidden; }
@@ -1767,36 +1770,9 @@ blockquote p{
 </header>
 
 <figure class="hero-shot">
-  <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="xMidYMid meet">
-    <title id="heroTitle">Three clusters. Two products create one relationship, five products create ten, ten products create forty-five. The catalogue grows five times; the connections between its parts grow forty-five times.</title>
-    <defs>
-      <linearGradient id="gBg5" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#0b1225"/>
-        <stop offset="1" stop-color="#0a1730"/>
-      </linearGradient>
-    </defs>
-    <rect width="1180" height="320" fill="url(#gBg5)"/>
-    <text x="590" y="34" text-anchor="middle" font-family="Inter, sans-serif"
-          font-size="12.5" font-weight="700" fill="#5f7398" letter-spacing="2.2">THE CATALOGUE GROWS 5&#215;. WHAT CONNECTS IT GROWS 45&#215;.</text>
-    <g stroke="#a78bfa" stroke-width="1.1" stroke-opacity=".55" fill="none"><line x1="200.0" y1="88.0" x2="200.0" y2="212.0"/></g>
-    <g fill="#0b1225" stroke="#7dd3fc" stroke-width="2"><circle cx="200.0" cy="88.0" r="5"/><circle cx="200.0" cy="212.0" r="5"/></g>
-    <text x="200" y="286" text-anchor="middle" font-family="Inter, sans-serif"
-          font-size="14" font-weight="700" fill="#c7d4ec">2 products</text>
-    <text x="200" y="306" text-anchor="middle" font-family="Inter, sans-serif"
-          font-size="12.5" font-weight="600" fill="#a78bfa">1 relationship</text>
-    <g stroke="#a78bfa" stroke-width="1.1" stroke-opacity=".55" fill="none"><line x1="590.0" y1="78.0" x2="658.5" y2="127.8"/><line x1="590.0" y1="78.0" x2="632.3" y2="208.2"/><line x1="590.0" y1="78.0" x2="547.7" y2="208.2"/><line x1="590.0" y1="78.0" x2="521.5" y2="127.8"/><line x1="658.5" y1="127.8" x2="632.3" y2="208.2"/><line x1="658.5" y1="127.8" x2="547.7" y2="208.2"/><line x1="658.5" y1="127.8" x2="521.5" y2="127.8"/><line x1="632.3" y1="208.2" x2="547.7" y2="208.2"/><line x1="632.3" y1="208.2" x2="521.5" y2="127.8"/><line x1="547.7" y1="208.2" x2="521.5" y2="127.8"/></g>
-    <g fill="#0b1225" stroke="#7dd3fc" stroke-width="2"><circle cx="590.0" cy="78.0" r="5"/><circle cx="658.5" cy="127.8" r="5"/><circle cx="632.3" cy="208.2" r="5"/><circle cx="547.7" cy="208.2" r="5"/><circle cx="521.5" cy="127.8" r="5"/></g>
-    <text x="590" y="286" text-anchor="middle" font-family="Inter, sans-serif"
-          font-size="14" font-weight="700" fill="#c7d4ec">5 products</text>
-    <text x="590" y="306" text-anchor="middle" font-family="Inter, sans-serif"
-          font-size="12.5" font-weight="600" fill="#a78bfa">10 relationships</text>
-    <g stroke="#a78bfa" stroke-width="1.1" stroke-opacity=".55" fill="none"><line x1="980.0" y1="64.0" x2="1030.5" y2="80.4"/><line x1="980.0" y1="64.0" x2="1061.8" y2="123.4"/><line x1="980.0" y1="64.0" x2="1061.8" y2="176.6"/><line x1="980.0" y1="64.0" x2="1030.5" y2="219.6"/><line x1="980.0" y1="64.0" x2="980.0" y2="236.0"/><line x1="980.0" y1="64.0" x2="929.5" y2="219.6"/><line x1="980.0" y1="64.0" x2="898.2" y2="176.6"/><line x1="980.0" y1="64.0" x2="898.2" y2="123.4"/><line x1="980.0" y1="64.0" x2="929.5" y2="80.4"/><line x1="1030.5" y1="80.4" x2="1061.8" y2="123.4"/><line x1="1030.5" y1="80.4" x2="1061.8" y2="176.6"/><line x1="1030.5" y1="80.4" x2="1030.5" y2="219.6"/><line x1="1030.5" y1="80.4" x2="980.0" y2="236.0"/><line x1="1030.5" y1="80.4" x2="929.5" y2="219.6"/><line x1="1030.5" y1="80.4" x2="898.2" y2="176.6"/><line x1="1030.5" y1="80.4" x2="898.2" y2="123.4"/><line x1="1030.5" y1="80.4" x2="929.5" y2="80.4"/><line x1="1061.8" y1="123.4" x2="1061.8" y2="176.6"/><line x1="1061.8" y1="123.4" x2="1030.5" y2="219.6"/><line x1="1061.8" y1="123.4" x2="980.0" y2="236.0"/><line x1="1061.8" y1="123.4" x2="929.5" y2="219.6"/><line x1="1061.8" y1="123.4" x2="898.2" y2="176.6"/><line x1="1061.8" y1="123.4" x2="898.2" y2="123.4"/><line x1="1061.8" y1="123.4" x2="929.5" y2="80.4"/><line x1="1061.8" y1="176.6" x2="1030.5" y2="219.6"/><line x1="1061.8" y1="176.6" x2="980.0" y2="236.0"/><line x1="1061.8" y1="176.6" x2="929.5" y2="219.6"/><line x1="1061.8" y1="176.6" x2="898.2" y2="176.6"/><line x1="1061.8" y1="176.6" x2="898.2" y2="123.4"/><line x1="1061.8" y1="176.6" x2="929.5" y2="80.4"/><line x1="1030.5" y1="219.6" x2="980.0" y2="236.0"/><line x1="1030.5" y1="219.6" x2="929.5" y2="219.6"/><line x1="1030.5" y1="219.6" x2="898.2" y2="176.6"/><line x1="1030.5" y1="219.6" x2="898.2" y2="123.4"/><line x1="1030.5" y1="219.6" x2="929.5" y2="80.4"/><line x1="980.0" y1="236.0" x2="929.5" y2="219.6"/><line x1="980.0" y1="236.0" x2="898.2" y2="176.6"/><line x1="980.0" y1="236.0" x2="898.2" y2="123.4"/><line x1="980.0" y1="236.0" x2="929.5" y2="80.4"/><line x1="929.5" y1="219.6" x2="898.2" y2="176.6"/><line x1="929.5" y1="219.6" x2="898.2" y2="123.4"/><line x1="929.5" y1="219.6" x2="929.5" y2="80.4"/><line x1="898.2" y1="176.6" x2="898.2" y2="123.4"/><line x1="898.2" y1="176.6" x2="929.5" y2="80.4"/><line x1="898.2" y1="123.4" x2="929.5" y2="80.4"/></g>
-    <g fill="#0b1225" stroke="#7dd3fc" stroke-width="2"><circle cx="980.0" cy="64.0" r="5"/><circle cx="1030.5" cy="80.4" r="5"/><circle cx="1061.8" cy="123.4" r="5"/><circle cx="1061.8" cy="176.6" r="5"/><circle cx="1030.5" cy="219.6" r="5"/><circle cx="980.0" cy="236.0" r="5"/><circle cx="929.5" cy="219.6" r="5"/><circle cx="898.2" cy="176.6" r="5"/><circle cx="898.2" cy="123.4" r="5"/><circle cx="929.5" cy="80.4" r="5"/></g>
-    <text x="980" y="286" text-anchor="middle" font-family="Inter, sans-serif"
-          font-size="14" font-weight="700" fill="#c7d4ec">10 products</text>
-    <text x="980" y="306" text-anchor="middle" font-family="Inter, sans-serif"
-          font-size="12.5" font-weight="600" fill="#a78bfa">45 relationships</text>
-  </svg>
+  <img src="../assets/img/hero-growth-vs-complexity.webp"
+       alt="A small glass model of an office block connected by white threads to a sprawling grid of hundreds of buildings, trucks and depots"
+       width="1672" height="941" loading="eager" decoding="async">
 </figure>
 
 <div class="shell">
@@ -1824,6 +1800,39 @@ blockquote p{
     more suppliers, more countries, more warehouses, more revenue. Growth is the
     goal &mdash; or so we think.
   </p>
+
+  <figure class="art-diagram">
+    <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="xMidYMid meet">
+      <title id="heroTitle">Three clusters. Two products create one relationship, five products create ten, ten products create forty-five. The catalogue grows five times; the connections between its parts grow forty-five times.</title>
+      <defs>
+        <linearGradient id="gBg5" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#0b1225"/>
+          <stop offset="1" stop-color="#0a1730"/>
+        </linearGradient>
+      </defs>
+      <rect width="1180" height="320" fill="url(#gBg5)"/>
+      <text x="590" y="34" text-anchor="middle" font-family="Inter, sans-serif"
+            font-size="12.5" font-weight="700" fill="#5f7398" letter-spacing="2.2">THE CATALOGUE GROWS 5&#215;. WHAT CONNECTS IT GROWS 45&#215;.</text>
+      <g stroke="#a78bfa" stroke-width="1.1" stroke-opacity=".55" fill="none"><line x1="200.0" y1="88.0" x2="200.0" y2="212.0"/></g>
+      <g fill="#0b1225" stroke="#7dd3fc" stroke-width="2"><circle cx="200.0" cy="88.0" r="5"/><circle cx="200.0" cy="212.0" r="5"/></g>
+      <text x="200" y="286" text-anchor="middle" font-family="Inter, sans-serif"
+            font-size="14" font-weight="700" fill="#c7d4ec">2 products</text>
+      <text x="200" y="306" text-anchor="middle" font-family="Inter, sans-serif"
+            font-size="12.5" font-weight="600" fill="#a78bfa">1 relationship</text>
+      <g stroke="#a78bfa" stroke-width="1.1" stroke-opacity=".55" fill="none"><line x1="590.0" y1="78.0" x2="658.5" y2="127.8"/><line x1="590.0" y1="78.0" x2="632.3" y2="208.2"/><line x1="590.0" y1="78.0" x2="547.7" y2="208.2"/><line x1="590.0" y1="78.0" x2="521.5" y2="127.8"/><line x1="658.5" y1="127.8" x2="632.3" y2="208.2"/><line x1="658.5" y1="127.8" x2="547.7" y2="208.2"/><line x1="658.5" y1="127.8" x2="521.5" y2="127.8"/><line x1="632.3" y1="208.2" x2="547.7" y2="208.2"/><line x1="632.3" y1="208.2" x2="521.5" y2="127.8"/><line x1="547.7" y1="208.2" x2="521.5" y2="127.8"/></g>
+      <g fill="#0b1225" stroke="#7dd3fc" stroke-width="2"><circle cx="590.0" cy="78.0" r="5"/><circle cx="658.5" cy="127.8" r="5"/><circle cx="632.3" cy="208.2" r="5"/><circle cx="547.7" cy="208.2" r="5"/><circle cx="521.5" cy="127.8" r="5"/></g>
+      <text x="590" y="286" text-anchor="middle" font-family="Inter, sans-serif"
+            font-size="14" font-weight="700" fill="#c7d4ec">5 products</text>
+      <text x="590" y="306" text-anchor="middle" font-family="Inter, sans-serif"
+            font-size="12.5" font-weight="600" fill="#a78bfa">10 relationships</text>
+      <g stroke="#a78bfa" stroke-width="1.1" stroke-opacity=".55" fill="none"><line x1="980.0" y1="64.0" x2="1030.5" y2="80.4"/><line x1="980.0" y1="64.0" x2="1061.8" y2="123.4"/><line x1="980.0" y1="64.0" x2="1061.8" y2="176.6"/><line x1="980.0" y1="64.0" x2="1030.5" y2="219.6"/><line x1="980.0" y1="64.0" x2="980.0" y2="236.0"/><line x1="980.0" y1="64.0" x2="929.5" y2="219.6"/><line x1="980.0" y1="64.0" x2="898.2" y2="176.6"/><line x1="980.0" y1="64.0" x2="898.2" y2="123.4"/><line x1="980.0" y1="64.0" x2="929.5" y2="80.4"/><line x1="1030.5" y1="80.4" x2="1061.8" y2="123.4"/><line x1="1030.5" y1="80.4" x2="1061.8" y2="176.6"/><line x1="1030.5" y1="80.4" x2="1030.5" y2="219.6"/><line x1="1030.5" y1="80.4" x2="980.0" y2="236.0"/><line x1="1030.5" y1="80.4" x2="929.5" y2="219.6"/><line x1="1030.5" y1="80.4" x2="898.2" y2="176.6"/><line x1="1030.5" y1="80.4" x2="898.2" y2="123.4"/><line x1="1030.5" y1="80.4" x2="929.5" y2="80.4"/><line x1="1061.8" y1="123.4" x2="1061.8" y2="176.6"/><line x1="1061.8" y1="123.4" x2="1030.5" y2="219.6"/><line x1="1061.8" y1="123.4" x2="980.0" y2="236.0"/><line x1="1061.8" y1="123.4" x2="929.5" y2="219.6"/><line x1="1061.8" y1="123.4" x2="898.2" y2="176.6"/><line x1="1061.8" y1="123.4" x2="898.2" y2="123.4"/><line x1="1061.8" y1="123.4" x2="929.5" y2="80.4"/><line x1="1061.8" y1="176.6" x2="1030.5" y2="219.6"/><line x1="1061.8" y1="176.6" x2="980.0" y2="236.0"/><line x1="1061.8" y1="176.6" x2="929.5" y2="219.6"/><line x1="1061.8" y1="176.6" x2="898.2" y2="176.6"/><line x1="1061.8" y1="176.6" x2="898.2" y2="123.4"/><line x1="1061.8" y1="176.6" x2="929.5" y2="80.4"/><line x1="1030.5" y1="219.6" x2="980.0" y2="236.0"/><line x1="1030.5" y1="219.6" x2="929.5" y2="219.6"/><line x1="1030.5" y1="219.6" x2="898.2" y2="176.6"/><line x1="1030.5" y1="219.6" x2="898.2" y2="123.4"/><line x1="1030.5" y1="219.6" x2="929.5" y2="80.4"/><line x1="980.0" y1="236.0" x2="929.5" y2="219.6"/><line x1="980.0" y1="236.0" x2="898.2" y2="176.6"/><line x1="980.0" y1="236.0" x2="898.2" y2="123.4"/><line x1="980.0" y1="236.0" x2="929.5" y2="80.4"/><line x1="929.5" y1="219.6" x2="898.2" y2="176.6"/><line x1="929.5" y1="219.6" x2="898.2" y2="123.4"/><line x1="929.5" y1="219.6" x2="929.5" y2="80.4"/><line x1="898.2" y1="176.6" x2="898.2" y2="123.4"/><line x1="898.2" y1="176.6" x2="929.5" y2="80.4"/><line x1="898.2" y1="123.4" x2="929.5" y2="80.4"/></g>
+      <g fill="#0b1225" stroke="#7dd3fc" stroke-width="2"><circle cx="980.0" cy="64.0" r="5"/><circle cx="1030.5" cy="80.4" r="5"/><circle cx="1061.8" cy="123.4" r="5"/><circle cx="1061.8" cy="176.6" r="5"/><circle cx="1030.5" cy="219.6" r="5"/><circle cx="980.0" cy="236.0" r="5"/><circle cx="929.5" cy="219.6" r="5"/><circle cx="898.2" cy="176.6" r="5"/><circle cx="898.2" cy="123.4" r="5"/><circle cx="929.5" cy="80.4" r="5"/></g>
+      <text x="980" y="286" text-anchor="middle" font-family="Inter, sans-serif"
+            font-size="14" font-weight="700" fill="#c7d4ec">10 products</text>
+      <text x="980" y="306" text-anchor="middle" font-family="Inter, sans-serif"
+            font-size="12.5" font-weight="600" fill="#a78bfa">45 relationships</text>
+    </svg>
+  </figure>
 
   <p>Then something strange happens. A business reaches a certain size and growth begins to feel heavier. The founder works longer hours. Meetings multiply. Notifications never stop. Inventory becomes harder to predict. Cash feels tighter despite record sales. Hiring no longer creates more capacity &mdash; it creates more management.</p>
 

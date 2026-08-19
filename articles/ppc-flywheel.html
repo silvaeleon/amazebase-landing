@@ -521,9 +521,12 @@ blockquote p{
 }
 .hero-shot img{
   width:100%;
-  height:clamp(260px,32vw,400px);
-  object-fit:cover;
-  object-position:center 42%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
   border-radius:18px;
   border:1px solid var(--line-strong);
   box-shadow:0 30px 80px rgba(1,5,14,.55);
@@ -553,7 +556,6 @@ blockquote p{
 }
 @media (max-width:640px){
   .shell{ gap:28px; }
-  .hero-shot img{ height:210px; }
 }
 
 /* ── STEP / METRIC CARDS (same treatment as .mistake) ───────────────── */
@@ -1711,7 +1713,8 @@ blockquote p{
 }
 
 /* --- additions for this piece ------------------------------------- */
-.hero-shot svg{ width:100%; height:clamp(250px,28vw,340px); display:block; }
+.art-diagram{ margin:0 0 var(--s5); }
+.art-diagram svg{ width:100%; height:auto; display:block; }
 
 .loop{ margin:var(--s5) 0; border:1px solid var(--line); border-radius:var(--r3);
        background:var(--surface); padding:var(--s4) var(--s4) var(--s3); }
@@ -1767,56 +1770,9 @@ blockquote p{
 </header>
 
 <figure class="hero-shot">
-  <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="xMidYMid meet">
-    <title id="heroTitle">A flywheel: sales lead to reviews, reviews to higher conversion, conversion to better ranking, ranking to organic traffic, organic traffic to lower acquisition cost, which returns to more sales</title>
-    <defs>
-      <linearGradient id="gBg3" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#0b1225"/>
-        <stop offset="1" stop-color="#0a1730"/>
-      </linearGradient>
-      <linearGradient id="gRing" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0"  stop-color="#3b82f6"/>
-        <stop offset=".5" stop-color="#a78bfa"/>
-        <stop offset="1"  stop-color="#4ade80"/>
-      </linearGradient>
-    </defs>
-
-    <rect width="1180" height="320" fill="url(#gBg3)"/>
-
-    <circle cx="590" cy="160" r="150" fill="none" stroke="#16233d" stroke-width="1"/>
-    <circle cx="590" cy="160" r="130" fill="none" stroke="#16233d" stroke-width="1"/>
-    <circle cx="590" cy="160" r="110" fill="none" stroke="url(#gRing)" stroke-width="3.5"/>
-
-    <g fill="#a78bfa">
-      <polygon points="-6,-7 6,-7 0,7" transform="translate(700,160)"/>
-      <polygon points="-6,-7 6,-7 0,7" transform="translate(535,255) rotate(120)"/>
-      <polygon points="-6,-7 6,-7 0,7" transform="translate(535,65) rotate(240)"/>
-    </g>
-
-    <g fill="#0b1225" stroke="url(#gRing)" stroke-width="2.5">
-      <circle cx="590" cy="50"  r="7"/>
-      <circle cx="685" cy="105" r="7"/>
-      <circle cx="685" cy="215" r="7"/>
-      <circle cx="590" cy="270" r="7"/>
-      <circle cx="495" cy="215" r="7"/>
-      <circle cx="495" cy="105" r="7"/>
-    </g>
-
-    <g font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#c7d4ec">
-      <text x="590" y="32"  text-anchor="middle">More sales</text>
-      <text x="712" y="109" text-anchor="start">More reviews</text>
-      <text x="712" y="219" text-anchor="start">Higher conversion</text>
-      <text x="590" y="296" text-anchor="middle">Better ranking</text>
-      <text x="468" y="219" text-anchor="end">More organic traffic</text>
-      <text x="468" y="109" text-anchor="end">Lower acquisition cost</text>
-    </g>
-
-    <g font-family="Inter, sans-serif" font-weight="700" fill="#5f7398">
-      <text x="590" y="152" font-size="12" text-anchor="middle" letter-spacing="2.4">EVERY TURN</text>
-      <text x="590" y="176" font-size="12" text-anchor="middle" letter-spacing="2.4">MAKES THE</text>
-      <text x="590" y="200" font-size="12" text-anchor="middle" letter-spacing="2.4">NEXT EASIER</text>
-    </g>
-  </svg>
+  <img src="../assets/img/hero-ppc-flywheel.webp"
+       alt="A man pushing a huge illuminated flywheel, blue streams and icons feeding in on one side and amber ones spinning out the other"
+       width="1672" height="941" loading="eager" decoding="async">
 </figure>
 
 <div class="shell">
@@ -1842,6 +1798,59 @@ blockquote p{
     There are two ways to think about Amazon advertising. The first is the way most
     businesses do: spend money, generate clicks, create sales, repeat next month.
   </p>
+
+  <figure class="art-diagram">
+    <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="xMidYMid meet">
+      <title id="heroTitle">A flywheel: sales lead to reviews, reviews to higher conversion, conversion to better ranking, ranking to organic traffic, organic traffic to lower acquisition cost, which returns to more sales</title>
+      <defs>
+        <linearGradient id="gBg3" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#0b1225"/>
+          <stop offset="1" stop-color="#0a1730"/>
+        </linearGradient>
+        <linearGradient id="gRing" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0"  stop-color="#3b82f6"/>
+          <stop offset=".5" stop-color="#a78bfa"/>
+          <stop offset="1"  stop-color="#4ade80"/>
+        </linearGradient>
+      </defs>
+
+      <rect width="1180" height="320" fill="url(#gBg3)"/>
+
+      <circle cx="590" cy="160" r="150" fill="none" stroke="#16233d" stroke-width="1"/>
+      <circle cx="590" cy="160" r="130" fill="none" stroke="#16233d" stroke-width="1"/>
+      <circle cx="590" cy="160" r="110" fill="none" stroke="url(#gRing)" stroke-width="3.5"/>
+
+      <g fill="#a78bfa">
+        <polygon points="-6,-7 6,-7 0,7" transform="translate(700,160)"/>
+        <polygon points="-6,-7 6,-7 0,7" transform="translate(535,255) rotate(120)"/>
+        <polygon points="-6,-7 6,-7 0,7" transform="translate(535,65) rotate(240)"/>
+      </g>
+
+      <g fill="#0b1225" stroke="url(#gRing)" stroke-width="2.5">
+        <circle cx="590" cy="50"  r="7"/>
+        <circle cx="685" cy="105" r="7"/>
+        <circle cx="685" cy="215" r="7"/>
+        <circle cx="590" cy="270" r="7"/>
+        <circle cx="495" cy="215" r="7"/>
+        <circle cx="495" cy="105" r="7"/>
+      </g>
+
+      <g font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#c7d4ec">
+        <text x="590" y="32"  text-anchor="middle">More sales</text>
+        <text x="712" y="109" text-anchor="start">More reviews</text>
+        <text x="712" y="219" text-anchor="start">Higher conversion</text>
+        <text x="590" y="296" text-anchor="middle">Better ranking</text>
+        <text x="468" y="219" text-anchor="end">More organic traffic</text>
+        <text x="468" y="109" text-anchor="end">Lower acquisition cost</text>
+      </g>
+
+      <g font-family="Inter, sans-serif" font-weight="700" fill="#5f7398">
+        <text x="590" y="152" font-size="12" text-anchor="middle" letter-spacing="2.4">EVERY TURN</text>
+        <text x="590" y="176" font-size="12" text-anchor="middle" letter-spacing="2.4">MAKES THE</text>
+        <text x="590" y="200" font-size="12" text-anchor="middle" letter-spacing="2.4">NEXT EASIER</text>
+      </g>
+    </svg>
+  </figure>
 
   <p>Advertising is treated like electricity. Turn it on, sales increase. Turn it off, sales stop. Simple, predictable and entirely temporary.</p>
 

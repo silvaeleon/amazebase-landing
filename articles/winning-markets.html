@@ -521,9 +521,12 @@ blockquote p{
 }
 .hero-shot img{
   width:100%;
-  height:clamp(260px,32vw,400px);
-  object-fit:cover;
-  object-position:center 42%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
   border-radius:18px;
   border:1px solid var(--line-strong);
   box-shadow:0 30px 80px rgba(1,5,14,.55);
@@ -553,7 +556,6 @@ blockquote p{
 }
 @media (max-width:640px){
   .shell{ gap:28px; }
-  .hero-shot img{ height:210px; }
 }
 
 /* ── STEP / METRIC CARDS (same treatment as .mistake) ───────────────── */
@@ -1711,7 +1713,8 @@ blockquote p{
 }
 
 /* --- additions for this piece ------------------------------------- */
-.hero-shot svg{ width:100%; height:clamp(250px,28vw,340px); display:block; }
+.art-diagram{ margin:0 0 var(--s5); }
+.art-diagram svg{ width:100%; height:auto; display:block; }
 
 .orbit{ margin:var(--s5) 0; border:1px solid var(--line); border-radius:var(--r3);
         background:var(--surface); padding:var(--s4); }
@@ -1777,15 +1780,9 @@ blockquote p{
 </header>
 
 <figure class="hero-shot">
-  <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="none">
-    <title id="heroTitle">Five product life cycles rise, peak and fall one after another, each fainter than the last. Beneath them a single broad band — the market — continues across the whole span and rises gently throughout.</title>
-    <defs><linearGradient id="gBgE" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1225"/><stop offset="1" stop-color="#0a1730"/></linearGradient></defs>
-    <rect width="1180" height="320" fill="url(#gBgE)"/>
-    <path d="M60 214 C 340 208, 660 196, 1120 182 L1120 244 C 660 252, 340 256, 60 258 Z" fill="#4ade80" opacity=".13"/><path d="M60 214 C 340 208, 660 196, 1120 182" fill="none" stroke="#4ade80" stroke-width="3" stroke-linecap="round"/><path d="M60.0 212.6 L66.0 211.8 L72.0 210.8 L78.0 209.4 L84.0 207.5 L90.0 205.0 L96.0 201.7 L102.0 197.7 L108.0 192.8 L114.0 187.1 L120.0 180.4 L126.0 173.0 L132.0 165.0 L138.0 156.6 L144.0 148.2 L150.0 140.2 L156.0 132.8 L162.0 126.7 L168.0 121.9 L174.0 119.0 L180.0 118.0 L186.0 119.0 L192.0 121.9 L198.0 126.7 L204.0 132.8 L210.0 140.2 L216.0 148.2 L222.0 156.6 L228.0 165.0 L234.0 173.0 L240.0 180.4 L246.0 187.1 L252.0 192.8 L258.0 197.7 L264.0 201.7 L270.0 205.0 L276.0 207.5 L282.0 209.4 L288.0 210.8 L294.0 211.8 L300.0 212.6" fill="none" stroke="#7dd3fc" stroke-width="2.2" opacity="0.85"/><path d="M260.0 212.2 L266.5 211.3 L273.0 210.0 L279.5 208.2 L286.0 205.8 L292.5 202.7 L299.0 198.7 L305.5 193.7 L312.0 187.5 L318.5 180.3 L325.0 172.0 L331.5 162.7 L338.0 152.7 L344.5 142.3 L351.0 131.8 L357.5 121.7 L364.0 112.6 L370.5 104.8 L377.0 98.9 L383.5 95.3 L390.0 94.0 L396.5 95.3 L403.0 98.9 L409.5 104.8 L416.0 112.6 L422.5 121.7 L429.0 131.8 L435.5 142.3 L442.0 152.7 L448.5 162.7 L455.0 172.0 L461.5 180.3 L468.0 187.5 L474.5 193.7 L481.0 198.7 L487.5 202.7 L494.0 205.8 L500.5 208.2 L507.0 210.0 L513.5 211.3 L520.0 212.2" fill="none" stroke="#7dd3fc" stroke-width="2.2" opacity="0.70"/><path d="M490.0 212.7 L495.5 212.1 L501.0 211.2 L506.5 210.0 L512.0 208.3 L517.5 206.1 L523.0 203.3 L528.5 199.8 L534.0 195.5 L539.5 190.4 L545.0 184.6 L550.5 178.1 L556.0 171.1 L561.5 163.8 L567.0 156.4 L572.5 149.4 L578.0 143.0 L583.5 137.6 L589.0 133.5 L594.5 130.9 L600.0 130.0 L605.5 130.9 L611.0 133.5 L616.5 137.6 L622.0 143.0 L627.5 149.4 L633.0 156.4 L638.5 163.8 L644.0 171.1 L649.5 178.1 L655.0 184.6 L660.5 190.4 L666.0 195.5 L671.5 199.8 L677.0 203.3 L682.5 206.1 L688.0 208.3 L693.5 210.0 L699.0 211.2 L704.5 212.1 L710.0 212.7" fill="none" stroke="#7dd3fc" stroke-width="2.2" opacity="0.55"/><path d="M670.0 212.0 L677.0 211.0 L684.0 209.6 L691.0 207.7 L698.0 205.0 L705.0 201.6 L712.0 197.1 L719.0 191.6 L726.0 184.9 L733.0 176.9 L740.0 167.8 L747.0 157.6 L754.0 146.6 L761.0 135.1 L768.0 123.5 L775.0 112.5 L782.0 102.4 L789.0 93.9 L796.0 87.4 L803.0 83.4 L810.0 82.0 L817.0 83.4 L824.0 87.4 L831.0 93.9 L838.0 102.4 L845.0 112.5 L852.0 123.5 L859.0 135.1 L866.0 146.6 L873.0 157.6 L880.0 167.8 L887.0 176.9 L894.0 184.9 L901.0 191.6 L908.0 197.1 L915.0 201.6 L922.0 205.0 L929.0 207.7 L936.0 209.6 L943.0 211.0 L950.0 212.0" fill="none" stroke="#7dd3fc" stroke-width="2.2" opacity="0.42"/><path d="M905.0 212.9 L910.2 212.3 L915.5 211.5 L920.8 210.4 L926.0 209.0 L931.2 207.0 L936.5 204.5 L941.8 201.5 L947.0 197.7 L952.2 193.2 L957.5 188.1 L962.8 182.4 L968.0 176.2 L973.2 169.8 L978.5 163.3 L983.8 157.1 L989.0 151.4 L994.2 146.7 L999.5 143.0 L1004.8 140.8 L1010.0 140.0 L1015.2 140.8 L1020.5 143.0 L1025.8 146.7 L1031.0 151.4 L1036.2 157.1 L1041.5 163.3 L1046.8 169.8 L1052.0 176.2 L1057.2 182.4 L1062.5 188.1 L1067.8 193.2 L1073.0 197.7 L1078.2 201.5 L1083.5 204.5 L1088.8 207.0 L1094.0 209.0 L1099.2 210.4 L1104.5 211.5 L1109.8 212.3 L1115.0 212.9" fill="none" stroke="#7dd3fc" stroke-width="2.2" opacity="0.30"/>
-    <text x="60" y="48" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#7dd3fc" letter-spacing="1.8">PRODUCTS &mdash; EACH ONE RISES, PEAKS, FADES</text>
-    <text x="1120" y="168" text-anchor="end" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#4ade80">THE MARKET</text>
-    <text x="60" y="300" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#8fa3c8">Human needs evolve far more slowly than product catalogues do.</text>
-  </svg>
+  <img src="../assets/img/hero-winning-markets.webp"
+       alt="A large amber disc dense with miniature buildings and connecting roads, surrounded by four small isolated blue domes each holding one product"
+       width="1672" height="941" loading="eager" decoding="async">
 </figure>
 
 <div class="shell">
@@ -1813,6 +1810,18 @@ blockquote p{
     product &mdash; customers love it, margins are excellent, reviews are outstanding,
     growth has been impressive.
   </p>
+
+  <figure class="art-diagram">
+    <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="none">
+      <title id="heroTitle">Five product life cycles rise, peak and fall one after another, each fainter than the last. Beneath them a single broad band — the market — continues across the whole span and rises gently throughout.</title>
+      <defs><linearGradient id="gBgE" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1225"/><stop offset="1" stop-color="#0a1730"/></linearGradient></defs>
+      <rect width="1180" height="320" fill="url(#gBgE)"/>
+      <path d="M60 214 C 340 208, 660 196, 1120 182 L1120 244 C 660 252, 340 256, 60 258 Z" fill="#4ade80" opacity=".13"/><path d="M60 214 C 340 208, 660 196, 1120 182" fill="none" stroke="#4ade80" stroke-width="3" stroke-linecap="round"/><path d="M60.0 212.6 L66.0 211.8 L72.0 210.8 L78.0 209.4 L84.0 207.5 L90.0 205.0 L96.0 201.7 L102.0 197.7 L108.0 192.8 L114.0 187.1 L120.0 180.4 L126.0 173.0 L132.0 165.0 L138.0 156.6 L144.0 148.2 L150.0 140.2 L156.0 132.8 L162.0 126.7 L168.0 121.9 L174.0 119.0 L180.0 118.0 L186.0 119.0 L192.0 121.9 L198.0 126.7 L204.0 132.8 L210.0 140.2 L216.0 148.2 L222.0 156.6 L228.0 165.0 L234.0 173.0 L240.0 180.4 L246.0 187.1 L252.0 192.8 L258.0 197.7 L264.0 201.7 L270.0 205.0 L276.0 207.5 L282.0 209.4 L288.0 210.8 L294.0 211.8 L300.0 212.6" fill="none" stroke="#7dd3fc" stroke-width="2.2" opacity="0.85"/><path d="M260.0 212.2 L266.5 211.3 L273.0 210.0 L279.5 208.2 L286.0 205.8 L292.5 202.7 L299.0 198.7 L305.5 193.7 L312.0 187.5 L318.5 180.3 L325.0 172.0 L331.5 162.7 L338.0 152.7 L344.5 142.3 L351.0 131.8 L357.5 121.7 L364.0 112.6 L370.5 104.8 L377.0 98.9 L383.5 95.3 L390.0 94.0 L396.5 95.3 L403.0 98.9 L409.5 104.8 L416.0 112.6 L422.5 121.7 L429.0 131.8 L435.5 142.3 L442.0 152.7 L448.5 162.7 L455.0 172.0 L461.5 180.3 L468.0 187.5 L474.5 193.7 L481.0 198.7 L487.5 202.7 L494.0 205.8 L500.5 208.2 L507.0 210.0 L513.5 211.3 L520.0 212.2" fill="none" stroke="#7dd3fc" stroke-width="2.2" opacity="0.70"/><path d="M490.0 212.7 L495.5 212.1 L501.0 211.2 L506.5 210.0 L512.0 208.3 L517.5 206.1 L523.0 203.3 L528.5 199.8 L534.0 195.5 L539.5 190.4 L545.0 184.6 L550.5 178.1 L556.0 171.1 L561.5 163.8 L567.0 156.4 L572.5 149.4 L578.0 143.0 L583.5 137.6 L589.0 133.5 L594.5 130.9 L600.0 130.0 L605.5 130.9 L611.0 133.5 L616.5 137.6 L622.0 143.0 L627.5 149.4 L633.0 156.4 L638.5 163.8 L644.0 171.1 L649.5 178.1 L655.0 184.6 L660.5 190.4 L666.0 195.5 L671.5 199.8 L677.0 203.3 L682.5 206.1 L688.0 208.3 L693.5 210.0 L699.0 211.2 L704.5 212.1 L710.0 212.7" fill="none" stroke="#7dd3fc" stroke-width="2.2" opacity="0.55"/><path d="M670.0 212.0 L677.0 211.0 L684.0 209.6 L691.0 207.7 L698.0 205.0 L705.0 201.6 L712.0 197.1 L719.0 191.6 L726.0 184.9 L733.0 176.9 L740.0 167.8 L747.0 157.6 L754.0 146.6 L761.0 135.1 L768.0 123.5 L775.0 112.5 L782.0 102.4 L789.0 93.9 L796.0 87.4 L803.0 83.4 L810.0 82.0 L817.0 83.4 L824.0 87.4 L831.0 93.9 L838.0 102.4 L845.0 112.5 L852.0 123.5 L859.0 135.1 L866.0 146.6 L873.0 157.6 L880.0 167.8 L887.0 176.9 L894.0 184.9 L901.0 191.6 L908.0 197.1 L915.0 201.6 L922.0 205.0 L929.0 207.7 L936.0 209.6 L943.0 211.0 L950.0 212.0" fill="none" stroke="#7dd3fc" stroke-width="2.2" opacity="0.42"/><path d="M905.0 212.9 L910.2 212.3 L915.5 211.5 L920.8 210.4 L926.0 209.0 L931.2 207.0 L936.5 204.5 L941.8 201.5 L947.0 197.7 L952.2 193.2 L957.5 188.1 L962.8 182.4 L968.0 176.2 L973.2 169.8 L978.5 163.3 L983.8 157.1 L989.0 151.4 L994.2 146.7 L999.5 143.0 L1004.8 140.8 L1010.0 140.0 L1015.2 140.8 L1020.5 143.0 L1025.8 146.7 L1031.0 151.4 L1036.2 157.1 L1041.5 163.3 L1046.8 169.8 L1052.0 176.2 L1057.2 182.4 L1062.5 188.1 L1067.8 193.2 L1073.0 197.7 L1078.2 201.5 L1083.5 204.5 L1088.8 207.0 L1094.0 209.0 L1099.2 210.4 L1104.5 211.5 L1109.8 212.3 L1115.0 212.9" fill="none" stroke="#7dd3fc" stroke-width="2.2" opacity="0.30"/>
+      <text x="60" y="48" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#7dd3fc" letter-spacing="1.8">PRODUCTS &mdash; EACH ONE RISES, PEAKS, FADES</text>
+      <text x="1120" y="168" text-anchor="end" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#4ade80">THE MARKET</text>
+      <text x="60" y="300" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#8fa3c8">Human needs evolve far more slowly than product catalogues do.</text>
+    </svg>
+  </figure>
 
   <p>The second sells dozens of fairly ordinary products. None are spectacular. None dominate their category. Yet together they generate predictable sales, repeat customers, expanding product lines and consistent growth year after year.</p>
 

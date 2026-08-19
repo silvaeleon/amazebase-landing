@@ -521,9 +521,12 @@ blockquote p{
 }
 .hero-shot img{
   width:100%;
-  height:clamp(260px,32vw,400px);
-  object-fit:cover;
-  object-position:center 42%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
   border-radius:18px;
   border:1px solid var(--line-strong);
   box-shadow:0 30px 80px rgba(1,5,14,.55);
@@ -553,7 +556,6 @@ blockquote p{
 }
 @media (max-width:640px){
   .shell{ gap:28px; }
-  .hero-shot img{ height:210px; }
 }
 
 /* ── STEP / METRIC CARDS (same treatment as .mistake) ───────────────── */
@@ -1711,7 +1713,8 @@ blockquote p{
 }
 
 /* --- additions for this piece ------------------------------------- */
-.hero-shot svg{ width:100%; height:clamp(240px,27vw,330px); display:block; }
+.art-diagram{ margin:0 0 var(--s5); }
+.art-diagram svg{ width:100%; height:auto; display:block; }
 
 .leaks{ margin:var(--s5) 0; display:grid; gap:8px;
         grid-template-columns:repeat(3,1fr); }
@@ -1782,58 +1785,9 @@ blockquote p{
 </header>
 
 <figure class="hero-shot">
-  <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="xMidYMid meet">
-    <title id="heroTitle">A full pipe of attention enters on the left. Meetings, approvals, interruptions, repeated questions, manual reports and unclear processes each drain some of it. Only a thin trickle reaches the work marked strategy.</title>
-    <defs>
-      <linearGradient id="gBg8" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#0b1225"/>
-        <stop offset="1" stop-color="#0a1730"/>
-      </linearGradient>
-      <linearGradient id="gPipe" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0"   stop-color="#7dd3fc"/>
-        <stop offset=".55" stop-color="#7dd3fc" stop-opacity=".6"/>
-        <stop offset="1"   stop-color="#7dd3fc" stop-opacity=".18"/>
-      </linearGradient>
-    </defs>
-    <rect width="1180" height="320" fill="url(#gBg8)"/>
-
-    <path d="M60 118 L900 150 L900 178 L60 202 Z" fill="url(#gPipe)"/>
-
-    <g stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" opacity=".9">
-      <line x1="180" y1="200" x2="180" y2="244"/>
-      <line x1="300" y1="197" x2="300" y2="238"/>
-      <line x1="420" y1="194" x2="420" y2="248"/>
-      <line x1="540" y1="190" x2="540" y2="236"/>
-      <line x1="660" y1="187" x2="660" y2="246"/>
-      <line x1="780" y1="183" x2="780" y2="240"/>
-    </g>
-    <g fill="#fbbf24">
-      <circle cx="180" cy="250" r="4"/><circle cx="300" cy="244" r="4"/>
-      <circle cx="420" cy="254" r="4"/><circle cx="540" cy="242" r="4"/>
-      <circle cx="660" cy="252" r="4"/><circle cx="780" cy="246" r="4"/>
-    </g>
-
-    <g font-family="Inter, sans-serif" font-size="10.5" font-weight="600" fill="#8fa3c8"
-       text-anchor="middle">
-      <text x="180" y="272">meetings</text>
-      <text x="300" y="266">approvals</text>
-      <text x="420" y="276">interruptions</text>
-      <text x="540" y="264">repeat questions</text>
-      <text x="660" y="274">manual reports</text>
-      <text x="780" y="268">unclear process</text>
-    </g>
-
-    <rect x="905" y="146" width="215" height="36" rx="8"
-          fill="#101b33" stroke="#4ade80" stroke-width="2"/>
-    <text x="1012" y="170" font-family="Inter, sans-serif" font-size="13.5"
-          font-weight="700" fill="#4ade80" text-anchor="middle" letter-spacing="1.2">STRATEGY</text>
-
-    <g font-family="Inter, sans-serif" font-weight="700" letter-spacing="1.6">
-      <text x="60" y="96" font-size="12.5" fill="#7dd3fc">ATTENTION IN &mdash; SAME EVERY DAY</text>
-      <text x="1120" y="118" font-size="12.5" fill="#5f7398" text-anchor="end">WHAT ARRIVES</text>
-      <text x="60" y="298" font-size="12" fill="#fbbf24">EVERY LEAK LOOKS TOO SMALL TO FIX</text>
-    </g>
-  </svg>
+  <img src="../assets/img/hero-attention-is-the-asset.webp"
+       alt="A glass sphere on a plinth throwing a single beam of amber light upward, dim warehouse shelves on one side and a cloud of dark screens on the other"
+       width="1672" height="941" loading="eager" decoding="async">
 </figure>
 
 <div class="shell">
@@ -1861,6 +1815,61 @@ blockquote p{
     awake at night. The answers are predictable. Advertising. Inventory. Competition.
     Cash flow. Hiring. Policy changes. Margins.
   </p>
+
+  <figure class="art-diagram">
+    <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="xMidYMid meet">
+      <title id="heroTitle">A full pipe of attention enters on the left. Meetings, approvals, interruptions, repeated questions, manual reports and unclear processes each drain some of it. Only a thin trickle reaches the work marked strategy.</title>
+      <defs>
+        <linearGradient id="gBg8" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#0b1225"/>
+          <stop offset="1" stop-color="#0a1730"/>
+        </linearGradient>
+        <linearGradient id="gPipe" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0"   stop-color="#7dd3fc"/>
+          <stop offset=".55" stop-color="#7dd3fc" stop-opacity=".6"/>
+          <stop offset="1"   stop-color="#7dd3fc" stop-opacity=".18"/>
+        </linearGradient>
+      </defs>
+      <rect width="1180" height="320" fill="url(#gBg8)"/>
+
+      <path d="M60 118 L900 150 L900 178 L60 202 Z" fill="url(#gPipe)"/>
+
+      <g stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" opacity=".9">
+        <line x1="180" y1="200" x2="180" y2="244"/>
+        <line x1="300" y1="197" x2="300" y2="238"/>
+        <line x1="420" y1="194" x2="420" y2="248"/>
+        <line x1="540" y1="190" x2="540" y2="236"/>
+        <line x1="660" y1="187" x2="660" y2="246"/>
+        <line x1="780" y1="183" x2="780" y2="240"/>
+      </g>
+      <g fill="#fbbf24">
+        <circle cx="180" cy="250" r="4"/><circle cx="300" cy="244" r="4"/>
+        <circle cx="420" cy="254" r="4"/><circle cx="540" cy="242" r="4"/>
+        <circle cx="660" cy="252" r="4"/><circle cx="780" cy="246" r="4"/>
+      </g>
+
+      <g font-family="Inter, sans-serif" font-size="10.5" font-weight="600" fill="#8fa3c8"
+         text-anchor="middle">
+        <text x="180" y="272">meetings</text>
+        <text x="300" y="266">approvals</text>
+        <text x="420" y="276">interruptions</text>
+        <text x="540" y="264">repeat questions</text>
+        <text x="660" y="274">manual reports</text>
+        <text x="780" y="268">unclear process</text>
+      </g>
+
+      <rect x="905" y="146" width="215" height="36" rx="8"
+            fill="#101b33" stroke="#4ade80" stroke-width="2"/>
+      <text x="1012" y="170" font-family="Inter, sans-serif" font-size="13.5"
+            font-weight="700" fill="#4ade80" text-anchor="middle" letter-spacing="1.2">STRATEGY</text>
+
+      <g font-family="Inter, sans-serif" font-weight="700" letter-spacing="1.6">
+        <text x="60" y="96" font-size="12.5" fill="#7dd3fc">ATTENTION IN &mdash; SAME EVERY DAY</text>
+        <text x="1120" y="118" font-size="12.5" fill="#5f7398" text-anchor="end">WHAT ARRIVES</text>
+        <text x="60" y="298" font-size="12" fill="#fbbf24">EVERY LEAK LOOKS TOO SMALL TO FIX</text>
+      </g>
+    </svg>
+  </figure>
 
   <p>Now ask a different question: what did you actually spend most of your time thinking about this week?</p>
 

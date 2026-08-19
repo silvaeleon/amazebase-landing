@@ -521,9 +521,12 @@ blockquote p{
 }
 .hero-shot img{
   width:100%;
-  height:clamp(260px,32vw,400px);
-  object-fit:cover;
-  object-position:center 42%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
   border-radius:18px;
   border:1px solid var(--line-strong);
   box-shadow:0 30px 80px rgba(1,5,14,.55);
@@ -553,7 +556,6 @@ blockquote p{
 }
 @media (max-width:640px){
   .shell{ gap:28px; }
-  .hero-shot img{ height:210px; }
 }
 
 /* ── STEP / METRIC CARDS (same treatment as .mistake) ───────────────── */
@@ -1711,7 +1713,8 @@ blockquote p{
 }
 
 /* --- additions for this piece ------------------------------------- */
-.hero-shot svg{ width:100%; height:clamp(250px,28vw,340px); display:block; }
+.art-diagram{ margin:0 0 var(--s5); }
+.art-diagram svg{ width:100%; height:auto; display:block; }
 
 .tam{ margin:var(--s5) 0; border:1px solid var(--line); border-radius:var(--r3);
       background:var(--surface); overflow:hidden; }
@@ -1774,26 +1777,9 @@ blockquote p{
 </header>
 
 <figure class="hero-shot">
-  <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="xMidYMid meet">
-    <title id="heroTitle">Three nested rings. The outer ring, the total addressable market, is crowded with competitors. The middle ring holds fewer. The small inner ring, where a business actually operates, holds one.</title>
-    <defs><linearGradient id="gBgK" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1225"/><stop offset="1" stop-color="#0a1730"/></linearGradient></defs>
-    <rect width="1180" height="320" fill="url(#gBgK)"/>
-    <circle cx="330" cy="168" r="132" fill="#7dd3fc" opacity=".05" stroke="#7dd3fc" stroke-width="1.5" stroke-opacity=".5"/><circle cx="330" cy="168" r="88" fill="#7dd3fc" opacity=".07" stroke="#7dd3fc" stroke-width="1.5" stroke-opacity=".65"/><circle cx="330" cy="168" r="46" fill="#4ade80" opacity=".16" stroke="#4ade80" stroke-width="2"/><circle cx="427.5" cy="175.5" r="3.2" fill="#f87171" opacity=".8"/><circle cx="239.8" cy="239.9" r="3.2" fill="#f87171" opacity=".8"/><circle cx="393.0" cy="242.9" r="3.2" fill="#f87171" opacity=".8"/><circle cx="343.4" cy="284.7" r="3.2" fill="#f87171" opacity=".8"/><circle cx="400.3" cy="261.5" r="3.2" fill="#f87171" opacity=".8"/><circle cx="278.3" cy="84.0" r="3.2" fill="#f87171" opacity=".8"/><circle cx="224.2" cy="143.9" r="3.2" fill="#f87171" opacity=".8"/><circle cx="224.3" cy="232.7" r="3.2" fill="#f87171" opacity=".8"/><circle cx="409.0" cy="220.3" r="3.2" fill="#f87171" opacity=".8"/><circle cx="429.5" cy="128.4" r="3.2" fill="#f87171" opacity=".8"/><circle cx="363.3" cy="267.4" r="3.2" fill="#f87171" opacity=".8"/><circle cx="248.8" cy="260.2" r="3.2" fill="#f87171" opacity=".8"/><circle cx="355.0" cy="266.1" r="3.2" fill="#f87171" opacity=".8"/><circle cx="234.1" cy="111.3" r="3.2" fill="#f87171" opacity=".8"/><circle cx="444.7" cy="133.7" r="3.2" fill="#f87171" opacity=".8"/><circle cx="267.9" cy="247.5" r="3.2" fill="#f87171" opacity=".8"/><circle cx="393.9" cy="62.1" r="3.2" fill="#f87171" opacity=".8"/><circle cx="444.7" cy="190.2" r="3.2" fill="#f87171" opacity=".8"/><circle cx="407.5" cy="83.8" r="3.2" fill="#f87171" opacity=".8"/><circle cx="353.4" cy="284.2" r="3.2" fill="#f87171" opacity=".8"/><circle cx="317.3" cy="68.3" r="3.2" fill="#f87171" opacity=".8"/><circle cx="265.8" cy="89.6" r="3.2" fill="#f87171" opacity=".8"/><circle cx="431.5" cy="195.0" r="3.2" fill="#f87171" opacity=".8"/><circle cx="276.0" cy="260.2" r="3.2" fill="#f87171" opacity=".8"/><circle cx="257.7" cy="72.7" r="3.2" fill="#f87171" opacity=".8"/><circle cx="449.8" cy="138.3" r="3.2" fill="#f87171" opacity=".8"/><circle cx="448.2" cy="163.2" r="3.2" fill="#f87171" opacity=".8"/><circle cx="295.4" cy="261.8" r="3.2" fill="#f87171" opacity=".8"/><circle cx="250.6" cy="89.9" r="3.2" fill="#f87171" opacity=".8"/><circle cx="285.6" cy="81.5" r="3.2" fill="#f87171" opacity=".8"/><circle cx="372.9" cy="282.1" r="3.2" fill="#f87171" opacity=".8"/><circle cx="237.0" cy="99.2" r="3.2" fill="#f87171" opacity=".8"/><circle cx="418.2" cy="228.5" r="3.2" fill="#f87171" opacity=".8"/><circle cx="426.6" cy="106.8" r="3.2" fill="#f87171" opacity=".8"/><circle cx="430.5" cy="162.7" r="3.2" fill="#f87171" opacity=".8"/><circle cx="216.1" cy="201.2" r="3.2" fill="#f87171" opacity=".8"/><circle cx="218.8" cy="208.3" r="3.2" fill="#f87171" opacity=".8"/><circle cx="239.2" cy="131.0" r="3.2" fill="#f87171" opacity=".8"/><circle cx="430.5" cy="239.9" r="3.2" fill="#f87171" opacity=".8"/><circle cx="403.6" cy="236.5" r="3.2" fill="#f87171" opacity=".8"/><circle cx="270.7" cy="267.9" r="3.2" fill="#f87171" opacity=".8"/><circle cx="396.5" cy="81.3" r="3.2" fill="#f87171" opacity=".8"/><circle cx="211.7" cy="169.4" r="3.2" fill="#f87171" opacity=".8"/><circle cx="311.4" cy="272.5" r="3.2" fill="#f87171" opacity=".8"/><circle cx="243.4" cy="93.8" r="3.2" fill="#f87171" opacity=".8"/><circle cx="425.0" cy="191.2" r="3.2" fill="#f87171" opacity=".8"/><circle cx="377.5" cy="223.9" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="302.1" cy="93.7" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="336.6" cy="108.0" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="337.7" cy="88.7" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="299.6" cy="210.6" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="286.7" cy="211.2" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="354.0" cy="215.9" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="384.4" cy="222.3" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="397.1" cy="189.8" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="345.8" cy="224.3" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="356.5" cy="112.3" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="356.7" cy="228.6" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="306.9" cy="103.9" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="371.2" cy="118.1" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="330.0" cy="168.0" r="6" fill="#4ade80"/><text x="330" y="56" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="800" fill="#7dd3fc" letter-spacing="1.4">TAM</text><text x="330" y="98" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="800" fill="#7dd3fc" letter-spacing="1.4">SAM</text><text x="330" y="236" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="800" fill="#4ade80" letter-spacing="1.4">SOM</text>
-    <text x="620" y="86" font-family="Inter, sans-serif" font-size="13.5" font-weight="700"
-          fill="#7dd3fc" letter-spacing="1.4">THE NUMBER IN THE TOOL</text>
-    <text x="620" y="112" font-family="Inter, sans-serif" font-size="12.5" font-weight="500"
-          fill="#8fa3c8">Total demand that theoretically exists.</text>
-
-    <text x="620" y="158" font-family="Inter, sans-serif" font-size="13.5" font-weight="700"
-          fill="#fbbf24" letter-spacing="1.4">WHAT YOU COULD SERVE</text>
-    <text x="620" y="184" font-family="Inter, sans-serif" font-size="12.5" font-weight="500"
-          fill="#8fa3c8">After geography, channel, price and fit.</text>
-
-    <text x="620" y="230" font-family="Inter, sans-serif" font-size="13.5" font-weight="700"
-          fill="#4ade80" letter-spacing="1.4">WHERE YOUR BUSINESS ACTUALLY LIVES</text>
-    <text x="620" y="256" font-family="Inter, sans-serif" font-size="12.5" font-weight="500"
-          fill="#8fa3c8">What you can realistically win, and hold.</text>
-  </svg>
+  <img src="../assets/img/hero-overestimating-tam.webp"
+       alt="A vast dark ocean scattered with faint blue lights, and one small amber-lit harbour with a single ship tucked into a rocky bay"
+       width="1672" height="941" loading="eager" decoding="async">
 </figure>
 
 <div class="shell">
@@ -1821,6 +1807,29 @@ blockquote p{
     volume. The larger the number, the more exciting the opportunity appears.
     200,000 searches. 500,000. A million.
   </p>
+
+  <figure class="art-diagram">
+    <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="xMidYMid meet">
+      <title id="heroTitle">Three nested rings. The outer ring, the total addressable market, is crowded with competitors. The middle ring holds fewer. The small inner ring, where a business actually operates, holds one.</title>
+      <defs><linearGradient id="gBgK" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1225"/><stop offset="1" stop-color="#0a1730"/></linearGradient></defs>
+      <rect width="1180" height="320" fill="url(#gBgK)"/>
+      <circle cx="330" cy="168" r="132" fill="#7dd3fc" opacity=".05" stroke="#7dd3fc" stroke-width="1.5" stroke-opacity=".5"/><circle cx="330" cy="168" r="88" fill="#7dd3fc" opacity=".07" stroke="#7dd3fc" stroke-width="1.5" stroke-opacity=".65"/><circle cx="330" cy="168" r="46" fill="#4ade80" opacity=".16" stroke="#4ade80" stroke-width="2"/><circle cx="427.5" cy="175.5" r="3.2" fill="#f87171" opacity=".8"/><circle cx="239.8" cy="239.9" r="3.2" fill="#f87171" opacity=".8"/><circle cx="393.0" cy="242.9" r="3.2" fill="#f87171" opacity=".8"/><circle cx="343.4" cy="284.7" r="3.2" fill="#f87171" opacity=".8"/><circle cx="400.3" cy="261.5" r="3.2" fill="#f87171" opacity=".8"/><circle cx="278.3" cy="84.0" r="3.2" fill="#f87171" opacity=".8"/><circle cx="224.2" cy="143.9" r="3.2" fill="#f87171" opacity=".8"/><circle cx="224.3" cy="232.7" r="3.2" fill="#f87171" opacity=".8"/><circle cx="409.0" cy="220.3" r="3.2" fill="#f87171" opacity=".8"/><circle cx="429.5" cy="128.4" r="3.2" fill="#f87171" opacity=".8"/><circle cx="363.3" cy="267.4" r="3.2" fill="#f87171" opacity=".8"/><circle cx="248.8" cy="260.2" r="3.2" fill="#f87171" opacity=".8"/><circle cx="355.0" cy="266.1" r="3.2" fill="#f87171" opacity=".8"/><circle cx="234.1" cy="111.3" r="3.2" fill="#f87171" opacity=".8"/><circle cx="444.7" cy="133.7" r="3.2" fill="#f87171" opacity=".8"/><circle cx="267.9" cy="247.5" r="3.2" fill="#f87171" opacity=".8"/><circle cx="393.9" cy="62.1" r="3.2" fill="#f87171" opacity=".8"/><circle cx="444.7" cy="190.2" r="3.2" fill="#f87171" opacity=".8"/><circle cx="407.5" cy="83.8" r="3.2" fill="#f87171" opacity=".8"/><circle cx="353.4" cy="284.2" r="3.2" fill="#f87171" opacity=".8"/><circle cx="317.3" cy="68.3" r="3.2" fill="#f87171" opacity=".8"/><circle cx="265.8" cy="89.6" r="3.2" fill="#f87171" opacity=".8"/><circle cx="431.5" cy="195.0" r="3.2" fill="#f87171" opacity=".8"/><circle cx="276.0" cy="260.2" r="3.2" fill="#f87171" opacity=".8"/><circle cx="257.7" cy="72.7" r="3.2" fill="#f87171" opacity=".8"/><circle cx="449.8" cy="138.3" r="3.2" fill="#f87171" opacity=".8"/><circle cx="448.2" cy="163.2" r="3.2" fill="#f87171" opacity=".8"/><circle cx="295.4" cy="261.8" r="3.2" fill="#f87171" opacity=".8"/><circle cx="250.6" cy="89.9" r="3.2" fill="#f87171" opacity=".8"/><circle cx="285.6" cy="81.5" r="3.2" fill="#f87171" opacity=".8"/><circle cx="372.9" cy="282.1" r="3.2" fill="#f87171" opacity=".8"/><circle cx="237.0" cy="99.2" r="3.2" fill="#f87171" opacity=".8"/><circle cx="418.2" cy="228.5" r="3.2" fill="#f87171" opacity=".8"/><circle cx="426.6" cy="106.8" r="3.2" fill="#f87171" opacity=".8"/><circle cx="430.5" cy="162.7" r="3.2" fill="#f87171" opacity=".8"/><circle cx="216.1" cy="201.2" r="3.2" fill="#f87171" opacity=".8"/><circle cx="218.8" cy="208.3" r="3.2" fill="#f87171" opacity=".8"/><circle cx="239.2" cy="131.0" r="3.2" fill="#f87171" opacity=".8"/><circle cx="430.5" cy="239.9" r="3.2" fill="#f87171" opacity=".8"/><circle cx="403.6" cy="236.5" r="3.2" fill="#f87171" opacity=".8"/><circle cx="270.7" cy="267.9" r="3.2" fill="#f87171" opacity=".8"/><circle cx="396.5" cy="81.3" r="3.2" fill="#f87171" opacity=".8"/><circle cx="211.7" cy="169.4" r="3.2" fill="#f87171" opacity=".8"/><circle cx="311.4" cy="272.5" r="3.2" fill="#f87171" opacity=".8"/><circle cx="243.4" cy="93.8" r="3.2" fill="#f87171" opacity=".8"/><circle cx="425.0" cy="191.2" r="3.2" fill="#f87171" opacity=".8"/><circle cx="377.5" cy="223.9" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="302.1" cy="93.7" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="336.6" cy="108.0" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="337.7" cy="88.7" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="299.6" cy="210.6" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="286.7" cy="211.2" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="354.0" cy="215.9" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="384.4" cy="222.3" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="397.1" cy="189.8" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="345.8" cy="224.3" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="356.5" cy="112.3" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="356.7" cy="228.6" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="306.9" cy="103.9" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="371.2" cy="118.1" r="3.2" fill="#fbbf24" opacity=".8"/><circle cx="330.0" cy="168.0" r="6" fill="#4ade80"/><text x="330" y="56" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="800" fill="#7dd3fc" letter-spacing="1.4">TAM</text><text x="330" y="98" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="800" fill="#7dd3fc" letter-spacing="1.4">SAM</text><text x="330" y="236" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="800" fill="#4ade80" letter-spacing="1.4">SOM</text>
+      <text x="620" y="86" font-family="Inter, sans-serif" font-size="13.5" font-weight="700"
+            fill="#7dd3fc" letter-spacing="1.4">THE NUMBER IN THE TOOL</text>
+      <text x="620" y="112" font-family="Inter, sans-serif" font-size="12.5" font-weight="500"
+            fill="#8fa3c8">Total demand that theoretically exists.</text>
+
+      <text x="620" y="158" font-family="Inter, sans-serif" font-size="13.5" font-weight="700"
+            fill="#fbbf24" letter-spacing="1.4">WHAT YOU COULD SERVE</text>
+      <text x="620" y="184" font-family="Inter, sans-serif" font-size="12.5" font-weight="500"
+            fill="#8fa3c8">After geography, channel, price and fit.</text>
+
+      <text x="620" y="230" font-family="Inter, sans-serif" font-size="13.5" font-weight="700"
+            fill="#4ade80" letter-spacing="1.4">WHERE YOUR BUSINESS ACTUALLY LIVES</text>
+      <text x="620" y="256" font-family="Inter, sans-serif" font-size="12.5" font-weight="500"
+            fill="#8fa3c8">What you can realistically win, and hold.</text>
+    </svg>
+  </figure>
 
   <p>The assumption is obvious &mdash; large market equals large opportunity. It feels intuitive. If more people are searching, more people can buy.</p>
 

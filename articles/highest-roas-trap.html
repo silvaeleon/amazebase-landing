@@ -521,9 +521,12 @@ blockquote p{
 }
 .hero-shot img{
   width:100%;
-  height:clamp(260px,32vw,400px);
-  object-fit:cover;
-  object-position:center 42%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
   border-radius:18px;
   border:1px solid var(--line-strong);
   box-shadow:0 30px 80px rgba(1,5,14,.55);
@@ -553,7 +556,6 @@ blockquote p{
 }
 @media (max-width:640px){
   .shell{ gap:28px; }
-  .hero-shot img{ height:210px; }
 }
 
 /* ── STEP / METRIC CARDS (same treatment as .mistake) ───────────────── */
@@ -1363,9 +1365,9 @@ blockquote p{
 </header>
 
 <figure class="hero-shot">
-  <img src="../assets/img/hero-roas.jpg"
-       alt="A dark globe wrapped in a glowing supply-chain network, with shipping containers orbiting it"
-       width="1280" height="1098" loading="eager" decoding="async">
+  <img src="../assets/img/hero-highest-roas-trap.webp"
+       alt="A man standing where a narrow walled amber path ends, looking out over a wide blue river valley full of lights and people"
+       width="1672" height="941" loading="eager" decoding="async">
 </figure>
 
 <div class="shell">

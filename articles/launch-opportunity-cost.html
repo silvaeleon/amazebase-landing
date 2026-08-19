@@ -521,9 +521,12 @@ blockquote p{
 }
 .hero-shot img{
   width:100%;
-  height:clamp(260px,32vw,400px);
-  object-fit:cover;
-  object-position:center 42%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
   border-radius:18px;
   border:1px solid var(--line-strong);
   box-shadow:0 30px 80px rgba(1,5,14,.55);
@@ -553,7 +556,6 @@ blockquote p{
 }
 @media (max-width:640px){
   .shell{ gap:28px; }
-  .hero-shot img{ height:210px; }
 }
 
 /* ── STEP / METRIC CARDS (same treatment as .mistake) ───────────────── */
@@ -1711,7 +1713,8 @@ blockquote p{
 }
 
 /* --- additions for this piece ------------------------------------- */
-.hero-shot svg{ width:100%; height:clamp(250px,28vw,340px); display:block; }
+.art-diagram{ margin:0 0 var(--s5); }
+.art-diagram svg{ width:100%; height:auto; display:block; }
 
 .shelves{ margin:var(--s5) 0; display:grid; gap:8px; grid-template-columns:repeat(2,1fr); }
 .shelves span{ border:1px solid var(--line); border-radius:var(--r3);
@@ -1775,15 +1778,9 @@ blockquote p{
 </header>
 
 <figure class="hero-shot">
-  <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="xMidYMid meet">
-    <title id="heroTitle">Seven slots on a shelf of finite capacity. One is filled by the launch. The other six — restocking the bestseller, an adjacent market, acquiring a brand, operations, software, and holding a reserve — are struck through, because the capital can only sit in one of them.</title>
-    <defs><linearGradient id="gBgF" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1225"/><stop offset="1" stop-color="#0a1730"/></linearGradient></defs>
-    <rect width="1180" height="320" fill="url(#gBgF)"/>
-    <rect x="66" y="108" width="138" height="118" rx="8" fill="#4ade80" opacity=".18"/><rect x="66" y="108" width="138" height="118" rx="8" fill="none" stroke="#4ade80" stroke-width="2"/><text x="135" y="167" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="800" fill="#4ade80">THE LAUNCH</text><rect x="218" y="108" width="138" height="118" rx="8" fill="#101b33" opacity="1"/><rect x="218" y="108" width="138" height="118" rx="8" fill="none" stroke="#2a3a5c" stroke-width="2" stroke-dasharray="5 5"/><g stroke="#f87171" stroke-width="1.6" opacity=".55"><line x1="232" y1="122" x2="342" y2="212"/><line x1="342" y1="122" x2="232" y2="212"/></g><text x="287" y="161" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#5f7398">Restock the</text><text x="287" y="178" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#5f7398">bestseller</text><rect x="370" y="108" width="138" height="118" rx="8" fill="#101b33" opacity="1"/><rect x="370" y="108" width="138" height="118" rx="8" fill="none" stroke="#2a3a5c" stroke-width="2" stroke-dasharray="5 5"/><g stroke="#f87171" stroke-width="1.6" opacity=".55"><line x1="384" y1="122" x2="494" y2="212"/><line x1="494" y1="122" x2="384" y2="212"/></g><text x="439" y="161" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#5f7398">Adjacent</text><text x="439" y="178" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#5f7398">market</text><rect x="522" y="108" width="138" height="118" rx="8" fill="#101b33" opacity="1"/><rect x="522" y="108" width="138" height="118" rx="8" fill="none" stroke="#2a3a5c" stroke-width="2" stroke-dasharray="5 5"/><g stroke="#f87171" stroke-width="1.6" opacity=".55"><line x1="536" y1="122" x2="646" y2="212"/><line x1="646" y1="122" x2="536" y2="212"/></g><text x="591" y="161" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#5f7398">Acquire a</text><text x="591" y="178" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#5f7398">small brand</text><rect x="674" y="108" width="138" height="118" rx="8" fill="#101b33" opacity="1"/><rect x="674" y="108" width="138" height="118" rx="8" fill="none" stroke="#2a3a5c" stroke-width="2" stroke-dasharray="5 5"/><g stroke="#f87171" stroke-width="1.6" opacity=".55"><line x1="688" y1="122" x2="798" y2="212"/><line x1="798" y1="122" x2="688" y2="212"/></g><text x="743" y="167" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#5f7398">Operations</text><rect x="826" y="108" width="138" height="118" rx="8" fill="#101b33" opacity="1"/><rect x="826" y="108" width="138" height="118" rx="8" fill="none" stroke="#2a3a5c" stroke-width="2" stroke-dasharray="5 5"/><g stroke="#f87171" stroke-width="1.6" opacity=".55"><line x1="840" y1="122" x2="950" y2="212"/><line x1="950" y1="122" x2="840" y2="212"/></g><text x="895" y="161" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#5f7398">Proprietary</text><text x="895" y="178" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#5f7398">software</text><rect x="978" y="108" width="138" height="118" rx="8" fill="#101b33" opacity="1"/><rect x="978" y="108" width="138" height="118" rx="8" fill="none" stroke="#2a3a5c" stroke-width="2" stroke-dasharray="5 5"/><g stroke="#f87171" stroke-width="1.6" opacity=".55"><line x1="992" y1="122" x2="1102" y2="212"/><line x1="1102" y1="122" x2="992" y2="212"/></g><text x="1047" y="167" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#5f7398">Reserve</text>
-    <line x1="60" y1="238" x2="1120" y2="238" stroke="#2a3a5c" stroke-width="3"/>
-    <text x="66" y="76" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#5f7398" letter-spacing="1.8">ONE POOL OF CAPITAL. SEVEN PLACES IT COULD GO.</text>
-    <text x="66" y="286" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#8fa3c8">The launch is the only one you will ever see on a financial statement.</text>
-  </svg>
+  <img src="../assets/img/hero-launch-opportunity-cost.webp"
+       alt="A single dark bottle and a few gold boxes lit on a plinth, surrounded by faint ghost outlines of the products, robots and buildings not chosen"
+       width="1672" height="941" loading="eager" decoding="async">
 </figure>
 
 <div class="shell">
@@ -1811,6 +1808,18 @@ blockquote p{
     product makes money, it was a good decision. It sounds reasonable. If the launch
     generated profit, the investment was successful. End of story.
   </p>
+
+  <figure class="art-diagram">
+    <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="xMidYMid meet">
+      <title id="heroTitle">Seven slots on a shelf of finite capacity. One is filled by the launch. The other six — restocking the bestseller, an adjacent market, acquiring a brand, operations, software, and holding a reserve — are struck through, because the capital can only sit in one of them.</title>
+      <defs><linearGradient id="gBgF" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1225"/><stop offset="1" stop-color="#0a1730"/></linearGradient></defs>
+      <rect width="1180" height="320" fill="url(#gBgF)"/>
+      <rect x="66" y="108" width="138" height="118" rx="8" fill="#4ade80" opacity=".18"/><rect x="66" y="108" width="138" height="118" rx="8" fill="none" stroke="#4ade80" stroke-width="2"/><text x="135" y="167" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="800" fill="#4ade80">THE LAUNCH</text><rect x="218" y="108" width="138" height="118" rx="8" fill="#101b33" opacity="1"/><rect x="218" y="108" width="138" height="118" rx="8" fill="none" stroke="#2a3a5c" stroke-width="2" stroke-dasharray="5 5"/><g stroke="#f87171" stroke-width="1.6" opacity=".55"><line x1="232" y1="122" x2="342" y2="212"/><line x1="342" y1="122" x2="232" y2="212"/></g><text x="287" y="161" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#5f7398">Restock the</text><text x="287" y="178" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#5f7398">bestseller</text><rect x="370" y="108" width="138" height="118" rx="8" fill="#101b33" opacity="1"/><rect x="370" y="108" width="138" height="118" rx="8" fill="none" stroke="#2a3a5c" stroke-width="2" stroke-dasharray="5 5"/><g stroke="#f87171" stroke-width="1.6" opacity=".55"><line x1="384" y1="122" x2="494" y2="212"/><line x1="494" y1="122" x2="384" y2="212"/></g><text x="439" y="161" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#5f7398">Adjacent</text><text x="439" y="178" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#5f7398">market</text><rect x="522" y="108" width="138" height="118" rx="8" fill="#101b33" opacity="1"/><rect x="522" y="108" width="138" height="118" rx="8" fill="none" stroke="#2a3a5c" stroke-width="2" stroke-dasharray="5 5"/><g stroke="#f87171" stroke-width="1.6" opacity=".55"><line x1="536" y1="122" x2="646" y2="212"/><line x1="646" y1="122" x2="536" y2="212"/></g><text x="591" y="161" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#5f7398">Acquire a</text><text x="591" y="178" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#5f7398">small brand</text><rect x="674" y="108" width="138" height="118" rx="8" fill="#101b33" opacity="1"/><rect x="674" y="108" width="138" height="118" rx="8" fill="none" stroke="#2a3a5c" stroke-width="2" stroke-dasharray="5 5"/><g stroke="#f87171" stroke-width="1.6" opacity=".55"><line x1="688" y1="122" x2="798" y2="212"/><line x1="798" y1="122" x2="688" y2="212"/></g><text x="743" y="167" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#5f7398">Operations</text><rect x="826" y="108" width="138" height="118" rx="8" fill="#101b33" opacity="1"/><rect x="826" y="108" width="138" height="118" rx="8" fill="none" stroke="#2a3a5c" stroke-width="2" stroke-dasharray="5 5"/><g stroke="#f87171" stroke-width="1.6" opacity=".55"><line x1="840" y1="122" x2="950" y2="212"/><line x1="950" y1="122" x2="840" y2="212"/></g><text x="895" y="161" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#5f7398">Proprietary</text><text x="895" y="178" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#5f7398">software</text><rect x="978" y="108" width="138" height="118" rx="8" fill="#101b33" opacity="1"/><rect x="978" y="108" width="138" height="118" rx="8" fill="none" stroke="#2a3a5c" stroke-width="2" stroke-dasharray="5 5"/><g stroke="#f87171" stroke-width="1.6" opacity=".55"><line x1="992" y1="122" x2="1102" y2="212"/><line x1="1102" y1="122" x2="992" y2="212"/></g><text x="1047" y="167" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#5f7398">Reserve</text>
+      <line x1="60" y1="238" x2="1120" y2="238" stroke="#2a3a5c" stroke-width="3"/>
+      <text x="66" y="76" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#5f7398" letter-spacing="1.8">ONE POOL OF CAPITAL. SEVEN PLACES IT COULD GO.</text>
+      <text x="66" y="286" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#8fa3c8">The launch is the only one you will ever see on a financial statement.</text>
+    </svg>
+  </figure>
 
   <p>Except business doesn&rsquo;t work that way. Every product launch competes with every other possible use of your company&rsquo;s resources. The money invested in Product A cannot simultaneously fund Product B. The time spent improving one listing cannot improve another. The inventory sitting in one warehouse cannot be invested elsewhere.</p>
 

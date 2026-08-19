@@ -521,9 +521,12 @@ blockquote p{
 }
 .hero-shot img{
   width:100%;
-  height:clamp(260px,32vw,400px);
-  object-fit:cover;
-  object-position:center 42%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
   border-radius:18px;
   border:1px solid var(--line-strong);
   box-shadow:0 30px 80px rgba(1,5,14,.55);
@@ -553,7 +556,6 @@ blockquote p{
 }
 @media (max-width:640px){
   .shell{ gap:28px; }
-  .hero-shot img{ height:210px; }
 }
 
 /* ── STEP / METRIC CARDS (same treatment as .mistake) ───────────────── */
@@ -1711,7 +1713,8 @@ blockquote p{
 }
 
 /* --- additions for this piece ------------------------------------- */
-.hero-shot svg{ width:100%; height:clamp(250px,28vw,340px); display:block; }
+.art-diagram{ margin:0 0 var(--s5); }
+.art-diagram svg{ width:100%; height:auto; display:block; }
 
 .roic{ margin:var(--s5) 0; display:grid; gap:8px; grid-template-columns:1fr 1fr; }
 .roic > div{ border:1px solid var(--line); border-radius:var(--r3);
@@ -1780,29 +1783,9 @@ blockquote p{
 </header>
 
 <figure class="hero-shot">
-  <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="xMidYMid meet">
-    <title id="heroTitle">Two products. The first turns over two million dollars of revenue but needs one point eight million of capital to do it. The second turns over eight hundred thousand on a hundred and eighty thousand of capital. The second produces four times the revenue per dollar invested.</title>
-    <defs><linearGradient id="gBgI" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1225"/><stop offset="1" stop-color="#0a1730"/></linearGradient></defs>
-    <rect width="1180" height="320" fill="url(#gBgI)"/>
-    <rect x="180" y="96.0" width="76" height="150.0" rx="4" fill="#8fa3c8" opacity=".28"/><rect x="180" y="96.0" width="76" height="150.0" rx="4" fill="none" stroke="#8fa3c8" stroke-width="1.8"/><rect x="286" y="111.0" width="76" height="135.0" rx="4" fill="#f87171" opacity=".28"/><rect x="286" y="111.0" width="76" height="135.0" rx="4" fill="none" stroke="#f87171" stroke-width="1.8"/><rect x="700" y="186.0" width="76" height="60.0" rx="4" fill="#4ade80" opacity=".28"/><rect x="700" y="186.0" width="76" height="60.0" rx="4" fill="none" stroke="#4ade80" stroke-width="1.8"/><rect x="806" y="232.5" width="76" height="13.5" rx="4" fill="#f87171" opacity=".28"/><rect x="806" y="232.5" width="76" height="13.5" rx="4" fill="none" stroke="#f87171" stroke-width="1.8"/>
-    <line x1="140" y1="246" x2="1040" y2="246" stroke="#2a3a5c" stroke-width="1.5"/>
-    <line x1="600" y1="70" x2="600" y2="280" stroke="#16233d" stroke-width="1"/>
-    <g font-family="Inter, sans-serif" font-weight="600" font-size="11.5" fill="#8fa3c8" text-anchor="middle">
-      <text x="218" y="264">revenue</text><text x="324" y="264">capital tied up</text>
-      <text x="738" y="264">revenue</text><text x="844" y="264">capital tied up</text>
-    </g>
-    <g font-family="Inter, sans-serif" font-weight="700" font-size="12.5">
-      <text x="180" y="60" fill="#8fa3c8" letter-spacing="1.4">PRODUCT A</text>
-      <text x="700" y="60" fill="#4ade80" letter-spacing="1.4">PRODUCT B</text>
-    </g>
-    <g font-family="Inter, sans-serif" font-weight="800">
-      <text x="420" y="126" font-size="30" fill="#8fa3c8">$1.11</text>
-      <text x="940" y="126" font-size="30" fill="#4ade80">$4.44</text>
-      <text x="420" y="150" font-size="11.5" fill="#5f7398" font-weight="700" letter-spacing="1.2">PER $1 INVESTED</text>
-      <text x="940" y="150" font-size="11.5" fill="#5f7398" font-weight="700" letter-spacing="1.2">PER $1 INVESTED</text>
-    </g>
-    <text x="140" y="304" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#8fa3c8">Product A sells 2.5&#215; more. Product B works its capital 4&#215; harder.</text>
-  </svg>
+  <img src="../assets/img/hero-capital-allocation-products.webp"
+       alt="An empty glass cylinder at the centre of a dark disc, amber paths running out to pods holding phones, headphones, boxes, clothing, a chair and toys"
+       width="1672" height="941" loading="eager" decoding="async">
 </figure>
 
 <div class="shell">
@@ -1830,6 +1813,32 @@ blockquote p{
     remarkably similar. The demand looked strong. The margins were attractive. The
     competition wasn&rsquo;t too bad. It fit our brand. Our supplier recommended it.
   </p>
+
+  <figure class="art-diagram">
+    <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="xMidYMid meet">
+      <title id="heroTitle">Two products. The first turns over two million dollars of revenue but needs one point eight million of capital to do it. The second turns over eight hundred thousand on a hundred and eighty thousand of capital. The second produces four times the revenue per dollar invested.</title>
+      <defs><linearGradient id="gBgI" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1225"/><stop offset="1" stop-color="#0a1730"/></linearGradient></defs>
+      <rect width="1180" height="320" fill="url(#gBgI)"/>
+      <rect x="180" y="96.0" width="76" height="150.0" rx="4" fill="#8fa3c8" opacity=".28"/><rect x="180" y="96.0" width="76" height="150.0" rx="4" fill="none" stroke="#8fa3c8" stroke-width="1.8"/><rect x="286" y="111.0" width="76" height="135.0" rx="4" fill="#f87171" opacity=".28"/><rect x="286" y="111.0" width="76" height="135.0" rx="4" fill="none" stroke="#f87171" stroke-width="1.8"/><rect x="700" y="186.0" width="76" height="60.0" rx="4" fill="#4ade80" opacity=".28"/><rect x="700" y="186.0" width="76" height="60.0" rx="4" fill="none" stroke="#4ade80" stroke-width="1.8"/><rect x="806" y="232.5" width="76" height="13.5" rx="4" fill="#f87171" opacity=".28"/><rect x="806" y="232.5" width="76" height="13.5" rx="4" fill="none" stroke="#f87171" stroke-width="1.8"/>
+      <line x1="140" y1="246" x2="1040" y2="246" stroke="#2a3a5c" stroke-width="1.5"/>
+      <line x1="600" y1="70" x2="600" y2="280" stroke="#16233d" stroke-width="1"/>
+      <g font-family="Inter, sans-serif" font-weight="600" font-size="11.5" fill="#8fa3c8" text-anchor="middle">
+        <text x="218" y="264">revenue</text><text x="324" y="264">capital tied up</text>
+        <text x="738" y="264">revenue</text><text x="844" y="264">capital tied up</text>
+      </g>
+      <g font-family="Inter, sans-serif" font-weight="700" font-size="12.5">
+        <text x="180" y="60" fill="#8fa3c8" letter-spacing="1.4">PRODUCT A</text>
+        <text x="700" y="60" fill="#4ade80" letter-spacing="1.4">PRODUCT B</text>
+      </g>
+      <g font-family="Inter, sans-serif" font-weight="800">
+        <text x="420" y="126" font-size="30" fill="#8fa3c8">$1.11</text>
+        <text x="940" y="126" font-size="30" fill="#4ade80">$4.44</text>
+        <text x="420" y="150" font-size="11.5" fill="#5f7398" font-weight="700" letter-spacing="1.2">PER $1 INVESTED</text>
+        <text x="940" y="150" font-size="11.5" fill="#5f7398" font-weight="700" letter-spacing="1.2">PER $1 INVESTED</text>
+      </g>
+      <text x="140" y="304" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#8fa3c8">Product A sells 2.5&#215; more. Product B works its capital 4&#215; harder.</text>
+    </svg>
+  </figure>
 
   <p>All reasonable answers. Yet none of them addresses the question experienced CEOs eventually learn to ask.</p>
 

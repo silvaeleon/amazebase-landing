@@ -521,9 +521,12 @@ blockquote p{
 }
 .hero-shot img{
   width:100%;
-  height:clamp(260px,32vw,400px);
-  object-fit:cover;
-  object-position:center 42%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
   border-radius:18px;
   border:1px solid var(--line-strong);
   box-shadow:0 30px 80px rgba(1,5,14,.55);
@@ -553,7 +556,6 @@ blockquote p{
 }
 @media (max-width:640px){
   .shell{ gap:28px; }
-  .hero-shot img{ height:210px; }
 }
 
 /* ── STEP / METRIC CARDS (same treatment as .mistake) ───────────────── */
@@ -1711,7 +1713,8 @@ blockquote p{
 }
 
 /* --- additions for this piece ------------------------------------- */
-.hero-shot svg{ width:100%; height:clamp(250px,28vw,340px); display:block; }
+.art-diagram{ margin:0 0 var(--s5); }
+.art-diagram svg{ width:100%; height:auto; display:block; }
 
 .votes{ margin:var(--s5) 0; border:1px solid var(--line); border-radius:var(--r3);
         background:var(--surface); overflow:hidden; }
@@ -1777,17 +1780,9 @@ blockquote p{
 </header>
 
 <figure class="hero-shot">
-  <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="none">
-    <title id="heroTitle">Sixteen thin sediment layers stacked on top of one another. Each layer is one year of ordinary decisions; no single layer is remarkable, and together they are the whole company.</title>
-    <defs><linearGradient id="gBgC" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1225"/><stop offset="1" stop-color="#0a1730"/></linearGradient></defs>
-    <rect width="1180" height="320" fill="url(#gBgC)"/>
-    <path d="M80 272.0 C 380 272.0, 760 272.0, 1100 269.0 L1100 264.0 C 760 267.0, 380 267.0, 80 267.0 Z" fill="#4ade80" opacity="0.220"/><path d="M80 265.0 C 380 260.3, 760 267.8, 1100 262.0 L1100 256.0 C 760 261.8, 380 254.3, 80 259.0 Z" fill="#4ade80" opacity="0.268"/><path d="M80 257.0 C 380 251.2, 760 260.5, 1100 254.0 L1100 247.0 C 760 253.5, 380 244.2, 80 250.0 Z" fill="#4ade80" opacity="0.316"/><path d="M80 248.0 C 380 245.4, 760 249.5, 1100 245.0 L1100 240.0 C 760 244.5, 380 240.4, 80 243.0 Z" fill="#4ade80" opacity="0.364"/><path d="M80 241.0 C 380 243.7, 760 239.4, 1100 238.0 L1100 232.0 C 760 233.4, 380 237.7, 80 235.0 Z" fill="#4ade80" opacity="0.412"/><path d="M80 233.0 C 380 238.9, 760 229.5, 1100 230.0 L1100 223.0 C 760 222.5, 380 231.9, 80 226.0 Z" fill="#4ade80" opacity="0.460"/><path d="M80 224.0 C 380 228.6, 760 221.2, 1100 221.0 L1100 216.0 C 760 216.2, 380 223.6, 80 219.0 Z" fill="#4ade80" opacity="0.508"/><path d="M80 217.0 C 380 216.9, 760 217.1, 1100 214.0 L1100 208.0 C 760 211.1, 380 210.9, 80 211.0 Z" fill="#4ade80" opacity="0.556"/><path d="M80 209.0 C 380 204.2, 760 211.9, 1100 206.0 L1100 199.0 C 760 204.9, 380 197.2, 80 202.0 Z" fill="#4ade80" opacity="0.604"/><path d="M80 200.0 C 380 194.2, 760 203.5, 1100 197.0 L1100 192.0 C 760 198.5, 380 189.2, 80 195.0 Z" fill="#4ade80" opacity="0.652"/><path d="M80 193.0 C 380 190.5, 760 194.5, 1100 190.0 L1100 184.0 C 760 188.5, 380 184.5, 80 187.0 Z" fill="#4ade80" opacity="0.700"/><path d="M80 185.0 C 380 187.7, 760 183.4, 1100 182.0 L1100 175.0 C 760 176.4, 380 180.7, 80 178.0 Z" fill="#4ade80" opacity="0.748"/><path d="M80 176.0 C 380 181.9, 760 172.5, 1100 173.0 L1100 168.0 C 760 167.5, 380 176.9, 80 171.0 Z" fill="#4ade80" opacity="0.796"/><path d="M80 169.0 C 380 173.6, 760 166.3, 1100 166.0 L1100 160.0 C 760 160.3, 380 167.6, 80 163.0 Z" fill="#4ade80" opacity="0.844"/><path d="M80 161.0 C 380 160.8, 760 161.1, 1100 158.0 L1100 151.0 C 760 154.1, 380 153.8, 80 154.0 Z" fill="#4ade80" opacity="0.892"/><path d="M80 152.0 C 380 147.2, 760 154.9, 1100 149.0 L1100 144.0 C 760 149.9, 380 142.2, 80 147.0 Z" fill="#4ade80" opacity="0.940"/>
-    <line x1="1128" y1="151" x2="1128" y2="272" stroke="#7dd3fc" stroke-width="1.5"/>
-    <line x1="1122" y1="151" x2="1134" y2="151" stroke="#7dd3fc" stroke-width="1.5"/>
-    <line x1="1122" y1="272" x2="1134" y2="272" stroke="#7dd3fc" stroke-width="1.5"/>
-    <text x="80" y="46" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#5f7398" letter-spacing="2">EACH LAYER IS ONE YEAR OF ORDINARY DECISIONS</text>
-    <text x="80" y="300" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#8fa3c8">No single layer is remarkable. Together they are the company.</text>
-  </svg>
+  <img src="../assets/img/hero-sum-of-decisions.webp"
+       alt="A classical stone building dissolving into scattered dark cubes on one side and standing solid over rows of glowing amber cubes on the other"
+       width="1672" height="941" loading="eager" decoding="async">
 </figure>
 
 <div class="shell">
@@ -1814,6 +1809,20 @@ blockquote p{
     through the warehouse, review the financials, examine the advertising account,
     meet the employees, talk with suppliers. Everything you see feels permanent.
   </p>
+
+  <figure class="art-diagram">
+    <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="none">
+      <title id="heroTitle">Sixteen thin sediment layers stacked on top of one another. Each layer is one year of ordinary decisions; no single layer is remarkable, and together they are the whole company.</title>
+      <defs><linearGradient id="gBgC" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1225"/><stop offset="1" stop-color="#0a1730"/></linearGradient></defs>
+      <rect width="1180" height="320" fill="url(#gBgC)"/>
+      <path d="M80 272.0 C 380 272.0, 760 272.0, 1100 269.0 L1100 264.0 C 760 267.0, 380 267.0, 80 267.0 Z" fill="#4ade80" opacity="0.220"/><path d="M80 265.0 C 380 260.3, 760 267.8, 1100 262.0 L1100 256.0 C 760 261.8, 380 254.3, 80 259.0 Z" fill="#4ade80" opacity="0.268"/><path d="M80 257.0 C 380 251.2, 760 260.5, 1100 254.0 L1100 247.0 C 760 253.5, 380 244.2, 80 250.0 Z" fill="#4ade80" opacity="0.316"/><path d="M80 248.0 C 380 245.4, 760 249.5, 1100 245.0 L1100 240.0 C 760 244.5, 380 240.4, 80 243.0 Z" fill="#4ade80" opacity="0.364"/><path d="M80 241.0 C 380 243.7, 760 239.4, 1100 238.0 L1100 232.0 C 760 233.4, 380 237.7, 80 235.0 Z" fill="#4ade80" opacity="0.412"/><path d="M80 233.0 C 380 238.9, 760 229.5, 1100 230.0 L1100 223.0 C 760 222.5, 380 231.9, 80 226.0 Z" fill="#4ade80" opacity="0.460"/><path d="M80 224.0 C 380 228.6, 760 221.2, 1100 221.0 L1100 216.0 C 760 216.2, 380 223.6, 80 219.0 Z" fill="#4ade80" opacity="0.508"/><path d="M80 217.0 C 380 216.9, 760 217.1, 1100 214.0 L1100 208.0 C 760 211.1, 380 210.9, 80 211.0 Z" fill="#4ade80" opacity="0.556"/><path d="M80 209.0 C 380 204.2, 760 211.9, 1100 206.0 L1100 199.0 C 760 204.9, 380 197.2, 80 202.0 Z" fill="#4ade80" opacity="0.604"/><path d="M80 200.0 C 380 194.2, 760 203.5, 1100 197.0 L1100 192.0 C 760 198.5, 380 189.2, 80 195.0 Z" fill="#4ade80" opacity="0.652"/><path d="M80 193.0 C 380 190.5, 760 194.5, 1100 190.0 L1100 184.0 C 760 188.5, 380 184.5, 80 187.0 Z" fill="#4ade80" opacity="0.700"/><path d="M80 185.0 C 380 187.7, 760 183.4, 1100 182.0 L1100 175.0 C 760 176.4, 380 180.7, 80 178.0 Z" fill="#4ade80" opacity="0.748"/><path d="M80 176.0 C 380 181.9, 760 172.5, 1100 173.0 L1100 168.0 C 760 167.5, 380 176.9, 80 171.0 Z" fill="#4ade80" opacity="0.796"/><path d="M80 169.0 C 380 173.6, 760 166.3, 1100 166.0 L1100 160.0 C 760 160.3, 380 167.6, 80 163.0 Z" fill="#4ade80" opacity="0.844"/><path d="M80 161.0 C 380 160.8, 760 161.1, 1100 158.0 L1100 151.0 C 760 154.1, 380 153.8, 80 154.0 Z" fill="#4ade80" opacity="0.892"/><path d="M80 152.0 C 380 147.2, 760 154.9, 1100 149.0 L1100 144.0 C 760 149.9, 380 142.2, 80 147.0 Z" fill="#4ade80" opacity="0.940"/>
+      <line x1="1128" y1="151" x2="1128" y2="272" stroke="#7dd3fc" stroke-width="1.5"/>
+      <line x1="1122" y1="151" x2="1134" y2="151" stroke="#7dd3fc" stroke-width="1.5"/>
+      <line x1="1122" y1="272" x2="1134" y2="272" stroke="#7dd3fc" stroke-width="1.5"/>
+      <text x="80" y="46" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#5f7398" letter-spacing="2">EACH LAYER IS ONE YEAR OF ORDINARY DECISIONS</text>
+      <text x="80" y="300" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#8fa3c8">No single layer is remarkable. Together they are the company.</text>
+    </svg>
+  </figure>
 
   <p>But none of it appeared overnight. Every one of those things is the consequence of thousands of decisions that, at the time, felt remarkably ordinary. A purchase order. A hire. A supplier negotiation. A pricing adjustment. A launch. A subscription. A campaign. A difficult conversation. A meeting. A promotion. A delay. A shortcut. A habit.</p>
 

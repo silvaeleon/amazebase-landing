@@ -521,9 +521,12 @@ blockquote p{
 }
 .hero-shot img{
   width:100%;
-  height:clamp(260px,32vw,400px);
-  object-fit:cover;
-  object-position:center 42%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
   border-radius:18px;
   border:1px solid var(--line-strong);
   box-shadow:0 30px 80px rgba(1,5,14,.55);
@@ -553,7 +556,6 @@ blockquote p{
 }
 @media (max-width:640px){
   .shell{ gap:28px; }
-  .hero-shot img{ height:210px; }
 }
 
 /* ── STEP / METRIC CARDS (same treatment as .mistake) ───────────────── */
@@ -1711,7 +1713,8 @@ blockquote p{
 }
 
 /* --- additions for this piece ------------------------------------- */
-.hero-shot svg{ width:100%; height:clamp(250px,28vw,340px); display:block; }
+.art-diagram{ margin:0 0 var(--s5); }
+.art-diagram svg{ width:100%; height:auto; display:block; }
 
 .versions{ margin:var(--s5) 0; display:grid; gap:var(--s3);
            grid-template-columns:repeat(3,1fr); }
@@ -1770,15 +1773,9 @@ blockquote p{
 </header>
 
 <figure class="hero-shot">
-  <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="xMidYMid meet">
-    <title id="heroTitle">Three versions of the same company. In the first, every connection runs through the founder. In the second it still does, with a little coordination added. In the third — the final promotion — the network connects to itself and the founder has stepped out of the centre.</title>
-    <defs><linearGradient id="gBgB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1225"/><stop offset="1" stop-color="#0a1730"/></linearGradient></defs>
-    <rect width="1180" height="320" fill="url(#gBgB)"/>
-    <line x1="400" y1="70" x2="400" y2="258" stroke="#16233d" stroke-width="1"/>
-    <line x1="780" y1="70" x2="780" y2="258" stroke="#16233d" stroke-width="1"/>
-    <g stroke="#4ade80" stroke-width="1.4" stroke-opacity=".55" fill="none"><line x1="210.0" y1="168.0" x2="210.0" y2="102.0"/><line x1="210.0" y1="168.0" x2="261.6" y2="126.8"/><line x1="210.0" y1="168.0" x2="274.3" y2="182.7"/><line x1="210.0" y1="168.0" x2="238.6" y2="227.5"/><line x1="210.0" y1="168.0" x2="181.4" y2="227.5"/><line x1="210.0" y1="168.0" x2="145.7" y2="182.7"/><line x1="210.0" y1="168.0" x2="158.4" y2="126.8"/></g><g fill="#0b1225" stroke="#7dd3fc" stroke-width="2"><circle cx="210.0" cy="102.0" r="6"/><circle cx="261.6" cy="126.8" r="6"/><circle cx="274.3" cy="182.7" r="6"/><circle cx="238.6" cy="227.5" r="6"/><circle cx="181.4" cy="227.5" r="6"/><circle cx="145.7" cy="182.7" r="6"/><circle cx="158.4" cy="126.8" r="6"/></g><circle cx="210.0" cy="168.0" r="13" fill="#4ade80" opacity="1.00"/><g stroke="#fbbf24" stroke-width="1.4" stroke-opacity=".55" fill="none"><line x1="590.0" y1="168.0" x2="590.0" y2="102.0"/><line x1="590.0" y1="168.0" x2="641.6" y2="126.8"/><line x1="590.0" y1="168.0" x2="654.3" y2="182.7"/><line x1="590.0" y1="168.0" x2="618.6" y2="227.5"/><line x1="590.0" y1="168.0" x2="561.4" y2="227.5"/><line x1="590.0" y1="168.0" x2="525.7" y2="182.7"/><line x1="590.0" y1="168.0" x2="538.4" y2="126.8"/><line x1="590.0" y1="102.0" x2="641.6" y2="126.8"/><line x1="618.6" y1="227.5" x2="561.4" y2="227.5"/></g><g fill="#0b1225" stroke="#7dd3fc" stroke-width="2"><circle cx="590.0" cy="102.0" r="6"/><circle cx="641.6" cy="126.8" r="6"/><circle cx="654.3" cy="182.7" r="6"/><circle cx="618.6" cy="227.5" r="6"/><circle cx="561.4" cy="227.5" r="6"/><circle cx="525.7" cy="182.7" r="6"/><circle cx="538.4" cy="126.8" r="6"/></g><circle cx="590.0" cy="168.0" r="13" fill="#fbbf24" opacity="1.00"/><g stroke="#f87171" stroke-width="1.4" stroke-opacity=".55" fill="none"><line x1="970.0" y1="102.0" x2="1021.6" y2="126.8"/><line x1="1021.6" y1="126.8" x2="1034.3" y2="182.7"/><line x1="1034.3" y1="182.7" x2="998.6" y2="227.5"/><line x1="998.6" y1="227.5" x2="941.4" y2="227.5"/><line x1="941.4" y1="227.5" x2="905.7" y2="182.7"/><line x1="905.7" y1="182.7" x2="918.4" y2="126.8"/><line x1="918.4" y1="126.8" x2="970.0" y2="102.0"/><line x1="970.0" y1="102.0" x2="998.6" y2="227.5"/><line x1="1021.6" y1="126.8" x2="941.4" y2="227.5"/><line x1="1034.3" y1="182.7" x2="905.7" y2="182.7"/><line x1="998.6" y1="227.5" x2="918.4" y2="126.8"/></g><g fill="#0b1225" stroke="#7dd3fc" stroke-width="2"><circle cx="970.0" cy="102.0" r="6"/><circle cx="1021.6" cy="126.8" r="6"/><circle cx="1034.3" cy="182.7" r="6"/><circle cx="998.6" cy="227.5" r="6"/><circle cx="941.4" cy="227.5" r="6"/><circle cx="905.7" cy="182.7" r="6"/><circle cx="918.4" cy="126.8" r="6"/></g><circle cx="970.0" cy="168.0" r="13" fill="#f87171" opacity="0.28"/><text x="210" y="62" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" font-weight="700" fill="#5f7398" letter-spacing="2">VERSION 1</text><text x="210" y="278" text-anchor="middle" font-family="Inter, sans-serif" font-size="13.5" font-weight="700" fill="#4ade80">Does everything</text><text x="590" y="62" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" font-weight="700" fill="#5f7398" letter-spacing="2">VERSION 2</text><text x="590" y="278" text-anchor="middle" font-family="Inter, sans-serif" font-size="13.5" font-weight="700" fill="#fbbf24">Coordinates everything</text><text x="970" y="62" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" font-weight="700" fill="#5f7398" letter-spacing="2">THE FINAL PROMOTION</text><text x="970" y="278" text-anchor="middle" font-family="Inter, sans-serif" font-size="13.5" font-weight="700" fill="#f87171">Designs the system</text>
-    <text x="590" y="308" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#8fa3c8">Same founder. Same title. Three completely different jobs.</text>
-  </svg>
+  <img src="../assets/img/hero-ceo-job-changes.webp"
+       alt="Four silhouettes climbing one staircase that begins as rough stone blocks laid by hand and becomes a sweeping glass spiral overlooking a city"
+       width="1672" height="941" loading="eager" decoding="async">
 </figure>
 
 <div class="shell">
@@ -1806,6 +1803,18 @@ blockquote p{
     Grow sales. Manage people. Repeat. It sounds reasonable &mdash; after all,
     you&rsquo;re still the founder, still responsible, still making decisions.
   </p>
+
+  <figure class="art-diagram">
+    <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="xMidYMid meet">
+      <title id="heroTitle">Three versions of the same company. In the first, every connection runs through the founder. In the second it still does, with a little coordination added. In the third — the final promotion — the network connects to itself and the founder has stepped out of the centre.</title>
+      <defs><linearGradient id="gBgB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1225"/><stop offset="1" stop-color="#0a1730"/></linearGradient></defs>
+      <rect width="1180" height="320" fill="url(#gBgB)"/>
+      <line x1="400" y1="70" x2="400" y2="258" stroke="#16233d" stroke-width="1"/>
+      <line x1="780" y1="70" x2="780" y2="258" stroke="#16233d" stroke-width="1"/>
+      <g stroke="#4ade80" stroke-width="1.4" stroke-opacity=".55" fill="none"><line x1="210.0" y1="168.0" x2="210.0" y2="102.0"/><line x1="210.0" y1="168.0" x2="261.6" y2="126.8"/><line x1="210.0" y1="168.0" x2="274.3" y2="182.7"/><line x1="210.0" y1="168.0" x2="238.6" y2="227.5"/><line x1="210.0" y1="168.0" x2="181.4" y2="227.5"/><line x1="210.0" y1="168.0" x2="145.7" y2="182.7"/><line x1="210.0" y1="168.0" x2="158.4" y2="126.8"/></g><g fill="#0b1225" stroke="#7dd3fc" stroke-width="2"><circle cx="210.0" cy="102.0" r="6"/><circle cx="261.6" cy="126.8" r="6"/><circle cx="274.3" cy="182.7" r="6"/><circle cx="238.6" cy="227.5" r="6"/><circle cx="181.4" cy="227.5" r="6"/><circle cx="145.7" cy="182.7" r="6"/><circle cx="158.4" cy="126.8" r="6"/></g><circle cx="210.0" cy="168.0" r="13" fill="#4ade80" opacity="1.00"/><g stroke="#fbbf24" stroke-width="1.4" stroke-opacity=".55" fill="none"><line x1="590.0" y1="168.0" x2="590.0" y2="102.0"/><line x1="590.0" y1="168.0" x2="641.6" y2="126.8"/><line x1="590.0" y1="168.0" x2="654.3" y2="182.7"/><line x1="590.0" y1="168.0" x2="618.6" y2="227.5"/><line x1="590.0" y1="168.0" x2="561.4" y2="227.5"/><line x1="590.0" y1="168.0" x2="525.7" y2="182.7"/><line x1="590.0" y1="168.0" x2="538.4" y2="126.8"/><line x1="590.0" y1="102.0" x2="641.6" y2="126.8"/><line x1="618.6" y1="227.5" x2="561.4" y2="227.5"/></g><g fill="#0b1225" stroke="#7dd3fc" stroke-width="2"><circle cx="590.0" cy="102.0" r="6"/><circle cx="641.6" cy="126.8" r="6"/><circle cx="654.3" cy="182.7" r="6"/><circle cx="618.6" cy="227.5" r="6"/><circle cx="561.4" cy="227.5" r="6"/><circle cx="525.7" cy="182.7" r="6"/><circle cx="538.4" cy="126.8" r="6"/></g><circle cx="590.0" cy="168.0" r="13" fill="#fbbf24" opacity="1.00"/><g stroke="#f87171" stroke-width="1.4" stroke-opacity=".55" fill="none"><line x1="970.0" y1="102.0" x2="1021.6" y2="126.8"/><line x1="1021.6" y1="126.8" x2="1034.3" y2="182.7"/><line x1="1034.3" y1="182.7" x2="998.6" y2="227.5"/><line x1="998.6" y1="227.5" x2="941.4" y2="227.5"/><line x1="941.4" y1="227.5" x2="905.7" y2="182.7"/><line x1="905.7" y1="182.7" x2="918.4" y2="126.8"/><line x1="918.4" y1="126.8" x2="970.0" y2="102.0"/><line x1="970.0" y1="102.0" x2="998.6" y2="227.5"/><line x1="1021.6" y1="126.8" x2="941.4" y2="227.5"/><line x1="1034.3" y1="182.7" x2="905.7" y2="182.7"/><line x1="998.6" y1="227.5" x2="918.4" y2="126.8"/></g><g fill="#0b1225" stroke="#7dd3fc" stroke-width="2"><circle cx="970.0" cy="102.0" r="6"/><circle cx="1021.6" cy="126.8" r="6"/><circle cx="1034.3" cy="182.7" r="6"/><circle cx="998.6" cy="227.5" r="6"/><circle cx="941.4" cy="227.5" r="6"/><circle cx="905.7" cy="182.7" r="6"/><circle cx="918.4" cy="126.8" r="6"/></g><circle cx="970.0" cy="168.0" r="13" fill="#f87171" opacity="0.28"/><text x="210" y="62" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" font-weight="700" fill="#5f7398" letter-spacing="2">VERSION 1</text><text x="210" y="278" text-anchor="middle" font-family="Inter, sans-serif" font-size="13.5" font-weight="700" fill="#4ade80">Does everything</text><text x="590" y="62" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" font-weight="700" fill="#5f7398" letter-spacing="2">VERSION 2</text><text x="590" y="278" text-anchor="middle" font-family="Inter, sans-serif" font-size="13.5" font-weight="700" fill="#fbbf24">Coordinates everything</text><text x="970" y="62" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" font-weight="700" fill="#5f7398" letter-spacing="2">THE FINAL PROMOTION</text><text x="970" y="278" text-anchor="middle" font-family="Inter, sans-serif" font-size="13.5" font-weight="700" fill="#f87171">Designs the system</text>
+      <text x="590" y="308" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#8fa3c8">Same founder. Same title. Three completely different jobs.</text>
+    </svg>
+  </figure>
 
   <p>But something subtle happens as a business grows. The title remains the same. The job changes completely.</p>
 

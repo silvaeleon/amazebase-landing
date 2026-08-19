@@ -521,9 +521,12 @@ blockquote p{
 }
 .hero-shot img{
   width:100%;
-  height:clamp(260px,32vw,400px);
-  object-fit:cover;
-  object-position:center 42%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
   border-radius:18px;
   border:1px solid var(--line-strong);
   box-shadow:0 30px 80px rgba(1,5,14,.55);
@@ -553,7 +556,6 @@ blockquote p{
 }
 @media (max-width:640px){
   .shell{ gap:28px; }
-  .hero-shot img{ height:210px; }
 }
 
 /* ── STEP / METRIC CARDS (same treatment as .mistake) ───────────────── */
@@ -1711,7 +1713,8 @@ blockquote p{
 }
 
 /* --- additions for this piece ------------------------------------- */
-.hero-shot svg{ width:100%; height:clamp(250px,28vw,340px); display:block; }
+.art-diagram{ margin:0 0 var(--s5); }
+.art-diagram svg{ width:100%; height:auto; display:block; }
 
 .dull{ margin:var(--s5) 0; border:1px solid var(--line); border-radius:var(--r3);
        background:var(--surface); padding:var(--s4); }
@@ -1778,20 +1781,9 @@ blockquote p{
 </header>
 
 <figure class="hero-shot">
-  <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="xMidYMid meet">
-    <title id="heroTitle">A quadrant chart. Attention runs left to right, durability of demand runs bottom to top. Twenty-two viral products cluster in the high-attention, low-durability corner. Fourteen quiet products sit alone in the highlighted low-attention, high-durability corner.</title>
-    <defs><linearGradient id="gBgH" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1225"/><stop offset="1" stop-color="#0a1730"/></linearGradient></defs>
-    <rect width="1180" height="320" fill="url(#gBgH)"/>
-    <rect x="110" y="80" width="490" height="85" fill="#4ade80" opacity=".07"/>
-    <line x1="110" y1="165" x2="1090" y2="165" stroke="#1e2c4a" stroke-width="1"/>
-    <line x1="600" y1="80" x2="600" y2="250" stroke="#1e2c4a" stroke-width="1"/>
-    <circle cx="824.5" cy="212.7" r="4" fill="#f87171" opacity=".8"/><circle cx="1027.4" cy="207.7" r="4" fill="#f87171" opacity=".8"/><circle cx="848.4" cy="214.1" r="4" fill="#f87171" opacity=".8"/><circle cx="709.4" cy="210.1" r="4" fill="#f87171" opacity=".8"/><circle cx="900.8" cy="225.0" r="4" fill="#f87171" opacity=".8"/><circle cx="670.5" cy="199.1" r="4" fill="#f87171" opacity=".8"/><circle cx="669.0" cy="225.9" r="4" fill="#f87171" opacity=".8"/><circle cx="928.2" cy="185.2" r="4" fill="#f87171" opacity=".8"/><circle cx="1052.3" cy="234.1" r="4" fill="#f87171" opacity=".8"/><circle cx="911.2" cy="215.6" r="4" fill="#f87171" opacity=".8"/><circle cx="697.7" cy="183.8" r="4" fill="#f87171" opacity=".8"/><circle cx="857.2" cy="186.2" r="4" fill="#f87171" opacity=".8"/><circle cx="711.8" cy="195.8" r="4" fill="#f87171" opacity=".8"/><circle cx="642.9" cy="207.6" r="4" fill="#f87171" opacity=".8"/><circle cx="819.4" cy="227.6" r="4" fill="#f87171" opacity=".8"/><circle cx="853.2" cy="216.9" r="4" fill="#f87171" opacity=".8"/><circle cx="844.9" cy="218.1" r="4" fill="#f87171" opacity=".8"/><circle cx="826.7" cy="197.7" r="4" fill="#f87171" opacity=".8"/><circle cx="1059.0" cy="235.8" r="4" fill="#f87171" opacity=".8"/><circle cx="991.3" cy="220.5" r="4" fill="#f87171" opacity=".8"/><circle cx="765.6" cy="195.2" r="4" fill="#f87171" opacity=".8"/><circle cx="754.3" cy="186.7" r="4" fill="#f87171" opacity=".8"/><circle cx="469.5" cy="115.2" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="504.0" cy="114.5" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="552.0" cy="138.9" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="140.2" cy="105.1" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="531.4" cy="118.9" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="561.6" cy="115.1" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="171.4" cy="127.4" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="474.8" cy="108.3" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="177.5" cy="111.6" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="554.6" cy="134.2" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="190.7" cy="107.1" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="183.4" cy="97.2" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="482.7" cy="103.4" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="380.5" cy="117.7" r="5.5" fill="#4ade80" opacity=".92"/>
-    <text x="118" y="102" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#4ade80" letter-spacing="1.4">QUIET. DURABLE. WHERE THE BUSINESSES ARE.</text>
-    <text x="1082" y="242" text-anchor="end" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#f87171" letter-spacing="1.4">EVERY &ldquo;TOP 10 PRODUCTS&rdquo; LIST</text>
-    <text x="600" y="278" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" font-weight="700" fill="#5f7398" letter-spacing="2">ATTENTION &rarr;</text>
-    <text x="70" y="165" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" font-weight="700" fill="#5f7398" letter-spacing="2" transform="rotate(-90 70 165)">DURABILITY &rarr;</text>
-    <text x="110" y="304" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#8fa3c8">The two corners almost never overlap. That is the opportunity.</text>
-  </svg>
+  <img src="../assets/img/hero-boring-products-win.webp"
+       alt="On the left a chaotic swarm of bright social icons over scattered boxes; on the right a calm amber platform of stacked boxes and coins under a glass arch"
+       width="1672" height="941" loading="eager" decoding="async">
 </figure>
 
 <div class="shell">
@@ -1820,6 +1812,23 @@ blockquote p{
     growth, innovation, trends, explosive demand &mdash; products that suddenly appear
     everywhere.
   </p>
+
+  <figure class="art-diagram">
+    <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="xMidYMid meet">
+      <title id="heroTitle">A quadrant chart. Attention runs left to right, durability of demand runs bottom to top. Twenty-two viral products cluster in the high-attention, low-durability corner. Fourteen quiet products sit alone in the highlighted low-attention, high-durability corner.</title>
+      <defs><linearGradient id="gBgH" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1225"/><stop offset="1" stop-color="#0a1730"/></linearGradient></defs>
+      <rect width="1180" height="320" fill="url(#gBgH)"/>
+      <rect x="110" y="80" width="490" height="85" fill="#4ade80" opacity=".07"/>
+      <line x1="110" y1="165" x2="1090" y2="165" stroke="#1e2c4a" stroke-width="1"/>
+      <line x1="600" y1="80" x2="600" y2="250" stroke="#1e2c4a" stroke-width="1"/>
+      <circle cx="824.5" cy="212.7" r="4" fill="#f87171" opacity=".8"/><circle cx="1027.4" cy="207.7" r="4" fill="#f87171" opacity=".8"/><circle cx="848.4" cy="214.1" r="4" fill="#f87171" opacity=".8"/><circle cx="709.4" cy="210.1" r="4" fill="#f87171" opacity=".8"/><circle cx="900.8" cy="225.0" r="4" fill="#f87171" opacity=".8"/><circle cx="670.5" cy="199.1" r="4" fill="#f87171" opacity=".8"/><circle cx="669.0" cy="225.9" r="4" fill="#f87171" opacity=".8"/><circle cx="928.2" cy="185.2" r="4" fill="#f87171" opacity=".8"/><circle cx="1052.3" cy="234.1" r="4" fill="#f87171" opacity=".8"/><circle cx="911.2" cy="215.6" r="4" fill="#f87171" opacity=".8"/><circle cx="697.7" cy="183.8" r="4" fill="#f87171" opacity=".8"/><circle cx="857.2" cy="186.2" r="4" fill="#f87171" opacity=".8"/><circle cx="711.8" cy="195.8" r="4" fill="#f87171" opacity=".8"/><circle cx="642.9" cy="207.6" r="4" fill="#f87171" opacity=".8"/><circle cx="819.4" cy="227.6" r="4" fill="#f87171" opacity=".8"/><circle cx="853.2" cy="216.9" r="4" fill="#f87171" opacity=".8"/><circle cx="844.9" cy="218.1" r="4" fill="#f87171" opacity=".8"/><circle cx="826.7" cy="197.7" r="4" fill="#f87171" opacity=".8"/><circle cx="1059.0" cy="235.8" r="4" fill="#f87171" opacity=".8"/><circle cx="991.3" cy="220.5" r="4" fill="#f87171" opacity=".8"/><circle cx="765.6" cy="195.2" r="4" fill="#f87171" opacity=".8"/><circle cx="754.3" cy="186.7" r="4" fill="#f87171" opacity=".8"/><circle cx="469.5" cy="115.2" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="504.0" cy="114.5" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="552.0" cy="138.9" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="140.2" cy="105.1" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="531.4" cy="118.9" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="561.6" cy="115.1" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="171.4" cy="127.4" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="474.8" cy="108.3" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="177.5" cy="111.6" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="554.6" cy="134.2" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="190.7" cy="107.1" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="183.4" cy="97.2" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="482.7" cy="103.4" r="5.5" fill="#4ade80" opacity=".92"/><circle cx="380.5" cy="117.7" r="5.5" fill="#4ade80" opacity=".92"/>
+      <text x="118" y="102" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#4ade80" letter-spacing="1.4">QUIET. DURABLE. WHERE THE BUSINESSES ARE.</text>
+      <text x="1082" y="242" text-anchor="end" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#f87171" letter-spacing="1.4">EVERY &ldquo;TOP 10 PRODUCTS&rdquo; LIST</text>
+      <text x="600" y="278" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" font-weight="700" fill="#5f7398" letter-spacing="2">ATTENTION &rarr;</text>
+      <text x="70" y="165" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" font-weight="700" fill="#5f7398" letter-spacing="2" transform="rotate(-90 70 165)">DURABILITY &rarr;</text>
+      <text x="110" y="304" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#8fa3c8">The two corners almost never overlap. That is the opportunity.</text>
+    </svg>
+  </figure>
 
   <p>Every week there&rsquo;s another viral gadget, another trending niche, another product that supposedly generated a million dollars in six months. The stories are exciting. The problem is that exciting rarely translates into durable.</p>
 

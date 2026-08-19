@@ -521,9 +521,12 @@ blockquote p{
 }
 .hero-shot img{
   width:100%;
-  height:clamp(260px,32vw,400px);
-  object-fit:cover;
-  object-position:center 42%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
   border-radius:18px;
   border:1px solid var(--line-strong);
   box-shadow:0 30px 80px rgba(1,5,14,.55);
@@ -553,7 +556,6 @@ blockquote p{
 }
 @media (max-width:640px){
   .shell{ gap:28px; }
-  .hero-shot img{ height:210px; }
 }
 
 /* ── STEP / METRIC CARDS (same treatment as .mistake) ───────────────── */
@@ -1711,7 +1713,8 @@ blockquote p{
 }
 
 /* --- additions for this piece ------------------------------------- */
-.hero-shot svg{ width:100%; height:clamp(250px,28vw,340px); display:block; }
+.art-diagram{ margin:0 0 var(--s5); }
+.art-diagram svg{ width:100%; height:auto; display:block; }
 
 .shared{ margin:var(--s5) 0; display:grid; gap:7px; grid-template-columns:repeat(3,1fr); }
 .shared span{ border:1px solid var(--line); border-radius:var(--r3);
@@ -1775,18 +1778,9 @@ blockquote p{
 </header>
 
 <figure class="hero-shot">
-  <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="xMidYMid meet">
-    <title id="heroTitle">Six products on the left sit unconnected, sharing nothing. The same six on the right are joined by fifteen links — every product connected to every other through shared suppliers, customers, advertising and logistics.</title>
-    <defs><linearGradient id="gBgJ" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1225"/><stop offset="1" stop-color="#0a1730"/></linearGradient></defs>
-    <rect width="1180" height="320" fill="url(#gBgJ)"/>
-    <circle cx="300.0" cy="73.0" r="12" fill="#0b1225" stroke="#8fa3c8" stroke-width="2"/><circle cx="379.7" cy="119.0" r="12" fill="#0b1225" stroke="#8fa3c8" stroke-width="2"/><circle cx="379.7" cy="211.0" r="12" fill="#0b1225" stroke="#8fa3c8" stroke-width="2"/><circle cx="300.0" cy="257.0" r="12" fill="#0b1225" stroke="#8fa3c8" stroke-width="2"/><circle cx="220.3" cy="211.0" r="12" fill="#0b1225" stroke="#8fa3c8" stroke-width="2"/><circle cx="220.3" cy="119.0" r="12" fill="#0b1225" stroke="#8fa3c8" stroke-width="2"/><line x1="880.0" y1="73.0" x2="959.7" y2="119.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="880.0" y1="73.0" x2="959.7" y2="211.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="880.0" y1="73.0" x2="880.0" y2="257.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="880.0" y1="73.0" x2="800.3" y2="211.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="880.0" y1="73.0" x2="800.3" y2="119.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="959.7" y1="119.0" x2="959.7" y2="211.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="959.7" y1="119.0" x2="880.0" y2="257.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="959.7" y1="119.0" x2="800.3" y2="211.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="959.7" y1="119.0" x2="800.3" y2="119.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="959.7" y1="211.0" x2="880.0" y2="257.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="959.7" y1="211.0" x2="800.3" y2="211.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="959.7" y1="211.0" x2="800.3" y2="119.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="880.0" y1="257.0" x2="800.3" y2="211.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="880.0" y1="257.0" x2="800.3" y2="119.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="800.3" y1="211.0" x2="800.3" y2="119.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><circle cx="880.0" cy="73.0" r="12" fill="#0b1225" stroke="#4ade80" stroke-width="2"/><circle cx="959.7" cy="119.0" r="12" fill="#0b1225" stroke="#4ade80" stroke-width="2"/><circle cx="959.7" cy="211.0" r="12" fill="#0b1225" stroke="#4ade80" stroke-width="2"/><circle cx="880.0" cy="257.0" r="12" fill="#0b1225" stroke="#4ade80" stroke-width="2"/><circle cx="800.3" cy="211.0" r="12" fill="#0b1225" stroke="#4ade80" stroke-width="2"/><circle cx="800.3" cy="119.0" r="12" fill="#0b1225" stroke="#4ade80" stroke-width="2"/>
-    <line x1="590" y1="60" x2="590" y2="272" stroke="#16233d" stroke-width="1"/>
-    <text x="300" y="46" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#8fa3c8" letter-spacing="1.8">SIX PRODUCTS</text>
-    <text x="880" y="46" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#4ade80" letter-spacing="1.8">THE SAME SIX PRODUCTS</text>
-    <text x="300" y="296" text-anchor="middle" font-family="Inter, sans-serif" font-size="20" font-weight="800" fill="#8fa3c8">0 shared advantages</text>
-    <text x="880" y="296" text-anchor="middle" font-family="Inter, sans-serif" font-size="20" font-weight="800" fill="#4ade80">15</text>
-    <text x="928" y="296" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#4ade80">shared advantages</text>
-  </svg>
+  <img src="../assets/img/hero-products-that-compound.webp"
+       alt="A stack of cardboard boxes inside a glass case, blue light streaming outward from it into surrounding icons, warehouses and a truck"
+       width="1672" height="941" loading="eager" decoding="async">
 </figure>
 
 <div class="shell">
@@ -1814,6 +1808,21 @@ blockquote p{
     the answer is usually &ldquo;it looked profitable.&rdquo; Ask the founder of a
     mature ecommerce business and the conversation is completely different.
   </p>
+
+  <figure class="art-diagram">
+    <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="xMidYMid meet">
+      <title id="heroTitle">Six products on the left sit unconnected, sharing nothing. The same six on the right are joined by fifteen links — every product connected to every other through shared suppliers, customers, advertising and logistics.</title>
+      <defs><linearGradient id="gBgJ" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1225"/><stop offset="1" stop-color="#0a1730"/></linearGradient></defs>
+      <rect width="1180" height="320" fill="url(#gBgJ)"/>
+      <circle cx="300.0" cy="73.0" r="12" fill="#0b1225" stroke="#8fa3c8" stroke-width="2"/><circle cx="379.7" cy="119.0" r="12" fill="#0b1225" stroke="#8fa3c8" stroke-width="2"/><circle cx="379.7" cy="211.0" r="12" fill="#0b1225" stroke="#8fa3c8" stroke-width="2"/><circle cx="300.0" cy="257.0" r="12" fill="#0b1225" stroke="#8fa3c8" stroke-width="2"/><circle cx="220.3" cy="211.0" r="12" fill="#0b1225" stroke="#8fa3c8" stroke-width="2"/><circle cx="220.3" cy="119.0" r="12" fill="#0b1225" stroke="#8fa3c8" stroke-width="2"/><line x1="880.0" y1="73.0" x2="959.7" y2="119.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="880.0" y1="73.0" x2="959.7" y2="211.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="880.0" y1="73.0" x2="880.0" y2="257.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="880.0" y1="73.0" x2="800.3" y2="211.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="880.0" y1="73.0" x2="800.3" y2="119.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="959.7" y1="119.0" x2="959.7" y2="211.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="959.7" y1="119.0" x2="880.0" y2="257.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="959.7" y1="119.0" x2="800.3" y2="211.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="959.7" y1="119.0" x2="800.3" y2="119.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="959.7" y1="211.0" x2="880.0" y2="257.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="959.7" y1="211.0" x2="800.3" y2="211.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="959.7" y1="211.0" x2="800.3" y2="119.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="880.0" y1="257.0" x2="800.3" y2="211.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="880.0" y1="257.0" x2="800.3" y2="119.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><line x1="800.3" y1="211.0" x2="800.3" y2="119.0" stroke="#4ade80" stroke-width="1.5" opacity=".45"/><circle cx="880.0" cy="73.0" r="12" fill="#0b1225" stroke="#4ade80" stroke-width="2"/><circle cx="959.7" cy="119.0" r="12" fill="#0b1225" stroke="#4ade80" stroke-width="2"/><circle cx="959.7" cy="211.0" r="12" fill="#0b1225" stroke="#4ade80" stroke-width="2"/><circle cx="880.0" cy="257.0" r="12" fill="#0b1225" stroke="#4ade80" stroke-width="2"/><circle cx="800.3" cy="211.0" r="12" fill="#0b1225" stroke="#4ade80" stroke-width="2"/><circle cx="800.3" cy="119.0" r="12" fill="#0b1225" stroke="#4ade80" stroke-width="2"/>
+      <line x1="590" y1="60" x2="590" y2="272" stroke="#16233d" stroke-width="1"/>
+      <text x="300" y="46" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#8fa3c8" letter-spacing="1.8">SIX PRODUCTS</text>
+      <text x="880" y="46" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#4ade80" letter-spacing="1.8">THE SAME SIX PRODUCTS</text>
+      <text x="300" y="296" text-anchor="middle" font-family="Inter, sans-serif" font-size="20" font-weight="800" fill="#8fa3c8">0 shared advantages</text>
+      <text x="880" y="296" text-anchor="middle" font-family="Inter, sans-serif" font-size="20" font-weight="800" fill="#4ade80">15</text>
+      <text x="928" y="296" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#4ade80">shared advantages</text>
+    </svg>
+  </figure>
 
   <p>It strengthened our supply chain. It lowered our customer acquisition costs. It improved inventory utilisation. It increased average order value. It made our brand more valuable.</p>
 

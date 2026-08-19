@@ -521,9 +521,12 @@ blockquote p{
 }
 .hero-shot img{
   width:100%;
-  height:clamp(260px,32vw,400px);
-  object-fit:cover;
-  object-position:center 42%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
   border-radius:18px;
   border:1px solid var(--line-strong);
   box-shadow:0 30px 80px rgba(1,5,14,.55);
@@ -553,7 +556,6 @@ blockquote p{
 }
 @media (max-width:640px){
   .shell{ gap:28px; }
-  .hero-shot img{ height:210px; }
 }
 
 /* ── STEP / METRIC CARDS (same treatment as .mistake) ───────────────── */
@@ -1711,7 +1713,8 @@ blockquote p{
 }
 
 /* --- additions for this piece ------------------------------------- */
-.hero-shot svg{ width:100%; height:clamp(240px,27vw,330px); display:block; }
+.art-diagram{ margin:0 0 var(--s5); }
+.art-diagram svg{ width:100%; height:auto; display:block; }
 
 .asks{ margin:var(--s5) 0; border:1px solid var(--line); border-radius:var(--r3);
        background:var(--surface); overflow:hidden; }
@@ -1765,36 +1768,9 @@ blockquote p{
 </header>
 
 <figure class="hero-shot">
-  <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="xMidYMid meet">
-    <title id="heroTitle">On the left, twenty-eight identical metric tiles all demanding attention at once. On the right, a single panel asking one question: what should we do today?</title>
-    <defs>
-      <linearGradient id="gBgA" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#0b1225"/>
-        <stop offset="1" stop-color="#0a1730"/>
-      </linearGradient>
-    </defs>
-    <rect width="1180" height="320" fill="url(#gBgA)"/>
-    <rect x="70" y="74" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="79" y="85" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="79" y="96" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="146" y="74" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="155" y="85" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="155" y="96" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="222" y="74" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="231" y="85" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="231" y="96" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="298" y="74" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="307" y="85" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="307" y="96" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="374" y="74" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="383" y="85" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="383" y="96" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="450" y="74" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="459" y="85" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="459" y="96" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="526" y="74" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="535" y="85" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="535" y="96" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="70" y="126" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="79" y="137" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="79" y="148" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="146" y="126" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="155" y="137" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="155" y="148" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="222" y="126" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="231" y="137" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="231" y="148" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="298" y="126" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="307" y="137" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="307" y="148" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="374" y="126" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="383" y="137" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="383" y="148" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="450" y="126" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="459" y="137" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="459" y="148" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="526" y="126" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="535" y="137" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="535" y="148" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="70" y="178" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="79" y="189" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="79" y="200" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="146" y="178" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="155" y="189" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="155" y="200" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="222" y="178" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="231" y="189" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="231" y="200" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="298" y="178" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="307" y="189" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="307" y="200" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="374" y="178" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="383" y="189" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="383" y="200" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="450" y="178" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="459" y="189" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="459" y="200" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="526" y="178" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="535" y="189" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="535" y="200" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="70" y="230" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="79" y="241" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="79" y="252" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="146" y="230" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="155" y="241" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="155" y="252" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="222" y="230" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="231" y="241" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="231" y="252" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="298" y="230" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="307" y="241" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="307" y="252" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="374" y="230" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="383" y="241" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="383" y="252" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="450" y="230" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="459" y="241" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="459" y="252" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="526" y="230" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="535" y="241" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="535" y="252" width="46" height="4" rx="2" fill="#2a3a5c"/>
-    <text x="70" y="52" font-family="Inter, sans-serif" font-size="12" font-weight="700"
-          fill="#5f7398" letter-spacing="1.8">28 METRICS, ALL EQUALLY URGENT</text>
-    <text x="70" y="300" font-family="Inter, sans-serif" font-size="12" font-weight="600"
-          fill="#8fa3c8">Displays what happened.</text>
-
-    <line x1="620" y1="60" x2="620" y2="272" stroke="#1e2c4a" stroke-width="1"/>
-
-    <rect x="672" y="88" width="438" height="132" rx="12"
-          fill="#101b33" stroke="#4ade80" stroke-width="2"/>
-    <text x="700" y="52" font-family="Inter, sans-serif" font-size="12" font-weight="700"
-          fill="#4ade80" letter-spacing="1.8">ONE QUESTION</text>
-    <text x="700" y="130" font-family="Inter, sans-serif" font-size="17" font-weight="800"
-          fill="#e8eefc">What should we do today?</text>
-    <text x="700" y="162" font-family="Inter, sans-serif" font-size="13.5" font-weight="600"
-          fill="#8fa3c8">Increase inventory &mdash; and here is why.</text>
-    <text x="700" y="190" font-family="Inter, sans-serif" font-size="12.5" font-weight="600"
-          fill="#5f7398">Lead time 96 days. Cover 41 days. Cash allows it.</text>
-    <text x="700" y="300" font-family="Inter, sans-serif" font-size="12" font-weight="600"
-          fill="#4ade80">Recommends what to do next.</text>
-  </svg>
+  <img src="../assets/img/hero-dashboards-vs-decisions.webp"
+       alt="A corridor walled floor to ceiling with glowing blue dashboards, opening onto a single amber path winding into the distance"
+       width="1672" height="941" loading="eager" decoding="async">
 </figure>
 
 <div class="shell">
@@ -1822,6 +1798,39 @@ blockquote p{
     dashboards everywhere. Sales. PPC. Inventory. Profit. Cash flow. Business
     intelligence. Every metric imaginable, available in real time.
   </p>
+
+  <figure class="art-diagram">
+    <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="xMidYMid meet">
+      <title id="heroTitle">On the left, twenty-eight identical metric tiles all demanding attention at once. On the right, a single panel asking one question: what should we do today?</title>
+      <defs>
+        <linearGradient id="gBgA" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#0b1225"/>
+          <stop offset="1" stop-color="#0a1730"/>
+        </linearGradient>
+      </defs>
+      <rect width="1180" height="320" fill="url(#gBgA)"/>
+      <rect x="70" y="74" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="79" y="85" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="79" y="96" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="146" y="74" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="155" y="85" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="155" y="96" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="222" y="74" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="231" y="85" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="231" y="96" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="298" y="74" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="307" y="85" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="307" y="96" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="374" y="74" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="383" y="85" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="383" y="96" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="450" y="74" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="459" y="85" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="459" y="96" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="526" y="74" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="535" y="85" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="535" y="96" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="70" y="126" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="79" y="137" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="79" y="148" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="146" y="126" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="155" y="137" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="155" y="148" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="222" y="126" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="231" y="137" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="231" y="148" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="298" y="126" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="307" y="137" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="307" y="148" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="374" y="126" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="383" y="137" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="383" y="148" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="450" y="126" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="459" y="137" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="459" y="148" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="526" y="126" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="535" y="137" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="535" y="148" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="70" y="178" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="79" y="189" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="79" y="200" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="146" y="178" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="155" y="189" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="155" y="200" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="222" y="178" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="231" y="189" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="231" y="200" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="298" y="178" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="307" y="189" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="307" y="200" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="374" y="178" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="383" y="189" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="383" y="200" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="450" y="178" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="459" y="189" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="459" y="200" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="526" y="178" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="535" y="189" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="535" y="200" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="70" y="230" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="79" y="241" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="79" y="252" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="146" y="230" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="155" y="241" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="155" y="252" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="222" y="230" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="231" y="241" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="231" y="252" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="298" y="230" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="307" y="241" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="307" y="252" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="374" y="230" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="383" y="241" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="383" y="252" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="450" y="230" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="459" y="241" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="459" y="252" width="46" height="4" rx="2" fill="#2a3a5c"/><rect x="526" y="230" width="66" height="38" rx="5" fill="#101b33" stroke="#2a3a5c"/><rect x="535" y="241" width="36" height="4" rx="2" fill="#f87171" opacity=".7"/><rect x="535" y="252" width="46" height="4" rx="2" fill="#2a3a5c"/>
+      <text x="70" y="52" font-family="Inter, sans-serif" font-size="12" font-weight="700"
+            fill="#5f7398" letter-spacing="1.8">28 METRICS, ALL EQUALLY URGENT</text>
+      <text x="70" y="300" font-family="Inter, sans-serif" font-size="12" font-weight="600"
+            fill="#8fa3c8">Displays what happened.</text>
+
+      <line x1="620" y1="60" x2="620" y2="272" stroke="#1e2c4a" stroke-width="1"/>
+
+      <rect x="672" y="88" width="438" height="132" rx="12"
+            fill="#101b33" stroke="#4ade80" stroke-width="2"/>
+      <text x="700" y="52" font-family="Inter, sans-serif" font-size="12" font-weight="700"
+            fill="#4ade80" letter-spacing="1.8">ONE QUESTION</text>
+      <text x="700" y="130" font-family="Inter, sans-serif" font-size="17" font-weight="800"
+            fill="#e8eefc">What should we do today?</text>
+      <text x="700" y="162" font-family="Inter, sans-serif" font-size="13.5" font-weight="600"
+            fill="#8fa3c8">Increase inventory &mdash; and here is why.</text>
+      <text x="700" y="190" font-family="Inter, sans-serif" font-size="12.5" font-weight="600"
+            fill="#5f7398">Lead time 96 days. Cover 41 days. Cash allows it.</text>
+      <text x="700" y="300" font-family="Inter, sans-serif" font-size="12" font-weight="600"
+            fill="#4ade80">Recommends what to do next.</text>
+    </svg>
+  </figure>
 
   <p>At first glance it feels like the golden age of decision-making. So why do so many experienced sellers still feel uncertain? Why do meetings still end with &ldquo;let&rsquo;s gather more data&rdquo;? Why do founders spend hours inside dashboards and leave with fewer answers than when they started?</p>
 

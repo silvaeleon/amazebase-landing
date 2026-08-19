@@ -521,9 +521,12 @@ blockquote p{
 }
 .hero-shot img{
   width:100%;
-  height:clamp(260px,32vw,400px);
-  object-fit:cover;
-  object-position:center 42%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
   border-radius:18px;
   border:1px solid var(--line-strong);
   box-shadow:0 30px 80px rgba(1,5,14,.55);
@@ -553,7 +556,6 @@ blockquote p{
 }
 @media (max-width:640px){
   .shell{ gap:28px; }
-  .hero-shot img{ height:210px; }
 }
 
 /* ── STEP / METRIC CARDS (same treatment as .mistake) ───────────────── */
@@ -1711,7 +1713,8 @@ blockquote p{
 }
 
 /* --- additions for this piece ------------------------------------- */
-.hero-shot svg{ width:100%; height:clamp(240px,27vw,330px); display:block; }
+.art-diagram{ margin:0 0 var(--s5); }
+.art-diagram svg{ width:100%; height:auto; display:block; }
 
 .chain{ margin:var(--s5) 0; border:1px solid var(--line); border-radius:var(--r3);
         background:var(--surface); padding:var(--s4); }
@@ -1768,66 +1771,9 @@ blockquote p{
 </header>
 
 <figure class="hero-shot">
-  <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="none">
-    <title id="heroTitle">Two businesses starting from the same point. Each dot is a decision. Marginally better decisions, repeated, separate the two trajectories dramatically over five years.</title>
-    <defs>
-      <linearGradient id="gHi" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0" stop-color="#4ade80" stop-opacity=".3"/>
-        <stop offset="1" stop-color="#4ade80" stop-opacity="1"/>
-      </linearGradient>
-      <linearGradient id="gLo" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0" stop-color="#8fa3c8" stop-opacity=".3"/>
-        <stop offset="1" stop-color="#8fa3c8" stop-opacity=".9"/>
-      </linearGradient>
-      <linearGradient id="gSpread" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#4ade80" stop-opacity=".18"/>
-        <stop offset="1" stop-color="#4ade80" stop-opacity="0"/>
-      </linearGradient>
-      <linearGradient id="gBg4" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#0b1225"/>
-        <stop offset="1" stop-color="#0a1730"/>
-      </linearGradient>
-    </defs>
-
-    <rect width="1180" height="320" fill="url(#gBg4)"/>
-    <g stroke="#1e2c4a" stroke-width="1">
-      <line x1="0" y1="80"  x2="1180" y2="80"/>
-      <line x1="0" y1="160" x2="1180" y2="160"/>
-      <line x1="0" y1="240" x2="1180" y2="240"/>
-    </g>
-
-    <path d="M70 262 C 340 250, 620 210, 840 150 C 960 116, 1050 88, 1120 62
-             L1120 246 C1050 244, 960 243, 840 242 C620 241, 340 250, 70 262 Z"
-          fill="url(#gSpread)"/>
-
-    <path d="M70 262 C 340 250, 620 210, 840 150 C 960 116, 1050 88, 1120 62"
-          fill="none" stroke="url(#gHi)" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M70 262 C 340 250, 620 245, 840 242 C 960 241, 1050 244, 1120 246"
-          fill="none" stroke="url(#gLo)" stroke-width="3" stroke-linecap="round"
-          stroke-dasharray="8 6"/>
-
-    <g fill="#4ade80">
-      <circle cx="200" cy="257" r="3.5"/><circle cx="330" cy="250" r="3.5"/>
-      <circle cx="460" cy="235" r="3.5"/><circle cx="590" cy="213" r="3.5"/>
-      <circle cx="720" cy="182" r="3.5"/><circle cx="850" cy="147" r="3.5"/>
-      <circle cx="980" cy="108" r="3.5"/><circle cx="1110" cy="64" r="3.5"/>
-    </g>
-    <g fill="#5f7398">
-      <circle cx="200" cy="256" r="3"/><circle cx="330" cy="250" r="3"/>
-      <circle cx="460" cy="247" r="3"/><circle cx="590" cy="245" r="3"/>
-      <circle cx="720" cy="243" r="3"/><circle cx="850" cy="242" r="3"/>
-      <circle cx="980" cy="241" r="3"/><circle cx="1110" cy="246" r="3"/>
-    </g>
-
-    <circle cx="70" cy="262" r="6" fill="#c7d4ec"/>
-
-    <g font-family="Inter, sans-serif" font-size="13" font-weight="600">
-      <text x="70"  y="296" fill="#8fa3c8" letter-spacing="1.4">SAME START</text>
-      <text x="1120" y="42"  fill="#4ade80" text-anchor="end">slightly better, every time</text>
-      <text x="1120" y="276" fill="#8fa3c8" text-anchor="end">slightly worse, every time</text>
-      <text x="590" y="42"  fill="#5f7398" text-anchor="middle" letter-spacing="1.6">EACH DOT IS ONE DECISION</text>
-    </g>
-  </svg>
+  <img src="../assets/img/hero-decision-quality.webp"
+       alt="A branching blue node network rising from a sphere, one path curving up to a glowing amber platform and the other running into dark burning wreckage"
+       width="1672" height="941" loading="eager" decoding="async">
 </figure>
 
 <div class="shell">
@@ -1855,6 +1801,69 @@ blockquote p{
     familiar answers. Competition. Margins. Cash flow. Inventory. Advertising costs.
     Policy changes. Manufacturers. The economy.
   </p>
+
+  <figure class="art-diagram">
+    <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="none">
+      <title id="heroTitle">Two businesses starting from the same point. Each dot is a decision. Marginally better decisions, repeated, separate the two trajectories dramatically over five years.</title>
+      <defs>
+        <linearGradient id="gHi" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#4ade80" stop-opacity=".3"/>
+          <stop offset="1" stop-color="#4ade80" stop-opacity="1"/>
+        </linearGradient>
+        <linearGradient id="gLo" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#8fa3c8" stop-opacity=".3"/>
+          <stop offset="1" stop-color="#8fa3c8" stop-opacity=".9"/>
+        </linearGradient>
+        <linearGradient id="gSpread" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#4ade80" stop-opacity=".18"/>
+          <stop offset="1" stop-color="#4ade80" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="gBg4" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#0b1225"/>
+          <stop offset="1" stop-color="#0a1730"/>
+        </linearGradient>
+      </defs>
+
+      <rect width="1180" height="320" fill="url(#gBg4)"/>
+      <g stroke="#1e2c4a" stroke-width="1">
+        <line x1="0" y1="80"  x2="1180" y2="80"/>
+        <line x1="0" y1="160" x2="1180" y2="160"/>
+        <line x1="0" y1="240" x2="1180" y2="240"/>
+      </g>
+
+      <path d="M70 262 C 340 250, 620 210, 840 150 C 960 116, 1050 88, 1120 62
+               L1120 246 C1050 244, 960 243, 840 242 C620 241, 340 250, 70 262 Z"
+            fill="url(#gSpread)"/>
+
+      <path d="M70 262 C 340 250, 620 210, 840 150 C 960 116, 1050 88, 1120 62"
+            fill="none" stroke="url(#gHi)" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M70 262 C 340 250, 620 245, 840 242 C 960 241, 1050 244, 1120 246"
+            fill="none" stroke="url(#gLo)" stroke-width="3" stroke-linecap="round"
+            stroke-dasharray="8 6"/>
+
+      <g fill="#4ade80">
+        <circle cx="200" cy="257" r="3.5"/><circle cx="330" cy="250" r="3.5"/>
+        <circle cx="460" cy="235" r="3.5"/><circle cx="590" cy="213" r="3.5"/>
+        <circle cx="720" cy="182" r="3.5"/><circle cx="850" cy="147" r="3.5"/>
+        <circle cx="980" cy="108" r="3.5"/><circle cx="1110" cy="64" r="3.5"/>
+      </g>
+      <g fill="#5f7398">
+        <circle cx="200" cy="256" r="3"/><circle cx="330" cy="250" r="3"/>
+        <circle cx="460" cy="247" r="3"/><circle cx="590" cy="245" r="3"/>
+        <circle cx="720" cy="243" r="3"/><circle cx="850" cy="242" r="3"/>
+        <circle cx="980" cy="241" r="3"/><circle cx="1110" cy="246" r="3"/>
+      </g>
+
+      <circle cx="70" cy="262" r="6" fill="#c7d4ec"/>
+
+      <g font-family="Inter, sans-serif" font-size="13" font-weight="600">
+        <text x="70"  y="296" fill="#8fa3c8" letter-spacing="1.4">SAME START</text>
+        <text x="1120" y="42"  fill="#4ade80" text-anchor="end">slightly better, every time</text>
+        <text x="1120" y="276" fill="#8fa3c8" text-anchor="end">slightly worse, every time</text>
+        <text x="590" y="42"  fill="#5f7398" text-anchor="middle" letter-spacing="1.6">EACH DOT IS ONE DECISION</text>
+      </g>
+    </svg>
+  </figure>
 
   <p>None of those answers are wrong. But they share something in common: they&rsquo;re symptoms, not causes.</p>
 
