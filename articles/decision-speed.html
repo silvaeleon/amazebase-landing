@@ -26,6 +26,9 @@
 ========================================================================== */
 
 :root{
+  --z-nav:100;          /* navigation.css */
+  --container:1280px;   /* .container, below */
+  --t-body:15px;        /* .btn, below */
   --bg:#030917; --bg-deep:#01050E; --bg-raise:#060D1E;
   --surface:rgba(255,255,255,.030); --surface-2:rgba(255,255,255,.055);
   --surface-solid:#0A1224;
@@ -1734,7 +1737,134 @@ blockquote p{
                letter-spacing:.05em; text-transform:uppercase; white-space:nowrap; }
 .expiry div:last-child .adv{ color:var(--ink-1); font-weight:600; }
 .expiry div:last-child .life{ color:#4ade80; }
+
+/* ── SITE HEADER ──────────────────────────────────────────────────────
+   The header markup is the site's, and navigation.css styles it. These are
+   the pieces it also leans on from base.css, which this page does not load.
+   Every selector is scoped to the header or the mobile drawer: an article is
+   built out of bare a/p/h3/h4, and base.css restyles all of those.
+
+   The scope is written with :where() so it adds no specificity. Scoped the
+   plain way, `.site-header .btn` is (0,2,0) - the same weight as
+   navigation.css's own `.nav-actions .btn--quiet` and `.nav-mobile a`, and
+   loaded after them, so these copies quietly outranked the real rules: the
+   hamburger got pushed off a 390px screen and the drawer buttons lost their
+   sizing. Inside :where() each rule keeps exactly the weight it has in
+   base.css, which is the weight navigation.css was written against.
+   ------------------------------------------------------------------- */
+/* The header inherits from <body>, and this page's body is set for reading:
+   18px at 1.72. The site's is var(--t-body) at 1.6. Left alone, every element
+   in the bar came out a size and a half too tall. Reset it at the root of the
+   header so everything inside inherits the site's figures instead. */
+:where(.site-header),
+:where(.nav-mobile){
+  font-size:var(--t-body);
+  line-height:1.6;
+}
+
+:where(.site-header) .container{
+  width:min(100%,var(--container));
+  margin-inline:auto;
+  padding-inline:var(--gutter);
+  position:relative;
+}
+:where(.site-header, .nav-mobile) .brand{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:19px; font-weight:700; letter-spacing:-.01em;
+  color:var(--text); text-decoration:none;
+}
+:where(.site-header) .brand-mark{ width:26px; height:26px; flex:none; }
+:where(.site-header) .icon,    :where(.nav-mobile) .icon{    width:20px; height:20px; flex:none; stroke-width:1.7; }
+:where(.site-header) .icon-sm, :where(.nav-mobile) .icon-sm{ width:16px; height:16px; flex:none; stroke-width:1.8; }
+/* margin-block only: navigation.css centres this with margin-inline:auto,
+   and a shorthand `margin:0` here would outrank it and shove the menu
+   over against the brand. */
+:where(.site-header) .nav-menu{ list-style:none; padding:0; margin-block:0; }
+.site-header a, .nav-mobile a{ text-decoration:none; }
+/* base.css resets these globally; this page does not load it. Without the
+   padding reset the UA's 1px 6px survives and the 44px tap target
+   responsive.css asks for comes out 40px. */
+:where(.site-header) .nav-toggle{ font:inherit; cursor:pointer; padding:0; }
+:where(.site-header) svg, :where(.nav-mobile) svg{ display:block; }
+
+:where(.site-header) .btn, :where(.nav-mobile) .btn{
+  /* This page defines its own .btn - a filled gradient pill used in the body -
+     and it reaches the header buttons too. base.css's .btn sets none of these,
+     so the variant classes below are what should decide them. Cleared here or
+     "Log in", which is .btn--quiet and meant to read as plain text, arrives
+     wearing the brand gradient. */
+  background:none;
+  box-shadow:none;
+  color:inherit;
+  text-decoration:none;
+  position:relative;
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  padding:13px 22px;
+  border-radius:var(--r-sm);
+  font-size:var(--t-body); font-weight:600; line-height:1;
+  white-space:nowrap;
+  transition:transform var(--fast) var(--ease),
+             box-shadow var(--fast) var(--ease),
+             background var(--fast) var(--ease),
+             border-color var(--fast) var(--ease);
+}
+:where(.site-header) .btn:active, :where(.nav-mobile) .btn:active{ transform:translateY(0) scale(.99); }
+:where(.site-header) .btn--primary, :where(.nav-mobile) .btn--primary{
+  background:var(--grad-brand); color:#fff;
+  box-shadow:var(--sh-brand); overflow:hidden;
+}
+:where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{
+  content:""; position:absolute; top:0; left:-130%;
+  width:55%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);
+  transition:left .65s var(--ease);
+}
+:where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{
+  transform:translateY(-2px); box-shadow:0 22px 52px rgba(107,63,232,.45);
+}
+:where(.site-header) .btn--primary:hover::after, :where(.nav-mobile) .btn--primary:hover::after{ left:150%; }
+:where(.site-header) .btn--quiet, :where(.nav-mobile) .btn--quiet{ color:var(--text-2); padding:13px 8px; }
+:where(.site-header) .btn--quiet:hover, :where(.nav-mobile) .btn--quiet:hover{ color:var(--text); }
+:where(.nav-mobile) .btn--block{ width:100%; }
+
+@media (prefers-reduced-motion:reduce){
+  :where(.site-header) .btn, :where(.nav-mobile) .btn,
+  :where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{ transition:none; }
+  :where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{ transform:none; }
+}
+
+/* navigation.css hides these two buttons on small screens so the hamburger
+   fits. Its selectors are (0,2,0) and so is `:where(.site-header) .btn` above, which
+   is loaded after it - equal weight, later wins, and display:inline-flex beat
+   display:none. The hamburger ended up 107px off the right of a 390px screen
+   with no way to open the menu. Restating the hide at (0,3,0) settles it.
+   The breakpoints are read out of navigation.css at build time, not typed. */
+
+/* Clear the fixed site header. Reserving its height on .wrap keeps the gap
+   between the bar and the eyebrow the same as the gap used to be between the
+   top of the window and the eyebrow. */
+.wrap{ padding-top:70px; }
+@media (max-width:640px){ .wrap{ padding-top:64px; } }
+
+/* Anchor targets. .article h2 carried scroll-margin-top:32px, which was right
+   when this page had no fixed bar: 32px was breathing room. Now a jump from
+   the contents list lands 38px underneath the header. responsive.css puts the
+   rest of the site on 84px for exactly this reason; the article's own rule is
+   (0,2,0) and outranks it, so it is restated here at the same weight. */
+.article h2{ scroll-margin-top:84px; }
+
+/* The back-link sat hard against the left edge of the window, in line with
+   nothing. That was always true, but with the nav above it the thing reads as
+   stranded rather than as a heading. Same shell as .article-head, so it lines
+   up with the title beneath it and behaves as the breadcrumb it is. */
+.back-link{
+  max-width:1180px;
+  margin-inline:auto;      /* the rule above keeps its 28px bottom margin */
+  padding:22px var(--gutter) 0;
+}
 </style>
+<link rel="stylesheet" href="/css/navigation.css">
+<link rel="stylesheet" href="/css/responsive.css">
 <link rel="stylesheet" href="/css/site-footer.css">
 </head>
 
@@ -1742,6 +1872,101 @@ blockquote p{
 
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="bg-layer" aria-hidden="true"></div>
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+</defs>
+  <symbol id="i-chevron"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-menu"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-mega"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l7 4V5L8 9H4zM19 9a4 4 0 010 6"/></symbol>
+  <symbol id="i-dollar"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5v19M16.5 6.5H10a3.2 3.2 0 000 6.4h4a3.2 3.2 0 010 6.4H7"/></symbol>
+  <symbol id="i-stack"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/></symbol>
+  <symbol id="i-box"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></symbol>
+  <symbol id="i-search"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></symbol>
+  <symbol id="i-chart"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-trend"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></symbol>
+  <symbol id="i-db"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3.2"/><path d="M4 6v12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2V6M4 12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2"/></symbol>
+  <symbol id="i-shield"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-9.5V5.5L12 2.5 4 5.5V12.5C4 18.5 12 22 12 22z"/></symbol>
+  <symbol id="i-spark"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+  <symbol id="i-rocket"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15s-1.5 3 1 5.5S11 20 11 20M14.5 4.5c3-2 6-1 6-1s1 3-1 6l-6 6-5-5 6-6z"/><circle cx="15" cy="9" r="1.4"/></symbol>
+  <symbol id="i-case"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8.5 7V5a2 2 0 012-2h3a2 2 0 012 2v2M2.5 12.5h19"/></symbol>
+  <symbol id="i-info"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></symbol>
+  <symbol id="i-msg"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-8 8 8.6 8.6 0 01-3.6-.8L3 21l1.8-6.4A8 8 0 1121 12z"/></symbol>
+</svg>
+
+<header class="site-header">
+<div class="container">
+<nav class="nav" aria-label="Primary">
+
+  <a href="/index.html" class="brand" aria-label="AmazeBase home">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+      <path d="M16 17.6l4.4 8.2h-8.8z" fill="#C56BF5" opacity=".85"/>
+    </svg>
+    <span data-brand>AmazeBase</span>
+  </a>
+
+  <ul class="nav-menu">
+    <li class="nav-item">
+      <a class="nav-link" href="/product.html#modules">Product <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop nav-drop--wide">
+        <a href="/product.html#advertising"><svg class="icon-sm"><use href="#i-mega"/></svg>Advertising &amp; PPC</a>
+        <a href="/product.html#financials"><svg class="icon-sm"><use href="#i-dollar"/></svg>Financials</a>
+        <a href="/product.html#ledger"><svg class="icon-sm"><use href="#i-stack"/></svg>Ledger</a>
+        <a href="/product.html#inventory"><svg class="icon-sm"><use href="#i-box"/></svg>Inventory</a>
+        <a href="/product.html#research"><svg class="icon-sm"><use href="#i-search"/></svg>Product Research</a>
+        <a href="/product.html#simulations"><svg class="icon-sm"><use href="#i-chart"/></svg>Simulations</a>
+        <a href="/product.html#sales"><svg class="icon-sm"><use href="#i-trend"/></svg>Sales</a>
+        <a href="/product.html#data"><svg class="icon-sm"><use href="#i-db"/></svg>Data &amp; Sync</a>
+        <a href="/product.html#security"><svg class="icon-sm"><use href="#i-shield"/></svg>Security</a>
+        <a href="/product.html#assistant"><svg class="icon-sm"><use href="#i-spark"/></svg>AI Assistant &mdash; soon</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/solutions.html">Solutions <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/solutions.html#beginners"><svg class="icon-sm"><use href="#i-rocket"/></svg>Beginners</a>
+        <a href="/solutions.html#experts"><svg class="icon-sm"><use href="#i-dollar"/></svg>Experienced sellers</a>
+        <a href="/solutions.html#agencies"><svg class="icon-sm"><use href="#i-case"/></svg>Agencies</a>
+      </div>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="/index.html#pricing">Pricing</a></li>
+    <li class="nav-item"><a class="nav-link" href="/resources.html">Resources</a></li>
+    <li class="nav-item">
+      <a class="nav-link" href="/about.html">Company <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/about.html"><svg class="icon-sm"><use href="#i-info"/></svg>About</a>
+        <a href="/contact.html"><svg class="icon-sm"><use href="#i-msg"/></svg>Contact</a>
+      </div>
+    </li>
+  </ul>
+
+  <div class="nav-actions">
+    <a class="btn btn--quiet" href="https://amz-analytics-production.up.railway.app/login">Log in</a>
+    <a class="btn btn--primary" href="/index.html#waitlist" data-magnetic>Join the Wait List</a>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="navMobile">
+      <svg class="icon"><use href="#i-menu"/></svg>
+    </button>
+  </div>
+
+</nav>
+</div>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="/product.html#modules">Product</a>
+  <a href="/solutions.html">Solutions</a>
+  <a href="/index.html#pricing">Pricing</a>
+  <a href="/resources.html">Resources</a>
+  <a href="/about.html">About</a>
+  <a href="/contact.html">Contact</a>
+  <a class="btn btn--quiet btn--block" href="https://amz-analytics-production.up.railway.app/login">Log in</a>
+  <a class="btn btn--primary btn--block" href="/index.html#waitlist">Join the Wait List</a>
+</div>
+</header>
 
 <div class="wrap">
 
@@ -2133,5 +2358,6 @@ blockquote p{
 </div>
 </footer>
 
+<script src="/js/main.js" defer></script>
 </body>
 </html>
