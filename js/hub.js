@@ -263,10 +263,33 @@
     });
   }
 
+  /* Card artwork. `src` is whichever of hero/thumb suits the size being drawn,
+     and the alt is empty on purpose: the title sits right beside it inside the
+     same link, so describing the picture again only makes a screen reader read
+     every card twice. w/h are the real pixel dimensions so the box is reserved
+     before the file lands and the list does not jump while it loads. */
+  function art(src, cls, w, h, eager) {
+    var span = el("span", cls);
+    var img  = el("img");
+    img.src = src;
+    img.alt = "";
+    img.width = w; img.height = h;
+    img.loading = eager ? "eager" : "lazy";
+    img.decoding = "async";
+    span.appendChild(img);
+    return span;
+  }
+
   function card(r, big) {
     var a = el("a", "hub-feat" + (big ? " is-big" : ""));
     a.href = r.url || "#";
     if (/^https?:/.test(r.url || "")) { a.target = "_blank"; a.rel = "noopener noreferrer"; }
+
+    /* The big card is above the fold and is drawn wide, so it gets the full
+       hero. The two stacked cards are small - the 480px thumb is already more
+       than they can show. Either may be absent; the card still renders. */
+    var pic = big ? (r.hero || r.thumb) : (r.thumb || r.hero);
+    if (pic) a.appendChild(art(pic, "hub-feat-art", big ? 1672 : 480, big ? 941 : 270, big));
 
     var badge = el("span", "hub-badge", labelFor(state.formats, r.format).replace(/s$/, ""));
     a.appendChild(badge);
@@ -351,9 +374,19 @@
       a.href = r.url || "#";
       if (/^https?:/.test(r.url || "")) { a.target = "_blank"; a.rel = "noopener noreferrer"; }
 
+      /* With a thumb, the format icon rides on the picture as a small chip:
+         the row keeps its three columns, and the format stays readable at
+         640px and below where .hub-row-tag is hidden for space. Without a
+         thumb the icon renders on its own exactly as it did before. */
       var ico = el("span", "hub-row-ico");
       ico.appendChild(icon(iconFor(state.formats, r.format)));
-      a.appendChild(ico);
+      if (r.thumb) {
+        var th = art(r.thumb, "hub-row-thumb", 480, 270, false);
+        th.appendChild(ico);
+        a.appendChild(th);
+      } else {
+        a.appendChild(ico);
+      }
 
       var body = el("div", "hub-row-body");
       body.appendChild(el("h4", "hub-row-h", r.title));

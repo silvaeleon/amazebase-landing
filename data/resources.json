@@ -11,7 +11,12 @@
     "",
     "REQUIRED per entry: id, title, summary, category, format, level,",
     "  language, published, url.",
-    "OPTIONAL: author, minutes, featured, thumb, topics[].",
+    "OPTIONAL: author, minutes, featured, thumb, hero, topics[].",
+    "",
+    "thumb is the 480x270 card image and hero the full 1672x941 one. Both",
+    "  are derived from the article slug in `url`, not from `id` - seven",
+    "  entries have an id that differs from their filename. A card with no",
+    "  thumb still renders; it falls back to the format icon it used before.",
     "",
     "level    must be one of the ids in `levels` below (beginner | expert).",
     "language must be one of the ids in `languages` below (en | es | fr |",
@@ -149,6 +154,8 @@
       "minutes": 23,
       "featured": true,
       "url": "articles/ad-growth-vs-supply-chain.html",
+      "thumb": "assets/img/thumb-ad-growth-vs-supply-chain.webp",
+      "hero": "assets/img/hero-ad-growth-vs-supply-chain.webp",
       "topics": [
         "Campaign Strategy",
         "Inventory Forecasting",
@@ -175,6 +182,8 @@
       "minutes": 7,
       "featured": true,
       "url": "articles/think-like-investors.html",
+      "thumb": "assets/img/thumb-think-like-investors.webp",
+      "hero": "assets/img/hero-think-like-investors.webp",
       "topics": [
         "Product Research",
         "Capital Allocation",
@@ -201,6 +210,8 @@
       "minutes": 6,
       "featured": true,
       "url": "articles/analyze-systems.html",
+      "thumb": "assets/img/thumb-analyze-systems.webp",
+      "hero": "assets/img/hero-analyze-systems.webp",
       "topics": [
         "Product Research",
         "Systems Thinking",
@@ -224,6 +235,8 @@
       "minutes": 7,
       "featured": true,
       "url": "articles/research-after-you-found-it.html",
+      "thumb": "assets/img/thumb-research-after-you-found-it.webp",
+      "hero": "assets/img/hero-research-after-you-found-it.webp",
       "topics": [
         "Product Research",
         "Decision Making",
@@ -247,6 +260,8 @@
       "minutes": 7,
       "featured": true,
       "url": "articles/risk-research.html",
+      "thumb": "assets/img/thumb-risk-research.webp",
+      "hero": "assets/img/hero-risk-research.webp",
       "topics": [
         "Product Research",
         "Risk",
@@ -270,6 +285,8 @@
       "minutes": 6,
       "featured": true,
       "url": "articles/overestimating-tam.html",
+      "thumb": "assets/img/thumb-overestimating-tam.webp",
+      "hero": "assets/img/hero-overestimating-tam.webp",
       "topics": [
         "Product Research",
         "Market Analysis",
@@ -293,6 +310,8 @@
       "minutes": 7,
       "featured": true,
       "url": "articles/products-that-compound.html",
+      "thumb": "assets/img/thumb-products-that-compound.webp",
+      "hero": "assets/img/hero-products-that-compound.webp",
       "topics": [
         "Product Research",
         "Portfolio Allocation",
@@ -319,6 +338,8 @@
       "minutes": 7,
       "featured": true,
       "url": "articles/capital-allocation-products.html",
+      "thumb": "assets/img/thumb-capital-allocation-products.webp",
+      "hero": "assets/img/hero-capital-allocation-products.webp",
       "topics": [
         "Capital Allocation",
         "Return on Invested Capital",
@@ -342,6 +363,8 @@
       "minutes": 6,
       "featured": true,
       "url": "articles/boring-products-win.html",
+      "thumb": "assets/img/thumb-boring-products-win.webp",
+      "hero": "assets/img/hero-boring-products-win.webp",
       "topics": [
         "Product Research",
         "Market Analysis",
@@ -368,6 +391,8 @@
       "minutes": 7,
       "featured": true,
       "url": "articles/portfolio-complexity.html",
+      "thumb": "assets/img/thumb-portfolio-complexity.webp",
+      "hero": "assets/img/hero-portfolio-complexity.webp",
       "topics": [
         "Product Research",
         "Portfolio Allocation",
@@ -394,6 +419,8 @@
       "minutes": 7,
       "featured": true,
       "url": "articles/launch-opportunity-cost.html",
+      "thumb": "assets/img/thumb-launch-opportunity-cost.webp",
+      "hero": "assets/img/hero-launch-opportunity-cost.webp",
       "topics": [
         "Opportunity Cost",
         "Capital Allocation",
@@ -417,6 +444,8 @@
       "minutes": 7,
       "featured": true,
       "url": "articles/winning-markets.html",
+      "thumb": "assets/img/thumb-winning-markets.webp",
+      "hero": "assets/img/hero-winning-markets.webp",
       "topics": [
         "Product Research",
         "Market Analysis",
@@ -440,6 +469,8 @@
       "minutes": 7,
       "featured": true,
       "url": "articles/product-research-wrong-data.html",
+      "thumb": "assets/img/thumb-product-research-wrong-data.webp",
+      "hero": "assets/img/hero-product-research-wrong-data.webp",
       "topics": [
         "Product Research",
         "Capital Allocation",
@@ -463,6 +494,8 @@
       "minutes": 6,
       "featured": true,
       "url": "articles/sum-of-decisions.html",
+      "thumb": "assets/img/thumb-sum-of-decisions.webp",
+      "hero": "assets/img/hero-sum-of-decisions.webp",
       "topics": [
         "Decision Making",
         "Compounding",
@@ -486,6 +519,8 @@
       "minutes": 6,
       "featured": true,
       "url": "articles/ceo-job-changes.html",
+      "thumb": "assets/img/thumb-ceo-job-changes.webp",
+      "hero": "assets/img/hero-ceo-job-changes.webp",
       "topics": [
         "Leadership",
         "Scaling",
@@ -509,6 +544,8 @@
       "minutes": 6,
       "featured": true,
       "url": "articles/dashboards-vs-decisions.html",
+      "thumb": "assets/img/thumb-dashboards-vs-decisions.webp",
+      "hero": "assets/img/hero-dashboards-vs-decisions.webp",
       "topics": [
         "Decision Making",
         "KPIs",
@@ -532,6 +569,8 @@
       "minutes": 7,
       "featured": true,
       "url": "articles/decision-speed.html",
+      "thumb": "assets/img/thumb-decision-speed.webp",
+      "hero": "assets/img/hero-decision-speed.webp",
       "topics": [
         "Decision Making",
         "Competitive Moat",
@@ -555,6 +594,8 @@
       "minutes": 7,
       "featured": true,
       "url": "articles/attention-is-the-asset.html",
+      "thumb": "assets/img/thumb-attention-is-the-asset.webp",
+      "hero": "assets/img/hero-attention-is-the-asset.webp",
       "topics": [
         "Leadership",
         "Decision Making",
@@ -581,6 +622,8 @@
       "minutes": 7,
       "featured": true,
       "url": "articles/growth-is-cash-flow.html",
+      "thumb": "assets/img/thumb-growth-is-cash-flow.webp",
+      "hero": "assets/img/hero-growth-is-cash-flow.webp",
       "topics": [
         "Cash Flow",
         "Capital Allocation",
@@ -604,6 +647,8 @@
       "minutes": 7,
       "featured": true,
       "url": "articles/systems-produce-outcomes.html",
+      "thumb": "assets/img/thumb-systems-produce-outcomes.webp",
+      "hero": "assets/img/hero-systems-produce-outcomes.webp",
       "topics": [
         "Operating Systems",
         "Process Design",
@@ -627,6 +672,8 @@
       "minutes": 8,
       "featured": true,
       "url": "articles/growth-vs-complexity.html",
+      "thumb": "assets/img/thumb-growth-vs-complexity.webp",
+      "hero": "assets/img/hero-growth-vs-complexity.webp",
       "topics": [
         "Scaling",
         "Operating Systems",
@@ -650,6 +697,8 @@
       "minutes": 8,
       "featured": true,
       "url": "articles/decision-quality.html",
+      "thumb": "assets/img/thumb-decision-quality.webp",
+      "hero": "assets/img/hero-decision-quality.webp",
       "topics": [
         "Decision Making",
         "Compounding",
@@ -671,6 +720,8 @@
       "minutes": 7,
       "featured": true,
       "url": "articles/ppc-flywheel.html",
+      "thumb": "assets/img/thumb-ppc-flywheel.webp",
+      "hero": "assets/img/hero-ppc-flywheel.webp",
       "topics": [
         "Compounding",
         "Brand Building",
@@ -694,6 +745,8 @@
       "minutes": 7,
       "featured": true,
       "url": "articles/stopping-too-soon.html",
+      "thumb": "assets/img/thumb-stopping-too-soon.webp",
+      "hero": "assets/img/hero-stopping-too-soon.webp",
       "topics": [
         "Campaign Strategy",
         "Decision Making",
@@ -720,6 +773,8 @@
       "minutes": 7,
       "featured": true,
       "url": "articles/advertising-is-inventory.html",
+      "thumb": "assets/img/thumb-advertising-is-inventory.webp",
+      "hero": "assets/img/hero-advertising-is-inventory.webp",
       "topics": [
         "Inventory Forecasting",
         "Capital Allocation",
@@ -743,6 +798,8 @@
       "minutes": 23,
       "featured": true,
       "url": "articles/forecasting-not-math-podcast.html",
+      "thumb": "assets/img/thumb-forecasting-not-math-podcast.webp",
+      "hero": "assets/img/hero-forecasting-not-math-podcast.webp",
       "topics": [
         "Demand Forecasting",
         "Decision Making",
@@ -765,6 +822,8 @@
       "minutes": 23,
       "featured": true,
       "url": "articles/predicting-demand-podcast.html",
+      "thumb": "assets/img/thumb-predicting-demand-podcast.webp",
+      "hero": "assets/img/hero-predicting-demand-podcast.webp",
       "topics": [
         "Demand Forecasting",
         "Product Launch",
@@ -786,6 +845,8 @@
       "minutes": 6,
       "featured": true,
       "url": "articles/wrong-kpi.html",
+      "thumb": "assets/img/thumb-wrong-kpi.webp",
+      "hero": "assets/img/hero-wrong-kpi.webp",
       "topics": [
         "KPIs",
         "Decision Making",
@@ -808,6 +869,8 @@
       "minutes": 6,
       "featured": true,
       "url": "articles/campaign-cannibalisation.html",
+      "thumb": "assets/img/thumb-campaign-cannibalisation.webp",
+      "hero": "assets/img/hero-campaign-cannibalisation.webp",
       "topics": [
         "Cannibalisation",
         "Attribution",
@@ -830,6 +893,8 @@
       "minutes": 7,
       "featured": true,
       "url": "articles/advertising-debt.html",
+      "thumb": "assets/img/thumb-advertising-debt.webp",
+      "hero": "assets/img/hero-advertising-debt.webp",
       "topics": [
         "Advertising Debt",
         "Dependency",
@@ -852,6 +917,8 @@
       "minutes": 6,
       "featured": true,
       "url": "articles/attribution-vs-incrementality.html",
+      "thumb": "assets/img/thumb-attribution-vs-incrementality.webp",
+      "hero": "assets/img/hero-attribution-vs-incrementality.webp",
       "topics": [
         "Incrementality",
         "Attribution",
@@ -874,6 +941,8 @@
       "minutes": 6,
       "featured": true,
       "url": "articles/advertising-portfolio.html",
+      "thumb": "assets/img/thumb-advertising-portfolio.webp",
+      "hero": "assets/img/hero-advertising-portfolio.webp",
       "topics": [
         "Portfolio Allocation",
         "Campaign Strategy",
@@ -896,6 +965,8 @@
       "minutes": 6,
       "featured": true,
       "url": "articles/highest-roas-trap.html",
+      "thumb": "assets/img/thumb-highest-roas-trap.webp",
+      "hero": "assets/img/hero-highest-roas-trap.webp",
       "topics": [
         "ROAS",
         "Incrementality",
@@ -918,6 +989,8 @@
       "minutes": 6,
       "featured": true,
       "url": "articles/campaigns-compete.html",
+      "thumb": "assets/img/thumb-campaigns-compete.webp",
+      "hero": "assets/img/hero-campaigns-compete.webp",
       "topics": [
         "Campaign Strategy",
         "Capital Allocation",
@@ -940,6 +1013,8 @@
       "minutes": 6,
       "featured": true,
       "url": "articles/ppc-capital-allocation.html",
+      "thumb": "assets/img/thumb-ppc-capital-allocation.webp",
+      "hero": "assets/img/hero-ppc-capital-allocation.webp",
       "topics": [
         "Capital Allocation",
         "Campaign Strategy",
@@ -962,6 +1037,8 @@
       "minutes": 6,
       "featured": true,
       "url": "articles/stop-optimizing-acos.html",
+      "thumb": "assets/img/thumb-stop-optimizing-acos.webp",
+      "hero": "assets/img/hero-stop-optimizing-acos.webp",
       "topics": [
         "ACOS",
         "Campaign Strategy",
@@ -984,6 +1061,8 @@
       "minutes": 7,
       "featured": true,
       "url": "articles/optionality.html",
+      "thumb": "assets/img/thumb-optionality.webp",
+      "hero": "assets/img/hero-optionality.webp",
       "topics": [
         "Optionality",
         "Opportunity Cost",
@@ -1006,6 +1085,8 @@
       "minutes": 7,
       "featured": true,
       "url": "articles/opportunity-cost.html",
+      "thumb": "assets/img/thumb-opportunity-cost.webp",
+      "hero": "assets/img/hero-opportunity-cost.webp",
       "topics": [
         "Opportunity Cost",
         "Capital Allocation",
@@ -1028,6 +1109,8 @@
       "minutes": 7,
       "featured": true,
       "url": "articles/worst-investment.html",
+      "thumb": "assets/img/thumb-worst-investment.webp",
+      "hero": "assets/img/hero-worst-investment.webp",
       "topics": [
         "Capital Allocation",
         "Portfolio Allocation",
@@ -1050,6 +1133,8 @@
       "minutes": 7,
       "featured": true,
       "url": "articles/capital-velocity.html",
+      "thumb": "assets/img/thumb-capital-velocity.webp",
+      "hero": "assets/img/hero-capital-velocity.webp",
       "topics": [
         "Capital Velocity",
         "Cash Flow Management",
@@ -1072,6 +1157,8 @@
       "minutes": 6,
       "featured": true,
       "url": "articles/better-questions.html",
+      "thumb": "assets/img/thumb-better-questions.webp",
+      "hero": "assets/img/hero-better-questions.webp",
       "topics": [
         "Forecasting Process",
         "Assumptions",
@@ -1094,6 +1181,8 @@
       "minutes": 6,
       "featured": true,
       "url": "articles/classic-formula-wrong.html",
+      "thumb": "assets/img/thumb-classic-formula-wrong.webp",
+      "hero": "assets/img/hero-classic-formula-wrong.webp",
       "topics": [
         "Reorder Point",
         "Lead Time",
@@ -1116,6 +1205,8 @@
       "minutes": 5,
       "featured": true,
       "url": "articles/reorder-point.html",
+      "thumb": "assets/img/thumb-reorder-point.webp",
+      "hero": "assets/img/hero-reorder-point.webp",
       "topics": [
         "Reorder Point",
         "Restock Planning",
@@ -1137,6 +1228,8 @@
       "minutes": 7,
       "featured": true,
       "url": "articles/inventory-forecasting.html",
+      "thumb": "assets/img/thumb-inventory-forecasting.webp",
+      "hero": "assets/img/hero-inventory-forecasting.webp",
       "topics": [
         "Inventory Forecasting",
         "Restock Planning",

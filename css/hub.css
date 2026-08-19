@@ -487,3 +487,59 @@
 @media (max-width:640px){
   .hub-fig{ display:none; }
 }
+
+/* ── CARD ARTWORK ─────────────────────────────────────────────────────
+   Every resource in the hub is an article with its own hero image, so the
+   cards carry it. Two sizes: the featured card that opens the page is drawn
+   wide enough to want the full hero, everything else takes the 480px thumb.
+   Both boxes declare their aspect ratio so the grid is laid out at its final
+   height before a single image arrives - the list never reflows underneath a
+   reader who has already started scrolling.
+   ------------------------------------------------------------------- */
+
+.hub-feat-art,
+.hub-row-thumb{
+  display:block;
+  position:relative;
+  overflow:hidden;
+  border-radius:10px;
+  background:var(--surface-2);   /* holds the shape before the file lands */
+}
+.hub-feat-art img,
+.hub-row-thumb img{
+  display:block;
+  width:100%; height:100%;
+  object-fit:cover;
+}
+
+/* Featured. The big one leads with a 16:9 picture; the two stacked beside it
+   are far shorter, so theirs is a band rather than a full frame - a 16:9 crop
+   at that width would push the title out of the card. */
+.hub-feat-art{ aspect-ratio:16 / 9; margin-bottom:14px; }
+.hub-feat:not(.is-big) .hub-feat-art{ aspect-ratio:auto; height:74px; margin-bottom:11px; }
+.hub-feat.is-big .hub-feat-art{ border-radius:12px; }
+
+/* .hub-feat.is-big pins its content to the bottom of a 280px box. With a
+   picture on top the card is taller than that anyway, so the picture must be
+   allowed to sit at the top rather than be pushed down with the text. */
+.hub-feat.is-big{ justify-content:flex-start; }
+.hub-feat.is-big .hub-feat-meta{ margin-top:auto; }
+
+/* List rows. The thumbnail stands where the format icon used to, and the icon
+   moves on top of it as a chip - .hub-row-tag is display:none at 640px, so
+   without the chip the format would vanish entirely on a phone. */
+.hub-row-thumb{ width:108px; aspect-ratio:16 / 9; border-radius:9px; }
+.hub-row-thumb .hub-row-ico{
+  position:absolute; left:5px; bottom:5px;
+  width:22px; height:22px;
+  border-radius:6px;
+  background:rgba(3,9,23,.74);
+  border:1px solid rgba(255,255,255,.10);
+  color:var(--violet-soft);
+}
+.hub-row-thumb .hub-row-ico svg{ width:12px; height:12px; }
+
+@media (max-width:640px){
+  .hub-row-thumb{ width:76px; }
+  .hub-feat:not(.is-big) .hub-feat-art{ height:64px; }
+}
