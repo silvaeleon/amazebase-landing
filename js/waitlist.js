@@ -14,7 +14,7 @@
   /* The app that owns the waitlist table. Same-origin in local dev, the
      production app in the wild. Cross-origin, so the app must list this
      site in ALLOWED_ORIGINS or the browser blocks the POST. */
-  var API = "https://amz-analytics-production.up.railway.app";
+  var API = "https://analytics.amazebase.pro";
 
   var dialog = document.getElementById("waitlist");
   if (!dialog || typeof dialog.showModal !== "function") return;

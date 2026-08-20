@@ -15,7 +15,7 @@
   "use strict";
 
   var DATA_URL = "data/resources.json";
-  var API      = "https://amz-analytics-production.up.railway.app";
+  var API      = "https://analytics.amazebase.pro";
 
   var $ = function (s, r) { return (r || document).querySelector(s); };
 
