@@ -1,0 +1,33 @@
+# https://amazebase.pro
+# Everything here is public and meant to be read, by people and by machines.
+
+User-agent: *
+Allow: /
+
+# Named explicitly so the intent is on the record for the crawlers that read
+# and answer questions about this site, not only the ones that index it.
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: https://amazebase.pro/sitemap.xml

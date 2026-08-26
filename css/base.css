@@ -119,6 +119,7 @@ section[id]{ scroll-margin-top:96px; }
   gap:var(--s3);
 }
 
+.section-head h1,
 .section-head h2{
   font-size:var(--t-title);
   font-weight:700;

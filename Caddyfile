@@ -91,6 +91,8 @@
 	file_server {
 		hide .git
 		hide .env*
+		# build scripts, not part of the published site
+		hide tools
 	}
 
 	encode {
