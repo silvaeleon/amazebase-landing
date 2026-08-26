@@ -20,6 +20,16 @@
 <link rel="stylesheet" href="css/sections.css">
 <link rel="stylesheet" href="css/waitlist.css">
 <link rel="stylesheet" href="css/responsive.css">
+<noscript>
+  <!-- Every [data-reveal] element starts at opacity:0 and is only revealed by
+       the IntersectionObserver in js/main.js. Without JS that means a blank
+       page, so undo the starting state when scripting is off. -->
+  <style>
+    [data-reveal],
+    [data-reveal-stagger] > *{ opacity:1 !important; transform:none !important; }
+  </style>
+</noscript>
+
 <!-- SEO:START -->
 <link rel="canonical" href="https://amazebase.pro/">
 <meta property="og:site_name" content="AmazeBase">
@@ -1297,8 +1307,9 @@
   <figure class="quote">
     <span class="quote-face" aria-hidden="true">LS</span>
     <div>
-      <p>"AmazeBase replaced 6 different tools. I save 30+ hours every month."</p>
-      <cite>— Leon Silva, Amazon seller</cite>
+      <p>"Six tools, and none of them told me what to do next. So I built the one
+         that does. It replaced all six and saves me 30+ hours a month."</p>
+      <cite>— Leon Silva, 6-figure Amazon seller</cite>
     </div>
   </figure>
 

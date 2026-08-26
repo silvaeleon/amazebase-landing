@@ -21,6 +21,16 @@
 <link rel="stylesheet" href="css/waitlist.css">
 <link rel="stylesheet" href="css/responsive.css">
 <link rel="stylesheet" href="css/contact.css">
+<noscript>
+  <!-- Every [data-reveal] element starts at opacity:0 and is only revealed by
+       the IntersectionObserver in js/main.js. Without JS that means a blank
+       page, so undo the starting state when scripting is off. -->
+  <style>
+    [data-reveal],
+    [data-reveal-stagger] > *{ opacity:1 !important; transform:none !important; }
+  </style>
+</noscript>
+
 <!-- SEO:START -->
 <link rel="canonical" href="https://amazebase.pro/contact.html">
 <meta property="og:site_name" content="AmazeBase">
@@ -323,8 +333,8 @@
     </div>
 
     <figure class="mod-figure ct-figure">
-      <img src="/assets/img/contact-message-loop.webp"
-           alt="Messages from sellers arriving, converging on a single point where they are read, and becoming the AmazeBase product">
+      <img width="1000" height="1280" src="/assets/img/contact-message-loop.webp"
+           alt="Messages from sellers arriving, converging on a single point where they are read, and becoming the AmazeBase product" decoding="async">
     </figure>
 
   </article>

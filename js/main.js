@@ -182,4 +182,31 @@
       target.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
     });
   });
+
+  /* ------------------------------------------------------ DEEP LINK ON LOAD */
+  /* The handler above only fires on click, so opening /product.html#simulations
+     cold left the page at the top with the target still at opacity:0 — every
+     anchor in the Product menu is a URL people copy and share. Reveal the
+     target and everything above it first, so the landing position is stable
+     and scrolling back up isn't a wall of invisible sections. */
+
+  if (location.hash.length > 1) {
+    const target = document.getElementById(
+      decodeURIComponent(location.hash.slice(1))
+    );
+
+    if (target) {
+      revealables.forEach((el) => {
+        const atOrInside =
+          el === target || el.contains(target) || target.contains(el);
+        const above =
+          el.compareDocumentPosition(target) & Node.DOCUMENT_POSITION_FOLLOWING;
+        if (atOrInside || above) el.classList.add("is-in");
+      });
+
+      requestAnimationFrame(() => {
+        target.scrollIntoView({ behavior: "auto", block: "start" });
+      });
+    }
+  }
 })();
