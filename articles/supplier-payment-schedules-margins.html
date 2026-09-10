@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A purchase order is two objects &mdash; AmazeBase</title>
+
+<meta name="description" content="Tracking supplier payment schedules alongside product margins — and the number that decides which supplier is actually cheaper.">
+<meta name="theme-color" content="#030917">
+<meta name="author" content="AmazeBase">
+<meta property="og:title" content="A purchase order is two objects">
+<meta property="og:description" content="Tracking supplier payment schedules alongside product margins — and the number that decides which supplier is actually cheaper.">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+/* ==========================================================================
+   ARTICLE — Amazon Inventory Forecasting
+   Self-contained. Tokens mirror css/variables.css so this page can either
+   stand alone OR have this <style> block deleted once it sits inside the
+   site's normal stylesheet chain.
+========================================================================== */
+
+:root{
+  --z-nav:100;          /* navigation.css */
+  --container:1280px;   /* .container, below */
+  --t-body:15px;        /* .btn, below */
+  --bg:#030917; --bg-deep:#01050E; --bg-raise:#060D1E;
+  --surface:rgba(255,255,255,.030); --surface-2:rgba(255,255,255,.055);
+  --surface-solid:#0A1224;
+  --line:rgba(255,255,255,.070); --line-strong:rgba(255,255,255,.140);
+
+  --text:#EEF1F8; --text-2:#98A2B8; --text-3:#616C84;
+
+  --violet:#8B3BF1; --violet-soft:#A971F7; --indigo:#5B4FE6;
+  --blue:#3B82F6; --blue-soft:#7EB3FF;
+  --green:#2ED47A; --amber:#F5A524; --red:#F0435C;
+
+  --grad-brand:linear-gradient(135deg,#5B4FE6 0%,#8B3BF1 100%);
+  --grad-text:linear-gradient(90deg,#6153E6 0%,#9D50F7 55%,#C56BF5 100%);
+  --grad-card:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  --grad-rule:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,monospace;
+
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px;
+  --s5:48px; --s6:64px; --s7:96px; --s8:128px;
+
+  --gutter:clamp(20px,4vw,40px);
+  --measure:720px;
+
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
+  --sh-2:0 18px 40px rgba(0,0,0,.42);
+  --sh-brand:0 16px 40px rgba(107,63,232,.35);
+  --ease:cubic-bezier(.22,.61,.36,1); --fast:.18s; --mid:.28s;
+
+  color-scheme:dark;
+  scrollbar-color:#26304A var(--bg);
+  scrollbar-width:thin;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation:none !important; transition:none !important; }
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+::selection{ background:var(--violet); color:#fff; }
+
+.skip-link{
+  position:absolute; left:-9999px; top:0;
+  background:var(--surface-solid); color:var(--text);
+  padding:12px 20px; border-radius:0 0 var(--r-sm) 0;
+  z-index:1000; text-decoration:none; font-weight:600;
+}
+.skip-link:focus{ left:0; }
+
+:focus-visible{
+  outline:2px solid var(--violet-soft);
+  outline-offset:3px;
+  border-radius:var(--r-xs);
+}
+
+/* ---------- ambient background ------------------------------------------ */
+.bg-layer{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(760px 520px at 18% -8%,  rgba(91,79,230,.20), transparent 62%),
+    radial-gradient(680px 480px at 88% 4%,   rgba(139,59,241,.15), transparent 60%),
+    radial-gradient(900px 700px at 50% 108%, rgba(59,130,246,.09), transparent 66%);
+}
+
+.wrap{ position:relative; z-index:1; }
+
+/* ---------- shell ------------------------------------------------------- */
+.article{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:0 var(--gutter) var(--s8);
+}
+
+/* ---------- header ------------------------------------------------------ */
+.article-head{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:clamp(64px,9vw,120px) var(--gutter) clamp(32px,4vw,48px);
+}
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--violet-soft);
+  background:var(--surface); border:1px solid var(--line);
+  padding:7px 14px; border-radius:var(--r-pill);
+  margin:0 0 var(--s3);
+}
+.eyebrow::before{
+  content:""; width:6px; height:6px; border-radius:50%;
+  background:var(--violet-soft);
+  box-shadow:0 0 10px rgba(169,113,247,.9);
+}
+
+h1{
+  font-size:clamp(34px,5vw,58px);
+  line-height:1.08;
+  letter-spacing:-.025em;
+  font-weight:800;
+  margin:0 0 var(--s3);
+  text-wrap:balance;
+}
+h1 .accent{
+  background:var(--grad-text);
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+}
+
+.deck{
+  font-size:clamp(18px,2.1vw,21px);
+  line-height:1.6;
+  color:var(--text-2);
+  margin:0 0 var(--s4);
+  max-width:62ch;
+}
+
+.meta{
+  display:flex; flex-wrap:wrap; align-items:center; gap:var(--s2);
+  font-size:14px; color:var(--text-3);
+  padding-top:var(--s3);
+  border-top:1px solid var(--line);
+}
+.meta .dot{ width:3px; height:3px; border-radius:50%; background:var(--text-3); }
+
+/* ---------- table of contents ------------------------------------------- */
+.toc{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:0 0 var(--s6);
+}
+.toc h2{
+  font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--text-3); margin:0 0 var(--s3); padding:0; border:0;
+}
+.toc ol{
+  list-style:none; margin:0; padding:0;
+  counter-reset:toc;
+  display:grid; gap:2px;
+}
+.toc li{ counter-increment:toc; margin:0; }
+.toc a{
+  display:flex; gap:14px; align-items:baseline;
+  color:var(--text-2); text-decoration:none;
+  font-size:15px; line-height:1.5;
+  padding:8px 10px; margin:0 -10px;
+  border-radius:var(--r-xs);
+  transition:color var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+.toc a::before{
+  content:counter(toc,decimal-leading-zero);
+  font-family:var(--font-mono); font-size:12px; font-weight:600;
+  color:var(--text-3); flex:none; min-width:22px;
+  transition:color var(--fast) var(--ease);
+}
+.toc a:hover{ color:var(--text); background:var(--surface); }
+.toc a:hover::before{ color:var(--violet-soft); }
+
+/* ---------- body typography --------------------------------------------- */
+.article p{ margin:0 0 1.1em; color:#D5DBE9; }
+.article p.lead{ font-size:20px; color:var(--text); }
+
+.article h2{
+  font-size:clamp(26px,3.2vw,34px);
+  line-height:1.2;
+  letter-spacing:-.02em;
+  font-weight:700;
+  color:var(--text);
+  margin:var(--s7) 0 var(--s3);
+  padding-top:var(--s5);
+  border-top:1px solid var(--line);
+  scroll-margin-top:32px;
+  text-wrap:balance;
+}
+.article h2:first-of-type{ margin-top:0; }
+
+.article h2 .num{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:13px; font-weight:600; letter-spacing:.16em;
+  color:var(--violet-soft);
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
+
+.article strong{ color:var(--text); font-weight:700; }
+
+.article ul{
+  margin:0 0 1.4em;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:10px;
+}
+.article ul li{
+  position:relative;
+  padding-left:26px;
+  color:#D5DBE9;
+  line-height:1.6;
+}
+.article ul li::before{
+  content:"";
+  position:absolute; left:6px; top:.68em;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--violet);
+  box-shadow:0 0 8px rgba(139,59,241,.55);
+}
+
+/* ---------- pull quote --------------------------------------------------- */
+blockquote{
+  margin:var(--s4) 0;
+  padding:var(--s3) var(--s4);
+  border-left:2px solid var(--violet);
+  background:linear-gradient(90deg,rgba(139,59,241,.10),transparent 80%);
+  border-radius:0 var(--r-md) var(--r-md) 0;
+}
+blockquote p{
+  margin:0;
+  font-size:20px;
+  line-height:1.5;
+  font-weight:600;
+  color:var(--text);
+}
+
+/* ---------- callouts ----------------------------------------------------- */
+.callout{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:var(--s4) 0 var(--s5);
+}
+.callout .label{
+  display:block;
+  font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--text-3);
+  margin-bottom:var(--s2);
+}
+.callout p:last-child, .callout ul:last-child{ margin-bottom:0; }
+
+.formula{
+  font-family:var(--font-mono);
+  font-size:clamp(15px,2.1vw,19px);
+  font-weight:600;
+  line-height:1.6;
+  color:var(--text);
+  background:var(--bg-deep);
+  border:1px solid var(--line-strong);
+  border-radius:var(--r-md);
+  padding:var(--s3);
+  margin:0 0 var(--s3);
+  text-align:center;
+  overflow-x:auto;
+}
+.formula .op{ color:var(--violet-soft); }
+
+/* ---------- numbers strip ------------------------------------------------ */
+.figures{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:var(--s2);
+  margin:var(--s4) 0 var(--s5);
+  padding:0; list-style:none;
+}
+.figures li{ padding:0; }
+.figures li::before{ display:none; }
+.fig{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:var(--s3) var(--s2);
+  text-align:center;
+}
+.fig .v{
+  display:block;
+  font-size:28px; font-weight:800; letter-spacing:-.02em; line-height:1.1;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.fig .k{
+  display:block;
+  font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.fig.is-bad .v{ color:var(--red); }
+.fig.is-real .v{ color:var(--green); }
+
+/* ---------- divider ------------------------------------------------------ */
+.rule{
+  height:1px; border:0;
+  background:var(--grad-rule);
+  margin:var(--s6) 0;
+}
+
+/* ---------- closing CTA -------------------------------------------------- */
+.cta{
+  max-width:var(--measure);
+  margin:var(--s7) auto 0;
+  padding:clamp(32px,5vw,56px) var(--gutter);
+  text-align:center;
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-xl);
+  box-shadow:var(--sh-2);
+}
+.cta h2{
+  font-size:clamp(24px,3vw,32px);
+  font-weight:700; letter-spacing:-.02em; line-height:1.2;
+  margin:0 0 var(--s2); padding:0; border:0;
+  text-wrap:balance;
+}
+.cta p{
+  color:var(--text-2);
+  max-width:52ch;
+  margin:0 auto var(--s4);
+  font-size:17px;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--grad-brand);
+  color:#fff; text-decoration:none;
+  font-weight:600; font-size:16px;
+  padding:14px 28px;
+  border-radius:var(--r-pill);
+  box-shadow:var(--sh-brand);
+  transition:transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+.btn:hover{ transform:translateY(-2px); box-shadow:0 22px 50px rgba(107,63,232,.45); }
+.btn svg{ width:18px; height:18px; }
+
+/* ---------- responsive --------------------------------------------------- */
+@media (max-width:640px){
+  body{ font-size:17px; }
+  .article p.lead{ font-size:18px; }
+  blockquote p{ font-size:18px; }
+  .article h2{ margin-top:var(--s6); padding-top:var(--s4); }
+}
+
+/* ---------- print -------------------------------------------------------- */
+@media print{
+  .bg-layer,.toc,.cta,.skip-link{ display:none; }
+  body{ background:#fff; color:#111; font-size:12pt; }
+  .article p,.article ul li{ color:#222; }
+  .article h2{ color:#000; }
+}
+.back-link{ margin:0 0 28px; font-size:13px; }
+.back-link a{ color:var(--text-2); text-decoration:none; }
+.back-link a:hover{ color:var(--text); }
+
+/* ── HERO IMAGE ─────────────────────────────────────────────────────── */
+.hero-shot{
+  margin:0 0 52px;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  background:var(--bg-raise);
+  line-height:0;
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+.hero-shot img{ width:100%; height:auto; display:block; }
+
+/* ── MISTAKE CARDS ──────────────────────────────────────────────────── */
+.mistake{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.mistake::before{
+  content:"";
+  position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+  background:var(--amber);
+}
+.mistake h2{ margin-top:0 !important; }
+.article .mistake h2:first-of-type{ margin-top:0; }
+
+/* ── PULL QUOTES ────────────────────────────────────────────────────── */
+blockquote{
+  margin:44px 0;
+  padding:0 0 0 26px;
+  border-left:3px solid var(--amber);
+  background:none;
+}
+blockquote p{
+  font-size:23px;
+  line-height:1.45;
+  font-style:italic;
+  font-weight:600;
+  color:var(--text);
+  margin:0;
+}
+
+/* ── MID-ARTICLE STRIP ──────────────────────────────────────────────── */
+.strip{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px; flex-wrap:wrap;
+  margin:44px 0;
+  padding:26px 30px;
+  border-radius:16px;
+  background:linear-gradient(120deg,#0A1224,#131A33);
+  border:1px solid var(--line-strong);
+}
+.strip h3{ margin:0 0 6px; font-size:19px; color:var(--text); }
+.strip p{ margin:0; font-size:14px; color:var(--text-2); }
+.strip-btn{
+  flex:0 0 auto;
+  display:inline-block;
+  padding:12px 22px;
+  border-radius:10px;
+  background:var(--amber);
+  color:#1A1200;
+  font-size:14px; font-weight:700;
+  text-decoration:none;
+  transition:filter .15s ease;
+}
+.strip-btn:hover{ filter:brightness(1.08); }
+
+@media (max-width:640px){
+  .mistake{ padding:24px 20px 8px; }
+  .mistake::before{ top:20px; bottom:20px; }
+  blockquote p{ font-size:20px; }
+  .strip{ padding:22px; }
+  .strip-btn{ width:100%; text-align:center; }
+}
+
+/* ── WIDE SHELL: content + rail, so the page uses the screen ─────────── */
+.shell{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 var(--gutter);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 300px;
+  gap:64px;
+  align-items:start;
+}
+.shell > .article{ max-width:none; margin:0; padding:0 0 var(--s8); }
+
+.rail{ position:sticky; top:40px; display:flex; flex-direction:column; gap:14px; }
+.rail-card{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+  padding:20px;
+}
+.rail-k{
+  display:block; margin-bottom:10px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.rail-v{
+  display:block; margin-bottom:10px;
+  font-size:34px; line-height:1; font-weight:800; letter-spacing:-.02em;
+  color:var(--green);
+}
+.rail-v.is-amber{ color:var(--amber); }
+.rail-v.is-violet{ color:var(--violet-soft); }
+.rail-card p{ margin:0; font-size:13px; line-height:1.55; color:var(--text-2); }
+.rail-src{
+  margin:0; padding-top:14px;
+  border-top:1px solid var(--line);
+  font-size:11px; line-height:1.5; color:var(--text-3);
+}
+
+/* header + hero align to the same shell */
+.article-head, .hero-shot{ max-width:1180px; }
+
+/* ── HERO: a band, not a giant square ───────────────────────────────── */
+.hero-shot{
+  margin:0 auto 56px;
+  padding:0 var(--gutter);
+  border:0; background:none; box-shadow:none;
+  border-radius:0;
+  overflow:visible;
+}
+.hero-shot img{
+  width:100%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
+  border-radius:18px;
+  border:1px solid var(--line-strong);
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+
+/* ── THE FIX callout ────────────────────────────────────────────────── */
+.fixbox{
+  margin:22px 0 4px;
+  padding:16px 18px;
+  border-radius:12px;
+  border:1px solid rgba(46,212,122,.28);
+  background:rgba(46,212,122,.07);
+}
+.fixbox-k{
+  display:block; margin-bottom:6px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--green);
+}
+.fixbox p{ margin:0 !important; color:var(--text) !important; }
+
+@media (max-width:1080px){
+  .shell{ grid-template-columns:1fr; gap:40px; max-width:820px; }
+  .rail{ position:static; flex-direction:row; flex-wrap:wrap; }
+  .rail-card{ flex:1 1 220px; }
+  .rail-src{ flex:1 1 100%; border-top:0; padding-top:0; }
+  .article-head, .hero-shot{ max-width:820px; }
+}
+@media (max-width:640px){
+  .shell{ gap:28px; }
+}
+
+
+/* ── FIGURES CARRIED OVER FROM THE DRAFT ──────────────────────────────
+   This piece ships its own tables, charts and spec blocks. Rather than
+   import a second design system for them, the palette they were written
+   against is repointed at this site's tokens, and only their component
+   rules are carried over. --measure is deliberately absent: it collides
+   with the site's, and the ported rules should use the site's column.
+   ------------------------------------------------------------------- */
+:root{
+  --paper:var(--bg); --panel:var(--surface-solid); --panel-2:var(--surface-2);
+  --ink:var(--text); --ink-2:var(--text-2); --ink-3:var(--text-3);
+  --rule:var(--line); --rule-strong:var(--line-strong);
+  --accent:var(--violet-soft); --accent-soft:rgba(139,59,241,.16);
+  --cost:var(--text-3);
+  --good:var(--green);  --good-soft:rgba(46,212,122,.10);
+  --warn:var(--amber);  --warn-soft:rgba(245,165,36,.10);
+  --crit:var(--red);    --crit-soft:rgba(240,67,92,.10);
+  --f-display:var(--font); --f-body:var(--font);
+  --f-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+article p{margin:0 0 1.15rem}
+article ul, article ol{margin:0 0 1.3rem;padding-left:1.15rem}
+article li{margin-bottom:.5rem}
+article li::marker{color:var(--ink-3)}
+strong{font-weight:600}
+.fix{background:var(--panel);border:1px solid var(--rule);border-left:3px solid var(--accent);padding:1.1rem 1.3rem;margin:1.9rem 0}
+.fix .k{display:block;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:.45rem}
+.fix p{margin:0}
+.fix p+p{margin-top:.7rem}
+pre{font-family:var(--f-mono);font-size:.83rem;line-height:1.75;background:var(--panel-2);border:1px solid var(--rule);padding:1rem 1.1rem;margin:1.6rem 0;overflow-x:auto}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--panel-2);padding:.1em .35em;border-radius:2px}
+pre code{background:none;padding:0;font-size:1em}
+.spec{background:var(--panel);border:1px solid var(--rule);padding:1.2rem 1.3rem;margin:1.8rem 0}
+.spec h4{margin:0 0 .8rem;font-size:.72rem;font-family:var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+.spec dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:.45rem 1rem}
+.spec dt{color:var(--ink-2);font-size:.95rem}
+.spec dd{margin:0;font-family:var(--f-mono);font-size:.88rem;font-variant-numeric:tabular-nums;text-align:right}
+figure h4{margin:0 0 .2rem;font-size:1rem;font-weight:600}
+figure .sub{margin:0 0 .8rem;font-size:.85rem;color:var(--ink-2)}
+figure svg{display:block;width:100%;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:1.1rem;margin:0 0 .8rem;font-size:.83rem;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:.4rem}
+.swatch{width:11px;height:11px;border-radius:2px;display:inline-block}
+.ax{fill:var(--ink-3);font-family:"IBM Plex Mono",monospace;font-size:9.5px}
+.anno{fill:var(--ink);font-family:"IBM Plex Sans",sans-serif;font-size:10.5px;font-weight:600}
+.anno-2{fill:var(--ink-2);font-family:"IBM Plex Sans",sans-serif;font-size:9.5px}
+.grid{stroke:var(--rule);stroke-width:1}
+.tblwrap{overflow-x:auto;margin:1.6rem 0}
+table{border-collapse:collapse;width:100%;font-size:.92rem;min-width:27rem}
+caption{caption-side:bottom;text-align:left;font-size:.8rem;color:var(--ink-3);padding-top:.7rem;line-height:1.5}
+th, td{padding:.55rem .7rem;text-align:right;border-bottom:1px solid var(--rule);font-variant-numeric:tabular-nums}
+th:first-child, td:first-child{text-align:left}
+thead th{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500;border-bottom:1px solid var(--rule-strong)}
+tbody tr:last-child td{border-bottom:1px solid var(--rule-strong);font-weight:600}
+.bands{display:grid;gap:.55rem;margin:1.4rem 0 1.9rem}
+.band{display:grid;grid-template-columns:7rem 1fr;gap:1rem;align-items:baseline;padding:.7rem .9rem;background:var(--panel);border:1px solid var(--rule)}
+.band .lab{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
+.band.c .lab{color:var(--ink-3)}
+.band.s .lab{color:var(--accent)}
+.band.d .lab{color:var(--crit)}
+.band .txt{font-size:.95rem;color:var(--ink-2)}
+.five{list-style:none;padding:0;margin:1.5rem 0 2rem;border-top:1px solid var(--rule)}
+.five li{margin:0;display:grid;grid-template-columns:2.4rem 1fr;gap:.9rem;padding:.85rem .2rem;border-bottom:1px solid var(--rule)}
+.five .n{font-family:var(--f-mono);font-size:.72rem;color:var(--accent);padding-top:.15rem}
+.five b{display:block;font-weight:600}
+.five .d{color:var(--ink-2);font-size:.93rem}
+.faq details{border-bottom:1px solid var(--rule);padding:.9rem 0}
+.faq summary{cursor:pointer;font-weight:600;list-style:none;display:flex;gap:.75rem;align-items:flex-start}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::before{content:"+";font-family:var(--f-mono);color:var(--accent);font-weight:400;line-height:1.6}
+.faq details[open] summary::before{content:"–"}
+.faq p{margin:.65rem 0 0 1.5rem;color:var(--ink-2)}
+.faq summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* ── PIECES THIS ARTICLE ADDS ─────────────────────────────────────────
+   h3, tables, the FAQ and the carried-over figure. The 44 articles that
+   came before this one had no h3 and no tables, so the core stylesheet
+   never needed rules for them.
+   ------------------------------------------------------------------- */
+.article h3{
+  margin:var(--s5) 0 var(--s2);
+  font-size:clamp(19px,1.6vw,22px);
+  font-weight:650; letter-spacing:-.01em; color:var(--text);
+}
+.tblwrap{ margin:var(--s4) 0; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.article table{
+  width:100%; border-collapse:collapse;
+  font-size:.94rem; line-height:1.5;
+}
+.article th, .article td{
+  padding:10px 14px; text-align:left; vertical-align:top;
+  border-bottom:1px solid var(--line);
+}
+.article th{
+  font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+  color:var(--text-3); border-bottom-color:var(--line-strong); white-space:nowrap;
+}
+.article tbody tr:last-child td{ border-bottom:0; }
+.art-diagram{ margin:var(--s4) 0; }
+.art-diagram svg{ width:100%; height:auto; display:block; }
+.art-diagram .sub, .art-diagram figcaption{
+  margin-top:10px; font-size:var(--t-micro,.82rem); color:var(--text-3); line-height:1.5;
+}
+.faq{ margin:var(--s4) 0; }
+.faq details{
+  border:1px solid var(--line); border-radius:var(--r-md);
+  background:var(--surface); padding:14px 18px; margin-bottom:10px;
+}
+.faq summary{
+  cursor:pointer; font-weight:600; color:var(--text);
+  list-style:none; padding-right:24px; position:relative;
+}
+.faq summary::-webkit-details-marker{ display:none; }
+.faq summary::after{
+  content:"+"; position:absolute; right:0; top:-2px;
+  font-size:19px; line-height:1; color:var(--violet-soft);
+}
+.faq details[open] summary::after{ content:"\2013"; }
+.faq details p{ margin:10px 0 0 !important; color:var(--text-2); }
+
+/* ── KEEPING WIDE THINGS INSIDE A PHONE ───────────────────────────────
+   These pieces carry long monospace formulas, wide comparison tables and
+   the draft's scenario rows. Each has a min-content width larger than a
+   390px screen, and the shell's mobile track is `1fr` - which means
+   minmax(auto,1fr), so a single one of them widens the whole column and
+   the entire page scrolls sideways. Cap the track, then let each wide
+   block scroll inside itself instead of pushing the article around.
+   ------------------------------------------------------------------- */
+@media (max-width:1080px){
+  .shell{ grid-template-columns:minmax(0,1fr); }
+}
+.shell > .article{ min-width:0; }
+.article > *{ max-width:100%; }
+.formula{ overflow-x:auto; }
+.formula code{ white-space:pre; }
+.tblwrap{ min-width:0; max-width:100%; }
+.scn, .scnrow, .bands, .band, .inputs, .facts, .spec, .grid{ min-width:0; max-width:100%; }
+@media (max-width:640px){
+  .scnrow{ display:block; }
+  .scnrow > *{ display:block; }
+}
+
+/* ── SITE HEADER ──────────────────────────────────────────────────────
+   The header markup is the site's, and navigation.css styles it. These are
+   the pieces it also leans on from base.css, which this page does not load.
+   Every selector is scoped to the header or the mobile drawer: an article is
+   built out of bare a/p/h3/h4, and base.css restyles all of those.
+
+   The scope is written with :where() so it adds no specificity. Scoped the
+   plain way, `.site-header .btn` is (0,2,0) - the same weight as
+   navigation.css's own `.nav-actions .btn--quiet` and `.nav-mobile a`, and
+   loaded after them, so these copies quietly outranked the real rules: the
+   hamburger got pushed off a 390px screen and the drawer buttons lost their
+   sizing. Inside :where() each rule keeps exactly the weight it has in
+   base.css, which is the weight navigation.css was written against.
+   ------------------------------------------------------------------- */
+/* The header inherits from <body>, and this page's body is set for reading:
+   18px at 1.72. The site's is var(--t-body) at 1.6. Left alone, every element
+   in the bar came out a size and a half too tall. Reset it at the root of the
+   header so everything inside inherits the site's figures instead. */
+:where(.site-header),
+:where(.nav-mobile){
+  font-size:var(--t-body);
+  line-height:1.6;
+}
+
+:where(.site-header) .container{
+  width:min(100%,var(--container));
+  margin-inline:auto;
+  padding-inline:var(--gutter);
+  position:relative;
+}
+:where(.site-header, .nav-mobile) .brand{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:19px; font-weight:700; letter-spacing:-.01em;
+  color:var(--text); text-decoration:none;
+}
+:where(.site-header) .brand-mark{ width:26px; height:26px; flex:none; }
+:where(.site-header) .icon,    :where(.nav-mobile) .icon{    width:20px; height:20px; flex:none; stroke-width:1.7; }
+:where(.site-header) .icon-sm, :where(.nav-mobile) .icon-sm{ width:16px; height:16px; flex:none; stroke-width:1.8; }
+/* margin-block only: navigation.css centres this with margin-inline:auto,
+   and a shorthand `margin:0` here would outrank it and shove the menu
+   over against the brand. */
+:where(.site-header) .nav-menu{ list-style:none; padding:0; margin-block:0; }
+.site-header a, .nav-mobile a{ text-decoration:none; }
+/* base.css resets these globally; this page does not load it. Without the
+   padding reset the UA's 1px 6px survives and the 44px tap target
+   responsive.css asks for comes out 40px. */
+:where(.site-header) .nav-toggle{ font:inherit; cursor:pointer; padding:0; }
+:where(.site-header) svg, :where(.nav-mobile) svg{ display:block; }
+
+:where(.site-header) .btn, :where(.nav-mobile) .btn{
+  /* This page defines its own .btn - a filled gradient pill used in the body -
+     and it reaches the header buttons too. base.css's .btn sets none of these,
+     so the variant classes below are what should decide them. Cleared here or
+     "Log in", which is .btn--quiet and meant to read as plain text, arrives
+     wearing the brand gradient. */
+  background:none;
+  box-shadow:none;
+  color:inherit;
+  text-decoration:none;
+  position:relative;
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  padding:13px 22px;
+  border-radius:var(--r-sm);
+  font-size:var(--t-body); font-weight:600; line-height:1;
+  white-space:nowrap;
+  transition:transform var(--fast) var(--ease),
+             box-shadow var(--fast) var(--ease),
+             background var(--fast) var(--ease),
+             border-color var(--fast) var(--ease);
+}
+:where(.site-header) .btn:active, :where(.nav-mobile) .btn:active{ transform:translateY(0) scale(.99); }
+:where(.site-header) .btn--primary, :where(.nav-mobile) .btn--primary{
+  background:var(--grad-brand); color:#fff;
+  box-shadow:var(--sh-brand); overflow:hidden;
+}
+:where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{
+  content:""; position:absolute; top:0; left:-130%;
+  width:55%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);
+  transition:left .65s var(--ease);
+}
+:where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{
+  transform:translateY(-2px); box-shadow:0 22px 52px rgba(107,63,232,.45);
+}
+:where(.site-header) .btn--primary:hover::after, :where(.nav-mobile) .btn--primary:hover::after{ left:150%; }
+:where(.site-header) .btn--quiet, :where(.nav-mobile) .btn--quiet{ color:var(--text-2); padding:13px 8px; }
+:where(.site-header) .btn--quiet:hover, :where(.nav-mobile) .btn--quiet:hover{ color:var(--text); }
+:where(.nav-mobile) .btn--block{ width:100%; }
+
+@media (prefers-reduced-motion:reduce){
+  :where(.site-header) .btn, :where(.nav-mobile) .btn,
+  :where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{ transition:none; }
+  :where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{ transform:none; }
+}
+
+/* navigation.css hides these two buttons on small screens so the hamburger
+   fits. Its selectors are (0,2,0) and so is `:where(.site-header) .btn` above, which
+   is loaded after it - equal weight, later wins, and display:inline-flex beat
+   display:none. The hamburger ended up 107px off the right of a 390px screen
+   with no way to open the menu. Restating the hide at (0,3,0) settles it.
+   The breakpoints are read out of navigation.css at build time, not typed. */
+
+/* Clear the fixed site header. Reserving its height on .wrap keeps the gap
+   between the bar and the eyebrow the same as the gap used to be between the
+   top of the window and the eyebrow. */
+.wrap{ padding-top:70px; }
+@media (max-width:640px){ .wrap{ padding-top:64px; } }
+
+/* Anchor targets. .article h2 carried scroll-margin-top:32px, which was right
+   when this page had no fixed bar: 32px was breathing room. Now a jump from
+   the contents list lands 38px underneath the header. responsive.css puts the
+   rest of the site on 84px for exactly this reason; the article's own rule is
+   (0,2,0) and outranks it, so it is restated here at the same weight. */
+.article h2{ scroll-margin-top:84px; }
+
+/* The back-link sat hard against the left edge of the window, in line with
+   nothing. That was always true, but with the nav above it the thing reads as
+   stranded rather than as a heading. Same shell as .article-head, so it lines
+   up with the title beneath it and behaves as the breadcrumb it is. */
+.back-link{
+  max-width:1180px;
+  margin-inline:auto;      /* the rule above keeps its 28px bottom margin */
+  padding:22px var(--gutter) 0;
+}
+</style>
+<link rel="stylesheet" href="/css/navigation.css">
+<link rel="stylesheet" href="/css/responsive.css">
+<link rel="stylesheet" href="/css/site-footer.css">
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="bg-layer" aria-hidden="true"></div>
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+</defs>
+  <symbol id="i-chevron"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-menu"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-mega"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l7 4V5L8 9H4zM19 9a4 4 0 010 6"/></symbol>
+  <symbol id="i-dollar"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5v19M16.5 6.5H10a3.2 3.2 0 000 6.4h4a3.2 3.2 0 010 6.4H7"/></symbol>
+  <symbol id="i-stack"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/></symbol>
+  <symbol id="i-box"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></symbol>
+  <symbol id="i-search"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></symbol>
+  <symbol id="i-chart"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-trend"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></symbol>
+  <symbol id="i-db"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3.2"/><path d="M4 6v12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2V6M4 12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2"/></symbol>
+  <symbol id="i-shield"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-9.5V5.5L12 2.5 4 5.5V12.5C4 18.5 12 22 12 22z"/></symbol>
+  <symbol id="i-spark"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+  <symbol id="i-rocket"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15s-1.5 3 1 5.5S11 20 11 20M14.5 4.5c3-2 6-1 6-1s1 3-1 6l-6 6-5-5 6-6z"/><circle cx="15" cy="9" r="1.4"/></symbol>
+  <symbol id="i-case"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8.5 7V5a2 2 0 012-2h3a2 2 0 012 2v2M2.5 12.5h19"/></symbol>
+  <symbol id="i-info"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></symbol>
+  <symbol id="i-msg"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-8 8 8.6 8.6 0 01-3.6-.8L3 21l1.8-6.4A8 8 0 1121 12z"/></symbol>
+</svg>
+
+<header class="site-header">
+<div class="container">
+<nav class="nav" aria-label="Primary">
+
+  <a href="/index.html" class="brand" aria-label="AmazeBase home">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+      <path d="M16 17.6l4.4 8.2h-8.8z" fill="#C56BF5" opacity=".85"/>
+    </svg>
+    <span data-brand>AmazeBase</span>
+  </a>
+
+  <ul class="nav-menu">
+    <li class="nav-item">
+      <a class="nav-link" href="/product.html#modules">Product <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop nav-drop--wide">
+        <a href="/product.html#advertising"><svg class="icon-sm"><use href="#i-mega"/></svg>Advertising &amp; PPC</a>
+        <a href="/product.html#financials"><svg class="icon-sm"><use href="#i-dollar"/></svg>Financials</a>
+        <a href="/product.html#ledger"><svg class="icon-sm"><use href="#i-stack"/></svg>Ledger</a>
+        <a href="/product.html#inventory"><svg class="icon-sm"><use href="#i-box"/></svg>Inventory</a>
+        <a href="/product.html#research"><svg class="icon-sm"><use href="#i-search"/></svg>Product Research</a>
+        <a href="/product.html#simulations"><svg class="icon-sm"><use href="#i-chart"/></svg>Simulations</a>
+        <a href="/product.html#sales"><svg class="icon-sm"><use href="#i-trend"/></svg>Sales</a>
+        <a href="/product.html#data"><svg class="icon-sm"><use href="#i-db"/></svg>Data &amp; Sync</a>
+        <a href="/product.html#security"><svg class="icon-sm"><use href="#i-shield"/></svg>Security</a>
+        <a href="/product.html#assistant"><svg class="icon-sm"><use href="#i-spark"/></svg>AI Assistant &mdash; soon</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/solutions.html">Solutions <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/solutions.html#beginners"><svg class="icon-sm"><use href="#i-rocket"/></svg>Beginners</a>
+        <a href="/solutions.html#experts"><svg class="icon-sm"><use href="#i-dollar"/></svg>Experienced sellers</a>
+        <a href="/solutions.html#agencies"><svg class="icon-sm"><use href="#i-case"/></svg>Agencies</a>
+      </div>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="/index.html#pricing">Pricing</a></li>
+    <li class="nav-item"><a class="nav-link" href="/resources.html">Resources</a></li>
+    <li class="nav-item">
+      <a class="nav-link" href="/about.html">Company <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/about.html"><svg class="icon-sm"><use href="#i-info"/></svg>About</a>
+        <a href="/contact.html"><svg class="icon-sm"><use href="#i-msg"/></svg>Contact</a>
+      </div>
+    </li>
+  </ul>
+
+  <div class="nav-actions">
+    <a class="btn btn--quiet" href="https://amz-analytics-production.up.railway.app/login">Log in</a>
+    <a class="btn btn--primary" href="/index.html#waitlist" data-magnetic>Join the Wait List</a>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="navMobile">
+      <svg class="icon"><use href="#i-menu"/></svg>
+    </button>
+  </div>
+
+</nav>
+</div>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="/product.html#modules">Product</a>
+  <a href="/solutions.html">Solutions</a>
+  <a href="/index.html#pricing">Pricing</a>
+  <a href="/resources.html">Resources</a>
+  <a href="/about.html">About</a>
+  <a href="/contact.html">Contact</a>
+  <a class="btn btn--quiet btn--block" href="https://amz-analytics-production.up.railway.app/login">Log in</a>
+  <a class="btn btn--primary btn--block" href="/index.html#waitlist">Join the Wait List</a>
+</div>
+</header>
+
+<div class="wrap">
+<p class="back-link"><a href="/resources.html">&larr; Knowledge Hub</a></p>
+<header class="article-head">
+  <p class="eyebrow">Profit &amp; Finances</p>
+  <h1>A purchase order <span class="accent">is two objects</span></h1>
+  <p class="deck">Tracking supplier payment schedules alongside product margins — and the number that decides which supplier is actually cheaper.</p>
+  <p class="meta">
+    <span>AmazeBase</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>13 min read</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>Suppliers &amp; Cash Flow</span>
+  </p>
+</header>
+
+<!-- HERO IMAGE GOES HERE. Drop the image in as assets/img/hero-supplier-payment-schedules-margins.webp at 1672x941, uncomment, and write the alt text:
+<figure class="hero-shot">
+  <img src="../assets/img/hero-supplier-payment-schedules-margins.webp"
+       alt=""
+       width="1672" height="941" loading="eager" decoding="async">
+</figure>
+-->
+
+<div class="shell">
+<main id="main" class="article">
+  <p class="lead">Most sellers keep supplier management in two places that never meet: a margin spreadsheet, and a folder of invoices with dates on them.</p>
+  <nav class="toc" aria-labelledby="toc-title">
+    <h2 id="toc-title">What&rsquo;s in this piece</h2>
+    <ol>
+      <li><a href="#s1">Two objects, one document</a></li>
+      <li><a href="#s2">The price is not the cost</a></li>
+      <li><a href="#s3">Payment shape</a></li>
+      <li><a href="#s4">Which supplier is cheaper</a></li>
+      <li><a href="#s5">Turning a PO into payments</a></li>
+      <li><a href="#s6">Committed, scheduled, due</a></li>
+      <li><a href="#s7">Overlapping commitments</a></li>
+      <li><a href="#s8">One cost, one owner</a></li>
+      <li><a href="#s9">The supplier scorecard</a></li>
+      <li><a href="#s10">Currency</a></li>
+      <li><a href="#s11">Expected vs actual</a></li>
+      <li><a href="#s12">Five numbers</a></li>
+      <li><a href="#s13">Questions</a></li>
+    </ol>
+  </nav>
+
+
+    
+
+    <p>That split feels natural. Profitability is an analysis question; paying the factory is an admin task. They sit with different tools and often different people.</p>
+
+    <p>It's also the reason profitable Amazon businesses run out of money.</p>
+
+    <p>Because a purchase order isn't one thing. <strong>It's an inventory commitment and a cash schedule wearing the same document.</strong> The inventory half determines what you'll earn. The cash half determines whether you can get there. Look at either alone and you'll make a decision that's correct in one dimension and ruinous in the other.</p>
+
+    <p>Here's how to hold both at once — and a number that settles the argument sellers have most often, which is which supplier is cheaper.</p>
+
+    <h2 id="s1"><span class="num">01</span>Two objects, one document</h2>
+      <p>Split every PO deliberately, because the two halves have different owners, different questions, and different failure modes.</p>
+      <ul>
+        <li><strong>The inventory commitment</strong> — units, landed cost, when they become sellable, what they'll contribute. Feeds product economics and reorder planning.</li>
+        <li><strong>The cash schedule</strong> — a set of dated obligations, each with an amount and a trigger. Feeds the cash timeline.</li>
+      </ul>
+      <p>They share exactly two facts: the unit cost and the arrival date. Everything else diverges. And those two shared facts are precisely where systems drift apart, so they're worth guarding — §08 comes back to it.</p>
+      <blockquote>
+    <p>The PO you can afford and the PO you should place are different documents until you put them on one screen.</p>
+  </blockquote>
+    
+
+    <h2 id="s2"><span class="num">02</span>The quote is not the cost</h2>
+      <p>A supplier quotes $8.00. That number belongs in a negotiation, not in a margin calculation.</p>
+      <p>Landed cost is everything required to turn a quote into a sellable unit: manufacturing, packaging, inspection, labelling, prep, inland transport, international freight, duty and tariffs, insurance, and whatever the last shipment taught you to expect.</p>
+      <p>The practical consequence shows up when comparing suppliers. A $7.50 quote against an $8.00 quote is not a saving until you've added:</p>
+      <ul>
+        <li><strong>MOQ</strong> — a lower price at 5,000 units when you need 2,000 is a worse deal, not a better one.</li>
+        <li><strong>Incoterms</strong> — EXW and DDP quotes are not comparable numbers. One of them contains the freight.</li>
+        <li><strong>Packaging and prep</strong> — who does it, and is it in the price?</li>
+        <li><strong>Defect rate</strong> — 3% unsellable is 3% on your effective unit cost.</li>
+        <li><strong>Payment shape</strong> — the subject of the next two sections.</li>
+      </ul>
+      <p>Compare the economic cost of the inventory, not the number on the quote.</p>
+    
+
+    <h2 id="s3"><span class="num">03</span>Payment shape, and why it doesn't show up in margin</h2>
+      <p>Two suppliers, identical landed cost, identical product.</p>
+      <ul>
+        <li><strong>Supplier A:</strong> 30% at order, 70% before shipment.</li>
+        <li><strong>Supplier B:</strong> 20% at order, 80% thirty days after shipment.</li>
+      </ul>
+      <p>Your product margin is byte-for-byte identical. Your business is not.</p>
+      <p>The reason is the shape of the gap between paying and being paid. An Amazon seller pays a factory, waits for production, waits for a boat, waits for check-in, sells over weeks, then waits again for Amazon's disbursement cycle. Cash leaves early and returns late, and the interval is measured in months.</p>
+      <p>Two numbers describe that gap. Almost nobody computes either:</p>
+<pre><code>cash conversion gap = days from the first supplier payment
+                      to the first Amazon disbursement
+                      from that inventory
+
+peak exposure       = the largest amount you are out of pocket
+                      at any point in the cycle</code></pre>
+      <p>Margin tells you what a unit earns. These two tell you what it costs to <em>wait</em> for that, and how much of your business is tied up while you do.</p>
+    
+
+    <h2 id="s4"><span class="num">04</span>So which supplier is actually cheaper?</h2>
+      <p>Now make the two suppliers differ on price as well, the way they do in reality — the cheaper one is slower and wants its money sooner.</p>
+
+      <div class="spec">
+        <h4>Same product, 3,000 units, sells at $35</h4>
+        <dl>
+          <dt>Cash back per unit after Amazon fees and ads</dt><dd>$12.00</dd>
+          <dt>Sales rate once sellable</dt><dd>50/day</dd>
+          <dt>Supplier A — landed cost</dt><dd>$6.80</dd>
+          <dt>Supplier A — terms · production · transit</dt><dd>30/70 · 45d · 30d</dd>
+          <dt>Supplier B — landed cost</dt><dd>$7.20</dd>
+          <dt>Supplier B — terms · production · transit</dt><dd>20/80 net 30 · 25d · 30d</dd>
+        </dl>
+      </div>
+
+      <p>A is 5.6% cheaper per unit. Every instinct says take it. Watch what the cash does.</p>
+
+      <figure class="art-diagram">
+        <h4>Cash exposure through one order cycle</h4>
+        <p class="sub">How far out of pocket you are, day by day, from first payment to full recovery.</p>
+        <div class="legend">
+          <span><i class="swatch" style="background:var(--s1)"></i>Supplier A — $6.80, 30/70, 75d to sellable</span>
+          <span><i class="swatch" style="background:var(--s2)"></i>Supplier B — $7.20, 20/80 net 30, 55d to sellable</span>
+        </div>
+        <svg viewBox="0 0 700 300" role="img" aria-label="Two cash exposure curves over 140 days. Supplier A steps to 6,120 dollars out of pocket on day 0, to 20,400 on day 45, stays there until day 95, and returns to zero on day 129. Supplier B steps to 4,320 on day 0, to 21,600 on day 55, stays there until day 75, and returns to zero on day 111.">
+          <line class="grid" x1="66" y1="40" x2="672" y2="40" stroke="var(--rule-strong)"></line>
+          <line class="grid" x1="66" y1="87.7" x2="672" y2="87.7" stroke-dasharray="2 4"></line>
+          <line class="grid" x1="66" y1="135.5" x2="672" y2="135.5" stroke-dasharray="2 4"></line>
+          <line class="grid" x1="66" y1="183.2" x2="672" y2="183.2" stroke-dasharray="2 4"></line>
+          <line class="grid" x1="66" y1="231" x2="672" y2="231" stroke-dasharray="2 4"></line>
+          <text class="ax" x="58" y="43" text-anchor="end">$0</text>
+          <text class="ax" x="58" y="91" text-anchor="end">−$5k</text>
+          <text class="ax" x="58" y="139" text-anchor="end">−$10k</text>
+          <text class="ax" x="58" y="186" text-anchor="end">−$15k</text>
+          <text class="ax" x="58" y="234" text-anchor="end">−$20k</text>
+
+          <path fill="var(--s1-fill)" stroke="none" d="M66,40 L66,98.4 L260.8,98.4 L260.8,234.7 L477.2,234.7 L624.4,40 Z"></path>
+          <path fill="var(--s2-fill)" stroke="none" d="M66,40 L66,81.2 L304.1,81.2 L304.1,246.2 L390.7,246.2 L546.5,40 Z"></path>
+
+          <polyline fill="none" stroke="var(--s1)" stroke-width="2" stroke-linejoin="round"
+                    points="66,40 66,98.4 260.8,98.4 260.8,234.7 477.2,234.7 624.4,40"></polyline>
+          <polyline fill="none" stroke="var(--s2)" stroke-width="2" stroke-linejoin="round"
+                    points="66,40 66,81.2 304.1,81.2 304.1,246.2 390.7,246.2 546.5,40"></polyline>
+
+          <circle cx="624.4" cy="40" r="4.5" fill="var(--s1)" stroke="var(--panel)" stroke-width="2"></circle>
+          <circle cx="546.5" cy="40" r="4.5" fill="var(--s2)" stroke="var(--panel)" stroke-width="2"></circle>
+
+          <text class="anno" x="270" y="228">A · −$20,400</text>
+          <text class="anno-2" x="270" y="240">balance due day 45</text>
+          <text class="anno" x="314" y="262">B · −$21,600</text>
+          <text class="anno-2" x="314" y="274">balance due day 55</text>
+          <text class="anno" x="540" y="30" text-anchor="end">B recovers · day 111</text>
+          <text class="anno" x="668" y="60" text-anchor="end">A recovers · day 129</text>
+
+          <line class="grid" x1="66" y1="40" x2="672" y2="40" stroke="var(--rule-strong)"></line>
+          <text class="ax" x="66" y="290">day 0</text>
+          <text class="ax" x="195.9" y="290" text-anchor="middle">30</text>
+          <text class="ax" x="325.7" y="290" text-anchor="middle">60</text>
+          <text class="ax" x="455.6" y="290" text-anchor="middle">90</text>
+          <text class="ax" x="585.5" y="290" text-anchor="middle">120</text>
+        </svg>
+        <figcaption>B is out of pocket by slightly more at the bottom, for 34 fewer days. Peak exposure barely differs; the time spent at peak is what separates them.</figcaption>
+      </figure>
+
+      <p>Turn the cycle length into how many times a year the same money works:</p>
+
+      <div class="tblwrap">
+<div class="tblwrap"><table>
+          <caption>Contribution per unit is $12.00 less landed cost. Turns per year is 365 ÷ cycle days.</caption>
+          <thead>
+            <tr><th scope="col">Per year</th><th scope="col">Supplier A</th><th scope="col">Supplier B</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Contribution per unit</td><td>$5.20</td><td>$4.80</td></tr>
+            <tr><td>Cash cycle</td><td>129 days</td><td>111 days</td></tr>
+            <tr><td>Capital turns per year</td><td>2.83</td><td>3.29</td></tr>
+            <tr><td>Capital deployed</td><td>$20,400</td><td>$21,600</td></tr>
+            <tr><td>Annual contribution</td><td>$44,148</td><td>$47,376</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <p>The cheaper supplier earns <strong>$3,200 less per year</strong> on the same capital — and that's before counting what its 20 extra days of lead time cost in safety stock and stockout risk.</p>
+      <p>Add a second product competing for the same cash and the gap widens, because the constraint isn't the price. It's how long each dollar is stuck.</p>
+
+      <div class="fixbox">
+        <span class="fixbox-k">The rule</span>
+        <p>Compare suppliers on <strong>contribution per dollar per year</strong>, not price per unit. Price is one input to it. Terms and lead time are the other two, and they usually matter more.</p>
+      </div>
+    
+
+    <h2 id="s5"><span class="num">05</span>Turning a PO into dated payments</h2>
+      <p>A $21,000 purchase order is not a $21,000 cash event. It's a set of obligations, each with an amount and a rule for when it lands. Four triggers cover essentially every real contract:</p>
+      <ul>
+        <li><strong>At order</strong> — dated on the PO date. Known immediately.</li>
+        <li><strong>At shipment</strong> — dated when the goods leave. Estimated until they do.</li>
+        <li><strong>N days after shipment</strong> — the same anchor, plus a fixed offset.</li>
+        <li><strong>On a fixed date</strong> — dated as agreed.</li>
+      </ul>
+      <p>Two of those four hang off an event that hasn't happened yet, which produces the trap:</p>
+
+      <div class="fixbox">
+        <span class="fixbox-k">Never store a date you derived from an estimate</span>
+        <p>Store the <em>trigger</em> and the <em>offset</em>, and compute the date on read. If you store the computed date, then move the shipping estimate two weeks, every downstream due date silently keeps the old value — and nothing anywhere tells you the schedule is now fiction.</p>
+        <p>And when the anchor doesn't exist yet, say so. A payment showing "unanchored — awaiting shipment date" is honest. One quietly dated on the PO date instead looks like a fact and is a guess.</p>
+      </div>
+
+      <p>This is the difference between a schedule that ages well and one that quietly rots. It's the same discipline as the rest of the stack: keep the inputs, derive the outputs, and label what's derived.</p>
+    
+
+    <h2 id="s6"><span class="num">06</span>Committed, scheduled, due</h2>
+      <p>"How much do I owe suppliers?" has three legitimate answers, and mixing them is how a comfortable-looking month turns into a scramble.</p>
+
+      <div class="bands">
+        <div class="band c"><span class="lab">Committed</span><span class="txt">The total value of open POs. What you've promised, regardless of when it lands.</span></div>
+        <div class="band s"><span class="lab">Scheduled</span><span class="txt">Instalments with a trigger and a date, not yet paid. What's coming, and when.</span></div>
+        <div class="band d"><span class="lab">Due</span><span class="txt">Scheduled and inside your planning window — the next 7, 30 or 60 days.</span></div>
+      </div>
+
+      <p>Three products in production at once — $10,000, $15,000, $20,000 — is $45,000 committed. At 30% deposits it's $13,500 due now, which reads as comfortable. The remaining $31,500 arrives weeks later, and it arrives alongside the ad spend, the freight invoices, the software and the existing balances that were already scheduled.</p>
+      <p>Nothing went wrong. Three reasonable decisions simply landed in the same fortnight.</p>
+    
+
+    <h2 id="s7"><span class="num">07</span>The danger is overlap, not any single order</h2>
+      <p>One PO almost never causes a cash problem. The problem is the calendar view nobody builds.</p>
+      <p>Per-supplier questions — <em>when do I pay Supplier A?</em> — are the wrong grain. The business doesn't experience suppliers one at a time; it experiences a week in which $18,400 leaves.</p>
+      <p>So the useful view is a forward window across everything:</p>
+<pre><code>Next 7 days     $18,400 due          2 instalments
+Next 30 days    $47,200 scheduled    5 instalments + freight
+Next 60 days    $91,500 committed    incl. 2 POs with no schedule yet</code></pre>
+      <p>And the one exception check worth running automatically: <strong>is any payment due before the inventory it's paying for turns into Amazon cash?</strong> That's not a rule of thumb — it's a comparison of two dates you already have, and it's the specific shape of every inventory-driven cash squeeze.</p>
+      <p>A supplier dashboard that lists fifty POs has told you nothing. One that says <em>"two payments land before the cash they depend on"</em> has done the whole job.</p>
+    
+
+    <h2 id="s8"><span class="num">08</span>One cost, one owner</h2>
+      <p>Back to the two facts the halves of a PO share. Here's how they come apart.</p>
+      <p>A supplier raises the price from $7.20 to $7.80. The new PO records $7.80 correctly. The margin model still holds $7.20, because it was populated separately — or because it recalculates from a cached figure that nothing told to refresh.</p>
+      <p>Nobody made a mistake. There was simply no path from the purchase order to the profitability number, and the business now looks 8% more profitable than it is on every screen that matters.</p>
+      <p>The rule is structural, not procedural:</p>
+      <ul>
+        <li><strong>The PO is the source of truth for unit cost.</strong> Margin reads from it; it never holds its own copy.</li>
+        <li><strong>A cost change recomputes what depends on it,</strong> automatically. If recomputation is a button someone has to remember, every number downstream is stale by default.</li>
+        <li><strong>Estimates are labelled as estimates.</strong> Freight projected, duty assumed, a quote that expires in 30 days — mark all three, so a margin built on them declares itself.</li>
+        <li><strong>A real invoice replaces its estimate,</strong> rather than being added beside it. Otherwise freight gets counted twice, once as a guess and once as a bill.</li>
+      </ul>
+      <p>Chain it: <strong>supplier → PO → cost → product → margin</strong>. Every link is a read, not a copy.</p>
+    
+
+    <h2 id="s9"><span class="num">09</span>The supplier scorecard you already have the data for</h2>
+      <p>Most supplier records are contact cards — a name, an email, a WhatsApp number. That's an address book, not a supply chain.</p>
+      <p>The useful record is a history, and almost every field in it is a by-product of orders you already ran:</p>
+      <ul>
+        <li><strong>Price history</strong> per SKU, with dates. Answers "has this crept up?" without opening old emails.</li>
+        <li><strong>Payment terms</strong>, so a new PO inherits them instead of being re-typed.</li>
+        <li><strong>Promised vs actual production time</strong> — quoted 25 days, averaged 34 across the last six orders.</li>
+        <li><strong>Promised vs actual arrival</strong>, which is the number your safety stock should be sized from.</li>
+        <li><strong>Estimated vs actual landed cost</strong>, so freight assumptions get better.</li>
+        <li><strong>Defect and rejection rate</strong>, which is a silent addition to unit cost.</li>
+        <li><strong>MOQ, currency, incoterms</strong>, so quotes are comparable at a glance.</li>
+      </ul>
+      <p>The consistent-25-quoted-34-actual finding is the one that pays for the whole exercise. It shifts every reorder date for that supplier by nine days — and nine days is the difference between a comfortable restock and an airfreight decision.</p>
+      <blockquote>
+    <p>You are not collecting supplier data. You are keeping the receipts from experiments you already ran.</p>
+  </blockquote>
+    
+
+    <h2 id="s10"><span class="num">10</span>The one that ambushes importers</h2>
+      <p>If you pay a factory in USD, freight in EUR and duty in your home currency, a landed cost that sums the raw amounts is wrong by however much the market moved.</p>
+      <p>Three rules keep it honest:</p>
+      <ul>
+        <li><strong>Store the currency and the rate on every payment</strong>, alongside the converted amount. Not a global setting — a property of the transaction.</li>
+        <li><strong>Convert at the rate on the date the money moved</strong>, not today's rate. A deposit paid in March was paid at March's rate, permanently.</li>
+        <li><strong>Scheduled future payments carry an assumed rate</strong>, and should be labelled as such — the amount is known in the supplier's currency, not in yours.</li>
+      </ul>
+      <p>For a seller with meaningful FX exposure this quietly moves landed cost by several percent, which is enough to reorder a ranking of which products are worth restocking.</p>
+    
+
+    <h2 id="s11"><span class="num">11</span>Expected against actual</h2>
+      <p>Every PO is a set of predictions that later resolve. Recording how they resolved is what makes the next PO better — and it's the cheapest thing on this list, because reality supplies the data for free.</p>
+
+      <div class="tblwrap">
+<div class="tblwrap"><table>
+          <caption>Five predictions per order. Each closes on its own, and each improves a specific assumption for next time.</caption>
+          <thead>
+            <tr><th scope="col">Predicted</th><th scope="col">Improves</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Production time</td><td>Reorder timing</td></tr>
+            <tr><td>Arrival date</td><td>Safety stock</td></tr>
+            <tr><td>Landed cost</td><td>Margin accuracy</td></tr>
+            <tr><td>Payment date</td><td>Cash forecast</td></tr>
+            <tr><td>Sell-through rate</td><td>Order quantity</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <p>Systematic error is a settings problem. Random error is the weather. You can't tell them apart without the record, and after five or six orders per supplier the pattern is unmistakable.</p>
+      <p>Which is the real answer to the accuracy question: the system doesn't get better at predicting. Your assumptions get better informed by your own history.</p>
+    
+
+    <h2 id="s12"><span class="num">12</span>Five numbers, together</h2>
+      <p>For any product you'd consider reordering, these five belong on one screen. Separately they're reporting. Together they're a decision.</p>
+
+      <ul class="five">
+        <li><span class="n">01</span><span><b>Contribution per unit</b><span class="d">What it earns after landed cost, Amazon fees and advertising.</span></span></li>
+        <li><span class="n">02</span><span><b>Cover remaining</b><span class="d">Units on hand and inbound, at current velocity, in days.</span></span></li>
+        <li><span class="n">03</span><span><b>Order-by date</b><span class="d">When the next PO must be placed, given measured lead time.</span></span></li>
+        <li><span class="n">04</span><span><b>Cash required, and when</b><span class="d">The instalments that order creates, on their dates.</span></span></li>
+        <li><span class="n">05</span><span><b>Cash recovery date</b><span class="d">When the resulting inventory starts returning money.</span></span></li>
+      </ul>
+
+      <p>Numbers 4 and 5 are the pair almost nobody has, and they're the ones that turn "should I reorder?" into a question with a real answer. The distance between them is your cash conversion gap. Everything in this article exists to make that distance visible before you commit to it.</p>
+    
+
+    <h2 id="s13">Frequently asked</h2>
+      <div class="faq">
+        <details open>
+          <summary>How do I track supplier payment schedules for an Amazon business?</summary>
+          <p>Record each purchase order as a set of dated instalments rather than one total. Each instalment needs an amount, a trigger (at order, at shipment, N days after shipment, or a fixed date) and a paid/unpaid status. Store the trigger and offset rather than the computed date, so the schedule updates when your shipping estimate moves. Then view them across all POs on a forward calendar, not supplier by supplier.</p>
+        </details>
+        <details>
+          <summary>Which supplier is cheaper — the lower price or the better terms?</summary>
+          <p>Compare contribution per dollar per year rather than price per unit. A supplier that's 5% more expensive but 20 days faster and pays later can produce more annual contribution on the same capital, because the money completes more cycles. Price is one of three inputs; terms and lead time are the others.</p>
+        </details>
+        <details>
+          <summary>What is cash conversion gap for an Amazon seller?</summary>
+          <p>The number of days between your first supplier payment and the first Amazon disbursement from that inventory. It spans deposit, production, freight, check-in, the selling period and Amazon's payout cycle — typically 90 to 150 days. It's the single best measure of how much working capital a product needs.</p>
+        </details>
+        <details>
+          <summary>Should I allocate freight to individual products?</summary>
+          <p>Yes, for landed cost — freight is part of what a sellable unit costs. Allocate a shipment's freight across its SKUs by units or by volume, whichever matches how it was charged, and label it as an allocation. What you shouldn't do is allocate company overheads to units.</p>
+        </details>
+        <details>
+          <summary>Why does my margin disagree with my purchase orders?</summary>
+          <p>Almost always because the margin model holds its own copy of unit cost, or reads a cached figure nothing refreshed after the PO changed. The fix is structural: the PO is the source of truth, margin reads from it, and a cost change recomputes automatically rather than waiting for someone to press a button.</p>
+        </details>
+        <details>
+          <summary>What should I track about a supplier beyond contact details?</summary>
+          <p>Payment terms, MOQ, currency and incoterms so quotes are comparable; and the history your own orders generate — price per SKU over time, promised versus actual production days, promised versus actual arrival, estimated versus actual landed cost, and defect rate. The gap between quoted and actual lead time is usually the most valuable number in the record.</p>
+        </details>
+        <details>
+          <summary>How far ahead should I forecast supplier payments?</summary>
+          <p>At least one full cash conversion cycle — 90 to 150 days for most importers — because that's how long a decision you make today keeps affecting your balance. Shorter windows hide exactly the overlap that causes squeezes.</p>
+        </details>
+      </div>
+    
+
+    <section class="sec">
+      <h2>A purchase order is a financial decision</h2>
+      <p>Supplier payments get filed as admin. They're the point where inventory, margin, lead time and cash all become the same decision — and the only place you can still change your mind cheaply.</p>
+      <p>What am I buying, what will it really cost, when do I pay, when does it arrive, how fast will it sell, what will it contribute, and what does all of that do to my cash. Those aren't seven questions. They're one, asked once, before you send the deposit.</p>
+    
+
+    
+
+  
+</main>
+
+<aside class="rail" aria-label="Key figures from this article">
+  <div class="rail-card">
+    <span class="rail-k">Worked comparison</span>
+    <span class="rail-v">3,000 units</span>
+    <p>One product at $35, returning $12 a unit after Amazon fees and advertising, selling 50 a day once sellable.</p>
+  </div>
+  <div class="rail-card">
+    <span class="rail-k">The quote is not the cost</span>
+    <span class="rail-v is-amber">$3,200</span>
+    <p>What the cheaper-looking supplier actually costs per year, once the timing of the payments is counted.</p>
+  </div>
+  <div class="rail-card">
+    <span class="rail-k">Three states</span>
+    <span class="rail-v is-violet">Committed</span>
+    <p>Committed, scheduled, due. An open PO is all three at different moments, and only one of them is in your bank this week.</p>
+  </div>
+  <p class="rail-src">Figures from this article&rsquo;s own worked example, not an industry survey.</p>
+</aside>
+
+
+</div><!-- /.wrap -->
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+  <symbol id="i-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12.5 17v-4a2.5 2.5 0 015 0v4"/></symbol>
+  <symbol id="i-tw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M20 4L4 20"/></symbol>
+  <symbol id="i-gh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4 1.4-4-2.2-5.6-2.6M15 21v-3.4a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 2.6 5.5 2.9 5.5 2.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 9.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></symbol>
+</defs>
+</svg>
+
+<footer class="footer">
+<div class="container">
+
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/index.html" class="brand" aria-label="AmazeBase home">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+        </svg>
+        <span data-brand>AmazeBase</span>
+      </a>
+      <p>The operating system for Amazon sellers. Everything connected, everything in sync.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="/product.html#modules">Product</a>
+      <a href="/index.html#pricing">Pricing</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a href="/resources.html">Knowledge Hub</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="/about.html">About</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>&copy; 2026 <span data-brand>AmazeBase</span>. All rights reserved.</span>
+    <div class="footer-social">
+      <a href="#" aria-label="LinkedIn"><svg class="icon-sm"><use href="#i-in"/></svg></a>
+      <a href="#" aria-label="X"><svg class="icon-sm"><use href="#i-tw"/></svg></a>
+      <a href="#" aria-label="GitHub"><svg class="icon-sm"><use href="#i-gh"/></svg></a>
+    </div>
+  </div>
+
+</div>
+</footer>
+
+<script src="/js/main.js" defer></script>
+</body>
+</html>

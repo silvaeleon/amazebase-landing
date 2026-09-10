@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The numbers your Amazon software invented &mdash; AmazeBase</title>
+
+<meta name="description" content="Every analytics tool you&#x27;ve used fills in what it doesn&#x27;t know — silently, in the same font as the facts. Here&#x27;s how to spot it.">
+<meta name="theme-color" content="#030917">
+<meta name="author" content="AmazeBase">
+<meta property="og:title" content="The numbers your Amazon software invented">
+<meta property="og:description" content="Every analytics tool you&#x27;ve used fills in what it doesn&#x27;t know — silently, in the same font as the facts. Here&#x27;s how to spot it.">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+/* ==========================================================================
+   ARTICLE — Amazon Inventory Forecasting
+   Self-contained. Tokens mirror css/variables.css so this page can either
+   stand alone OR have this <style> block deleted once it sits inside the
+   site's normal stylesheet chain.
+========================================================================== */
+
+:root{
+  --z-nav:100;          /* navigation.css */
+  --container:1280px;   /* .container, below */
+  --t-body:15px;        /* .btn, below */
+  --bg:#030917; --bg-deep:#01050E; --bg-raise:#060D1E;
+  --surface:rgba(255,255,255,.030); --surface-2:rgba(255,255,255,.055);
+  --surface-solid:#0A1224;
+  --line:rgba(255,255,255,.070); --line-strong:rgba(255,255,255,.140);
+
+  --text:#EEF1F8; --text-2:#98A2B8; --text-3:#616C84;
+
+  --violet:#8B3BF1; --violet-soft:#A971F7; --indigo:#5B4FE6;
+  --blue:#3B82F6; --blue-soft:#7EB3FF;
+  --green:#2ED47A; --amber:#F5A524; --red:#F0435C;
+
+  --grad-brand:linear-gradient(135deg,#5B4FE6 0%,#8B3BF1 100%);
+  --grad-text:linear-gradient(90deg,#6153E6 0%,#9D50F7 55%,#C56BF5 100%);
+  --grad-card:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  --grad-rule:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,monospace;
+
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px;
+  --s5:48px; --s6:64px; --s7:96px; --s8:128px;
+
+  --gutter:clamp(20px,4vw,40px);
+  --measure:720px;
+
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
+  --sh-2:0 18px 40px rgba(0,0,0,.42);
+  --sh-brand:0 16px 40px rgba(107,63,232,.35);
+  --ease:cubic-bezier(.22,.61,.36,1); --fast:.18s; --mid:.28s;
+
+  color-scheme:dark;
+  scrollbar-color:#26304A var(--bg);
+  scrollbar-width:thin;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation:none !important; transition:none !important; }
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+::selection{ background:var(--violet); color:#fff; }
+
+.skip-link{
+  position:absolute; left:-9999px; top:0;
+  background:var(--surface-solid); color:var(--text);
+  padding:12px 20px; border-radius:0 0 var(--r-sm) 0;
+  z-index:1000; text-decoration:none; font-weight:600;
+}
+.skip-link:focus{ left:0; }
+
+:focus-visible{
+  outline:2px solid var(--violet-soft);
+  outline-offset:3px;
+  border-radius:var(--r-xs);
+}
+
+/* ---------- ambient background ------------------------------------------ */
+.bg-layer{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(760px 520px at 18% -8%,  rgba(91,79,230,.20), transparent 62%),
+    radial-gradient(680px 480px at 88% 4%,   rgba(139,59,241,.15), transparent 60%),
+    radial-gradient(900px 700px at 50% 108%, rgba(59,130,246,.09), transparent 66%);
+}
+
+.wrap{ position:relative; z-index:1; }
+
+/* ---------- shell ------------------------------------------------------- */
+.article{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:0 var(--gutter) var(--s8);
+}
+
+/* ---------- header ------------------------------------------------------ */
+.article-head{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:clamp(64px,9vw,120px) var(--gutter) clamp(32px,4vw,48px);
+}
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--violet-soft);
+  background:var(--surface); border:1px solid var(--line);
+  padding:7px 14px; border-radius:var(--r-pill);
+  margin:0 0 var(--s3);
+}
+.eyebrow::before{
+  content:""; width:6px; height:6px; border-radius:50%;
+  background:var(--violet-soft);
+  box-shadow:0 0 10px rgba(169,113,247,.9);
+}
+
+h1{
+  font-size:clamp(34px,5vw,58px);
+  line-height:1.08;
+  letter-spacing:-.025em;
+  font-weight:800;
+  margin:0 0 var(--s3);
+  text-wrap:balance;
+}
+h1 .accent{
+  background:var(--grad-text);
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+}
+
+.deck{
+  font-size:clamp(18px,2.1vw,21px);
+  line-height:1.6;
+  color:var(--text-2);
+  margin:0 0 var(--s4);
+  max-width:62ch;
+}
+
+.meta{
+  display:flex; flex-wrap:wrap; align-items:center; gap:var(--s2);
+  font-size:14px; color:var(--text-3);
+  padding-top:var(--s3);
+  border-top:1px solid var(--line);
+}
+.meta .dot{ width:3px; height:3px; border-radius:50%; background:var(--text-3); }
+
+/* ---------- table of contents ------------------------------------------- */
+.toc{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:0 0 var(--s6);
+}
+.toc h2{
+  font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--text-3); margin:0 0 var(--s3); padding:0; border:0;
+}
+.toc ol{
+  list-style:none; margin:0; padding:0;
+  counter-reset:toc;
+  display:grid; gap:2px;
+}
+.toc li{ counter-increment:toc; margin:0; }
+.toc a{
+  display:flex; gap:14px; align-items:baseline;
+  color:var(--text-2); text-decoration:none;
+  font-size:15px; line-height:1.5;
+  padding:8px 10px; margin:0 -10px;
+  border-radius:var(--r-xs);
+  transition:color var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+.toc a::before{
+  content:counter(toc,decimal-leading-zero);
+  font-family:var(--font-mono); font-size:12px; font-weight:600;
+  color:var(--text-3); flex:none; min-width:22px;
+  transition:color var(--fast) var(--ease);
+}
+.toc a:hover{ color:var(--text); background:var(--surface); }
+.toc a:hover::before{ color:var(--violet-soft); }
+
+/* ---------- body typography --------------------------------------------- */
+.article p{ margin:0 0 1.1em; color:#D5DBE9; }
+.article p.lead{ font-size:20px; color:var(--text); }
+
+.article h2{
+  font-size:clamp(26px,3.2vw,34px);
+  line-height:1.2;
+  letter-spacing:-.02em;
+  font-weight:700;
+  color:var(--text);
+  margin:var(--s7) 0 var(--s3);
+  padding-top:var(--s5);
+  border-top:1px solid var(--line);
+  scroll-margin-top:32px;
+  text-wrap:balance;
+}
+.article h2:first-of-type{ margin-top:0; }
+
+.article h2 .num{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:13px; font-weight:600; letter-spacing:.16em;
+  color:var(--violet-soft);
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
+
+.article strong{ color:var(--text); font-weight:700; }
+
+.article ul{
+  margin:0 0 1.4em;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:10px;
+}
+.article ul li{
+  position:relative;
+  padding-left:26px;
+  color:#D5DBE9;
+  line-height:1.6;
+}
+.article ul li::before{
+  content:"";
+  position:absolute; left:6px; top:.68em;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--violet);
+  box-shadow:0 0 8px rgba(139,59,241,.55);
+}
+
+/* ---------- pull quote --------------------------------------------------- */
+blockquote{
+  margin:var(--s4) 0;
+  padding:var(--s3) var(--s4);
+  border-left:2px solid var(--violet);
+  background:linear-gradient(90deg,rgba(139,59,241,.10),transparent 80%);
+  border-radius:0 var(--r-md) var(--r-md) 0;
+}
+blockquote p{
+  margin:0;
+  font-size:20px;
+  line-height:1.5;
+  font-weight:600;
+  color:var(--text);
+}
+
+/* ---------- callouts ----------------------------------------------------- */
+.callout{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:var(--s4) 0 var(--s5);
+}
+.callout .label{
+  display:block;
+  font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--text-3);
+  margin-bottom:var(--s2);
+}
+.callout p:last-child, .callout ul:last-child{ margin-bottom:0; }
+
+.formula{
+  font-family:var(--font-mono);
+  font-size:clamp(15px,2.1vw,19px);
+  font-weight:600;
+  line-height:1.6;
+  color:var(--text);
+  background:var(--bg-deep);
+  border:1px solid var(--line-strong);
+  border-radius:var(--r-md);
+  padding:var(--s3);
+  margin:0 0 var(--s3);
+  text-align:center;
+  overflow-x:auto;
+}
+.formula .op{ color:var(--violet-soft); }
+
+/* ---------- numbers strip ------------------------------------------------ */
+.figures{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:var(--s2);
+  margin:var(--s4) 0 var(--s5);
+  padding:0; list-style:none;
+}
+.figures li{ padding:0; }
+.figures li::before{ display:none; }
+.fig{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:var(--s3) var(--s2);
+  text-align:center;
+}
+.fig .v{
+  display:block;
+  font-size:28px; font-weight:800; letter-spacing:-.02em; line-height:1.1;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.fig .k{
+  display:block;
+  font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.fig.is-bad .v{ color:var(--red); }
+.fig.is-real .v{ color:var(--green); }
+
+/* ---------- divider ------------------------------------------------------ */
+.rule{
+  height:1px; border:0;
+  background:var(--grad-rule);
+  margin:var(--s6) 0;
+}
+
+/* ---------- closing CTA -------------------------------------------------- */
+.cta{
+  max-width:var(--measure);
+  margin:var(--s7) auto 0;
+  padding:clamp(32px,5vw,56px) var(--gutter);
+  text-align:center;
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-xl);
+  box-shadow:var(--sh-2);
+}
+.cta h2{
+  font-size:clamp(24px,3vw,32px);
+  font-weight:700; letter-spacing:-.02em; line-height:1.2;
+  margin:0 0 var(--s2); padding:0; border:0;
+  text-wrap:balance;
+}
+.cta p{
+  color:var(--text-2);
+  max-width:52ch;
+  margin:0 auto var(--s4);
+  font-size:17px;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--grad-brand);
+  color:#fff; text-decoration:none;
+  font-weight:600; font-size:16px;
+  padding:14px 28px;
+  border-radius:var(--r-pill);
+  box-shadow:var(--sh-brand);
+  transition:transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+.btn:hover{ transform:translateY(-2px); box-shadow:0 22px 50px rgba(107,63,232,.45); }
+.btn svg{ width:18px; height:18px; }
+
+/* ---------- responsive --------------------------------------------------- */
+@media (max-width:640px){
+  body{ font-size:17px; }
+  .article p.lead{ font-size:18px; }
+  blockquote p{ font-size:18px; }
+  .article h2{ margin-top:var(--s6); padding-top:var(--s4); }
+}
+
+/* ---------- print -------------------------------------------------------- */
+@media print{
+  .bg-layer,.toc,.cta,.skip-link{ display:none; }
+  body{ background:#fff; color:#111; font-size:12pt; }
+  .article p,.article ul li{ color:#222; }
+  .article h2{ color:#000; }
+}
+.back-link{ margin:0 0 28px; font-size:13px; }
+.back-link a{ color:var(--text-2); text-decoration:none; }
+.back-link a:hover{ color:var(--text); }
+
+/* ── HERO IMAGE ─────────────────────────────────────────────────────── */
+.hero-shot{
+  margin:0 0 52px;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  background:var(--bg-raise);
+  line-height:0;
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+.hero-shot img{ width:100%; height:auto; display:block; }
+
+/* ── MISTAKE CARDS ──────────────────────────────────────────────────── */
+.mistake{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.mistake::before{
+  content:"";
+  position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+  background:var(--amber);
+}
+.mistake h2{ margin-top:0 !important; }
+.article .mistake h2:first-of-type{ margin-top:0; }
+
+/* ── PULL QUOTES ────────────────────────────────────────────────────── */
+blockquote{
+  margin:44px 0;
+  padding:0 0 0 26px;
+  border-left:3px solid var(--amber);
+  background:none;
+}
+blockquote p{
+  font-size:23px;
+  line-height:1.45;
+  font-style:italic;
+  font-weight:600;
+  color:var(--text);
+  margin:0;
+}
+
+/* ── MID-ARTICLE STRIP ──────────────────────────────────────────────── */
+.strip{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px; flex-wrap:wrap;
+  margin:44px 0;
+  padding:26px 30px;
+  border-radius:16px;
+  background:linear-gradient(120deg,#0A1224,#131A33);
+  border:1px solid var(--line-strong);
+}
+.strip h3{ margin:0 0 6px; font-size:19px; color:var(--text); }
+.strip p{ margin:0; font-size:14px; color:var(--text-2); }
+.strip-btn{
+  flex:0 0 auto;
+  display:inline-block;
+  padding:12px 22px;
+  border-radius:10px;
+  background:var(--amber);
+  color:#1A1200;
+  font-size:14px; font-weight:700;
+  text-decoration:none;
+  transition:filter .15s ease;
+}
+.strip-btn:hover{ filter:brightness(1.08); }
+
+@media (max-width:640px){
+  .mistake{ padding:24px 20px 8px; }
+  .mistake::before{ top:20px; bottom:20px; }
+  blockquote p{ font-size:20px; }
+  .strip{ padding:22px; }
+  .strip-btn{ width:100%; text-align:center; }
+}
+
+/* ── WIDE SHELL: content + rail, so the page uses the screen ─────────── */
+.shell{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 var(--gutter);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 300px;
+  gap:64px;
+  align-items:start;
+}
+.shell > .article{ max-width:none; margin:0; padding:0 0 var(--s8); }
+
+.rail{ position:sticky; top:40px; display:flex; flex-direction:column; gap:14px; }
+.rail-card{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+  padding:20px;
+}
+.rail-k{
+  display:block; margin-bottom:10px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.rail-v{
+  display:block; margin-bottom:10px;
+  font-size:34px; line-height:1; font-weight:800; letter-spacing:-.02em;
+  color:var(--green);
+}
+.rail-v.is-amber{ color:var(--amber); }
+.rail-v.is-violet{ color:var(--violet-soft); }
+.rail-card p{ margin:0; font-size:13px; line-height:1.55; color:var(--text-2); }
+.rail-src{
+  margin:0; padding-top:14px;
+  border-top:1px solid var(--line);
+  font-size:11px; line-height:1.5; color:var(--text-3);
+}
+
+/* header + hero align to the same shell */
+.article-head, .hero-shot{ max-width:1180px; }
+
+/* ── HERO: a band, not a giant square ───────────────────────────────── */
+.hero-shot{
+  margin:0 auto 56px;
+  padding:0 var(--gutter);
+  border:0; background:none; box-shadow:none;
+  border-radius:0;
+  overflow:visible;
+}
+.hero-shot img{
+  width:100%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
+  border-radius:18px;
+  border:1px solid var(--line-strong);
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+
+/* ── THE FIX callout ────────────────────────────────────────────────── */
+.fixbox{
+  margin:22px 0 4px;
+  padding:16px 18px;
+  border-radius:12px;
+  border:1px solid rgba(46,212,122,.28);
+  background:rgba(46,212,122,.07);
+}
+.fixbox-k{
+  display:block; margin-bottom:6px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--green);
+}
+.fixbox p{ margin:0 !important; color:var(--text) !important; }
+
+@media (max-width:1080px){
+  .shell{ grid-template-columns:1fr; gap:40px; max-width:820px; }
+  .rail{ position:static; flex-direction:row; flex-wrap:wrap; }
+  .rail-card{ flex:1 1 220px; }
+  .rail-src{ flex:1 1 100%; border-top:0; padding-top:0; }
+  .article-head, .hero-shot{ max-width:820px; }
+}
+@media (max-width:640px){
+  .shell{ gap:28px; }
+}
+
+
+/* ── FIGURES CARRIED OVER FROM THE DRAFT ──────────────────────────────
+   This piece ships its own tables, charts and spec blocks. Rather than
+   import a second design system for them, the palette they were written
+   against is repointed at this site's tokens, and only their component
+   rules are carried over. --measure is deliberately absent: it collides
+   with the site's, and the ported rules should use the site's column.
+   ------------------------------------------------------------------- */
+:root{
+  --paper:var(--bg); --panel:var(--surface-solid); --panel-2:var(--surface-2);
+  --ink:var(--text); --ink-2:var(--text-2); --ink-3:var(--text-3);
+  --rule:var(--line); --rule-strong:var(--line-strong);
+  --accent:var(--violet-soft); --accent-soft:rgba(139,59,241,.16);
+  --cost:var(--text-3);
+  --good:var(--green);  --good-soft:rgba(46,212,122,.10);
+  --warn:var(--amber);  --warn-soft:rgba(245,165,36,.10);
+  --crit:var(--red);    --crit-soft:rgba(240,67,92,.10);
+  --f-display:var(--font); --f-body:var(--font);
+  --f-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+article p{margin:0 0 1.15rem}
+article ul, article ol{margin:0 0 1.3rem;padding-left:1.15rem}
+article li{margin-bottom:.5rem}
+article li::marker{color:var(--ink-3)}
+strong{font-weight:600}
+.fix{background:var(--panel);border:1px solid var(--rule);border-left:3px solid var(--accent);padding:1.1rem 1.3rem;margin:1.9rem 0}
+.fix .k{display:block;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:.45rem}
+.fix p{margin:0}
+.fix p+p{margin-top:.7rem}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--panel-2);padding:.1em .35em;border-radius:2px}
+.demo{display:grid;gap:1rem;margin:1.9rem 0}
+@media (min-width:760px){
+.demo{grid-template-columns:1fr 1fr;align-items:start}
+}
+.card{background:var(--panel);border:1px solid var(--rule);padding:1.1rem 1.2rem}
+.card .tag{font-family:var(--f-mono);font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;display:inline-block;padding:.18rem .45rem;border-radius:3px;margin-bottom:.9rem}
+.card.a{border-top:3px solid var(--crit)}
+.card.a .tag{color:var(--crit);background:var(--crit-soft)}
+.card.b{border-top:3px solid var(--good)}
+.card.b .tag{color:var(--good);background:var(--good-soft)}
+.card .sku{font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3);letter-spacing:.06em}
+.card .big{font-family:var(--f-display);font-size:1.6rem;line-height:1.2;margin:.35rem 0 .1rem;font-weight:500}
+.card .qty{font-size:1rem;font-weight:600;margin-bottom:.85rem}
+.card .rows{border-top:1px solid var(--rule);margin-top:.6rem;padding-top:.6rem;display:grid;gap:.5rem}
+.card .row{font-size:.85rem;line-height:1.45;color:var(--ink-2)}
+.card .row b{color:var(--ink);font-weight:600}
+.card .src{font-family:var(--f-mono);font-size:.63rem;letter-spacing:.09em;text-transform:uppercase;display:inline-block;padding:.12rem .38rem;border-radius:3px;margin-right:.35rem;vertical-align:1px}
+.src.m{color:var(--good);background:var(--good-soft)}
+.src.a{color:var(--accent);background:var(--accent-soft)}
+.src.s{color:var(--warn);background:var(--warn-soft)}
+.card .flag{font-size:.83rem;color:var(--crit);background:var(--crit-soft);padding:.5rem .65rem;margin-top:.7rem;line-height:1.45}
+.card .comp{font-family:var(--f-mono);font-size:.74rem;color:var(--ink-2);line-height:1.6;background:var(--panel-2);padding:.55rem .65rem;margin-bottom:.6rem}
+.demo-cap{font-size:.82rem;color:var(--ink-3);line-height:1.55;margin:-.5rem 0 0}
+.tells{list-style:none;padding:0;margin:1.5rem 0 2rem;border-top:1px solid var(--rule)}
+.tells li{margin:0;display:grid;grid-template-columns:2.4rem 1fr;gap:.9rem;padding:.9rem .2rem;border-bottom:1px solid var(--rule)}
+.tells .n{font-family:var(--f-mono);font-size:.72rem;color:var(--accent);padding-top:.2rem}
+.tells b{display:block;font-weight:600}
+.tells .d{color:var(--ink-2);font-size:.93rem}
+.faq details{border-bottom:1px solid var(--rule);padding:.9rem 0}
+.faq summary{cursor:pointer;font-weight:600;list-style:none;display:flex;gap:.75rem;align-items:flex-start}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::before{content:"+";font-family:var(--f-mono);color:var(--accent);font-weight:400;line-height:1.6}
+.faq details[open] summary::before{content:"–"}
+.faq p{margin:.65rem 0 0 1.5rem;color:var(--ink-2)}
+.faq summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* ── PIECES THIS ARTICLE ADDS ─────────────────────────────────────────
+   h3, tables, the FAQ and the carried-over figure. The 44 articles that
+   came before this one had no h3 and no tables, so the core stylesheet
+   never needed rules for them.
+   ------------------------------------------------------------------- */
+.article h3{
+  margin:var(--s5) 0 var(--s2);
+  font-size:clamp(19px,1.6vw,22px);
+  font-weight:650; letter-spacing:-.01em; color:var(--text);
+}
+.tblwrap{ margin:var(--s4) 0; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.article table{
+  width:100%; border-collapse:collapse;
+  font-size:.94rem; line-height:1.5;
+}
+.article th, .article td{
+  padding:10px 14px; text-align:left; vertical-align:top;
+  border-bottom:1px solid var(--line);
+}
+.article th{
+  font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+  color:var(--text-3); border-bottom-color:var(--line-strong); white-space:nowrap;
+}
+.article tbody tr:last-child td{ border-bottom:0; }
+.art-diagram{ margin:var(--s4) 0; }
+.art-diagram svg{ width:100%; height:auto; display:block; }
+.art-diagram .sub, .art-diagram figcaption{
+  margin-top:10px; font-size:var(--t-micro,.82rem); color:var(--text-3); line-height:1.5;
+}
+.faq{ margin:var(--s4) 0; }
+.faq details{
+  border:1px solid var(--line); border-radius:var(--r-md);
+  background:var(--surface); padding:14px 18px; margin-bottom:10px;
+}
+.faq summary{
+  cursor:pointer; font-weight:600; color:var(--text);
+  list-style:none; padding-right:24px; position:relative;
+}
+.faq summary::-webkit-details-marker{ display:none; }
+.faq summary::after{
+  content:"+"; position:absolute; right:0; top:-2px;
+  font-size:19px; line-height:1; color:var(--violet-soft);
+}
+.faq details[open] summary::after{ content:"\2013"; }
+.faq details p{ margin:10px 0 0 !important; color:var(--text-2); }
+
+/* ── KEEPING WIDE THINGS INSIDE A PHONE ───────────────────────────────
+   These pieces carry long monospace formulas, wide comparison tables and
+   the draft's scenario rows. Each has a min-content width larger than a
+   390px screen, and the shell's mobile track is `1fr` - which means
+   minmax(auto,1fr), so a single one of them widens the whole column and
+   the entire page scrolls sideways. Cap the track, then let each wide
+   block scroll inside itself instead of pushing the article around.
+   ------------------------------------------------------------------- */
+@media (max-width:1080px){
+  .shell{ grid-template-columns:minmax(0,1fr); }
+}
+.shell > .article{ min-width:0; }
+.article > *{ max-width:100%; }
+.formula{ overflow-x:auto; }
+.formula code{ white-space:pre; }
+.tblwrap{ min-width:0; max-width:100%; }
+.scn, .scnrow, .bands, .band, .inputs, .facts, .spec, .grid{ min-width:0; max-width:100%; }
+@media (max-width:640px){
+  .scnrow{ display:block; }
+  .scnrow > *{ display:block; }
+}
+
+/* ── SITE HEADER ──────────────────────────────────────────────────────
+   The header markup is the site's, and navigation.css styles it. These are
+   the pieces it also leans on from base.css, which this page does not load.
+   Every selector is scoped to the header or the mobile drawer: an article is
+   built out of bare a/p/h3/h4, and base.css restyles all of those.
+
+   The scope is written with :where() so it adds no specificity. Scoped the
+   plain way, `.site-header .btn` is (0,2,0) - the same weight as
+   navigation.css's own `.nav-actions .btn--quiet` and `.nav-mobile a`, and
+   loaded after them, so these copies quietly outranked the real rules: the
+   hamburger got pushed off a 390px screen and the drawer buttons lost their
+   sizing. Inside :where() each rule keeps exactly the weight it has in
+   base.css, which is the weight navigation.css was written against.
+   ------------------------------------------------------------------- */
+/* The header inherits from <body>, and this page's body is set for reading:
+   18px at 1.72. The site's is var(--t-body) at 1.6. Left alone, every element
+   in the bar came out a size and a half too tall. Reset it at the root of the
+   header so everything inside inherits the site's figures instead. */
+:where(.site-header),
+:where(.nav-mobile){
+  font-size:var(--t-body);
+  line-height:1.6;
+}
+
+:where(.site-header) .container{
+  width:min(100%,var(--container));
+  margin-inline:auto;
+  padding-inline:var(--gutter);
+  position:relative;
+}
+:where(.site-header, .nav-mobile) .brand{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:19px; font-weight:700; letter-spacing:-.01em;
+  color:var(--text); text-decoration:none;
+}
+:where(.site-header) .brand-mark{ width:26px; height:26px; flex:none; }
+:where(.site-header) .icon,    :where(.nav-mobile) .icon{    width:20px; height:20px; flex:none; stroke-width:1.7; }
+:where(.site-header) .icon-sm, :where(.nav-mobile) .icon-sm{ width:16px; height:16px; flex:none; stroke-width:1.8; }
+/* margin-block only: navigation.css centres this with margin-inline:auto,
+   and a shorthand `margin:0` here would outrank it and shove the menu
+   over against the brand. */
+:where(.site-header) .nav-menu{ list-style:none; padding:0; margin-block:0; }
+.site-header a, .nav-mobile a{ text-decoration:none; }
+/* base.css resets these globally; this page does not load it. Without the
+   padding reset the UA's 1px 6px survives and the 44px tap target
+   responsive.css asks for comes out 40px. */
+:where(.site-header) .nav-toggle{ font:inherit; cursor:pointer; padding:0; }
+:where(.site-header) svg, :where(.nav-mobile) svg{ display:block; }
+
+:where(.site-header) .btn, :where(.nav-mobile) .btn{
+  /* This page defines its own .btn - a filled gradient pill used in the body -
+     and it reaches the header buttons too. base.css's .btn sets none of these,
+     so the variant classes below are what should decide them. Cleared here or
+     "Log in", which is .btn--quiet and meant to read as plain text, arrives
+     wearing the brand gradient. */
+  background:none;
+  box-shadow:none;
+  color:inherit;
+  text-decoration:none;
+  position:relative;
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  padding:13px 22px;
+  border-radius:var(--r-sm);
+  font-size:var(--t-body); font-weight:600; line-height:1;
+  white-space:nowrap;
+  transition:transform var(--fast) var(--ease),
+             box-shadow var(--fast) var(--ease),
+             background var(--fast) var(--ease),
+             border-color var(--fast) var(--ease);
+}
+:where(.site-header) .btn:active, :where(.nav-mobile) .btn:active{ transform:translateY(0) scale(.99); }
+:where(.site-header) .btn--primary, :where(.nav-mobile) .btn--primary{
+  background:var(--grad-brand); color:#fff;
+  box-shadow:var(--sh-brand); overflow:hidden;
+}
+:where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{
+  content:""; position:absolute; top:0; left:-130%;
+  width:55%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);
+  transition:left .65s var(--ease);
+}
+:where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{
+  transform:translateY(-2px); box-shadow:0 22px 52px rgba(107,63,232,.45);
+}
+:where(.site-header) .btn--primary:hover::after, :where(.nav-mobile) .btn--primary:hover::after{ left:150%; }
+:where(.site-header) .btn--quiet, :where(.nav-mobile) .btn--quiet{ color:var(--text-2); padding:13px 8px; }
+:where(.site-header) .btn--quiet:hover, :where(.nav-mobile) .btn--quiet:hover{ color:var(--text); }
+:where(.nav-mobile) .btn--block{ width:100%; }
+
+@media (prefers-reduced-motion:reduce){
+  :where(.site-header) .btn, :where(.nav-mobile) .btn,
+  :where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{ transition:none; }
+  :where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{ transform:none; }
+}
+
+/* navigation.css hides these two buttons on small screens so the hamburger
+   fits. Its selectors are (0,2,0) and so is `:where(.site-header) .btn` above, which
+   is loaded after it - equal weight, later wins, and display:inline-flex beat
+   display:none. The hamburger ended up 107px off the right of a 390px screen
+   with no way to open the menu. Restating the hide at (0,3,0) settles it.
+   The breakpoints are read out of navigation.css at build time, not typed. */
+
+/* Clear the fixed site header. Reserving its height on .wrap keeps the gap
+   between the bar and the eyebrow the same as the gap used to be between the
+   top of the window and the eyebrow. */
+.wrap{ padding-top:70px; }
+@media (max-width:640px){ .wrap{ padding-top:64px; } }
+
+/* Anchor targets. .article h2 carried scroll-margin-top:32px, which was right
+   when this page had no fixed bar: 32px was breathing room. Now a jump from
+   the contents list lands 38px underneath the header. responsive.css puts the
+   rest of the site on 84px for exactly this reason; the article's own rule is
+   (0,2,0) and outranks it, so it is restated here at the same weight. */
+.article h2{ scroll-margin-top:84px; }
+
+/* The back-link sat hard against the left edge of the window, in line with
+   nothing. That was always true, but with the nav above it the thing reads as
+   stranded rather than as a heading. Same shell as .article-head, so it lines
+   up with the title beneath it and behaves as the breadcrumb it is. */
+.back-link{
+  max-width:1180px;
+  margin-inline:auto;      /* the rule above keeps its 28px bottom margin */
+  padding:22px var(--gutter) 0;
+}
+</style>
+<link rel="stylesheet" href="/css/navigation.css">
+<link rel="stylesheet" href="/css/responsive.css">
+<link rel="stylesheet" href="/css/site-footer.css">
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="bg-layer" aria-hidden="true"></div>
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+</defs>
+  <symbol id="i-chevron"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-menu"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-mega"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l7 4V5L8 9H4zM19 9a4 4 0 010 6"/></symbol>
+  <symbol id="i-dollar"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5v19M16.5 6.5H10a3.2 3.2 0 000 6.4h4a3.2 3.2 0 010 6.4H7"/></symbol>
+  <symbol id="i-stack"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/></symbol>
+  <symbol id="i-box"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></symbol>
+  <symbol id="i-search"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></symbol>
+  <symbol id="i-chart"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-trend"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></symbol>
+  <symbol id="i-db"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3.2"/><path d="M4 6v12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2V6M4 12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2"/></symbol>
+  <symbol id="i-shield"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-9.5V5.5L12 2.5 4 5.5V12.5C4 18.5 12 22 12 22z"/></symbol>
+  <symbol id="i-spark"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+  <symbol id="i-rocket"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15s-1.5 3 1 5.5S11 20 11 20M14.5 4.5c3-2 6-1 6-1s1 3-1 6l-6 6-5-5 6-6z"/><circle cx="15" cy="9" r="1.4"/></symbol>
+  <symbol id="i-case"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8.5 7V5a2 2 0 012-2h3a2 2 0 012 2v2M2.5 12.5h19"/></symbol>
+  <symbol id="i-info"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></symbol>
+  <symbol id="i-msg"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-8 8 8.6 8.6 0 01-3.6-.8L3 21l1.8-6.4A8 8 0 1121 12z"/></symbol>
+</svg>
+
+<header class="site-header">
+<div class="container">
+<nav class="nav" aria-label="Primary">
+
+  <a href="/index.html" class="brand" aria-label="AmazeBase home">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+      <path d="M16 17.6l4.4 8.2h-8.8z" fill="#C56BF5" opacity=".85"/>
+    </svg>
+    <span data-brand>AmazeBase</span>
+  </a>
+
+  <ul class="nav-menu">
+    <li class="nav-item">
+      <a class="nav-link" href="/product.html#modules">Product <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop nav-drop--wide">
+        <a href="/product.html#advertising"><svg class="icon-sm"><use href="#i-mega"/></svg>Advertising &amp; PPC</a>
+        <a href="/product.html#financials"><svg class="icon-sm"><use href="#i-dollar"/></svg>Financials</a>
+        <a href="/product.html#ledger"><svg class="icon-sm"><use href="#i-stack"/></svg>Ledger</a>
+        <a href="/product.html#inventory"><svg class="icon-sm"><use href="#i-box"/></svg>Inventory</a>
+        <a href="/product.html#research"><svg class="icon-sm"><use href="#i-search"/></svg>Product Research</a>
+        <a href="/product.html#simulations"><svg class="icon-sm"><use href="#i-chart"/></svg>Simulations</a>
+        <a href="/product.html#sales"><svg class="icon-sm"><use href="#i-trend"/></svg>Sales</a>
+        <a href="/product.html#data"><svg class="icon-sm"><use href="#i-db"/></svg>Data &amp; Sync</a>
+        <a href="/product.html#security"><svg class="icon-sm"><use href="#i-shield"/></svg>Security</a>
+        <a href="/product.html#assistant"><svg class="icon-sm"><use href="#i-spark"/></svg>AI Assistant &mdash; soon</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/solutions.html">Solutions <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/solutions.html#beginners"><svg class="icon-sm"><use href="#i-rocket"/></svg>Beginners</a>
+        <a href="/solutions.html#experts"><svg class="icon-sm"><use href="#i-dollar"/></svg>Experienced sellers</a>
+        <a href="/solutions.html#agencies"><svg class="icon-sm"><use href="#i-case"/></svg>Agencies</a>
+      </div>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="/index.html#pricing">Pricing</a></li>
+    <li class="nav-item"><a class="nav-link" href="/resources.html">Resources</a></li>
+    <li class="nav-item">
+      <a class="nav-link" href="/about.html">Company <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/about.html"><svg class="icon-sm"><use href="#i-info"/></svg>About</a>
+        <a href="/contact.html"><svg class="icon-sm"><use href="#i-msg"/></svg>Contact</a>
+      </div>
+    </li>
+  </ul>
+
+  <div class="nav-actions">
+    <a class="btn btn--quiet" href="https://amz-analytics-production.up.railway.app/login">Log in</a>
+    <a class="btn btn--primary" href="/index.html#waitlist" data-magnetic>Join the Wait List</a>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="navMobile">
+      <svg class="icon"><use href="#i-menu"/></svg>
+    </button>
+  </div>
+
+</nav>
+</div>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="/product.html#modules">Product</a>
+  <a href="/solutions.html">Solutions</a>
+  <a href="/index.html#pricing">Pricing</a>
+  <a href="/resources.html">Resources</a>
+  <a href="/about.html">About</a>
+  <a href="/contact.html">Contact</a>
+  <a class="btn btn--quiet btn--block" href="https://amz-analytics-production.up.railway.app/login">Log in</a>
+  <a class="btn btn--primary btn--block" href="/index.html#waitlist">Join the Wait List</a>
+</div>
+</header>
+
+<div class="wrap">
+<p class="back-link"><a href="/resources.html">&larr; Knowledge Hub</a></p>
+<header class="article-head">
+  <p class="eyebrow">Tools &amp; Tutorials</p>
+  <h1>The numbers your <span class="accent">Amazon software invented</span></h1>
+  <p class="deck">Every analytics tool you've used fills in what it doesn't know — silently, in the same font as the facts. Here's how to spot it.</p>
+  <p class="meta">
+    <span>AmazeBase</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>9 min read</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>Data &amp; Decisions</span>
+  </p>
+</header>
+
+<!-- HERO IMAGE GOES HERE. Drop the image in as assets/img/hero-invented-numbers-amazon-analytics.webp at 1672x941, uncomment, and write the alt text:
+<figure class="hero-shot">
+  <img src="../assets/img/hero-invented-numbers-amazon-analytics.webp"
+       alt=""
+       width="1672" height="941" loading="eager" decoding="async">
+</figure>
+-->
+
+<div class="shell">
+<main id="main" class="article">
+  <p class="lead">Your inventory screen says: <strong>Order by 14 March. 1,400 units.</strong> A date and a quantity. Clean, specific, actionable — the kind of output you pay software for.</p>
+  <nav class="toc" aria-labelledby="toc-title">
+    <h2 id="toc-title">What&rsquo;s in this piece</h2>
+    <ol>
+      <li><a href="#s1">Order by 14 March</a></li>
+      <li><a href="#s2">The plausible default</a></li>
+      <li><a href="#s3">Why every tool does it</a></li>
+      <li><a href="#s4">Six tells</a></li>
+      <li><a href="#s5">Why blank beats guess</a></li>
+      <li><a href="#s6">What it should look like</a></li>
+      <li><a href="#s7">"Just give me a number"</a></li>
+      <li><a href="#s8">Questions</a></li>
+    </ol>
+  </nav>
+
+
+    
+
+    <p>Now ask it one question. Where did the lead time in that calculation come from?</p>
+
+    <p>In most tools, the answer is that it came from nowhere. It's 90 days, because 90 days is what the field was set to when the account was created, and nobody ever changed it. Your actual supplier takes 58.</p>
+
+    <p>The date is wrong by a month. Nothing on the screen suggests it might be.</p>
+
+    <blockquote>
+    <p>The problem isn't that your software doesn't know things. It's that it doesn't say so.</p>
+  </blockquote>
+
+    <p>This is the most common defect in Amazon analytics, it's in nearly every tool on the market including the expensive ones, and almost nobody talks about it — because talking about it means admitting to it.</p>
+
+    <h2 id="s2"><span class="num">01</span>The plausible default</h2>
+      <p>Here's the pattern. A calculation needs an input. The input isn't available — you never entered it, or the data doesn't contain it, or the report that would have carried it wasn't uploaded.</p>
+      <p>The software has three options: leave the output blank, say what's missing, or substitute something reasonable and carry on.</p>
+      <p>It almost always picks the third. And the substitute is well chosen — 90 days is a defensible lead time, 15% is a defensible TACOS, zero is a defensible freight cost if you have no freight records. Nothing looks broken. The screen fills in. You act on it.</p>
+      <p>Call it what it is: <strong>a plausible default</strong>. A number that exists to make a screen look complete, presented identically to a number that came from your business.</p>
+      <p>The dangerous part isn't the substitution. It's the <em>identical presentation</em>. Your measured velocity and an invented lead time sit in the same row, same weight, same font — and the output that combines them inherits the confidence of the better half.</p>
+    
+
+    <h2 id="s3"><span class="num">02</span>Why every tool does this, including the good ones</h2>
+      <p>It's worth being fair about the motive, because it isn't malice and it isn't laziness.</p>
+      <p>It's the free trial.</p>
+      <p>A new user connects their account on a Tuesday evening. If the software is honest, most of the screen is empty — no costs entered, so no margin; no purchase orders, so no lead time; no freight records, so no landed cost. It's an accurate picture of what the tool knows about them, and it looks like a product that doesn't work.</p>
+      <p>Fill those gaps with plausible defaults and the same user sees a rich dashboard within ninety seconds. Charts, percentages, recommendations. That converts. Every product team that has ever run the experiment has found this.</p>
+      <p>So defaults are a growth decision, made rationally, by people who aren't trying to mislead anyone.</p>
+      <p>They just optimise the first five minutes of the relationship at the expense of every decision after it. And the cost lands on the customer who stayed — the one placing a $40,000 order against a lead time nobody measured.</p>
+    
+
+    <h2 id="s4"><span class="num">03</span>Six tells: how to find the invented numbers in the tool you use now</h2>
+      <p>You don't need access to anyone's source code. Invented numbers leave fingerprints, and you can check for all six in about ten minutes.</p>
+
+      <ul class="tells">
+        <li><span class="n">01</span><span><b>Suspiciously round values</b><span class="d">90 days. 30%. 15%. Real measurements are 58 days and 27.3%. A round number in a field you never filled is a default wearing a disguise.</span></span></li>
+        <li><span class="n">02</span><span><b>The same value on every SKU</b><span class="d">Sort by lead time, or by any cost assumption. If forty products share one figure, that figure describes the software's configuration, not your supply chain.</span></span></li>
+        <li><span class="n">03</span><span><b>An output that survives a missing input</b><span class="d">The strongest test. Delete a cost, or check a product you've never entered costs for. If a margin still appears, the tool manufactured one — and it will do the same everywhere else you're not looking.</span></span></li>
+        <li><span class="n">04</span><span><b>No date on the data</b><span class="d">Ask what day the numbers run through. If no screen tells you, rates are probably computed against the calendar rather than the data — which quietly deflates every velocity when reports run late.</span></span></li>
+        <li><span class="n">05</span><span><b>Nothing ever says "unknown"</b><span class="d">Click through a full session. If not one screen admits to missing something, that isn't completeness. Nobody's data is complete. It means the gaps are being filled where you can't see them.</span></span></li>
+        <li><span class="n">06</span><span><b>Precision it can't possibly have</b><span class="d">A margin of 27.43% built on a freight figure that was allocated by a rule and a return rate from a historical average. The decimals are decoration, and they're doing persuasion work the data can't support.</span></span></li>
+      </ul>
+
+      <p>Run these on whatever you're using today. Most sellers find at least three, and the third one — an output that survives a missing input — is usually the moment the exercise stops being academic.</p>
+    
+
+    <h2 id="s5"><span class="num">04</span>Why a blank is worth more than a guess</h2>
+      <p>The instinct is that an approximate answer beats no answer. For this class of problem, it's backwards, and the reason is worth being precise about.</p>
+      <p>A blank field is a <strong>known unknown</strong>. It costs you five minutes of irritation and points at a specific, cheap action: go and find the lead time. You do it once, and every decision downstream improves permanently.</p>
+      <p>A default is an <strong>unknown unknown</strong>. It costs you nothing today and takes away your ability to tell which of your decisions were made on real information. That's not a smaller version of the same problem. It's a different problem, and a worse one, because there's no signal to act on — you can't fix what never announced itself.</p>
+      <p>And the errors don't stay put. A lead time that's a month wrong doesn't just move a date. It moves your safety stock, your reorder quantity, the cash you commit and when you commit it — and when the stockout arrives you'll diagnose it as a demand forecasting problem, because that's where it surfaced.</p>
+      <div class="fixbox">
+        <span class="fixbox-k">The test that matters</span>
+        <p>Before acting on any number your software gives you, ask: <strong>which of these inputs did my business actually produce, and which did the software?</strong></p>
+        <p>If the screen can't tell you, the honest reading of that number is "unknown", regardless of how many decimals it has.</p>
+      </div>
+    
+
+    <h2 id="s6"><span class="num">05</span>What a screen looks like when it admits what it doesn't know</h2>
+      <p>The objection to all this is that honesty makes for an ugly product. It doesn't. It makes for a longer one — and the extra length is the part you needed.</p>
+      <p>Same SKU, same moment, two ways of showing it:</p>
+
+      <div class="demo">
+        <div class="card a">
+          <span class="tag">What most tools show</span>
+          <div class="sku">RESTOCK · AB-2210</div>
+          <div class="big">Order by 14 March</div>
+          <div class="qty">1,400 units</div>
+          <div class="rows">
+            <div class="row">Days of cover <b>28</b></div>
+            <div class="row">Lead time <b>90 days</b></div>
+            <div class="row">Margin <b>31.4%</b></div>
+          </div>
+        </div>
+
+        <div class="card b">
+          <span class="tag">What it should show</span>
+          <div class="sku">RESTOCK · AB-2210</div>
+          <div class="big">Order by 14 March</div>
+          <div class="qty">1,400 units</div>
+          <div class="comp">1,400 = 44/day × (60d lead + 12d buffer)<br>− 3,100 on hand − 1,200 inbound</div>
+          <div class="rows">
+            <div class="row"><span class="src m">Measured</span>Velocity <b>44/day</b> — last 30 days of data, ending 5 Sep</div>
+            <div class="row"><span class="src m">Measured</span>Lead time <b>60d avg, 72d worst</b> — your last 5 orders</div>
+            <div class="row"><span class="src a">Allocated</span>Margin <b>31.4%</b> — freight spread by units</div>
+          </div>
+          <div class="flag">Freight is unallocated on 2 of your 4 open POs, so this margin reads high. The order-by date is unaffected.</div>
+        </div>
+      </div>
+      <p class="demo-cap">The left card is more confident and less useful. The right one is the same decision with its working shown — and it tells you which part to distrust and which part to act on anyway.</p>
+
+      <p>Three behaviours produce that second card, and they're not expensive to build. They're just unflattering during a trial.</p>
+      <ul>
+        <li><strong>Refuse rather than default.</strong> "Lead time not measured — add a received date to any past order" beats a 90 that nobody chose. An empty state that names what's missing is a to-do list, and a useful one.</li>
+        <li><strong>Label the provenance.</strong> Measured, allocated, or assumed, on the number itself. Same figure, three very different weights — and the assumed ones are exactly where your setup work should go next.</li>
+        <li><strong>Warn at the decision, not at the field.</strong> The hardest and most valuable. A footnote on the margin field is useless, because nobody visits the margin field. The warning has to appear on the card where you're about to place a $40,000 order.</li>
+      </ul>
+      <p>Note what the honest card does <em>not</em> do: it doesn't refuse to help. It still gives a date and a quantity. It just declines to pretend that all four inputs are equally solid — and in doing so, it tells you that the freight problem affects your margin but not your reorder date, which is the single most useful sentence on either card.</p>
+    
+
+    <h2 id="s7"><span class="num">06</span>"I don't want caveats. I want a number."</h2>
+      <p>Fair, and the honest card gives you one. <em>Order by 14 March, 1,400 units.</em> It's right there, in the same place, in the same size.</p>
+      <p>What it adds is the answer to the question you'd otherwise have to ask a human: how much should I trust this? For a routine restock you'll never read past the headline. For the order that's twice your normal size, you'll read every line — and that's precisely the order where a 90-day default costs you a quarter.</p>
+      <p>The alternative isn't a simpler screen. It's the same screen with the doubts removed and the risk left in.</p>
+      <p>There's a version of this in every profession that handles consequences. A lab result carries its reference range. A surveyor's report says which measurements were taken and which were estimated. A structural engineer signs off on load assumptions, not just the load. None of them find this burdensome; they find it the minimum standard for advice someone will act on.</p>
+      <p>Software that tells you to spend $40,000 should be held to the same bar.</p>
+    
+
+    <h2 id="s8">Frequently asked</h2>
+      <div class="faq">
+        <details open>
+          <summary>How can I tell if my Amazon analytics tool is using default values?</summary>
+          <p>Six checks: suspiciously round figures in fields you never filled, the same value repeated across every SKU, an output that still appears when its input is missing, no date telling you what period the data covers, no screen anywhere admitting something is unknown, and precision the underlying data can't support. The third is the decisive one — check a product you've never entered costs for, and see whether a margin appears anyway.</p>
+        </details>
+        <details>
+          <summary>Why does my inventory tool use a 90-day lead time?</summary>
+          <p>Because it's a default, and it stays until someone changes it. Your real lead time is measurable from your own orders — the days between placing an order and the units becoming sellable, averaged over your last several. The gap between that average and the worst case is also the right size for your safety stock, which is a second number the default silently costs you.</p>
+        </details>
+        <details>
+          <summary>Isn't an estimate better than no answer at all?</summary>
+          <p>An estimate you know is an estimate, yes. An estimate presented as a measurement, no. The first is a known unknown — it points at a cheap fix. The second removes your ability to tell which decisions rested on real data, and the error typically surfaces in a different part of the business from where it was made, so it gets misdiagnosed.</p>
+        </details>
+        <details>
+          <summary>What should software do when it doesn't have the data?</summary>
+          <p>Say so, in the place the decision is being made. Refuse to compute rather than substituting a plausible figure, label every number as measured, allocated or assumed, and put the warning on the decision card rather than on the field — because nobody visits the field.</p>
+        </details>
+        <details>
+          <summary>Why do my two tools show different numbers for the same product?</summary>
+          <p>Usually because at least one of them is filling a gap you don't know about — a different default cost, a different lead time, a different assumption about freight. Two tools that both had complete data and the same definitions would agree. The disagreement is the signal; the useful question is which of the two will tell you what it made up.</p>
+        </details>
+      </div>
+    
+
+    <section class="sec">
+      <h2>A dashboard can afford to guess. A decision can't.</h2>
+      <p>A dashboard is a picture of a business. If one input is invented, the picture is slightly off, and nothing happens — you look at it, you feel informed, you move on.</p>
+      <p>A decision is different. A decision spends money on a specific day in a specific quantity, and it inherits every weakness of every input that fed it. There's no such thing as a slightly-off purchase order.</p>
+      <p>So the number worth acting on isn't the most precise one, or the one that arrives fastest, or the one on the prettiest screen.</p>
+      <p>It's the one that told you how much to trust it.</p>
+    
+
+    
+
+  
+</main>
+
+<aside class="rail" aria-label="Key figures from this article">
+  <div class="rail-card">
+    <span class="rail-k">The default</span>
+    <span class="rail-v">90 days</span>
+    <p>A lead time nobody measured, printed in the same font as the facts. The real supplier takes 58.</p>
+  </div>
+  <div class="rail-card">
+    <span class="rail-k">Checks you can run</span>
+    <span class="rail-v is-amber">Six</span>
+    <p>Round values, one value on every SKU, an output that survives a missing input, no data date, nothing ever unknown, impossible precision.</p>
+  </div>
+  <div class="rail-card">
+    <span class="rail-k">The decisive one</span>
+    <span class="rail-v is-violet">Test three</span>
+    <p>Check a product you have never entered costs for. If a margin appears anyway, the tool manufactured it.</p>
+  </div>
+  <p class="rail-src">Figures from this article&rsquo;s own worked example, not an industry survey.</p>
+</aside>
+
+
+</div><!-- /.wrap -->
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+  <symbol id="i-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12.5 17v-4a2.5 2.5 0 015 0v4"/></symbol>
+  <symbol id="i-tw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M20 4L4 20"/></symbol>
+  <symbol id="i-gh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4 1.4-4-2.2-5.6-2.6M15 21v-3.4a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 2.6 5.5 2.9 5.5 2.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 9.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></symbol>
+</defs>
+</svg>
+
+<footer class="footer">
+<div class="container">
+
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/index.html" class="brand" aria-label="AmazeBase home">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+        </svg>
+        <span data-brand>AmazeBase</span>
+      </a>
+      <p>The operating system for Amazon sellers. Everything connected, everything in sync.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="/product.html#modules">Product</a>
+      <a href="/index.html#pricing">Pricing</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a href="/resources.html">Knowledge Hub</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="/about.html">About</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>&copy; 2026 <span data-brand>AmazeBase</span>. All rights reserved.</span>
+    <div class="footer-social">
+      <a href="#" aria-label="LinkedIn"><svg class="icon-sm"><use href="#i-in"/></svg></a>
+      <a href="#" aria-label="X"><svg class="icon-sm"><use href="#i-tw"/></svg></a>
+      <a href="#" aria-label="GitHub"><svg class="icon-sm"><use href="#i-gh"/></svg></a>
+    </div>
+  </div>
+
+</div>
+</footer>
+
+<script src="/js/main.js" defer></script>
+</body>
+</html>

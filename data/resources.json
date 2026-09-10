@@ -142,6 +142,148 @@
   ],
   "resources": [
     {
+      "id": "fba-reorder-date-velocity",
+      "title": "When should I reorder this ASIN?",
+      "summary": "Stock on hand is easy. Knowing when you must reorder is the hard part, and the honest output is a range with a deadline rather than one confident date.",
+      "category": "inventory",
+      "format": "article",
+      "level": "expert",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-10",
+      "minutes": 12,
+      "url": "articles/fba-reorder-date-velocity.html",
+      "topics": [
+        "Inventory Forecasting",
+        "Reorder Point",
+        "Demand Forecasting",
+        "Lead Time",
+        "Stockouts"
+      ]
+    },
+    {
+      "id": "supplier-payment-schedules-margins",
+      "title": "A purchase order is two objects",
+      "summary": "A purchase order is two objects at once: a cost that lands in margin, and a schedule of payments that lands in cash. Which supplier is cheaper depends on which one you are asking about.",
+      "category": "profit",
+      "categories": ["profit", "inventory"],
+      "format": "article",
+      "level": "expert",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-09",
+      "minutes": 13,
+      "url": "articles/supplier-payment-schedules-margins.html",
+      "topics": [
+        "Cash Flow",
+        "Landed Cost",
+        "Suppliers",
+        "Capital Allocation",
+        "Lead Time"
+      ]
+    },
+    {
+      "id": "true-product-margin-after-ads",
+      "title": "The five margins of one product",
+      "summary": "One product has five margins and they disagree on purpose. Which one is right depends entirely on the decision you are about to make.",
+      "category": "profit",
+      "categories": ["profit", "ppc"],
+      "format": "article",
+      "level": "expert",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-08",
+      "minutes": 13,
+      "url": "articles/true-product-margin-after-ads.html",
+      "topics": [
+        "Landed Cost",
+        "Capital Allocation",
+        "Campaign Strategy",
+        "Opportunity Cost",
+        "Decision Making"
+      ]
+    },
+    {
+      "id": "automate-cash-flow-inventory",
+      "title": "How to automate cash flow forecasting and inventory management",
+      "summary": "Automation does not buy a better prediction. It shortens the distance between a fact changing and you knowing what that fact changes.",
+      "category": "inventory",
+      "categories": ["inventory", "profit"],
+      "format": "article",
+      "level": "expert",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-07",
+      "minutes": 12,
+      "url": "articles/automate-cash-flow-inventory.html",
+      "topics": [
+        "Inventory Forecasting",
+        "Cash Flow",
+        "Operating Systems",
+        "Demand Forecasting",
+        "Capital Allocation"
+      ]
+    },
+    {
+      "id": "data-gaps-seep-everywhere",
+      "title": "One missing invoice",
+      "summary": "A gap in one corner of an Amazon operation does not stay in that corner. Which gaps travel, which ones do not, and how to find your own in twenty minutes.",
+      "category": "tools",
+      "categories": ["tools", "profit"],
+      "format": "article",
+      "level": "expert",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-06",
+      "minutes": 12,
+      "url": "articles/data-gaps-seep-everywhere.html",
+      "topics": [
+        "Data Quality",
+        "Landed Cost",
+        "Decision Making",
+        "Operating Systems"
+      ]
+    },
+    {
+      "id": "first-product-succeeds-cash",
+      "title": "What if your first product succeeds?",
+      "summary": "Most new sellers plan for the product failing. Almost nobody plans for it working, which is the case that actually runs them out of money.",
+      "category": "growth",
+      "categories": ["growth", "profit"],
+      "format": "article",
+      "level": "beginner",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-05",
+      "minutes": 11,
+      "url": "articles/first-product-succeeds-cash.html",
+      "topics": [
+        "Cash Flow",
+        "Scaling",
+        "Capital Allocation",
+        "Product Research",
+        "Decision Making"
+      ]
+    },
+    {
+      "id": "invented-numbers-amazon-analytics",
+      "title": "The numbers your Amazon software invented",
+      "summary": "Every analytics tool fills in what it does not know, silently, in the same font as the facts. Six checks that find the invented numbers in whatever you use today.",
+      "category": "tools",
+      "format": "article",
+      "level": "beginner",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-04",
+      "minutes": 9,
+      "url": "articles/invented-numbers-amazon-analytics.html",
+      "topics": [
+        "Decision Making",
+        "Data Quality",
+        "Operating Systems"
+      ]
+    },
+    {
       "id": "ad-growth-vs-supply-chain",
       "title": "Ad Growth Versus Supply Chain Reality",
       "summary": "Advertising moves demand in days; supply chains answer in months. What happens in that gap, and why scaling spend is really a purchase order nobody has written yet.",

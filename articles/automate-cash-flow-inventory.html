@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How to automate cash flow forecasting and inventory management &mdash; AmazeBase</title>
+
+<meta name="description" content="Automation doesn&#x27;t buy you a better prediction. It buys you a shorter distance between a fact changing and you knowing what it changes.">
+<meta name="theme-color" content="#030917">
+<meta name="author" content="AmazeBase">
+<meta property="og:title" content="How to automate cash flow forecasting and inventory management">
+<meta property="og:description" content="Automation doesn&#x27;t buy you a better prediction. It buys you a shorter distance between a fact changing and you knowing what it changes.">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+/* ==========================================================================
+   ARTICLE — Amazon Inventory Forecasting
+   Self-contained. Tokens mirror css/variables.css so this page can either
+   stand alone OR have this <style> block deleted once it sits inside the
+   site's normal stylesheet chain.
+========================================================================== */
+
+:root{
+  --z-nav:100;          /* navigation.css */
+  --container:1280px;   /* .container, below */
+  --t-body:15px;        /* .btn, below */
+  --bg:#030917; --bg-deep:#01050E; --bg-raise:#060D1E;
+  --surface:rgba(255,255,255,.030); --surface-2:rgba(255,255,255,.055);
+  --surface-solid:#0A1224;
+  --line:rgba(255,255,255,.070); --line-strong:rgba(255,255,255,.140);
+
+  --text:#EEF1F8; --text-2:#98A2B8; --text-3:#616C84;
+
+  --violet:#8B3BF1; --violet-soft:#A971F7; --indigo:#5B4FE6;
+  --blue:#3B82F6; --blue-soft:#7EB3FF;
+  --green:#2ED47A; --amber:#F5A524; --red:#F0435C;
+
+  --grad-brand:linear-gradient(135deg,#5B4FE6 0%,#8B3BF1 100%);
+  --grad-text:linear-gradient(90deg,#6153E6 0%,#9D50F7 55%,#C56BF5 100%);
+  --grad-card:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  --grad-rule:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,monospace;
+
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px;
+  --s5:48px; --s6:64px; --s7:96px; --s8:128px;
+
+  --gutter:clamp(20px,4vw,40px);
+  --measure:720px;
+
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
+  --sh-2:0 18px 40px rgba(0,0,0,.42);
+  --sh-brand:0 16px 40px rgba(107,63,232,.35);
+  --ease:cubic-bezier(.22,.61,.36,1); --fast:.18s; --mid:.28s;
+
+  color-scheme:dark;
+  scrollbar-color:#26304A var(--bg);
+  scrollbar-width:thin;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation:none !important; transition:none !important; }
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+::selection{ background:var(--violet); color:#fff; }
+
+.skip-link{
+  position:absolute; left:-9999px; top:0;
+  background:var(--surface-solid); color:var(--text);
+  padding:12px 20px; border-radius:0 0 var(--r-sm) 0;
+  z-index:1000; text-decoration:none; font-weight:600;
+}
+.skip-link:focus{ left:0; }
+
+:focus-visible{
+  outline:2px solid var(--violet-soft);
+  outline-offset:3px;
+  border-radius:var(--r-xs);
+}
+
+/* ---------- ambient background ------------------------------------------ */
+.bg-layer{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(760px 520px at 18% -8%,  rgba(91,79,230,.20), transparent 62%),
+    radial-gradient(680px 480px at 88% 4%,   rgba(139,59,241,.15), transparent 60%),
+    radial-gradient(900px 700px at 50% 108%, rgba(59,130,246,.09), transparent 66%);
+}
+
+.wrap{ position:relative; z-index:1; }
+
+/* ---------- shell ------------------------------------------------------- */
+.article{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:0 var(--gutter) var(--s8);
+}
+
+/* ---------- header ------------------------------------------------------ */
+.article-head{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:clamp(64px,9vw,120px) var(--gutter) clamp(32px,4vw,48px);
+}
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--violet-soft);
+  background:var(--surface); border:1px solid var(--line);
+  padding:7px 14px; border-radius:var(--r-pill);
+  margin:0 0 var(--s3);
+}
+.eyebrow::before{
+  content:""; width:6px; height:6px; border-radius:50%;
+  background:var(--violet-soft);
+  box-shadow:0 0 10px rgba(169,113,247,.9);
+}
+
+h1{
+  font-size:clamp(34px,5vw,58px);
+  line-height:1.08;
+  letter-spacing:-.025em;
+  font-weight:800;
+  margin:0 0 var(--s3);
+  text-wrap:balance;
+}
+h1 .accent{
+  background:var(--grad-text);
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+}
+
+.deck{
+  font-size:clamp(18px,2.1vw,21px);
+  line-height:1.6;
+  color:var(--text-2);
+  margin:0 0 var(--s4);
+  max-width:62ch;
+}
+
+.meta{
+  display:flex; flex-wrap:wrap; align-items:center; gap:var(--s2);
+  font-size:14px; color:var(--text-3);
+  padding-top:var(--s3);
+  border-top:1px solid var(--line);
+}
+.meta .dot{ width:3px; height:3px; border-radius:50%; background:var(--text-3); }
+
+/* ---------- table of contents ------------------------------------------- */
+.toc{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:0 0 var(--s6);
+}
+.toc h2{
+  font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--text-3); margin:0 0 var(--s3); padding:0; border:0;
+}
+.toc ol{
+  list-style:none; margin:0; padding:0;
+  counter-reset:toc;
+  display:grid; gap:2px;
+}
+.toc li{ counter-increment:toc; margin:0; }
+.toc a{
+  display:flex; gap:14px; align-items:baseline;
+  color:var(--text-2); text-decoration:none;
+  font-size:15px; line-height:1.5;
+  padding:8px 10px; margin:0 -10px;
+  border-radius:var(--r-xs);
+  transition:color var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+.toc a::before{
+  content:counter(toc,decimal-leading-zero);
+  font-family:var(--font-mono); font-size:12px; font-weight:600;
+  color:var(--text-3); flex:none; min-width:22px;
+  transition:color var(--fast) var(--ease);
+}
+.toc a:hover{ color:var(--text); background:var(--surface); }
+.toc a:hover::before{ color:var(--violet-soft); }
+
+/* ---------- body typography --------------------------------------------- */
+.article p{ margin:0 0 1.1em; color:#D5DBE9; }
+.article p.lead{ font-size:20px; color:var(--text); }
+
+.article h2{
+  font-size:clamp(26px,3.2vw,34px);
+  line-height:1.2;
+  letter-spacing:-.02em;
+  font-weight:700;
+  color:var(--text);
+  margin:var(--s7) 0 var(--s3);
+  padding-top:var(--s5);
+  border-top:1px solid var(--line);
+  scroll-margin-top:32px;
+  text-wrap:balance;
+}
+.article h2:first-of-type{ margin-top:0; }
+
+.article h2 .num{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:13px; font-weight:600; letter-spacing:.16em;
+  color:var(--violet-soft);
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
+
+.article strong{ color:var(--text); font-weight:700; }
+
+.article ul{
+  margin:0 0 1.4em;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:10px;
+}
+.article ul li{
+  position:relative;
+  padding-left:26px;
+  color:#D5DBE9;
+  line-height:1.6;
+}
+.article ul li::before{
+  content:"";
+  position:absolute; left:6px; top:.68em;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--violet);
+  box-shadow:0 0 8px rgba(139,59,241,.55);
+}
+
+/* ---------- pull quote --------------------------------------------------- */
+blockquote{
+  margin:var(--s4) 0;
+  padding:var(--s3) var(--s4);
+  border-left:2px solid var(--violet);
+  background:linear-gradient(90deg,rgba(139,59,241,.10),transparent 80%);
+  border-radius:0 var(--r-md) var(--r-md) 0;
+}
+blockquote p{
+  margin:0;
+  font-size:20px;
+  line-height:1.5;
+  font-weight:600;
+  color:var(--text);
+}
+
+/* ---------- callouts ----------------------------------------------------- */
+.callout{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:var(--s4) 0 var(--s5);
+}
+.callout .label{
+  display:block;
+  font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--text-3);
+  margin-bottom:var(--s2);
+}
+.callout p:last-child, .callout ul:last-child{ margin-bottom:0; }
+
+.formula{
+  font-family:var(--font-mono);
+  font-size:clamp(15px,2.1vw,19px);
+  font-weight:600;
+  line-height:1.6;
+  color:var(--text);
+  background:var(--bg-deep);
+  border:1px solid var(--line-strong);
+  border-radius:var(--r-md);
+  padding:var(--s3);
+  margin:0 0 var(--s3);
+  text-align:center;
+  overflow-x:auto;
+}
+.formula .op{ color:var(--violet-soft); }
+
+/* ---------- numbers strip ------------------------------------------------ */
+.figures{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:var(--s2);
+  margin:var(--s4) 0 var(--s5);
+  padding:0; list-style:none;
+}
+.figures li{ padding:0; }
+.figures li::before{ display:none; }
+.fig{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:var(--s3) var(--s2);
+  text-align:center;
+}
+.fig .v{
+  display:block;
+  font-size:28px; font-weight:800; letter-spacing:-.02em; line-height:1.1;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.fig .k{
+  display:block;
+  font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.fig.is-bad .v{ color:var(--red); }
+.fig.is-real .v{ color:var(--green); }
+
+/* ---------- divider ------------------------------------------------------ */
+.rule{
+  height:1px; border:0;
+  background:var(--grad-rule);
+  margin:var(--s6) 0;
+}
+
+/* ---------- closing CTA -------------------------------------------------- */
+.cta{
+  max-width:var(--measure);
+  margin:var(--s7) auto 0;
+  padding:clamp(32px,5vw,56px) var(--gutter);
+  text-align:center;
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-xl);
+  box-shadow:var(--sh-2);
+}
+.cta h2{
+  font-size:clamp(24px,3vw,32px);
+  font-weight:700; letter-spacing:-.02em; line-height:1.2;
+  margin:0 0 var(--s2); padding:0; border:0;
+  text-wrap:balance;
+}
+.cta p{
+  color:var(--text-2);
+  max-width:52ch;
+  margin:0 auto var(--s4);
+  font-size:17px;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--grad-brand);
+  color:#fff; text-decoration:none;
+  font-weight:600; font-size:16px;
+  padding:14px 28px;
+  border-radius:var(--r-pill);
+  box-shadow:var(--sh-brand);
+  transition:transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+.btn:hover{ transform:translateY(-2px); box-shadow:0 22px 50px rgba(107,63,232,.45); }
+.btn svg{ width:18px; height:18px; }
+
+/* ---------- responsive --------------------------------------------------- */
+@media (max-width:640px){
+  body{ font-size:17px; }
+  .article p.lead{ font-size:18px; }
+  blockquote p{ font-size:18px; }
+  .article h2{ margin-top:var(--s6); padding-top:var(--s4); }
+}
+
+/* ---------- print -------------------------------------------------------- */
+@media print{
+  .bg-layer,.toc,.cta,.skip-link{ display:none; }
+  body{ background:#fff; color:#111; font-size:12pt; }
+  .article p,.article ul li{ color:#222; }
+  .article h2{ color:#000; }
+}
+.back-link{ margin:0 0 28px; font-size:13px; }
+.back-link a{ color:var(--text-2); text-decoration:none; }
+.back-link a:hover{ color:var(--text); }
+
+/* ── HERO IMAGE ─────────────────────────────────────────────────────── */
+.hero-shot{
+  margin:0 0 52px;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  background:var(--bg-raise);
+  line-height:0;
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+.hero-shot img{ width:100%; height:auto; display:block; }
+
+/* ── MISTAKE CARDS ──────────────────────────────────────────────────── */
+.mistake{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.mistake::before{
+  content:"";
+  position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+  background:var(--amber);
+}
+.mistake h2{ margin-top:0 !important; }
+.article .mistake h2:first-of-type{ margin-top:0; }
+
+/* ── PULL QUOTES ────────────────────────────────────────────────────── */
+blockquote{
+  margin:44px 0;
+  padding:0 0 0 26px;
+  border-left:3px solid var(--amber);
+  background:none;
+}
+blockquote p{
+  font-size:23px;
+  line-height:1.45;
+  font-style:italic;
+  font-weight:600;
+  color:var(--text);
+  margin:0;
+}
+
+/* ── MID-ARTICLE STRIP ──────────────────────────────────────────────── */
+.strip{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px; flex-wrap:wrap;
+  margin:44px 0;
+  padding:26px 30px;
+  border-radius:16px;
+  background:linear-gradient(120deg,#0A1224,#131A33);
+  border:1px solid var(--line-strong);
+}
+.strip h3{ margin:0 0 6px; font-size:19px; color:var(--text); }
+.strip p{ margin:0; font-size:14px; color:var(--text-2); }
+.strip-btn{
+  flex:0 0 auto;
+  display:inline-block;
+  padding:12px 22px;
+  border-radius:10px;
+  background:var(--amber);
+  color:#1A1200;
+  font-size:14px; font-weight:700;
+  text-decoration:none;
+  transition:filter .15s ease;
+}
+.strip-btn:hover{ filter:brightness(1.08); }
+
+@media (max-width:640px){
+  .mistake{ padding:24px 20px 8px; }
+  .mistake::before{ top:20px; bottom:20px; }
+  blockquote p{ font-size:20px; }
+  .strip{ padding:22px; }
+  .strip-btn{ width:100%; text-align:center; }
+}
+
+/* ── WIDE SHELL: content + rail, so the page uses the screen ─────────── */
+.shell{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 var(--gutter);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 300px;
+  gap:64px;
+  align-items:start;
+}
+.shell > .article{ max-width:none; margin:0; padding:0 0 var(--s8); }
+
+.rail{ position:sticky; top:40px; display:flex; flex-direction:column; gap:14px; }
+.rail-card{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+  padding:20px;
+}
+.rail-k{
+  display:block; margin-bottom:10px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.rail-v{
+  display:block; margin-bottom:10px;
+  font-size:34px; line-height:1; font-weight:800; letter-spacing:-.02em;
+  color:var(--green);
+}
+.rail-v.is-amber{ color:var(--amber); }
+.rail-v.is-violet{ color:var(--violet-soft); }
+.rail-card p{ margin:0; font-size:13px; line-height:1.55; color:var(--text-2); }
+.rail-src{
+  margin:0; padding-top:14px;
+  border-top:1px solid var(--line);
+  font-size:11px; line-height:1.5; color:var(--text-3);
+}
+
+/* header + hero align to the same shell */
+.article-head, .hero-shot{ max-width:1180px; }
+
+/* ── HERO: a band, not a giant square ───────────────────────────────── */
+.hero-shot{
+  margin:0 auto 56px;
+  padding:0 var(--gutter);
+  border:0; background:none; box-shadow:none;
+  border-radius:0;
+  overflow:visible;
+}
+.hero-shot img{
+  width:100%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
+  border-radius:18px;
+  border:1px solid var(--line-strong);
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+
+/* ── THE FIX callout ────────────────────────────────────────────────── */
+.fixbox{
+  margin:22px 0 4px;
+  padding:16px 18px;
+  border-radius:12px;
+  border:1px solid rgba(46,212,122,.28);
+  background:rgba(46,212,122,.07);
+}
+.fixbox-k{
+  display:block; margin-bottom:6px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--green);
+}
+.fixbox p{ margin:0 !important; color:var(--text) !important; }
+
+@media (max-width:1080px){
+  .shell{ grid-template-columns:1fr; gap:40px; max-width:820px; }
+  .rail{ position:static; flex-direction:row; flex-wrap:wrap; }
+  .rail-card{ flex:1 1 220px; }
+  .rail-src{ flex:1 1 100%; border-top:0; padding-top:0; }
+  .article-head, .hero-shot{ max-width:820px; }
+}
+@media (max-width:640px){
+  .shell{ gap:28px; }
+}
+
+
+/* ── FIGURES CARRIED OVER FROM THE DRAFT ──────────────────────────────
+   This piece ships its own tables, charts and spec blocks. Rather than
+   import a second design system for them, the palette they were written
+   against is repointed at this site's tokens, and only their component
+   rules are carried over. --measure is deliberately absent: it collides
+   with the site's, and the ported rules should use the site's column.
+   ------------------------------------------------------------------- */
+:root{
+  --paper:var(--bg); --panel:var(--surface-solid); --panel-2:var(--surface-2);
+  --ink:var(--text); --ink-2:var(--text-2); --ink-3:var(--text-3);
+  --rule:var(--line); --rule-strong:var(--line-strong);
+  --accent:var(--violet-soft); --accent-soft:rgba(139,59,241,.16);
+  --cost:var(--text-3);
+  --good:var(--green);  --good-soft:rgba(46,212,122,.10);
+  --warn:var(--amber);  --warn-soft:rgba(245,165,36,.10);
+  --crit:var(--red);    --crit-soft:rgba(240,67,92,.10);
+  --f-display:var(--font); --f-body:var(--font);
+  --f-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+article p{margin:0 0 1.15rem}
+article ul, article ol{margin:0 0 1.3rem;padding-left:1.15rem}
+article li{margin-bottom:.5rem}
+article li::marker{color:var(--ink-3)}
+strong{font-weight:600}
+em{font-style:italic}
+.fix{background:var(--panel);
+  border:1px solid var(--rule);
+  border-left:3px solid var(--accent);
+  padding:1.1rem 1.3rem;
+  margin:1.9rem 0;}
+.fix .k{display:block;
+  font-family:var(--f-mono);
+  font-size:.68rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:.45rem;}
+.fix p{margin:0}
+pre{font-family:var(--f-mono);
+  font-size:.83rem;
+  line-height:1.75;
+  background:var(--panel-2);
+  border:1px solid var(--rule);
+  padding:1rem 1.1rem;
+  margin:1.6rem 0;
+  overflow-x:auto;}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--panel-2);padding:.1em .35em;border-radius:2px}
+pre code{background:none;padding:0;font-size:1em}
+.inputs{list-style:none;padding:0;margin:1.4rem 0 1.9rem;
+  display:flex;flex-direction:column;gap:0;
+  border-top:1px solid var(--rule);}
+.inputs li{margin:0;
+  display:grid;
+  grid-template-columns:2.2rem 1fr;
+  gap:.9rem;
+  padding:.85rem .2rem;
+  border-bottom:1px solid var(--rule);}
+.inputs .n{font-family:var(--f-mono);font-size:.78rem;color:var(--ink-3);padding-top:.15rem}
+.inputs b{display:block;font-weight:600}
+.inputs span.d{color:var(--ink-2);font-size:.95rem}
+.src{font-family:var(--f-mono);
+  font-size:.68rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  margin:1.6rem 0 .2rem;}
+.bands{display:grid;gap:.55rem;margin:1.4rem 0 1.8rem}
+.band{display:grid;grid-template-columns:6.5rem 1fr;gap:1rem;align-items:baseline;
+  padding:.7rem .9rem;background:var(--panel);border:1px solid var(--rule);}
+.band .lab{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
+.band.c .lab{color:var(--good)}
+.band.s .lab{color:var(--accent)}
+.band.a .lab{color:var(--warn)}
+.band .txt{font-size:.95rem;color:var(--ink-2)}
+.never{margin:1.5rem 0}
+.never dt{font-weight:600;margin-top:1.1rem}
+.never dd{margin:.25rem 0 0;color:var(--ink-2)}
+.faq{margin-top:1.5rem}
+.faq details{border-bottom:1px solid var(--rule);padding:.9rem 0}
+.faq summary{cursor:pointer;font-weight:600;list-style:none;
+  display:flex;gap:.75rem;align-items:flex-start;}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::before{content:"+";font-family:var(--f-mono);color:var(--accent);
+  font-weight:400;line-height:1.6;}
+.faq details[open] summary::before{content:"–"}
+.faq p{margin:.65rem 0 0 1.5rem;color:var(--ink-2)}
+.faq summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* ── PIECES THIS ARTICLE ADDS ─────────────────────────────────────────
+   h3, tables, the FAQ and the carried-over figure. The 44 articles that
+   came before this one had no h3 and no tables, so the core stylesheet
+   never needed rules for them.
+   ------------------------------------------------------------------- */
+.article h3{
+  margin:var(--s5) 0 var(--s2);
+  font-size:clamp(19px,1.6vw,22px);
+  font-weight:650; letter-spacing:-.01em; color:var(--text);
+}
+.tblwrap{ margin:var(--s4) 0; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.article table{
+  width:100%; border-collapse:collapse;
+  font-size:.94rem; line-height:1.5;
+}
+.article th, .article td{
+  padding:10px 14px; text-align:left; vertical-align:top;
+  border-bottom:1px solid var(--line);
+}
+.article th{
+  font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+  color:var(--text-3); border-bottom-color:var(--line-strong); white-space:nowrap;
+}
+.article tbody tr:last-child td{ border-bottom:0; }
+.art-diagram{ margin:var(--s4) 0; }
+.art-diagram svg{ width:100%; height:auto; display:block; }
+.art-diagram .sub, .art-diagram figcaption{
+  margin-top:10px; font-size:var(--t-micro,.82rem); color:var(--text-3); line-height:1.5;
+}
+.faq{ margin:var(--s4) 0; }
+.faq details{
+  border:1px solid var(--line); border-radius:var(--r-md);
+  background:var(--surface); padding:14px 18px; margin-bottom:10px;
+}
+.faq summary{
+  cursor:pointer; font-weight:600; color:var(--text);
+  list-style:none; padding-right:24px; position:relative;
+}
+.faq summary::-webkit-details-marker{ display:none; }
+.faq summary::after{
+  content:"+"; position:absolute; right:0; top:-2px;
+  font-size:19px; line-height:1; color:var(--violet-soft);
+}
+.faq details[open] summary::after{ content:"\2013"; }
+.faq details p{ margin:10px 0 0 !important; color:var(--text-2); }
+
+/* ── KEEPING WIDE THINGS INSIDE A PHONE ───────────────────────────────
+   These pieces carry long monospace formulas, wide comparison tables and
+   the draft's scenario rows. Each has a min-content width larger than a
+   390px screen, and the shell's mobile track is `1fr` - which means
+   minmax(auto,1fr), so a single one of them widens the whole column and
+   the entire page scrolls sideways. Cap the track, then let each wide
+   block scroll inside itself instead of pushing the article around.
+   ------------------------------------------------------------------- */
+@media (max-width:1080px){
+  .shell{ grid-template-columns:minmax(0,1fr); }
+}
+.shell > .article{ min-width:0; }
+.article > *{ max-width:100%; }
+.formula{ overflow-x:auto; }
+.formula code{ white-space:pre; }
+.tblwrap{ min-width:0; max-width:100%; }
+.scn, .scnrow, .bands, .band, .inputs, .facts, .spec, .grid{ min-width:0; max-width:100%; }
+@media (max-width:640px){
+  .scnrow{ display:block; }
+  .scnrow > *{ display:block; }
+}
+
+/* ── SITE HEADER ──────────────────────────────────────────────────────
+   The header markup is the site's, and navigation.css styles it. These are
+   the pieces it also leans on from base.css, which this page does not load.
+   Every selector is scoped to the header or the mobile drawer: an article is
+   built out of bare a/p/h3/h4, and base.css restyles all of those.
+
+   The scope is written with :where() so it adds no specificity. Scoped the
+   plain way, `.site-header .btn` is (0,2,0) - the same weight as
+   navigation.css's own `.nav-actions .btn--quiet` and `.nav-mobile a`, and
+   loaded after them, so these copies quietly outranked the real rules: the
+   hamburger got pushed off a 390px screen and the drawer buttons lost their
+   sizing. Inside :where() each rule keeps exactly the weight it has in
+   base.css, which is the weight navigation.css was written against.
+   ------------------------------------------------------------------- */
+/* The header inherits from <body>, and this page's body is set for reading:
+   18px at 1.72. The site's is var(--t-body) at 1.6. Left alone, every element
+   in the bar came out a size and a half too tall. Reset it at the root of the
+   header so everything inside inherits the site's figures instead. */
+:where(.site-header),
+:where(.nav-mobile){
+  font-size:var(--t-body);
+  line-height:1.6;
+}
+
+:where(.site-header) .container{
+  width:min(100%,var(--container));
+  margin-inline:auto;
+  padding-inline:var(--gutter);
+  position:relative;
+}
+:where(.site-header, .nav-mobile) .brand{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:19px; font-weight:700; letter-spacing:-.01em;
+  color:var(--text); text-decoration:none;
+}
+:where(.site-header) .brand-mark{ width:26px; height:26px; flex:none; }
+:where(.site-header) .icon,    :where(.nav-mobile) .icon{    width:20px; height:20px; flex:none; stroke-width:1.7; }
+:where(.site-header) .icon-sm, :where(.nav-mobile) .icon-sm{ width:16px; height:16px; flex:none; stroke-width:1.8; }
+/* margin-block only: navigation.css centres this with margin-inline:auto,
+   and a shorthand `margin:0` here would outrank it and shove the menu
+   over against the brand. */
+:where(.site-header) .nav-menu{ list-style:none; padding:0; margin-block:0; }
+.site-header a, .nav-mobile a{ text-decoration:none; }
+/* base.css resets these globally; this page does not load it. Without the
+   padding reset the UA's 1px 6px survives and the 44px tap target
+   responsive.css asks for comes out 40px. */
+:where(.site-header) .nav-toggle{ font:inherit; cursor:pointer; padding:0; }
+:where(.site-header) svg, :where(.nav-mobile) svg{ display:block; }
+
+:where(.site-header) .btn, :where(.nav-mobile) .btn{
+  /* This page defines its own .btn - a filled gradient pill used in the body -
+     and it reaches the header buttons too. base.css's .btn sets none of these,
+     so the variant classes below are what should decide them. Cleared here or
+     "Log in", which is .btn--quiet and meant to read as plain text, arrives
+     wearing the brand gradient. */
+  background:none;
+  box-shadow:none;
+  color:inherit;
+  text-decoration:none;
+  position:relative;
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  padding:13px 22px;
+  border-radius:var(--r-sm);
+  font-size:var(--t-body); font-weight:600; line-height:1;
+  white-space:nowrap;
+  transition:transform var(--fast) var(--ease),
+             box-shadow var(--fast) var(--ease),
+             background var(--fast) var(--ease),
+             border-color var(--fast) var(--ease);
+}
+:where(.site-header) .btn:active, :where(.nav-mobile) .btn:active{ transform:translateY(0) scale(.99); }
+:where(.site-header) .btn--primary, :where(.nav-mobile) .btn--primary{
+  background:var(--grad-brand); color:#fff;
+  box-shadow:var(--sh-brand); overflow:hidden;
+}
+:where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{
+  content:""; position:absolute; top:0; left:-130%;
+  width:55%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);
+  transition:left .65s var(--ease);
+}
+:where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{
+  transform:translateY(-2px); box-shadow:0 22px 52px rgba(107,63,232,.45);
+}
+:where(.site-header) .btn--primary:hover::after, :where(.nav-mobile) .btn--primary:hover::after{ left:150%; }
+:where(.site-header) .btn--quiet, :where(.nav-mobile) .btn--quiet{ color:var(--text-2); padding:13px 8px; }
+:where(.site-header) .btn--quiet:hover, :where(.nav-mobile) .btn--quiet:hover{ color:var(--text); }
+:where(.nav-mobile) .btn--block{ width:100%; }
+
+@media (prefers-reduced-motion:reduce){
+  :where(.site-header) .btn, :where(.nav-mobile) .btn,
+  :where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{ transition:none; }
+  :where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{ transform:none; }
+}
+
+/* navigation.css hides these two buttons on small screens so the hamburger
+   fits. Its selectors are (0,2,0) and so is `:where(.site-header) .btn` above, which
+   is loaded after it - equal weight, later wins, and display:inline-flex beat
+   display:none. The hamburger ended up 107px off the right of a 390px screen
+   with no way to open the menu. Restating the hide at (0,3,0) settles it.
+   The breakpoints are read out of navigation.css at build time, not typed. */
+
+/* Clear the fixed site header. Reserving its height on .wrap keeps the gap
+   between the bar and the eyebrow the same as the gap used to be between the
+   top of the window and the eyebrow. */
+.wrap{ padding-top:70px; }
+@media (max-width:640px){ .wrap{ padding-top:64px; } }
+
+/* Anchor targets. .article h2 carried scroll-margin-top:32px, which was right
+   when this page had no fixed bar: 32px was breathing room. Now a jump from
+   the contents list lands 38px underneath the header. responsive.css puts the
+   rest of the site on 84px for exactly this reason; the article's own rule is
+   (0,2,0) and outranks it, so it is restated here at the same weight. */
+.article h2{ scroll-margin-top:84px; }
+
+/* The back-link sat hard against the left edge of the window, in line with
+   nothing. That was always true, but with the nav above it the thing reads as
+   stranded rather than as a heading. Same shell as .article-head, so it lines
+   up with the title beneath it and behaves as the breadcrumb it is. */
+.back-link{
+  max-width:1180px;
+  margin-inline:auto;      /* the rule above keeps its 28px bottom margin */
+  padding:22px var(--gutter) 0;
+}
+</style>
+<link rel="stylesheet" href="/css/navigation.css">
+<link rel="stylesheet" href="/css/responsive.css">
+<link rel="stylesheet" href="/css/site-footer.css">
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="bg-layer" aria-hidden="true"></div>
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+</defs>
+  <symbol id="i-chevron"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-menu"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-mega"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l7 4V5L8 9H4zM19 9a4 4 0 010 6"/></symbol>
+  <symbol id="i-dollar"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5v19M16.5 6.5H10a3.2 3.2 0 000 6.4h4a3.2 3.2 0 010 6.4H7"/></symbol>
+  <symbol id="i-stack"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/></symbol>
+  <symbol id="i-box"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></symbol>
+  <symbol id="i-search"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></symbol>
+  <symbol id="i-chart"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-trend"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></symbol>
+  <symbol id="i-db"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3.2"/><path d="M4 6v12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2V6M4 12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2"/></symbol>
+  <symbol id="i-shield"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-9.5V5.5L12 2.5 4 5.5V12.5C4 18.5 12 22 12 22z"/></symbol>
+  <symbol id="i-spark"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+  <symbol id="i-rocket"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15s-1.5 3 1 5.5S11 20 11 20M14.5 4.5c3-2 6-1 6-1s1 3-1 6l-6 6-5-5 6-6z"/><circle cx="15" cy="9" r="1.4"/></symbol>
+  <symbol id="i-case"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8.5 7V5a2 2 0 012-2h3a2 2 0 012 2v2M2.5 12.5h19"/></symbol>
+  <symbol id="i-info"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></symbol>
+  <symbol id="i-msg"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-8 8 8.6 8.6 0 01-3.6-.8L3 21l1.8-6.4A8 8 0 1121 12z"/></symbol>
+</svg>
+
+<header class="site-header">
+<div class="container">
+<nav class="nav" aria-label="Primary">
+
+  <a href="/index.html" class="brand" aria-label="AmazeBase home">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+      <path d="M16 17.6l4.4 8.2h-8.8z" fill="#C56BF5" opacity=".85"/>
+    </svg>
+    <span data-brand>AmazeBase</span>
+  </a>
+
+  <ul class="nav-menu">
+    <li class="nav-item">
+      <a class="nav-link" href="/product.html#modules">Product <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop nav-drop--wide">
+        <a href="/product.html#advertising"><svg class="icon-sm"><use href="#i-mega"/></svg>Advertising &amp; PPC</a>
+        <a href="/product.html#financials"><svg class="icon-sm"><use href="#i-dollar"/></svg>Financials</a>
+        <a href="/product.html#ledger"><svg class="icon-sm"><use href="#i-stack"/></svg>Ledger</a>
+        <a href="/product.html#inventory"><svg class="icon-sm"><use href="#i-box"/></svg>Inventory</a>
+        <a href="/product.html#research"><svg class="icon-sm"><use href="#i-search"/></svg>Product Research</a>
+        <a href="/product.html#simulations"><svg class="icon-sm"><use href="#i-chart"/></svg>Simulations</a>
+        <a href="/product.html#sales"><svg class="icon-sm"><use href="#i-trend"/></svg>Sales</a>
+        <a href="/product.html#data"><svg class="icon-sm"><use href="#i-db"/></svg>Data &amp; Sync</a>
+        <a href="/product.html#security"><svg class="icon-sm"><use href="#i-shield"/></svg>Security</a>
+        <a href="/product.html#assistant"><svg class="icon-sm"><use href="#i-spark"/></svg>AI Assistant &mdash; soon</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/solutions.html">Solutions <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/solutions.html#beginners"><svg class="icon-sm"><use href="#i-rocket"/></svg>Beginners</a>
+        <a href="/solutions.html#experts"><svg class="icon-sm"><use href="#i-dollar"/></svg>Experienced sellers</a>
+        <a href="/solutions.html#agencies"><svg class="icon-sm"><use href="#i-case"/></svg>Agencies</a>
+      </div>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="/index.html#pricing">Pricing</a></li>
+    <li class="nav-item"><a class="nav-link" href="/resources.html">Resources</a></li>
+    <li class="nav-item">
+      <a class="nav-link" href="/about.html">Company <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/about.html"><svg class="icon-sm"><use href="#i-info"/></svg>About</a>
+        <a href="/contact.html"><svg class="icon-sm"><use href="#i-msg"/></svg>Contact</a>
+      </div>
+    </li>
+  </ul>
+
+  <div class="nav-actions">
+    <a class="btn btn--quiet" href="https://amz-analytics-production.up.railway.app/login">Log in</a>
+    <a class="btn btn--primary" href="/index.html#waitlist" data-magnetic>Join the Wait List</a>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="navMobile">
+      <svg class="icon"><use href="#i-menu"/></svg>
+    </button>
+  </div>
+
+</nav>
+</div>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="/product.html#modules">Product</a>
+  <a href="/solutions.html">Solutions</a>
+  <a href="/index.html#pricing">Pricing</a>
+  <a href="/resources.html">Resources</a>
+  <a href="/about.html">About</a>
+  <a href="/contact.html">Contact</a>
+  <a class="btn btn--quiet btn--block" href="https://amz-analytics-production.up.railway.app/login">Log in</a>
+  <a class="btn btn--primary btn--block" href="/index.html#waitlist">Join the Wait List</a>
+</div>
+</header>
+
+<div class="wrap">
+<p class="back-link"><a href="/resources.html">&larr; Knowledge Hub</a></p>
+<header class="article-head">
+  <p class="eyebrow">Operating Systems</p>
+  <h1>How to automate cash <span class="accent">flow forecasting and inventory management</span></h1>
+  <p class="deck">Automation doesn't buy you a better prediction. It buys you a shorter distance between a fact changing and you knowing what it changes.</p>
+  <p class="meta">
+    <span>AmazeBase</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>12 min read</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>Inventory &amp; Cash Flow</span>
+  </p>
+</header>
+
+<!-- HERO IMAGE GOES HERE. Drop the image in as assets/img/hero-automate-cash-flow-inventory.webp at 1672x941, uncomment, and write the alt text:
+<figure class="hero-shot">
+  <img src="../assets/img/hero-automate-cash-flow-inventory.webp"
+       alt=""
+       width="1672" height="941" loading="eager" decoding="async">
+</figure>
+-->
+
+<div class="shell">
+<main id="main" class="article">
+  <p class="lead">Most sellers who ask this question are really asking two questions at once.</p>
+  <nav class="toc" aria-labelledby="toc-title">
+    <h2 id="toc-title">What&rsquo;s in this piece</h2>
+    <ol>
+      <li><a href="#s1"><span>00</span>What "automated" means</a></li>
+      <li><a href="#s2"><span>01</span>Connect the six inputs</a></li>
+      <li><a href="#s3"><span>02</span>Make the numbers honest</a></li>
+      <li><a href="#s4"><span>03</span>Inventory → a dated decision</a></li>
+      <li><a href="#s5"><span>04</span>Cash → a dated timeline</a></li>
+      <li><a href="#s6"><span>05</span>The financeability join</a></li>
+      <li><a href="#s7"><span>06</span>Scenarios and fragility</a></li>
+      <li><a href="#s8"><span>07</span>Forecast vs. actual</a></li>
+      <li><a href="#s9"><span>—</span>What never to automate</a></li>
+      <li><a href="#s10"><span>—</span>A 30-day sequence</a></li>
+      <li><a href="#s11"><span>—</span>Questions</a></li>
+    </ol>
+  </nav>
+
+
+    
+
+    <p>The first is mechanical: <em>can software do the arithmetic for me?</em> Yes. That part was solved decades ago.</p>
+
+    <p>The second is the one that matters: <em>can I trust the answer enough to spend $40,000 on it?</em></p>
+
+    <p>Automation doesn't earn that trust by predicting better. It earns it by <strong>shortening the distance between a fact changing and you knowing what that fact changes.</strong></p>
+
+    <p>A supplier slips two weeks. A competitor goes out of stock and your velocity doubles. A container lands early. Each of those changes one number — and every decision downstream of it. In a spreadsheet, you find out when you next open the spreadsheet. In a system that's wired together, you find out that day.</p>
+
+    <p>That's what automation buys. Not certainty. Speed of correction.</p>
+
+    <p>Here's how to build it, in the order that actually works.</p>
+
+    <h2 id="s1"><span class="num">00</span>What "automated" actually means</h2>
+      <p>A system that automates cash flow and inventory has to do four things, in this order. Skip one and the rest is decoration.</p>
+      <ul>
+        <li><strong>Collect</strong> — every fact arrives without you retyping it.</li>
+        <li><strong>Date</strong> — every fact carries the day the money moved or the unit sold, not the day you noticed it.</li>
+        <li><strong>Decide</strong> — the system converts facts into a dated action, not a number on a chart.</li>
+        <li><strong>Compare</strong> — last week's answer is kept and scored against what actually happened.</li>
+      </ul>
+      <p>Most tools stop at <em>collect</em> and call the chart a forecast. The value is in the last two.</p>
+      <blockquote>
+    <p>A forecast that doesn't end in a date and a quantity isn't a forecast. It's a mood.</p>
+  </blockquote>
+    
+
+    <h2 id="s2">Connect the six inputs</h2>
+      <p>Cash and inventory forecasting need exactly six inputs. Three of them Amazon knows. Three of them <strong>only you know</strong> — and those three are why generic tools give generic answers.</p>
+
+      <p class="src">Amazon knows</p>
+      <ul class="inputs">
+        <li><span class="n">01</span><span><b>Units sold, by SKU, by day</b><span class="d">Your real demand signal — including the days you were out of stock.</span></span></li>
+        <li><span class="n">02</span><span><b>Settlement money in and out</b><span class="d">Sales, refunds, referral fees, FBA fees, storage, disbursements — dated as Amazon charged them.</span></span></li>
+        <li><span class="n">03</span><span><b>Stock on hand and in transit</b><span class="d">Fulfillable, reserved, inbound, plus the ledger of every movement.</span></span></li>
+      </ul>
+
+      <p class="src">Only you know</p>
+      <ul class="inputs">
+        <li><span class="n">04</span><span><b>Landed unit cost</b><span class="d">Manufacturing, freight, duty, inspection — per unit, per batch. Not an average you typed once.</span></span></li>
+        <li><span class="n">05</span><span><b>Real lead times</b><span class="d">Days from <em>you placed the order</em> to <em>Amazon made it sellable</em>, per supplier, measured across your last several orders.</span></span></li>
+        <li><span class="n">06</span><span><b>Payment terms</b><span class="d">30% at order, 70% at shipment, net 30 after arrival. This is what turns a purchase order into a dated cash outflow.</span></span></li>
+      </ul>
+
+      <p>Inputs 4 to 6 are the whole game. A tool that only reads your Amazon account can tell you what happened. It cannot tell you what you can afford, because it doesn't know what you owe or when.</p>
+
+      <div class="fixbox">
+        <span class="fixbox-k">The fix</span>
+        <p>Enter costs, lead times and payment terms <strong>once, at the moment you place the order</strong> — not at month end. If it isn't captured when the PO is created, it never gets captured.</p>
+      </div>
+    
+
+    <h2 id="s3">Make the numbers honest before you automate them</h2>
+      <p>Automating a wrong number just produces wrong answers faster. Four rules make the inputs trustworthy.</p>
+
+      <h3>Anchor to the data, not to the calendar</h3>
+      <p>If your last transaction file ends 12 days ago, your "daily sales" figure is the average of 12 real days and 12 days of zero. That silently halves your velocity — and a system that then divides your stock by that velocity will tell you your inventory lasts twice as long as it does.</p>
+      <p>Every rate must be computed against <strong>the last day the data actually covers</strong>, and the screen must say what that day is. Freshness is not a footnote; it's a precondition.</p>
+
+      <h3>Money in, money out — nothing allocated</h3>
+      <p>A P&amp;L that tries to attribute every cost to a product will spend your life adjudicating allocations that don't change a single decision. For cash forecasting, a cost is a cost <strong>on the day the money moved</strong>. Which ASIN it belongs to is a separate question, asked by a separate screen.</p>
+      <p>This one rule removes most of the reconciliation work that makes sellers abandon their own numbers.</p>
+
+      <h3>Label certainty; never launder it</h3>
+      <p>Not every future dollar is equally real. Three bands are enough:</p>
+      <div class="bands">
+        <div class="band c"><span class="lab">Confirmed</span><span class="txt">Paid, with a date on the receipt.</span></div>
+        <div class="band s"><span class="lab">Scheduled</span><span class="txt">Unpaid, but the trigger and due date are known.</span></div>
+        <div class="band a"><span class="lab">Assumed</span><span class="txt">A cost we know exists, with no schedule attached, dated on a default.</span></div>
+      </div>
+      <p>Show them separately and stack them. A cash chart where these are mixed into one bar is worse than no chart, because it looks like knowledge.</p>
+
+      <h3>Where facts disagree, the human resolves it</h3>
+      <p>Two records will contradict each other: your receipt count against Amazon's, your freight invoice against the shipment it belongs to. Software that silently picks a winner is software you will eventually stop believing.</p>
+      <p>The right behaviour is to surface the conflict, refuse to average it away, and put a barrier in front of the wrong answer — while leaving the decision with the person who knows.</p>
+    
+
+    <h2 id="s4">Inventory: turn stock into a dated decision</h2>
+      <p>Now the arithmetic. Note the order: <strong>the date comes before the quantity.</strong></p>
+
+      <h3>Velocity, with a window you can defend</h3>
+      <p>Use exact trailing windows — 7, 30, 60, 90 days — anchored to the last data date. Weight the recent window more heavily than the long one (something like 60/40 on 7-day against 30-day) so a real trend shows up in days rather than months, and fall back to longer windows when a SKU is too thin to read.</p>
+      <p>Never use a lifetime average. A product that sold 20/day in January and 80/day in March does not sell 47/day.</p>
+
+      <h3>Days of cover, and the stockout date</h3>
+<pre><code>days of cover        = stock on hand / daily velocity
+days of cover (net)  = (stock on hand + inbound) / daily velocity
+projected stockout   = last data date + days of cover</code></pre>
+      <p>The inbound line matters more than sellers expect. Units on a boat are not stock, and are not nothing.</p>
+
+      <h3>Lead time: measure it, don't type it</h3>
+      <p>The single biggest source of error in reorder timing is a lead time somebody typed in once, in optimism, in a different year.</p>
+      <p>Measure it from your own history: <strong>order date → the date units became sellable</strong>, per supplier, and keep both the average <em>and the worst case</em>. The gap between the two is not trivia — it is exactly the size of the safety stock you need.</p>
+
+      <h3>Safety stock is a purchased service level, not "extra"</h3>
+<pre><code>safety days   ≈ (worst lead time − average lead time)
+                + demand-variability buffer
+
+reorder point = velocity × (average lead time + safety days)
+
+order-by date = last data date
+                + (days of cover − average lead time − safety days)</code></pre>
+      <p>If the order-by date is in the past, the order is <strong>overdue</strong>, and the system should say so in those words.</p>
+
+      <h3>Only then, the quantity</h3>
+<pre><code>suggested qty = velocity × (lead time + target cover)
+                − stock on hand − inbound</code></pre>
+      <p>Target cover is a business choice — how many days of stock you want on hand when the shipment lands. Where you have a real per-order freight cost and a real holding cost, the economic order quantity tells you whether your habitual order size is costing you money:</p>
+<pre><code>Q* = √( 2 × annual demand × cost per order
+        / annual holding cost per unit )</code></pre>
+      <p>Treat EOQ as a <em>check on your instinct</em>, not a command. It assumes steady demand, and yours isn't.</p>
+
+      <h3>Show the composition, not just the number</h3>
+      <p>"Order 1,400 units" is unauditable. "1,400 = 62/day × (45-day lead + 60-day target cover) − 3,100 on hand − 1,200 inbound" is a number a seller can argue with — which is the only kind worth acting on.</p>
+    
+
+    <h2 id="s5">Cash: turn a P&amp;L into a dated timeline</h2>
+      <p>A profit and loss statement tells you whether the business works. It does not tell you whether you can pay for the container. Those are different questions and they need different screens.</p>
+      <p>A cash timeline needs four streams, each dated.</p>
+
+      <p class="src">Money in</p>
+      <ul>
+        <li><strong>Amazon disbursements</strong> — your settlement balance, released on Amazon's cadence, which lags the sale. Model the lag; don't pretend the sale date is the cash date.</li>
+        <li>Any non-Amazon revenue.</li>
+      </ul>
+
+      <p class="src">Money out</p>
+      <ul>
+        <li><strong>Supplier instalments</strong> — driven off the PO's payment triggers: <em>at order</em>, <em>at shipment</em>, <em>N days after shipment</em>, <em>on date</em>. This is the one that ruins quarters.</li>
+        <li><strong>Amazon's own deductions</strong> — fees, ads, storage — which mostly net out of the disbursement rather than arriving as a bill.</li>
+        <li><strong>Overheads</strong> — the ones with no product attached: software, VAs, agencies, your own draw.</li>
+      </ul>
+
+      <p>Start from a <strong>known opening balance</strong> on a known date. A cash chart with no starting balance is a chart of differences pretending to be a position.</p>
+      <p>Then the output is one line: your projected balance, week by week, with the <strong>lowest point and the date it happens</strong> called out. That trough is the number that decides whether an order is possible.</p>
+    
+
+    <h2 id="s6">The join: an order you can't finance isn't a plan</h2>
+      <p>This is the part almost every tool skips, and it's where the two halves of this article become one system.</p>
+      <p>Your inventory module says: <em>order 1,400 units of SKU-A by the 14th, and 900 of SKU-B by the 22nd.</em><br>
+      Your cash timeline says: <em>your balance bottoms out at $8,200 on the 19th.</em></p>
+      <p>Separately, both are correct. Together, they're a decision:</p>
+      <ul>
+        <li>Placing both orders on time takes the trough negative on the 19th.</li>
+        <li>Delaying SKU-B by nine days costs roughly six days of stockout — a countable number of units and dollars of contribution — and keeps the trough positive.</li>
+        <li>Splitting SKU-A into two shipments raises freight per unit but flattens the outflow.</li>
+      </ul>
+      <p>That comparison — <strong>the order you should place versus the cash you'll actually have</strong> — is the whole point of connecting the two systems.</p>
+      <p>Ranking is capital allocation. When you can't fund everything, fund the SKUs with the highest <strong>return per dollar per year</strong>: contribution per unit × units sold per year ÷ dollars tied up. A 40% margin product that turns twice a year loses to a 20% margin product that turns six times.</p>
+      <div class="fixbox">
+        <span class="fixbox-k">The fix</span>
+        <p>Never look at a restock list without the cash trough on the same screen. A reorder suggestion that ignores your bank balance is a wish list.</p>
+      </div>
+    
+
+    <h2 id="s7">Scenarios, and what they're actually for</h2>
+      <p>Scenario tools get sold as prediction engines. They're not, and pretending otherwise is how sellers get burned.</p>
+      <p>Their real job is <strong>fragility testing</strong>: finding which assumption, if wrong, hurts most.</p>
+      <p>Run your plan with:</p>
+      <ul>
+        <li>lead time at its worst observed value, not its average</li>
+        <li>velocity at ±30%</li>
+        <li>a supplier instalment landing two weeks earlier than promised</li>
+        <li>ad cost per sale up 20%</li>
+      </ul>
+      <p>Then read the output as a ranking, not a forecast: <em>my plan survives a demand miss but not a lead-time miss.</em> That tells you where to buy insurance — an air-freight top-up, a renegotiated deposit, a smaller first order.</p>
+      <p>The single most useful scenario knob is not price. It's <strong>conversion rate</strong>. You can't measure whether new photography works, but you can measure what a one-point conversion change does to your stock cover and your cash trough — and that number is usually far larger than sellers expect.</p>
+    
+
+    <h2 id="s8">Forecast vs. actual: the loop that pays for itself</h2>
+      <p>Everything above is worthless if nothing keeps score.</p>
+      <p>Every week, store what the system predicted: velocity per SKU, projected stockout date, suggested order-by date, projected cash trough. Then compare it to what happened.</p>
+      <p>Three questions, asked on a schedule:</p>
+      <ol>
+        <li><strong>Where was velocity wrong, and in which direction?</strong> Consistent one-directional error is a settings problem, not bad luck.</li>
+        <li><strong>Where was lead time wrong?</strong> Every completed PO is a free measurement. Feed it back automatically.</li>
+        <li><strong>Where was cash wrong?</strong> Almost always a payment whose trigger date was never entered.</li>
+      </ol>
+      <p>Systematic error is a fixable defect. Random error is the cost of doing business. You cannot tell them apart without the record.</p>
+    
+
+    <h2 id="s9">What you should never automate</h2>
+      <p>Automation should shorten the distance between a fact and a decision — not take the decision.</p>
+      <p><strong>Automate:</strong> collection, dating, arithmetic, alerting, the score-keeping loop.</p>
+      <dl class="never">
+        <dt>Never automate — placing the order</dt>
+        <dd>A stockout costs you sales. A wrong $40,000 order costs you the quarter.</dd>
+        <dt>Never automate — resolving contradictory records</dt>
+        <dd>Surface the conflict; let the person who knows decide.</dd>
+        <dt>Never automate — inventing data you don't have</dt>
+        <dd>If freight per order was never measured, the honest output is "not measured" — not a plausible default silently doing the arithmetic.</dd>
+      </dl>
+      <p>An empty state that tells you what's missing is worth more than a full screen built on assumptions.</p>
+    
+
+    <h2 id="s10">A 30-day sequence to set this up</h2>
+      <ol>
+        <li><strong>Week 1 — Truth.</strong> Get transactions and the FBA inventory ledger loaded. Confirm the last data date. Fix stock discrepancies. Nothing downstream is real until this is.</li>
+        <li><strong>Week 2 — Cost.</strong> Enter your open purchase orders with real landed costs, real payment triggers and real dates. Back-fill the last three completed POs so lead time has something to measure.</li>
+        <li><strong>Week 3 — Decisions.</strong> Turn on reorder dates and days of cover. Set target cover per SKU deliberately. Check the composition of each suggestion against your own judgement — you're calibrating the system, not obeying it.</li>
+        <li><strong>Week 4 — Cash.</strong> Enter an opening balance. Build the timeline. Find the trough. Then put the restock list next to it and see which of your planned orders survives.</li>
+      </ol>
+      <p>From there it's a weekly rhythm: what changed, what's overdue, what's affordable, and where was I wrong last week.</p>
+    
+
+    <h2 id="s11">Frequently asked</h2>
+      <div class="faq">
+        <details open>
+          <summary>Can cash flow forecasting be fully automated for an Amazon business?</summary>
+          <p>The collection, dating and arithmetic can be. The inputs cannot: landed costs, supplier payment terms and your opening balance exist only in your records. Expect an hour of setup per supplier and a few minutes per purchase order thereafter.</p>
+        </details>
+        <details>
+          <summary>What data do I need before I can forecast anything?</summary>
+          <p>Six things: units sold by day, settlement money in and out, stock on hand and inbound, landed unit cost, measured supplier lead times, and payment terms. The first three come from Amazon; the last three come from you.</p>
+        </details>
+        <details>
+          <summary>How accurate is automated inventory forecasting?</summary>
+          <p>Accurate enough to beat a spreadsheet, and never accurate enough to trust blindly. The measurable win isn't forecast precision — it's the reduction in time between something changing and you responding, and the elimination of arithmetic errors in the response.</p>
+        </details>
+        <details>
+          <summary>What's the difference between a P&amp;L and a cash flow forecast?</summary>
+          <p>A P&amp;L tells you whether the business is profitable over a period. A cash flow forecast tells you whether you can pay for something on a specific day. A profitable Amazon business can absolutely run out of cash — that's the normal failure mode, not the exotic one.</p>
+        </details>
+        <details>
+          <summary>How do I calculate a reorder point?</summary>
+          <p>Velocity × (average lead time + safety days), where velocity is a recent trailing average anchored to your last data date, and safety days come from the gap between your average and worst-case measured lead time. Compute the date first; the quantity follows from it.</p>
+        </details>
+        <details>
+          <summary>Why does my forecast keep saying I have more stock than I do?</summary>
+          <p>Usually one of three things: velocity computed against the calendar instead of the last data date, inbound units counted as sellable, or a lead time typed in once and never measured.</p>
+        </details>
+      </div>
+    
+
+    <section class="sec">
+      <h2>Faster at correcting, not better at predicting</h2>
+      <p>Automating cash flow and inventory forecasting isn't about buying a crystal ball. It's about building a system where every fact you already have is dated, connected, and pointed at a decision — so that when reality moves, you find out this week rather than next quarter.</p>
+      <p>The sellers who do this well aren't better at predicting. They're faster at correcting.</p>
+    
+
+    
+
+  
+</main>
+
+<aside class="rail" aria-label="Key figures from this article">
+  <div class="rail-card">
+    <span class="rail-k">Layers to automate</span>
+    <span class="rail-v">Seven</span>
+    <p>From the connected inputs at the bottom to the forecast-against-actual loop that corrects everything above it.</p>
+  </div>
+  <div class="rail-card">
+    <span class="rail-k">Setup sequence</span>
+    <span class="rail-v is-amber">30 days</span>
+    <p>Week one truth, week two cost, week three decisions, week four cash. In that order, because each layer needs the one beneath it.</p>
+  </div>
+  <div class="rail-card">
+    <span class="rail-k">What it buys you</span>
+    <span class="rail-v is-violet">Latency</span>
+    <p>Not a better prediction. A shorter distance between a fact changing and you knowing what it changes.</p>
+  </div>
+  <p class="rail-src">Figures from this article&rsquo;s own worked example, not an industry survey.</p>
+</aside>
+
+
+</div><!-- /.wrap -->
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+  <symbol id="i-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12.5 17v-4a2.5 2.5 0 015 0v4"/></symbol>
+  <symbol id="i-tw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M20 4L4 20"/></symbol>
+  <symbol id="i-gh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4 1.4-4-2.2-5.6-2.6M15 21v-3.4a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 2.6 5.5 2.9 5.5 2.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 9.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></symbol>
+</defs>
+</svg>
+
+<footer class="footer">
+<div class="container">
+
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/index.html" class="brand" aria-label="AmazeBase home">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+        </svg>
+        <span data-brand>AmazeBase</span>
+      </a>
+      <p>The operating system for Amazon sellers. Everything connected, everything in sync.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="/product.html#modules">Product</a>
+      <a href="/index.html#pricing">Pricing</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a href="/resources.html">Knowledge Hub</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="/about.html">About</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>&copy; 2026 <span data-brand>AmazeBase</span>. All rights reserved.</span>
+    <div class="footer-social">
+      <a href="#" aria-label="LinkedIn"><svg class="icon-sm"><use href="#i-in"/></svg></a>
+      <a href="#" aria-label="X"><svg class="icon-sm"><use href="#i-tw"/></svg></a>
+      <a href="#" aria-label="GitHub"><svg class="icon-sm"><use href="#i-gh"/></svg></a>
+    </div>
+  </div>
+
+</div>
+</footer>
+
+<script src="/js/main.js" defer></script>
+</body>
+</html>
