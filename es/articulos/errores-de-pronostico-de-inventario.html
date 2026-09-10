@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pron&oacute;stico de inventario en Amazon: los errores que destruyen tu utilidad en silencio &mdash; AmazeBase</title>
+
+<meta name="description" content="Diez errores de pron&oacute;stico de inventario que destruyen en silencio la utilidad de los vendedores de Amazon &mdash; desde confiar en las ventas diarias promedio hasta tratar el tiempo de reposici&oacute;n como un n&uacute;mero fijo &mdash; y c&oacute;mo evitarlos.">
+<meta name="theme-color" content="#030917">
+<meta name="author" content="AmazeBase">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   ARTICLE — Amazon Inventory Forecasting
+   Self-contained. Tokens mirror css/variables.css so this page can either
+   stand alone OR have this <style> block deleted once it sits inside the
+   site's normal stylesheet chain.
+========================================================================== */
+
+:root{
+  --z-nav:100;          /* navigation.css */
+  --container:1280px;   /* .container, below */
+  --t-body:15px;        /* .btn, below */
+  --bg:#030917; --bg-deep:#01050E; --bg-raise:#060D1E;
+  --surface:rgba(255,255,255,.030); --surface-2:rgba(255,255,255,.055);
+  --surface-solid:#0A1224;
+  --line:rgba(255,255,255,.070); --line-strong:rgba(255,255,255,.140);
+
+  --text:#EEF1F8; --text-2:#98A2B8; --text-3:#616C84;
+
+  --violet:#8B3BF1; --violet-soft:#A971F7; --indigo:#5B4FE6;
+  --blue:#3B82F6; --blue-soft:#7EB3FF;
+  --green:#2ED47A; --amber:#F5A524; --red:#F0435C;
+
+  --grad-brand:linear-gradient(135deg,#5B4FE6 0%,#8B3BF1 100%);
+  --grad-text:linear-gradient(90deg,#6153E6 0%,#9D50F7 55%,#C56BF5 100%);
+  --grad-card:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  --grad-rule:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,monospace;
+
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px;
+  --s5:48px; --s6:64px; --s7:96px; --s8:128px;
+
+  --gutter:clamp(20px,4vw,40px);
+  --measure:720px;
+
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
+  --sh-2:0 18px 40px rgba(0,0,0,.42);
+  --sh-brand:0 16px 40px rgba(107,63,232,.35);
+  --ease:cubic-bezier(.22,.61,.36,1); --fast:.18s; --mid:.28s;
+
+  color-scheme:dark;
+  scrollbar-color:#26304A var(--bg);
+  scrollbar-width:thin;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation:none !important; transition:none !important; }
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+::selection{ background:var(--violet); color:#fff; }
+
+.skip-link{
+  position:absolute; left:-9999px; top:0;
+  background:var(--surface-solid); color:var(--text);
+  padding:12px 20px; border-radius:0 0 var(--r-sm) 0;
+  z-index:1000; text-decoration:none; font-weight:600;
+}
+.skip-link:focus{ left:0; }
+
+:focus-visible{
+  outline:2px solid var(--violet-soft);
+  outline-offset:3px;
+  border-radius:var(--r-xs);
+}
+
+/* ---------- ambient background ------------------------------------------ */
+.bg-layer{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(760px 520px at 18% -8%,  rgba(91,79,230,.20), transparent 62%),
+    radial-gradient(680px 480px at 88% 4%,   rgba(139,59,241,.15), transparent 60%),
+    radial-gradient(900px 700px at 50% 108%, rgba(59,130,246,.09), transparent 66%);
+}
+
+.wrap{ position:relative; z-index:1; }
+
+/* ---------- shell ------------------------------------------------------- */
+.article{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:0 var(--gutter) var(--s8);
+}
+
+/* ---------- header ------------------------------------------------------ */
+.article-head{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:clamp(64px,9vw,120px) var(--gutter) clamp(32px,4vw,48px);
+}
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--violet-soft);
+  background:var(--surface); border:1px solid var(--line);
+  padding:7px 14px; border-radius:var(--r-pill);
+  margin:0 0 var(--s3);
+}
+.eyebrow::before{
+  content:""; width:6px; height:6px; border-radius:50%;
+  background:var(--violet-soft);
+  box-shadow:0 0 10px rgba(169,113,247,.9);
+}
+
+h1{
+  font-size:clamp(34px,5vw,58px);
+  line-height:1.08;
+  letter-spacing:-.025em;
+  font-weight:800;
+  margin:0 0 var(--s3);
+  text-wrap:balance;
+}
+h1 .accent{
+  background:var(--grad-text);
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+}
+
+.deck{
+  font-size:clamp(18px,2.1vw,21px);
+  line-height:1.6;
+  color:var(--text-2);
+  margin:0 0 var(--s4);
+  max-width:62ch;
+}
+
+.meta{
+  display:flex; flex-wrap:wrap; align-items:center; gap:var(--s2);
+  font-size:14px; color:var(--text-3);
+  padding-top:var(--s3);
+  border-top:1px solid var(--line);
+}
+.meta .dot{ width:3px; height:3px; border-radius:50%; background:var(--text-3); }
+
+/* ---------- table of contents ------------------------------------------- */
+.toc{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:0 0 var(--s6);
+}
+.toc h2{
+  font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--text-3); margin:0 0 var(--s3); padding:0; border:0;
+}
+.toc ol{
+  list-style:none; margin:0; padding:0;
+  counter-reset:toc;
+  display:grid; gap:2px;
+}
+.toc li{ counter-increment:toc; margin:0; }
+.toc a{
+  display:flex; gap:14px; align-items:baseline;
+  color:var(--text-2); text-decoration:none;
+  font-size:15px; line-height:1.5;
+  padding:8px 10px; margin:0 -10px;
+  border-radius:var(--r-xs);
+  transition:color var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+.toc a::before{
+  content:counter(toc,decimal-leading-zero);
+  font-family:var(--font-mono); font-size:12px; font-weight:600;
+  color:var(--text-3); flex:none; min-width:22px;
+  transition:color var(--fast) var(--ease);
+}
+.toc a:hover{ color:var(--text); background:var(--surface); }
+.toc a:hover::before{ color:var(--violet-soft); }
+
+/* ---------- body typography --------------------------------------------- */
+.article p{ margin:0 0 1.1em; color:#D5DBE9; }
+.article p.lead{ font-size:20px; color:var(--text); }
+
+.article h2{
+  font-size:clamp(26px,3.2vw,34px);
+  line-height:1.2;
+  letter-spacing:-.02em;
+  font-weight:700;
+  color:var(--text);
+  margin:var(--s7) 0 var(--s3);
+  padding-top:var(--s5);
+  border-top:1px solid var(--line);
+  scroll-margin-top:32px;
+  text-wrap:balance;
+}
+.article h2:first-of-type{ margin-top:0; }
+
+.article h2 .num{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:13px; font-weight:600; letter-spacing:.16em;
+  color:var(--violet-soft);
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
+
+.article strong{ color:var(--text); font-weight:700; }
+
+.article ul{
+  margin:0 0 1.4em;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:10px;
+}
+.article ul li{
+  position:relative;
+  padding-left:26px;
+  color:#D5DBE9;
+  line-height:1.6;
+}
+.article ul li::before{
+  content:"";
+  position:absolute; left:6px; top:.68em;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--violet);
+  box-shadow:0 0 8px rgba(139,59,241,.55);
+}
+
+/* ---------- pull quote --------------------------------------------------- */
+blockquote{
+  margin:var(--s4) 0;
+  padding:var(--s3) var(--s4);
+  border-left:2px solid var(--violet);
+  background:linear-gradient(90deg,rgba(139,59,241,.10),transparent 80%);
+  border-radius:0 var(--r-md) var(--r-md) 0;
+}
+blockquote p{
+  margin:0;
+  font-size:20px;
+  line-height:1.5;
+  font-weight:600;
+  color:var(--text);
+}
+
+/* ---------- callouts ----------------------------------------------------- */
+.callout{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:var(--s4) 0 var(--s5);
+}
+.callout .label{
+  display:block;
+  font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--text-3);
+  margin-bottom:var(--s2);
+}
+.callout p:last-child, .callout ul:last-child{ margin-bottom:0; }
+
+.formula{
+  font-family:var(--font-mono);
+  font-size:clamp(15px,2.1vw,19px);
+  font-weight:600;
+  line-height:1.6;
+  color:var(--text);
+  background:var(--bg-deep);
+  border:1px solid var(--line-strong);
+  border-radius:var(--r-md);
+  padding:var(--s3);
+  margin:0 0 var(--s3);
+  text-align:center;
+  overflow-x:auto;
+}
+.formula .op{ color:var(--violet-soft); }
+
+/* ---------- numbers strip ------------------------------------------------ */
+.figures{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:var(--s2);
+  margin:var(--s4) 0 var(--s5);
+  padding:0; list-style:none;
+}
+.figures li{ padding:0; }
+.figures li::before{ display:none; }
+.fig{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:var(--s3) var(--s2);
+  text-align:center;
+}
+.fig .v{
+  display:block;
+  font-size:28px; font-weight:800; letter-spacing:-.02em; line-height:1.1;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.fig .k{
+  display:block;
+  font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.fig.is-bad .v{ color:var(--red); }
+.fig.is-real .v{ color:var(--green); }
+
+/* ---------- divider ------------------------------------------------------ */
+.rule{
+  height:1px; border:0;
+  background:var(--grad-rule);
+  margin:var(--s6) 0;
+}
+
+/* ---------- closing CTA -------------------------------------------------- */
+.cta{
+  max-width:var(--measure);
+  margin:var(--s7) auto 0;
+  padding:clamp(32px,5vw,56px) var(--gutter);
+  text-align:center;
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-xl);
+  box-shadow:var(--sh-2);
+}
+.cta h2{
+  font-size:clamp(24px,3vw,32px);
+  font-weight:700; letter-spacing:-.02em; line-height:1.2;
+  margin:0 0 var(--s2); padding:0; border:0;
+  text-wrap:balance;
+}
+.cta p{
+  color:var(--text-2);
+  max-width:52ch;
+  margin:0 auto var(--s4);
+  font-size:17px;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--grad-brand);
+  color:#fff; text-decoration:none;
+  font-weight:600; font-size:16px;
+  padding:14px 28px;
+  border-radius:var(--r-pill);
+  box-shadow:var(--sh-brand);
+  transition:transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+.btn:hover{ transform:translateY(-2px); box-shadow:0 22px 50px rgba(107,63,232,.45); }
+.btn svg{ width:18px; height:18px; }
+
+/* ---------- responsive --------------------------------------------------- */
+@media (max-width:640px){
+  body{ font-size:17px; }
+  .article p.lead{ font-size:18px; }
+  blockquote p{ font-size:18px; }
+  .article h2{ margin-top:var(--s6); padding-top:var(--s4); }
+}
+
+/* ---------- print -------------------------------------------------------- */
+@media print{
+  .bg-layer,.toc,.cta,.skip-link{ display:none; }
+  body{ background:#fff; color:#111; font-size:12pt; }
+  .article p,.article ul li{ color:#222; }
+  .article h2{ color:#000; }
+}
+.back-link{ margin:0 0 28px; font-size:13px; }
+.back-link a{ color:var(--text-2); text-decoration:none; }
+.back-link a:hover{ color:var(--text); }
+
+/* ── HERO IMAGE ─────────────────────────────────────────────────────── */
+.hero-shot{
+  margin:0 0 52px;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  background:var(--bg-raise);
+  line-height:0;
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+.hero-shot img{ width:100%; height:auto; display:block; }
+
+/* ── MISTAKE CARDS ──────────────────────────────────────────────────── */
+.mistake{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.mistake::before{
+  content:"";
+  position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+  background:var(--amber);
+}
+.mistake h2{ margin-top:0 !important; }
+.article .mistake h2:first-of-type{ margin-top:0; }
+
+/* ── PULL QUOTES ────────────────────────────────────────────────────── */
+blockquote{
+  margin:44px 0;
+  padding:0 0 0 26px;
+  border-left:3px solid var(--amber);
+  background:none;
+}
+blockquote p{
+  font-size:23px;
+  line-height:1.45;
+  font-style:italic;
+  font-weight:600;
+  color:var(--text);
+  margin:0;
+}
+
+/* ── MID-ARTICLE STRIP ──────────────────────────────────────────────── */
+.strip{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px; flex-wrap:wrap;
+  margin:44px 0;
+  padding:26px 30px;
+  border-radius:16px;
+  background:linear-gradient(120deg,#0A1224,#131A33);
+  border:1px solid var(--line-strong);
+}
+.strip h3{ margin:0 0 6px; font-size:19px; color:var(--text); }
+.strip p{ margin:0; font-size:14px; color:var(--text-2); }
+.strip-btn{
+  flex:0 0 auto;
+  display:inline-block;
+  padding:12px 22px;
+  border-radius:10px;
+  background:var(--amber);
+  color:#1A1200;
+  font-size:14px; font-weight:700;
+  text-decoration:none;
+  transition:filter .15s ease;
+}
+.strip-btn:hover{ filter:brightness(1.08); }
+
+@media (max-width:640px){
+  .mistake{ padding:24px 20px 8px; }
+  .mistake::before{ top:20px; bottom:20px; }
+  blockquote p{ font-size:20px; }
+  .strip{ padding:22px; }
+  .strip-btn{ width:100%; text-align:center; }
+}
+
+/* ── WIDE SHELL: content + rail, so the page uses the screen ─────────── */
+.shell{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 var(--gutter);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 300px;
+  gap:64px;
+  align-items:start;
+}
+.shell > .article{ max-width:none; margin:0; padding:0 0 var(--s8); }
+
+.rail{ position:sticky; top:40px; display:flex; flex-direction:column; gap:14px; }
+.rail-card{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+  padding:20px;
+}
+.rail-k{
+  display:block; margin-bottom:10px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.rail-v{
+  display:block; margin-bottom:10px;
+  font-size:34px; line-height:1; font-weight:800; letter-spacing:-.02em;
+  color:var(--green);
+}
+.rail-v.is-amber{ color:var(--amber); }
+.rail-v.is-violet{ color:var(--violet-soft); }
+.rail-card p{ margin:0; font-size:13px; line-height:1.55; color:var(--text-2); }
+.rail-src{
+  margin:0; padding-top:14px;
+  border-top:1px solid var(--line);
+  font-size:11px; line-height:1.5; color:var(--text-3);
+}
+
+/* header + hero align to the same shell */
+.article-head, .hero-shot{ max-width:1180px; }
+
+/* ── HERO: a band, not a giant square ───────────────────────────────── */
+.hero-shot{
+  margin:0 auto 56px;
+  padding:0 var(--gutter);
+  border:0; background:none; box-shadow:none;
+  border-radius:0;
+  overflow:visible;
+}
+.hero-shot img{
+  width:100%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
+  border-radius:18px;
+  border:1px solid var(--line-strong);
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+
+/* ── THE FIX callout ────────────────────────────────────────────────── */
+.fixbox{
+  margin:22px 0 4px;
+  padding:16px 18px;
+  border-radius:12px;
+  border:1px solid rgba(46,212,122,.28);
+  background:rgba(46,212,122,.07);
+}
+.fixbox-k{
+  display:block; margin-bottom:6px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--green);
+}
+.fixbox p{ margin:0 !important; color:var(--text) !important; }
+
+@media (max-width:1080px){
+  .shell{ grid-template-columns:1fr; gap:40px; max-width:820px; }
+  .rail{ position:static; flex-direction:row; flex-wrap:wrap; }
+  .rail-card{ flex:1 1 220px; }
+  .rail-src{ flex:1 1 100%; border-top:0; padding-top:0; }
+  .article-head, .hero-shot{ max-width:820px; }
+}
+@media (max-width:640px){
+  .shell{ gap:28px; }
+}
+
+/* ── SITE HEADER ──────────────────────────────────────────────────────
+   The header markup is the site's, and navigation.css styles it. These are
+   the pieces it also leans on from base.css, which this page does not load.
+   Every selector is scoped to the header or the mobile drawer: an article is
+   built out of bare a/p/h3/h4, and base.css restyles all of those.
+
+   The scope is written with :where() so it adds no specificity. Scoped the
+   plain way, `.site-header .btn` is (0,2,0) - the same weight as
+   navigation.css's own `.nav-actions .btn--quiet` and `.nav-mobile a`, and
+   loaded after them, so these copies quietly outranked the real rules: the
+   hamburger got pushed off a 390px screen and the drawer buttons lost their
+   sizing. Inside :where() each rule keeps exactly the weight it has in
+   base.css, which is the weight navigation.css was written against.
+   ------------------------------------------------------------------- */
+/* The header inherits from <body>, and this page's body is set for reading:
+   18px at 1.72. The site's is var(--t-body) at 1.6. Left alone, every element
+   in the bar came out a size and a half too tall. Reset it at the root of the
+   header so everything inside inherits the site's figures instead. */
+:where(.site-header),
+:where(.nav-mobile){
+  font-size:var(--t-body);
+  line-height:1.6;
+}
+
+:where(.site-header) .container{
+  width:min(100%,var(--container));
+  margin-inline:auto;
+  padding-inline:var(--gutter);
+  position:relative;
+}
+:where(.site-header, .nav-mobile) .brand{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:19px; font-weight:700; letter-spacing:-.01em;
+  color:var(--text); text-decoration:none;
+}
+:where(.site-header) .brand-mark{ width:26px; height:26px; flex:none; }
+:where(.site-header) .icon,    :where(.nav-mobile) .icon{    width:20px; height:20px; flex:none; stroke-width:1.7; }
+:where(.site-header) .icon-sm, :where(.nav-mobile) .icon-sm{ width:16px; height:16px; flex:none; stroke-width:1.8; }
+/* margin-block only: navigation.css centres this with margin-inline:auto,
+   and a shorthand `margin:0` here would outrank it and shove the menu
+   over against the brand. */
+:where(.site-header) .nav-menu{ list-style:none; padding:0; margin-block:0; }
+.site-header a, .nav-mobile a{ text-decoration:none; }
+/* base.css resets these globally; this page does not load it. Without the
+   padding reset the UA's 1px 6px survives and the 44px tap target
+   responsive.css asks for comes out 40px. */
+:where(.site-header) .nav-toggle{ font:inherit; cursor:pointer; padding:0; }
+:where(.site-header) svg, :where(.nav-mobile) svg{ display:block; }
+
+:where(.site-header) .btn, :where(.nav-mobile) .btn{
+  /* This page defines its own .btn - a filled gradient pill used in the body -
+     and it reaches the header buttons too. base.css's .btn sets none of these,
+     so the variant classes below are what should decide them. Cleared here or
+     "Log in", which is .btn--quiet and meant to read as plain text, arrives
+     wearing the brand gradient. */
+  background:none;
+  box-shadow:none;
+  color:inherit;
+  text-decoration:none;
+  position:relative;
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  padding:13px 22px;
+  border-radius:var(--r-sm);
+  font-size:var(--t-body); font-weight:600; line-height:1;
+  white-space:nowrap;
+  transition:transform var(--fast) var(--ease),
+             box-shadow var(--fast) var(--ease),
+             background var(--fast) var(--ease),
+             border-color var(--fast) var(--ease);
+}
+:where(.site-header) .btn:active, :where(.nav-mobile) .btn:active{ transform:translateY(0) scale(.99); }
+:where(.site-header) .btn--primary, :where(.nav-mobile) .btn--primary{
+  background:var(--grad-brand); color:#fff;
+  box-shadow:var(--sh-brand); overflow:hidden;
+}
+:where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{
+  content:""; position:absolute; top:0; left:-130%;
+  width:55%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);
+  transition:left .65s var(--ease);
+}
+:where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{
+  transform:translateY(-2px); box-shadow:0 22px 52px rgba(107,63,232,.45);
+}
+:where(.site-header) .btn--primary:hover::after, :where(.nav-mobile) .btn--primary:hover::after{ left:150%; }
+:where(.site-header) .btn--quiet, :where(.nav-mobile) .btn--quiet{ color:var(--text-2); padding:13px 8px; }
+:where(.site-header) .btn--quiet:hover, :where(.nav-mobile) .btn--quiet:hover{ color:var(--text); }
+:where(.nav-mobile) .btn--block{ width:100%; }
+
+@media (prefers-reduced-motion:reduce){
+  :where(.site-header) .btn, :where(.nav-mobile) .btn,
+  :where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{ transition:none; }
+  :where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{ transform:none; }
+}
+
+/* navigation.css hides these two buttons on small screens so the hamburger
+   fits. Its selectors are (0,2,0) and so is `:where(.site-header) .btn` above, which
+   is loaded after it - equal weight, later wins, and display:inline-flex beat
+   display:none. The hamburger ended up 107px off the right of a 390px screen
+   with no way to open the menu. Restating the hide at (0,3,0) settles it.
+   The breakpoints are read out of navigation.css at build time, not typed. */
+
+/* Clear the fixed site header. Reserving its height on .wrap keeps the gap
+   between the bar and the eyebrow the same as the gap used to be between the
+   top of the window and the eyebrow. */
+.wrap{ padding-top:70px; }
+@media (max-width:640px){ .wrap{ padding-top:64px; } }
+
+/* Anchor targets. .article h2 carried scroll-margin-top:32px, which was right
+   when this page had no fixed bar: 32px was breathing room. Now a jump from
+   the contents list lands 38px underneath the header. responsive.css puts the
+   rest of the site on 84px for exactly this reason; the article's own rule is
+   (0,2,0) and outranks it, so it is restated here at the same weight. */
+.article h2{ scroll-margin-top:84px; }
+
+/* The back-link sat hard against the left edge of the window, in line with
+   nothing. That was always true, but with the nav above it the thing reads as
+   stranded rather than as a heading. Same shell as .article-head, so it lines
+   up with the title beneath it and behaves as the breadcrumb it is. */
+.back-link{
+  max-width:1180px;
+  margin-inline:auto;      /* the rule above keeps its 28px bottom margin */
+  padding:22px var(--gutter) 0;
+}
+</style>
+<link rel="stylesheet" href="/css/navigation.css">
+<link rel="stylesheet" href="/css/responsive.css">
+<link rel="stylesheet" href="/css/site-footer.css">
+<!-- SEO:START -->
+<link rel="canonical" href="https://amazebase.pro/es/articulos/errores-de-pronostico-de-inventario.html">
+<link rel="alternate" hreflang="en" href="https://amazebase.pro/articles/inventory-forecasting.html">
+<link rel="alternate" hreflang="es" href="https://amazebase.pro/es/articulos/errores-de-pronostico-de-inventario.html">
+<link rel="alternate" hreflang="x-default" href="https://amazebase.pro/articles/inventory-forecasting.html">
+<meta property="og:site_name" content="AmazeBase">
+<meta property="og:locale" content="es_LA">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://amazebase.pro/es/articulos/errores-de-pronostico-de-inventario.html">
+<meta property="og:title" content="Pron&oacute;stico de inventario en Amazon: los errores que destruyen tu utilidad en silencio">
+<meta property="og:description" content="Si pides muy poco, pierdes ventas, posicionamiento e impulso. Si pides demasiado, tu efectivo se queda en un almac&eacute;n. Estos son los diez errores que causan ambas cosas.">
+<meta property="og:image" content="https://amazebase.pro/assets/img/og/og-inventory-forecasting.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Un t&uacute;nel oscuro de datos azules que alimenta un n&uacute;cleo central de esferas de pron&oacute;stico y se abre hacia un almac&eacute;n &aacute;mbar repleto de pallets">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pron&oacute;stico de inventario en Amazon: los errores que destruyen tu utilidad en silencio">
+<meta name="twitter:description" content="Si pides muy poco, pierdes ventas, posicionamiento e impulso. Si pides demasiado, tu efectivo se queda en un almac&eacute;n. Estos son los diez errores que causan ambas cosas.">
+<meta name="twitter:image" content="https://amazebase.pro/assets/img/og/og-inventory-forecasting.jpg">
+<meta name="twitter:image:alt" content="Un t&uacute;nel oscuro de datos azules que alimenta un n&uacute;cleo central de esferas de pron&oacute;stico y se abre hacia un almac&eacute;n &aacute;mbar repleto de pallets">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://amazebase.pro/#organization",
+      "name": "AmazeBase",
+      "legalName": "Silbros Trading LLC",
+      "url": "https://amazebase.pro/",
+      "email": "contact@silbrostrading.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://amazebase.pro/assets/img/og/og-home.jpg",
+        "width": 1200,
+        "height": 630
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Albuquerque",
+        "addressRegion": "NM",
+        "addressCountry": "US"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://amazebase.pro/#website",
+      "url": "https://amazebase.pro/",
+      "name": "AmazeBase",
+      "publisher": {
+        "@id": "https://amazebase.pro/#organization"
+      },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "Article",
+      "@id": "https://amazebase.pro/es/articulos/errores-de-pronostico-de-inventario.html#article",
+      "isPartOf": {
+        "@id": "https://amazebase.pro/#website"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://amazebase.pro/es/articulos/errores-de-pronostico-de-inventario.html"
+      },
+      "headline": "Pronóstico de inventario: los errores que destruyen tu utilidad en silencio",
+      "description": "Si pides muy poco, pierdes ventas, posicionamiento e impulso. Si pides demasiado, tu efectivo se queda en un almacén. Los diez errores que causan ambas cosas — y qué hacer en su lugar.",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://amazebase.pro/assets/img/og/og-inventory-forecasting.jpg",
+        "width": 1200,
+        "height": 630
+      },
+      "datePublished": "2026-07-15",
+      "dateModified": "2026-07-15",
+      "author": {
+        "@id": "https://amazebase.pro/#organization"
+      },
+      "publisher": {
+        "@id": "https://amazebase.pro/#organization"
+      },
+      "inLanguage": "es",
+      "keywords": [
+        "Pronóstico de inventario",
+        "Planificación de reposición",
+        "Gestión del flujo de caja",
+        "Stock de seguridad"
+      ],
+      "timeRequired": "PT7M"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Inicio",
+          "item": "https://amazebase.pro/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Centro de Conocimiento",
+          "item": "https://amazebase.pro/es/recursos.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Pronóstico de inventario: los errores que destruyen tu utilidad en silencio"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- SEO:END -->
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+<div class="bg-layer" aria-hidden="true"></div>
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+</defs>
+  <symbol id="i-chevron"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-menu"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-mega"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l7 4V5L8 9H4zM19 9a4 4 0 010 6"/></symbol>
+  <symbol id="i-dollar"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5v19M16.5 6.5H10a3.2 3.2 0 000 6.4h4a3.2 3.2 0 010 6.4H7"/></symbol>
+  <symbol id="i-stack"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/></symbol>
+  <symbol id="i-box"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></symbol>
+  <symbol id="i-search"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></symbol>
+  <symbol id="i-chart"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-trend"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></symbol>
+  <symbol id="i-db"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3.2"/><path d="M4 6v12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2V6M4 12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2"/></symbol>
+  <symbol id="i-shield"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-9.5V5.5L12 2.5 4 5.5V12.5C4 18.5 12 22 12 22z"/></symbol>
+  <symbol id="i-spark"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+  <symbol id="i-rocket"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15s-1.5 3 1 5.5S11 20 11 20M14.5 4.5c3-2 6-1 6-1s1 3-1 6l-6 6-5-5 6-6z"/><circle cx="15" cy="9" r="1.4"/></symbol>
+  <symbol id="i-case"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8.5 7V5a2 2 0 012-2h3a2 2 0 012 2v2M2.5 12.5h19"/></symbol>
+  <symbol id="i-info"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></symbol>
+  <symbol id="i-msg"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-8 8 8.6 8.6 0 01-3.6-.8L3 21l1.8-6.4A8 8 0 1121 12z"/></symbol>
+</svg>
+
+<header class="site-header">
+<div class="container">
+<nav class="nav" aria-label="Principal">
+
+  <a href="/index.html" class="brand" aria-label="Inicio de AmazeBase">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+      <path d="M16 17.6l4.4 8.2h-8.8z" fill="#C56BF5" opacity=".85"/>
+    </svg>
+    <span data-brand>AmazeBase</span>
+  </a>
+
+  <ul class="nav-menu">
+    <li class="nav-item">
+      <a class="nav-link" href="/product.html#modules">Producto <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop nav-drop--wide">
+        <a href="/product.html#advertising"><svg class="icon-sm"><use href="#i-mega"/></svg>Publicidad y PPC</a>
+        <a href="/product.html#financials"><svg class="icon-sm"><use href="#i-dollar"/></svg>Finanzas</a>
+        <a href="/product.html#ledger"><svg class="icon-sm"><use href="#i-stack"/></svg>Ledger</a>
+        <a href="/product.html#inventory"><svg class="icon-sm"><use href="#i-box"/></svg>Inventario</a>
+        <a href="/product.html#research"><svg class="icon-sm"><use href="#i-search"/></svg>Investigaci&oacute;n de productos</a>
+        <a href="/product.html#simulations"><svg class="icon-sm"><use href="#i-chart"/></svg>Simulaciones</a>
+        <a href="/product.html#sales"><svg class="icon-sm"><use href="#i-trend"/></svg>Ventas</a>
+        <a href="/product.html#data"><svg class="icon-sm"><use href="#i-db"/></svg>Datos y sincronizaci&oacute;n</a>
+        <a href="/product.html#security"><svg class="icon-sm"><use href="#i-shield"/></svg>Seguridad</a>
+        <a href="/product.html#assistant"><svg class="icon-sm"><use href="#i-spark"/></svg>Asistente de IA &mdash; pronto</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/solutions.html">Soluciones <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/solutions.html#beginners"><svg class="icon-sm"><use href="#i-rocket"/></svg>Principiantes</a>
+        <a href="/solutions.html#experts"><svg class="icon-sm"><use href="#i-dollar"/></svg>Vendedores con experiencia</a>
+        <a href="/solutions.html#agencies"><svg class="icon-sm"><use href="#i-case"/></svg>Agencias</a>
+      </div>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="/index.html#pricing">Precios</a></li>
+    <li class="nav-item"><a class="nav-link" href="/es/recursos.html">Recursos</a></li>
+    <li class="nav-item">
+      <a class="nav-link" href="/about.html">Empresa <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/about.html"><svg class="icon-sm"><use href="#i-info"/></svg>Nosotros</a>
+        <a href="/contact.html"><svg class="icon-sm"><use href="#i-msg"/></svg>Contacto</a>
+      </div>
+    </li>
+  </ul>
+
+  <div class="nav-actions">
+    <div class="nav-item lang-switch">
+      <button class="lang-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Idioma / Language">
+        ES <svg class="chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+      </button>
+      <div class="nav-drop lang-drop">
+        <a href="/articles/inventory-forecasting.html" hreflang="en" lang="en"><span class="lc">EN</span>English</a>
+        <a href="/es/articulos/errores-de-pronostico-de-inventario.html" hreflang="es" lang="es" aria-current="true"><span class="lc">ES</span>Español</a>
+      </div>
+    </div>
+    <a class="btn btn--quiet" href="https://analytics.amazebase.pro/login">Iniciar sesi&oacute;n</a>
+    <a class="btn btn--primary" href="/index.html#waitlist" data-magnetic>&Uacute;nete a la lista de espera</a>
+    <button class="nav-toggle" aria-label="Abrir men&uacute;" aria-expanded="false" aria-controls="navMobile">
+      <svg class="icon"><use href="#i-menu"/></svg>
+    </button>
+  </div>
+
+</nav>
+</div>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="/product.html#modules">Producto</a>
+  <a href="/solutions.html">Soluciones</a>
+  <a href="/index.html#pricing">Precios</a>
+  <a href="/es/recursos.html">Recursos</a>
+  <a href="/about.html">Nosotros</a>
+  <a href="/contact.html">Contacto</a>
+  <a class="btn btn--quiet btn--block" href="https://analytics.amazebase.pro/login">Iniciar sesi&oacute;n</a>
+  <a class="btn btn--primary btn--block" href="/index.html#waitlist">&Uacute;nete a la lista de espera</a>
+</div>
+</header>
+
+<div class="wrap">
+
+<!-- ====================================================================== HEADER ====================================================================== -->
+<p class="back-link"><a href="/es/recursos.html">&larr; Centro de Conocimiento</a></p>
+
+<header class="article-head">
+  <p class="eyebrow">Planificaci&oacute;n de inventario</p>
+
+  <h1>Pron&oacute;stico de inventario en Amazon: los errores que <span class="accent">destruyen tu utilidad en silencio</span></h1>
+
+  <p class="deck">
+    Si pides muy poco, pierdes ventas, posicionamiento y meses de impulso. Si pides
+    demasiado, tu efectivo se queda en un almac&eacute;n mientras las tarifas de
+    almacenamiento se comen el margen. Estos son los diez errores que causan ambas cosas &mdash; y qu&eacute; hacer en su lugar.
+  </p>
+
+  <p class="meta">
+    <span>AmazeBase</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span><time datetime="2026-07-15">15 de julio de 2026</time></span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>7 min de lectura</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>Inventario y flujo de caja</span>
+  </p>
+</header>
+
+<figure class="hero-shot">
+  <img src="/assets/img/hero-inventory-forecasting.webp"
+       alt="Un t&uacute;nel oscuro de datos azules que alimenta un n&uacute;cleo central de esferas de pron&oacute;stico y se abre hacia un almac&eacute;n &aacute;mbar repleto de pallets"
+       width="1672" height="941" loading="eager" decoding="async">
+</figure>
+
+<!-- ====================================================================== BODY ====================================================================== -->
+<div class="shell">
+<main id="main" class="article">
+
+  <p class="lead">
+    Si les preguntas a vendedores de Amazon con experiencia qu&eacute; los mantiene
+    despiertos por la noche, muchos no dir&aacute;n PPC. No dir&aacute;n rese&ntilde;as. Ni siquiera dir&aacute;n competencia.
+  </p>
+
+  <p>Dir&aacute;n <strong>inventario</strong>.</p>
+
+  <p>Porque los errores de inventario son caros.</p>
+
+  <p>Si pides muy poco, pierdes ventas, posicionamiento, impulso publicitario y a menudo meses de trabajo duro.</p>
+
+  <p>Si pides demasiado, tu efectivo queda atrapado en un almac&eacute;n mientras las tarifas de almacenamiento se comen tus utilidades poco a poco.</p>
+
+  <p>Pronosticar el inventario no se trata de predecir el futuro a la perfecci&oacute;n.</p>
+
+  <p>Se trata de tomar mejores decisiones que tus competidores.</p>
+
+  <p>Por desgracia, ah&iacute; es justo donde se equivoca la mayor&iacute;a de los vendedores.</p>
+
+  <hr class="rule">
+
+  <!-- TOC -->
+  <nav class="toc" aria-labelledby="toc-title">
+    <h2 id="toc-title">Los diez errores</h2>
+    <ol>
+      <li><a href="#m1">Pronosticar ventas en lugar de pronosticar decisiones</a></li>
+      <li><a href="#m2">Confiar en las ventas diarias promedio</a></li>
+      <li><a href="#m3">Ignorar las ventas perdidas</a></li>
+      <li><a href="#m4">Tratar el tiempo de reposici&oacute;n del proveedor como un n&uacute;mero fijo</a></li>
+      <li><a href="#m5">Confundir inventario con efectivo</a></li>
+      <li><a href="#m6">Suponer que las recomendaciones de Amazon siempre son correctas</a></li>
+      <li><a href="#m7">Olvidar que las promociones lo cambian todo</a></li>
+      <li><a href="#m8">Creer que el stock de seguridad es &laquo;inventario extra&raquo;</a></li>
+      <li><a href="#m9">Pronosticar cada SKU por separado</a></li>
+      <li><a href="#m10">Olvidar que la planificaci&oacute;n de inventario es continua</a></li>
+    </ol>
+  </nav>
+
+  <!-- What it actually is -->
+  <h2 id="what-it-is">Qu&eacute; es realmente el pron&oacute;stico de inventario</h2>
+
+  <p>La mayor&iacute;a cree que pronosticar el inventario significa responder una sola pregunta:</p>
+
+  <blockquote><p>&iquest;Cu&aacute;ntas unidades deber&iacute;a pedir?</p></blockquote>
+
+  <p>En realidad esa es la &uacute;ltima pregunta.</p>
+
+  <p>Las preguntas reales son:</p>
+
+  <ul>
+    <li>&iquest;Cu&aacute;nto voy a vender?</li>
+    <li>&iquest;Cu&aacute;ndo voy a necesitar m&aacute;s inventario?</li>
+    <li>&iquest;Cu&aacute;nto va a tardar en llegar?</li>
+    <li>&iquest;Cu&aacute;nto efectivo voy a tener disponible?</li>
+    <li>&iquest;Cu&aacute;nto stock de seguridad necesito?</li>
+    <li>&iquest;Qu&eacute; pasa si algo sale mal?</li>
+  </ul>
+
+  <p>Pronosticar no es un problema de inventario.</p>
+
+  <p>
+    Es un problema de planificaci&oacute;n del negocio. Amazon y las gu&iacute;as del sector
+    plantean el pron&oacute;stico, de forma consistente, como la conexi&oacute;n entre demanda,
+    tiempos de reposici&oacute;n y decisiones de reposici&oacute;n, y no como el simple c&aacute;lculo de cantidades a pedir.
+  </p>
+  <section class="mistake">
+  <h2 id="m1"><span class="num">Error 01</span>Pronosticar ventas en lugar de pronosticar decisiones</h2>
+
+  <p>Este es probablemente el error m&aacute;s grande que cometen los vendedores.</p>
+
+  <p>Muchas hojas de c&aacute;lculo intentan predecir las ventas futuras. Pero las ventas por s&iacute; solas no te dicen qu&eacute; hacer.</p>
+
+  <p>Imagina que tu pron&oacute;stico predice que vas a vender <strong>40 unidades/d&iacute;a</strong>. Bien. &iquest;Y ahora qu&eacute;?</p>
+
+  <ul>
+    <li>&iquest;Deber&iacute;as pedir hoy?</li>
+    <li>&iquest;Esperar dos semanas?</li>
+    <li>&iquest;Subir el PPC?</li>
+    <li>&iquest;Bajar la publicidad?</li>
+    <li>&iquest;Lanzar otra variaci&oacute;n?</li>
+  </ul>
+
+  <p>Los pron&oacute;sticos de ventas no responden esas preguntas.</p>
+
+  <p>Una buena planificaci&oacute;n de inventario convierte los pron&oacute;sticos en decisiones.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">Qu&eacute; hacer</span>
+    <p>El pron&oacute;stico en s&iacute; no vale nada. <strong>Lo que vale es la decisi&oacute;n que habilita.</strong></p>
+  </div>
+</section>
+
+  <section class="mistake">
+  <h2 id="m2"><span class="num">Error 02</span>Confiar en las ventas diarias promedio</h2>
+
+  <p>Este atrapa a casi todos.</p>
+
+  <p>Supongamos que vendiste:</p>
+
+  <ul>
+    <li>20 unidades/d&iacute;a en enero</li>
+    <li>40 unidades/d&iacute;a en febrero</li>
+    <li>80 unidades/d&iacute;a en marzo</li>
+  </ul>
+
+  <ul class="figures">
+    <li>
+      <div class="fig is-bad">
+        <span class="v">47/d&iacute;a</span>
+        <span class="k">Tu promedio</span>
+      </div>
+    </li>
+    <li>
+      <div class="fig is-real">
+        <span class="v">80/d&iacute;a</span>
+        <span class="k">Tu realidad</span>
+      </div>
+    </li>
+    <li>
+      <div class="fig">
+        <span class="v">&minus;41&nbsp;%</span>
+        <span class="k">Lo que pides de menos</span>
+      </div>
+    </li>
+  </ul>
+
+  <p>Ya no vendes 47 unidades. Vendes alrededor de 80.</p>
+
+  <p>Si repones usando promedios, te vas a quedar sin stock.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">Qu&eacute; hacer</span>
+    <p>Los promedios hist&oacute;ricos sirven para entender el pasado. Son peligrosos
+    cuando se usan para predecir negocios que est&aacute;n creciendo.</p>
+  </div>
+</section>
+
+  <section class="mistake">
+  <h2 id="m3"><span class="num">Error 03</span>Ignorar las ventas perdidas</h2>
+
+  <p>
+    Uno de los errores de pron&oacute;stico ocultos m&aacute;s grandes es usar el historial de
+    ventas de Amazon sin limpiarlo primero.
+  </p>
+
+  <p>Imagina esta l&iacute;nea de tiempo:</p>
+
+  <ul>
+    <li>Enero: 50 ventas/d&iacute;a</li>
+    <li>Febrero: 60 ventas/d&iacute;a</li>
+    <li>Marzo: quiebre de stock durante 15 d&iacute;as</li>
+  </ul>
+
+  <p>Amazon reporta menos ventas.</p>
+
+  <p>Pero la demanda no desapareci&oacute;. Simplemente no te quedaba nada que vender.</p>
+
+  <p>Muchos sistemas de pron&oacute;stico aprenden sin querer de esas ventas que faltan.</p>
+
+  <p>Eso le ense&ntilde;a al sistema que la demanda cay&oacute;. En realidad, <strong>fall&oacute; el inventario</strong>.</p>
+
+  <div class="callout">
+    <span class="label">C&oacute;mo se ve bien hecho</span>
+    <div class="fixbox">
+    <span class="fixbox-k">Qu&eacute; hacer</span>
+    <p>El pron&oacute;stico profesional elimina los periodos en que los productos no
+      estuvieron disponibles antes de estimar la demanda futura. Quienes lo hacen
+      a diario tambi&eacute;n se&ntilde;alan que los datos hist&oacute;ricos distorsionados por quiebres
+      de stock y promociones necesitan ajustarse antes de modelar.</p>
+  </div>
+  </div>
+</section>
+
+  <section class="mistake">
+  <h2 id="m4"><span class="num">Error 04</span>Tratar el tiempo de reposici&oacute;n del proveedor como un n&uacute;mero fijo</h2>
+
+  <p>Muchos vendedores asumen: <em>&laquo;Mi proveedor tarda 30 d&iacute;as&raquo;.</em></p>
+
+  <p>No es as&iacute;. A veces son:</p>
+
+  <ul>
+    <li>28 d&iacute;as</li>
+    <li>34 d&iacute;as</li>
+    <li>41 d&iacute;as</li>
+    <li>52 d&iacute;as</li>
+  </ul>
+
+  <p>Y despu&eacute;s le sumas:</p>
+
+  <ul>
+    <li>Retrasos de producci&oacute;n</li>
+    <li>Congesti&oacute;n portuaria</li>
+    <li>Aduana</li>
+    <li>Inspecciones</li>
+    <li>Transporte terrestre</li>
+    <li>Retrasos en la recepci&oacute;n en Amazon</li>
+  </ul>
+
+  <p>De pronto tu tiempo de reposici&oacute;n de &laquo;30 d&iacute;as&raquo; se volvi&oacute; de 55 d&iacute;as.</p>
+
+  <p>Los pron&oacute;sticos fallan porque la realidad es variable.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">Qu&eacute; hacer</span>
+    <p>Un buen pron&oacute;stico planifica para la incertidumbre en lugar de fingir que no existe.</p>
+  </div>
+</section>
+
+  <section class="mistake">
+  <h2 id="m5"><span class="num">Error 05</span>Confundir inventario con efectivo</h2>
+
+  <p>Esta es una de las lecciones m&aacute;s grandes que los vendedores con experiencia terminan aprendiendo.</p>
+
+  <p>El inventario no son solo productos. <strong>El inventario es dinero.</strong></p>
+
+  <p>Cada unidad parada en un almac&eacute;n representa efectivo que no puedes gastar en:</p>
+
+  <ul>
+    <li>PPC</li>
+    <li>Productos nuevos</li>
+    <li>Mejores fotos</li>
+    <li>Contrataciones</li>
+    <li>&Oacute;rdenes de compra m&aacute;s grandes</li>
+    <li>Emergencias</li>
+  </ul>
+
+  <p>Comprar demasiado inventario no solo sube las tarifas de almacenamiento.</p>
+
+  <p>Frena el crecimiento de todo tu negocio.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">Qu&eacute; hacer</span>
+    <p>El propio Amazon se&ntilde;ala el exceso de inventario como un problema de flujo de caja, adem&aacute;s de un problema de almacenamiento.</p>
+  </div>
+</section>
+
+  <aside class="strip">
+  <div>
+    <h3>Domina el inventario en Amazon</h3>
+    <p>AmazeBase convierte estos c&aacute;lculos en decisiones sobre las que puedes actuar.</p>
+  </div>
+  <a class="strip-btn" href="/index.html#waitlist">&Uacute;nete a la lista de espera</a>
+</aside>
+
+<section class="mistake">
+  <h2 id="m6"><span class="num">Error 06</span>Suponer que las recomendaciones de Amazon siempre son correctas</h2>
+
+  <p>Amazon ofrece excelentes herramientas de planificaci&oacute;n. Pero Amazon solo ve una parte del panorama.</p>
+
+  <p>Sabe:</p>
+
+  <ul>
+    <li>Las ventas en Amazon</li>
+    <li>El inventario en Amazon</li>
+    <li>Los env&iacute;os a Amazon</li>
+  </ul>
+
+  <p>No sabe:</p>
+
+  <ul>
+    <li>Tu flujo de caja</li>
+    <li>Tus negociaciones con proveedores</li>
+    <li>Los m&iacute;nimos de las &oacute;rdenes de compra</li>
+    <li>La capacidad de tu almac&eacute;n</li>
+    <li>Tus planes de marketing</li>
+    <li>Tus lanzamientos de productos nuevos</li>
+    <li>La estrategia del negocio</li>
+  </ul>
+
+  <div class="fixbox">
+    <span class="fixbox-k">Qu&eacute; hacer</span>
+    <p>Sus recomendaciones hay que tratarlas como insumos — no como decisiones autom&aacute;ticas.</p>
+  </div>
+</section>
+
+  <section class="mistake">
+  <h2 id="m7"><span class="num">Error 07</span>Olvidar que las promociones lo cambian todo</h2>
+
+  <p>
+    Prime Day. Black Friday. Lightning Deals. Cupones. Tr&aacute;fico externo.
+    Campa&ntilde;as con influencers. TikTok. Lanzamientos por correo.
+  </p>
+
+  <p>Cada uno de ellos cambia la demanda.</p>
+
+  <p>
+    Si tu pron&oacute;stico asume &laquo;todo normal&raquo;, es casi seguro que te vas a quedar sin
+    inventario durante las promociones.
+  </p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">Qu&eacute; hacer</span>
+    <p>Los pron&oacute;sticos necesitan incluir los eventos planeados del negocio, no solo las ventas hist&oacute;ricas.
+    Las gu&iacute;as de pron&oacute;stico actuales recomiendan cada vez m&aacute;s incorporar promociones
+    y otros factores externos, porque los promedios hist&oacute;ricos por s&iacute; solos suelen fallar durante los
+    picos de demanda.</p>
+  </div>
+</section>
+
+  <section class="mistake">
+  <h2 id="m8"><span class="num">Error 08</span>Creer que el stock de seguridad es &laquo;inventario extra&raquo;</h2>
+
+  <p>El stock de seguridad se malinterpreta seguido.</p>
+
+  <p>No es inventario que esperas vender. <strong>Es un seguro.</strong></p>
+
+  <p>Un seguro contra:</p>
+
+  <ul>
+    <li>Contenedores retrasados</li>
+    <li>Problemas con el proveedor</li>
+    <li>Demanda inesperada</li>
+    <li>Retrasos en aduana</li>
+    <li>Retrasos en la recepci&oacute;n en Amazon</li>
+  </ul>
+
+  <p>Demasiados vendedores no tienen casi nada — o tienen much&iacute;simo de m&aacute;s.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">Qu&eacute; hacer</span>
+    <p>La cantidad correcta depende de qu&eacute; tan inciertas son en realidad tu cadena de suministro y tu demanda.</p>
+  </div>
+</section>
+
+  <section class="mistake">
+  <h2 id="m9"><span class="num">Error 09</span>Pronosticar cada SKU por separado</h2>
+
+  <p>Los vendedores con experiencia saben que los productos se influyen entre s&iacute;.</p>
+
+  <ul>
+    <li>Lanzar una variaci&oacute;n nueva suele reducir las ventas de una versi&oacute;n anterior.</li>
+    <li>Los paquetes cambian la demanda.</li>
+    <li>Los listings padre-hijo redistribuyen las ventas.</li>
+    <li>Anunciar un SKU aumenta la demanda de otro.</li>
+  </ul>
+
+  <div class="fixbox">
+    <span class="fixbox-k">Qu&eacute; hacer</span>
+    <p>Pronosticar productos de forma aislada suele perder de vista lo que est&aacute; pasando en todo el
+    cat&aacute;logo.</p>
+  </div>
+</section>
+
+  <section class="mistake">
+  <h2 id="m10"><span class="num">Error 10</span>Olvidar que la planificaci&oacute;n de inventario es continua</h2>
+
+  <p>Muchos negocios pronostican una vez al mes. Y despu&eacute;s ignoran todo hasta el mes siguiente.</p>
+
+  <p>Los mercados no funcionan as&iacute;. Cada semana cambia algo.</p>
+
+  <ul>
+    <li>Los competidores cambian precios.</li>
+    <li>La publicidad cambia.</li>
+    <li>Las rese&ntilde;as cambian.</li>
+    <li>La demanda cambia.</li>
+  </ul>
+
+  <div class="fixbox">
+    <span class="fixbox-k">Qu&eacute; hacer</span>
+    <p>Los pron&oacute;sticos deben evolucionar de forma continua a medida que llega informaci&oacute;n nueva.</p>
+  </div>
+
+  <!-- Formula -->
+</section>
+
+  <h2 id="formula">La f&oacute;rmula que usa la mayor&iacute;a de los vendedores</h2>
+
+  <p>Muchas gu&iacute;as de inventario recomiendan algo as&iacute;:</p>
+
+  <p class="formula">
+    Punto de reorden <span class="op">=</span> (Ventas diarias promedio <span class="op">&times;</span> Tiempo de reposici&oacute;n) <span class="op">+</span> Stock de seguridad
+  </p>
+
+  <p>Es un buen punto de partida. Pero asume que:</p>
+
+  <ul>
+    <li>Las ventas se mantienen constantes</li>
+    <li>El tiempo de reposici&oacute;n nunca cambia</li>
+    <li>No hay promociones</li>
+    <li>No hay quiebres de stock</li>
+    <li>El efectivo es ilimitado</li>
+  </ul>
+
+  <p>Los negocios reales son m&aacute;s complicados que una sola ecuaci&oacute;n.</p>
+
+  <p>
+    La f&oacute;rmula sirve — pero solo acompa&ntilde;ada de criterio y de supuestos que se
+    actualizan seguido.
+  </p>
+
+  <!-- Great forecasting -->
+  <h2 id="great">C&oacute;mo se ve un pron&oacute;stico excelente</h2>
+
+  <p>En lugar de preguntar:</p>
+
+  <blockquote><p>&iquest;Cu&aacute;ntas unidades deber&iacute;a pedir?</p></blockquote>
+
+  <p>Los grandes operadores preguntan:</p>
+
+  <ul>
+    <li>&iquest;Qu&eacute; pasa si la demanda sube 25&nbsp;%?</li>
+    <li>&iquest;Qu&eacute; pasa si mi env&iacute;o se retrasa tres semanas?</li>
+    <li>&iquest;Qu&eacute; pasa si el PPC duplica las ventas?</li>
+    <li>&iquest;Qu&eacute; pasa si mi proveedor no cumple con la producci&oacute;n?</li>
+    <li>&iquest;Qu&eacute; pasa si lanzo otro producto?</li>
+    <li>&iquest;Todav&iacute;a puedo pagar mi pr&oacute;xima orden de compra?</li>
+    <li>&iquest;Voy a tener suficiente efectivo despu&eacute;s de mi pr&oacute;ximo pago de Amazon?</li>
+  </ul>
+
+  <p>&iquest;Notas algo?</p>
+
+  <p>Estas no son preguntas de inventario. Son preguntas de negocio.</p>
+
+  <p>El inventario es simplemente donde esas decisiones se vuelven visibles.</p>
+
+  <!-- The goal -->
+  <h2 id="goal">El objetivo no es un pron&oacute;stico perfecto</h2>
+
+  <p>Todo vendedor quiere un pron&oacute;stico preciso. Pero los pron&oacute;sticos perfectos no existen.</p>
+
+  <p>
+    Los mejores negocios no ganan porque predigan el futuro a la perfecci&oacute;n. Ganan
+    porque <strong>reaccionan m&aacute;s r&aacute;pido cuando la realidad cambia</strong>.
+  </p>
+
+  <p>Un buen pron&oacute;stico no elimina la incertidumbre.</p>
+
+  <p>Te ayuda a tomar mejores decisiones a pesar de la incertidumbre.</p>
+
+  <p>Ese es el prop&oacute;sito real del pron&oacute;stico de inventario.</p>
+
+  <p>
+    Y eso es lo que separa a los negocios que crecen de forma consistente de los que
+    se pasan cada mes reaccionando a la &uacute;ltima emergencia de inventario.
+  </p>
+
+  <!-- Final thoughts -->
+  <h2 id="final">Para cerrar</h2>
+
+  <p>Pronosticar el inventario no se trata de hojas de c&aacute;lculo, f&oacute;rmulas ni algoritmos complicados.</p>
+
+  <p>Se trata de confianza.</p>
+
+  <ul>
+    <li>Confianza en que vas a tener suficiente inventario cuando suba la demanda.</li>
+    <li>Confianza en que no vas a inmovilizar efectivo innecesario en stock de baja rotaci&oacute;n.</li>
+    <li>Confianza en que puedes lanzar productos nuevos sin arriesgar el resto de tu negocio.</li>
+  </ul>
+
+  <p>
+    Los vendedores que superan a su competencia de forma consistente no
+    necesariamente tienen mejores productos.
+  </p>
+
+  <p>Casi siempre, simplemente toman mejores decisiones antes.</p>
+
+  <p>Y casi todas esas decisiones empiezan con un mejor pron&oacute;stico.</p>
+
+</main>
+
+<aside class="rail" aria-label="Cifras clave de este art&iacute;culo">
+
+  <div class="rail-card">
+    <span class="rail-k">Promedio vs. realidad</span>
+    <span class="rail-v">&minus;41&nbsp;%</span>
+    <p>Cu&aacute;nto pides de menos si planificas con un promedio de 47/d&iacute;a mientras en realidad vendes alrededor de 80/d&iacute;a.</p>
+  </div>
+
+  <div class="rail-card">
+    <span class="rail-k">Deriva del tiempo de reposici&oacute;n</span>
+    <span class="rail-v is-amber">55 d&iacute;as</span>
+    <p>En lo que se convierte un tiempo de reposici&oacute;n de &laquo;30 d&iacute;as&raquo; cuando se acumulan retrasos, aduana y recepci&oacute;n.</p>
+  </div>
+
+  <div class="rail-card">
+    <span class="rail-k">Escondido en tu historial</span>
+    <span class="rail-v is-violet">15 d&iacute;as</span>
+    <p>Un quiebre de stock as&iacute; de largo arrastra hacia abajo las ventas reportadas &mdash; Amazon nunca registra la demanda que no pudiste atender.</p>
+  </div>
+
+  <p class="rail-src">Cifras de los ejemplos trabajados de este art&iacute;culo, no de un estudio de mercado.</p>
+
+</aside>
+
+</div>
+
+<!-- ====================================================================== CLOSING CTA ====================================================================== -->
+<aside class="cta">
+  <h2>Deja de pronosticar en hojas de c&aacute;lculo</h2>
+  <p>
+    AmazeBase conecta tus ventas, publicidad, inventario, proveedores y flujo de caja
+    para que cada decisi&oacute;n de reposici&oacute;n los tome en cuenta todos a la vez.
+  </p>
+  <a class="btn" href="/index.html">
+    Mira c&oacute;mo funciona
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M5 12h14M13 6l6 6-6 6"/>
+    </svg>
+  </a>
+</aside>
+
+</div><!-- /.wrap -->
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+  <symbol id="i-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12.5 17v-4a2.5 2.5 0 015 0v4"/></symbol>
+  <symbol id="i-tw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M20 4L4 20"/></symbol>
+  <symbol id="i-gh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4 1.4-4-2.2-5.6-2.6M15 21v-3.4a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 2.6 5.5 2.9 5.5 2.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 9.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></symbol>
+</defs>
+</svg>
+
+<footer class="footer">
+<div class="container">
+
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/index.html" class="brand" aria-label="Inicio de AmazeBase">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+        </svg>
+        <span data-brand>AmazeBase</span>
+      </a>
+      <p>El sistema operativo para vendedores de Amazon. Todo conectado, todo sincronizado.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Producto</h4>
+      <a href="/product.html#modules">Producto</a>
+      <a href="/index.html#pricing">Precios</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Recursos</h4>
+      <a href="/es/recursos.html">Centro de Conocimiento</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <a href="/about.html">Nosotros</a>
+      <a href="/contact.html">Contacto</a>
+      <a href="/privacy.html">Privacidad</a>
+      <a href="/terms.html">T&eacute;rminos</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>&copy; 2026 <span data-brand>AmazeBase</span>. Todos los derechos reservados.</span>
+    <div class="footer-social">
+      <a href="#" aria-label="LinkedIn"><svg class="icon-sm"><use href="#i-in"/></svg></a>
+      <a href="#" aria-label="X"><svg class="icon-sm"><use href="#i-tw"/></svg></a>
+      <a href="#" aria-label="GitHub"><svg class="icon-sm"><use href="#i-gh"/></svg></a>
+    </div>
+  </div>
+
+</div>
+</footer>
+
+<script src="/js/main.js" defer></script>
+</body>
+</html>

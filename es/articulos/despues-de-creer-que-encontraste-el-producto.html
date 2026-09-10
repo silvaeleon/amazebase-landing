@@ -1,0 +1,2527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>La mejor investigaci&oacute;n de productos empieza despu&eacute;s de creer que encontraste el producto &mdash; AmazeBase</title>
+
+<meta name="description" content="Encontrar un producto prometedor no es el final de la investigaci&oacute;n &mdash; es el comienzo de las preguntas que de verdad importan. Por qu&eacute; el momento en que te convences es el momento en que tu criterio es menos confiable.">
+<meta name="theme-color" content="#030917">
+<meta name="author" content="AmazeBase">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   ARTICLE — Amazon Inventory Forecasting
+   Self-contained. Tokens mirror css/variables.css so this page can either
+   stand alone OR have this <style> block deleted once it sits inside the
+   site's normal stylesheet chain.
+========================================================================== */
+
+:root{
+  --z-nav:100;          /* navigation.css */
+  --container:1280px;   /* .container, below */
+  --t-body:15px;        /* .btn, below */
+  --bg:#030917; --bg-deep:#01050E; --bg-raise:#060D1E;
+  --surface:rgba(255,255,255,.030); --surface-2:rgba(255,255,255,.055);
+  --surface-solid:#0A1224;
+  --line:rgba(255,255,255,.070); --line-strong:rgba(255,255,255,.140);
+
+  --text:#EEF1F8; --text-2:#98A2B8; --text-3:#616C84;
+
+  --violet:#8B3BF1; --violet-soft:#A971F7; --indigo:#5B4FE6;
+  --blue:#3B82F6; --blue-soft:#7EB3FF;
+  --green:#2ED47A; --amber:#F5A524; --red:#F0435C;
+
+  --grad-brand:linear-gradient(135deg,#5B4FE6 0%,#8B3BF1 100%);
+  --grad-text:linear-gradient(90deg,#6153E6 0%,#9D50F7 55%,#C56BF5 100%);
+  --grad-card:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  --grad-rule:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,monospace;
+
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px;
+  --s5:48px; --s6:64px; --s7:96px; --s8:128px;
+
+  --gutter:clamp(20px,4vw,40px);
+  --measure:720px;
+
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
+  --sh-2:0 18px 40px rgba(0,0,0,.42);
+  --sh-brand:0 16px 40px rgba(107,63,232,.35);
+  --ease:cubic-bezier(.22,.61,.36,1); --fast:.18s; --mid:.28s;
+
+  color-scheme:dark;
+  scrollbar-color:#26304A var(--bg);
+  scrollbar-width:thin;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation:none !important; transition:none !important; }
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+::selection{ background:var(--violet); color:#fff; }
+
+.skip-link{
+  position:absolute; left:-9999px; top:0;
+  background:var(--surface-solid); color:var(--text);
+  padding:12px 20px; border-radius:0 0 var(--r-sm) 0;
+  z-index:1000; text-decoration:none; font-weight:600;
+}
+.skip-link:focus{ left:0; }
+
+:focus-visible{
+  outline:2px solid var(--violet-soft);
+  outline-offset:3px;
+  border-radius:var(--r-xs);
+}
+
+/* ---------- ambient background ------------------------------------------ */
+.bg-layer{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(760px 520px at 18% -8%,  rgba(91,79,230,.20), transparent 62%),
+    radial-gradient(680px 480px at 88% 4%,   rgba(139,59,241,.15), transparent 60%),
+    radial-gradient(900px 700px at 50% 108%, rgba(59,130,246,.09), transparent 66%);
+}
+
+.wrap{ position:relative; z-index:1; }
+
+/* ---------- shell ------------------------------------------------------- */
+.article{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:0 var(--gutter) var(--s8);
+}
+
+/* ---------- header ------------------------------------------------------ */
+.article-head{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:clamp(64px,9vw,120px) var(--gutter) clamp(32px,4vw,48px);
+}
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--violet-soft);
+  background:var(--surface); border:1px solid var(--line);
+  padding:7px 14px; border-radius:var(--r-pill);
+  margin:0 0 var(--s3);
+}
+.eyebrow::before{
+  content:""; width:6px; height:6px; border-radius:50%;
+  background:var(--violet-soft);
+  box-shadow:0 0 10px rgba(169,113,247,.9);
+}
+
+h1{
+  font-size:clamp(34px,5vw,58px);
+  line-height:1.08;
+  letter-spacing:-.025em;
+  font-weight:800;
+  margin:0 0 var(--s3);
+  text-wrap:balance;
+}
+h1 .accent{
+  background:var(--grad-text);
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+}
+
+.deck{
+  font-size:clamp(18px,2.1vw,21px);
+  line-height:1.6;
+  color:var(--text-2);
+  margin:0 0 var(--s4);
+  max-width:62ch;
+}
+
+.meta{
+  display:flex; flex-wrap:wrap; align-items:center; gap:var(--s2);
+  font-size:14px; color:var(--text-3);
+  padding-top:var(--s3);
+  border-top:1px solid var(--line);
+}
+.meta .dot{ width:3px; height:3px; border-radius:50%; background:var(--text-3); }
+
+/* ---------- table of contents ------------------------------------------- */
+.toc{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:0 0 var(--s6);
+}
+.toc h2{
+  font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--text-3); margin:0 0 var(--s3); padding:0; border:0;
+}
+.toc ol{
+  list-style:none; margin:0; padding:0;
+  counter-reset:toc;
+  display:grid; gap:2px;
+}
+.toc li{ counter-increment:toc; margin:0; }
+.toc a{
+  display:flex; gap:14px; align-items:baseline;
+  color:var(--text-2); text-decoration:none;
+  font-size:15px; line-height:1.5;
+  padding:8px 10px; margin:0 -10px;
+  border-radius:var(--r-xs);
+  transition:color var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+.toc a::before{
+  content:counter(toc,decimal-leading-zero);
+  font-family:var(--font-mono); font-size:12px; font-weight:600;
+  color:var(--text-3); flex:none; min-width:22px;
+  transition:color var(--fast) var(--ease);
+}
+.toc a:hover{ color:var(--text); background:var(--surface); }
+.toc a:hover::before{ color:var(--violet-soft); }
+
+/* ---------- body typography --------------------------------------------- */
+.article p{ margin:0 0 1.1em; color:#D5DBE9; }
+.article p.lead{ font-size:20px; color:var(--text); }
+
+.article h2{
+  font-size:clamp(26px,3.2vw,34px);
+  line-height:1.2;
+  letter-spacing:-.02em;
+  font-weight:700;
+  color:var(--text);
+  margin:var(--s7) 0 var(--s3);
+  padding-top:var(--s5);
+  border-top:1px solid var(--line);
+  scroll-margin-top:32px;
+  text-wrap:balance;
+}
+.article h2:first-of-type{ margin-top:0; }
+
+.article h2 .num{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:13px; font-weight:600; letter-spacing:.16em;
+  color:var(--violet-soft);
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
+
+.article strong{ color:var(--text); font-weight:700; }
+
+.article ul{
+  margin:0 0 1.4em;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:10px;
+}
+.article ul li{
+  position:relative;
+  padding-left:26px;
+  color:#D5DBE9;
+  line-height:1.6;
+}
+.article ul li::before{
+  content:"";
+  position:absolute; left:6px; top:.68em;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--violet);
+  box-shadow:0 0 8px rgba(139,59,241,.55);
+}
+
+/* ---------- pull quote --------------------------------------------------- */
+blockquote{
+  margin:var(--s4) 0;
+  padding:var(--s3) var(--s4);
+  border-left:2px solid var(--violet);
+  background:linear-gradient(90deg,rgba(139,59,241,.10),transparent 80%);
+  border-radius:0 var(--r-md) var(--r-md) 0;
+}
+blockquote p{
+  margin:0;
+  font-size:20px;
+  line-height:1.5;
+  font-weight:600;
+  color:var(--text);
+}
+
+/* ---------- callouts ----------------------------------------------------- */
+.callout{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:var(--s4) 0 var(--s5);
+}
+.callout .label{
+  display:block;
+  font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--text-3);
+  margin-bottom:var(--s2);
+}
+.callout p:last-child, .callout ul:last-child{ margin-bottom:0; }
+
+.formula{
+  font-family:var(--font-mono);
+  font-size:clamp(15px,2.1vw,19px);
+  font-weight:600;
+  line-height:1.6;
+  color:var(--text);
+  background:var(--bg-deep);
+  border:1px solid var(--line-strong);
+  border-radius:var(--r-md);
+  padding:var(--s3);
+  margin:0 0 var(--s3);
+  text-align:center;
+  overflow-x:auto;
+}
+.formula .op{ color:var(--violet-soft); }
+
+/* ---------- numbers strip ------------------------------------------------ */
+.figures{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:var(--s2);
+  margin:var(--s4) 0 var(--s5);
+  padding:0; list-style:none;
+}
+.figures li{ padding:0; }
+.figures li::before{ display:none; }
+.fig{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:var(--s3) var(--s2);
+  text-align:center;
+}
+.fig .v{
+  display:block;
+  font-size:28px; font-weight:800; letter-spacing:-.02em; line-height:1.1;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.fig .k{
+  display:block;
+  font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.fig.is-bad .v{ color:var(--red); }
+.fig.is-real .v{ color:var(--green); }
+
+/* ---------- divider ------------------------------------------------------ */
+.rule{
+  height:1px; border:0;
+  background:var(--grad-rule);
+  margin:var(--s6) 0;
+}
+
+/* ---------- closing CTA -------------------------------------------------- */
+.cta{
+  max-width:var(--measure);
+  margin:var(--s7) auto 0;
+  padding:clamp(32px,5vw,56px) var(--gutter);
+  text-align:center;
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-xl);
+  box-shadow:var(--sh-2);
+}
+.cta h2{
+  font-size:clamp(24px,3vw,32px);
+  font-weight:700; letter-spacing:-.02em; line-height:1.2;
+  margin:0 0 var(--s2); padding:0; border:0;
+  text-wrap:balance;
+}
+.cta p{
+  color:var(--text-2);
+  max-width:52ch;
+  margin:0 auto var(--s4);
+  font-size:17px;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--grad-brand);
+  color:#fff; text-decoration:none;
+  font-weight:600; font-size:16px;
+  padding:14px 28px;
+  border-radius:var(--r-pill);
+  box-shadow:var(--sh-brand);
+  transition:transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+.btn:hover{ transform:translateY(-2px); box-shadow:0 22px 50px rgba(107,63,232,.45); }
+.btn svg{ width:18px; height:18px; }
+
+/* ---------- responsive --------------------------------------------------- */
+@media (max-width:640px){
+  body{ font-size:17px; }
+  .article p.lead{ font-size:18px; }
+  blockquote p{ font-size:18px; }
+  .article h2{ margin-top:var(--s6); padding-top:var(--s4); }
+}
+
+/* ---------- print -------------------------------------------------------- */
+@media print{
+  .bg-layer,.toc,.cta,.skip-link{ display:none; }
+  body{ background:#fff; color:#111; font-size:12pt; }
+  .article p,.article ul li{ color:#222; }
+  .article h2{ color:#000; }
+}
+.back-link{ margin:0 0 28px; font-size:13px; }
+.back-link a{ color:var(--text-2); text-decoration:none; }
+.back-link a:hover{ color:var(--text); }
+
+/* ── HERO IMAGE ─────────────────────────────────────────────────────── */
+.hero-shot{
+  margin:0 0 52px;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  background:var(--bg-raise);
+  line-height:0;
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+.hero-shot img{ width:100%; height:auto; display:block; }
+
+/* ── MISTAKE CARDS ──────────────────────────────────────────────────── */
+.mistake{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.mistake::before{
+  content:"";
+  position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+  background:var(--amber);
+}
+.mistake h2{ margin-top:0 !important; }
+.article .mistake h2:first-of-type{ margin-top:0; }
+
+/* ── PULL QUOTES ────────────────────────────────────────────────────── */
+blockquote{
+  margin:44px 0;
+  padding:0 0 0 26px;
+  border-left:3px solid var(--amber);
+  background:none;
+}
+blockquote p{
+  font-size:23px;
+  line-height:1.45;
+  font-style:italic;
+  font-weight:600;
+  color:var(--text);
+  margin:0;
+}
+
+/* ── MID-ARTICLE STRIP ──────────────────────────────────────────────── */
+.strip{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px; flex-wrap:wrap;
+  margin:44px 0;
+  padding:26px 30px;
+  border-radius:16px;
+  background:linear-gradient(120deg,#0A1224,#131A33);
+  border:1px solid var(--line-strong);
+}
+.strip h3{ margin:0 0 6px; font-size:19px; color:var(--text); }
+.strip p{ margin:0; font-size:14px; color:var(--text-2); }
+.strip-btn{
+  flex:0 0 auto;
+  display:inline-block;
+  padding:12px 22px;
+  border-radius:10px;
+  background:var(--amber);
+  color:#1A1200;
+  font-size:14px; font-weight:700;
+  text-decoration:none;
+  transition:filter .15s ease;
+}
+.strip-btn:hover{ filter:brightness(1.08); }
+
+@media (max-width:640px){
+  .mistake{ padding:24px 20px 8px; }
+  .mistake::before{ top:20px; bottom:20px; }
+  blockquote p{ font-size:20px; }
+  .strip{ padding:22px; }
+  .strip-btn{ width:100%; text-align:center; }
+}
+
+/* ── WIDE SHELL: content + rail, so the page uses the screen ─────────── */
+.shell{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 var(--gutter);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 300px;
+  gap:64px;
+  align-items:start;
+}
+.shell > .article{ max-width:none; margin:0; padding:0 0 var(--s8); }
+
+.rail{ position:sticky; top:40px; display:flex; flex-direction:column; gap:14px; }
+.rail-card{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+  padding:20px;
+}
+.rail-k{
+  display:block; margin-bottom:10px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.rail-v{
+  display:block; margin-bottom:10px;
+  font-size:34px; line-height:1; font-weight:800; letter-spacing:-.02em;
+  color:var(--green);
+}
+.rail-v.is-amber{ color:var(--amber); }
+.rail-v.is-violet{ color:var(--violet-soft); }
+.rail-card p{ margin:0; font-size:13px; line-height:1.55; color:var(--text-2); }
+.rail-src{
+  margin:0; padding-top:14px;
+  border-top:1px solid var(--line);
+  font-size:11px; line-height:1.5; color:var(--text-3);
+}
+
+/* header + hero align to the same shell */
+.article-head, .hero-shot{ max-width:1180px; }
+
+/* ── HERO: a band, not a giant square ───────────────────────────────── */
+.hero-shot{
+  margin:0 auto 56px;
+  padding:0 var(--gutter);
+  border:0; background:none; box-shadow:none;
+  border-radius:0;
+  overflow:visible;
+}
+.hero-shot img{
+  width:100%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
+  border-radius:18px;
+  border:1px solid var(--line-strong);
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+
+/* ── THE FIX callout ────────────────────────────────────────────────── */
+.fixbox{
+  margin:22px 0 4px;
+  padding:16px 18px;
+  border-radius:12px;
+  border:1px solid rgba(46,212,122,.28);
+  background:rgba(46,212,122,.07);
+}
+.fixbox-k{
+  display:block; margin-bottom:6px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--green);
+}
+.fixbox p{ margin:0 !important; color:var(--text) !important; }
+
+@media (max-width:1080px){
+  .shell{ grid-template-columns:1fr; gap:40px; max-width:820px; }
+  .rail{ position:static; flex-direction:row; flex-wrap:wrap; }
+  .rail-card{ flex:1 1 220px; }
+  .rail-src{ flex:1 1 100%; border-top:0; padding-top:0; }
+  .article-head, .hero-shot{ max-width:820px; }
+}
+@media (max-width:640px){
+  .shell{ gap:28px; }
+}
+
+/* ── STEP / METRIC CARDS (same treatment as .mistake) ───────────────── */
+.step, .metric{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.step::before, .metric::before{
+  content:""; position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0; background:var(--amber);
+}
+.metric::before{ background:var(--blue-soft); }
+.step h2, .metric h2, .step h3, .metric h3{ margin-top:0 !important; }
+.article .step h2:first-of-type, .article .metric h2:first-of-type{ margin-top:0; }
+
+.metric h3{
+  font-size:20px; line-height:1.3; color:var(--text);
+  margin:0 0 14px; letter-spacing:-.01em;
+}
+.metric h3 .num{
+  display:inline-block; margin-right:10px;
+  min-width:26px; height:26px; line-height:26px; text-align:center;
+  border-radius:7px;
+  background:rgba(126,179,255,.14); color:var(--blue-soft);
+  font-size:12px; font-weight:700;
+}
+
+/* ── WARNING CARDS ──────────────────────────────────────────────────── */
+.warn{
+  position:relative;
+  border:1px solid rgba(240,67,92,.30);
+  border-radius:14px;
+  background:rgba(240,67,92,.07);
+  padding:22px 24px 6px;
+  margin:0 0 18px;
+}
+.warn h3{
+  margin:0 0 10px; font-size:17px; color:var(--text); line-height:1.35;
+}
+.warn h3::before{ content:"\26A0"; margin-right:9px; color:var(--red); }
+
+/* ── LEAD-TIME TABLE ────────────────────────────────────────────────── */
+.ltable{
+  width:100%; border-collapse:collapse;
+  margin:0 0 var(--s3);
+  font-size:15px;
+}
+.ltable th, .ltable td{
+  padding:12px 14px;
+  border-bottom:1px solid var(--line);
+  text-align:left; color:var(--text-2);
+}
+.ltable th{
+  font-size:11px; text-transform:uppercase; letter-spacing:.09em;
+  color:var(--text-3); font-weight:700;
+}
+.ltable td:last-child, .ltable th:last-child{ text-align:right; font-variant-numeric:tabular-nums; }
+.ltable tr:last-child td{
+  border-bottom:0; border-top:1px solid var(--line-strong);
+  color:var(--text); font-weight:700;
+}
+
+/* ── ROUTINE CHECKLIST ──────────────────────────────────────────────── */
+.routine{ counter-reset:r; list-style:none; padding:0; margin:0 0 var(--s3); }
+.routine li{
+  counter-increment:r;
+  position:relative;
+  padding:14px 16px 14px 52px;
+  margin-bottom:8px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  color:var(--text);
+  font-size:15.5px; line-height:1.5;
+}
+.routine li::before{
+  content:counter(r);
+  position:absolute; left:16px; top:13px;
+  width:24px; height:24px; line-height:24px; text-align:center;
+  border-radius:7px;
+  background:var(--grad-brand); color:#fff;
+  font-size:12px; font-weight:700;
+}
+.routine li::marker{ content:none; }
+
+@media (max-width:640px){
+  .step, .metric{ padding:24px 20px 8px; }
+  .step::before, .metric::before{ top:20px; bottom:20px; }
+  .ltable{ font-size:14px; }
+  .ltable th, .ltable td{ padding:10px 8px; }
+}
+
+/* ── PROBLEM / ALTERNATIVE PAIRS ────────────────────────────────────── */
+.problem, .alt{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 14px;
+}
+.problem::before, .alt::before{
+  content:""; position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.problem::before{ background:var(--red); }
+.alt{ margin-bottom:34px; border-color:rgba(46,212,122,.24); background:rgba(46,212,122,.05); }
+.alt::before{ background:var(--green); }
+
+.problem h2, .alt h2, .problem h3, .alt h3{ margin-top:0 !important; }
+.article .problem h2:first-of-type, .article .alt h2:first-of-type{ margin-top:0; }
+
+.problem h2 .num{ color:var(--red); }
+.alt h2 .num{ color:var(--green); }
+
+/* ── DELIVERY / DEMAND SAMPLES ──────────────────────────────────────── */
+.samples{
+  display:flex; flex-wrap:wrap; gap:8px;
+  list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.samples li{
+  padding:9px 14px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  background:var(--bg-raise);
+  font-family:var(--font-mono);
+  font-size:14px;
+  color:var(--text-2);
+  margin:0;
+}
+.samples li::before{ content:none; }
+.samples li.is-hi{ border-color:rgba(240,67,92,.42); color:#FF9AA9; }
+
+/* ── SCENARIO TRIO ──────────────────────────────────────────────────── */
+.scenarios{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:12px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.scenarios li{ margin:0; padding:0; }
+.scenarios li::before{ content:none; }
+.scen{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  padding:18px;
+  text-align:center;
+}
+.scen .n{ display:block; font-size:26px; font-weight:800; letter-spacing:-.02em; color:var(--text); margin-bottom:5px; }
+.scen .l{ display:block; font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--text-3); }
+.scen.is-low .n{ color:var(--blue-soft); }
+.scen.is-mid .n{ color:var(--text); }
+.scen.is-high .n{ color:var(--amber); }
+
+/* ── SIDE-BY-SIDE COMPARISON ────────────────────────────────────────── */
+.versus{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.versus > div{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  padding:20px;
+}
+.versus h4{
+  margin:0 0 12px; font-size:13px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.07em; color:var(--text-3);
+}
+.versus .big{ display:block; font-size:24px; font-weight:800; letter-spacing:-.02em; color:var(--text); margin-bottom:4px; }
+.versus .sub{ display:block; font-size:13px; color:var(--text-2); }
+.versus .big.is-warn{ color:var(--amber); }
+
+/* ── FOUR PILLARS ───────────────────────────────────────────────────── */
+.pillars{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+  gap:10px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.pillars li{
+  margin:0; padding:20px 14px; text-align:center;
+  border:1px solid var(--line-strong);
+  border-radius:12px;
+  background:var(--bg-raise);
+  font-size:15px; font-weight:600; color:var(--text);
+}
+.pillars li::before{ content:none; }
+
+@media (max-width:640px){
+  .problem, .alt{ padding:24px 20px 8px; }
+  .problem::before, .alt::before{ top:20px; bottom:20px; }
+  .versus{ grid-template-columns:1fr; }
+}
+
+/* ── TWO-CAMP DEFENCE CARDS ─────────────────────────────────────────── */
+.camp{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 20px;
+}
+.camp::before{
+  content:""; position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.camp.is-simple::before{ background:var(--blue-soft); }
+.camp.is-complex::before{ background:var(--violet-soft); }
+.camp h2, .camp h3{ margin-top:0 !important; }
+.article .camp h2:first-of-type{ margin-top:0; }
+.camp.is-simple h2 .num{ color:var(--blue-soft); }
+.camp.is-complex h2 .num{ color:var(--violet-soft); }
+
+/* ── ASSUMPTION PAIR ────────────────────────────────────────────────── */
+.assume{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.assume > div{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--bg-raise);
+  padding:20px;
+}
+.assume h4{
+  margin:0 0 10px; font-size:11px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.09em; color:var(--text-3);
+}
+.assume .eq{
+  display:block; font-family:var(--font-mono); font-size:14px;
+  color:var(--text); margin-bottom:12px; line-height:1.5;
+}
+.assume .as{
+  display:block; font-size:13px; line-height:1.55; color:var(--text-2);
+  padding-top:12px; border-top:1px solid var(--line);
+}
+
+/* ── RANGE ROWS ─────────────────────────────────────────────────────── */
+.ranges{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.ranges li{
+  display:grid; grid-template-columns:1fr auto 1fr;
+  align-items:center; gap:16px;
+  margin:0 0 10px; padding:16px 18px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+}
+.ranges li::before{ content:none; }
+.ranges .no{ font-size:14px; color:var(--text-3); text-decoration:line-through; }
+.ranges .arrow{ color:var(--violet-soft); font-size:16px; }
+.ranges .yes{ font-size:15px; color:var(--text); font-weight:600; }
+
+/* ── STAGE LADDER ───────────────────────────────────────────────────── */
+.stages{ counter-reset:st; list-style:none; margin:0 0 var(--s3); padding:0; }
+.stages li{
+  counter-increment:st;
+  position:relative;
+  margin:0 0 10px; padding:20px 22px 20px 74px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+}
+.stages li::before{
+  content:"Stage " counter(st);
+  position:absolute; left:20px; top:20px;
+  width:40px; padding:5px 0; text-align:center;
+  border-radius:8px;
+  background:var(--grad-brand); color:#fff;
+  font-size:9px; font-weight:700; letter-spacing:.04em;
+  text-transform:uppercase; line-height:1.25;
+}
+.stages li::marker{ content:none; }
+.stages h4{ margin:0 0 8px; font-size:16px; color:var(--text); }
+.stages p{ margin:0 !important; font-size:14.5px; color:var(--text-2); }
+
+/* ── COMPANY A / B ──────────────────────────────────────────────────── */
+.duel{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.duel > div{
+  border:1px solid var(--line); border-radius:14px;
+  background:var(--grad-card); padding:22px;
+}
+.duel > div.wins{ border-color:rgba(46,212,122,.35); background:rgba(46,212,122,.06); }
+.duel h4{ margin:0 0 10px; font-size:14px; color:var(--text); }
+.duel p{ margin:0 !important; font-size:14px; line-height:1.6; color:var(--text-2); }
+.duel .tag{
+  display:inline-block; margin-top:12px; padding:4px 10px;
+  border-radius:5px; font-size:10px; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase;
+}
+.duel .tag.win{ background:rgba(46,212,122,.15); color:var(--green); }
+.duel .tag.lose{ background:rgba(240,67,92,.13); color:#FF9AA9; }
+
+@media (max-width:640px){
+  .camp{ padding:24px 20px 8px; }
+  .camp::before{ top:20px; bottom:20px; }
+  .assume, .duel{ grid-template-columns:1fr; }
+  .ranges li{ grid-template-columns:1fr; gap:6px; }
+  .ranges .arrow{ display:none; }
+}
+
+/* ── BUSINESS A / B PROFILE CARDS ───────────────────────────────────── */
+.profiles{
+  display:grid; grid-template-columns:1fr 1fr; gap:14px;
+  margin:0 0 var(--s3);
+}
+.profile{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:26px 26px 10px;
+}
+.profile::before{
+  content:""; position:absolute; left:0; top:22px; bottom:22px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.profile.is-slow::before{ background:var(--red); }
+.profile.is-fast::before{ background:var(--green); }
+.profile h4{
+  margin:0 0 4px; font-size:17px; color:var(--text); letter-spacing:-.01em;
+}
+.profile .tagline{
+  display:block; margin-bottom:16px;
+  font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+}
+.profile.is-slow .tagline{ color:#FF9AA9; }
+.profile.is-fast .tagline{ color:var(--green); }
+.profile ul{ margin:0 0 16px; }
+.profile li{ font-size:14.5px; }
+
+/* ── CAPITAL CYCLE ──────────────────────────────────────────────────── */
+.cycle{
+  display:flex; flex-wrap:wrap; align-items:center; gap:8px;
+  list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.cycle li{
+  margin:0; padding:11px 15px;
+  border:1px solid var(--line-strong);
+  border-radius:9px;
+  background:var(--bg-raise);
+  font-size:14px; color:var(--text);
+}
+.cycle li::before{ content:none; }
+.cycle .sep{
+  border:0; background:none; padding:0 2px;
+  color:var(--violet-soft); font-size:15px;
+}
+
+/* ── WAITING LIST (where capital idles) ─────────────────────────────── */
+.waiting{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.waiting li{
+  position:relative;
+  margin:0 0 7px; padding:12px 16px 12px 42px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--amber);
+  border-radius:10px;
+  background:var(--grad-card);
+  font-size:15px; color:var(--text-2);
+}
+.waiting li::before{
+  content:"\23F1";
+  position:absolute; left:14px; top:12px;
+  color:var(--amber); font-size:14px;
+}
+
+/* ── QUESTION BLOCK ─────────────────────────────────────────────────── */
+.qbox{
+  margin:var(--s4) 0;
+  padding:26px 28px;
+  border:1px solid var(--line-strong);
+  border-radius:16px;
+  background:linear-gradient(120deg,rgba(91,79,230,.16),rgba(139,59,241,.07));
+}
+.qbox .label{
+  display:block; margin-bottom:12px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--violet-soft);
+}
+.qbox ul{ margin:0; padding-left:1.2em; }
+.qbox li{ font-size:15.5px; color:var(--text); margin-bottom:9px; }
+.qbox li::before{ content:none; }
+.qbox p{ margin:0 !important; font-size:19px; line-height:1.5; color:var(--text); font-weight:600; }
+
+@media (max-width:640px){
+  .profiles{ grid-template-columns:1fr; }
+  .profile{ padding:22px 20px 8px; }
+  .qbox{ padding:22px 20px; }
+}
+
+/* ── SPEC TABLE INSIDE PROFILE CARDS ────────────────────────────────── */
+.spec{ list-style:none; margin:0 0 16px; padding:0; }
+.spec li{
+  display:flex; justify-content:space-between; align-items:baseline; gap:14px;
+  margin:0; padding:9px 0;
+  border-bottom:1px solid var(--line);
+  font-size:14px;
+}
+.spec li:last-child{ border-bottom:0; }
+.spec li::before{ content:none; }
+.spec .sk{ color:var(--text-3); }
+.spec .sv{ color:var(--text); font-weight:600; text-align:right; font-variant-numeric:tabular-nums; }
+.spec .sv.hot{ color:#FF9AA9; }
+.spec .sv.cool{ color:var(--green); }
+
+/* ── LEDGER / TRADE-OFF LIST ────────────────────────────────────────── */
+.tradeoff{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.tradeoff li{
+  position:relative;
+  margin:0 0 7px; padding:12px 16px 12px 40px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--red);
+  border-radius:10px;
+  background:rgba(240,67,92,.05);
+  font-size:15px; color:var(--text-2);
+}
+.tradeoff li::before{
+  content:"\2715";
+  position:absolute; left:15px; top:12px;
+  color:var(--red); font-size:12px;
+}
+
+/* ── ALLOCATION OPTIONS ─────────────────────────────────────────────── */
+.options{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:10px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.options li{
+  margin:0; padding:16px;
+  border:1px solid var(--line-strong);
+  border-radius:12px;
+  background:var(--bg-raise);
+  font-size:14.5px; color:var(--text);
+  text-align:center;
+}
+.options li::before{ content:none; }
+
+@media (max-width:640px){
+  .spec li{ font-size:13.5px; }
+}
+
+/* ── FOREGONE / WHAT YOU GAVE UP ────────────────────────────────────── */
+.forgone{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:10px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.forgone li{
+  position:relative;
+  margin:0; padding:16px 16px 16px 42px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  font-size:14.5px; line-height:1.5; color:var(--text-2);
+}
+.forgone li::before{
+  content:"\2205";
+  position:absolute; left:15px; top:15px;
+  color:var(--text-3); font-size:15px;
+}
+
+/* ── OPTIONALITY / TWO POSTURES ─────────────────────────────────────── */
+.posture{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.posture > div{
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:22px;
+  background:var(--grad-card);
+}
+.posture > div.open{ border-color:rgba(46,212,122,.30); background:rgba(46,212,122,.06); }
+.posture > div.shut{ border-color:rgba(240,67,92,.28); background:rgba(240,67,92,.05); }
+.posture h4{ margin:0 0 8px; font-size:15px; color:var(--text); }
+.posture p{ margin:0 !important; font-size:14.5px; line-height:1.6; color:var(--text-2); }
+
+/* ── THE TWO QUESTIONS ──────────────────────────────────────────────── */
+.swap{
+  margin:var(--s4) 0;
+  border:1px solid var(--line-strong);
+  border-radius:16px;
+  overflow:hidden;
+}
+.swap > div{ padding:22px 26px; }
+.swap .from{ background:rgba(240,67,92,.06); border-bottom:1px solid var(--line-strong); }
+.swap .to{ background:rgba(46,212,122,.06); }
+.swap .lab{
+  display:block; margin-bottom:8px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+}
+.swap .from .lab{ color:#FF9AA9; }
+.swap .to .lab{ color:var(--green); }
+.swap p{ margin:0 !important; font-size:19px; line-height:1.45; font-weight:600; color:var(--text); }
+
+@media (max-width:640px){
+  .posture{ grid-template-columns:1fr; }
+  .swap > div{ padding:20px; }
+  .swap p{ font-size:17px; }
+}
+
+/* ── VISIBLE vs INVISIBLE COST STACK ────────────────────────────────── */
+.coststack{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.coststack > div{
+  border:1px solid var(--line);
+  border-radius:14px; padding:22px;
+  background:var(--grad-card);
+}
+.coststack > div.hidden-cost{
+  border-color:rgba(245,165,36,.32);
+  background:rgba(245,165,36,.06);
+}
+.coststack h4{
+  margin:0 0 14px; font-size:11px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.09em; color:var(--text-3);
+}
+.coststack .hidden-cost h4{ color:var(--amber); }
+.coststack ul{ margin:0; padding:0; list-style:none; }
+.coststack li{
+  margin:0 0 7px; padding:0 0 0 18px; position:relative;
+  font-size:14.5px; color:var(--text-2);
+}
+.coststack li::before{
+  content:"\2022"; position:absolute; left:2px; top:-1px; color:var(--text-3);
+}
+.coststack .hidden-cost li{ color:var(--text); }
+.coststack .hidden-cost li::before{ color:var(--amber); }
+
+@media (max-width:640px){ .coststack{ grid-template-columns:1fr; } }
+
+/* ── CAMPAIGN COMPARISON CARDS ──────────────────────────────────────── */
+.campaign{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:24px 26px;
+}
+.campaign::before{
+  content:""; position:absolute; left:0; top:22px; bottom:22px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.campaign.is-tidy::before{ background:var(--blue-soft); }
+.campaign.is-messy::before{ background:var(--amber); }
+.campaign h4{ margin:0 0 4px; font-size:16px; color:var(--text); }
+.campaign .verdict{
+  display:block; margin-bottom:16px;
+  font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+}
+.campaign.is-tidy .verdict{ color:var(--blue-soft); }
+.campaign.is-messy .verdict{ color:var(--amber); }
+.campaign .acos{
+  display:block; font-size:34px; font-weight:800; letter-spacing:-.02em;
+  line-height:1; margin-bottom:14px; color:var(--text);
+}
+
+/* ── DIMINISHING-RETURNS CURVE ──────────────────────────────────────── */
+.curve{
+  margin:0 0 var(--s3);
+  padding:22px 24px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--bg-raise);
+}
+.curve-bars{ display:flex; align-items:flex-end; gap:6px; height:96px; margin-bottom:12px; }
+.curve-bars span{
+  flex:1; border-radius:4px 4px 0 0;
+  background:linear-gradient(180deg,var(--violet-soft),rgba(139,59,241,.25));
+}
+.curve-cap{ margin:0 !important; font-size:13px; color:var(--text-3); text-align:center; }
+
+/* ── CAPTURE vs CREATE ──────────────────────────────────────────────── */
+.jobs{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.jobs > div{
+  border:1px solid var(--line); border-radius:14px;
+  background:var(--grad-card); padding:22px;
+}
+.jobs h4{ margin:0 0 6px; font-size:15px; color:var(--text); }
+.jobs .n{ display:block; font-size:26px; font-weight:800; letter-spacing:-.02em; margin-bottom:10px; }
+.jobs .captures .n{ color:var(--green); }
+.jobs .creates .n{ color:var(--amber); }
+.jobs p{ margin:0 !important; font-size:14px; line-height:1.6; color:var(--text-2); }
+
+@media (max-width:640px){
+  .jobs{ grid-template-columns:1fr; }
+  .campaign{ padding:20px; }
+}
+
+/* ── COMPETING CLAIMS ON THE SAME POOL ──────────────────────────────── */
+.claims{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:9px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.claims li{
+  margin:0; padding:15px 14px; text-align:center;
+  border:1px solid var(--line-strong);
+  border-radius:11px;
+  background:var(--bg-raise);
+  font-size:14px; color:var(--text);
+}
+.claims li::before{ content:none; }
+.claims li.is-ppc{
+  border-color:var(--violet-soft);
+  background:rgba(139,59,241,.12);
+  font-weight:600;
+}
+
+/* ── BUDGET vs ALLOCATION ───────────────────────────────────────────── */
+.mindset{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.mindset > div{
+  border:1px solid var(--line); border-radius:14px; padding:22px;
+  background:var(--grad-card);
+}
+.mindset > div.owns{ border-color:rgba(240,67,92,.26); background:rgba(240,67,92,.05); }
+.mindset > div.competes{ border-color:rgba(46,212,122,.28); background:rgba(46,212,122,.06); }
+.mindset h4{ margin:0 0 6px; font-size:15px; color:var(--text); }
+.mindset .says{
+  display:block; margin-bottom:10px; font-size:15px;
+  font-style:italic; color:var(--text);
+}
+.mindset p{ margin:0 !important; font-size:14px; line-height:1.6; color:var(--text-2); }
+
+/* ── BOTTLENECK CHECKS ──────────────────────────────────────────────── */
+.bottleneck{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.bottleneck li{
+  position:relative;
+  margin:0 0 7px; padding:13px 16px 13px 44px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--blue-soft);
+  border-radius:10px;
+  background:var(--grad-card);
+  font-size:15px; color:var(--text-2);
+}
+.bottleneck li::before{
+  content:"?";
+  position:absolute; left:15px; top:12px;
+  width:18px; height:18px; line-height:18px; text-align:center;
+  border-radius:50%;
+  background:rgba(126,179,255,.16); color:var(--blue-soft);
+  font-size:11px; font-weight:700;
+}
+
+@media (max-width:640px){ .mindset{ grid-template-columns:1fr; } }
+
+/* ── FIVE CAMPAIGNS ASKING ──────────────────────────────────────────── */
+.asks{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.asks li{
+  display:grid; grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:center; gap:16px;
+  margin:0 0 8px; padding:14px 18px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+}
+.asks li::before{ content:none; }
+.asks .who{
+  font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--violet-soft); white-space:nowrap;
+}
+.asks .why{ font-size:14.5px; color:var(--text-2); }
+.asks .amt{
+  font-size:15px; font-weight:700; color:var(--text);
+  font-variant-numeric:tabular-nums; white-space:nowrap;
+}
+.asks-total{
+  display:flex; justify-content:space-between; align-items:baseline;
+  padding:16px 18px; margin-top:12px;
+  border:1px solid rgba(240,67,92,.32);
+  border-radius:12px;
+  background:rgba(240,67,92,.07);
+}
+.asks-total .lab{ font-size:14px; color:var(--text-2); }
+.asks-total .val{ font-size:22px; font-weight:800; color:#FF9AA9; }
+
+/* ── RESOURCE CONTENTION ────────────────────────────────────────────── */
+.contend{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:9px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.contend li{
+  margin:0; padding:18px 12px; text-align:center;
+  border:1px solid var(--line-strong);
+  border-radius:11px;
+  background:var(--bg-raise);
+  font-size:14px; color:var(--text);
+}
+.contend li::before{ content:none; }
+
+/* ── DEPARTMENT SILOS ───────────────────────────────────────────────── */
+.silos{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:10px; margin:0 0 var(--s3);
+}
+.silo{
+  border:1px solid var(--line); border-radius:12px;
+  background:var(--grad-card); padding:18px; text-align:center;
+}
+.silo .dept{
+  display:block; font-size:11px; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase; color:var(--text-3);
+  margin-bottom:8px;
+}
+.silo .wants{ display:block; font-size:15px; color:var(--text); font-weight:600; }
+
+@media (max-width:640px){
+  .asks li{ grid-template-columns:1fr auto; }
+  .asks .who{ grid-column:1 / -1; }
+}
+
+/* ── THOUGHT EXPERIMENT: PAUSE THE CAMPAIGN ─────────────────────────── */
+.experiment{
+  margin:var(--s4) 0;
+  border:1px solid var(--line-strong);
+  border-radius:16px;
+  overflow:hidden;
+}
+.experiment > div{ padding:24px 26px; }
+.experiment .pause-a{ background:rgba(126,179,255,.06); border-bottom:1px solid var(--line-strong); }
+.experiment .pause-b{ background:rgba(245,165,36,.06); }
+.experiment .what{
+  display:block; margin-bottom:10px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+}
+.experiment .pause-a .what{ color:var(--blue-soft); }
+.experiment .pause-b .what{ color:var(--amber); }
+.experiment h4{ margin:0 0 10px; font-size:17px; color:var(--text); }
+.experiment p{ margin:0 !important; font-size:14.5px; line-height:1.6; color:var(--text-2); }
+.experiment .verdict{
+  display:block; margin-top:12px; padding-top:12px;
+  border-top:1px solid var(--line);
+  font-size:14.5px; color:var(--text); font-weight:600;
+}
+
+/* ── SUPERMARKET ANALOGY BLOCK ──────────────────────────────────────── */
+.analogy{
+  margin:var(--s4) 0;
+  padding:26px 28px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--blue-soft);
+  border-radius:14px;
+  background:var(--bg-raise);
+}
+.analogy p{ margin:0 0 10px !important; font-size:15.5px; line-height:1.65; color:var(--text-2); }
+.analogy p:last-child{ margin-bottom:0 !important; color:var(--text); font-weight:600; }
+
+/* ── FUTURE DASHBOARD ROWS ──────────────────────────────────────────── */
+.dashrows{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.dashrows li{
+  position:relative;
+  margin:0 0 7px; padding:14px 16px 14px 46px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--green);
+  border-radius:10px;
+  background:var(--grad-card);
+  font-size:15px; color:var(--text);
+}
+.dashrows li::before{
+  content:"\25B8";
+  position:absolute; left:18px; top:13px;
+  color:var(--green); font-size:13px;
+}
+
+/* ── CAMPAIGN TYPE CARDS ────────────────────────────────────────────── */
+.types{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:12px; margin:0 0 var(--s3);
+}
+.type{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+  padding:22px 22px 18px;
+}
+.type::before{
+  content:""; position:absolute; left:0; top:20px; bottom:20px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.type.t-defend::before{ background:var(--green); }
+.type.t-acquire::before{ background:var(--amber); }
+.type.t-launch::before{ background:var(--violet-soft); }
+.type.t-research::before{ background:var(--blue-soft); }
+.type.t-seasonal::before{ background:#9AA6FF; }
+.type h4{ margin:0 0 12px; font-size:16px; color:var(--text); }
+.type ul{ margin:0; padding:0; list-style:none; }
+.type li{
+  margin:0 0 6px; padding:0 0 0 15px; position:relative;
+  font-size:13.5px; line-height:1.5; color:var(--text-2);
+}
+.type li::before{
+  content:"\2022"; position:absolute; left:2px; top:-1px; color:var(--text-3);
+}
+
+/* ── ALLOCATION BAR ─────────────────────────────────────────────────── */
+.alloc{ margin:0 0 var(--s3); }
+.alloc-bar{
+  display:flex; height:38px; border-radius:9px; overflow:hidden;
+  border:1px solid var(--line-strong);
+}
+.alloc-bar span{
+  display:grid; place-items:center;
+  font-size:12px; font-weight:700; color:#0A0F1E;
+}
+.alloc-bar .a1{ background:var(--green); }
+.alloc-bar .a2{ background:var(--amber); }
+.alloc-bar .a3{ background:var(--violet-soft); }
+.alloc-bar .a4{ background:var(--blue-soft); }
+.alloc-bar .a5{ background:var(--text-3); color:var(--text); }
+.alloc-key{
+  display:flex; flex-wrap:wrap; gap:14px; margin-top:12px;
+  font-size:12.5px; color:var(--text-2);
+}
+.alloc-key span{ display:inline-flex; align-items:center; gap:7px; }
+.alloc-key i{ width:11px; height:11px; border-radius:3px; display:inline-block; }
+
+/* ── SAME ACOS, DIFFERENT RISK ──────────────────────────────────────── */
+.risk{ width:100%; border-collapse:collapse; margin:0 0 var(--s3); font-size:14.5px; }
+.risk th, .risk td{
+  padding:12px 14px; text-align:left;
+  border-bottom:1px solid var(--line); color:var(--text-2);
+}
+.risk th{
+  font-size:11px; text-transform:uppercase; letter-spacing:.08em;
+  color:var(--text-3); font-weight:700;
+}
+.risk td:first-child{ color:var(--text-3); }
+.risk .fragile{ color:#FF9AA9; }
+.risk .robust{ color:var(--green); }
+.risk tr:last-child td{ border-bottom:0; }
+
+@media (max-width:640px){
+  .alloc-bar span{ font-size:10px; }
+  .risk th, .risk td{ padding:10px 8px; font-size:13.5px; }
+}
+
+/* ── MONTH REPORT PANEL ─────────────────────────────────────────────── */
+.report{
+  margin:0 0 var(--s3);
+  border:1px solid var(--line-strong);
+  border-radius:16px;
+  overflow:hidden;
+}
+.report-head{
+  padding:16px 22px;
+  background:var(--bg-raise);
+  border-bottom:1px solid var(--line-strong);
+  font-size:11px; font-weight:700; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.report-rows{ list-style:none; margin:0; padding:0; }
+.report-rows li{
+  display:flex; justify-content:space-between; align-items:baseline;
+  margin:0; padding:14px 22px;
+  border-bottom:1px solid var(--line);
+  font-size:15px; color:var(--text-2);
+}
+.report-rows li::before{ content:none; }
+.report-rows li:last-child{ border-bottom:0; }
+.report-rows .v{ color:var(--text); font-weight:700; font-variant-numeric:tabular-nums; }
+.report-q{
+  padding:20px 22px;
+  background:rgba(245,165,36,.08);
+  border-top:1px solid rgba(245,165,36,.30);
+}
+.report-q .lab{
+  display:block; margin-bottom:8px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--amber);
+}
+.report-q p{ margin:0 !important; font-size:18px; line-height:1.45; font-weight:600; color:var(--text); }
+
+/* ── TWO SHOPS ──────────────────────────────────────────────────────── */
+.shops{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.shop{
+  border:1px solid var(--line); border-radius:14px;
+  background:var(--grad-card); padding:22px;
+}
+.shop .role{
+  display:block; margin-bottom:8px;
+  font-size:10px; font-weight:700; letter-spacing:.09em; text-transform:uppercase;
+}
+.shop.guides .role{ color:var(--blue-soft); }
+.shop.creates .role{ color:var(--amber); }
+.shop h4{ margin:0 0 8px; font-size:16px; color:var(--text); }
+.shop p{ margin:0 !important; font-size:14px; line-height:1.6; color:var(--text-2); }
+
+@media (max-width:640px){ .shops{ grid-template-columns:1fr; } }
+
+/* ── DEPENDENCY SCALE ───────────────────────────────────────────────── */
+.depscale{ margin:0 0 var(--s3); }
+.depscale-bar{
+  display:flex; height:44px; border-radius:10px; overflow:hidden;
+  border:1px solid var(--line-strong);
+}
+.depscale-bar span{
+  display:grid; place-items:center;
+  font-size:13px; font-weight:700; color:#0A0F1E;
+}
+.depscale-bar .d10{ background:var(--green); }
+.depscale-bar .d30{ background:#8FD46A; }
+.depscale-bar .d60{ background:var(--amber); }
+.depscale-bar .d90{ background:var(--red); color:#fff; }
+.depscale-cap{
+  display:flex; justify-content:space-between; margin-top:10px;
+  font-size:12px; color:var(--text-3);
+}
+
+/* ── ESCALATION LADDER ──────────────────────────────────────────────── */
+.escalate{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.escalate li{
+  display:flex; justify-content:space-between; align-items:center; gap:16px;
+  margin:0 0 7px; padding:13px 18px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:var(--grad-card);
+  font-size:15px; color:var(--text-2);
+}
+.escalate li::before{ content:none; }
+.escalate .spend{
+  font-family:var(--font-mono); font-size:15px; font-weight:700;
+  color:var(--text); white-space:nowrap;
+}
+.escalate li:nth-child(1) .spend{ color:var(--green); }
+.escalate li:nth-child(2) .spend{ color:#8FD46A; }
+.escalate li:nth-child(3) .spend{ color:var(--amber); }
+.escalate li:nth-child(4) .spend{ color:#FF9AA9; }
+
+/* ── FUEL vs OXYGEN ─────────────────────────────────────────────────── */
+.fuelox{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.fuelox > div{
+  border:1px solid var(--line); border-radius:14px; padding:24px;
+  background:var(--grad-card); text-align:center;
+}
+.fuelox .fuel{ border-color:rgba(46,212,122,.30); background:rgba(46,212,122,.06); }
+.fuelox .oxygen{ border-color:rgba(240,67,92,.28); background:rgba(240,67,92,.05); }
+.fuelox .word{
+  display:block; font-size:26px; font-weight:800; letter-spacing:-.02em;
+  margin-bottom:8px;
+}
+.fuelox .fuel .word{ color:var(--green); }
+.fuelox .oxygen .word{ color:#FF9AA9; }
+.fuelox p{ margin:0 !important; font-size:14.5px; line-height:1.6; color:var(--text-2); }
+
+/* ── INTEREST PAYMENTS ──────────────────────────────────────────────── */
+.interest{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.interest li{
+  position:relative;
+  margin:0 0 7px; padding:13px 16px 13px 44px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--red);
+  border-radius:10px;
+  background:rgba(240,67,92,.05);
+  font-size:15px; color:var(--text-2);
+}
+.interest li::before{
+  content:"%";
+  position:absolute; left:15px; top:12px;
+  width:19px; height:19px; line-height:19px; text-align:center;
+  border-radius:50%;
+  background:rgba(240,67,92,.16); color:#FF9AA9;
+  font-size:11px; font-weight:700;
+}
+
+@media (max-width:640px){
+  .fuelox{ grid-template-columns:1fr; }
+  .escalate li{ flex-direction:column; align-items:flex-start; gap:5px; }
+  .depscale-bar span{ font-size:11px; }
+}
+
+/* ── ONE CUSTOMER, THREE CLAIMS ─────────────────────────────────────── */
+.claimchain{ list-style:none; margin:0 0 14px; padding:0; }
+.claimchain li{
+  display:flex; align-items:center; gap:14px;
+  margin:0 0 7px; padding:14px 18px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--violet-soft);
+  border-radius:11px;
+  background:var(--grad-card);
+  font-size:15px; color:var(--text-2);
+}
+.claimchain li::before{ content:none; }
+.claimchain .step{
+  width:24px; height:24px; flex:0 0 auto;
+  display:grid; place-items:center;
+  border-radius:7px;
+  background:rgba(139,59,241,.16); color:var(--violet-soft);
+  font-size:12px; font-weight:700;
+}
+.claimchain-out{
+  display:flex; justify-content:space-between; align-items:baseline;
+  padding:16px 18px;
+  border:1px solid rgba(245,165,36,.32);
+  border-radius:11px;
+  background:rgba(245,165,36,.07);
+  margin-bottom:var(--s3);
+}
+.claimchain-out .lab{ font-size:14px; color:var(--text-2); }
+.claimchain-out .val{ font-size:20px; font-weight:800; color:var(--amber); }
+
+/* ── GOOD vs BAD CANNIBALISATION ────────────────────────────────────── */
+.cannibal{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.cannibal > div{
+  border:1px solid var(--line); border-radius:14px; padding:22px;
+  background:var(--grad-card);
+}
+.cannibal .deliberate{ border-color:rgba(46,212,122,.30); background:rgba(46,212,122,.06); }
+.cannibal .accidental{ border-color:rgba(240,67,92,.28); background:rgba(240,67,92,.05); }
+.cannibal .kind{
+  display:block; margin-bottom:8px;
+  font-size:10px; font-weight:700; letter-spacing:.09em; text-transform:uppercase;
+}
+.cannibal .deliberate .kind{ color:var(--green); }
+.cannibal .accidental .kind{ color:#FF9AA9; }
+.cannibal h4{ margin:0 0 8px; font-size:16px; color:var(--text); }
+.cannibal p{ margin:0 !important; font-size:14.5px; line-height:1.6; color:var(--text-2); }
+
+/* ── MALL ENTRANCES ─────────────────────────────────────────────────── */
+.entrances{
+  display:flex; align-items:stretch; gap:10px;
+  margin:0 0 var(--s3);
+}
+.entrances .door{
+  flex:1; padding:20px 14px; text-align:center;
+  border:1px dashed var(--line-strong);
+  border-radius:12px;
+  background:var(--bg-raise);
+  font-size:14px; color:var(--text-2);
+}
+.entrances .arrowcol{
+  display:grid; place-items:center;
+  color:var(--text-3); font-size:18px;
+  padding:0 4px;
+}
+.entrances .store{
+  flex:1.1; padding:20px 14px; text-align:center;
+  border:1px solid var(--violet-soft);
+  border-radius:12px;
+  background:rgba(139,59,241,.10);
+  color:var(--text); font-weight:600; font-size:14.5px;
+  display:grid; place-items:center;
+}
+
+@media (max-width:640px){
+  .cannibal{ grid-template-columns:1fr; }
+  .entrances{ flex-direction:column; }
+  .entrances .arrowcol{ transform:rotate(90deg); padding:2px 0; }
+}
+
+/* ── KPI / QUESTION PAIRS ───────────────────────────────────────────── */
+.kpiq{ list-style:none; margin:0 0 14px; padding:0; }
+.kpiq li{
+  display:grid; grid-template-columns:110px minmax(0,1fr);
+  align-items:center; gap:18px;
+  margin:0 0 7px; padding:14px 18px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:var(--grad-card);
+}
+.kpiq li::before{ content:none; }
+.kpiq .metric{
+  font-family:var(--font-mono); font-size:14px; font-weight:700;
+  color:var(--blue-soft); letter-spacing:.02em;
+}
+.kpiq .answers{ font-size:14.5px; color:var(--text-2); line-height:1.5; }
+.kpiq-gap{
+  margin:0 0 var(--s3); padding:18px 20px;
+  border:1px solid rgba(139,59,241,.34);
+  border-radius:12px;
+  background:rgba(139,59,241,.09);
+}
+.kpiq-gap .lab{
+  display:block; margin-bottom:7px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--violet-soft);
+}
+.kpiq-gap p{ margin:0 !important; font-size:18px; line-height:1.45; font-weight:600; color:var(--text); }
+
+/* ── SPEEDOMETER / DESCRIBES vs DECIDES ─────────────────────────────── */
+.instrument{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.instrument > div{
+  border:1px solid var(--line); border-radius:14px; padding:24px;
+  background:var(--grad-card); text-align:center;
+}
+.instrument .reads{ border-color:rgba(126,179,255,.28); background:rgba(126,179,255,.05); }
+.instrument .acts{ border-color:rgba(46,212,122,.28); background:rgba(46,212,122,.06); }
+.instrument .big2{
+  display:block; font-size:24px; font-weight:800; letter-spacing:-.02em; margin-bottom:8px;
+}
+.instrument .reads .big2{ color:var(--blue-soft); }
+.instrument .acts .big2{ color:var(--green); }
+.instrument p{ margin:0 !important; font-size:14.5px; line-height:1.6; color:var(--text-2); }
+
+/* ── DECISION SCORE PANEL ───────────────────────────────────────────── */
+.dscore{
+  margin:var(--s4) 0;
+  border:1px solid var(--line-strong);
+  border-radius:16px; overflow:hidden;
+}
+.dscore-q{
+  padding:24px 26px;
+  background:linear-gradient(120deg,rgba(91,79,230,.18),rgba(139,59,241,.08));
+  border-bottom:1px solid var(--line-strong);
+}
+.dscore-q .lab{
+  display:block; margin-bottom:8px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--violet-soft);
+}
+.dscore-q p{ margin:0 !important; font-size:19px; line-height:1.45; font-weight:600; color:var(--text); }
+.dscore-rows{ list-style:none; margin:0; padding:0; }
+.dscore-rows li{
+  display:flex; justify-content:space-between; align-items:center; gap:16px;
+  margin:0; padding:16px 26px;
+  border-bottom:1px solid var(--line);
+  font-size:14.5px; color:var(--text-2);
+}
+.dscore-rows li::before{ content:none; }
+.dscore-rows li:last-child{ border-bottom:0; }
+.dscore-rows .score{
+  font-size:12px; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+  padding:5px 11px; border-radius:6px; white-space:nowrap;
+}
+.dscore-rows .high{ background:rgba(46,212,122,.15); color:var(--green); }
+.dscore-rows .low{ background:rgba(240,67,92,.13); color:#FF9AA9; }
+
+@media (max-width:640px){
+  .kpiq li{ grid-template-columns:1fr; gap:6px; }
+  .instrument{ grid-template-columns:1fr; }
+  .dscore-rows li{ flex-direction:column; align-items:flex-start; gap:8px; }
+}
+
+/* --- additions for this piece ------------------------------------- */
+.art-diagram{ margin:0 0 var(--s5); }
+.art-diagram svg{ width:100%; height:auto; display:block; }
+
+.stage{ margin:var(--s5) 0; display:grid; gap:8px; grid-template-columns:1fr 1fr; }
+.stage > div{ border:1px solid var(--line); border-radius:var(--r3);
+              background:var(--surface); padding:var(--s4); }
+.stage .k{ display:block; font-size:.72rem; letter-spacing:.09em; text-transform:uppercase;
+           font-weight:700; margin-bottom:6px; }
+.stage .h{ display:block; font-weight:700; font-size:1rem; margin-bottom:10px; }
+.stage .one .k{ color:var(--ink-3); }  .stage .one .h{ color:#8fa3c8; }
+.stage .two .k{ color:#4ade80; }       .stage .two .h{ color:#4ade80; }
+.stage ul{ margin:0; padding-left:1.1em; }
+.stage li{ font-size:.9rem; color:var(--ink-2); margin:5px 0; }
+.stage .two li{ color:var(--ink-1); }
+@media(max-width:700px){ .stage{ grid-template-columns:1fr; } }
+
+.thenwhat{ margin:var(--s5) 0; border:1px solid var(--line); border-radius:var(--r3);
+           background:var(--surface); padding:var(--s4); }
+.thenwhat ol{ list-style:none; margin:0; padding:0; }
+.thenwhat li{ position:relative; padding:0 0 11px 26px; font-size:.93rem; color:var(--ink-2); }
+.thenwhat li::before{ content:""; position:absolute; left:7px; top:8px;
+                      width:6px; height:6px; border-radius:50%; background:#fbbf24; }
+.thenwhat li::after{ content:""; position:absolute; left:9px; top:18px;
+                     width:1px; bottom:0; background:var(--line); }
+.thenwhat li:last-child{ padding-bottom:0; }
+.thenwhat li:last-child::after{ display:none; }
+.thenwhat li b{ color:var(--ink-1); font-weight:600; }
+.thenwhat .cap{ display:block; margin-top:var(--s3); padding-top:var(--s3);
+                border-top:1px solid var(--line); font-size:.85rem; color:var(--ink-3); }
+
+.ways{ margin:var(--s5) 0; border:1px solid var(--line); border-radius:var(--r3);
+       background:var(--surface); overflow:hidden; }
+.ways div{ display:grid; grid-template-columns:1fr auto auto; gap:var(--s3);
+           align-items:baseline; padding:10px var(--s4); border-bottom:1px solid var(--line); }
+.ways div:last-child{ border-bottom:0; }
+.ways .hd{ font-size:.72rem; letter-spacing:.09em; text-transform:uppercase;
+           font-weight:700; color:var(--ink-3); }
+.ways .sc{ font-size:.92rem; color:var(--ink-2); }
+.ways .v{ font-size:.85rem; font-weight:700; text-align:right; min-width:96px; }
+.ways .no{ color:#f87171; } .ways .yes{ color:#4ade80; }
+
+/* ── SITE HEADER ──────────────────────────────────────────────────────
+   The header markup is the site's, and navigation.css styles it. These are
+   the pieces it also leans on from base.css, which this page does not load.
+   Every selector is scoped to the header or the mobile drawer: an article is
+   built out of bare a/p/h3/h4, and base.css restyles all of those.
+
+   The scope is written with :where() so it adds no specificity. Scoped the
+   plain way, `.site-header .btn` is (0,2,0) - the same weight as
+   navigation.css's own `.nav-actions .btn--quiet` and `.nav-mobile a`, and
+   loaded after them, so these copies quietly outranked the real rules: the
+   hamburger got pushed off a 390px screen and the drawer buttons lost their
+   sizing. Inside :where() each rule keeps exactly the weight it has in
+   base.css, which is the weight navigation.css was written against.
+   ------------------------------------------------------------------- */
+/* The header inherits from <body>, and this page's body is set for reading:
+   18px at 1.72. The site's is var(--t-body) at 1.6. Left alone, every element
+   in the bar came out a size and a half too tall. Reset it at the root of the
+   header so everything inside inherits the site's figures instead. */
+:where(.site-header),
+:where(.nav-mobile){
+  font-size:var(--t-body);
+  line-height:1.6;
+}
+
+:where(.site-header) .container{
+  width:min(100%,var(--container));
+  margin-inline:auto;
+  padding-inline:var(--gutter);
+  position:relative;
+}
+:where(.site-header, .nav-mobile) .brand{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:19px; font-weight:700; letter-spacing:-.01em;
+  color:var(--text); text-decoration:none;
+}
+:where(.site-header) .brand-mark{ width:26px; height:26px; flex:none; }
+:where(.site-header) .icon,    :where(.nav-mobile) .icon{    width:20px; height:20px; flex:none; stroke-width:1.7; }
+:where(.site-header) .icon-sm, :where(.nav-mobile) .icon-sm{ width:16px; height:16px; flex:none; stroke-width:1.8; }
+/* margin-block only: navigation.css centres this with margin-inline:auto,
+   and a shorthand `margin:0` here would outrank it and shove the menu
+   over against the brand. */
+:where(.site-header) .nav-menu{ list-style:none; padding:0; margin-block:0; }
+.site-header a, .nav-mobile a{ text-decoration:none; }
+/* base.css resets these globally; this page does not load it. Without the
+   padding reset the UA's 1px 6px survives and the 44px tap target
+   responsive.css asks for comes out 40px. */
+:where(.site-header) .nav-toggle{ font:inherit; cursor:pointer; padding:0; }
+:where(.site-header) svg, :where(.nav-mobile) svg{ display:block; }
+
+:where(.site-header) .btn, :where(.nav-mobile) .btn{
+  /* This page defines its own .btn - a filled gradient pill used in the body -
+     and it reaches the header buttons too. base.css's .btn sets none of these,
+     so the variant classes below are what should decide them. Cleared here or
+     "Log in", which is .btn--quiet and meant to read as plain text, arrives
+     wearing the brand gradient. */
+  background:none;
+  box-shadow:none;
+  color:inherit;
+  text-decoration:none;
+  position:relative;
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  padding:13px 22px;
+  border-radius:var(--r-sm);
+  font-size:var(--t-body); font-weight:600; line-height:1;
+  white-space:nowrap;
+  transition:transform var(--fast) var(--ease),
+             box-shadow var(--fast) var(--ease),
+             background var(--fast) var(--ease),
+             border-color var(--fast) var(--ease);
+}
+:where(.site-header) .btn:active, :where(.nav-mobile) .btn:active{ transform:translateY(0) scale(.99); }
+:where(.site-header) .btn--primary, :where(.nav-mobile) .btn--primary{
+  background:var(--grad-brand); color:#fff;
+  box-shadow:var(--sh-brand); overflow:hidden;
+}
+:where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{
+  content:""; position:absolute; top:0; left:-130%;
+  width:55%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);
+  transition:left .65s var(--ease);
+}
+:where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{
+  transform:translateY(-2px); box-shadow:0 22px 52px rgba(107,63,232,.45);
+}
+:where(.site-header) .btn--primary:hover::after, :where(.nav-mobile) .btn--primary:hover::after{ left:150%; }
+:where(.site-header) .btn--quiet, :where(.nav-mobile) .btn--quiet{ color:var(--text-2); padding:13px 8px; }
+:where(.site-header) .btn--quiet:hover, :where(.nav-mobile) .btn--quiet:hover{ color:var(--text); }
+:where(.nav-mobile) .btn--block{ width:100%; }
+
+@media (prefers-reduced-motion:reduce){
+  :where(.site-header) .btn, :where(.nav-mobile) .btn,
+  :where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{ transition:none; }
+  :where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{ transform:none; }
+}
+
+/* navigation.css hides these two buttons on small screens so the hamburger
+   fits. Its selectors are (0,2,0) and so is `:where(.site-header) .btn` above, which
+   is loaded after it - equal weight, later wins, and display:inline-flex beat
+   display:none. The hamburger ended up 107px off the right of a 390px screen
+   with no way to open the menu. Restating the hide at (0,3,0) settles it.
+   The breakpoints are read out of navigation.css at build time, not typed. */
+
+/* Clear the fixed site header. Reserving its height on .wrap keeps the gap
+   between the bar and the eyebrow the same as the gap used to be between the
+   top of the window and the eyebrow. */
+.wrap{ padding-top:70px; }
+@media (max-width:640px){ .wrap{ padding-top:64px; } }
+
+/* Anchor targets. .article h2 carried scroll-margin-top:32px, which was right
+   when this page had no fixed bar: 32px was breathing room. Now a jump from
+   the contents list lands 38px underneath the header. responsive.css puts the
+   rest of the site on 84px for exactly this reason; the article's own rule is
+   (0,2,0) and outranks it, so it is restated here at the same weight. */
+.article h2{ scroll-margin-top:84px; }
+
+/* The back-link sat hard against the left edge of the window, in line with
+   nothing. That was always true, but with the nav above it the thing reads as
+   stranded rather than as a heading. Same shell as .article-head, so it lines
+   up with the title beneath it and behaves as the breadcrumb it is. */
+.back-link{
+  max-width:1180px;
+  margin-inline:auto;      /* the rule above keeps its 28px bottom margin */
+  padding:22px var(--gutter) 0;
+}
+</style>
+<link rel="stylesheet" href="/css/navigation.css">
+<link rel="stylesheet" href="/css/responsive.css">
+<link rel="stylesheet" href="/css/site-footer.css">
+<!-- SEO:START -->
+<link rel="canonical" href="https://amazebase.pro/es/articulos/despues-de-creer-que-encontraste-el-producto.html">
+<link rel="alternate" hreflang="en" href="https://amazebase.pro/articles/research-after-you-found-it.html">
+<link rel="alternate" hreflang="es" href="https://amazebase.pro/es/articulos/despues-de-creer-que-encontraste-el-producto.html">
+<link rel="alternate" hreflang="x-default" href="https://amazebase.pro/articles/research-after-you-found-it.html">
+<meta property="og:site_name" content="AmazeBase">
+<meta property="og:locale" content="es_LA">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://amazebase.pro/es/articulos/despues-de-creer-que-encontraste-el-producto.html">
+<meta property="og:title" content="La mejor investigaci&oacute;n de productos empieza despu&eacute;s de creer que encontraste el producto">
+<meta property="og:description" content="La confianza cierra la investigaci&oacute;n. La curiosidad la extiende.">
+<meta property="og:image" content="https://amazebase.pro/assets/img/og/og-research-after-you-found-it.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Un cubo &aacute;mbar luminoso sobre un pedestal, examinado por una lente grande montada en un brazo articulado, rodeado de nodos de datos azules y peque&ntilde;as marcas de advertencia">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="La mejor investigaci&oacute;n de productos empieza despu&eacute;s de creer que encontraste el producto">
+<meta name="twitter:description" content="La confianza cierra la investigaci&oacute;n. La curiosidad la extiende.">
+<meta name="twitter:image" content="https://amazebase.pro/assets/img/og/og-research-after-you-found-it.jpg">
+<meta name="twitter:image:alt" content="Un cubo &aacute;mbar luminoso sobre un pedestal, examinado por una lente grande montada en un brazo articulado, rodeado de nodos de datos azules y peque&ntilde;as marcas de advertencia">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://amazebase.pro/#organization",
+      "name": "AmazeBase",
+      "legalName": "Silbros Trading LLC",
+      "url": "https://amazebase.pro/",
+      "email": "contact@silbrostrading.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://amazebase.pro/assets/img/og/og-home.jpg",
+        "width": 1200,
+        "height": 630
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Albuquerque",
+        "addressRegion": "NM",
+        "addressCountry": "US"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://amazebase.pro/#website",
+      "url": "https://amazebase.pro/",
+      "name": "AmazeBase",
+      "publisher": {
+        "@id": "https://amazebase.pro/#organization"
+      },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "Article",
+      "@id": "https://amazebase.pro/es/articulos/despues-de-creer-que-encontraste-el-producto.html#article",
+      "isPartOf": {
+        "@id": "https://amazebase.pro/#website"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://amazebase.pro/es/articulos/despues-de-creer-que-encontraste-el-producto.html"
+      },
+      "headline": "La mejor investigación de productos empieza después de creer que encontraste el producto",
+      "description": "El momento en que te convences de que encontraste un ganador es el momento en que tu criterio es menos confiable. La etapa uno pregunta si puede funcionar; la etapa dos pregunta de qué supuestos depende, y qué pasa cuando esos supuestos cambian.",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://amazebase.pro/assets/img/og/og-research-after-you-found-it.jpg",
+        "width": 1200,
+        "height": 630
+      },
+      "datePublished": "2026-08-23",
+      "dateModified": "2026-08-23",
+      "author": {
+        "@id": "https://amazebase.pro/#organization"
+      },
+      "publisher": {
+        "@id": "https://amazebase.pro/#organization"
+      },
+      "inLanguage": "es",
+      "keywords": [
+        "Investigación de productos",
+        "Toma de decisiones",
+        "Riesgo",
+        "Sesgo de confirmación",
+        "Pensamiento de segundo orden",
+        "Supuestos",
+        "Asignación de capital"
+      ],
+      "timeRequired": "PT7M"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Inicio",
+          "item": "https://amazebase.pro/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Centro de Conocimiento",
+          "item": "https://amazebase.pro/es/recursos.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "La mejor investigación de productos empieza después de creer que encontraste el producto"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- SEO:END -->
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+<div class="bg-layer" aria-hidden="true"></div>
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+</defs>
+  <symbol id="i-chevron"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-menu"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-mega"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l7 4V5L8 9H4zM19 9a4 4 0 010 6"/></symbol>
+  <symbol id="i-dollar"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5v19M16.5 6.5H10a3.2 3.2 0 000 6.4h4a3.2 3.2 0 010 6.4H7"/></symbol>
+  <symbol id="i-stack"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/></symbol>
+  <symbol id="i-box"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></symbol>
+  <symbol id="i-search"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></symbol>
+  <symbol id="i-chart"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-trend"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></symbol>
+  <symbol id="i-db"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3.2"/><path d="M4 6v12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2V6M4 12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2"/></symbol>
+  <symbol id="i-shield"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-9.5V5.5L12 2.5 4 5.5V12.5C4 18.5 12 22 12 22z"/></symbol>
+  <symbol id="i-spark"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+  <symbol id="i-rocket"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15s-1.5 3 1 5.5S11 20 11 20M14.5 4.5c3-2 6-1 6-1s1 3-1 6l-6 6-5-5 6-6z"/><circle cx="15" cy="9" r="1.4"/></symbol>
+  <symbol id="i-case"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8.5 7V5a2 2 0 012-2h3a2 2 0 012 2v2M2.5 12.5h19"/></symbol>
+  <symbol id="i-info"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></symbol>
+  <symbol id="i-msg"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-8 8 8.6 8.6 0 01-3.6-.8L3 21l1.8-6.4A8 8 0 1121 12z"/></symbol>
+</svg>
+
+<header class="site-header">
+<div class="container">
+<nav class="nav" aria-label="Principal">
+
+  <a href="/index.html" class="brand" aria-label="Inicio de AmazeBase">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+      <path d="M16 17.6l4.4 8.2h-8.8z" fill="#C56BF5" opacity=".85"/>
+    </svg>
+    <span data-brand>AmazeBase</span>
+  </a>
+
+  <ul class="nav-menu">
+    <li class="nav-item">
+      <a class="nav-link" href="/product.html#modules">Producto <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop nav-drop--wide">
+        <a href="/product.html#advertising"><svg class="icon-sm"><use href="#i-mega"/></svg>Publicidad y PPC</a>
+        <a href="/product.html#financials"><svg class="icon-sm"><use href="#i-dollar"/></svg>Finanzas</a>
+        <a href="/product.html#ledger"><svg class="icon-sm"><use href="#i-stack"/></svg>Ledger</a>
+        <a href="/product.html#inventory"><svg class="icon-sm"><use href="#i-box"/></svg>Inventario</a>
+        <a href="/product.html#research"><svg class="icon-sm"><use href="#i-search"/></svg>Investigaci&oacute;n de productos</a>
+        <a href="/product.html#simulations"><svg class="icon-sm"><use href="#i-chart"/></svg>Simulaciones</a>
+        <a href="/product.html#sales"><svg class="icon-sm"><use href="#i-trend"/></svg>Ventas</a>
+        <a href="/product.html#data"><svg class="icon-sm"><use href="#i-db"/></svg>Datos y sincronizaci&oacute;n</a>
+        <a href="/product.html#security"><svg class="icon-sm"><use href="#i-shield"/></svg>Seguridad</a>
+        <a href="/product.html#assistant"><svg class="icon-sm"><use href="#i-spark"/></svg>Asistente de IA &mdash; pronto</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/solutions.html">Soluciones <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/solutions.html#beginners"><svg class="icon-sm"><use href="#i-rocket"/></svg>Principiantes</a>
+        <a href="/solutions.html#experts"><svg class="icon-sm"><use href="#i-dollar"/></svg>Vendedores con experiencia</a>
+        <a href="/solutions.html#agencies"><svg class="icon-sm"><use href="#i-case"/></svg>Agencias</a>
+      </div>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="/index.html#pricing">Precios</a></li>
+    <li class="nav-item"><a class="nav-link" href="/es/recursos.html">Recursos</a></li>
+    <li class="nav-item">
+      <a class="nav-link" href="/about.html">Empresa <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/about.html"><svg class="icon-sm"><use href="#i-info"/></svg>Nosotros</a>
+        <a href="/contact.html"><svg class="icon-sm"><use href="#i-msg"/></svg>Contacto</a>
+      </div>
+    </li>
+  </ul>
+
+  <div class="nav-actions">
+    <div class="nav-item lang-switch">
+      <button class="lang-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Idioma / Language">
+        ES <svg class="chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+      </button>
+      <div class="nav-drop lang-drop">
+        <a href="/articles/research-after-you-found-it.html" hreflang="en" lang="en"><span class="lc">EN</span>English</a>
+        <a href="/es/articulos/despues-de-creer-que-encontraste-el-producto.html" hreflang="es" lang="es" aria-current="true"><span class="lc">ES</span>Español</a>
+      </div>
+    </div>
+    <a class="btn btn--quiet" href="https://analytics.amazebase.pro/login">Iniciar sesi&oacute;n</a>
+    <a class="btn btn--primary" href="/index.html#waitlist" data-magnetic>&Uacute;nete a la lista de espera</a>
+    <button class="nav-toggle" aria-label="Abrir men&uacute;" aria-expanded="false" aria-controls="navMobile">
+      <svg class="icon"><use href="#i-menu"/></svg>
+    </button>
+  </div>
+
+</nav>
+</div>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="/product.html#modules">Producto</a>
+  <a href="/solutions.html">Soluciones</a>
+  <a href="/index.html#pricing">Precios</a>
+  <a href="/es/recursos.html">Recursos</a>
+  <a href="/about.html">Nosotros</a>
+  <a href="/contact.html">Contacto</a>
+  <a class="btn btn--quiet btn--block" href="https://analytics.amazebase.pro/login">Iniciar sesi&oacute;n</a>
+  <a class="btn btn--primary btn--block" href="/index.html#waitlist">&Uacute;nete a la lista de espera</a>
+</div>
+</header>
+
+<div class="wrap">
+
+<p class="back-link"><a href="/es/recursos.html">&larr; Centro de Conocimiento</a></p>
+
+<header class="article-head">
+  <p class="eyebrow">Investigaci&oacute;n de productos</p>
+
+  <h1>La mejor investigaci&oacute;n de productos empieza <span class="accent">despu&eacute;s de creer que encontraste el producto</span></h1>
+
+  <p class="deck">
+    Encontrar un producto prometedor no es el final de la investigaci&oacute;n de
+    productos. Es el comienzo de las preguntas que de verdad importan.
+  </p>
+
+  <p class="meta">
+    <span>AmazeBase</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span><time datetime="2026-08-23">23 de agosto de 2026</time></span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>7 min de lectura</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>Investigaci&oacute;n de productos</span>
+  </p>
+</header>
+
+<figure class="hero-shot">
+  <img src="/assets/img/hero-research-after-you-found-it.webp"
+       alt="Un cubo &aacute;mbar luminoso sobre un pedestal, examinado por una lente grande montada en un brazo articulado, rodeado de nodos de datos azules y peque&ntilde;as marcas de advertencia"
+       width="1672" height="941" loading="eager" decoding="async">
+</figure>
+
+<div class="shell">
+<main id="main" class="article">
+
+  <nav class="toc" aria-labelledby="toc-title">
+    <h2 id="toc-title">Qu&eacute; encontrar&aacute;s en este art&iacute;culo</h2>
+    <ol>
+      <li><a href="#stages">La investigaci&oacute;n de productos tiene dos etapas</a></li>
+      <li><a href="#house">Imagina comprar una casa</a></li>
+      <li><a href="#bias">El sesgo de confirmaci&oacute;n es el enemigo oculto</a></li>
+      <li><a href="#kill">La buena investigaci&oacute;n intenta matar la idea</a></li>
+      <li><a href="#opposite">Haz la pregunta contraria</a></li>
+      <li><a href="#premortem">Explica el fracaso dentro de cinco a&ntilde;os</a></li>
+      <li><a href="#assumptions">Toda oportunidad depende de supuestos</a></li>
+      <li><a href="#ways">Los productos m&aacute;s fuertes tienen varias formas de ganar</a></li>
+      <li><a href="#secondorder">Pensamiento de segundo orden</a></li>
+      <li><a href="#asymmetry">El costo de equivocarte</a></li>
+      <li><a href="#curiosity">La curiosidad vale m&aacute;s que la confianza</a></li>
+    </ol>
+  </nav>
+
+  <p class="lead">
+    Hay un momento que todo vendedor de Amazon conoce bien. Llevas d&iacute;as
+    investigando, quiz&aacute; semanas. Volumen de b&uacute;squeda, competidores, m&aacute;rgenes,
+    costos de publicidad, proveedores, rese&ntilde;as. Todo se ve alentador. Te recuestas
+    y piensas: <em>creo que lo encontr&eacute;.</em>
+  </p>
+
+  <figure class="art-diagram">
+    <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="xMidYMid meet">
+      <title id="heroTitle">Cien productos candidatos se reducen a doce tras la investigaci&oacute;n habitual. Una l&iacute;nea punteada marca d&oacute;nde se detiene la mayor&iacute;a de los vendedores. M&aacute;s all&aacute;, una segunda ronda de preguntas m&aacute;s duras deja dos.</title>
+      <defs><linearGradient id="gBgM" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1225"/><stop offset="1" stop-color="#0a1730"/></linearGradient></defs>
+      <rect width="1180" height="320" fill="url(#gBgM)"/>
+      <path d="M330 68 L440 112 L440 224 L330 268 Z" fill="#7dd3fc" opacity=".07"/>
+      <path d="M690 112 L860 148 L860 192 L690 224 Z" fill="#4ade80" opacity=".09"/>
+      <circle cx="157.6" cy="119.5" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="108.2" cy="242.5" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="202.9" cy="202.2" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="197.2" cy="147.0" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="238.3" cy="181.8" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="249.7" cy="197.1" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="263.0" cy="157.1" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="105.7" cy="105.0" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="236.3" cy="108.2" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="220.6" cy="189.7" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="83.7" cy="219.2" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="77.6" cy="234.0" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="263.4" cy="116.9" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="237.0" cy="209.8" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="98.8" cy="198.6" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="98.5" cy="242.4" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="228.4" cy="254.4" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="82.3" cy="135.2" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="212.6" cy="187.5" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="111.9" cy="237.8" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="264.7" cy="132.3" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="103.6" cy="198.2" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="163.7" cy="197.4" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="183.5" cy="149.1" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="75.0" cy="102.3" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="175.4" cy="209.1" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="167.9" cy="212.0" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="194.2" cy="236.5" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="220.7" cy="135.9" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="101.9" cy="89.8" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="79.1" cy="233.2" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="271.2" cy="213.2" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="95.1" cy="196.9" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="99.4" cy="238.0" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="220.8" cy="212.9" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="210.1" cy="153.3" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="265.1" cy="251.1" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="125.6" cy="156.7" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="238.7" cy="200.4" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="164.4" cy="159.0" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="292.6" cy="127.7" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="118.7" cy="201.5" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="133.7" cy="239.5" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="144.9" cy="244.4" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="157.4" cy="237.3" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="242.8" cy="209.8" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="119.3" cy="107.6" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="77.1" cy="110.5" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="223.3" cy="89.6" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="124.6" cy="180.1" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="105.7" cy="137.2" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="122.5" cy="199.7" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="97.3" cy="257.6" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="207.7" cy="206.3" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="197.1" cy="167.6" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="293.3" cy="238.9" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="259.0" cy="83.4" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="205.6" cy="247.5" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="216.8" cy="170.3" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="219.4" cy="109.9" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="237.4" cy="219.1" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="86.5" cy="169.8" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="206.9" cy="141.4" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="226.8" cy="243.9" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="278.4" cy="133.4" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="104.9" cy="231.7" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="210.8" cy="227.3" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="269.9" cy="128.3" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="205.1" cy="132.6" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="253.4" cy="202.5" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="125.0" cy="168.0" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="206.7" cy="119.9" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="112.0" cy="163.4" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="86.6" cy="167.1" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="286.2" cy="226.7" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="82.5" cy="226.6" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="234.8" cy="205.5" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="76.2" cy="214.8" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="114.9" cy="222.5" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="144.2" cy="144.0" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="109.6" cy="234.2" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="121.0" cy="235.1" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="188.2" cy="104.7" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="220.7" cy="173.6" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="76.2" cy="226.2" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="132.3" cy="82.3" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="246.3" cy="208.9" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="158.7" cy="111.5" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="191.2" cy="183.6" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="228.6" cy="166.1" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="200.6" cy="207.7" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="113.6" cy="110.5" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="181.4" cy="213.7" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="254.6" cy="231.6" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="171.0" cy="206.5" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="94.4" cy="148.0" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="85.4" cy="228.4" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="299.9" cy="198.5" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="243.1" cy="145.0" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="252.8" cy="93.3" r="3.2" fill="#8fa3c8" opacity=".8"/><circle cx="540.4" cy="153.1" r="5.0" fill="#7dd3fc" opacity=".8"/><circle cx="634.1" cy="135.3" r="5.0" fill="#7dd3fc" opacity=".8"/><circle cx="500.2" cy="126.9" r="5.0" fill="#7dd3fc" opacity=".8"/><circle cx="630.1" cy="149.5" r="5.0" fill="#7dd3fc" opacity=".8"/><circle cx="641.6" cy="149.3" r="5.0" fill="#7dd3fc" opacity=".8"/><circle cx="629.0" cy="137.5" r="5.0" fill="#7dd3fc" opacity=".8"/><circle cx="641.5" cy="215.4" r="5.0" fill="#7dd3fc" opacity=".8"/><circle cx="636.9" cy="187.2" r="5.0" fill="#7dd3fc" opacity=".8"/><circle cx="640.3" cy="209.4" r="5.0" fill="#7dd3fc" opacity=".8"/><circle cx="653.1" cy="145.5" r="5.0" fill="#7dd3fc" opacity=".8"/><circle cx="631.5" cy="196.0" r="5.0" fill="#7dd3fc" opacity=".8"/><circle cx="535.7" cy="134.8" r="5.0" fill="#7dd3fc" opacity=".8"/><circle cx="952.0" cy="168.9" r="8.0" fill="#4ade80" opacity=".8"/><circle cx="922.4" cy="185.5" r="8.0" fill="#4ade80" opacity=".8"/>
+      <line x1="770" y1="56" x2="770" y2="280" stroke="#f0435c" stroke-width="2" stroke-dasharray="6 5"/>
+      <text x="762" y="48" text-anchor="end" font-family="Inter, sans-serif" font-size="12" font-weight="800" fill="#f0435c" letter-spacing="1.2">AQU&Iacute; SE DETIENE LA MAYOR&Iacute;A</text>
+      <g font-family="Inter, sans-serif" font-weight="700" letter-spacing="1.5">
+        <text x="70" y="46" font-size="12" fill="#8fa3c8">100 CANDIDATOS</text>
+        <text x="470" y="94" font-size="12" fill="#7dd3fc">ETAPA UNO &mdash; 12 RESTANTES</text>
+        <text x="880" y="128" font-size="12" fill="#4ade80">ETAPA DOS &mdash; 2 RESTANTES</text>
+      </g>
+      <g font-family="Inter, sans-serif" font-size="11.5" font-weight="600" fill="#5f7398">
+        <text x="470" y="252">Demanda, margen, competencia,</text>
+        <text x="470" y="268">proveedor. Las preguntas f&aacute;ciles.</text>
+        <text x="880" y="222">&iquest;Qu&eacute; supuestos son fr&aacute;giles</text>
+        <text x="880" y="238">y qu&eacute; pasa si cambian?</text>
+      </g>
+    </svg>
+  </figure>
+
+  <p>Para la mayor&iacute;a de los vendedores, esa es la meta. Para los operadores con experiencia, ah&iacute; empieza el trabajo de verdad.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">La diferencia</span>
+    <p>Identificar una oportunidad prometedora es sorprendentemente f&aacute;cil. Entender si merece a&ntilde;os de atenci&oacute;n de tu empresa es mucho m&aacute;s dif&iacute;cil.</p>
+  </div>
+
+  <p>Esa brecha explica por qu&eacute; los negocios con experiencia dejan pasar productos que se ven extraordinarios, y de vez en cuando persiguen oportunidades que todos los dem&aacute;s ignoran.</p>
+
+  <h2 id="stages">La investigaci&oacute;n de productos tiene dos etapas</h2>
+
+  <div class="stage">
+    <div class="one">
+      <span class="k">Etapa uno</span>
+      <span class="h">Necesaria, y no suficiente</span>
+      <ul>
+        <li>&iquest;Existe demanda?</li>
+        <li>&iquest;Podemos fabricarlo?</li>
+        <li>&iquest;Podemos ganar dinero?</li>
+        <li>&iquest;Podemos competir?</li>
+      </ul>
+    </div>
+    <div class="two">
+      <span class="k">Etapa dos</span>
+      <span class="h">Donde la mayor&iacute;a de los lanzamientos nunca llega</span>
+      <ul>
+        <li>&iquest;Qu&eacute; supuestos hacen que esto se vea atractivo?</li>
+        <li>&iquest;Cu&aacute;les de esos supuestos son fr&aacute;giles?</li>
+        <li>&iquest;Qu&eacute; pasa si cambian?</li>
+        <li>&iquest;El negocio puede salir adelante igual?</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 id="house">Imagina comprar una casa</h2>
+
+  <p>Visitas una propiedad hermosa. La cocina es perfecta, la ubicaci&oacute;n excelente, el precio razonable. &iquest;Firmar&iacute;as de inmediato? Probablemente no. Revisar&iacute;as los cimientos, el techo, la zonificaci&oacute;n, el riesgo de inundaci&oacute;n, la plomer&iacute;a, las construcciones cercanas.</p>
+
+  <p>Dicho de otro modo, una vez que decides que te gusta la casa, empiezas a buscar razones para <em>no</em> comprarla.</p>
+
+  <div class="qbox">
+    <span class="label">La inversi&oacute;n</span>
+    <p>Los vendedores de Amazon suelen hacer lo contrario. Una vez que les gusta un producto, empiezan a juntar evidencia que confirma el entusiasmo.</p>
+  </div>
+
+  <h2 id="bias">El sesgo de confirmaci&oacute;n es el enemigo oculto</h2>
+
+  <p>Una vez que llegamos a una conclusi&oacute;n, buscamos por naturaleza informaci&oacute;n que la respalde. Descartamos la evidencia que la contradice, reinterpretamos las se&ntilde;ales de alerta y nos volvemos cada vez m&aacute;s confiados.</p>
+
+  <p>La investigaci&oacute;n de productos es especialmente vulnerable. Una vez que decidiste lanzar, un volumen de b&uacute;squeda creciente se siente significativo. Las rese&ntilde;as positivas reciben m&aacute;s atenci&oacute;n. Los m&aacute;rgenes altos parecen sostenibles. Las promesas del proveedor se vuelven cre&iacute;bles. Las se&ntilde;ales negativas parecen pasajeras.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">Qu&eacute; cambi&oacute; en realidad</span>
+    <p>Nada del mercado. Solo tu interpretaci&oacute;n de &eacute;l.</p>
+  </div>
+
+  <h2 id="kill">La buena investigaci&oacute;n de productos intenta matar la idea</h2>
+
+  <p>Suena pesimista. No lo es. Imagina un fondo de capital de riesgo evaluando una inversi&oacute;n. &iquest;Pasan semanas convenci&eacute;ndose de invertir? No &mdash; su proceso est&aacute; dise&ntilde;ado para eliminar oportunidades, y solo las m&aacute;s fuertes sobreviven.</p>
+
+  <p>El objetivo no es probar que el producto es bueno. Es descubrir si merece sobrevivir a un escrutinio riguroso. Los productos que siguen siendo atractivos despu&eacute;s de las preguntas dif&iacute;ciles suelen ser inversiones mucho mejores.</p>
+
+  <h2 id="opposite">Haz la pregunta contraria</h2>
+
+  <div class="swap">
+    <div class="from">
+      <span class="lab">La investigaci&oacute;n tradicional pregunta</span>
+      <p>&laquo;&iquest;Por qu&eacute; va a funcionar?&raquo;</p>
+    </div>
+    <div class="to">
+      <span class="lab">Los operadores con experiencia preguntan</span>
+      <p>&laquo;&iquest;Por qu&eacute; podr&iacute;a fracasar?&raquo;</p>
+    </div>
+  </div>
+
+  <p>Ese solo cambio transforma la investigaci&oacute;n. En vez de buscar evidencia a favor, empiezas a buscar supuestos d&eacute;biles:</p>
+
+  <ul class="options">
+    <li>&iquest;D&oacute;nde est&aacute; concentrada la demanda?</li>
+    <li>&iquest;Los proveedores podr&iacute;an subir precios con facilidad?</li>
+    <li>&iquest;Est&aacute; cambiando el comportamiento del cliente?</li>
+    <li>&iquest;Qu&eacute; pasa si el CPC se duplica?</li>
+    <li>&iquest;Esto seguir&iacute;a funcionando si los competidores mejoran?</li>
+    <li>&iquest;Qu&eacute; tan sensibles son los m&aacute;rgenes?</li>
+  </ul>
+
+  <p>Esas preguntas casi nunca aparecen en las gu&iacute;as de investigaci&oacute;n para principiantes, y sin embargo suelen determinar el resultado.</p>
+
+  <h2 id="premortem">Imagina explicar el fracaso dentro de cinco a&ntilde;os</h2>
+
+  <p>Este es uno de los ejercicios m&aacute;s potentes que puede hacer un fundador. Finge que el lanzamiento fracas&oacute;. Pasaron cinco a&ntilde;os. Alguien pregunta qu&eacute; ocurri&oacute;. Escribe la historia.</p>
+
+  <p>Quiz&aacute; la demanda se desaceler&oacute;. Quiz&aacute; aparecieron problemas de calidad. Quiz&aacute; entraron competidores de forma agresiva. Quiz&aacute; el inventario se volvi&oacute; inmanejable. Quiz&aacute; cambi&oacute; la regulaci&oacute;n. Quiz&aacute; desapareci&oacute; el capital de trabajo. Quiz&aacute; la categor&iacute;a simplemente se volvi&oacute; menos atractiva.</p>
+
+  <div class="qbox">
+    <span class="label">Y ahora la parte &uacute;til</span>
+    <p>&iquest;Cu&aacute;les de esos riesgos podemos investigar hoy? El ejercicio obliga a tu mente a buscar hacia adelante en vez de hacia atr&aacute;s.</p>
+  </div>
+
+<aside class="strip">
+  <div>
+    <h3>Prueba los supuestos, no el entusiasmo</h3>
+    <p>AmazeBase conecta inventario, publicidad, margen y efectivo, para que veas qu&eacute; tan sensible es un lanzamiento antes de financiarlo.</p>
+  </div>
+  <a class="strip-btn" href="/index.html#waitlist">&Uacute;nete a la lista de espera</a>
+</aside>
+
+  <h2 id="assumptions">Toda gran oportunidad depende de supuestos</h2>
+
+  <p>Supongamos que tu modelo proyecta utilidades excepcionales. Ahora lista cada supuesto que sostiene esas proyecciones: los costos de publicidad se mantienen estables, la conversi&oacute;n sigue alta, los proveedores mantienen sus precios, la demanda sigue creciendo, el inventario llega a tiempo, las rese&ntilde;as siguen positivas, las pol&iacute;ticas de la plataforma no cambian.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">De d&oacute;nde viene de verdad la utilidad</span>
+    <p>El producto no crea la rentabilidad. La crean esos supuestos &mdash; y entenderlos vale m&aacute;s que refinar otra hoja de c&aacute;lculo.</p>
+  </div>
+
+  <h2 id="ways">Los productos m&aacute;s fuertes tienen varias formas de ganar</h2>
+
+  <div class="ways">
+    <div><span class="hd">Si pasa esto</span><span class="hd v">Producto A</span><span class="hd v">Producto B</span></div>
+    <div><span class="sc">La publicidad se encarece</span><span class="v no">fracasa</span><span class="v yes">sigue rentable</span></div>
+    <div><span class="sc">La demanda se desacelera</span><span class="v no">fracasa</span><span class="v yes">sigue rentable</span></div>
+    <div><span class="sc">Los m&aacute;rgenes se comprimen</span><span class="v no">fracasa</span><span class="v yes">sigue viable</span></div>
+    <div><span class="sc">Un competidor mejora</span><span class="v no">fracasa</span><span class="v yes">sigue viable</span></div>
+  </div>
+
+  <p>Una oportunidad depende de la precisi&oacute;n. La otra depende de la resistencia. &iquest;Cu&aacute;l preferir&iacute;as tener?</p>
+
+  <h2 id="secondorder">Pensamiento de segundo orden</h2>
+
+  <p>La mayor&iacute;a de la investigaci&oacute;n se detiene en los efectos de primer orden: lanzamos el producto. Los fundadores con experiencia siguen preguntando.</p>
+
+  <div class="thenwhat">
+    <ol>
+      <li>Lanzamos el producto. <b>&iquest;Y despu&eacute;s?</b></li>
+      <li>Las ventas suben. <b>&iquest;Y despu&eacute;s?</b></li>
+      <li>Las necesidades de inventario se duplican. <b>&iquest;Y despu&eacute;s?</b></li>
+      <li>El flujo de caja se aprieta. <b>&iquest;Y despu&eacute;s?</b></li>
+      <li>Retrasamos los pr&oacute;ximos lanzamientos. <b>&iquest;Y despu&eacute;s?</b></li>
+      <li>Los competidores ganan participaci&oacute;n en otro lado.</li>
+    </ol>
+    <span class="cap">Las decisiones de negocio casi nunca terminan en el resultado inmediato. Pensar en segundo orden significa seguir las consecuencias m&aacute;s lejos que los dem&aacute;s.</span>
+  </div>
+
+  <h2 id="bridge">Imagina construir un puente</h2>
+
+  <p>Los ingenieros no dise&ntilde;an puentes para el tr&aacute;fico promedio. Los dise&ntilde;an para eventos poco comunes: cargas pesadas, vientos fuertes, condiciones inesperadas. Un puente no se juzga por c&oacute;mo se comporta en d&iacute;as normales, sino por c&oacute;mo aguanta bajo estr&eacute;s.</p>
+
+  <p>La investigaci&oacute;n de productos merece la misma filosof&iacute;a. Las condiciones promedio casi nunca destruyen negocios. Las inesperadas s&iacute;.</p>
+
+  <h2 id="asymmetry">El costo de equivocarte importa m&aacute;s que acertar</h2>
+
+  <p>Supongamos dos lanzamientos, cada uno con 70&nbsp;% de probabilidad de &eacute;xito. Fallar en uno cuesta $50,000. Fallar en el otro cuesta $700,000. La probabilidad es id&eacute;ntica. La decisi&oacute;n no.</p>
+
+  <p>Los resultados esperados importan; las consecuencias importan m&aacute;s. Los operadores con experiencia piensan todo el tiempo en la asimetr&iacute;a &mdash; p&eacute;rdida limitada, ganancia significativa. Esas son las oportunidades que vale la pena perseguir.</p>
+
+  <h2 id="threeyears">Imagina que el producto ya existe</h2>
+
+  <p>Olvida el d&iacute;a del lanzamiento y adelanta tres a&ntilde;os. El producto es exitoso. Ahora pregunta: &iquest;fortaleci&oacute; las relaciones con los proveedores? &iquest;Mejor&oacute; la marca? &iquest;Subi&oacute; el valor de vida del cliente? &iquest;Cre&oacute; oportunidades adyacentes? &iquest;Se volvi&oacute; m&aacute;s f&aacute;cil de operar?</p>
+
+  <p>&iquest;O simplemente cre&oacute; otro departamento ocupado? Las preguntas de largo plazo suelen revelar debilidades invisibles durante la planeaci&oacute;n del lanzamiento.</p>
+
+  <h2 id="curiosity">La curiosidad vale m&aacute;s que la confianza</h2>
+
+  <p>Los principiantes celebran la confianza. Los fundadores con experiencia desconf&iacute;an de ella, porque la confianza suele significar que la investigaci&oacute;n se detuvo demasiado pronto.</p>
+
+  <p>La curiosidad sigue preguntando. &iquest;Qu&eacute; no hemos considerado? &iquest;Qui&eacute;n no est&aacute; de acuerdo con nosotros? &iquest;Qu&eacute; supuestos nos parecen obvios? &iquest;Qu&eacute; datos nos har&iacute;an cambiar de opini&oacute;n?</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">La distinci&oacute;n</span>
+    <p>La confianza cierra la investigaci&oacute;n. La curiosidad la extiende. Una construye certeza, la otra construye entendimiento.</p>
+  </div>
+
+  <h2 id="dashboard">El panel que de verdad necesitamos</h2>
+
+  <p>Imagina que tu plataforma de investigaci&oacute;n cambia en el momento en que identificas una oportunidad prometedora &mdash; en vez de terminar el an&aacute;lisis, empieza una segunda fase:</p>
+
+  <ul class="bottleneck">
+    <li>Cuestionar cada supuesto</li>
+    <li>Modelar los peores escenarios</li>
+    <li>Estimar la sensibilidad al capital</li>
+    <li>Evaluar la dependencia del proveedor</li>
+    <li>Probar la resistencia de la publicidad</li>
+    <li>Analizar los cambios de comportamiento del cliente</li>
+    <li>Medir el riesgo de concentraci&oacute;n</li>
+    <li>Calcular el costo de oportunidad</li>
+  </ul>
+
+  <p>Software que act&uacute;a menos como un buscador y m&aacute;s como un consejo directivo con experiencia.</p>
+
+  <h2 id="questions">Los grandes negocios se construyen sobre mejores preguntas</h2>
+
+  <p>La tecnolog&iacute;a va a seguir mejorando. Las estimaciones de b&uacute;squeda van a ser m&aacute;s precisas. La IA va a identificar oportunidades m&aacute;s r&aacute;pido. El an&aacute;lisis de competidores se va a automatizar. Encontrar productos prometedores va a ser m&aacute;s f&aacute;cil cada a&ntilde;o.</p>
+
+  <p>Lo que significa que la ventaja competitiva va a venir cada vez m&aacute;s de otro lado: criterio, disciplina, pensamiento cr&iacute;tico, la disposici&oacute;n a investigar m&aacute;s all&aacute; de lo obvio, el valor de rechazar oportunidades atractivas. Eso es notablemente dif&iacute;cil de automatizar.</p>
+
+  <h2 id="final">Para cerrar</h2>
+
+  <p>Encontrar un producto prometedor emociona. Se siente como progreso, y muchas veces lo es. Pero la emoci&oacute;n puede ser peligrosa.</p>
+
+  <p>El momento en que te convences de que encontraste un ganador es justo cuando tu pensamiento se vuelve m&aacute;s vulnerable. Empiezas a ver confirmaci&oacute;n en vez de contradicci&oacute;n, posibilidad en vez de incertidumbre, optimismo en vez de riesgo.</p>
+
+  <p>Los mejores operadores resisten ese instinto a prop&oacute;sito. Bajan la velocidad. Se cuestionan. Invitan el desacuerdo. Buscan razones por las que la idea podr&iacute;a fracasar &mdash; no porque disfruten el pesimismo, sino porque los negocios extraordinarios casi nunca se construyen haciendo preguntas m&aacute;s f&aacute;ciles.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">La pregunta que conviene hacer</span>
+    <p>No &laquo;&iquest;deber&iacute;amos lanzar esto?&raquo; sino &laquo;&iquest;qu&eacute; tendr&iacute;a que ser cierto para que este producto siga siendo una gran decisi&oacute;n dentro de cinco a&ntilde;os?&raquo;</p>
+  </div>
+
+  <p>Eso cambia el prop&oacute;sito de la investigaci&oacute;n de productos: de encontrar productos que se ven prometedores, a identificar negocios que siguen siendo excepcionales cuando la realidad empieza a poner a prueba cada supuesto. Y ah&iacute; es donde empieza la investigaci&oacute;n de productos de verdad buena.</p>
+
+  <div class="callout">
+    <span class="label">Lecturas relacionadas</span>
+    <p>
+      Esto cierra la serie de Investigaci&oacute;n de productos y se empareja sobre todo con
+      <a href="/es/articulos/investigacion-de-productos-es-investigacion-de-riesgos.html">la investigaci&oacute;n de productos es en realidad investigaci&oacute;n de riesgo</a>
+      &mdash; ese art&iacute;culo es qu&eacute; buscar, este es cu&aacute;ndo buscar. Mira tambi&eacute;n
+      <a href="/es/articulos/investigacion-de-productos-datos-equivocados.html">los datos equivocados</a>,
+      <a href="/es/articulos/por-que-los-vendedores-sobrestiman-el-tam.html">sobrestimar el TAM</a> y
+      <a href="/es/articulos/cada-producto-es-una-asignacion-de-capital.html">asignaci&oacute;n de capital</a>.
+    </p>
+  </div>
+
+</main>
+
+<aside class="rail" aria-label="Ideas clave">
+
+  <div class="rail-card">
+    <span class="rail-k">El momento</span>
+    <span class="rail-v is-violet">&laquo;Lo encontr&eacute;&raquo;</span>
+    <p>No es la meta. Es el punto en que tu criterio se vuelve menos confiable.</p>
+  </div>
+
+  <div class="rail-card">
+    <span class="rail-k">El m&eacute;todo</span>
+    <span class="rail-v is-amber">Intenta matarlo</span>
+    <p>Los procesos de inversi&oacute;n eliminan, no persuaden. Lo que sobrevive al escrutinio vale la pena financiarlo.</p>
+  </div>
+
+  <div class="rail-card">
+    <span class="rail-k">Qu&eacute; valorar</span>
+    <span class="rail-v">Varias formas de ganar</span>
+    <p>Un producto necesita que todo salga bien. El otro sobrevive a que varias cosas salgan mal.</p>
+  </div>
+
+  <div class="rail-card">
+    <span class="rail-k">La se&ntilde;al</span>
+    <span class="rail-v">La confianza</span>
+    <p>Suele significar que la investigaci&oacute;n se detuvo temprano. La curiosidad la mantiene abierta.</p>
+  </div>
+
+</aside>
+</div>
+
+<aside class="cta">
+  <h2>Haz la segunda ronda de preguntas</h2>
+  <p>
+    AmazeBase conecta inventario, publicidad, margen y efectivo &mdash; para que pruebes
+    c&oacute;mo aguanta un lanzamiento cuando los supuestos que lo sostienen dejan de sostenerse.
+  </p>
+  <a class="btn" href="/index.html#waitlist">
+    &Uacute;nete a la lista de espera
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M5 12h14M13 6l6 6-6 6"/>
+    </svg>
+  </a>
+</aside>
+
+</div><!-- /.wrap -->
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+  <symbol id="i-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12.5 17v-4a2.5 2.5 0 015 0v4"/></symbol>
+  <symbol id="i-tw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M20 4L4 20"/></symbol>
+  <symbol id="i-gh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4 1.4-4-2.2-5.6-2.6M15 21v-3.4a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 2.6 5.5 2.9 5.5 2.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 9.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></symbol>
+</defs>
+</svg>
+
+<footer class="footer">
+<div class="container">
+
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/index.html" class="brand" aria-label="Inicio de AmazeBase">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+        </svg>
+        <span data-brand>AmazeBase</span>
+      </a>
+      <p>El sistema operativo para vendedores de Amazon. Todo conectado, todo sincronizado.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Producto</h4>
+      <a href="/product.html#modules">Producto</a>
+      <a href="/index.html#pricing">Precios</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Recursos</h4>
+      <a href="/es/recursos.html">Centro de Conocimiento</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <a href="/about.html">Nosotros</a>
+      <a href="/contact.html">Contacto</a>
+      <a href="/privacy.html">Privacidad</a>
+      <a href="/terms.html">T&eacute;rminos</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>&copy; 2026 <span data-brand>AmazeBase</span>. Todos los derechos reservados.</span>
+    <div class="footer-social">
+      <a href="#" aria-label="LinkedIn"><svg class="icon-sm"><use href="#i-in"/></svg></a>
+      <a href="#" aria-label="X"><svg class="icon-sm"><use href="#i-tw"/></svg></a>
+      <a href="#" aria-label="GitHub"><svg class="icon-sm"><use href="#i-gh"/></svg></a>
+    </div>
+  </div>
+
+</div>
+</footer>
+
+<script src="/js/main.js" defer></script>
+</body>
+</html>

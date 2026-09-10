@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Una orden de compra son dos objetos &mdash; AmazeBase</title>
+
+<meta name="description" content="C&oacute;mo seguir los calendarios de pago a proveedores junto con los m&aacute;rgenes de producto — y el n&uacute;mero que decide qu&eacute; proveedor sale realmente m&aacute;s barato.">
+<meta name="theme-color" content="#030917">
+<meta name="author" content="AmazeBase">
+<meta property="og:title" content="A purchase order is two objects">
+<meta property="og:description" content="Tracking supplier payment schedules alongside product margins — and the number that decides which supplier is actually cheaper.">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+/* ==========================================================================
+   ARTICLE — Amazon Inventory Forecasting
+   Self-contained. Tokens mirror css/variables.css so this page can either
+   stand alone OR have this <style> block deleted once it sits inside the
+   site's normal stylesheet chain.
+========================================================================== */
+
+:root{
+  --z-nav:100;          /* navigation.css */
+  --container:1280px;   /* .container, below */
+  --t-body:15px;        /* .btn, below */
+  --bg:#030917; --bg-deep:#01050E; --bg-raise:#060D1E;
+  --surface:rgba(255,255,255,.030); --surface-2:rgba(255,255,255,.055);
+  --surface-solid:#0A1224;
+  --line:rgba(255,255,255,.070); --line-strong:rgba(255,255,255,.140);
+
+  --text:#EEF1F8; --text-2:#98A2B8; --text-3:#616C84;
+
+  --violet:#8B3BF1; --violet-soft:#A971F7; --indigo:#5B4FE6;
+  --blue:#3B82F6; --blue-soft:#7EB3FF;
+  --green:#2ED47A; --amber:#F5A524; --red:#F0435C;
+
+  --grad-brand:linear-gradient(135deg,#5B4FE6 0%,#8B3BF1 100%);
+  --grad-text:linear-gradient(90deg,#6153E6 0%,#9D50F7 55%,#C56BF5 100%);
+  --grad-card:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  --grad-rule:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,monospace;
+
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px;
+  --s5:48px; --s6:64px; --s7:96px; --s8:128px;
+
+  --gutter:clamp(20px,4vw,40px);
+  --measure:720px;
+
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
+  --sh-2:0 18px 40px rgba(0,0,0,.42);
+  --sh-brand:0 16px 40px rgba(107,63,232,.35);
+  --ease:cubic-bezier(.22,.61,.36,1); --fast:.18s; --mid:.28s;
+
+  color-scheme:dark;
+  scrollbar-color:#26304A var(--bg);
+  scrollbar-width:thin;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation:none !important; transition:none !important; }
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+::selection{ background:var(--violet); color:#fff; }
+
+.skip-link{
+  position:absolute; left:-9999px; top:0;
+  background:var(--surface-solid); color:var(--text);
+  padding:12px 20px; border-radius:0 0 var(--r-sm) 0;
+  z-index:1000; text-decoration:none; font-weight:600;
+}
+.skip-link:focus{ left:0; }
+
+:focus-visible{
+  outline:2px solid var(--violet-soft);
+  outline-offset:3px;
+  border-radius:var(--r-xs);
+}
+
+/* ---------- ambient background ------------------------------------------ */
+.bg-layer{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(760px 520px at 18% -8%,  rgba(91,79,230,.20), transparent 62%),
+    radial-gradient(680px 480px at 88% 4%,   rgba(139,59,241,.15), transparent 60%),
+    radial-gradient(900px 700px at 50% 108%, rgba(59,130,246,.09), transparent 66%);
+}
+
+.wrap{ position:relative; z-index:1; }
+
+/* ---------- shell ------------------------------------------------------- */
+.article{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:0 var(--gutter) var(--s8);
+}
+
+/* ---------- header ------------------------------------------------------ */
+.article-head{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:clamp(64px,9vw,120px) var(--gutter) clamp(32px,4vw,48px);
+}
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--violet-soft);
+  background:var(--surface); border:1px solid var(--line);
+  padding:7px 14px; border-radius:var(--r-pill);
+  margin:0 0 var(--s3);
+}
+.eyebrow::before{
+  content:""; width:6px; height:6px; border-radius:50%;
+  background:var(--violet-soft);
+  box-shadow:0 0 10px rgba(169,113,247,.9);
+}
+
+h1{
+  font-size:clamp(34px,5vw,58px);
+  line-height:1.08;
+  letter-spacing:-.025em;
+  font-weight:800;
+  margin:0 0 var(--s3);
+  text-wrap:balance;
+}
+h1 .accent{
+  background:var(--grad-text);
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+}
+
+.deck{
+  font-size:clamp(18px,2.1vw,21px);
+  line-height:1.6;
+  color:var(--text-2);
+  margin:0 0 var(--s4);
+  max-width:62ch;
+}
+
+.meta{
+  display:flex; flex-wrap:wrap; align-items:center; gap:var(--s2);
+  font-size:14px; color:var(--text-3);
+  padding-top:var(--s3);
+  border-top:1px solid var(--line);
+}
+.meta .dot{ width:3px; height:3px; border-radius:50%; background:var(--text-3); }
+
+/* ---------- table of contents ------------------------------------------- */
+.toc{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:0 0 var(--s6);
+}
+.toc h2{
+  font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--text-3); margin:0 0 var(--s3); padding:0; border:0;
+}
+.toc ol{
+  list-style:none; margin:0; padding:0;
+  counter-reset:toc;
+  display:grid; gap:2px;
+}
+.toc li{ counter-increment:toc; margin:0; }
+.toc a{
+  display:flex; gap:14px; align-items:baseline;
+  color:var(--text-2); text-decoration:none;
+  font-size:15px; line-height:1.5;
+  padding:8px 10px; margin:0 -10px;
+  border-radius:var(--r-xs);
+  transition:color var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+.toc a::before{
+  content:counter(toc,decimal-leading-zero);
+  font-family:var(--font-mono); font-size:12px; font-weight:600;
+  color:var(--text-3); flex:none; min-width:22px;
+  transition:color var(--fast) var(--ease);
+}
+.toc a:hover{ color:var(--text); background:var(--surface); }
+.toc a:hover::before{ color:var(--violet-soft); }
+
+/* ---------- body typography --------------------------------------------- */
+.article p{ margin:0 0 1.1em; color:#D5DBE9; }
+.article p.lead{ font-size:20px; color:var(--text); }
+
+.article h2{
+  font-size:clamp(26px,3.2vw,34px);
+  line-height:1.2;
+  letter-spacing:-.02em;
+  font-weight:700;
+  color:var(--text);
+  margin:var(--s7) 0 var(--s3);
+  padding-top:var(--s5);
+  border-top:1px solid var(--line);
+  scroll-margin-top:32px;
+  text-wrap:balance;
+}
+.article h2:first-of-type{ margin-top:0; }
+
+.article h2 .num{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:13px; font-weight:600; letter-spacing:.16em;
+  color:var(--violet-soft);
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
+
+.article strong{ color:var(--text); font-weight:700; }
+
+.article ul{
+  margin:0 0 1.4em;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:10px;
+}
+.article ul li{
+  position:relative;
+  padding-left:26px;
+  color:#D5DBE9;
+  line-height:1.6;
+}
+.article ul li::before{
+  content:"";
+  position:absolute; left:6px; top:.68em;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--violet);
+  box-shadow:0 0 8px rgba(139,59,241,.55);
+}
+
+/* ---------- pull quote --------------------------------------------------- */
+blockquote{
+  margin:var(--s4) 0;
+  padding:var(--s3) var(--s4);
+  border-left:2px solid var(--violet);
+  background:linear-gradient(90deg,rgba(139,59,241,.10),transparent 80%);
+  border-radius:0 var(--r-md) var(--r-md) 0;
+}
+blockquote p{
+  margin:0;
+  font-size:20px;
+  line-height:1.5;
+  font-weight:600;
+  color:var(--text);
+}
+
+/* ---------- callouts ----------------------------------------------------- */
+.callout{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:var(--s4) 0 var(--s5);
+}
+.callout .label{
+  display:block;
+  font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--text-3);
+  margin-bottom:var(--s2);
+}
+.callout p:last-child, .callout ul:last-child{ margin-bottom:0; }
+
+.formula{
+  font-family:var(--font-mono);
+  font-size:clamp(15px,2.1vw,19px);
+  font-weight:600;
+  line-height:1.6;
+  color:var(--text);
+  background:var(--bg-deep);
+  border:1px solid var(--line-strong);
+  border-radius:var(--r-md);
+  padding:var(--s3);
+  margin:0 0 var(--s3);
+  text-align:center;
+  overflow-x:auto;
+}
+.formula .op{ color:var(--violet-soft); }
+
+/* ---------- numbers strip ------------------------------------------------ */
+.figures{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:var(--s2);
+  margin:var(--s4) 0 var(--s5);
+  padding:0; list-style:none;
+}
+.figures li{ padding:0; }
+.figures li::before{ display:none; }
+.fig{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:var(--s3) var(--s2);
+  text-align:center;
+}
+.fig .v{
+  display:block;
+  font-size:28px; font-weight:800; letter-spacing:-.02em; line-height:1.1;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.fig .k{
+  display:block;
+  font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.fig.is-bad .v{ color:var(--red); }
+.fig.is-real .v{ color:var(--green); }
+
+/* ---------- divider ------------------------------------------------------ */
+.rule{
+  height:1px; border:0;
+  background:var(--grad-rule);
+  margin:var(--s6) 0;
+}
+
+/* ---------- closing CTA -------------------------------------------------- */
+.cta{
+  max-width:var(--measure);
+  margin:var(--s7) auto 0;
+  padding:clamp(32px,5vw,56px) var(--gutter);
+  text-align:center;
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-xl);
+  box-shadow:var(--sh-2);
+}
+.cta h2{
+  font-size:clamp(24px,3vw,32px);
+  font-weight:700; letter-spacing:-.02em; line-height:1.2;
+  margin:0 0 var(--s2); padding:0; border:0;
+  text-wrap:balance;
+}
+.cta p{
+  color:var(--text-2);
+  max-width:52ch;
+  margin:0 auto var(--s4);
+  font-size:17px;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--grad-brand);
+  color:#fff; text-decoration:none;
+  font-weight:600; font-size:16px;
+  padding:14px 28px;
+  border-radius:var(--r-pill);
+  box-shadow:var(--sh-brand);
+  transition:transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+.btn:hover{ transform:translateY(-2px); box-shadow:0 22px 50px rgba(107,63,232,.45); }
+.btn svg{ width:18px; height:18px; }
+
+/* ---------- responsive --------------------------------------------------- */
+@media (max-width:640px){
+  body{ font-size:17px; }
+  .article p.lead{ font-size:18px; }
+  blockquote p{ font-size:18px; }
+  .article h2{ margin-top:var(--s6); padding-top:var(--s4); }
+}
+
+/* ---------- print -------------------------------------------------------- */
+@media print{
+  .bg-layer,.toc,.cta,.skip-link{ display:none; }
+  body{ background:#fff; color:#111; font-size:12pt; }
+  .article p,.article ul li{ color:#222; }
+  .article h2{ color:#000; }
+}
+.back-link{ margin:0 0 28px; font-size:13px; }
+.back-link a{ color:var(--text-2); text-decoration:none; }
+.back-link a:hover{ color:var(--text); }
+
+/* ── HERO IMAGE ─────────────────────────────────────────────────────── */
+.hero-shot{
+  margin:0 0 52px;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  background:var(--bg-raise);
+  line-height:0;
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+.hero-shot img{ width:100%; height:auto; display:block; }
+
+/* ── MISTAKE CARDS ──────────────────────────────────────────────────── */
+.mistake{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.mistake::before{
+  content:"";
+  position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+  background:var(--amber);
+}
+.mistake h2{ margin-top:0 !important; }
+.article .mistake h2:first-of-type{ margin-top:0; }
+
+/* ── PULL QUOTES ────────────────────────────────────────────────────── */
+blockquote{
+  margin:44px 0;
+  padding:0 0 0 26px;
+  border-left:3px solid var(--amber);
+  background:none;
+}
+blockquote p{
+  font-size:23px;
+  line-height:1.45;
+  font-style:italic;
+  font-weight:600;
+  color:var(--text);
+  margin:0;
+}
+
+/* ── MID-ARTICLE STRIP ──────────────────────────────────────────────── */
+.strip{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px; flex-wrap:wrap;
+  margin:44px 0;
+  padding:26px 30px;
+  border-radius:16px;
+  background:linear-gradient(120deg,#0A1224,#131A33);
+  border:1px solid var(--line-strong);
+}
+.strip h3{ margin:0 0 6px; font-size:19px; color:var(--text); }
+.strip p{ margin:0; font-size:14px; color:var(--text-2); }
+.strip-btn{
+  flex:0 0 auto;
+  display:inline-block;
+  padding:12px 22px;
+  border-radius:10px;
+  background:var(--amber);
+  color:#1A1200;
+  font-size:14px; font-weight:700;
+  text-decoration:none;
+  transition:filter .15s ease;
+}
+.strip-btn:hover{ filter:brightness(1.08); }
+
+@media (max-width:640px){
+  .mistake{ padding:24px 20px 8px; }
+  .mistake::before{ top:20px; bottom:20px; }
+  blockquote p{ font-size:20px; }
+  .strip{ padding:22px; }
+  .strip-btn{ width:100%; text-align:center; }
+}
+
+/* ── WIDE SHELL: content + rail, so the page uses the screen ─────────── */
+.shell{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 var(--gutter);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 300px;
+  gap:64px;
+  align-items:start;
+}
+.shell > .article{ max-width:none; margin:0; padding:0 0 var(--s8); }
+
+.rail{ position:sticky; top:40px; display:flex; flex-direction:column; gap:14px; }
+.rail-card{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+  padding:20px;
+}
+.rail-k{
+  display:block; margin-bottom:10px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.rail-v{
+  display:block; margin-bottom:10px;
+  font-size:34px; line-height:1; font-weight:800; letter-spacing:-.02em;
+  color:var(--green);
+}
+.rail-v.is-amber{ color:var(--amber); }
+.rail-v.is-violet{ color:var(--violet-soft); }
+.rail-card p{ margin:0; font-size:13px; line-height:1.55; color:var(--text-2); }
+.rail-src{
+  margin:0; padding-top:14px;
+  border-top:1px solid var(--line);
+  font-size:11px; line-height:1.5; color:var(--text-3);
+}
+
+/* header + hero align to the same shell */
+.article-head, .hero-shot{ max-width:1180px; }
+
+/* ── HERO: a band, not a giant square ───────────────────────────────── */
+.hero-shot{
+  margin:0 auto 56px;
+  padding:0 var(--gutter);
+  border:0; background:none; box-shadow:none;
+  border-radius:0;
+  overflow:visible;
+}
+.hero-shot img{
+  width:100%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
+  border-radius:18px;
+  border:1px solid var(--line-strong);
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+
+/* ── THE FIX callout ────────────────────────────────────────────────── */
+.fixbox{
+  margin:22px 0 4px;
+  padding:16px 18px;
+  border-radius:12px;
+  border:1px solid rgba(46,212,122,.28);
+  background:rgba(46,212,122,.07);
+}
+.fixbox-k{
+  display:block; margin-bottom:6px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--green);
+}
+.fixbox p{ margin:0 !important; color:var(--text) !important; }
+
+@media (max-width:1080px){
+  .shell{ grid-template-columns:1fr; gap:40px; max-width:820px; }
+  .rail{ position:static; flex-direction:row; flex-wrap:wrap; }
+  .rail-card{ flex:1 1 220px; }
+  .rail-src{ flex:1 1 100%; border-top:0; padding-top:0; }
+  .article-head, .hero-shot{ max-width:820px; }
+}
+@media (max-width:640px){
+  .shell{ gap:28px; }
+}
+
+
+/* ── FIGURES CARRIED OVER FROM THE DRAFT ──────────────────────────────
+   This piece ships its own tables, charts and spec blocks. Rather than
+   import a second design system for them, the palette they were written
+   against is repointed at this site's tokens, and only their component
+   rules are carried over. --measure is deliberately absent: it collides
+   with the site's, and the ported rules should use the site's column.
+   ------------------------------------------------------------------- */
+:root{
+  --paper:var(--bg); --panel:var(--surface-solid); --panel-2:var(--surface-2);
+  --ink:var(--text); --ink-2:var(--text-2); --ink-3:var(--text-3);
+  --rule:var(--line); --rule-strong:var(--line-strong);
+  --accent:var(--violet-soft); --accent-soft:rgba(139,59,241,.16);
+  --cost:var(--text-3);
+  --good:var(--green);  --good-soft:rgba(46,212,122,.10);
+  --warn:var(--amber);  --warn-soft:rgba(245,165,36,.10);
+  --crit:var(--red);    --crit-soft:rgba(240,67,92,.10);
+  --f-display:var(--font); --f-body:var(--font);
+  --f-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+article p{margin:0 0 1.15rem}
+article ul, article ol{margin:0 0 1.3rem;padding-left:1.15rem}
+article li{margin-bottom:.5rem}
+article li::marker{color:var(--ink-3)}
+strong{font-weight:600}
+.fix{background:var(--panel);border:1px solid var(--rule);border-left:3px solid var(--accent);padding:1.1rem 1.3rem;margin:1.9rem 0}
+.fix .k{display:block;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:.45rem}
+.fix p{margin:0}
+.fix p+p{margin-top:.7rem}
+pre{font-family:var(--f-mono);font-size:.83rem;line-height:1.75;background:var(--panel-2);border:1px solid var(--rule);padding:1rem 1.1rem;margin:1.6rem 0;overflow-x:auto}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--panel-2);padding:.1em .35em;border-radius:2px}
+pre code{background:none;padding:0;font-size:1em}
+.spec{background:var(--panel);border:1px solid var(--rule);padding:1.2rem 1.3rem;margin:1.8rem 0}
+.spec h4{margin:0 0 .8rem;font-size:.72rem;font-family:var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+.spec dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:.45rem 1rem}
+.spec dt{color:var(--ink-2);font-size:.95rem}
+.spec dd{margin:0;font-family:var(--f-mono);font-size:.88rem;font-variant-numeric:tabular-nums;text-align:right}
+figure h4{margin:0 0 .2rem;font-size:1rem;font-weight:600}
+figure .sub{margin:0 0 .8rem;font-size:.85rem;color:var(--ink-2)}
+figure svg{display:block;width:100%;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:1.1rem;margin:0 0 .8rem;font-size:.83rem;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:.4rem}
+.swatch{width:11px;height:11px;border-radius:2px;display:inline-block}
+.ax{fill:var(--ink-3);font-family:"IBM Plex Mono",monospace;font-size:9.5px}
+.anno{fill:var(--ink);font-family:"IBM Plex Sans",sans-serif;font-size:10.5px;font-weight:600}
+.anno-2{fill:var(--ink-2);font-family:"IBM Plex Sans",sans-serif;font-size:9.5px}
+.grid{stroke:var(--rule);stroke-width:1}
+.tblwrap{overflow-x:auto;margin:1.6rem 0}
+table{border-collapse:collapse;width:100%;font-size:.92rem;min-width:27rem}
+caption{caption-side:bottom;text-align:left;font-size:.8rem;color:var(--ink-3);padding-top:.7rem;line-height:1.5}
+th, td{padding:.55rem .7rem;text-align:right;border-bottom:1px solid var(--rule);font-variant-numeric:tabular-nums}
+th:first-child, td:first-child{text-align:left}
+thead th{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500;border-bottom:1px solid var(--rule-strong)}
+tbody tr:last-child td{border-bottom:1px solid var(--rule-strong);font-weight:600}
+.bands{display:grid;gap:.55rem;margin:1.4rem 0 1.9rem}
+.band{display:grid;grid-template-columns:7rem 1fr;gap:1rem;align-items:baseline;padding:.7rem .9rem;background:var(--panel);border:1px solid var(--rule)}
+.band .lab{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
+.band.c .lab{color:var(--ink-3)}
+.band.s .lab{color:var(--accent)}
+.band.d .lab{color:var(--crit)}
+.band .txt{font-size:.95rem;color:var(--ink-2)}
+.five{list-style:none;padding:0;margin:1.5rem 0 2rem;border-top:1px solid var(--rule)}
+.five li{margin:0;display:grid;grid-template-columns:2.4rem 1fr;gap:.9rem;padding:.85rem .2rem;border-bottom:1px solid var(--rule)}
+.five .n{font-family:var(--f-mono);font-size:.72rem;color:var(--accent);padding-top:.15rem}
+.five b{display:block;font-weight:600}
+.five .d{color:var(--ink-2);font-size:.93rem}
+.faq details{border-bottom:1px solid var(--rule);padding:.9rem 0}
+.faq summary{cursor:pointer;font-weight:600;list-style:none;display:flex;gap:.75rem;align-items:flex-start}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::before{content:"+";font-family:var(--f-mono);color:var(--accent);font-weight:400;line-height:1.6}
+.faq details[open] summary::before{content:"–"}
+.faq p{margin:.65rem 0 0 1.5rem;color:var(--ink-2)}
+.faq summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* ── PIECES THIS ARTICLE ADDS ─────────────────────────────────────────
+   h3, tables, the FAQ and the carried-over figure. The 44 articles that
+   came before this one had no h3 and no tables, so the core stylesheet
+   never needed rules for them.
+   ------------------------------------------------------------------- */
+.article h3{
+  margin:var(--s5) 0 var(--s2);
+  font-size:clamp(19px,1.6vw,22px);
+  font-weight:650; letter-spacing:-.01em; color:var(--text);
+}
+.tblwrap{ margin:var(--s4) 0; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.article table{
+  width:100%; border-collapse:collapse;
+  font-size:.94rem; line-height:1.5;
+}
+.article th, .article td{
+  padding:10px 14px; text-align:left; vertical-align:top;
+  border-bottom:1px solid var(--line);
+}
+.article th{
+  font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+  color:var(--text-3); border-bottom-color:var(--line-strong); white-space:nowrap;
+}
+.article tbody tr:last-child td{ border-bottom:0; }
+.art-diagram{ margin:var(--s4) 0; }
+.art-diagram svg{ width:100%; height:auto; display:block; }
+.art-diagram .sub, .art-diagram figcaption{
+  margin-top:10px; font-size:var(--t-micro,.82rem); color:var(--text-3); line-height:1.5;
+}
+.faq{ margin:var(--s4) 0; }
+.faq details{
+  border:1px solid var(--line); border-radius:var(--r-md);
+  background:var(--surface); padding:14px 18px; margin-bottom:10px;
+}
+.faq summary{
+  cursor:pointer; font-weight:600; color:var(--text);
+  list-style:none; padding-right:24px; position:relative;
+}
+.faq summary::-webkit-details-marker{ display:none; }
+.faq summary::after{
+  content:"+"; position:absolute; right:0; top:-2px;
+  font-size:19px; line-height:1; color:var(--violet-soft);
+}
+.faq details[open] summary::after{ content:"\2013"; }
+.faq details p{ margin:10px 0 0 !important; color:var(--text-2); }
+
+/* ── KEEPING WIDE THINGS INSIDE A PHONE ───────────────────────────────
+   These pieces carry long monospace formulas, wide comparison tables and
+   the draft's scenario rows. Each has a min-content width larger than a
+   390px screen, and the shell's mobile track is `1fr` - which means
+   minmax(auto,1fr), so a single one of them widens the whole column and
+   the entire page scrolls sideways. Cap the track, then let each wide
+   block scroll inside itself instead of pushing the article around.
+   ------------------------------------------------------------------- */
+@media (max-width:1080px){
+  .shell{ grid-template-columns:minmax(0,1fr); }
+}
+.shell > .article{ min-width:0; }
+.article > *{ max-width:100%; }
+.formula{ overflow-x:auto; }
+.formula code{ white-space:pre; }
+.tblwrap{ min-width:0; max-width:100%; }
+.scn, .scnrow, .bands, .band, .inputs, .facts, .spec, .grid{ min-width:0; max-width:100%; }
+@media (max-width:640px){
+  .scnrow{ display:block; }
+  .scnrow > *{ display:block; }
+}
+
+/* ── SITE HEADER ──────────────────────────────────────────────────────
+   The header markup is the site's, and navigation.css styles it. These are
+   the pieces it also leans on from base.css, which this page does not load.
+   Every selector is scoped to the header or the mobile drawer: an article is
+   built out of bare a/p/h3/h4, and base.css restyles all of those.
+
+   The scope is written with :where() so it adds no specificity. Scoped the
+   plain way, `.site-header .btn` is (0,2,0) - the same weight as
+   navigation.css's own `.nav-actions .btn--quiet` and `.nav-mobile a`, and
+   loaded after them, so these copies quietly outranked the real rules: the
+   hamburger got pushed off a 390px screen and the drawer buttons lost their
+   sizing. Inside :where() each rule keeps exactly the weight it has in
+   base.css, which is the weight navigation.css was written against.
+   ------------------------------------------------------------------- */
+/* The header inherits from <body>, and this page's body is set for reading:
+   18px at 1.72. The site's is var(--t-body) at 1.6. Left alone, every element
+   in the bar came out a size and a half too tall. Reset it at the root of the
+   header so everything inside inherits the site's figures instead. */
+:where(.site-header),
+:where(.nav-mobile){
+  font-size:var(--t-body);
+  line-height:1.6;
+}
+
+:where(.site-header) .container{
+  width:min(100%,var(--container));
+  margin-inline:auto;
+  padding-inline:var(--gutter);
+  position:relative;
+}
+:where(.site-header, .nav-mobile) .brand{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:19px; font-weight:700; letter-spacing:-.01em;
+  color:var(--text); text-decoration:none;
+}
+:where(.site-header) .brand-mark{ width:26px; height:26px; flex:none; }
+:where(.site-header) .icon,    :where(.nav-mobile) .icon{    width:20px; height:20px; flex:none; stroke-width:1.7; }
+:where(.site-header) .icon-sm, :where(.nav-mobile) .icon-sm{ width:16px; height:16px; flex:none; stroke-width:1.8; }
+/* margin-block only: navigation.css centres this with margin-inline:auto,
+   and a shorthand `margin:0` here would outrank it and shove the menu
+   over against the brand. */
+:where(.site-header) .nav-menu{ list-style:none; padding:0; margin-block:0; }
+.site-header a, .nav-mobile a{ text-decoration:none; }
+/* base.css resets these globally; this page does not load it. Without the
+   padding reset the UA's 1px 6px survives and the 44px tap target
+   responsive.css asks for comes out 40px. */
+:where(.site-header) .nav-toggle{ font:inherit; cursor:pointer; padding:0; }
+:where(.site-header) svg, :where(.nav-mobile) svg{ display:block; }
+
+:where(.site-header) .btn, :where(.nav-mobile) .btn{
+  /* This page defines its own .btn - a filled gradient pill used in the body -
+     and it reaches the header buttons too. base.css's .btn sets none of these,
+     so the variant classes below are what should decide them. Cleared here or
+     "Log in", which is .btn--quiet and meant to read as plain text, arrives
+     wearing the brand gradient. */
+  background:none;
+  box-shadow:none;
+  color:inherit;
+  text-decoration:none;
+  position:relative;
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  padding:13px 22px;
+  border-radius:var(--r-sm);
+  font-size:var(--t-body); font-weight:600; line-height:1;
+  white-space:nowrap;
+  transition:transform var(--fast) var(--ease),
+             box-shadow var(--fast) var(--ease),
+             background var(--fast) var(--ease),
+             border-color var(--fast) var(--ease);
+}
+:where(.site-header) .btn:active, :where(.nav-mobile) .btn:active{ transform:translateY(0) scale(.99); }
+:where(.site-header) .btn--primary, :where(.nav-mobile) .btn--primary{
+  background:var(--grad-brand); color:#fff;
+  box-shadow:var(--sh-brand); overflow:hidden;
+}
+:where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{
+  content:""; position:absolute; top:0; left:-130%;
+  width:55%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);
+  transition:left .65s var(--ease);
+}
+:where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{
+  transform:translateY(-2px); box-shadow:0 22px 52px rgba(107,63,232,.45);
+}
+:where(.site-header) .btn--primary:hover::after, :where(.nav-mobile) .btn--primary:hover::after{ left:150%; }
+:where(.site-header) .btn--quiet, :where(.nav-mobile) .btn--quiet{ color:var(--text-2); padding:13px 8px; }
+:where(.site-header) .btn--quiet:hover, :where(.nav-mobile) .btn--quiet:hover{ color:var(--text); }
+:where(.nav-mobile) .btn--block{ width:100%; }
+
+@media (prefers-reduced-motion:reduce){
+  :where(.site-header) .btn, :where(.nav-mobile) .btn,
+  :where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{ transition:none; }
+  :where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{ transform:none; }
+}
+
+/* navigation.css hides these two buttons on small screens so the hamburger
+   fits. Its selectors are (0,2,0) and so is `:where(.site-header) .btn` above, which
+   is loaded after it - equal weight, later wins, and display:inline-flex beat
+   display:none. The hamburger ended up 107px off the right of a 390px screen
+   with no way to open the menu. Restating the hide at (0,3,0) settles it.
+   The breakpoints are read out of navigation.css at build time, not typed. */
+
+/* Clear the fixed site header. Reserving its height on .wrap keeps the gap
+   between the bar and the eyebrow the same as the gap used to be between the
+   top of the window and the eyebrow. */
+.wrap{ padding-top:70px; }
+@media (max-width:640px){ .wrap{ padding-top:64px; } }
+
+/* Anchor targets. .article h2 carried scroll-margin-top:32px, which was right
+   when this page had no fixed bar: 32px was breathing room. Now a jump from
+   the contents list lands 38px underneath the header. responsive.css puts the
+   rest of the site on 84px for exactly this reason; the article's own rule is
+   (0,2,0) and outranks it, so it is restated here at the same weight. */
+.article h2{ scroll-margin-top:84px; }
+
+/* The back-link sat hard against the left edge of the window, in line with
+   nothing. That was always true, but with the nav above it the thing reads as
+   stranded rather than as a heading. Same shell as .article-head, so it lines
+   up with the title beneath it and behaves as the breadcrumb it is. */
+.back-link{
+  max-width:1180px;
+  margin-inline:auto;      /* the rule above keeps its 28px bottom margin */
+  padding:22px var(--gutter) 0;
+}
+
+/* Chart series colours. These live on .art-diagram rather than :root so
+   they cannot shadow the site's --s1..--s8 spacing scale. Values are the
+   draft's own dark-mode series colours. */
+.art-diagram{
+  --ser-a:#9F7BF2;  --ser-b:#12A594;
+  --ser-a-fill:rgba(159,123,242,.15);  --ser-b-fill:rgba(18,165,148,.15);
+}
+</style>
+<link rel="stylesheet" href="/css/navigation.css">
+<link rel="stylesheet" href="/css/responsive.css">
+<link rel="stylesheet" href="/css/site-footer.css">
+<link rel="canonical" href="https://amazebase.pro/es/articulos/una-orden-de-compra-son-dos-objetos.html">
+<link rel="alternate" hreflang="en" href="https://amazebase.pro/articles/supplier-payment-schedules-margins.html">
+<link rel="alternate" hreflang="es" href="https://amazebase.pro/es/articulos/una-orden-de-compra-son-dos-objetos.html">
+<link rel="alternate" hreflang="x-default" href="https://amazebase.pro/articles/supplier-payment-schedules-margins.html">
+<meta property="og:site_name" content="AmazeBase">
+<meta property="og:locale" content="es_LA">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://amazebase.pro/es/articulos/una-orden-de-compra-son-dos-objetos.html">
+<meta property="og:title" content="Una orden de compra son dos objetos">
+<meta property="og:description" content="C&oacute;mo seguir los calendarios de pago a proveedores junto con los m&aacute;rgenes de producto — y el n&uacute;mero que decide qu&eacute; proveedor sale realmente m&aacute;s barato.">
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+<div class="bg-layer" aria-hidden="true"></div>
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+</defs>
+  <symbol id="i-chevron"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-menu"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-mega"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l7 4V5L8 9H4zM19 9a4 4 0 010 6"/></symbol>
+  <symbol id="i-dollar"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5v19M16.5 6.5H10a3.2 3.2 0 000 6.4h4a3.2 3.2 0 010 6.4H7"/></symbol>
+  <symbol id="i-stack"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/></symbol>
+  <symbol id="i-box"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></symbol>
+  <symbol id="i-search"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></symbol>
+  <symbol id="i-chart"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-trend"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></symbol>
+  <symbol id="i-db"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3.2"/><path d="M4 6v12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2V6M4 12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2"/></symbol>
+  <symbol id="i-shield"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-9.5V5.5L12 2.5 4 5.5V12.5C4 18.5 12 22 12 22z"/></symbol>
+  <symbol id="i-spark"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+  <symbol id="i-rocket"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15s-1.5 3 1 5.5S11 20 11 20M14.5 4.5c3-2 6-1 6-1s1 3-1 6l-6 6-5-5 6-6z"/><circle cx="15" cy="9" r="1.4"/></symbol>
+  <symbol id="i-case"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8.5 7V5a2 2 0 012-2h3a2 2 0 012 2v2M2.5 12.5h19"/></symbol>
+  <symbol id="i-info"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></symbol>
+  <symbol id="i-msg"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-8 8 8.6 8.6 0 01-3.6-.8L3 21l1.8-6.4A8 8 0 1121 12z"/></symbol>
+</svg>
+
+<header class="site-header">
+<div class="container">
+<nav class="nav" aria-label="Principal">
+
+  <a href="/index.html" class="brand" aria-label="Inicio de AmazeBase">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+      <path d="M16 17.6l4.4 8.2h-8.8z" fill="#C56BF5" opacity=".85"/>
+    </svg>
+    <span data-brand>AmazeBase</span>
+  </a>
+
+  <ul class="nav-menu">
+    <li class="nav-item">
+      <a class="nav-link" href="/product.html#modules">Producto <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop nav-drop--wide">
+        <a href="/product.html#advertising"><svg class="icon-sm"><use href="#i-mega"/></svg>Publicidad y PPC</a>
+        <a href="/product.html#financials"><svg class="icon-sm"><use href="#i-dollar"/></svg>Finanzas</a>
+        <a href="/product.html#ledger"><svg class="icon-sm"><use href="#i-stack"/></svg>Ledger</a>
+        <a href="/product.html#inventory"><svg class="icon-sm"><use href="#i-box"/></svg>Inventario</a>
+        <a href="/product.html#research"><svg class="icon-sm"><use href="#i-search"/></svg>Investigaci&oacute;n de productos</a>
+        <a href="/product.html#simulations"><svg class="icon-sm"><use href="#i-chart"/></svg>Simulaciones</a>
+        <a href="/product.html#sales"><svg class="icon-sm"><use href="#i-trend"/></svg>Ventas</a>
+        <a href="/product.html#data"><svg class="icon-sm"><use href="#i-db"/></svg>Datos y sincronizaci&oacute;n</a>
+        <a href="/product.html#security"><svg class="icon-sm"><use href="#i-shield"/></svg>Seguridad</a>
+        <a href="/product.html#assistant"><svg class="icon-sm"><use href="#i-spark"/></svg>Asistente de IA &mdash; pronto</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/solutions.html">Soluciones <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/solutions.html#beginners"><svg class="icon-sm"><use href="#i-rocket"/></svg>Principiantes</a>
+        <a href="/solutions.html#experts"><svg class="icon-sm"><use href="#i-dollar"/></svg>Vendedores con experiencia</a>
+        <a href="/solutions.html#agencies"><svg class="icon-sm"><use href="#i-case"/></svg>Agencias</a>
+      </div>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="/index.html#pricing">Precios</a></li>
+    <li class="nav-item"><a class="nav-link" href="/es/recursos.html">Recursos</a></li>
+    <li class="nav-item">
+      <a class="nav-link" href="/about.html">Empresa <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/about.html"><svg class="icon-sm"><use href="#i-info"/></svg>Nosotros</a>
+        <a href="/contact.html"><svg class="icon-sm"><use href="#i-msg"/></svg>Contacto</a>
+      </div>
+    </li>
+  </ul>
+
+  <div class="nav-actions">
+    <div class="nav-item lang-switch">
+      <button class="lang-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Idioma / Language">
+        ES <svg class="chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+      </button>
+      <div class="nav-drop lang-drop">
+        <a href="/articles/supplier-payment-schedules-margins.html" hreflang="en" lang="en"><span class="lc">EN</span>English</a>
+        <a href="/es/articulos/una-orden-de-compra-son-dos-objetos.html" hreflang="es" lang="es" aria-current="true"><span class="lc">ES</span>Español</a>
+      </div>
+    </div>
+    <a class="btn btn--quiet" href="https://analytics.amazebase.pro/login">Iniciar sesi&oacute;n</a>
+    <a class="btn btn--primary" href="/index.html#waitlist" data-magnetic>&Uacute;nete a la lista de espera</a>
+    <button class="nav-toggle" aria-label="Abrir men&uacute;" aria-expanded="false" aria-controls="navMobile">
+      <svg class="icon"><use href="#i-menu"/></svg>
+    </button>
+  </div>
+
+</nav>
+</div>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="/product.html#modules">Producto</a>
+  <a href="/solutions.html">Soluciones</a>
+  <a href="/index.html#pricing">Precios</a>
+  <a href="/es/recursos.html">Recursos</a>
+  <a href="/about.html">Nosotros</a>
+  <a href="/contact.html">Contacto</a>
+  <a class="btn btn--quiet btn--block" href="https://analytics.amazebase.pro/login">Iniciar sesi&oacute;n</a>
+  <a class="btn btn--primary btn--block" href="/index.html#waitlist">&Uacute;nete a la lista de espera</a>
+</div>
+</header>
+
+<div class="wrap">
+<p class="back-link"><a href="/es/recursos.html">&larr; Centro de Conocimiento</a></p>
+<header class="article-head">
+  <p class="eyebrow">Utilidad y finanzas</p>
+  <h1>Una orden de compra <span class="accent">son dos objetos</span></h1>
+  <p class="deck">C&oacute;mo seguir los calendarios de pago a proveedores junto con los m&aacute;rgenes de producto — y el n&uacute;mero que decide qu&eacute; proveedor sale realmente m&aacute;s barato.</p>
+  <p class="meta">
+    <span>AmazeBase</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>13 min de lectura</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>Proveedores y flujo de caja</span>
+  </p>
+</header>
+
+<!-- HERO IMAGE GOES HERE. Drop the image in as assets/img/hero-supplier-payment-schedules-margins.webp at 1672x941, uncomment, and write the alt text:
+<figure class="hero-shot">
+  <img src="/assets/img/hero-supplier-payment-schedules-margins.webp"
+       alt=""
+       width="1672" height="941" loading="eager" decoding="async">
+</figure>
+-->
+
+<div class="shell">
+<main id="main" class="article">
+  <p class="lead">La mayor&iacute;a de los vendedores maneja a sus proveedores en dos lugares que nunca se cruzan: una hoja de c&aacute;lculo de m&aacute;rgenes y una carpeta de facturas con fechas.</p>
+  <nav class="toc" aria-labelledby="toc-title">
+    <h2 id="toc-title">Qu&eacute; encontrar&aacute;s en este art&iacute;culo</h2>
+    <ol>
+      <li><a href="#s1">Dos objetos, un documento</a></li>
+      <li><a href="#s2">El precio no es el costo</a></li>
+      <li><a href="#s3">La forma del pago</a></li>
+      <li><a href="#s4">Qu&eacute; proveedor sale m&aacute;s barato</a></li>
+      <li><a href="#s5">Convertir una orden de compra en pagos</a></li>
+      <li><a href="#s6">Comprometido, programado, por pagar</a></li>
+      <li><a href="#s7">Compromisos que se traslapan</a></li>
+      <li><a href="#s8">Un costo, un due&ntilde;o</a></li>
+      <li><a href="#s9">La ficha del proveedor</a></li>
+      <li><a href="#s10">Moneda</a></li>
+      <li><a href="#s11">Esperado vs. real</a></li>
+      <li><a href="#s12">Cinco n&uacute;meros</a></li>
+      <li><a href="#s13">Preguntas</a></li>
+    </ol>
+  </nav>
+
+
+    
+
+    <p>Esa separaci&oacute;n se siente natural. La rentabilidad es una pregunta de an&aacute;lisis; pagarle a la f&aacute;brica es una tarea administrativa. Viven en herramientas distintas y muchas veces en manos distintas.</p>
+
+    <p>Tambi&eacute;n es la raz&oacute;n por la que negocios rentables de Amazon se quedan sin dinero.</p>
+
+    <p>Porque una orden de compra no es una sola cosa. <strong>Es un compromiso de inventario y un calendario de pagos vestidos con el mismo documento.</strong> La mitad de inventario determina cu&aacute;nto vas a ganar. La mitad de efectivo determina si puedes llegar hasta ah&iacute;. Mira solo una de las dos y tomar&aacute;s una decisi&oacute;n correcta en una dimensi&oacute;n y ruinosa en la otra.</p>
+
+    <p>As&iacute; se sostienen las dos a la vez — y este es el n&uacute;mero que zanja la discusi&oacute;n m&aacute;s frecuente entre vendedores: qu&eacute; proveedor sale m&aacute;s barato.</p>
+
+    <h2 id="s1"><span class="num">01</span>Dos objetos, un documento</h2>
+      <p>Separa cada orden de compra a prop&oacute;sito, porque las dos mitades tienen due&ntilde;os distintos, preguntas distintas y formas distintas de fallar.</p>
+      <ul>
+        <li><strong>El compromiso de inventario</strong> — unidades, costo puesto en destino, cu&aacute;ndo se vuelven vendibles, qu&eacute; van a aportar. Alimenta la econom&iacute;a del producto y la planeaci&oacute;n de reposici&oacute;n.</li>
+        <li><strong>El calendario de pagos</strong> — un conjunto de obligaciones con fecha, cada una con un monto y un disparador. Alimenta la l&iacute;nea de tiempo del efectivo.</li>
+      </ul>
+      <p>Comparten exactamente dos datos: el costo unitario y la fecha de llegada. Todo lo dem&aacute;s se separa. Y esos dos datos compartidos son justo donde los sistemas se desincronizan, as&iacute; que vale la pena cuidarlos — la §08 vuelve sobre eso.</p>
+      <blockquote>
+    <p>La orden de compra que puedes pagar y la orden de compra que deber&iacute;as colocar son documentos distintos hasta que los pones en una sola pantalla.</p>
+  </blockquote>
+    
+
+    <h2 id="s2"><span class="num">02</span>La cotizaci&oacute;n no es el costo</h2>
+      <p>Un proveedor cotiza $8.00. Ese n&uacute;mero pertenece a una negociaci&oacute;n, no a un c&aacute;lculo de margen.</p>
+      <p>El costo puesto en destino es todo lo que hace falta para convertir una cotizaci&oacute;n en una unidad vendible: fabricaci&oacute;n, empaque, inspecci&oacute;n, etiquetado, prep, transporte terrestre, flete internacional, aranceles e impuestos de aduana, seguro y lo que sea que el &uacute;ltimo embarque te ense&ntilde;&oacute; a esperar.</p>
+      <p>La consecuencia pr&aacute;ctica aparece al comparar proveedores. Una cotizaci&oacute;n de $7.50 contra una de $8.00 no es un ahorro hasta que sumas:</p>
+      <ul>
+        <li><strong>MOQ</strong> — un precio m&aacute;s bajo a 5,000 unidades cuando necesitas 2,000 es un peor trato, no uno mejor.</li>
+        <li><strong>Incoterms</strong> — una cotizaci&oacute;n EXW y una DDP no son n&uacute;meros comparables. Una de las dos ya trae el flete adentro.</li>
+        <li><strong>Empaque y prep</strong> — &iquest;qui&eacute;n lo hace y est&aacute; dentro del precio?</li>
+        <li><strong>Tasa de defectos</strong> — 3&nbsp;% no vendible es 3&nbsp;% sobre tu costo unitario efectivo.</li>
+        <li><strong>La forma del pago</strong> — el tema de las dos secciones siguientes.</li>
+      </ul>
+      <p>Compara el costo econ&oacute;mico del inventario, no el n&uacute;mero de la cotizaci&oacute;n.</p>
+    
+
+    <h2 id="s3"><span class="num">03</span>La forma del pago, y por qu&eacute; no aparece en el margen</h2>
+      <p>Dos proveedores, mismo costo puesto en destino, mismo producto.</p>
+      <ul>
+        <li><strong>Proveedor A:</strong> 30&nbsp;% al pedido, 70&nbsp;% antes del embarque.</li>
+        <li><strong>Proveedor B:</strong> 20&nbsp;% al pedido, 80&nbsp;% treinta d&iacute;as despu&eacute;s del embarque.</li>
+      </ul>
+      <p>Tu margen de producto es id&eacute;ntico byte por byte. Tu negocio no.</p>
+      <p>La raz&oacute;n es la forma de la brecha entre pagar y cobrar. Un vendedor de Amazon le paga a una f&aacute;brica, espera la producci&oacute;n, espera un barco, espera la recepci&oacute;n en Amazon, vende durante semanas y luego vuelve a esperar el ciclo de dep&oacute;sitos de Amazon. El efectivo sale temprano y regresa tarde, y el intervalo se mide en meses.</p>
+      <p>Dos n&uacute;meros describen esa brecha. Casi nadie calcula ninguno de los dos:</p>
+<pre><code>brecha de conversi&oacute;n de efectivo = d&iacute;as entre el primer pago al proveedor
+                                   y el primer dep&oacute;sito de Amazon
+                                   generado por ese inventario
+
+exposici&oacute;n m&aacute;xima                = el monto m&aacute;s alto que tienes fuera de bolsillo
+                                   en cualquier punto del ciclo</code></pre>
+      <p>El margen te dice cu&aacute;nto gana una unidad. Estos dos te dicen cu&aacute;nto cuesta <em>esperar</em> por eso, y cu&aacute;nto de tu negocio queda amarrado mientras esperas.</p>
+    
+
+    <h2 id="s4"><span class="num">04</span>&iquest;Entonces qu&eacute; proveedor sale realmente m&aacute;s barato?</h2>
+      <p>Ahora haz que los dos proveedores tambi&eacute;n difieran en precio, como pasa en la realidad — el m&aacute;s barato es m&aacute;s lento y quiere su dinero antes.</p>
+
+      <div class="spec">
+        <h4>Mismo producto, 3,000 unidades, se vende a $35</h4>
+        <dl>
+          <dt>Efectivo de vuelta por unidad tras tarifas de Amazon y publicidad</dt><dd>$12.00</dd>
+          <dt>Ritmo de venta una vez vendible</dt><dd>50/d&iacute;a</dd>
+          <dt>Proveedor A — costo puesto en destino</dt><dd>$6.80</dd>
+          <dt>Proveedor A — t&eacute;rminos · producci&oacute;n · tr&aacute;nsito</dt><dd>30/70 · 45d · 30d</dd>
+          <dt>Proveedor B — costo puesto en destino</dt><dd>$7.20</dd>
+          <dt>Proveedor B — t&eacute;rminos · producci&oacute;n · tr&aacute;nsito</dt><dd>20/80 neto 30 · 25d · 30d</dd>
+        </dl>
+      </div>
+
+      <p>A es 5.6&nbsp;% m&aacute;s barato por unidad. Todo el instinto dice t&oacute;malo. Mira lo que hace el efectivo.</p>
+
+      <figure class="art-diagram">
+        <h4>Exposici&oacute;n de efectivo a lo largo de un ciclo de compra</h4>
+        <p class="sub">Qu&eacute; tan fuera de bolsillo est&aacute;s, d&iacute;a a d&iacute;a, desde el primer pago hasta la recuperaci&oacute;n total.</p>
+        <div class="legend">
+          <span><i class="swatch" style="background:var(--ser-a)"></i>Proveedor A — $6.80, 30/70, 75d hasta vendible</span>
+          <span><i class="swatch" style="background:var(--ser-b)"></i>Proveedor B — $7.20, 20/80 neto 30, 55d hasta vendible</span>
+        </div>
+        <svg viewBox="0 0 700 300" role="img" aria-label="Dos curvas de exposici&oacute;n de efectivo a lo largo de 140 d&iacute;as. El proveedor A salta a 6,120 d&oacute;lares fuera de bolsillo el d&iacute;a 0, a 20,400 el d&iacute;a 45, se mantiene ah&iacute; hasta el d&iacute;a 95 y vuelve a cero el d&iacute;a 129. El proveedor B salta a 4,320 el d&iacute;a 0, a 21,600 el d&iacute;a 55, se mantiene ah&iacute; hasta el d&iacute;a 75 y vuelve a cero el d&iacute;a 111.">
+          <line class="grid" x1="66" y1="40" x2="672" y2="40" stroke="var(--rule-strong)"></line>
+          <line class="grid" x1="66" y1="87.7" x2="672" y2="87.7" stroke-dasharray="2 4"></line>
+          <line class="grid" x1="66" y1="135.5" x2="672" y2="135.5" stroke-dasharray="2 4"></line>
+          <line class="grid" x1="66" y1="183.2" x2="672" y2="183.2" stroke-dasharray="2 4"></line>
+          <line class="grid" x1="66" y1="231" x2="672" y2="231" stroke-dasharray="2 4"></line>
+          <text class="ax" x="58" y="43" text-anchor="end">$0</text>
+          <text class="ax" x="58" y="91" text-anchor="end">−$5k</text>
+          <text class="ax" x="58" y="139" text-anchor="end">−$10k</text>
+          <text class="ax" x="58" y="186" text-anchor="end">−$15k</text>
+          <text class="ax" x="58" y="234" text-anchor="end">−$20k</text>
+
+          <path fill="var(--ser-a-fill)" stroke="none" d="M66,40 L66,98.4 L260.8,98.4 L260.8,234.7 L477.2,234.7 L624.4,40 Z"></path>
+          <path fill="var(--ser-b-fill)" stroke="none" d="M66,40 L66,81.2 L304.1,81.2 L304.1,246.2 L390.7,246.2 L546.5,40 Z"></path>
+
+          <polyline fill="none" stroke="var(--ser-a)" stroke-width="2" stroke-linejoin="round"
+                    points="66,40 66,98.4 260.8,98.4 260.8,234.7 477.2,234.7 624.4,40"></polyline>
+          <polyline fill="none" stroke="var(--ser-b)" stroke-width="2" stroke-linejoin="round"
+                    points="66,40 66,81.2 304.1,81.2 304.1,246.2 390.7,246.2 546.5,40"></polyline>
+
+          <circle cx="624.4" cy="40" r="4.5" fill="var(--ser-a)" stroke="var(--panel)" stroke-width="2"></circle>
+          <circle cx="546.5" cy="40" r="4.5" fill="var(--ser-b)" stroke="var(--panel)" stroke-width="2"></circle>
+
+          <text class="anno" x="270" y="228">A · −$20,400</text>
+          <text class="anno-2" x="270" y="240">saldo el d&iacute;a 45</text>
+          <text class="anno" x="314" y="262">B · −$21,600</text>
+          <text class="anno-2" x="314" y="274">saldo el d&iacute;a 55</text>
+          <text class="anno" x="540" y="30" text-anchor="end">B recupera · d&iacute;a 111</text>
+          <text class="anno" x="668" y="60" text-anchor="end">A recupera · d&iacute;a 129</text>
+
+          <line class="grid" x1="66" y1="40" x2="672" y2="40" stroke="var(--rule-strong)"></line>
+          <text class="ax" x="66" y="290">d&iacute;a 0</text>
+          <text class="ax" x="195.9" y="290" text-anchor="middle">30</text>
+          <text class="ax" x="325.7" y="290" text-anchor="middle">60</text>
+          <text class="ax" x="455.6" y="290" text-anchor="middle">90</text>
+          <text class="ax" x="585.5" y="290" text-anchor="middle">120</text>
+        </svg>
+        <figcaption>B queda algo m&aacute;s expuesto en el punto m&aacute;s bajo, durante 34 d&iacute;as menos. La exposici&oacute;n m&aacute;xima casi no cambia; lo que los separa es el tiempo que pasas en ese m&aacute;ximo.</figcaption>
+      </figure>
+
+      <p>Convierte la duraci&oacute;n del ciclo en cu&aacute;ntas veces al a&ntilde;o trabaja el mismo dinero:</p>
+
+      <div class="tblwrap">
+<div class="tblwrap"><table>
+          <caption>La contribuci&oacute;n por unidad es $12.00 menos el costo puesto en destino. Las vueltas por a&ntilde;o son 365 ÷ d&iacute;as de ciclo.</caption>
+          <thead>
+            <tr><th scope="col">Por a&ntilde;o</th><th scope="col">Proveedor A</th><th scope="col">Proveedor B</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Contribuci&oacute;n por unidad</td><td>$5.20</td><td>$4.80</td></tr>
+            <tr><td>Ciclo de efectivo</td><td>129 d&iacute;as</td><td>111 d&iacute;as</td></tr>
+            <tr><td>Vueltas de capital por a&ntilde;o</td><td>2.83</td><td>3.29</td></tr>
+            <tr><td>Capital desplegado</td><td>$20,400</td><td>$21,600</td></tr>
+            <tr><td>Contribuci&oacute;n anual</td><td>$44,148</td><td>$47,376</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <p>El proveedor m&aacute;s barato gana <strong>$3,200 menos al a&ntilde;o</strong> con el mismo capital — y eso antes de contar lo que cuestan sus 20 d&iacute;as extra de tiempo de reposici&oacute;n en stock de seguridad y riesgo de quiebre de stock.</p>
+      <p>Agrega un segundo producto compitiendo por el mismo efectivo y la diferencia crece, porque la restricci&oacute;n no es el precio. Es cu&aacute;nto tiempo se queda atorado cada d&oacute;lar.</p>
+
+      <div class="fixbox">
+        <span class="fixbox-k">La regla</span>
+        <p>Compara proveedores por <strong>contribuci&oacute;n por d&oacute;lar por a&ntilde;o</strong>, no por precio por unidad. El precio es uno de los insumos. Los t&eacute;rminos y el tiempo de reposici&oacute;n son los otros dos, y suelen pesar m&aacute;s.</p>
+      </div>
+    
+
+    <h2 id="s5"><span class="num">05</span>Convertir una orden de compra en pagos con fecha</h2>
+      <p>Una orden de compra de $21,000 no es un evento de efectivo por $21,000 en una sola fecha. Es un conjunto de obligaciones, cada una con un monto y una regla de cu&aacute;ndo cae. Cuatro disparadores cubren pr&aacute;cticamente cualquier contrato real:</p>
+      <ul>
+        <li><strong>Al pedido</strong> — con la fecha de la orden de compra. Se conoce de inmediato.</li>
+        <li><strong>Al embarque</strong> — con la fecha en que sale la mercanc&iacute;a. Estimado hasta que sale.</li>
+        <li><strong>N d&iacute;as despu&eacute;s del embarque</strong> — el mismo ancla, m&aacute;s un desfase fijo.</li>
+        <li><strong>En una fecha fija</strong> — con la fecha acordada.</li>
+      </ul>
+      <p>Dos de esos cuatro cuelgan de un evento que a&uacute;n no ocurre, y de ah&iacute; sale la trampa:</p>
+
+      <div class="fixbox">
+        <span class="fixbox-k">Nunca guardes una fecha que derivaste de un estimado</span>
+        <p>Guarda el <em>disparador</em> y el <em>desfase</em>, y calcula la fecha al leer. Si guardas la fecha calculada y luego mueves dos semanas el estimado de embarque, cada fecha de vencimiento aguas abajo conserva en silencio el valor viejo — y nada en ning&uacute;n lado te avisa que el calendario ya es ficci&oacute;n.</p>
+        <p>Y cuando el ancla todav&iacute;a no existe, dilo. Un pago que muestra &laquo;sin anclar — a la espera de la fecha de embarque&raquo; es honesto. Uno fechado en silencio con la fecha de la orden de compra parece un hecho y es una adivinanza.</p>
+      </div>
+
+      <p>Esta es la diferencia entre un calendario que envejece bien y uno que se pudre en silencio. Es la misma disciplina que en el resto del stack: guarda los insumos, deriva los resultados y etiqueta lo que es derivado.</p>
+    
+
+    <h2 id="s6"><span class="num">06</span>Comprometido, programado, por pagar</h2>
+      <p>&laquo;&iquest;Cu&aacute;nto le debo a mis proveedores?&raquo; tiene tres respuestas leg&iacute;timas, y mezclarlas es c&oacute;mo un mes que se ve c&oacute;modo se convierte en una carrera contra el reloj.</p>
+
+      <div class="bands">
+        <div class="band c"><span class="lab">Comprometido</span><span class="txt">El valor total de las &oacute;rdenes de compra abiertas. Lo que prometiste, sin importar cu&aacute;ndo cae.</span></div>
+        <div class="band s"><span class="lab">Programado</span><span class="txt">Cuotas con un disparador y una fecha, todav&iacute;a sin pagar. Lo que viene, y cu&aacute;ndo.</span></div>
+        <div class="band d"><span class="lab">Por pagar</span><span class="txt">Programado y dentro de tu ventana de planeaci&oacute;n — los pr&oacute;ximos 7, 30 o 60 d&iacute;as.</span></div>
+      </div>
+
+      <p>Tres productos en producci&oacute;n al mismo tiempo — $10,000, $15,000, $20,000 — son $45,000 comprometidos. Con anticipos de 30&nbsp;% son $13,500 por pagar ahora, y eso se lee c&oacute;modo. Los $31,500 restantes llegan semanas despu&eacute;s, y llegan junto con la inversi&oacute;n publicitaria, las facturas de flete, el software y los saldos que ya estaban programados.</p>
+      <p>Nada sali&oacute; mal. Tres decisiones razonables simplemente cayeron en la misma quincena.</p>
+    
+
+    <h2 id="s7"><span class="num">07</span>El peligro es el traslape, no una orden individual</h2>
+      <p>Una sola orden de compra casi nunca causa un problema de efectivo. El problema es la vista de calendario que nadie arma.</p>
+      <p>Las preguntas por proveedor — <em>&iquest;cu&aacute;ndo le pago al Proveedor A?</em> — tienen el grano equivocado. El negocio no vive a los proveedores de uno en uno; vive una semana en la que salen $18,400 de la cuenta.</p>
+      <p>As&iacute; que la vista &uacute;til es una ventana hacia adelante sobre todo a la vez:</p>
+<pre><code>Pr&oacute;ximos 7 d&iacute;as   $18,400 por pagar       2 cuotas
+Pr&oacute;ximos 30 d&iacute;as  $47,200 programados     5 cuotas + flete
+Pr&oacute;ximos 60 d&iacute;as  $91,500 comprometidos   incl. 2 &oacute;rdenes sin programar</code></pre>
+      <p>Y la &uacute;nica alerta que vale la pena correr autom&aacute;ticamente: <strong>&iquest;hay alg&uacute;n pago que vence antes de que el inventario que est&aacute; pagando se convierta en efectivo de Amazon?</strong> Eso no es una regla de dedo — es una comparaci&oacute;n de dos fechas que ya tienes, y es la forma exacta de todo apret&oacute;n de efectivo causado por el inventario.</p>
+      <p>Un panel de proveedores que lista cincuenta &oacute;rdenes de compra no te dijo nada. Uno que dice <em>&laquo;dos pagos caen antes que el efectivo del que dependen&raquo;</em> hizo el trabajo completo.</p>
+    
+
+    <h2 id="s8"><span class="num">08</span>Un costo, un due&ntilde;o</h2>
+      <p>Volvamos a los dos datos que comparten las mitades de una orden de compra. As&iacute; es como se separan.</p>
+      <p>Un proveedor sube el precio de $7.20 a $7.80. La nueva orden de compra registra $7.80 correctamente. El modelo de margen sigue guardando $7.20, porque se llen&oacute; por separado — o porque recalcula a partir de una cifra en cach&eacute; que nadie mand&oacute; a actualizar.</p>
+      <p>Nadie cometi&oacute; un error. Simplemente no hab&iacute;a un camino de la orden de compra al n&uacute;mero de rentabilidad, y ahora el negocio se ve 8&nbsp;% m&aacute;s rentable de lo que es en cada pantalla que importa.</p>
+      <p>La regla es estructural, no de procedimiento:</p>
+      <ul>
+        <li><strong>La orden de compra es la fuente de verdad del costo unitario.</strong> El margen la lee; nunca guarda su propia copia.</li>
+        <li><strong>Un cambio de costo recalcula lo que depende de &eacute;l,</strong> autom&aacute;ticamente. Si recalcular es un bot&oacute;n que alguien tiene que recordar, cada n&uacute;mero aguas abajo est&aacute; viejo por defecto.</li>
+        <li><strong>Los estimados se etiquetan como estimados.</strong> Flete proyectado, aranceles supuestos, una cotizaci&oacute;n que vence en 30 d&iacute;as — marca los tres, para que un margen construido sobre ellos se declare a s&iacute; mismo.</li>
+        <li><strong>Una factura real reemplaza a su estimado,</strong> en vez de sumarse junto a &eacute;l. Si no, el flete se cuenta dos veces, una como adivinanza y otra como cuenta.</li>
+      </ul>
+      <p>Enc&aacute;denalo: <strong>proveedor → orden de compra → costo → producto → margen</strong>. Cada eslab&oacute;n es una lectura, no una copia.</p>
+    
+
+    <h2 id="s9"><span class="num">09</span>La ficha de proveedor para la que ya tienes los datos</h2>
+      <p>La mayor&iacute;a de los registros de proveedor son tarjetas de contacto — un nombre, un correo, un n&uacute;mero de WhatsApp. Eso es una libreta de direcciones, no una cadena de suministro.</p>
+      <p>El registro &uacute;til es un historial, y casi todos sus campos son un subproducto de &oacute;rdenes que ya corriste:</p>
+      <ul>
+        <li><strong>Historial de precios</strong> por SKU, con fechas. Responde &laquo;&iquest;esto ha ido subiendo?&raquo; sin abrir correos viejos.</li>
+        <li><strong>T&eacute;rminos de pago</strong>, para que una orden de compra nueva los herede en vez de teclearse otra vez.</li>
+        <li><strong>Tiempo de producci&oacute;n prometido vs. real</strong> — cotiz&oacute; 25 d&iacute;as, promedi&oacute; 34 en las &uacute;ltimas seis &oacute;rdenes.</li>
+        <li><strong>Llegada prometida vs. real</strong>, que es el n&uacute;mero con el que deber&iacute;as dimensionar tu stock de seguridad.</li>
+        <li><strong>Costo puesto en destino estimado vs. real</strong>, para que los supuestos de flete mejoren.</li>
+        <li><strong>Tasa de defectos y de rechazo</strong>, que es un a&ntilde;adido silencioso al costo unitario.</li>
+        <li><strong>MOQ, moneda, incoterms</strong>, para que las cotizaciones sean comparables de un vistazo.</li>
+      </ul>
+      <p>El hallazgo de 25 cotizados contra 34 reales, una y otra vez, es el que paga todo el ejercicio. Mueve nueve d&iacute;as cada fecha de reposici&oacute;n de ese proveedor — y nueve d&iacute;as son la diferencia entre una reposici&oacute;n c&oacute;moda y una decisi&oacute;n de flete a&eacute;reo.</p>
+      <blockquote>
+    <p>No est&aacute;s recolectando datos de proveedores. Est&aacute;s guardando los recibos de experimentos que ya corriste.</p>
+  </blockquote>
+    
+
+    <h2 id="s10"><span class="num">10</span>El que embosca a los importadores</h2>
+      <p>Si le pagas a una f&aacute;brica en USD, el flete en EUR y los aranceles en tu moneda local, un costo puesto en destino que suma los montos crudos est&aacute; mal por todo lo que se haya movido el mercado.</p>
+      <p>Tres reglas lo mantienen honesto:</p>
+      <ul>
+        <li><strong>Guarda la moneda y el tipo de cambio en cada pago</strong>, junto con el monto convertido. No una configuraci&oacute;n global — una propiedad de la transacci&oacute;n.</li>
+        <li><strong>Convierte al tipo de cambio del d&iacute;a en que se movi&oacute; el dinero</strong>, no al de hoy. Un anticipo pagado en marzo se pag&oacute; al tipo de marzo, para siempre.</li>
+        <li><strong>Los pagos futuros programados cargan un tipo de cambio supuesto</strong>, y deber&iacute;an etiquetarse as&iacute; — el monto se conoce en la moneda del proveedor, no en la tuya.</li>
+      </ul>
+      <p>Para un vendedor con exposici&oacute;n cambiaria relevante esto mueve en silencio el costo puesto en destino varios puntos porcentuales, y eso alcanza para reordenar la lista de qu&eacute; productos vale la pena reponer.</p>
+    
+
+    <h2 id="s11"><span class="num">11</span>Lo esperado contra lo real</h2>
+      <p>Cada orden de compra es un conjunto de predicciones que despu&eacute;s se resuelven. Registrar c&oacute;mo se resolvieron es lo que hace mejor a la siguiente orden — y es lo m&aacute;s barato de esta lista, porque la realidad te da los datos gratis.</p>
+
+      <div class="tblwrap">
+<div class="tblwrap"><table>
+          <caption>Cinco predicciones por orden. Cada una se cierra por su cuenta y cada una mejora un supuesto espec&iacute;fico para la pr&oacute;xima vez.</caption>
+          <thead>
+            <tr><th scope="col">Lo que predices</th><th scope="col">Lo que mejora</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Tiempo de producci&oacute;n</td><td>Momento de reposici&oacute;n</td></tr>
+            <tr><td>Fecha de llegada</td><td>Stock de seguridad</td></tr>
+            <tr><td>Costo puesto en destino</td><td>Precisi&oacute;n del margen</td></tr>
+            <tr><td>Fecha de pago</td><td>Pron&oacute;stico de efectivo</td></tr>
+            <tr><td>Ritmo de venta</td><td>Cantidad a ordenar</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <p>El error sistem&aacute;tico es un problema de configuraci&oacute;n. El error aleatorio es el clima. No puedes distinguirlos sin el registro, y despu&eacute;s de cinco o seis &oacute;rdenes por proveedor el patr&oacute;n es inconfundible.</p>
+      <p>Que es la verdadera respuesta a la pregunta sobre precisi&oacute;n: el sistema no se vuelve mejor prediciendo. Tus supuestos quedan mejor informados por tu propio historial.</p>
+    
+
+    <h2 id="s12"><span class="num">12</span>Cinco n&uacute;meros, juntos</h2>
+      <p>Para cualquier producto que considerar&iacute;as reponer, estos cinco van en una sola pantalla. Por separado son reportes. Juntos son una decisi&oacute;n.</p>
+
+      <ul class="five">
+        <li><span class="n">01</span><span><b>Contribuci&oacute;n por unidad</b><span class="d">Lo que gana despu&eacute;s del costo puesto en destino, las tarifas de Amazon y la publicidad.</span></span></li>
+        <li><span class="n">02</span><span><b>Cobertura restante</b><span class="d">Unidades disponibles y en tr&aacute;nsito, a la velocidad de ventas actual, en d&iacute;as.</span></span></li>
+        <li><span class="n">03</span><span><b>Fecha l&iacute;mite para ordenar</b><span class="d">Cu&aacute;ndo hay que colocar la siguiente orden de compra, con el tiempo de reposici&oacute;n medido.</span></span></li>
+        <li><span class="n">04</span><span><b>Efectivo requerido, y cu&aacute;ndo</b><span class="d">Las cuotas que crea esa orden, en sus fechas.</span></span></li>
+        <li><span class="n">05</span><span><b>Fecha de recuperaci&oacute;n del efectivo</b><span class="d">Cu&aacute;ndo el inventario resultante empieza a devolver dinero.</span></span></li>
+      </ul>
+
+      <p>Los n&uacute;meros 4 y 5 son el par que casi nadie tiene, y son los que convierten &laquo;&iquest;debo reponer?&raquo; en una pregunta con respuesta real. La distancia entre los dos es tu brecha de conversi&oacute;n de efectivo. Todo en este art&iacute;culo existe para hacer visible esa distancia antes de que te comprometas con ella.</p>
+    
+
+    <h2 id="s13">Preguntas frecuentes</h2>
+      <div class="faq">
+        <details open>
+          <summary>&iquest;C&oacute;mo le doy seguimiento a los calendarios de pago a proveedores en un negocio de Amazon?</summary>
+          <p>Registra cada orden de compra como un conjunto de cuotas con fecha, no como un solo total. Cada cuota necesita un monto, un disparador (al pedido, al embarque, N d&iacute;as despu&eacute;s del embarque o una fecha fija) y un estado de pagada o no pagada. Guarda el disparador y el desfase en vez de la fecha calculada, para que el calendario se actualice cuando se mueva tu estimado de embarque. Despu&eacute;s m&iacute;ralos a trav&eacute;s de todas las &oacute;rdenes de compra en un calendario hacia adelante, no proveedor por proveedor.</p>
+        </details>
+        <details>
+          <summary>&iquest;Qu&eacute; proveedor sale m&aacute;s barato — el de menor precio o el de mejores t&eacute;rminos?</summary>
+          <p>Compara contribuci&oacute;n por d&oacute;lar por a&ntilde;o en vez de precio por unidad. Un proveedor 5&nbsp;% m&aacute;s caro pero 20 d&iacute;as m&aacute;s r&aacute;pido y al que le pagas m&aacute;s tarde puede producir m&aacute;s contribuci&oacute;n anual con el mismo capital, porque el dinero completa m&aacute;s ciclos. El precio es uno de tres insumos; los t&eacute;rminos y el tiempo de reposici&oacute;n son los otros.</p>
+        </details>
+        <details>
+          <summary>&iquest;Qu&eacute; es la brecha de conversi&oacute;n de efectivo para un vendedor de Amazon?</summary>
+          <p>El n&uacute;mero de d&iacute;as entre tu primer pago al proveedor y el primer dep&oacute;sito de Amazon proveniente de ese inventario. Abarca el anticipo, la producci&oacute;n, el flete, la recepci&oacute;n en Amazon, el periodo de venta y el ciclo de pagos de Amazon — normalmente de 90 a 150 d&iacute;as. Es la mejor medida que existe de cu&aacute;nto capital de trabajo necesita un producto.</p>
+        </details>
+        <details>
+          <summary>&iquest;Debo asignar el flete a productos individuales?</summary>
+          <p>S&iacute;, para el costo puesto en destino — el flete es parte de lo que cuesta una unidad vendible. Reparte el flete de un embarque entre sus SKU por unidades o por volumen, lo que coincida con c&oacute;mo te lo cobraron, y etiqu&eacute;talo como un reparto. Lo que no deber&iacute;as hacer es repartir los gastos generales de la empresa entre las unidades.</p>
+        </details>
+        <details>
+          <summary>&iquest;Por qu&eacute; mi margen no coincide con mis &oacute;rdenes de compra?</summary>
+          <p>Casi siempre porque el modelo de margen guarda su propia copia del costo unitario, o lee una cifra en cach&eacute; que nadie actualiz&oacute; despu&eacute;s de que cambi&oacute; la orden de compra. La soluci&oacute;n es estructural: la orden de compra es la fuente de verdad, el margen la lee, y un cambio de costo recalcula autom&aacute;ticamente en vez de esperar a que alguien apriete un bot&oacute;n.</p>
+        </details>
+        <details>
+          <summary>&iquest;Qu&eacute; deber&iacute;a registrar de un proveedor adem&aacute;s de sus datos de contacto?</summary>
+          <p>T&eacute;rminos de pago, MOQ, moneda e incoterms para que las cotizaciones sean comparables; y el historial que generan tus propias &oacute;rdenes — precio por SKU en el tiempo, d&iacute;as de producci&oacute;n prometidos contra reales, llegada prometida contra real, costo puesto en destino estimado contra real, y tasa de defectos. La brecha entre el tiempo de reposici&oacute;n cotizado y el real suele ser el n&uacute;mero m&aacute;s valioso del registro.</p>
+        </details>
+        <details>
+          <summary>&iquest;Con cu&aacute;nta anticipaci&oacute;n debo pronosticar los pagos a proveedores?</summary>
+          <p>Al menos un ciclo completo de conversi&oacute;n de efectivo — de 90 a 150 d&iacute;as para la mayor&iacute;a de los importadores — porque ese es el tiempo que una decisi&oacute;n de hoy sigue afectando tu saldo. Las ventanas m&aacute;s cortas esconden justo el traslape que causa los aprietos.</p>
+        </details>
+      </div>
+    
+
+    <section class="sec">
+      <h2>Una orden de compra es una decisi&oacute;n financiera</h2>
+      <p>Los pagos a proveedores se archivan como administraci&oacute;n. Son el punto donde el inventario, el margen, el tiempo de reposici&oacute;n y el efectivo se vuelven la misma decisi&oacute;n — y el &uacute;nico lugar donde todav&iacute;a puedes cambiar de opini&oacute;n barato.</p>
+      <p>Qu&eacute; estoy comprando, cu&aacute;nto va a costar de verdad, cu&aacute;ndo pago, cu&aacute;ndo llega, qu&eacute; tan r&aacute;pido se vende, cu&aacute;nto va a aportar y qu&eacute; le hace todo eso a mi efectivo. Esas no son siete preguntas. Son una sola, hecha una vez, antes de mandar el anticipo.</p>
+    </section>
+
+  
+</main>
+
+<aside class="rail" aria-label="Cifras clave de este art&iacute;culo">
+  <div class="rail-card">
+    <span class="rail-k">Comparaci&oacute;n trabajada</span>
+    <span class="rail-v">3,000 unidades</span>
+    <p>Un producto a $35, que deja $12 por unidad despu&eacute;s de tarifas de Amazon y publicidad, vendiendo 50 al d&iacute;a una vez vendible.</p>
+  </div>
+  <div class="rail-card">
+    <span class="rail-k">La cotizaci&oacute;n no es el costo</span>
+    <span class="rail-v is-amber">$3,200</span>
+    <p>Lo que en realidad cuesta al a&ntilde;o el proveedor que parec&iacute;a m&aacute;s barato, una vez que cuentas el momento de los pagos.</p>
+  </div>
+  <div class="rail-card">
+    <span class="rail-k">Tres estados</span>
+    <span class="rail-v is-violet">Comprometido</span>
+    <p>Comprometido, programado, por pagar. Una orden de compra abierta es los tres en momentos distintos, y solo uno de ellos est&aacute; en tu banco esta semana.</p>
+  </div>
+  <p class="rail-src">Cifras del ejemplo trabajado de este mismo art&iacute;culo, no de un estudio de mercado.</p>
+</aside>
+
+</div><!-- /.shell -->
+
+</div><!-- /.wrap -->
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+  <symbol id="i-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12.5 17v-4a2.5 2.5 0 015 0v4"/></symbol>
+  <symbol id="i-tw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M20 4L4 20"/></symbol>
+  <symbol id="i-gh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4 1.4-4-2.2-5.6-2.6M15 21v-3.4a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 2.6 5.5 2.9 5.5 2.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 9.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></symbol>
+</defs>
+</svg>
+
+<footer class="footer">
+<div class="container">
+
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/index.html" class="brand" aria-label="Inicio de AmazeBase">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+        </svg>
+        <span data-brand>AmazeBase</span>
+      </a>
+      <p>El sistema operativo para vendedores de Amazon. Todo conectado, todo sincronizado.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Producto</h4>
+      <a href="/product.html#modules">Producto</a>
+      <a href="/index.html#pricing">Precios</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Recursos</h4>
+      <a href="/es/recursos.html">Centro de Conocimiento</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <a href="/about.html">Nosotros</a>
+      <a href="/contact.html">Contacto</a>
+      <a href="/privacy.html">Privacidad</a>
+      <a href="/terms.html">T&eacute;rminos</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>&copy; 2026 <span data-brand>AmazeBase</span>. Todos los derechos reservados.</span>
+    <div class="footer-social">
+      <a href="#" aria-label="LinkedIn"><svg class="icon-sm"><use href="#i-in"/></svg></a>
+      <a href="#" aria-label="X"><svg class="icon-sm"><use href="#i-tw"/></svg></a>
+      <a href="#" aria-label="GitHub"><svg class="icon-sm"><use href="#i-gh"/></svg></a>
+    </div>
+  </div>
+
+</div>
+</footer>
+
+<script src="/js/main.js" defer></script>
+</body>
+</html>

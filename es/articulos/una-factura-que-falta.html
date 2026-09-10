@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Una factura que falta &mdash; AmazeBase</title>
+
+<meta name="description" content="Por qu&eacute; un vac&iacute;o en una esquina de tu operaci&oacute;n de Amazon no se queda en esa esquina &mdash; y c&oacute;mo saber cu&aacute;les vac&iacute;os s&iacute; importan.">
+<meta name="theme-color" content="#030917">
+<meta name="author" content="AmazeBase">
+<meta property="og:title" content="One missing invoice">
+<meta property="og:description" content="Why a gap in one corner of your Amazon operation doesn&#x27;t stay in that corner — and how to tell which gaps actually matter.">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+/* ==========================================================================
+   ARTICLE — Amazon Inventory Forecasting
+   Self-contained. Tokens mirror css/variables.css so this page can either
+   stand alone OR have this <style> block deleted once it sits inside the
+   site's normal stylesheet chain.
+========================================================================== */
+
+:root{
+  --z-nav:100;          /* navigation.css */
+  --container:1280px;   /* .container, below */
+  --t-body:15px;        /* .btn, below */
+  --bg:#030917; --bg-deep:#01050E; --bg-raise:#060D1E;
+  --surface:rgba(255,255,255,.030); --surface-2:rgba(255,255,255,.055);
+  --surface-solid:#0A1224;
+  --line:rgba(255,255,255,.070); --line-strong:rgba(255,255,255,.140);
+
+  --text:#EEF1F8; --text-2:#98A2B8; --text-3:#616C84;
+
+  --violet:#8B3BF1; --violet-soft:#A971F7; --indigo:#5B4FE6;
+  --blue:#3B82F6; --blue-soft:#7EB3FF;
+  --green:#2ED47A; --amber:#F5A524; --red:#F0435C;
+
+  --grad-brand:linear-gradient(135deg,#5B4FE6 0%,#8B3BF1 100%);
+  --grad-text:linear-gradient(90deg,#6153E6 0%,#9D50F7 55%,#C56BF5 100%);
+  --grad-card:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  --grad-rule:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,monospace;
+
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px;
+  --s5:48px; --s6:64px; --s7:96px; --s8:128px;
+
+  --gutter:clamp(20px,4vw,40px);
+  --measure:720px;
+
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
+  --sh-2:0 18px 40px rgba(0,0,0,.42);
+  --sh-brand:0 16px 40px rgba(107,63,232,.35);
+  --ease:cubic-bezier(.22,.61,.36,1); --fast:.18s; --mid:.28s;
+
+  color-scheme:dark;
+  scrollbar-color:#26304A var(--bg);
+  scrollbar-width:thin;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation:none !important; transition:none !important; }
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+::selection{ background:var(--violet); color:#fff; }
+
+.skip-link{
+  position:absolute; left:-9999px; top:0;
+  background:var(--surface-solid); color:var(--text);
+  padding:12px 20px; border-radius:0 0 var(--r-sm) 0;
+  z-index:1000; text-decoration:none; font-weight:600;
+}
+.skip-link:focus{ left:0; }
+
+:focus-visible{
+  outline:2px solid var(--violet-soft);
+  outline-offset:3px;
+  border-radius:var(--r-xs);
+}
+
+/* ---------- ambient background ------------------------------------------ */
+.bg-layer{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(760px 520px at 18% -8%,  rgba(91,79,230,.20), transparent 62%),
+    radial-gradient(680px 480px at 88% 4%,   rgba(139,59,241,.15), transparent 60%),
+    radial-gradient(900px 700px at 50% 108%, rgba(59,130,246,.09), transparent 66%);
+}
+
+.wrap{ position:relative; z-index:1; }
+
+/* ---------- shell ------------------------------------------------------- */
+.article{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:0 var(--gutter) var(--s8);
+}
+
+/* ---------- header ------------------------------------------------------ */
+.article-head{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:clamp(64px,9vw,120px) var(--gutter) clamp(32px,4vw,48px);
+}
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--violet-soft);
+  background:var(--surface); border:1px solid var(--line);
+  padding:7px 14px; border-radius:var(--r-pill);
+  margin:0 0 var(--s3);
+}
+.eyebrow::before{
+  content:""; width:6px; height:6px; border-radius:50%;
+  background:var(--violet-soft);
+  box-shadow:0 0 10px rgba(169,113,247,.9);
+}
+
+h1{
+  font-size:clamp(34px,5vw,58px);
+  line-height:1.08;
+  letter-spacing:-.025em;
+  font-weight:800;
+  margin:0 0 var(--s3);
+  text-wrap:balance;
+}
+h1 .accent{
+  background:var(--grad-text);
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+}
+
+.deck{
+  font-size:clamp(18px,2.1vw,21px);
+  line-height:1.6;
+  color:var(--text-2);
+  margin:0 0 var(--s4);
+  max-width:62ch;
+}
+
+.meta{
+  display:flex; flex-wrap:wrap; align-items:center; gap:var(--s2);
+  font-size:14px; color:var(--text-3);
+  padding-top:var(--s3);
+  border-top:1px solid var(--line);
+}
+.meta .dot{ width:3px; height:3px; border-radius:50%; background:var(--text-3); }
+
+/* ---------- table of contents ------------------------------------------- */
+.toc{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:0 0 var(--s6);
+}
+.toc h2{
+  font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--text-3); margin:0 0 var(--s3); padding:0; border:0;
+}
+.toc ol{
+  list-style:none; margin:0; padding:0;
+  counter-reset:toc;
+  display:grid; gap:2px;
+}
+.toc li{ counter-increment:toc; margin:0; }
+.toc a{
+  display:flex; gap:14px; align-items:baseline;
+  color:var(--text-2); text-decoration:none;
+  font-size:15px; line-height:1.5;
+  padding:8px 10px; margin:0 -10px;
+  border-radius:var(--r-xs);
+  transition:color var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+.toc a::before{
+  content:counter(toc,decimal-leading-zero);
+  font-family:var(--font-mono); font-size:12px; font-weight:600;
+  color:var(--text-3); flex:none; min-width:22px;
+  transition:color var(--fast) var(--ease);
+}
+.toc a:hover{ color:var(--text); background:var(--surface); }
+.toc a:hover::before{ color:var(--violet-soft); }
+
+/* ---------- body typography --------------------------------------------- */
+.article p{ margin:0 0 1.1em; color:#D5DBE9; }
+.article p.lead{ font-size:20px; color:var(--text); }
+
+.article h2{
+  font-size:clamp(26px,3.2vw,34px);
+  line-height:1.2;
+  letter-spacing:-.02em;
+  font-weight:700;
+  color:var(--text);
+  margin:var(--s7) 0 var(--s3);
+  padding-top:var(--s5);
+  border-top:1px solid var(--line);
+  scroll-margin-top:32px;
+  text-wrap:balance;
+}
+.article h2:first-of-type{ margin-top:0; }
+
+.article h2 .num{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:13px; font-weight:600; letter-spacing:.16em;
+  color:var(--violet-soft);
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
+
+.article strong{ color:var(--text); font-weight:700; }
+
+.article ul{
+  margin:0 0 1.4em;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:10px;
+}
+.article ul li{
+  position:relative;
+  padding-left:26px;
+  color:#D5DBE9;
+  line-height:1.6;
+}
+.article ul li::before{
+  content:"";
+  position:absolute; left:6px; top:.68em;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--violet);
+  box-shadow:0 0 8px rgba(139,59,241,.55);
+}
+
+/* ---------- pull quote --------------------------------------------------- */
+blockquote{
+  margin:var(--s4) 0;
+  padding:var(--s3) var(--s4);
+  border-left:2px solid var(--violet);
+  background:linear-gradient(90deg,rgba(139,59,241,.10),transparent 80%);
+  border-radius:0 var(--r-md) var(--r-md) 0;
+}
+blockquote p{
+  margin:0;
+  font-size:20px;
+  line-height:1.5;
+  font-weight:600;
+  color:var(--text);
+}
+
+/* ---------- callouts ----------------------------------------------------- */
+.callout{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:var(--s4) 0 var(--s5);
+}
+.callout .label{
+  display:block;
+  font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--text-3);
+  margin-bottom:var(--s2);
+}
+.callout p:last-child, .callout ul:last-child{ margin-bottom:0; }
+
+.formula{
+  font-family:var(--font-mono);
+  font-size:clamp(15px,2.1vw,19px);
+  font-weight:600;
+  line-height:1.6;
+  color:var(--text);
+  background:var(--bg-deep);
+  border:1px solid var(--line-strong);
+  border-radius:var(--r-md);
+  padding:var(--s3);
+  margin:0 0 var(--s3);
+  text-align:center;
+  overflow-x:auto;
+}
+.formula .op{ color:var(--violet-soft); }
+
+/* ---------- numbers strip ------------------------------------------------ */
+.figures{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:var(--s2);
+  margin:var(--s4) 0 var(--s5);
+  padding:0; list-style:none;
+}
+.figures li{ padding:0; }
+.figures li::before{ display:none; }
+.fig{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:var(--s3) var(--s2);
+  text-align:center;
+}
+.fig .v{
+  display:block;
+  font-size:28px; font-weight:800; letter-spacing:-.02em; line-height:1.1;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.fig .k{
+  display:block;
+  font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.fig.is-bad .v{ color:var(--red); }
+.fig.is-real .v{ color:var(--green); }
+
+/* ---------- divider ------------------------------------------------------ */
+.rule{
+  height:1px; border:0;
+  background:var(--grad-rule);
+  margin:var(--s6) 0;
+}
+
+/* ---------- closing CTA -------------------------------------------------- */
+.cta{
+  max-width:var(--measure);
+  margin:var(--s7) auto 0;
+  padding:clamp(32px,5vw,56px) var(--gutter);
+  text-align:center;
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-xl);
+  box-shadow:var(--sh-2);
+}
+.cta h2{
+  font-size:clamp(24px,3vw,32px);
+  font-weight:700; letter-spacing:-.02em; line-height:1.2;
+  margin:0 0 var(--s2); padding:0; border:0;
+  text-wrap:balance;
+}
+.cta p{
+  color:var(--text-2);
+  max-width:52ch;
+  margin:0 auto var(--s4);
+  font-size:17px;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--grad-brand);
+  color:#fff; text-decoration:none;
+  font-weight:600; font-size:16px;
+  padding:14px 28px;
+  border-radius:var(--r-pill);
+  box-shadow:var(--sh-brand);
+  transition:transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+.btn:hover{ transform:translateY(-2px); box-shadow:0 22px 50px rgba(107,63,232,.45); }
+.btn svg{ width:18px; height:18px; }
+
+/* ---------- responsive --------------------------------------------------- */
+@media (max-width:640px){
+  body{ font-size:17px; }
+  .article p.lead{ font-size:18px; }
+  blockquote p{ font-size:18px; }
+  .article h2{ margin-top:var(--s6); padding-top:var(--s4); }
+}
+
+/* ---------- print -------------------------------------------------------- */
+@media print{
+  .bg-layer,.toc,.cta,.skip-link{ display:none; }
+  body{ background:#fff; color:#111; font-size:12pt; }
+  .article p,.article ul li{ color:#222; }
+  .article h2{ color:#000; }
+}
+.back-link{ margin:0 0 28px; font-size:13px; }
+.back-link a{ color:var(--text-2); text-decoration:none; }
+.back-link a:hover{ color:var(--text); }
+
+/* ── HERO IMAGE ─────────────────────────────────────────────────────── */
+.hero-shot{
+  margin:0 0 52px;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  background:var(--bg-raise);
+  line-height:0;
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+.hero-shot img{ width:100%; height:auto; display:block; }
+
+/* ── MISTAKE CARDS ──────────────────────────────────────────────────── */
+.mistake{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.mistake::before{
+  content:"";
+  position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+  background:var(--amber);
+}
+.mistake h2{ margin-top:0 !important; }
+.article .mistake h2:first-of-type{ margin-top:0; }
+
+/* ── PULL QUOTES ────────────────────────────────────────────────────── */
+blockquote{
+  margin:44px 0;
+  padding:0 0 0 26px;
+  border-left:3px solid var(--amber);
+  background:none;
+}
+blockquote p{
+  font-size:23px;
+  line-height:1.45;
+  font-style:italic;
+  font-weight:600;
+  color:var(--text);
+  margin:0;
+}
+
+/* ── MID-ARTICLE STRIP ──────────────────────────────────────────────── */
+.strip{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px; flex-wrap:wrap;
+  margin:44px 0;
+  padding:26px 30px;
+  border-radius:16px;
+  background:linear-gradient(120deg,#0A1224,#131A33);
+  border:1px solid var(--line-strong);
+}
+.strip h3{ margin:0 0 6px; font-size:19px; color:var(--text); }
+.strip p{ margin:0; font-size:14px; color:var(--text-2); }
+.strip-btn{
+  flex:0 0 auto;
+  display:inline-block;
+  padding:12px 22px;
+  border-radius:10px;
+  background:var(--amber);
+  color:#1A1200;
+  font-size:14px; font-weight:700;
+  text-decoration:none;
+  transition:filter .15s ease;
+}
+.strip-btn:hover{ filter:brightness(1.08); }
+
+@media (max-width:640px){
+  .mistake{ padding:24px 20px 8px; }
+  .mistake::before{ top:20px; bottom:20px; }
+  blockquote p{ font-size:20px; }
+  .strip{ padding:22px; }
+  .strip-btn{ width:100%; text-align:center; }
+}
+
+/* ── WIDE SHELL: content + rail, so the page uses the screen ─────────── */
+.shell{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 var(--gutter);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 300px;
+  gap:64px;
+  align-items:start;
+}
+.shell > .article{ max-width:none; margin:0; padding:0 0 var(--s8); }
+
+.rail{ position:sticky; top:40px; display:flex; flex-direction:column; gap:14px; }
+.rail-card{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+  padding:20px;
+}
+.rail-k{
+  display:block; margin-bottom:10px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.rail-v{
+  display:block; margin-bottom:10px;
+  font-size:34px; line-height:1; font-weight:800; letter-spacing:-.02em;
+  color:var(--green);
+}
+.rail-v.is-amber{ color:var(--amber); }
+.rail-v.is-violet{ color:var(--violet-soft); }
+.rail-card p{ margin:0; font-size:13px; line-height:1.55; color:var(--text-2); }
+.rail-src{
+  margin:0; padding-top:14px;
+  border-top:1px solid var(--line);
+  font-size:11px; line-height:1.5; color:var(--text-3);
+}
+
+/* header + hero align to the same shell */
+.article-head, .hero-shot{ max-width:1180px; }
+
+/* ── HERO: a band, not a giant square ───────────────────────────────── */
+.hero-shot{
+  margin:0 auto 56px;
+  padding:0 var(--gutter);
+  border:0; background:none; box-shadow:none;
+  border-radius:0;
+  overflow:visible;
+}
+.hero-shot img{
+  width:100%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
+  border-radius:18px;
+  border:1px solid var(--line-strong);
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+
+/* ── THE FIX callout ────────────────────────────────────────────────── */
+.fixbox{
+  margin:22px 0 4px;
+  padding:16px 18px;
+  border-radius:12px;
+  border:1px solid rgba(46,212,122,.28);
+  background:rgba(46,212,122,.07);
+}
+.fixbox-k{
+  display:block; margin-bottom:6px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--green);
+}
+.fixbox p{ margin:0 !important; color:var(--text) !important; }
+
+@media (max-width:1080px){
+  .shell{ grid-template-columns:1fr; gap:40px; max-width:820px; }
+  .rail{ position:static; flex-direction:row; flex-wrap:wrap; }
+  .rail-card{ flex:1 1 220px; }
+  .rail-src{ flex:1 1 100%; border-top:0; padding-top:0; }
+  .article-head, .hero-shot{ max-width:820px; }
+}
+@media (max-width:640px){
+  .shell{ gap:28px; }
+}
+
+
+/* ── FIGURES CARRIED OVER FROM THE DRAFT ──────────────────────────────
+   This piece ships its own tables, charts and spec blocks. Rather than
+   import a second design system for them, the palette they were written
+   against is repointed at this site's tokens, and only their component
+   rules are carried over. --measure is deliberately absent: it collides
+   with the site's, and the ported rules should use the site's column.
+   ------------------------------------------------------------------- */
+:root{
+  --paper:var(--bg); --panel:var(--surface-solid); --panel-2:var(--surface-2);
+  --ink:var(--text); --ink-2:var(--text-2); --ink-3:var(--text-3);
+  --rule:var(--line); --rule-strong:var(--line-strong);
+  --accent:var(--violet-soft); --accent-soft:rgba(139,59,241,.16);
+  --cost:var(--text-3);
+  --good:var(--green);  --good-soft:rgba(46,212,122,.10);
+  --warn:var(--amber);  --warn-soft:rgba(245,165,36,.10);
+  --crit:var(--red);    --crit-soft:rgba(240,67,92,.10);
+  --f-display:var(--font); --f-body:var(--font);
+  --f-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+article p{margin:0 0 1.15rem}
+article ul, article ol{margin:0 0 1.3rem;padding-left:1.15rem}
+article li{margin-bottom:.5rem}
+article li::marker{color:var(--ink-3)}
+strong{font-weight:600}
+.fix{background:var(--panel);border:1px solid var(--rule);border-left:3px solid var(--accent);padding:1.1rem 1.3rem;margin:1.9rem 0}
+.fix .k{display:block;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:.45rem}
+.fix p{margin:0}
+.fix p+p{margin-top:.7rem}
+pre{font-family:var(--f-mono);font-size:.84rem;line-height:1.8;background:var(--panel-2);border:1px solid var(--rule);padding:1rem 1.1rem;margin:1.6rem 0;overflow-x:auto}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--panel-2);padding:.1em .35em;border-radius:2px}
+pre code{background:none;padding:0;font-size:1em}
+figure svg{display:block;width:100%;height:auto;max-width:100%;color:var(--ink-2)}
+.facts{list-style:none;padding:0;margin:1.5rem 0 2rem;border-top:1px solid var(--rule)}
+.facts li{margin:0;display:grid;grid-template-columns:2.4rem 1fr;gap:.9rem;padding:.85rem .2rem;border-bottom:1px solid var(--rule)}
+.facts .n{font-family:var(--f-mono);font-size:.72rem;color:var(--accent);padding-top:.15rem}
+.facts b{display:block;font-weight:600}
+.facts .d{color:var(--ink-2);font-size:.93rem}
+.tblwrap{overflow-x:auto;margin:1.6rem 0}
+table{border-collapse:collapse;width:100%;font-size:.9rem;min-width:33rem}
+caption{caption-side:bottom;text-align:left;font-size:.8rem;color:var(--ink-3);padding-top:.7rem;line-height:1.55}
+th, td{padding:.6rem .7rem;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+thead th{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500;border-bottom:1px solid var(--rule-strong)}
+tbody th{font-weight:600;font-size:.9rem}
+.cascade{display:grid;gap:.55rem;margin:1.5rem 0 2rem;counter-reset:c}
+.step{counter-increment:c;display:grid;grid-template-columns:2rem 1fr;gap:.9rem;padding:.8rem 1rem;background:var(--panel);border:1px solid var(--rule)}
+.step::before{content:counter(c);font-family:var(--f-mono);font-size:.75rem;color:var(--ink-3);padding-top:.25rem}
+.step b{display:block;font-weight:600;font-size:.97rem}
+.step span{color:var(--ink-2);font-size:.93rem}
+.step.last{border-color:var(--crit);background:var(--crit-soft)}
+.step.last b{color:var(--crit)}
+.faq details{border-bottom:1px solid var(--rule);padding:.9rem 0}
+.faq summary{cursor:pointer;font-weight:600;list-style:none;display:flex;gap:.75rem;align-items:flex-start}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::before{content:"+";font-family:var(--f-mono);color:var(--accent);font-weight:400;line-height:1.6}
+.faq details[open] summary::before{content:"–"}
+.faq p{margin:.65rem 0 0 1.5rem;color:var(--ink-2)}
+.faq summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* ── PIECES THIS ARTICLE ADDS ─────────────────────────────────────────
+   h3, tables, the FAQ and the carried-over figure. The 44 articles that
+   came before this one had no h3 and no tables, so the core stylesheet
+   never needed rules for them.
+   ------------------------------------------------------------------- */
+.article h3{
+  margin:var(--s5) 0 var(--s2);
+  font-size:clamp(19px,1.6vw,22px);
+  font-weight:650; letter-spacing:-.01em; color:var(--text);
+}
+.tblwrap{ margin:var(--s4) 0; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.article table{
+  width:100%; border-collapse:collapse;
+  font-size:.94rem; line-height:1.5;
+}
+.article th, .article td{
+  padding:10px 14px; text-align:left; vertical-align:top;
+  border-bottom:1px solid var(--line);
+}
+.article th{
+  font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+  color:var(--text-3); border-bottom-color:var(--line-strong); white-space:nowrap;
+}
+.article tbody tr:last-child td{ border-bottom:0; }
+.art-diagram{ margin:var(--s4) 0; }
+.art-diagram svg{ width:100%; height:auto; display:block; }
+.art-diagram .sub, .art-diagram figcaption{
+  margin-top:10px; font-size:var(--t-micro,.82rem); color:var(--text-3); line-height:1.5;
+}
+.faq{ margin:var(--s4) 0; }
+.faq details{
+  border:1px solid var(--line); border-radius:var(--r-md);
+  background:var(--surface); padding:14px 18px; margin-bottom:10px;
+}
+.faq summary{
+  cursor:pointer; font-weight:600; color:var(--text);
+  list-style:none; padding-right:24px; position:relative;
+}
+.faq summary::-webkit-details-marker{ display:none; }
+.faq summary::after{
+  content:"+"; position:absolute; right:0; top:-2px;
+  font-size:19px; line-height:1; color:var(--violet-soft);
+}
+.faq details[open] summary::after{ content:"\2013"; }
+.faq details p{ margin:10px 0 0 !important; color:var(--text-2); }
+
+/* ── KEEPING WIDE THINGS INSIDE A PHONE ───────────────────────────────
+   These pieces carry long monospace formulas, wide comparison tables and
+   the draft's scenario rows. Each has a min-content width larger than a
+   390px screen, and the shell's mobile track is `1fr` - which means
+   minmax(auto,1fr), so a single one of them widens the whole column and
+   the entire page scrolls sideways. Cap the track, then let each wide
+   block scroll inside itself instead of pushing the article around.
+   ------------------------------------------------------------------- */
+@media (max-width:1080px){
+  .shell{ grid-template-columns:minmax(0,1fr); }
+}
+.shell > .article{ min-width:0; }
+.article > *{ max-width:100%; }
+.formula{ overflow-x:auto; }
+.formula code{ white-space:pre; }
+.tblwrap{ min-width:0; max-width:100%; }
+.scn, .scnrow, .bands, .band, .inputs, .facts, .spec, .grid{ min-width:0; max-width:100%; }
+@media (max-width:640px){
+  .scnrow{ display:block; }
+  .scnrow > *{ display:block; }
+}
+
+/* ── SITE HEADER ──────────────────────────────────────────────────────
+   The header markup is the site's, and navigation.css styles it. These are
+   the pieces it also leans on from base.css, which this page does not load.
+   Every selector is scoped to the header or the mobile drawer: an article is
+   built out of bare a/p/h3/h4, and base.css restyles all of those.
+
+   The scope is written with :where() so it adds no specificity. Scoped the
+   plain way, `.site-header .btn` is (0,2,0) - the same weight as
+   navigation.css's own `.nav-actions .btn--quiet` and `.nav-mobile a`, and
+   loaded after them, so these copies quietly outranked the real rules: the
+   hamburger got pushed off a 390px screen and the drawer buttons lost their
+   sizing. Inside :where() each rule keeps exactly the weight it has in
+   base.css, which is the weight navigation.css was written against.
+   ------------------------------------------------------------------- */
+/* The header inherits from <body>, and this page's body is set for reading:
+   18px at 1.72. The site's is var(--t-body) at 1.6. Left alone, every element
+   in the bar came out a size and a half too tall. Reset it at the root of the
+   header so everything inside inherits the site's figures instead. */
+:where(.site-header),
+:where(.nav-mobile){
+  font-size:var(--t-body);
+  line-height:1.6;
+}
+
+:where(.site-header) .container{
+  width:min(100%,var(--container));
+  margin-inline:auto;
+  padding-inline:var(--gutter);
+  position:relative;
+}
+:where(.site-header, .nav-mobile) .brand{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:19px; font-weight:700; letter-spacing:-.01em;
+  color:var(--text); text-decoration:none;
+}
+:where(.site-header) .brand-mark{ width:26px; height:26px; flex:none; }
+:where(.site-header) .icon,    :where(.nav-mobile) .icon{    width:20px; height:20px; flex:none; stroke-width:1.7; }
+:where(.site-header) .icon-sm, :where(.nav-mobile) .icon-sm{ width:16px; height:16px; flex:none; stroke-width:1.8; }
+/* margin-block only: navigation.css centres this with margin-inline:auto,
+   and a shorthand `margin:0` here would outrank it and shove the menu
+   over against the brand. */
+:where(.site-header) .nav-menu{ list-style:none; padding:0; margin-block:0; }
+.site-header a, .nav-mobile a{ text-decoration:none; }
+/* base.css resets these globally; this page does not load it. Without the
+   padding reset the UA's 1px 6px survives and the 44px tap target
+   responsive.css asks for comes out 40px. */
+:where(.site-header) .nav-toggle{ font:inherit; cursor:pointer; padding:0; }
+:where(.site-header) svg, :where(.nav-mobile) svg{ display:block; }
+
+:where(.site-header) .btn, :where(.nav-mobile) .btn{
+  /* This page defines its own .btn - a filled gradient pill used in the body -
+     and it reaches the header buttons too. base.css's .btn sets none of these,
+     so the variant classes below are what should decide them. Cleared here or
+     "Log in", which is .btn--quiet and meant to read as plain text, arrives
+     wearing the brand gradient. */
+  background:none;
+  box-shadow:none;
+  color:inherit;
+  text-decoration:none;
+  position:relative;
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  padding:13px 22px;
+  border-radius:var(--r-sm);
+  font-size:var(--t-body); font-weight:600; line-height:1;
+  white-space:nowrap;
+  transition:transform var(--fast) var(--ease),
+             box-shadow var(--fast) var(--ease),
+             background var(--fast) var(--ease),
+             border-color var(--fast) var(--ease);
+}
+:where(.site-header) .btn:active, :where(.nav-mobile) .btn:active{ transform:translateY(0) scale(.99); }
+:where(.site-header) .btn--primary, :where(.nav-mobile) .btn--primary{
+  background:var(--grad-brand); color:#fff;
+  box-shadow:var(--sh-brand); overflow:hidden;
+}
+:where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{
+  content:""; position:absolute; top:0; left:-130%;
+  width:55%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);
+  transition:left .65s var(--ease);
+}
+:where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{
+  transform:translateY(-2px); box-shadow:0 22px 52px rgba(107,63,232,.45);
+}
+:where(.site-header) .btn--primary:hover::after, :where(.nav-mobile) .btn--primary:hover::after{ left:150%; }
+:where(.site-header) .btn--quiet, :where(.nav-mobile) .btn--quiet{ color:var(--text-2); padding:13px 8px; }
+:where(.site-header) .btn--quiet:hover, :where(.nav-mobile) .btn--quiet:hover{ color:var(--text); }
+:where(.nav-mobile) .btn--block{ width:100%; }
+
+@media (prefers-reduced-motion:reduce){
+  :where(.site-header) .btn, :where(.nav-mobile) .btn,
+  :where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{ transition:none; }
+  :where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{ transform:none; }
+}
+
+/* navigation.css hides these two buttons on small screens so the hamburger
+   fits. Its selectors are (0,2,0) and so is `:where(.site-header) .btn` above, which
+   is loaded after it - equal weight, later wins, and display:inline-flex beat
+   display:none. The hamburger ended up 107px off the right of a 390px screen
+   with no way to open the menu. Restating the hide at (0,3,0) settles it.
+   The breakpoints are read out of navigation.css at build time, not typed. */
+
+/* Clear the fixed site header. Reserving its height on .wrap keeps the gap
+   between the bar and the eyebrow the same as the gap used to be between the
+   top of the window and the eyebrow. */
+.wrap{ padding-top:70px; }
+@media (max-width:640px){ .wrap{ padding-top:64px; } }
+
+/* Anchor targets. .article h2 carried scroll-margin-top:32px, which was right
+   when this page had no fixed bar: 32px was breathing room. Now a jump from
+   the contents list lands 38px underneath the header. responsive.css puts the
+   rest of the site on 84px for exactly this reason; the article's own rule is
+   (0,2,0) and outranks it, so it is restated here at the same weight. */
+.article h2{ scroll-margin-top:84px; }
+
+/* The back-link sat hard against the left edge of the window, in line with
+   nothing. That was always true, but with the nav above it the thing reads as
+   stranded rather than as a heading. Same shell as .article-head, so it lines
+   up with the title beneath it and behaves as the breadcrumb it is. */
+.back-link{
+  max-width:1180px;
+  margin-inline:auto;      /* the rule above keeps its 28px bottom margin */
+  padding:22px var(--gutter) 0;
+}
+</style>
+<link rel="stylesheet" href="/css/navigation.css">
+<link rel="stylesheet" href="/css/responsive.css">
+<link rel="stylesheet" href="/css/site-footer.css">
+<link rel="canonical" href="https://amazebase.pro/es/articulos/una-factura-que-falta.html">
+<link rel="alternate" hreflang="en" href="https://amazebase.pro/articles/data-gaps-seep-everywhere.html">
+<link rel="alternate" hreflang="es" href="https://amazebase.pro/es/articulos/una-factura-que-falta.html">
+<link rel="alternate" hreflang="x-default" href="https://amazebase.pro/articles/data-gaps-seep-everywhere.html">
+<meta property="og:site_name" content="AmazeBase">
+<meta property="og:locale" content="es_LA">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://amazebase.pro/es/articulos/una-factura-que-falta.html">
+<meta property="og:title" content="Una factura que falta">
+<meta property="og:description" content="Por qu&eacute; un vac&iacute;o en una esquina de tu operaci&oacute;n de Amazon no se queda en esa esquina &mdash; y c&oacute;mo saber cu&aacute;les vac&iacute;os s&iacute; importan.">
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+<div class="bg-layer" aria-hidden="true"></div>
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+</defs>
+  <symbol id="i-chevron"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-menu"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-mega"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l7 4V5L8 9H4zM19 9a4 4 0 010 6"/></symbol>
+  <symbol id="i-dollar"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5v19M16.5 6.5H10a3.2 3.2 0 000 6.4h4a3.2 3.2 0 010 6.4H7"/></symbol>
+  <symbol id="i-stack"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/></symbol>
+  <symbol id="i-box"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></symbol>
+  <symbol id="i-search"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></symbol>
+  <symbol id="i-chart"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-trend"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></symbol>
+  <symbol id="i-db"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3.2"/><path d="M4 6v12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2V6M4 12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2"/></symbol>
+  <symbol id="i-shield"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-9.5V5.5L12 2.5 4 5.5V12.5C4 18.5 12 22 12 22z"/></symbol>
+  <symbol id="i-spark"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+  <symbol id="i-rocket"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15s-1.5 3 1 5.5S11 20 11 20M14.5 4.5c3-2 6-1 6-1s1 3-1 6l-6 6-5-5 6-6z"/><circle cx="15" cy="9" r="1.4"/></symbol>
+  <symbol id="i-case"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8.5 7V5a2 2 0 012-2h3a2 2 0 012 2v2M2.5 12.5h19"/></symbol>
+  <symbol id="i-info"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></symbol>
+  <symbol id="i-msg"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-8 8 8.6 8.6 0 01-3.6-.8L3 21l1.8-6.4A8 8 0 1121 12z"/></symbol>
+</svg>
+
+<header class="site-header">
+<div class="container">
+<nav class="nav" aria-label="Principal">
+
+  <a href="/index.html" class="brand" aria-label="Inicio de AmazeBase">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+      <path d="M16 17.6l4.4 8.2h-8.8z" fill="#C56BF5" opacity=".85"/>
+    </svg>
+    <span data-brand>AmazeBase</span>
+  </a>
+
+  <ul class="nav-menu">
+    <li class="nav-item">
+      <a class="nav-link" href="/product.html#modules">Producto <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop nav-drop--wide">
+        <a href="/product.html#advertising"><svg class="icon-sm"><use href="#i-mega"/></svg>Publicidad y PPC</a>
+        <a href="/product.html#financials"><svg class="icon-sm"><use href="#i-dollar"/></svg>Finanzas</a>
+        <a href="/product.html#ledger"><svg class="icon-sm"><use href="#i-stack"/></svg>Ledger</a>
+        <a href="/product.html#inventory"><svg class="icon-sm"><use href="#i-box"/></svg>Inventario</a>
+        <a href="/product.html#research"><svg class="icon-sm"><use href="#i-search"/></svg>Investigaci&oacute;n de productos</a>
+        <a href="/product.html#simulations"><svg class="icon-sm"><use href="#i-chart"/></svg>Simulaciones</a>
+        <a href="/product.html#sales"><svg class="icon-sm"><use href="#i-trend"/></svg>Ventas</a>
+        <a href="/product.html#data"><svg class="icon-sm"><use href="#i-db"/></svg>Datos y sincronizaci&oacute;n</a>
+        <a href="/product.html#security"><svg class="icon-sm"><use href="#i-shield"/></svg>Seguridad</a>
+        <a href="/product.html#assistant"><svg class="icon-sm"><use href="#i-spark"/></svg>Asistente de IA &mdash; pronto</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/solutions.html">Soluciones <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/solutions.html#beginners"><svg class="icon-sm"><use href="#i-rocket"/></svg>Principiantes</a>
+        <a href="/solutions.html#experts"><svg class="icon-sm"><use href="#i-dollar"/></svg>Vendedores con experiencia</a>
+        <a href="/solutions.html#agencies"><svg class="icon-sm"><use href="#i-case"/></svg>Agencias</a>
+      </div>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="/index.html#pricing">Precios</a></li>
+    <li class="nav-item"><a class="nav-link" href="/es/recursos.html">Recursos</a></li>
+    <li class="nav-item">
+      <a class="nav-link" href="/about.html">Empresa <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/about.html"><svg class="icon-sm"><use href="#i-info"/></svg>Nosotros</a>
+        <a href="/contact.html"><svg class="icon-sm"><use href="#i-msg"/></svg>Contacto</a>
+      </div>
+    </li>
+  </ul>
+
+  <div class="nav-actions">
+    <div class="nav-item lang-switch">
+      <button class="lang-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Idioma / Language">
+        ES <svg class="chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+      </button>
+      <div class="nav-drop lang-drop">
+        <a href="/articles/data-gaps-seep-everywhere.html" hreflang="en" lang="en"><span class="lc">EN</span>English</a>
+        <a href="/es/articulos/una-factura-que-falta.html" hreflang="es" lang="es" aria-current="true"><span class="lc">ES</span>Español</a>
+      </div>
+    </div>
+    <a class="btn btn--quiet" href="https://analytics.amazebase.pro/login">Iniciar sesi&oacute;n</a>
+    <a class="btn btn--primary" href="/index.html#waitlist" data-magnetic>&Uacute;nete a la lista de espera</a>
+    <button class="nav-toggle" aria-label="Abrir men&uacute;" aria-expanded="false" aria-controls="navMobile">
+      <svg class="icon"><use href="#i-menu"/></svg>
+    </button>
+  </div>
+
+</nav>
+</div>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="/product.html#modules">Producto</a>
+  <a href="/solutions.html">Soluciones</a>
+  <a href="/index.html#pricing">Precios</a>
+  <a href="/es/recursos.html">Recursos</a>
+  <a href="/about.html">Nosotros</a>
+  <a href="/contact.html">Contacto</a>
+  <a class="btn btn--quiet btn--block" href="https://analytics.amazebase.pro/login">Iniciar sesi&oacute;n</a>
+  <a class="btn btn--primary btn--block" href="/index.html#waitlist">&Uacute;nete a la lista de espera</a>
+</div>
+</header>
+
+<div class="wrap">
+<p class="back-link"><a href="/es/recursos.html">&larr; Centro de Conocimiento</a></p>
+<header class="article-head">
+  <p class="eyebrow">Datos y decisiones</p>
+  <h1><span class="accent">Una factura que falta</span></h1>
+  <p class="deck">Por qu&eacute; un vac&iacute;o en una esquina de tu operaci&oacute;n de Amazon no se queda en esa esquina &mdash; y c&oacute;mo saber cu&aacute;les vac&iacute;os s&iacute; importan.</p>
+  <p class="meta">
+    <span>AmazeBase</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>12 min de lectura</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>Datos y decisiones</span>
+  </p>
+</header>
+
+<!-- HERO IMAGE GOES HERE. Drop the image in as assets/img/hero-data-gaps-seep-everywhere.webp at 1672x941, uncomment, and write the alt text:
+<figure class="hero-shot">
+  <img src="/assets/img/hero-data-gaps-seep-everywhere.webp"
+       alt=""
+       width="1672" height="941" loading="eager" decoding="async">
+</figure>
+-->
+
+<div class="shell">
+<main id="main" class="article">
+  <p class="lead">Un agente de carga env&iacute;a una factura por $2,180. Cubre un contenedor con tres SKU. Alguien la archiva en una carpeta de correo, piensa asignarla despu&eacute;s, y nunca lo hace.</p>
+  <nav class="toc" aria-labelledby="toc-title">
+    <h2 id="toc-title">Qu&eacute; encontrar&aacute;s en este art&iacute;culo</h2>
+    <ol>
+      <li><a href="#s1">Una factura de flete que nadie registr&oacute;</a></li>
+      <li><a href="#s2">A d&oacute;nde va</a></li>
+      <li><a href="#s3">Por qu&eacute; los vac&iacute;os viajan</a></li>
+      <li><a href="#s4">Los seis datos compartidos</a></li>
+      <li><a href="#s5">El da&ntilde;o que no ves</a></li>
+      <li><a href="#s6">Cinco vac&iacute;os comunes</a></li>
+      <li><a href="#s7">No registres todo</a></li>
+      <li><a href="#s8">Qu&eacute; hace un buen sistema</a></li>
+      <li><a href="#s9">Encuentra los tuyos en 20 minutos</a></li>
+      <li><a href="#s10">Preguntas</a></li>
+    </ol>
+  </nav>
+
+
+    
+
+    <p>Eso es todo lo que pasa. Una factura, un contenedor, una tarde en la que nunca llegaste a hacerlo. Si manejas un negocio en Amazon ya lo hiciste, probablemente este trimestre.</p>
+
+    <p>Esto es lo que lo vuelve digno de un art&iacute;culo: <strong>esa factura no se queda perdida en el lugar donde la perdiste.</strong> No produce un n&uacute;mero equivocado en un reporte. Produce una serie de respuestas seguras, plausibles y equivocadas en otras cuatro partes del negocio, ninguna de las cuales parece tener nada que ver con el flete.</p>
+
+    <p>Y lo &uacute;ltimo que rompe es justo lo que la habr&iacute;a detectado.</p>
+
+    <h2 id="s1"><span class="num">01</span>A d&oacute;nde va realmente un faltante de $2,180</h2>
+      <p>Digamos que el contenedor tra&iacute;a 12,000 unidades repartidas en tres SKU. Son unos $0.18 por unidad de flete que nunca entraron en el costo de nadie.</p>
+      <p>Sobre una unidad de $7.00 una omisi&oacute;n de $0.18 es 2.5&nbsp;%. Poco. Ahora mira c&oacute;mo se mueve.</p>
+
+      <div class="cascade">
+        <div class="step"><span><b>El costo puesto en destino marca $7.00 en vez de $7.18</b><span>El &uacute;nico lugar donde el error realmente vive. Nadie lo va a mirar nunca, porque nada se ve mal.</span></span></div>
+        <div class="step"><span><b>El margen despu&eacute;s de publicidad queda sobrestimado</b><span>Cada cifra de contribuci&oacute;n por unidad de esos tres SKU est&aacute; $0.18 arriba. Sobre 12,000 unidades son $2,180 de utilidad que no existe &mdash; que es, por supuesto, exactamente la factura.</span></span></div>
+        <div class="step"><span><b>El ACOS de punto de equilibrio sale demasiado alto</b><span>El ACOS de punto de equilibrio es tu margen despu&eacute;s de tarifas. Sobrestima el margen y el sistema te dice que puedes pagar m&aacute;s publicidad de la que puedes. As&iacute; que subes pujas en campa&ntilde;as que ya est&aacute;n en el punto de equilibrio.</span></span></div>
+        <div class="step"><span><b>El ranking de reposici&oacute;n pone el SKU equivocado primero</b><span>Cuando ordenas productos por retorno sobre el capital, un error de costo de 2.5&nbsp;% basta para intercambiar dos vecinos. Repones el que se ve&iacute;a mejor.</span></span></div>
+        <div class="step"><span><b>La salida de efectivo se ve m&aacute;s ligera de lo que es</b><span>$2,180 que salieron de tu banco nunca aparecen del lado de las salidas, as&iacute; que el pron&oacute;stico es optimista por exactamente el monto que s&iacute; pagaste.</span></span></div>
+        <div class="step last"><span><b>El P&amp;L deja de cuadrar con el banco</b><span>Y este es el que hace el da&ntilde;o real &mdash; porque ahora el sistema que habr&iacute;a detectado los otros cuatro es justo el que dejaste de creer.</span></span></div>
+      </div>
+
+      <figure class="art-diagram">
+        <svg viewBox="0 0 760 500" role="img" aria-label="Diagrama: una factura de flete sin asignar subestima el costo puesto en destino, que leen cuatro m&oacute;dulos &mdash; margen, publicidad, ranking de reposici&oacute;n y salida de efectivo &mdash;, todos alimentando un estado de resultados que ya no cuadra con el banco, lo que a su vez reduce la confianza y hace que se registre menos detalle.">
+          <defs>
+            <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="currentColor"></path>
+            </marker>
+            <marker id="ahc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--crit)"></path>
+            </marker>
+          </defs>
+
+          <!-- tier 1: the gap -->
+          <rect x="280" y="20" width="200" height="52" rx="3" fill="none" stroke="var(--crit)" stroke-width="1.5"></rect>
+          <text x="380" y="42" text-anchor="middle" font-size="12.5" font-weight="600" fill="var(--crit)">Factura de flete</text>
+          <text x="380" y="58" text-anchor="middle" font-size="11.5" fill="var(--crit)">sin asignar a la orden de compra</text>
+
+          <line x1="380" y1="72" x2="380" y2="116" stroke="currentColor" stroke-width="1.5" marker-end="url(#ah)"></line>
+          <text x="390" y="98" font-size="11" fill="currentColor">subestima</text>
+
+          <!-- tier 2: the shared fact -->
+          <rect x="280" y="118" width="200" height="52" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+          <text x="380" y="140" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">Costo unitario en destino</text>
+          <text x="380" y="156" text-anchor="middle" font-size="11.5" fill="currentColor">$7.00, no $7.18</text>
+
+          <!-- fan out trunk -->
+          <line x1="380" y1="170" x2="380" y2="200" stroke="currentColor" stroke-width="1.5"></line>
+          <text x="390" y="190" font-size="11" fill="currentColor">cada m&oacute;dulo lo lee</text>
+          <polyline points="102,200 658,200" fill="none" stroke="currentColor" stroke-width="1.5"></polyline>
+          <line x1="102" y1="200" x2="102" y2="234" stroke="currentColor" stroke-width="1.5" marker-end="url(#ah)"></line>
+          <line x1="287" y1="200" x2="287" y2="234" stroke="currentColor" stroke-width="1.5" marker-end="url(#ah)"></line>
+          <line x1="473" y1="200" x2="473" y2="234" stroke="currentColor" stroke-width="1.5" marker-end="url(#ah)"></line>
+          <line x1="658" y1="200" x2="658" y2="234" stroke="currentColor" stroke-width="1.5" marker-end="url(#ah)"></line>
+
+          <!-- tier 3: consumers -->
+          <rect x="20" y="236" width="165" height="60" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+          <text x="102" y="260" text-anchor="middle" font-size="12" font-weight="600" fill="currentColor">Margen</text>
+          <text x="102" y="277" text-anchor="middle" font-size="11" fill="currentColor">se ve sano, no lo es</text>
+
+          <rect x="205" y="236" width="165" height="60" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+          <text x="287" y="260" text-anchor="middle" font-size="12" font-weight="600" fill="currentColor">ACOS de equilibrio</text>
+          <text x="287" y="277" text-anchor="middle" font-size="11" fill="currentColor">muy alto, pujas de m&aacute;s</text>
+
+          <rect x="390" y="236" width="165" height="60" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+          <text x="473" y="260" text-anchor="middle" font-size="12" font-weight="600" fill="currentColor">Ranking de reposici&oacute;n</text>
+          <text x="473" y="277" text-anchor="middle" font-size="11" fill="currentColor">SKU equivocado primero</text>
+
+          <rect x="575" y="236" width="165" height="60" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+          <text x="658" y="260" text-anchor="middle" font-size="12" font-weight="600" fill="currentColor">Salida de efectivo</text>
+          <text x="658" y="277" text-anchor="middle" font-size="11" fill="currentColor">el pron&oacute;stico va corto</text>
+
+          <!-- converge -->
+          <line x1="102" y1="296" x2="102" y2="330" stroke="currentColor" stroke-width="1.5"></line>
+          <line x1="287" y1="296" x2="287" y2="330" stroke="currentColor" stroke-width="1.5"></line>
+          <line x1="473" y1="296" x2="473" y2="330" stroke="currentColor" stroke-width="1.5"></line>
+          <line x1="658" y1="296" x2="658" y2="330" stroke="currentColor" stroke-width="1.5"></line>
+          <polyline points="102,330 658,330" fill="none" stroke="currentColor" stroke-width="1.5"></polyline>
+          <line x1="380" y1="330" x2="380" y2="368" stroke="currentColor" stroke-width="1.5" marker-end="url(#ah)"></line>
+
+          <!-- tier 4 -->
+          <rect x="230" y="370" width="300" height="52" rx="3" fill="none" stroke="var(--crit)" stroke-width="1.5"></rect>
+          <text x="380" y="392" text-anchor="middle" font-size="12.5" font-weight="600" fill="var(--crit)">El P&amp;L deja de cuadrar con el banco</text>
+          <text x="380" y="409" text-anchor="middle" font-size="11.5" fill="var(--crit)">as&iacute; que dejas de creerle</text>
+
+          <!-- feedback loop -->
+          <path d="M230,396 L120,396 L120,460 L740,460 L740,46 L484,46"
+                fill="none" stroke="var(--crit)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#ahc)"></path>
+          <text x="430" y="476" text-anchor="middle" font-size="11" fill="var(--crit)">y la siguiente factura tampoco se registra</text>
+        </svg>
+        <figcaption>El error vive en un solo campo. Lo leen cuatro m&oacute;dulos que no tienen nada que ver con el flete, y termina da&ntilde;ando la conciliaci&oacute;n que lo habr&iacute;a encontrado &mdash; que es lo que hace que el ciclo se cierre en vez de terminar.</figcaption>
+      </figure>
+
+      <p>Nadie fue descuidado. Cada m&oacute;dulo hizo bien su aritm&eacute;tica con el dato que recibi&oacute;. El sistema funcion&oacute; exactamente como fue dise&ntilde;ado, y produjo cuatro malas decisiones.</p>
+    
+
+    <h2 id="s2"><span class="num">02</span>Por qu&eacute; los vac&iacute;os viajan, y cu&aacute;les no</h2>
+      <p>Esta es la parte que conviene interiorizar, porque te permite dejar de preocuparte por la mayor&iacute;a de los datos faltantes y empezar a preocuparte por las piezas correctas.</p>
+      <p>Tu operaci&oacute;n no son cinco sistemas separados. Son cinco conjuntos de decisiones que se apoyan en <strong>un n&uacute;mero peque&ntilde;o de datos compartidos.</strong> Publicidad, inventario, finanzas y compras leen todos el costo puesto en destino. Inventario, efectivo y publicidad leen todos la velocidad de ventas. Nada est&aacute; tan aislado como el software lo hace parecer.</p>
+      <p>As&iacute; que hay dos tipos de vac&iacute;o, y se comportan de forma completamente distinta:</p>
+      <ul>
+        <li><strong>Los vac&iacute;os de insumo compartido</strong> est&aacute;n en un dato que muchas decisiones leen. Se propagan &mdash; una omisi&oacute;n, varias respuestas equivocadas, en lugares que parecen no tener relaci&oacute;n con donde lo perdiste.</li>
+        <li><strong>Los vac&iacute;os de hoja</strong> est&aacute;n en un dato que solo una cosa lee. Qu&eacute; agente de carga usaste, las dimensiones del case pack, el usuario de WeChat de tu proveedor. Faltantes, molestos, contenidos.</li>
+      </ul>
+
+      <div class="fixbox">
+        <span class="fixbox-k">La regla</span>
+        <p>Un vac&iacute;o se extiende en proporci&oacute;n a cu&aacute;ntas decisiones leen el dato en el que est&aacute;. Seis o siete datos en un negocio de Amazon los lee casi todo. Todo lo dem&aacute;s es una hoja.</p>
+        <p>As&iacute; que la pregunta no es &laquo;&iquest;mis datos est&aacute;n completos?&raquo;. Es <strong>&laquo;&iquest;cu&aacute;les de los datos compartidos realmente conozco?&raquo;</strong></p>
+      </div>
+
+      <p>Por eso tambi&eacute;n la filtraci&oacute;n es tan dif&iacute;cil de ver desde adentro. No detectas un costo puesto en destino malo mirando el costo puesto en destino &mdash; nada en $7.00 se ve mal. Lo detectas como una campa&ntilde;a publicitaria que deber&iacute;a ser rentable y no lo es, y vas a mirar la campa&ntilde;a. Que es el &uacute;nico lugar donde el problema con seguridad no est&aacute;.</p>
+      <blockquote>
+    <p>Un error propagado siempre aparece en un lugar distinto de donde se cometi&oacute;. Eso es lo que lo vuelve caro de encontrar y f&aacute;cil de diagnosticar mal.</p>
+  </blockquote>
+    
+
+    <h2 id="s4"><span class="num">03</span>Los seis datos que todo lee</h2>
+      <p>Lista corta. Si conoces estos seis con honestidad, la mayor&iacute;a de tus n&uacute;meros son confiables. Si no conoces uno de ellos, tienes una fuga, donde sea que aparezca.</p>
+
+      <ul class="facts">
+        <li><span class="n">01</span><span><b>Costo unitario puesto en destino</b><span class="d">Lo leen: margen, ACOS de punto de equilibrio, ranking de reposici&oacute;n, valuaci&oacute;n de inventario, efectivo. El dato m&aacute;s le&iacute;do que tienes &mdash; y el que m&aacute;s seguido se queda en precio de f&aacute;brica.</span></span></li>
+        <li><span class="n">02</span><span><b>Velocidad de ventas</b><span class="d">Lo leen: d&iacute;as de cobertura, fecha de reorden, presupuesto publicitario, tiempos de efectivo, pron&oacute;stico. Sale mal si tus datos est&aacute;n desactualizados, porque una tasa calculada sobre d&iacute;as que a&uacute;n no reportan sale baja.</span></span></li>
+        <li><span class="n">03</span><span><b>Stock &mdash; vendible, reservado, en tr&aacute;nsito</b><span class="d">Lo leen: decisiones de reposici&oacute;n, capital inmovilizado, riesgo de quiebre de stock. Un solo n&uacute;mero no sirve; los tres se comportan distinto.</span></span></li>
+        <li><span class="n">04</span><span><b>Inversi&oacute;n publicitaria, por producto</b><span class="d">Lo leen: rentabilidad por SKU, contribuci&oacute;n, decisiones de puja, el P&amp;L. La inversi&oacute;n publicitaria a nivel de cuenta sirve para el P&amp;L y no sirve para nada m&aacute;s.</span></span></li>
+        <li><span class="n">05</span><span><b>Tarifas de Amazon, por venta</b><span class="d">Lo leen: el margen en todos los niveles. En su mayor&iacute;a te las miden en la l&iacute;nea de liquidaci&oacute;n &mdash; las que duelen son los cargos a nivel de cuenta que nadie asigna.</span></span></li>
+        <li><span class="n">06</span><span><b>Dinero que sale, con su fecha</b><span class="d">Lo leen: pron&oacute;stico de efectivo, vista de compromisos, P&amp;L. La fecha importa tanto como el monto; un pago sin fecha es un pago que te va a sorprender.</span></span></li>
+      </ul>
+
+      <p>Cada uno de estos lo leen al menos tres partes del negocio. Esa es la definici&oacute;n que los hace merecer tu atenci&oacute;n, y es la raz&oacute;n por la que &laquo;ya arreglar&eacute; el flete a fin de a&ntilde;o&raquo; no es una decisi&oacute;n de archivo &mdash; es una decisi&oacute;n operativa sobre otros cuatro m&oacute;dulos.</p>
+    
+
+    <h2 id="s5"><span class="num">04</span>El da&ntilde;o que no ves es la confianza</h2>
+      <p>Las cuatro decisiones equivocadas de la primera secci&oacute;n son el costo visible. Son recuperables &mdash; pujaste de m&aacute;s durante un mes, repusiste el segundo mejor SKU. Molesto, superable.</p>
+      <p>El costo real es el &uacute;ltimo paso, y es el que la gente subestima.</p>
+      <p>Cuando tu P&amp;L no cuadra con tu cuenta bancaria, no pasas la tarde conciliando. Haces lo que todos hacen: dejas de consultar el P&amp;L. Vuelves al n&uacute;mero que puedes ver sin discutir con &eacute;l &mdash; los ingresos de Seller Central &mdash; y manejas el negocio con eso.</p>
+      <p>Que es donde empezaste, antes de construir nada de esto.</p>
+      <p>Ese es el ciclo que vale la pena nombrar. <strong>Un vac&iacute;o no solo corrompe tus n&uacute;meros. Corrompe tu disposici&oacute;n a mirarlos</strong> &mdash; y un operador que dej&oacute; de mirar tiene garantizado acumular tambi&eacute;n el siguiente vac&iacute;o, porque nada lo va a sacar a la superficie.</p>
+      <p>Es la misma raz&oacute;n por la que un detector de humo que pita durante un mes termina en un caj&oacute;n. La falla no es la falsa alarma. Es lo que la falsa alarma te ense&ntilde;&oacute; a hacer.</p>
+    
+
+    <h2 id="s6"><span class="num">05</span>Cinco vac&iacute;os comunes y lo que envenena cada uno</h2>
+
+      <div class="tblwrap">
+<div class="tblwrap"><table>
+          <caption>F&iacute;jate en la segunda columna. En todos los casos el s&iacute;ntoma aparece en un lugar distinto del vac&iacute;o &mdash; por eso sobreviven durante a&ntilde;os.</caption>
+          <thead>
+            <tr><th scope="col">El vac&iacute;o</th><th scope="col">D&oacute;nde lo notas</th><th scope="col">Lo que arruina en silencio</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Flete y aranceles sin asignar a las &oacute;rdenes de compra</th>
+              <td>En ning&uacute;n lado &mdash; los m&aacute;rgenes se ven excelentes</td>
+              <td>Pujas publicitarias, ranking de reposici&oacute;n, salida de efectivo, toda comparaci&oacute;n entre productos</td>
+            </tr>
+            <tr>
+              <th scope="row">Inversi&oacute;n publicitaria solo a nivel de cuenta</th>
+              <td>El ACOS general se ve bien</td>
+              <td>Toda cifra de utilidad por producto; no puedes saber qu&eacute; SKU est&aacute; financiando a cu&aacute;l</td>
+            </tr>
+            <tr>
+              <th scope="row">Stock sin separar en vendible / reservado / en tr&aacute;nsito</th>
+              <td>Los d&iacute;as de cobertura se ven c&oacute;modos</td>
+              <td>Fechas de reorden, riesgo de quiebre de stock, cifras de capital inmovilizado</td>
+            </tr>
+            <tr>
+              <th scope="row">Fechas de pago a proveedores sin registrar</th>
+              <td>Nada, hasta que cae un pago</td>
+              <td>Toda la vista de efectivo a futuro &mdash; los montos se conocen, los tiempos no</td>
+            </tr>
+            <tr>
+              <th scope="row">Tiempo de reposici&oacute;n escrito una vez, nunca medido</th>
+              <td>Las fechas de reorden se ven precisas</td>
+              <td>Toda fecha de reorden, el stock de seguridad, y los quiebres de stock que le echar&aacute;s a la demanda</td>
+            </tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <p>Dos patrones atraviesan los cinco. Primero, ninguno se anuncia &mdash; la pantalla donde falta el dato suele ser la pantalla que sigue vi&eacute;ndose bien. Segundo, cada uno es un dato compartido, que es exactamente por lo que las consecuencias aterrizan tres m&oacute;dulos m&aacute;s all&aacute;.</p>
+    
+
+    <h2 id="s7"><span class="num">06</span>La respuesta no es &laquo;registrar todo&raquo;</h2>
+      <p>Despu&eacute;s de leer lo anterior, la reacci&oacute;n natural es ir a registrar todo. No lo hagas. Ese es el modo de falla del otro lado, y es igual de com&uacute;n.</p>
+      <p>Los datos perfectos tienen un costo, y se paga en la moneda de la que menos tienes: atenci&oacute;n. Un vendedor que dedica seis horas a la semana a asignar cada costo con dos decimales compr&oacute; precisi&oacute;n en cifras que nunca iban a cambiar una decisi&oacute;n, al precio de no mirar las que s&iacute;.</p>
+      <p>Hay tambi&eacute;n un problema m&aacute;s callado: entre m&aacute;s tareas exige un sistema, m&aacute;s pronto se abandona. El sistema de registro m&aacute;s completo del mundo es el que nadie ha actualizado desde marzo.</p>
+      <p>As&iacute; que ordena el trabajo con honestidad:</p>
+<pre><code>vale cerrarlo = (cu&aacute;ntas decisiones lo leen)
+              × (costo de equivocarse en esas decisiones)
+              ÷ (esfuerzo para cerrarlo)</code></pre>
+      <p>La asignaci&oacute;n del flete puntea alto en los tres: la leen cuatro m&oacute;dulos, es cara cuando est&aacute; mal, y se cierra en una hora al mes al momento de la orden de compra. Asignar por unidad el honorario de tu contador puntea casi cero en los tres. Ambos son &laquo;datos que faltan&raquo;. Solo uno vale un martes.</p>
+      <div class="fixbox">
+        <span class="fixbox-k">El replanteamiento</span>
+        <p>La integridad no es la meta, y no es alcanzable. <strong>Conocer la forma de tu incompletitud s&iacute; lo es.</strong></p>
+        <p>Un operador que puede decir &laquo;mi flete est&aacute; asignado, mis tiempos de reposici&oacute;n est&aacute;n medidos, mis gastos generales son una estimaci&oacute;n&raquo; est&aacute; en mucha mejor forma que uno que cree que todo es exacto &mdash; porque el primero sabe qu&eacute; conclusiones tomar con pinzas.</p>
+      </div>
+    
+
+    <h2 id="s8"><span class="num">07</span>Qu&eacute; deber&iacute;a hacer un sistema con un vac&iacute;o que no puede llenar</h2>
+      <p>La mayor&iacute;a de las herramientas manejan los datos faltantes igual: sustituyen algo plausible y siguen. Un tiempo de reposici&oacute;n por defecto de 90 d&iacute;as. Flete asumido en cero. El costo cayendo al &uacute;ltimo precio conocido. La pantalla se llena, y nada indica que una decisi&oacute;n ahora descansa sobre un n&uacute;mero que nadie captur&oacute;.</p>
+      <p>Esa es la peor opci&oacute;n disponible, porque convierte un vac&iacute;o que pod&iacute;as haber visto en una respuesta segura que no puedes ver. Tres comportamientos mejores:</p>
+      <ul>
+        <li><strong>Ni&eacute;gate en vez de asumir un valor.</strong> &laquo;Flete no medido &mdash; EOQ no disponible&raquo; es m&aacute;s &uacute;til que una cantidad de pedido calculada a partir de un cero. Un estado vac&iacute;o que nombra lo que falta te dice qu&eacute; ir a arreglar.</li>
+        <li><strong>Etiqueta la procedencia.</strong> Cada n&uacute;mero deber&iacute;a indicar si fue medido, asignado por una regla que elegiste, o asumido. Misma cifra, peso muy distinto &mdash; y los asumidos son tu cola de trabajo.</li>
+        <li><strong>Descalifica la decisi&oacute;n, no solo el n&uacute;mero.</strong> Este es el que casi nadie hace. Si el costo puesto en destino est&aacute; incompleto, no basta con ponerle una nota al pie al costo puesto en destino &mdash; la pantalla que <em>ordena los SKU por retorno sobre el capital</em> deber&iacute;a decir que el ranking no es confiable, porque ah&iacute; es donde ocurre el da&ntilde;o.</li>
+      </ul>
+      <p>Ese &uacute;ltimo punto se sigue directamente de la cascada. Si los errores aparecen en un lugar distinto de donde se cometen, entonces las advertencias tienen que aparecer en un lugar distinto de donde falta el dato &mdash; en la decisi&oacute;n, no en el campo.</p>
+    
+
+    <h2 id="s9"><span class="num">08</span>Encuentra tus propios vac&iacute;os en veinte minutos</h2>
+      <p>Toma los seis datos compartidos. Para cada uno, tres preguntas:</p>
+      <ol>
+        <li><strong>&iquest;De d&oacute;nde sale este n&uacute;mero?</strong> &iquest;Medido de un documento, asignado por una regla, o escrito por alguien una vez? Si no puedes responder en una frase, ah&iacute; est&aacute; el vac&iacute;o.</li>
+        <li><strong>&iquest;Cu&aacute;ndo fue cierto por &uacute;ltima vez?</strong> Un tiempo de reposici&oacute;n capturado en 2024 ya no es un dato. Una velocidad calculada contra ventas desactualizadas tampoco.</li>
+        <li><strong>&iquest;Qu&eacute; decisi&oacute;n cambiar&iacute;a si estuviera 20&nbsp;% desviado?</strong> Esta es la que ordena el trabajo. Si nada cambia, d&eacute;jalo. Si cambia tu orden de reposici&oacute;n, ci&eacute;rralo esta semana.</li>
+      </ol>
+      <p>Seis datos, tres preguntas, veinte minutos. La mayor&iacute;a de los vendedores que hacen esto por primera vez encuentran dos vac&iacute;os que nunca habr&iacute;an ido a buscar, porque ambos aparec&iacute;an como problemas en un m&oacute;dulo que no ten&iacute;a nada que ver con la causa.</p>
+      <p>Luego haz la conciliaci&oacute;n que has estado evitando: &iquest;la utilidad que reporta tu sistema coincide con lo que realmente lleg&oacute; a tu banco en el mismo periodo? No al centavo &mdash; pero cada diferencia que no puedes nombrar es un vac&iacute;o, y uno de ellos est&aacute; aguas arriba de una decisi&oacute;n que tomaste este mes.</p>
+    
+
+    <h2 id="s10">Preguntas frecuentes</h2>
+      <div class="faq">
+        <details open>
+          <summary>&iquest;Por qu&eacute; necesito conectar inventario, costos, publicidad y finanzas?</summary>
+          <p>Porque leen los mismos datos de fondo. El costo puesto en destino alimenta el margen, las pujas publicitarias, el ranking de reposici&oacute;n y el efectivo; la velocidad de ventas alimenta las fechas de reorden, el presupuesto publicitario y los tiempos de efectivo. Cuando uno de esos datos est&aacute; mal o falta, cada m&oacute;dulo que lo lee produce una respuesta segura y equivocada &mdash; normalmente en un lugar que parece no tener relaci&oacute;n con la causa.</p>
+        </details>
+        <details>
+          <summary>&iquest;Qu&eacute; vac&iacute;os de datos afectan m&aacute;s a los vendedores de Amazon?</summary>
+          <p>Flete y aranceles sin asignar a las &oacute;rdenes de compra, inversi&oacute;n publicitaria registrada solo a nivel de cuenta, stock sin separar en vendible, reservado y en tr&aacute;nsito, fechas de pago a proveedores sin registrar, y tiempos de reposici&oacute;n escritos en vez de medidos. Los cinco son datos que varias decisiones leen, que es lo que los vuelve caros.</p>
+        </details>
+        <details>
+          <summary>&iquest;Necesito registrar cada costo?</summary>
+          <p>No, e intentarlo es una falla com&uacute;n. Ordena cada vac&iacute;o por cu&aacute;ntas decisiones lo leen, cu&aacute;nto cuesta equivocarse en esas decisiones, y qu&eacute; tan dif&iacute;cil es cerrarlo. La asignaci&oacute;n del flete suele puntear alto en los tres; asignar por unidad el honorario de tu contador puntea casi cero. La meta no son datos completos &mdash; es saber cu&aacute;les de tus n&uacute;meros est&aacute;n medidos y cu&aacute;les son estimaciones.</p>
+        </details>
+        <details>
+          <summary>&iquest;Por qu&eacute; mi utilidad no coincide con mi cuenta bancaria?</summary>
+          <p>Casi siempre es un costo que existe en tu banco y no en tus registros &mdash; una factura de flete sin asignar, un pago de aranceles, un abono a un proveedor sin registrar &mdash; o es un tema de tiempos, cuando el dinero se movi&oacute; en un periodo distinto al de la venta con la que se relaciona. Cada diferencia que no puedes nombrar es un vac&iacute;o, y normalmente est&aacute; aguas arriba de una decisi&oacute;n que ya tomaste.</p>
+        </details>
+        <details>
+          <summary>&iquest;C&oacute;mo s&eacute; si un n&uacute;mero que falta importa?</summary>
+          <p>Preg&uacute;ntate qu&eacute; cambiar&iacute;a si estuviera 20&nbsp;% mal. Si ninguna decisi&oacute;n cambia, d&eacute;jalo. Si cambia tu orden de reposici&oacute;n, tu presupuesto publicitario o tu pr&oacute;xima orden de compra, vale la pena cerrarlo esta semana. Esa sola pregunta separa la mayor parte del trabajo de datos en &laquo;importante&raquo; y &laquo;ordenar&raquo;.</p>
+        </details>
+        <details>
+          <summary>&iquest;Un solo sistema es realmente mejor que herramientas separadas?</summary>
+          <p>Lo que importa no es un solo inicio de sesi&oacute;n &mdash; es que los datos compartidos tengan una definici&oacute;n y una fuente. Herramientas separadas, cada una con su propia copia del costo puesto en destino, se van a desfasar, y el desfase aparece como dos pantallas que no coinciden, que es lo que ense&ntilde;a a la gente a dejar de confiar en ambas. Un solo lugar que sea due&ntilde;o de cada dato compartido es el requisito; si es un producto o varios es secundario.</p>
+        </details>
+      </div>
+    
+
+    <section class="sec">
+      <h2>La factura nunca fue el punto</h2>
+      <p>$2,180 de flete no es una suma grande, y encontrarla no le habr&iacute;a cambiado el a&ntilde;o a nadie. Lo que hizo fue volver equivocados otros cuatro n&uacute;meros de formas que parec&iacute;an problemas de publicidad, problemas de inventario y problemas de efectivo &mdash; y despu&eacute;s quitar el &uacute;nico reporte que pod&iacute;a haberlos conectado.</p>
+      <p>Nunca vas a cerrar todos los vac&iacute;os. Pero puedes saber sobre qu&eacute; seis datos funciona realmente tu negocio, cu&aacute;les conoces de verdad, y qu&eacute; conclusiones tomar con pinzas hasta que los conozcas.</p>
+      <p>Eso no es un proyecto de integridad. Es simplemente saber d&oacute;nde est&aacute;n tus propios bordes.</p>
+    </section>
+
+  
+</main>
+
+<aside class="rail" aria-label="Cifras clave de este art&iacute;culo">
+  <div class="rail-card">
+    <span class="rail-k">La factura que falta</span>
+    <span class="rail-v">$2,180</span>
+    <p>Una factura de flete que cubre tres SKU, archivada en una carpeta de correo y nunca asignada a ninguno de ellos.</p>
+  </div>
+  <div class="rail-card">
+    <span class="rail-k">Lo que mueve</span>
+    <span class="rail-v is-amber">$7.00 &rarr; $7.18</span>
+    <p>Costo puesto en destino por unidad. Peque&ntilde;o en una unidad, y aguas arriba de cada decisi&oacute;n de margen, puja y reorden que viene despu&eacute;s.</p>
+  </div>
+  <div class="rail-card">
+    <span class="rail-k">Datos que todo lee</span>
+    <span class="rail-v is-violet">Seis</span>
+    <p>Costo, flete, velocidad, tiempo de reposici&oacute;n, tarifas y devoluciones. Un vac&iacute;o en uno aparece en todos los lugares donde se lee.</p>
+  </div>
+  <p class="rail-src">Cifras del propio ejemplo trabajado de este art&iacute;culo, no de una encuesta de la industria.</p>
+</aside>
+
+</div><!-- /.shell -->
+
+</div><!-- /.wrap -->
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+  <symbol id="i-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12.5 17v-4a2.5 2.5 0 015 0v4"/></symbol>
+  <symbol id="i-tw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M20 4L4 20"/></symbol>
+  <symbol id="i-gh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4 1.4-4-2.2-5.6-2.6M15 21v-3.4a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 2.6 5.5 2.9 5.5 2.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 9.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></symbol>
+</defs>
+</svg>
+
+<footer class="footer">
+<div class="container">
+
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/index.html" class="brand" aria-label="Inicio de AmazeBase">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+        </svg>
+        <span data-brand>AmazeBase</span>
+      </a>
+      <p>El sistema operativo para vendedores de Amazon. Todo conectado, todo sincronizado.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Producto</h4>
+      <a href="/product.html#modules">Producto</a>
+      <a href="/index.html#pricing">Precios</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Recursos</h4>
+      <a href="/es/recursos.html">Centro de Conocimiento</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <a href="/about.html">Nosotros</a>
+      <a href="/contact.html">Contacto</a>
+      <a href="/privacy.html">Privacidad</a>
+      <a href="/terms.html">T&eacute;rminos</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>&copy; 2026 <span data-brand>AmazeBase</span>. Todos los derechos reservados.</span>
+    <div class="footer-social">
+      <a href="#" aria-label="LinkedIn"><svg class="icon-sm"><use href="#i-in"/></svg></a>
+      <a href="#" aria-label="X"><svg class="icon-sm"><use href="#i-tw"/></svg></a>
+      <a href="#" aria-label="GitHub"><svg class="icon-sm"><use href="#i-gh"/></svg></a>
+    </div>
+  </div>
+
+</div>
+</footer>
+
+<script src="/js/main.js" defer></script>
+</body>
+</html>

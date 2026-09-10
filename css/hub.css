@@ -373,7 +373,12 @@
 
 @media (max-width:640px){
   .hub-hero{ padding-block:calc(var(--s7) + 24px) var(--s4); }
-  .hub-cats{ grid-template-columns:repeat(2,1fr); }
+  /* minmax(0,1fr), not 1fr. `1fr` is minmax(auto,1fr), so a track can never
+     shrink below its content's min-content width -- and "Investigación de
+     productos" is 178px wide against a 167px track, which pushed the whole
+     grid 4px past the viewport and made the page scroll sideways. English
+     happens to fit; that is luck, not design. */
+  .hub-cats{ grid-template-columns:repeat(2,minmax(0,1fr)); }
   .hub-sec-head{ flex-direction:column; align-items:flex-start; }
   .hub-row{ grid-template-columns:auto minmax(0,1fr); }
   .hub-row-tag{ display:none; }

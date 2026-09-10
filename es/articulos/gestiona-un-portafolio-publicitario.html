@@ -1,0 +1,2215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deja de gestionar campa&ntilde;as. Empieza a gestionar un portafolio publicitario. &mdash; AmazeBase</title>
+
+<meta name="description" content="Los mejores anunciantes de Amazon no piensan como marketers. Piensan como gestores de inversiones &mdash; porque una cuenta de publicidad no es un conjunto de campa&ntilde;as, es un portafolio.">
+<meta name="theme-color" content="#030917">
+<meta name="author" content="AmazeBase">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   ARTICLE — Amazon Inventory Forecasting
+   Self-contained. Tokens mirror css/variables.css so this page can either
+   stand alone OR have this <style> block deleted once it sits inside the
+   site's normal stylesheet chain.
+========================================================================== */
+
+:root{
+  --z-nav:100;          /* navigation.css */
+  --container:1280px;   /* .container, below */
+  --t-body:15px;        /* .btn, below */
+  --bg:#030917; --bg-deep:#01050E; --bg-raise:#060D1E;
+  --surface:rgba(255,255,255,.030); --surface-2:rgba(255,255,255,.055);
+  --surface-solid:#0A1224;
+  --line:rgba(255,255,255,.070); --line-strong:rgba(255,255,255,.140);
+
+  --text:#EEF1F8; --text-2:#98A2B8; --text-3:#616C84;
+
+  --violet:#8B3BF1; --violet-soft:#A971F7; --indigo:#5B4FE6;
+  --blue:#3B82F6; --blue-soft:#7EB3FF;
+  --green:#2ED47A; --amber:#F5A524; --red:#F0435C;
+
+  --grad-brand:linear-gradient(135deg,#5B4FE6 0%,#8B3BF1 100%);
+  --grad-text:linear-gradient(90deg,#6153E6 0%,#9D50F7 55%,#C56BF5 100%);
+  --grad-card:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  --grad-rule:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,monospace;
+
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px;
+  --s5:48px; --s6:64px; --s7:96px; --s8:128px;
+
+  --gutter:clamp(20px,4vw,40px);
+  --measure:720px;
+
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
+  --sh-2:0 18px 40px rgba(0,0,0,.42);
+  --sh-brand:0 16px 40px rgba(107,63,232,.35);
+  --ease:cubic-bezier(.22,.61,.36,1); --fast:.18s; --mid:.28s;
+
+  color-scheme:dark;
+  scrollbar-color:#26304A var(--bg);
+  scrollbar-width:thin;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation:none !important; transition:none !important; }
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+::selection{ background:var(--violet); color:#fff; }
+
+.skip-link{
+  position:absolute; left:-9999px; top:0;
+  background:var(--surface-solid); color:var(--text);
+  padding:12px 20px; border-radius:0 0 var(--r-sm) 0;
+  z-index:1000; text-decoration:none; font-weight:600;
+}
+.skip-link:focus{ left:0; }
+
+:focus-visible{
+  outline:2px solid var(--violet-soft);
+  outline-offset:3px;
+  border-radius:var(--r-xs);
+}
+
+/* ---------- ambient background ------------------------------------------ */
+.bg-layer{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(760px 520px at 18% -8%,  rgba(91,79,230,.20), transparent 62%),
+    radial-gradient(680px 480px at 88% 4%,   rgba(139,59,241,.15), transparent 60%),
+    radial-gradient(900px 700px at 50% 108%, rgba(59,130,246,.09), transparent 66%);
+}
+
+.wrap{ position:relative; z-index:1; }
+
+/* ---------- shell ------------------------------------------------------- */
+.article{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:0 var(--gutter) var(--s8);
+}
+
+/* ---------- header ------------------------------------------------------ */
+.article-head{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:clamp(64px,9vw,120px) var(--gutter) clamp(32px,4vw,48px);
+}
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--violet-soft);
+  background:var(--surface); border:1px solid var(--line);
+  padding:7px 14px; border-radius:var(--r-pill);
+  margin:0 0 var(--s3);
+}
+.eyebrow::before{
+  content:""; width:6px; height:6px; border-radius:50%;
+  background:var(--violet-soft);
+  box-shadow:0 0 10px rgba(169,113,247,.9);
+}
+
+h1{
+  font-size:clamp(34px,5vw,58px);
+  line-height:1.08;
+  letter-spacing:-.025em;
+  font-weight:800;
+  margin:0 0 var(--s3);
+  text-wrap:balance;
+}
+h1 .accent{
+  background:var(--grad-text);
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+}
+
+.deck{
+  font-size:clamp(18px,2.1vw,21px);
+  line-height:1.6;
+  color:var(--text-2);
+  margin:0 0 var(--s4);
+  max-width:62ch;
+}
+
+.meta{
+  display:flex; flex-wrap:wrap; align-items:center; gap:var(--s2);
+  font-size:14px; color:var(--text-3);
+  padding-top:var(--s3);
+  border-top:1px solid var(--line);
+}
+.meta .dot{ width:3px; height:3px; border-radius:50%; background:var(--text-3); }
+
+/* ---------- table of contents ------------------------------------------- */
+.toc{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:0 0 var(--s6);
+}
+.toc h2{
+  font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--text-3); margin:0 0 var(--s3); padding:0; border:0;
+}
+.toc ol{
+  list-style:none; margin:0; padding:0;
+  counter-reset:toc;
+  display:grid; gap:2px;
+}
+.toc li{ counter-increment:toc; margin:0; }
+.toc a{
+  display:flex; gap:14px; align-items:baseline;
+  color:var(--text-2); text-decoration:none;
+  font-size:15px; line-height:1.5;
+  padding:8px 10px; margin:0 -10px;
+  border-radius:var(--r-xs);
+  transition:color var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+.toc a::before{
+  content:counter(toc,decimal-leading-zero);
+  font-family:var(--font-mono); font-size:12px; font-weight:600;
+  color:var(--text-3); flex:none; min-width:22px;
+  transition:color var(--fast) var(--ease);
+}
+.toc a:hover{ color:var(--text); background:var(--surface); }
+.toc a:hover::before{ color:var(--violet-soft); }
+
+/* ---------- body typography --------------------------------------------- */
+.article p{ margin:0 0 1.1em; color:#D5DBE9; }
+.article p.lead{ font-size:20px; color:var(--text); }
+
+.article h2{
+  font-size:clamp(26px,3.2vw,34px);
+  line-height:1.2;
+  letter-spacing:-.02em;
+  font-weight:700;
+  color:var(--text);
+  margin:var(--s7) 0 var(--s3);
+  padding-top:var(--s5);
+  border-top:1px solid var(--line);
+  scroll-margin-top:32px;
+  text-wrap:balance;
+}
+.article h2:first-of-type{ margin-top:0; }
+
+.article h2 .num{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:13px; font-weight:600; letter-spacing:.16em;
+  color:var(--violet-soft);
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
+
+.article strong{ color:var(--text); font-weight:700; }
+
+.article ul{
+  margin:0 0 1.4em;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:10px;
+}
+.article ul li{
+  position:relative;
+  padding-left:26px;
+  color:#D5DBE9;
+  line-height:1.6;
+}
+.article ul li::before{
+  content:"";
+  position:absolute; left:6px; top:.68em;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--violet);
+  box-shadow:0 0 8px rgba(139,59,241,.55);
+}
+
+/* ---------- pull quote --------------------------------------------------- */
+blockquote{
+  margin:var(--s4) 0;
+  padding:var(--s3) var(--s4);
+  border-left:2px solid var(--violet);
+  background:linear-gradient(90deg,rgba(139,59,241,.10),transparent 80%);
+  border-radius:0 var(--r-md) var(--r-md) 0;
+}
+blockquote p{
+  margin:0;
+  font-size:20px;
+  line-height:1.5;
+  font-weight:600;
+  color:var(--text);
+}
+
+/* ---------- callouts ----------------------------------------------------- */
+.callout{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:var(--s4) 0 var(--s5);
+}
+.callout .label{
+  display:block;
+  font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--text-3);
+  margin-bottom:var(--s2);
+}
+.callout p:last-child, .callout ul:last-child{ margin-bottom:0; }
+
+.formula{
+  font-family:var(--font-mono);
+  font-size:clamp(15px,2.1vw,19px);
+  font-weight:600;
+  line-height:1.6;
+  color:var(--text);
+  background:var(--bg-deep);
+  border:1px solid var(--line-strong);
+  border-radius:var(--r-md);
+  padding:var(--s3);
+  margin:0 0 var(--s3);
+  text-align:center;
+  overflow-x:auto;
+}
+.formula .op{ color:var(--violet-soft); }
+
+/* ---------- numbers strip ------------------------------------------------ */
+.figures{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:var(--s2);
+  margin:var(--s4) 0 var(--s5);
+  padding:0; list-style:none;
+}
+.figures li{ padding:0; }
+.figures li::before{ display:none; }
+.fig{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:var(--s3) var(--s2);
+  text-align:center;
+}
+.fig .v{
+  display:block;
+  font-size:28px; font-weight:800; letter-spacing:-.02em; line-height:1.1;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.fig .k{
+  display:block;
+  font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.fig.is-bad .v{ color:var(--red); }
+.fig.is-real .v{ color:var(--green); }
+
+/* ---------- divider ------------------------------------------------------ */
+.rule{
+  height:1px; border:0;
+  background:var(--grad-rule);
+  margin:var(--s6) 0;
+}
+
+/* ---------- closing CTA -------------------------------------------------- */
+.cta{
+  max-width:var(--measure);
+  margin:var(--s7) auto 0;
+  padding:clamp(32px,5vw,56px) var(--gutter);
+  text-align:center;
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-xl);
+  box-shadow:var(--sh-2);
+}
+.cta h2{
+  font-size:clamp(24px,3vw,32px);
+  font-weight:700; letter-spacing:-.02em; line-height:1.2;
+  margin:0 0 var(--s2); padding:0; border:0;
+  text-wrap:balance;
+}
+.cta p{
+  color:var(--text-2);
+  max-width:52ch;
+  margin:0 auto var(--s4);
+  font-size:17px;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--grad-brand);
+  color:#fff; text-decoration:none;
+  font-weight:600; font-size:16px;
+  padding:14px 28px;
+  border-radius:var(--r-pill);
+  box-shadow:var(--sh-brand);
+  transition:transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+.btn:hover{ transform:translateY(-2px); box-shadow:0 22px 50px rgba(107,63,232,.45); }
+.btn svg{ width:18px; height:18px; }
+
+/* ---------- responsive --------------------------------------------------- */
+@media (max-width:640px){
+  body{ font-size:17px; }
+  .article p.lead{ font-size:18px; }
+  blockquote p{ font-size:18px; }
+  .article h2{ margin-top:var(--s6); padding-top:var(--s4); }
+}
+
+/* ---------- print -------------------------------------------------------- */
+@media print{
+  .bg-layer,.toc,.cta,.skip-link{ display:none; }
+  body{ background:#fff; color:#111; font-size:12pt; }
+  .article p,.article ul li{ color:#222; }
+  .article h2{ color:#000; }
+}
+.back-link{ margin:0 0 28px; font-size:13px; }
+.back-link a{ color:var(--text-2); text-decoration:none; }
+.back-link a:hover{ color:var(--text); }
+
+/* ── HERO IMAGE ─────────────────────────────────────────────────────── */
+.hero-shot{
+  margin:0 0 52px;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  background:var(--bg-raise);
+  line-height:0;
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+.hero-shot img{ width:100%; height:auto; display:block; }
+
+/* ── MISTAKE CARDS ──────────────────────────────────────────────────── */
+.mistake{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.mistake::before{
+  content:"";
+  position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+  background:var(--amber);
+}
+.mistake h2{ margin-top:0 !important; }
+.article .mistake h2:first-of-type{ margin-top:0; }
+
+/* ── PULL QUOTES ────────────────────────────────────────────────────── */
+blockquote{
+  margin:44px 0;
+  padding:0 0 0 26px;
+  border-left:3px solid var(--amber);
+  background:none;
+}
+blockquote p{
+  font-size:23px;
+  line-height:1.45;
+  font-style:italic;
+  font-weight:600;
+  color:var(--text);
+  margin:0;
+}
+
+/* ── MID-ARTICLE STRIP ──────────────────────────────────────────────── */
+.strip{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px; flex-wrap:wrap;
+  margin:44px 0;
+  padding:26px 30px;
+  border-radius:16px;
+  background:linear-gradient(120deg,#0A1224,#131A33);
+  border:1px solid var(--line-strong);
+}
+.strip h3{ margin:0 0 6px; font-size:19px; color:var(--text); }
+.strip p{ margin:0; font-size:14px; color:var(--text-2); }
+.strip-btn{
+  flex:0 0 auto;
+  display:inline-block;
+  padding:12px 22px;
+  border-radius:10px;
+  background:var(--amber);
+  color:#1A1200;
+  font-size:14px; font-weight:700;
+  text-decoration:none;
+  transition:filter .15s ease;
+}
+.strip-btn:hover{ filter:brightness(1.08); }
+
+@media (max-width:640px){
+  .mistake{ padding:24px 20px 8px; }
+  .mistake::before{ top:20px; bottom:20px; }
+  blockquote p{ font-size:20px; }
+  .strip{ padding:22px; }
+  .strip-btn{ width:100%; text-align:center; }
+}
+
+/* ── WIDE SHELL: content + rail, so the page uses the screen ─────────── */
+.shell{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 var(--gutter);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 300px;
+  gap:64px;
+  align-items:start;
+}
+.shell > .article{ max-width:none; margin:0; padding:0 0 var(--s8); }
+
+.rail{ position:sticky; top:40px; display:flex; flex-direction:column; gap:14px; }
+.rail-card{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+  padding:20px;
+}
+.rail-k{
+  display:block; margin-bottom:10px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.rail-v{
+  display:block; margin-bottom:10px;
+  font-size:34px; line-height:1; font-weight:800; letter-spacing:-.02em;
+  color:var(--green);
+}
+.rail-v.is-amber{ color:var(--amber); }
+.rail-v.is-violet{ color:var(--violet-soft); }
+.rail-card p{ margin:0; font-size:13px; line-height:1.55; color:var(--text-2); }
+.rail-src{
+  margin:0; padding-top:14px;
+  border-top:1px solid var(--line);
+  font-size:11px; line-height:1.5; color:var(--text-3);
+}
+
+/* header + hero align to the same shell */
+.article-head, .hero-shot{ max-width:1180px; }
+
+/* ── HERO: a band, not a giant square ───────────────────────────────── */
+.hero-shot{
+  margin:0 auto 56px;
+  padding:0 var(--gutter);
+  border:0; background:none; box-shadow:none;
+  border-radius:0;
+  overflow:visible;
+}
+.hero-shot img{
+  width:100%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
+  border-radius:18px;
+  border:1px solid var(--line-strong);
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+
+/* ── THE FIX callout ────────────────────────────────────────────────── */
+.fixbox{
+  margin:22px 0 4px;
+  padding:16px 18px;
+  border-radius:12px;
+  border:1px solid rgba(46,212,122,.28);
+  background:rgba(46,212,122,.07);
+}
+.fixbox-k{
+  display:block; margin-bottom:6px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--green);
+}
+.fixbox p{ margin:0 !important; color:var(--text) !important; }
+
+@media (max-width:1080px){
+  .shell{ grid-template-columns:1fr; gap:40px; max-width:820px; }
+  .rail{ position:static; flex-direction:row; flex-wrap:wrap; }
+  .rail-card{ flex:1 1 220px; }
+  .rail-src{ flex:1 1 100%; border-top:0; padding-top:0; }
+  .article-head, .hero-shot{ max-width:820px; }
+}
+@media (max-width:640px){
+  .shell{ gap:28px; }
+}
+
+/* ── STEP / METRIC CARDS (same treatment as .mistake) ───────────────── */
+.step, .metric{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.step::before, .metric::before{
+  content:""; position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0; background:var(--amber);
+}
+.metric::before{ background:var(--blue-soft); }
+.step h2, .metric h2, .step h3, .metric h3{ margin-top:0 !important; }
+.article .step h2:first-of-type, .article .metric h2:first-of-type{ margin-top:0; }
+
+.metric h3{
+  font-size:20px; line-height:1.3; color:var(--text);
+  margin:0 0 14px; letter-spacing:-.01em;
+}
+.metric h3 .num{
+  display:inline-block; margin-right:10px;
+  min-width:26px; height:26px; line-height:26px; text-align:center;
+  border-radius:7px;
+  background:rgba(126,179,255,.14); color:var(--blue-soft);
+  font-size:12px; font-weight:700;
+}
+
+/* ── WARNING CARDS ──────────────────────────────────────────────────── */
+.warn{
+  position:relative;
+  border:1px solid rgba(240,67,92,.30);
+  border-radius:14px;
+  background:rgba(240,67,92,.07);
+  padding:22px 24px 6px;
+  margin:0 0 18px;
+}
+.warn h3{
+  margin:0 0 10px; font-size:17px; color:var(--text); line-height:1.35;
+}
+.warn h3::before{ content:"\26A0"; margin-right:9px; color:var(--red); }
+
+/* ── LEAD-TIME TABLE ────────────────────────────────────────────────── */
+.ltable{
+  width:100%; border-collapse:collapse;
+  margin:0 0 var(--s3);
+  font-size:15px;
+}
+.ltable th, .ltable td{
+  padding:12px 14px;
+  border-bottom:1px solid var(--line);
+  text-align:left; color:var(--text-2);
+}
+.ltable th{
+  font-size:11px; text-transform:uppercase; letter-spacing:.09em;
+  color:var(--text-3); font-weight:700;
+}
+.ltable td:last-child, .ltable th:last-child{ text-align:right; font-variant-numeric:tabular-nums; }
+.ltable tr:last-child td{
+  border-bottom:0; border-top:1px solid var(--line-strong);
+  color:var(--text); font-weight:700;
+}
+
+/* ── ROUTINE CHECKLIST ──────────────────────────────────────────────── */
+.routine{ counter-reset:r; list-style:none; padding:0; margin:0 0 var(--s3); }
+.routine li{
+  counter-increment:r;
+  position:relative;
+  padding:14px 16px 14px 52px;
+  margin-bottom:8px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  color:var(--text);
+  font-size:15.5px; line-height:1.5;
+}
+.routine li::before{
+  content:counter(r);
+  position:absolute; left:16px; top:13px;
+  width:24px; height:24px; line-height:24px; text-align:center;
+  border-radius:7px;
+  background:var(--grad-brand); color:#fff;
+  font-size:12px; font-weight:700;
+}
+.routine li::marker{ content:none; }
+
+@media (max-width:640px){
+  .step, .metric{ padding:24px 20px 8px; }
+  .step::before, .metric::before{ top:20px; bottom:20px; }
+  .ltable{ font-size:14px; }
+  .ltable th, .ltable td{ padding:10px 8px; }
+}
+
+/* ── PROBLEM / ALTERNATIVE PAIRS ────────────────────────────────────── */
+.problem, .alt{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 14px;
+}
+.problem::before, .alt::before{
+  content:""; position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.problem::before{ background:var(--red); }
+.alt{ margin-bottom:34px; border-color:rgba(46,212,122,.24); background:rgba(46,212,122,.05); }
+.alt::before{ background:var(--green); }
+
+.problem h2, .alt h2, .problem h3, .alt h3{ margin-top:0 !important; }
+.article .problem h2:first-of-type, .article .alt h2:first-of-type{ margin-top:0; }
+
+.problem h2 .num{ color:var(--red); }
+.alt h2 .num{ color:var(--green); }
+
+/* ── DELIVERY / DEMAND SAMPLES ──────────────────────────────────────── */
+.samples{
+  display:flex; flex-wrap:wrap; gap:8px;
+  list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.samples li{
+  padding:9px 14px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  background:var(--bg-raise);
+  font-family:var(--font-mono);
+  font-size:14px;
+  color:var(--text-2);
+  margin:0;
+}
+.samples li::before{ content:none; }
+.samples li.is-hi{ border-color:rgba(240,67,92,.42); color:#FF9AA9; }
+
+/* ── SCENARIO TRIO ──────────────────────────────────────────────────── */
+.scenarios{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:12px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.scenarios li{ margin:0; padding:0; }
+.scenarios li::before{ content:none; }
+.scen{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  padding:18px;
+  text-align:center;
+}
+.scen .n{ display:block; font-size:26px; font-weight:800; letter-spacing:-.02em; color:var(--text); margin-bottom:5px; }
+.scen .l{ display:block; font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--text-3); }
+.scen.is-low .n{ color:var(--blue-soft); }
+.scen.is-mid .n{ color:var(--text); }
+.scen.is-high .n{ color:var(--amber); }
+
+/* ── SIDE-BY-SIDE COMPARISON ────────────────────────────────────────── */
+.versus{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.versus > div{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  padding:20px;
+}
+.versus h4{
+  margin:0 0 12px; font-size:13px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.07em; color:var(--text-3);
+}
+.versus .big{ display:block; font-size:24px; font-weight:800; letter-spacing:-.02em; color:var(--text); margin-bottom:4px; }
+.versus .sub{ display:block; font-size:13px; color:var(--text-2); }
+.versus .big.is-warn{ color:var(--amber); }
+
+/* ── FOUR PILLARS ───────────────────────────────────────────────────── */
+.pillars{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+  gap:10px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.pillars li{
+  margin:0; padding:20px 14px; text-align:center;
+  border:1px solid var(--line-strong);
+  border-radius:12px;
+  background:var(--bg-raise);
+  font-size:15px; font-weight:600; color:var(--text);
+}
+.pillars li::before{ content:none; }
+
+@media (max-width:640px){
+  .problem, .alt{ padding:24px 20px 8px; }
+  .problem::before, .alt::before{ top:20px; bottom:20px; }
+  .versus{ grid-template-columns:1fr; }
+}
+
+/* ── TWO-CAMP DEFENCE CARDS ─────────────────────────────────────────── */
+.camp{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 20px;
+}
+.camp::before{
+  content:""; position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.camp.is-simple::before{ background:var(--blue-soft); }
+.camp.is-complex::before{ background:var(--violet-soft); }
+.camp h2, .camp h3{ margin-top:0 !important; }
+.article .camp h2:first-of-type{ margin-top:0; }
+.camp.is-simple h2 .num{ color:var(--blue-soft); }
+.camp.is-complex h2 .num{ color:var(--violet-soft); }
+
+/* ── ASSUMPTION PAIR ────────────────────────────────────────────────── */
+.assume{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.assume > div{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--bg-raise);
+  padding:20px;
+}
+.assume h4{
+  margin:0 0 10px; font-size:11px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.09em; color:var(--text-3);
+}
+.assume .eq{
+  display:block; font-family:var(--font-mono); font-size:14px;
+  color:var(--text); margin-bottom:12px; line-height:1.5;
+}
+.assume .as{
+  display:block; font-size:13px; line-height:1.55; color:var(--text-2);
+  padding-top:12px; border-top:1px solid var(--line);
+}
+
+/* ── RANGE ROWS ─────────────────────────────────────────────────────── */
+.ranges{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.ranges li{
+  display:grid; grid-template-columns:1fr auto 1fr;
+  align-items:center; gap:16px;
+  margin:0 0 10px; padding:16px 18px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+}
+.ranges li::before{ content:none; }
+.ranges .no{ font-size:14px; color:var(--text-3); text-decoration:line-through; }
+.ranges .arrow{ color:var(--violet-soft); font-size:16px; }
+.ranges .yes{ font-size:15px; color:var(--text); font-weight:600; }
+
+/* ── STAGE LADDER ───────────────────────────────────────────────────── */
+.stages{ counter-reset:st; list-style:none; margin:0 0 var(--s3); padding:0; }
+.stages li{
+  counter-increment:st;
+  position:relative;
+  margin:0 0 10px; padding:20px 22px 20px 74px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+}
+.stages li::before{
+  content:"Stage " counter(st);
+  position:absolute; left:20px; top:20px;
+  width:40px; padding:5px 0; text-align:center;
+  border-radius:8px;
+  background:var(--grad-brand); color:#fff;
+  font-size:9px; font-weight:700; letter-spacing:.04em;
+  text-transform:uppercase; line-height:1.25;
+}
+.stages li::marker{ content:none; }
+.stages h4{ margin:0 0 8px; font-size:16px; color:var(--text); }
+.stages p{ margin:0 !important; font-size:14.5px; color:var(--text-2); }
+
+/* ── COMPANY A / B ──────────────────────────────────────────────────── */
+.duel{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.duel > div{
+  border:1px solid var(--line); border-radius:14px;
+  background:var(--grad-card); padding:22px;
+}
+.duel > div.wins{ border-color:rgba(46,212,122,.35); background:rgba(46,212,122,.06); }
+.duel h4{ margin:0 0 10px; font-size:14px; color:var(--text); }
+.duel p{ margin:0 !important; font-size:14px; line-height:1.6; color:var(--text-2); }
+.duel .tag{
+  display:inline-block; margin-top:12px; padding:4px 10px;
+  border-radius:5px; font-size:10px; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase;
+}
+.duel .tag.win{ background:rgba(46,212,122,.15); color:var(--green); }
+.duel .tag.lose{ background:rgba(240,67,92,.13); color:#FF9AA9; }
+
+@media (max-width:640px){
+  .camp{ padding:24px 20px 8px; }
+  .camp::before{ top:20px; bottom:20px; }
+  .assume, .duel{ grid-template-columns:1fr; }
+  .ranges li{ grid-template-columns:1fr; gap:6px; }
+  .ranges .arrow{ display:none; }
+}
+
+/* ── BUSINESS A / B PROFILE CARDS ───────────────────────────────────── */
+.profiles{
+  display:grid; grid-template-columns:1fr 1fr; gap:14px;
+  margin:0 0 var(--s3);
+}
+.profile{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:26px 26px 10px;
+}
+.profile::before{
+  content:""; position:absolute; left:0; top:22px; bottom:22px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.profile.is-slow::before{ background:var(--red); }
+.profile.is-fast::before{ background:var(--green); }
+.profile h4{
+  margin:0 0 4px; font-size:17px; color:var(--text); letter-spacing:-.01em;
+}
+.profile .tagline{
+  display:block; margin-bottom:16px;
+  font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+}
+.profile.is-slow .tagline{ color:#FF9AA9; }
+.profile.is-fast .tagline{ color:var(--green); }
+.profile ul{ margin:0 0 16px; }
+.profile li{ font-size:14.5px; }
+
+/* ── CAPITAL CYCLE ──────────────────────────────────────────────────── */
+.cycle{
+  display:flex; flex-wrap:wrap; align-items:center; gap:8px;
+  list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.cycle li{
+  margin:0; padding:11px 15px;
+  border:1px solid var(--line-strong);
+  border-radius:9px;
+  background:var(--bg-raise);
+  font-size:14px; color:var(--text);
+}
+.cycle li::before{ content:none; }
+.cycle .sep{
+  border:0; background:none; padding:0 2px;
+  color:var(--violet-soft); font-size:15px;
+}
+
+/* ── WAITING LIST (where capital idles) ─────────────────────────────── */
+.waiting{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.waiting li{
+  position:relative;
+  margin:0 0 7px; padding:12px 16px 12px 42px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--amber);
+  border-radius:10px;
+  background:var(--grad-card);
+  font-size:15px; color:var(--text-2);
+}
+.waiting li::before{
+  content:"\23F1";
+  position:absolute; left:14px; top:12px;
+  color:var(--amber); font-size:14px;
+}
+
+/* ── QUESTION BLOCK ─────────────────────────────────────────────────── */
+.qbox{
+  margin:var(--s4) 0;
+  padding:26px 28px;
+  border:1px solid var(--line-strong);
+  border-radius:16px;
+  background:linear-gradient(120deg,rgba(91,79,230,.16),rgba(139,59,241,.07));
+}
+.qbox .label{
+  display:block; margin-bottom:12px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--violet-soft);
+}
+.qbox ul{ margin:0; padding-left:1.2em; }
+.qbox li{ font-size:15.5px; color:var(--text); margin-bottom:9px; }
+.qbox li::before{ content:none; }
+.qbox p{ margin:0 !important; font-size:19px; line-height:1.5; color:var(--text); font-weight:600; }
+
+@media (max-width:640px){
+  .profiles{ grid-template-columns:1fr; }
+  .profile{ padding:22px 20px 8px; }
+  .qbox{ padding:22px 20px; }
+}
+
+/* ── SPEC TABLE INSIDE PROFILE CARDS ────────────────────────────────── */
+.spec{ list-style:none; margin:0 0 16px; padding:0; }
+.spec li{
+  display:flex; justify-content:space-between; align-items:baseline; gap:14px;
+  margin:0; padding:9px 0;
+  border-bottom:1px solid var(--line);
+  font-size:14px;
+}
+.spec li:last-child{ border-bottom:0; }
+.spec li::before{ content:none; }
+.spec .sk{ color:var(--text-3); }
+.spec .sv{ color:var(--text); font-weight:600; text-align:right; font-variant-numeric:tabular-nums; }
+.spec .sv.hot{ color:#FF9AA9; }
+.spec .sv.cool{ color:var(--green); }
+
+/* ── LEDGER / TRADE-OFF LIST ────────────────────────────────────────── */
+.tradeoff{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.tradeoff li{
+  position:relative;
+  margin:0 0 7px; padding:12px 16px 12px 40px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--red);
+  border-radius:10px;
+  background:rgba(240,67,92,.05);
+  font-size:15px; color:var(--text-2);
+}
+.tradeoff li::before{
+  content:"\2715";
+  position:absolute; left:15px; top:12px;
+  color:var(--red); font-size:12px;
+}
+
+/* ── ALLOCATION OPTIONS ─────────────────────────────────────────────── */
+.options{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:10px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.options li{
+  margin:0; padding:16px;
+  border:1px solid var(--line-strong);
+  border-radius:12px;
+  background:var(--bg-raise);
+  font-size:14.5px; color:var(--text);
+  text-align:center;
+}
+.options li::before{ content:none; }
+
+@media (max-width:640px){
+  .spec li{ font-size:13.5px; }
+}
+
+/* ── FOREGONE / WHAT YOU GAVE UP ────────────────────────────────────── */
+.forgone{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:10px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.forgone li{
+  position:relative;
+  margin:0; padding:16px 16px 16px 42px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  font-size:14.5px; line-height:1.5; color:var(--text-2);
+}
+.forgone li::before{
+  content:"\2205";
+  position:absolute; left:15px; top:15px;
+  color:var(--text-3); font-size:15px;
+}
+
+/* ── OPTIONALITY / TWO POSTURES ─────────────────────────────────────── */
+.posture{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.posture > div{
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:22px;
+  background:var(--grad-card);
+}
+.posture > div.open{ border-color:rgba(46,212,122,.30); background:rgba(46,212,122,.06); }
+.posture > div.shut{ border-color:rgba(240,67,92,.28); background:rgba(240,67,92,.05); }
+.posture h4{ margin:0 0 8px; font-size:15px; color:var(--text); }
+.posture p{ margin:0 !important; font-size:14.5px; line-height:1.6; color:var(--text-2); }
+
+/* ── THE TWO QUESTIONS ──────────────────────────────────────────────── */
+.swap{
+  margin:var(--s4) 0;
+  border:1px solid var(--line-strong);
+  border-radius:16px;
+  overflow:hidden;
+}
+.swap > div{ padding:22px 26px; }
+.swap .from{ background:rgba(240,67,92,.06); border-bottom:1px solid var(--line-strong); }
+.swap .to{ background:rgba(46,212,122,.06); }
+.swap .lab{
+  display:block; margin-bottom:8px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+}
+.swap .from .lab{ color:#FF9AA9; }
+.swap .to .lab{ color:var(--green); }
+.swap p{ margin:0 !important; font-size:19px; line-height:1.45; font-weight:600; color:var(--text); }
+
+@media (max-width:640px){
+  .posture{ grid-template-columns:1fr; }
+  .swap > div{ padding:20px; }
+  .swap p{ font-size:17px; }
+}
+
+/* ── VISIBLE vs INVISIBLE COST STACK ────────────────────────────────── */
+.coststack{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.coststack > div{
+  border:1px solid var(--line);
+  border-radius:14px; padding:22px;
+  background:var(--grad-card);
+}
+.coststack > div.hidden-cost{
+  border-color:rgba(245,165,36,.32);
+  background:rgba(245,165,36,.06);
+}
+.coststack h4{
+  margin:0 0 14px; font-size:11px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.09em; color:var(--text-3);
+}
+.coststack .hidden-cost h4{ color:var(--amber); }
+.coststack ul{ margin:0; padding:0; list-style:none; }
+.coststack li{
+  margin:0 0 7px; padding:0 0 0 18px; position:relative;
+  font-size:14.5px; color:var(--text-2);
+}
+.coststack li::before{
+  content:"\2022"; position:absolute; left:2px; top:-1px; color:var(--text-3);
+}
+.coststack .hidden-cost li{ color:var(--text); }
+.coststack .hidden-cost li::before{ color:var(--amber); }
+
+@media (max-width:640px){ .coststack{ grid-template-columns:1fr; } }
+
+/* ── CAMPAIGN COMPARISON CARDS ──────────────────────────────────────── */
+.campaign{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:24px 26px;
+}
+.campaign::before{
+  content:""; position:absolute; left:0; top:22px; bottom:22px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.campaign.is-tidy::before{ background:var(--blue-soft); }
+.campaign.is-messy::before{ background:var(--amber); }
+.campaign h4{ margin:0 0 4px; font-size:16px; color:var(--text); }
+.campaign .verdict{
+  display:block; margin-bottom:16px;
+  font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+}
+.campaign.is-tidy .verdict{ color:var(--blue-soft); }
+.campaign.is-messy .verdict{ color:var(--amber); }
+.campaign .acos{
+  display:block; font-size:34px; font-weight:800; letter-spacing:-.02em;
+  line-height:1; margin-bottom:14px; color:var(--text);
+}
+
+/* ── DIMINISHING-RETURNS CURVE ──────────────────────────────────────── */
+.curve{
+  margin:0 0 var(--s3);
+  padding:22px 24px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--bg-raise);
+}
+.curve-bars{ display:flex; align-items:flex-end; gap:6px; height:96px; margin-bottom:12px; }
+.curve-bars span{
+  flex:1; border-radius:4px 4px 0 0;
+  background:linear-gradient(180deg,var(--violet-soft),rgba(139,59,241,.25));
+}
+.curve-cap{ margin:0 !important; font-size:13px; color:var(--text-3); text-align:center; }
+
+/* ── CAPTURE vs CREATE ──────────────────────────────────────────────── */
+.jobs{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.jobs > div{
+  border:1px solid var(--line); border-radius:14px;
+  background:var(--grad-card); padding:22px;
+}
+.jobs h4{ margin:0 0 6px; font-size:15px; color:var(--text); }
+.jobs .n{ display:block; font-size:26px; font-weight:800; letter-spacing:-.02em; margin-bottom:10px; }
+.jobs .captures .n{ color:var(--green); }
+.jobs .creates .n{ color:var(--amber); }
+.jobs p{ margin:0 !important; font-size:14px; line-height:1.6; color:var(--text-2); }
+
+@media (max-width:640px){
+  .jobs{ grid-template-columns:1fr; }
+  .campaign{ padding:20px; }
+}
+
+/* ── COMPETING CLAIMS ON THE SAME POOL ──────────────────────────────── */
+.claims{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:9px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.claims li{
+  margin:0; padding:15px 14px; text-align:center;
+  border:1px solid var(--line-strong);
+  border-radius:11px;
+  background:var(--bg-raise);
+  font-size:14px; color:var(--text);
+}
+.claims li::before{ content:none; }
+.claims li.is-ppc{
+  border-color:var(--violet-soft);
+  background:rgba(139,59,241,.12);
+  font-weight:600;
+}
+
+/* ── BUDGET vs ALLOCATION ───────────────────────────────────────────── */
+.mindset{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.mindset > div{
+  border:1px solid var(--line); border-radius:14px; padding:22px;
+  background:var(--grad-card);
+}
+.mindset > div.owns{ border-color:rgba(240,67,92,.26); background:rgba(240,67,92,.05); }
+.mindset > div.competes{ border-color:rgba(46,212,122,.28); background:rgba(46,212,122,.06); }
+.mindset h4{ margin:0 0 6px; font-size:15px; color:var(--text); }
+.mindset .says{
+  display:block; margin-bottom:10px; font-size:15px;
+  font-style:italic; color:var(--text);
+}
+.mindset p{ margin:0 !important; font-size:14px; line-height:1.6; color:var(--text-2); }
+
+/* ── BOTTLENECK CHECKS ──────────────────────────────────────────────── */
+.bottleneck{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.bottleneck li{
+  position:relative;
+  margin:0 0 7px; padding:13px 16px 13px 44px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--blue-soft);
+  border-radius:10px;
+  background:var(--grad-card);
+  font-size:15px; color:var(--text-2);
+}
+.bottleneck li::before{
+  content:"?";
+  position:absolute; left:15px; top:12px;
+  width:18px; height:18px; line-height:18px; text-align:center;
+  border-radius:50%;
+  background:rgba(126,179,255,.16); color:var(--blue-soft);
+  font-size:11px; font-weight:700;
+}
+
+@media (max-width:640px){ .mindset{ grid-template-columns:1fr; } }
+
+/* ── FIVE CAMPAIGNS ASKING ──────────────────────────────────────────── */
+.asks{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.asks li{
+  display:grid; grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:center; gap:16px;
+  margin:0 0 8px; padding:14px 18px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+}
+.asks li::before{ content:none; }
+.asks .who{
+  font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--violet-soft); white-space:nowrap;
+}
+.asks .why{ font-size:14.5px; color:var(--text-2); }
+.asks .amt{
+  font-size:15px; font-weight:700; color:var(--text);
+  font-variant-numeric:tabular-nums; white-space:nowrap;
+}
+.asks-total{
+  display:flex; justify-content:space-between; align-items:baseline;
+  padding:16px 18px; margin-top:12px;
+  border:1px solid rgba(240,67,92,.32);
+  border-radius:12px;
+  background:rgba(240,67,92,.07);
+}
+.asks-total .lab{ font-size:14px; color:var(--text-2); }
+.asks-total .val{ font-size:22px; font-weight:800; color:#FF9AA9; }
+
+/* ── RESOURCE CONTENTION ────────────────────────────────────────────── */
+.contend{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:9px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.contend li{
+  margin:0; padding:18px 12px; text-align:center;
+  border:1px solid var(--line-strong);
+  border-radius:11px;
+  background:var(--bg-raise);
+  font-size:14px; color:var(--text);
+}
+.contend li::before{ content:none; }
+
+/* ── DEPARTMENT SILOS ───────────────────────────────────────────────── */
+.silos{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:10px; margin:0 0 var(--s3);
+}
+.silo{
+  border:1px solid var(--line); border-radius:12px;
+  background:var(--grad-card); padding:18px; text-align:center;
+}
+.silo .dept{
+  display:block; font-size:11px; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase; color:var(--text-3);
+  margin-bottom:8px;
+}
+.silo .wants{ display:block; font-size:15px; color:var(--text); font-weight:600; }
+
+@media (max-width:640px){
+  .asks li{ grid-template-columns:1fr auto; }
+  .asks .who{ grid-column:1 / -1; }
+}
+
+/* ── THOUGHT EXPERIMENT: PAUSE THE CAMPAIGN ─────────────────────────── */
+.experiment{
+  margin:var(--s4) 0;
+  border:1px solid var(--line-strong);
+  border-radius:16px;
+  overflow:hidden;
+}
+.experiment > div{ padding:24px 26px; }
+.experiment .pause-a{ background:rgba(126,179,255,.06); border-bottom:1px solid var(--line-strong); }
+.experiment .pause-b{ background:rgba(245,165,36,.06); }
+.experiment .what{
+  display:block; margin-bottom:10px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+}
+.experiment .pause-a .what{ color:var(--blue-soft); }
+.experiment .pause-b .what{ color:var(--amber); }
+.experiment h4{ margin:0 0 10px; font-size:17px; color:var(--text); }
+.experiment p{ margin:0 !important; font-size:14.5px; line-height:1.6; color:var(--text-2); }
+.experiment .verdict{
+  display:block; margin-top:12px; padding-top:12px;
+  border-top:1px solid var(--line);
+  font-size:14.5px; color:var(--text); font-weight:600;
+}
+
+/* ── SUPERMARKET ANALOGY BLOCK ──────────────────────────────────────── */
+.analogy{
+  margin:var(--s4) 0;
+  padding:26px 28px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--blue-soft);
+  border-radius:14px;
+  background:var(--bg-raise);
+}
+.analogy p{ margin:0 0 10px !important; font-size:15.5px; line-height:1.65; color:var(--text-2); }
+.analogy p:last-child{ margin-bottom:0 !important; color:var(--text); font-weight:600; }
+
+/* ── FUTURE DASHBOARD ROWS ──────────────────────────────────────────── */
+.dashrows{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.dashrows li{
+  position:relative;
+  margin:0 0 7px; padding:14px 16px 14px 46px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--green);
+  border-radius:10px;
+  background:var(--grad-card);
+  font-size:15px; color:var(--text);
+}
+.dashrows li::before{
+  content:"\25B8";
+  position:absolute; left:18px; top:13px;
+  color:var(--green); font-size:13px;
+}
+
+/* ── CAMPAIGN TYPE CARDS ────────────────────────────────────────────── */
+.types{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:12px; margin:0 0 var(--s3);
+}
+.type{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+  padding:22px 22px 18px;
+}
+.type::before{
+  content:""; position:absolute; left:0; top:20px; bottom:20px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.type.t-defend::before{ background:var(--green); }
+.type.t-acquire::before{ background:var(--amber); }
+.type.t-launch::before{ background:var(--violet-soft); }
+.type.t-research::before{ background:var(--blue-soft); }
+.type.t-seasonal::before{ background:#9AA6FF; }
+.type h4{ margin:0 0 12px; font-size:16px; color:var(--text); }
+.type ul{ margin:0; padding:0; list-style:none; }
+.type li{
+  margin:0 0 6px; padding:0 0 0 15px; position:relative;
+  font-size:13.5px; line-height:1.5; color:var(--text-2);
+}
+.type li::before{
+  content:"\2022"; position:absolute; left:2px; top:-1px; color:var(--text-3);
+}
+
+/* ── ALLOCATION BAR ─────────────────────────────────────────────────── */
+.alloc{ margin:0 0 var(--s3); }
+.alloc-bar{
+  display:flex; height:38px; border-radius:9px; overflow:hidden;
+  border:1px solid var(--line-strong);
+}
+.alloc-bar span{
+  display:grid; place-items:center;
+  font-size:12px; font-weight:700; color:#0A0F1E;
+}
+.alloc-bar .a1{ background:var(--green); }
+.alloc-bar .a2{ background:var(--amber); }
+.alloc-bar .a3{ background:var(--violet-soft); }
+.alloc-bar .a4{ background:var(--blue-soft); }
+.alloc-bar .a5{ background:var(--text-3); color:var(--text); }
+.alloc-key{
+  display:flex; flex-wrap:wrap; gap:14px; margin-top:12px;
+  font-size:12.5px; color:var(--text-2);
+}
+.alloc-key span{ display:inline-flex; align-items:center; gap:7px; }
+.alloc-key i{ width:11px; height:11px; border-radius:3px; display:inline-block; }
+
+/* ── SAME ACOS, DIFFERENT RISK ──────────────────────────────────────── */
+.risk{ width:100%; border-collapse:collapse; margin:0 0 var(--s3); font-size:14.5px; }
+.risk th, .risk td{
+  padding:12px 14px; text-align:left;
+  border-bottom:1px solid var(--line); color:var(--text-2);
+}
+.risk th{
+  font-size:11px; text-transform:uppercase; letter-spacing:.08em;
+  color:var(--text-3); font-weight:700;
+}
+.risk td:first-child{ color:var(--text-3); }
+.risk .fragile{ color:#FF9AA9; }
+.risk .robust{ color:var(--green); }
+.risk tr:last-child td{ border-bottom:0; }
+
+@media (max-width:640px){
+  .alloc-bar span{ font-size:10px; }
+  .risk th, .risk td{ padding:10px 8px; font-size:13.5px; }
+}
+
+/* ── SITE HEADER ──────────────────────────────────────────────────────
+   The header markup is the site's, and navigation.css styles it. These are
+   the pieces it also leans on from base.css, which this page does not load.
+   Every selector is scoped to the header or the mobile drawer: an article is
+   built out of bare a/p/h3/h4, and base.css restyles all of those.
+
+   The scope is written with :where() so it adds no specificity. Scoped the
+   plain way, `.site-header .btn` is (0,2,0) - the same weight as
+   navigation.css's own `.nav-actions .btn--quiet` and `.nav-mobile a`, and
+   loaded after them, so these copies quietly outranked the real rules: the
+   hamburger got pushed off a 390px screen and the drawer buttons lost their
+   sizing. Inside :where() each rule keeps exactly the weight it has in
+   base.css, which is the weight navigation.css was written against.
+   ------------------------------------------------------------------- */
+/* The header inherits from <body>, and this page's body is set for reading:
+   18px at 1.72. The site's is var(--t-body) at 1.6. Left alone, every element
+   in the bar came out a size and a half too tall. Reset it at the root of the
+   header so everything inside inherits the site's figures instead. */
+:where(.site-header),
+:where(.nav-mobile){
+  font-size:var(--t-body);
+  line-height:1.6;
+}
+
+:where(.site-header) .container{
+  width:min(100%,var(--container));
+  margin-inline:auto;
+  padding-inline:var(--gutter);
+  position:relative;
+}
+:where(.site-header, .nav-mobile) .brand{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:19px; font-weight:700; letter-spacing:-.01em;
+  color:var(--text); text-decoration:none;
+}
+:where(.site-header) .brand-mark{ width:26px; height:26px; flex:none; }
+:where(.site-header) .icon,    :where(.nav-mobile) .icon{    width:20px; height:20px; flex:none; stroke-width:1.7; }
+:where(.site-header) .icon-sm, :where(.nav-mobile) .icon-sm{ width:16px; height:16px; flex:none; stroke-width:1.8; }
+/* margin-block only: navigation.css centres this with margin-inline:auto,
+   and a shorthand `margin:0` here would outrank it and shove the menu
+   over against the brand. */
+:where(.site-header) .nav-menu{ list-style:none; padding:0; margin-block:0; }
+.site-header a, .nav-mobile a{ text-decoration:none; }
+/* base.css resets these globally; this page does not load it. Without the
+   padding reset the UA's 1px 6px survives and the 44px tap target
+   responsive.css asks for comes out 40px. */
+:where(.site-header) .nav-toggle{ font:inherit; cursor:pointer; padding:0; }
+:where(.site-header) svg, :where(.nav-mobile) svg{ display:block; }
+
+:where(.site-header) .btn, :where(.nav-mobile) .btn{
+  /* This page defines its own .btn - a filled gradient pill used in the body -
+     and it reaches the header buttons too. base.css's .btn sets none of these,
+     so the variant classes below are what should decide them. Cleared here or
+     "Log in", which is .btn--quiet and meant to read as plain text, arrives
+     wearing the brand gradient. */
+  background:none;
+  box-shadow:none;
+  color:inherit;
+  text-decoration:none;
+  position:relative;
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  padding:13px 22px;
+  border-radius:var(--r-sm);
+  font-size:var(--t-body); font-weight:600; line-height:1;
+  white-space:nowrap;
+  transition:transform var(--fast) var(--ease),
+             box-shadow var(--fast) var(--ease),
+             background var(--fast) var(--ease),
+             border-color var(--fast) var(--ease);
+}
+:where(.site-header) .btn:active, :where(.nav-mobile) .btn:active{ transform:translateY(0) scale(.99); }
+:where(.site-header) .btn--primary, :where(.nav-mobile) .btn--primary{
+  background:var(--grad-brand); color:#fff;
+  box-shadow:var(--sh-brand); overflow:hidden;
+}
+:where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{
+  content:""; position:absolute; top:0; left:-130%;
+  width:55%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);
+  transition:left .65s var(--ease);
+}
+:where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{
+  transform:translateY(-2px); box-shadow:0 22px 52px rgba(107,63,232,.45);
+}
+:where(.site-header) .btn--primary:hover::after, :where(.nav-mobile) .btn--primary:hover::after{ left:150%; }
+:where(.site-header) .btn--quiet, :where(.nav-mobile) .btn--quiet{ color:var(--text-2); padding:13px 8px; }
+:where(.site-header) .btn--quiet:hover, :where(.nav-mobile) .btn--quiet:hover{ color:var(--text); }
+:where(.nav-mobile) .btn--block{ width:100%; }
+
+@media (prefers-reduced-motion:reduce){
+  :where(.site-header) .btn, :where(.nav-mobile) .btn,
+  :where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{ transition:none; }
+  :where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{ transform:none; }
+}
+
+/* navigation.css hides these two buttons on small screens so the hamburger
+   fits. Its selectors are (0,2,0) and so is `:where(.site-header) .btn` above, which
+   is loaded after it - equal weight, later wins, and display:inline-flex beat
+   display:none. The hamburger ended up 107px off the right of a 390px screen
+   with no way to open the menu. Restating the hide at (0,3,0) settles it.
+   The breakpoints are read out of navigation.css at build time, not typed. */
+
+/* Clear the fixed site header. Reserving its height on .wrap keeps the gap
+   between the bar and the eyebrow the same as the gap used to be between the
+   top of the window and the eyebrow. */
+.wrap{ padding-top:70px; }
+@media (max-width:640px){ .wrap{ padding-top:64px; } }
+
+/* Anchor targets. .article h2 carried scroll-margin-top:32px, which was right
+   when this page had no fixed bar: 32px was breathing room. Now a jump from
+   the contents list lands 38px underneath the header. responsive.css puts the
+   rest of the site on 84px for exactly this reason; the article's own rule is
+   (0,2,0) and outranks it, so it is restated here at the same weight. */
+.article h2{ scroll-margin-top:84px; }
+
+/* The back-link sat hard against the left edge of the window, in line with
+   nothing. That was always true, but with the nav above it the thing reads as
+   stranded rather than as a heading. Same shell as .article-head, so it lines
+   up with the title beneath it and behaves as the breadcrumb it is. */
+.back-link{
+  max-width:1180px;
+  margin-inline:auto;      /* the rule above keeps its 28px bottom margin */
+  padding:22px var(--gutter) 0;
+}
+</style>
+<link rel="stylesheet" href="/css/navigation.css">
+<link rel="stylesheet" href="/css/responsive.css">
+<link rel="stylesheet" href="/css/site-footer.css">
+<!-- SEO:START -->
+<link rel="canonical" href="https://amazebase.pro/es/articulos/gestiona-un-portafolio-publicitario.html">
+<link rel="alternate" hreflang="en" href="https://amazebase.pro/articles/advertising-portfolio.html">
+<link rel="alternate" hreflang="es" href="https://amazebase.pro/es/articulos/gestiona-un-portafolio-publicitario.html">
+<link rel="alternate" hreflang="x-default" href="https://amazebase.pro/articles/advertising-portfolio.html">
+<meta property="og:site_name" content="AmazeBase">
+<meta property="og:locale" content="es_LA">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://amazebase.pro/es/articulos/gestiona-un-portafolio-publicitario.html">
+<meta property="og:title" content="Deja de gestionar campa&ntilde;as. Empieza a gestionar un portafolio publicitario.">
+<meta property="og:description" content="No juzgar&iacute;as un bono del gobierno igual que una inversi&oacute;n de riesgo. &iquest;Entonces por qu&eacute; juzgar cada campa&ntilde;a de PPC con el mismo objetivo de ROAS?">
+<meta property="og:image" content="https://amazebase.pro/assets/img/og/og-advertising-portfolio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Un gr&aacute;fico circular segmentado en azul y &aacute;mbar sobre un pedestal central, rodeado de c&aacute;psulas que sostienen un escudo, una pila de monedas, un gr&aacute;fico de barras ascendente y una gema">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Deja de gestionar campa&ntilde;as. Empieza a gestionar un portafolio publicitario.">
+<meta name="twitter:description" content="No juzgar&iacute;as un bono del gobierno igual que una inversi&oacute;n de riesgo. &iquest;Entonces por qu&eacute; juzgar cada campa&ntilde;a de PPC con el mismo objetivo de ROAS?">
+<meta name="twitter:image" content="https://amazebase.pro/assets/img/og/og-advertising-portfolio.jpg">
+<meta name="twitter:image:alt" content="Un gr&aacute;fico circular segmentado en azul y &aacute;mbar sobre un pedestal central, rodeado de c&aacute;psulas que sostienen un escudo, una pila de monedas, un gr&aacute;fico de barras ascendente y una gema">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://amazebase.pro/#organization",
+      "name": "AmazeBase",
+      "legalName": "Silbros Trading LLC",
+      "url": "https://amazebase.pro/",
+      "email": "contact@silbrostrading.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://amazebase.pro/assets/img/og/og-home.jpg",
+        "width": 1200,
+        "height": 630
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Albuquerque",
+        "addressRegion": "NM",
+        "addressCountry": "US"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://amazebase.pro/#website",
+      "url": "https://amazebase.pro/",
+      "name": "AmazeBase",
+      "publisher": {
+        "@id": "https://amazebase.pro/#organization"
+      },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "Article",
+      "@id": "https://amazebase.pro/es/articulos/gestiona-un-portafolio-publicitario.html#article",
+      "isPartOf": {
+        "@id": "https://amazebase.pro/#website"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://amazebase.pro/es/articulos/gestiona-un-portafolio-publicitario.html"
+      },
+      "headline": "Deja de gestionar campañas. Empieza a gestionar un portafolio publicitario.",
+      "description": "Los mejores anunciantes de Amazon no piensan como marketers — piensan como gestores de inversiones. Tu cuenta no es un conjunto de campañas. Es un portafolio, y los portafolios se gestionan de otra forma.",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://amazebase.pro/assets/img/og/og-advertising-portfolio.jpg",
+        "width": 1200,
+        "height": 630
+      },
+      "datePublished": "2026-07-26",
+      "dateModified": "2026-07-26",
+      "author": {
+        "@id": "https://amazebase.pro/#organization"
+      },
+      "publisher": {
+        "@id": "https://amazebase.pro/#organization"
+      },
+      "inLanguage": "es",
+      "keywords": [
+        "Asignación de portafolio",
+        "Estrategia de campañas",
+        "Asignación de capital",
+        "ROAS",
+        "Riesgo",
+        "Diversificación"
+      ],
+      "timeRequired": "PT6M"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Inicio",
+          "item": "https://amazebase.pro/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Centro de Conocimiento",
+          "item": "https://amazebase.pro/es/recursos.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Deja de gestionar campañas. Empieza a gestionar un portafolio publicitario."
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- SEO:END -->
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+<div class="bg-layer" aria-hidden="true"></div>
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+</defs>
+  <symbol id="i-chevron"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-menu"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-mega"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l7 4V5L8 9H4zM19 9a4 4 0 010 6"/></symbol>
+  <symbol id="i-dollar"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5v19M16.5 6.5H10a3.2 3.2 0 000 6.4h4a3.2 3.2 0 010 6.4H7"/></symbol>
+  <symbol id="i-stack"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/></symbol>
+  <symbol id="i-box"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></symbol>
+  <symbol id="i-search"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></symbol>
+  <symbol id="i-chart"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-trend"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></symbol>
+  <symbol id="i-db"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3.2"/><path d="M4 6v12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2V6M4 12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2"/></symbol>
+  <symbol id="i-shield"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-9.5V5.5L12 2.5 4 5.5V12.5C4 18.5 12 22 12 22z"/></symbol>
+  <symbol id="i-spark"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+  <symbol id="i-rocket"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15s-1.5 3 1 5.5S11 20 11 20M14.5 4.5c3-2 6-1 6-1s1 3-1 6l-6 6-5-5 6-6z"/><circle cx="15" cy="9" r="1.4"/></symbol>
+  <symbol id="i-case"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8.5 7V5a2 2 0 012-2h3a2 2 0 012 2v2M2.5 12.5h19"/></symbol>
+  <symbol id="i-info"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></symbol>
+  <symbol id="i-msg"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-8 8 8.6 8.6 0 01-3.6-.8L3 21l1.8-6.4A8 8 0 1121 12z"/></symbol>
+</svg>
+
+<header class="site-header">
+<div class="container">
+<nav class="nav" aria-label="Principal">
+
+  <a href="/index.html" class="brand" aria-label="Inicio de AmazeBase">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+      <path d="M16 17.6l4.4 8.2h-8.8z" fill="#C56BF5" opacity=".85"/>
+    </svg>
+    <span data-brand>AmazeBase</span>
+  </a>
+
+  <ul class="nav-menu">
+    <li class="nav-item">
+      <a class="nav-link" href="/product.html#modules">Producto <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop nav-drop--wide">
+        <a href="/product.html#advertising"><svg class="icon-sm"><use href="#i-mega"/></svg>Publicidad y PPC</a>
+        <a href="/product.html#financials"><svg class="icon-sm"><use href="#i-dollar"/></svg>Finanzas</a>
+        <a href="/product.html#ledger"><svg class="icon-sm"><use href="#i-stack"/></svg>Ledger</a>
+        <a href="/product.html#inventory"><svg class="icon-sm"><use href="#i-box"/></svg>Inventario</a>
+        <a href="/product.html#research"><svg class="icon-sm"><use href="#i-search"/></svg>Investigaci&oacute;n de productos</a>
+        <a href="/product.html#simulations"><svg class="icon-sm"><use href="#i-chart"/></svg>Simulaciones</a>
+        <a href="/product.html#sales"><svg class="icon-sm"><use href="#i-trend"/></svg>Ventas</a>
+        <a href="/product.html#data"><svg class="icon-sm"><use href="#i-db"/></svg>Datos y sincronizaci&oacute;n</a>
+        <a href="/product.html#security"><svg class="icon-sm"><use href="#i-shield"/></svg>Seguridad</a>
+        <a href="/product.html#assistant"><svg class="icon-sm"><use href="#i-spark"/></svg>Asistente de IA &mdash; pronto</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/solutions.html">Soluciones <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/solutions.html#beginners"><svg class="icon-sm"><use href="#i-rocket"/></svg>Principiantes</a>
+        <a href="/solutions.html#experts"><svg class="icon-sm"><use href="#i-dollar"/></svg>Vendedores con experiencia</a>
+        <a href="/solutions.html#agencies"><svg class="icon-sm"><use href="#i-case"/></svg>Agencias</a>
+      </div>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="/index.html#pricing">Precios</a></li>
+    <li class="nav-item"><a class="nav-link" href="/es/recursos.html">Recursos</a></li>
+    <li class="nav-item">
+      <a class="nav-link" href="/about.html">Empresa <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/about.html"><svg class="icon-sm"><use href="#i-info"/></svg>Nosotros</a>
+        <a href="/contact.html"><svg class="icon-sm"><use href="#i-msg"/></svg>Contacto</a>
+      </div>
+    </li>
+  </ul>
+
+  <div class="nav-actions">
+    <div class="nav-item lang-switch">
+      <button class="lang-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Idioma / Language">
+        ES <svg class="chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+      </button>
+      <div class="nav-drop lang-drop">
+        <a href="/articles/advertising-portfolio.html" hreflang="en" lang="en"><span class="lc">EN</span>English</a>
+        <a href="/es/articulos/gestiona-un-portafolio-publicitario.html" hreflang="es" lang="es" aria-current="true"><span class="lc">ES</span>Español</a>
+      </div>
+    </div>
+    <a class="btn btn--quiet" href="https://analytics.amazebase.pro/login">Iniciar sesi&oacute;n</a>
+    <a class="btn btn--primary" href="/index.html#waitlist" data-magnetic>&Uacute;nete a la lista de espera</a>
+    <button class="nav-toggle" aria-label="Abrir men&uacute;" aria-expanded="false" aria-controls="navMobile">
+      <svg class="icon"><use href="#i-menu"/></svg>
+    </button>
+  </div>
+
+</nav>
+</div>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="/product.html#modules">Producto</a>
+  <a href="/solutions.html">Soluciones</a>
+  <a href="/index.html#pricing">Precios</a>
+  <a href="/es/recursos.html">Recursos</a>
+  <a href="/about.html">Nosotros</a>
+  <a href="/contact.html">Contacto</a>
+  <a class="btn btn--quiet btn--block" href="https://analytics.amazebase.pro/login">Iniciar sesi&oacute;n</a>
+  <a class="btn btn--primary btn--block" href="/index.html#waitlist">&Uacute;nete a la lista de espera</a>
+</div>
+</header>
+
+<div class="wrap">
+
+<p class="back-link"><a href="/es/recursos.html">&larr; Centro de Conocimiento</a></p>
+
+<header class="article-head">
+  <p class="eyebrow">Publicidad y PPC</p>
+
+  <h1>Deja de gestionar campa&ntilde;as. <span class="accent">Empieza a gestionar un portafolio publicitario.</span></h1>
+
+  <p class="deck">
+    Los mejores anunciantes de Amazon no piensan como marketers. Piensan como
+    gestores de inversiones. Porque tu cuenta de publicidad no es un conjunto de
+    campa&ntilde;as &mdash; es un portafolio de inversi&oacute;n, y los portafolios se gestionan de
+    forma muy distinta.
+  </p>
+
+  <p class="meta">
+    <span>AmazeBase</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span><time datetime="2026-07-26">26 de julio de 2026</time></span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>6 min de lectura</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>Publicidad y PPC</span>
+  </p>
+</header>
+
+<figure class="hero-shot">
+  <img src="/assets/img/hero-advertising-portfolio.webp"
+       alt="Un gr&aacute;fico circular segmentado en azul y &aacute;mbar sobre un pedestal central, rodeado de c&aacute;psulas que sostienen un escudo, una pila de monedas, un gr&aacute;fico de barras ascendente y una gema"
+       width="1672" height="941" loading="eager" decoding="async">
+</figure>
+
+<div class="shell">
+<main id="main" class="article">
+
+  <p class="lead">
+    Un portafolio de inversi&oacute;n serio tiene activos con prop&oacute;sitos completamente
+    distintos. Unos producen rendimientos estables. Otros ofrecen crecimiento a
+    largo plazo. Otros generan efectivo. Otros reducen el riesgo. Ninguno se juzga
+    con exactamente los mismos criterios &mdash; ser&iacute;a absurdo. Y aun as&iacute;, todos los
+    d&iacute;as, los vendedores de Amazon hacen justo eso con sus campa&ntilde;as.
+  </p>
+
+  <p>Gana el ROAS m&aacute;s alto. Gana el ACOS m&aacute;s bajo. Sube el presupuesto. Corta a los perdedores. Repite la semana que viene. Es un sistema simple &mdash; y es la raz&oacute;n por la que muchos negocios dejan sobre la mesa un crecimiento importante.</p>
+
+  <div class="callout">
+    <span class="label">Lecturas relacionadas</span>
+    <p>
+      Aqu&iacute; es donde aterriza el conjunto de PPC. Se apoya en
+      <a href="/es/articulos/deja-de-optimizar-el-acos.html">deja de optimizar el ACOS</a>,
+      <a href="/es/articulos/el-ppc-es-asignacion-de-capital.html">el PPC como asignaci&oacute;n de capital</a> y
+      <a href="/es/articulos/la-trampa-del-roas-mas-alto.html">la trampa del ROAS m&aacute;s alto</a>.
+    </p>
+  </div>
+
+  <nav class="toc" aria-labelledby="toc-title">
+    <h2 id="toc-title">Qu&eacute; encontrar&aacute;s en este art&iacute;culo</h2>
+    <ol>
+      <li><a href="#investments">Imagina que cada campa&ntilde;a es una inversi&oacute;n</a></li>
+      <li><a href="#jobs">Cada campa&ntilde;a tiene un trabajo distinto</a></li>
+      <li><a href="#diversify">La diversificaci&oacute;n tambi&eacute;n existe en la publicidad</a></li>
+      <li><a href="#risk">El riesgo no se mide con el ACOS</a></li>
+      <li><a href="#past">Deja de premiar el desempe&ntilde;o pasado</a></li>
+      <li><a href="#compete">Cada d&oacute;lar deber&iacute;a competir</a></li>
+      <li><a href="#rebalance">El portafolio cambia con el tiempo</a></li>
+      <li><a href="#ideal">Construir tu portafolio publicitario ideal</a></li>
+    </ol>
+  </nav>
+
+  <hr class="rule">
+
+  <h2 id="investments">Imagina que cada campa&ntilde;a es una inversi&oacute;n</h2>
+
+  <p>Piensa en tu cuenta no como campa&ntilde;as, sino como inversiones. La campa&ntilde;a A protege tu marca. La B trae clientes nuevos. La C lanza un producto. La D defiende participaci&oacute;n de mercado. La E explora palabras clave nuevas.</p>
+
+  <p>Todas est&aacute;n invirtiendo capital. Simplemente invierten por razones distintas.</p>
+
+  <blockquote>
+    <p>&iquest;Juzgar&iacute;as un bono del gobierno igual que una inversi&oacute;n de riesgo? &iquest;Entonces por qu&eacute; juzgar cada campa&ntilde;a de PPC con el mismo objetivo de ROAS?</p>
+  </blockquote>
+
+  <h2 id="best">Los grandes inversionistas nunca ponen todo en su mejor apuesta</h2>
+
+  <p>Una acci&oacute;n rindi&oacute; excepcionalmente bien el a&ntilde;o pasado. &iquest;Le metes autom&aacute;ticamente cada d&oacute;lar disponible? Los inversionistas profesionales no. Ellos preguntan:</p>
+
+  <ul class="bottleneck">
+    <li>&iquest;Cambi&oacute; la oportunidad?</li>
+    <li>&iquest;Aument&oacute; el riesgo?</li>
+    <li>&iquest;El crecimiento futuro ya est&aacute; en el precio?</li>
+    <li>&iquest;Hay mejores oportunidades en otra parte?</li>
+  </ul>
+
+  <div class="fixbox">
+    <span class="fixbox-k">La disciplina</span>
+    <p>Tu campa&ntilde;a de mejor desempe&ntilde;o no es autom&aacute;ticamente tu mejor inversi&oacute;n futura.</p>
+  </div>
+
+  <h2 id="jobs">Cada campa&ntilde;a tiene un trabajo distinto</h2>
+
+  <p>Uno de los errores m&aacute;s grandes de los vendedores con experiencia es esperar que cada campa&ntilde;a maximice la eficiencia. Las campa&ntilde;as no existen para eso.</p>
+
+  <div class="types">
+    <div class="type t-defend">
+      <h4>Defensiva</h4>
+      <ul>
+        <li>Proteger las b&uacute;squedas de marca</li>
+        <li>Mantener lejos a los competidores</li>
+        <li>ROAS normalmente excelente</li>
+        <li>Potencial de crecimiento limitado</li>
+      </ul>
+    </div>
+    <div class="type t-acquire">
+      <h4>Adquisici&oacute;n</h4>
+      <ul>
+        <li>Traer clientes completamente nuevos</li>
+        <li>Menor eficiencia</li>
+        <li>Mayor incertidumbre</li>
+        <li>Potencial de largo plazo mucho mayor</li>
+      </ul>
+    </div>
+    <div class="type t-launch">
+      <h4>Lanzamiento de producto</h4>
+      <ul>
+        <li>Generar visibilidad</li>
+        <li>Construir posicionamiento</li>
+        <li>Juntar rese&ntilde;as</li>
+        <li>Rara vez eficiente al principio</li>
+      </ul>
+    </div>
+    <div class="type t-research">
+      <h4>Investigaci&oacute;n</h4>
+      <ul>
+        <li>Segmentaci&oacute;n amplia y autom&aacute;tica</li>
+        <li>Descubrimiento de palabras clave</li>
+        <li>Muchos clics, sin ventas inmediatas</li>
+        <li>Descubre lo que despu&eacute;s se vuelve rentable</li>
+      </ul>
+    </div>
+    <div class="type t-seasonal">
+      <h4>Estacional</h4>
+      <ul>
+        <li>Opera solo en periodos espec&iacute;ficos</li>
+        <li>Exige inversi&oacute;n agresiva</li>
+        <li>Perfil de riesgo distinto</li>
+        <li>Objetivos distintos</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>&iquest;De verdad esperar&iacute;as que cada una de estas inversiones produjera el mismo ROAS?</p>
+
+  <h2 id="diversify">La diversificaci&oacute;n tambi&eacute;n existe en la publicidad</h2>
+
+  <p>Los inversionistas diversifican porque entienden la incertidumbre. La publicidad en Amazon funciona igual.</p>
+
+  <div class="posture">
+    <div class="shut">
+      <h4>Todo a campa&ntilde;as de marca</h4>
+      <p>El ROAS se ve fant&aacute;stico &mdash; hasta que los competidores se llevan a los clientes nuevos, el crecimiento org&aacute;nico se frena y la participaci&oacute;n de mercado cae.</p>
+    </div>
+    <div class="shut">
+      <h4>Todo a adquisici&oacute;n</h4>
+      <p>El crecimiento se acelera. La utilidad desaparece.</p>
+    </div>
+  </div>
+
+  <div class="fixbox">
+    <span class="fixbox-k">El equilibrio</span>
+    <p>Ninguno de los dos extremos es sano. Los portafolios publicitarios m&aacute;s fuertes equilibran objetivos distintos &mdash; igual que los portafolios de inversi&oacute;n.</p>
+  </div>
+
+  <h2 id="risk">El riesgo no se mide con el ACOS</h2>
+
+  <p>Supongamos que dos campa&ntilde;as tienen el mismo ACOS &mdash; veintitr&eacute;s por ciento. Parecen igual de atractivas. Pero mira los riesgos.</p>
+
+  <table class="risk">
+    <thead>
+      <tr><th scope="col">Exposici&oacute;n</th><th scope="col">Campa&ntilde;a A</th><th scope="col">Campa&ntilde;a B</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Palabras clave</td><td class="fragile">Una palabra clave</td><td class="robust">Cientos de t&eacute;rminos de b&uacute;squeda</td></tr>
+      <tr><td>Productos</td><td class="fragile">Un producto</td><td class="robust">Varios SKU</td></tr>
+      <tr><td>Demanda</td><td class="fragile">Estacional</td><td class="robust">Constante todo el a&ntilde;o</td></tr>
+    </tbody>
+  </table>
+
+  <blockquote>
+    <p>El mismo ACOS. Riesgo completamente distinto. Los inversionistas profesionales entienden esto por instinto. Los gestores de publicidad rara vez eval&uacute;an las campa&ntilde;as as&iacute;.</p>
+  </blockquote>
+
+<aside class="strip">
+  <div>
+    <h3>Gestiona el portafolio, no la campa&ntilde;a</h3>
+    <p>AmazeBase muestra lo que aporta cada campa&ntilde;a y lo que le cuesta al resto del negocio.</p>
+  </div>
+  <a class="strip-btn" href="/index.html#waitlist">&Uacute;nete a la lista de espera</a>
+</aside>
+
+  <h2 id="past">Deja de premiar el desempe&ntilde;o pasado</h2>
+
+  <p>Uno de los errores m&aacute;s grandes al invertir es asumir que el ganador de ayer se convierte autom&aacute;ticamente en el de ma&ntilde;ana. La publicidad sufre del mismo sesgo.</p>
+
+  <p>Una campa&ntilde;a dio resultados excepcionales el trimestre pasado, as&iacute; que todos quieren subirle el presupuesto. Pero &iquest;de verdad creci&oacute; la oportunidad &mdash; o el dinero f&aacute;cil ya se tom&oacute;?</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">La trampa</span>
+    <p>A veces la campa&ntilde;a de mayor retorno ya est&aacute; completamente optimizada y la inversi&oacute;n adicional produce muy poco. Mientras tanto, otra campa&ntilde;a con desempe&ntilde;o modesto todav&iacute;a tiene much&iacute;simo espacio para crecer. El futuro importa m&aacute;s que el pasado.</p>
+  </div>
+
+  <h2 id="compete">Cada d&oacute;lar deber&iacute;a competir</h2>
+
+  <p>Imagina que cada campa&ntilde;a presenta una propuesta de inversi&oacute;n, y cada una pide otros $10,000. Ahora quita los nombres de las campa&ntilde;as. Quita el ROAS. Quita el ACOS. Eval&uacute;a cada propuesta solo por el valor esperado para el negocio.</p>
+
+  <div class="qbox">
+    <span class="label">Eval&uacute;a con esto</span>
+    <ul>
+      <li>&iquest;Cu&aacute;l campa&ntilde;a crea clientes nuevos?</li>
+      <li>&iquest;Cu&aacute;l fortalece el posicionamiento org&aacute;nico?</li>
+      <li>&iquest;Cu&aacute;l apoya lanzamientos futuros?</li>
+      <li>&iquest;Cu&aacute;l mejora el reconocimiento de marca?</li>
+      <li>&iquest;Cu&aacute;l crea ventaja competitiva de largo plazo?</li>
+    </ul>
+  </div>
+
+  <p>As&iacute; es exactamente como los comit&eacute;s de inversi&oacute;n asignan capital. La publicidad no deber&iacute;a ser distinta.</p>
+
+  <h2 id="onemetric">Un portafolio no se construye alrededor de una sola m&eacute;trica</h2>
+
+  <p>Ning&uacute;n fondo profesional se gestiona con un solo n&uacute;mero. Los rendimientos importan &mdash; pero tambi&eacute;n el riesgo, la diversificaci&oacute;n, la liquidez, la volatilidad, el horizonte de tiempo y los requerimientos de capital.</p>
+
+  <div class="qbox">
+    <span class="label">M&aacute;s all&aacute; de &laquo;&iquest;cu&aacute;l es el ROAS?&raquo;</span>
+    <ul>
+      <li>&iquest;Qu&eacute; tan escalable es esta campa&ntilde;a?</li>
+      <li>&iquest;Qu&eacute; tan dependiente es de una sola palabra clave?</li>
+      <li>&iquest;Sostiene varios productos?</li>
+      <li>&iquest;Fortalece la marca?</li>
+      <li>&iquest;Reduce los costos de adquisici&oacute;n futuros?</li>
+      <li>&iquest;El inventario puede sostener demanda adicional?</li>
+    </ul>
+  </div>
+
+  <p>Una sola m&eacute;trica no puede responder todas esas preguntas.</p>
+
+  <h2 id="rebalance">El portafolio cambia con el tiempo</h2>
+
+  <p>Los grandes inversionistas rebalancean &mdash; no porque las inversiones fallaran, sino porque el mundo cambi&oacute;. Los negocios de Amazon deber&iacute;an hacer exactamente lo mismo.</p>
+
+  <ul class="ranges">
+    <li>
+      <span class="no">Un producto maduro anunciado como un lanzamiento nuevo</span>
+      <span class="arrow" aria-hidden="true">&rarr;</span>
+      <span class="yes">Estrategia ajustada a la etapa del producto</span>
+    </li>
+    <li>
+      <span class="no">Un l&iacute;der de categor&iacute;a anunciando como retador</span>
+      <span class="arrow" aria-hidden="true">&rarr;</span>
+      <span class="yes">Estrategia ajustada a la posici&oacute;n de mercado</span>
+    </li>
+  </ul>
+
+  <blockquote>
+    <p>Los presupuestos est&aacute;ticos crean negocios est&aacute;ticos.</p>
+  </blockquote>
+
+  <h2 id="ideal">Imagina construir tu portafolio publicitario ideal</h2>
+
+  <p>Supongamos que hoy empiezas desde cero. Sin campa&ntilde;as, sin historial, sin apego emocional. &iquest;C&oacute;mo asignar&iacute;as el presupuesto? Quiz&aacute; algo as&iacute;:</p>
+
+  <div class="alloc">
+    <div class="alloc-bar" role="img" aria-label="Asignaci&oacute;n ilustrativa: 25&nbsp;% defendiendo tr&aacute;fico de marca, 35&nbsp;% adquiriendo clientes nuevos, 20&nbsp;% lanzando productos, 10&nbsp;% experimentos de palabras clave, 10&nbsp;% en reserva">
+      <span class="a1" style="width:25%">25&nbsp;%</span>
+      <span class="a2" style="width:35%">35&nbsp;%</span>
+      <span class="a3" style="width:20%">20&nbsp;%</span>
+      <span class="a4" style="width:10%">10&nbsp;%</span>
+      <span class="a5" style="width:10%">10&nbsp;%</span>
+    </div>
+    <div class="alloc-key">
+      <span><i style="background:var(--green)"></i>Defender tr&aacute;fico de marca</span>
+      <span><i style="background:var(--amber)"></i>Adquirir clientes nuevos</span>
+      <span><i style="background:var(--violet-soft)"></i>Lanzar productos</span>
+      <span><i style="background:var(--blue-soft)"></i>Experimentos de palabras clave</span>
+      <span><i style="background:var(--text-3)"></i>Guardado en reserva</span>
+    </div>
+  </div>
+
+  <div class="fixbox">
+    <span class="fixbox-k">La pregunta</span>
+    <p>&iquest;Tu cuenta actual se parecer&iacute;a en algo a eso? Para muchos negocios la respuesta es no &mdash; porque la publicidad evoluciona poco a poco, mientras que los portafolios se construyen a prop&oacute;sito. La diferencia es importante.</p>
+  </div>
+
+  <h2 id="together">Las campa&ntilde;as no compiten entre s&iacute; &mdash; trabajan juntas</h2>
+
+  <p>Una campa&ntilde;a crea reconocimiento. Otra convierte demanda. Otra protege tu marca. Otra descubre palabras clave rentables. Otra lanza los &eacute;xitos de venta del futuro.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">El sistema</span>
+    <p>Vistas por separado, algunas campa&ntilde;as parecen d&eacute;biles. Vistas en conjunto, crean un sistema potente &mdash; por la misma raz&oacute;n por la que activos distintos se complementan en un portafolio.</p>
+  </div>
+
+  <h2 id="fund">Piensa como gestor de fondos</h2>
+
+  <p>Imagina que tu presupuesto de publicidad es de inversionistas externos. Cada mes hacen una sola pregunta: <strong>&laquo;&iquest;Por qu&eacute; nuestro capital est&aacute; invertido aqu&iacute;?&raquo;</strong> &iquest;Podr&iacute;as responderla para cada campa&ntilde;a?</p>
+
+  <blockquote>
+    <p>No con m&eacute;tricas. Con estrategia. Porque la estrategia explica por qu&eacute; una campa&ntilde;a merece capital. Las m&eacute;tricas solo describen qu&eacute; pas&oacute; despu&eacute;s de que lo recibi&oacute;.</p>
+  </blockquote>
+
+  <h2 id="dashboard">El panel que la mayor&iacute;a de los negocios necesita</h2>
+
+  <p>Imagina abrir tu plataforma de publicidad y, en lugar del ROAS m&aacute;s alto y el ACOS m&aacute;s bajo, ver:</p>
+
+  <ul class="dashrows">
+    <li>Mayor valor estrat&eacute;gico</li>
+    <li>Mayor potencial de adquisici&oacute;n de clientes</li>
+    <li>Mayor aporte a la utilidad de largo plazo</li>
+    <li>Mayor diversificaci&oacute;n del portafolio</li>
+    <li>Mayor demanda incremental</li>
+    <li>Campa&ntilde;as que necesitan menos exposici&oacute;n</li>
+    <li>Campa&ntilde;as que merecen m&aacute;s inversi&oacute;n</li>
+  </ul>
+
+  <p>Ahora ya no est&aacute;s gestionando anuncios. Est&aacute;s gestionando inversiones.</p>
+
+  <hr class="rule">
+
+  <h2 id="final">Para cerrar</h2>
+
+  <p>La mayor&iacute;a del software de publicidad para Amazon te ayuda a optimizar campa&ntilde;as. Muy poco te ayuda a construir portafolios. Esa distinci&oacute;n importa.</p>
+
+  <div class="swap">
+    <div class="from">
+      <span class="lab">La optimizaci&oacute;n de campa&ntilde;as pregunta</span>
+      <p>&laquo;&iquest;C&oacute;mo puede rendir mejor esta campa&ntilde;a?&raquo;</p>
+    </div>
+    <div class="to">
+      <span class="lab">La gesti&oacute;n de portafolio pregunta</span>
+      <p>&laquo;&iquest;C&oacute;mo deber&iacute;a asignar todo el negocio su capital publicitario?&raquo;</p>
+    </div>
+  </div>
+
+  <p>Los negocios no se vuelven extraordinarios por crear una campa&ntilde;a excepcional. Se vuelven extraordinarios por poner capital, una y otra vez, donde produce el mayor retorno de largo plazo &mdash; que es exactamente lo que hacen los grandes inversionistas.</p>
+
+  <blockquote>
+    <p>El futuro del PPC no es simplemente mejor optimizaci&oacute;n. Es mejor asignaci&oacute;n de capital. Los negocios que lo entiendan primero no solo construir&aacute;n cuentas de publicidad m&aacute;s fuertes. Construir&aacute;n empresas m&aacute;s fuertes.</p>
+  </blockquote>
+
+</main>
+
+<aside class="rail" aria-label="Ideas clave de este art&iacute;culo">
+
+  <div class="rail-card">
+    <span class="rail-k">Cinco trabajos distintos</span>
+    <span class="rail-v is-violet">5</span>
+    <p>Defensiva, adquisici&oacute;n, lanzamiento, investigaci&oacute;n, estacional. Un solo objetivo de ROAS no puede juzgar a las cinco.</p>
+  </div>
+
+  <div class="rail-card">
+    <span class="rail-k">Mismo ACOS, distinto riesgo</span>
+    <span class="rail-v is-amber">23&nbsp;%</span>
+    <p>Una campa&ntilde;a se apoya en una sola palabra clave y una sola temporada. La otra abarca cientos de t&eacute;rminos y varios SKU.</p>
+  </div>
+
+  <div class="rail-card">
+    <span class="rail-k">Construido, no acumulado</span>
+    <span class="rail-v">25/35/20/10/10</span>
+    <p>Una asignaci&oacute;n ilustrativa. La mayor&iacute;a de las cuentas no se parece en nada, porque evolucionaron en vez de ser dise&ntilde;adas.</p>
+  </div>
+
+  <p class="rail-src">Cifras de los ejemplos trabajados de este art&iacute;culo, no de un estudio de mercado.</p>
+
+</aside>
+</div>
+
+<aside class="cta">
+  <h2>Construye un portafolio, no un mont&oacute;n de campa&ntilde;as</h2>
+  <p>
+    AmazeBase conecta la publicidad con el inventario, los proveedores y el flujo
+    de caja para que cada campa&ntilde;a se juzgue por el trabajo que de verdad hace.
+  </p>
+  <a class="btn" href="/index.html#waitlist">
+    &Uacute;nete a la lista de espera
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M5 12h14M13 6l6 6-6 6"/>
+    </svg>
+  </a>
+</aside>
+
+</div><!-- /.wrap -->
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+  <symbol id="i-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12.5 17v-4a2.5 2.5 0 015 0v4"/></symbol>
+  <symbol id="i-tw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M20 4L4 20"/></symbol>
+  <symbol id="i-gh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4 1.4-4-2.2-5.6-2.6M15 21v-3.4a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 2.6 5.5 2.9 5.5 2.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 9.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></symbol>
+</defs>
+</svg>
+
+<footer class="footer">
+<div class="container">
+
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/index.html" class="brand" aria-label="Inicio de AmazeBase">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+        </svg>
+        <span data-brand>AmazeBase</span>
+      </a>
+      <p>El sistema operativo para vendedores de Amazon. Todo conectado, todo sincronizado.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Producto</h4>
+      <a href="/product.html#modules">Producto</a>
+      <a href="/index.html#pricing">Precios</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Recursos</h4>
+      <a href="/es/recursos.html">Centro de Conocimiento</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <a href="/about.html">Nosotros</a>
+      <a href="/contact.html">Contacto</a>
+      <a href="/privacy.html">Privacidad</a>
+      <a href="/terms.html">T&eacute;rminos</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>&copy; 2026 <span data-brand>AmazeBase</span>. Todos los derechos reservados.</span>
+    <div class="footer-social">
+      <a href="#" aria-label="LinkedIn"><svg class="icon-sm"><use href="#i-in"/></svg></a>
+      <a href="#" aria-label="X"><svg class="icon-sm"><use href="#i-tw"/></svg></a>
+      <a href="#" aria-label="GitHub"><svg class="icon-sm"><use href="#i-gh"/></svg></a>
+    </div>
+  </div>
+
+</div>
+</footer>
+
+<script src="/js/main.js" defer></script>
+</body>
+</html>

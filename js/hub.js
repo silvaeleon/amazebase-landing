@@ -14,7 +14,7 @@
 (function () {
   "use strict";
 
-  var DATA_URL = "data/resources.json";
+  var DATA_URL = "/data/resources.json";
   var API      = "https://analytics.amazebase.pro";
 
   var $ = function (s, r) { return (r || document).querySelector(s); };
@@ -57,18 +57,118 @@
     while (node.firstChild) node.removeChild(node.firstChild);
   }
 
+  /* ------------------------------------------------------------- LANGUAGE */
+
+  /* The hub exists at /resources.html and /es/recursos.html and is driven by
+     one script and one data file. Every user-facing string goes through T(),
+     which falls back to the English literal, so adding a language means adding
+     a column here and a `label_xx` beside each `label` in resources.json. */
+  var LANG = (document.documentElement.lang || "en").slice(0, 2).toLowerCase();
+
+  /* The page's own language is a scope, not a filter. Everything the hub
+     counts, tiles and searches is drawn from it; it is never an "active
+     filter" the visitor can clear, because clearing it would leave them on a
+     Spanish page reading English cards. The header EN/ES button moves between
+     the two hubs. ?lang= overrides it, which is what the old single-hub links
+     relied on. */
+  var SCOPE = LANG;
+  try {
+    var q = new URLSearchParams(location.search).get("lang");
+    if (q) SCOPE = q;
+  } catch (e) {}
+
+  function inScope(r) { return !SCOPE || r.language === SCOPE; }
+
+  var STR = {
+    es: {
+      "All Resources":        "Todos los recursos",
+      "All":                  "Todos",
+      "Results":              "Resultados",
+      "Latest Resources":     "Lo m\u00e1s reciente",
+      "resource":             "recurso",
+      "resources":            "recursos",
+      " match":               " coinciden",
+      "Nothing featured yet": "Todav\u00eda no hay destacados",
+      "Mark a resource with \u201cfeatured\u201d in data/resources.json and it will appear here.":
+        "Marca un recurso como \u00abfeatured\u00bb en data/resources.json y aparecer\u00e1 aqu\u00ed.",
+      "No resources published yet": "Todav\u00eda no hay recursos publicados",
+      "This hub is built and ready. Add entries to data/resources.json and they appear here \u2014 counts, filters and search all follow automatically.":
+        "El centro est\u00e1 listo. Agrega entradas en data/resources.json y aparecer\u00e1n aqu\u00ed: los conteos, los filtros y la b\u00fasqueda se actualizan solos.",
+      "Nothing matches those filters": "Nada coincide con esos filtros",
+      "Try a different category, format or search term.":
+        "Prueba con otra categor\u00eda, otro formato u otro t\u00e9rmino de b\u00fasqueda.",
+      "Couldn't load the resource list": "No pudimos cargar la lista de recursos",
+      " min":                 " min",
+      "Sending\u2026":         "Enviando\u2026",
+      "Tell us a little more about what you'd like.":
+        "Cu\u00e9ntanos un poco m\u00e1s sobre lo que te gustar\u00eda.",
+      "That email address doesn't look right.":
+        "Esa direcci\u00f3n de correo no parece v\u00e1lida.",
+      "Too many requests just now. Please try again later.":
+        "Demasiadas solicitudes por ahora. Vuelve a intentarlo m\u00e1s tarde.",
+      "We couldn't send that. Please try again.":
+        "No pudimos enviarlo. Int\u00e9ntalo de nuevo.",
+      "Something went wrong.": "Algo sali\u00f3 mal."
+    }
+  };
+
+  /* Taxonomy labels carry a `label_es` beside `label`; missing ones fall
+     back to English, so a half-translated taxonomy still renders. */
+  function lab(o) { return o["label_" + LANG] || o.label; }
+
+  /* Singular form for the format badge. English got away with stripping a
+     trailing "s"; "Casos de estudio" does not. */
+  function labOne(o) {
+    return o["label_one_" + LANG] || o.label_one || lab(o).replace(/s$/, "");
+  }
+
+  /* Resource urls in the data file are root-relative without the leading
+     slash ("articles/x.html"). That resolves correctly from /resources.html
+     and to /es/articles/... from the Spanish hub, so anchor it explicitly. */
+  function href(u) {
+    if (!u) return "#";
+    if (/^(https?:|\/|#)/.test(u)) return u;
+    return "/" + u;
+  }
+
+  /* state.all is every resource in the file; scopedAll() is the ones this
+     page is about. Every "total" the chrome shows uses the latter. */
+  function scopedAll() {
+    var out = [];
+    for (var i = 0; i < state.all.length; i++) {
+      if (inScope(state.all[i])) out.push(state.all[i]);
+    }
+    return out;
+  }
+
+  function T(s) {
+    var t = STR[LANG];
+    return (t && t[s]) || s;
+  }
+
   function plural(n, one, many) {
-    return n + " " + (n === 1 ? one : many);
+    return n + " " + T(n === 1 ? one : many);
   }
 
   function formatDate(iso) {
     var d = new Date(iso + "T00:00:00");
     if (isNaN(d)) return iso;
-    return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+    return d.toLocaleDateString(LANG === "es" ? "es-ES" : "en-GB",
+                            { day: "numeric", month: "short", year: "numeric" });
   }
 
   function labelFor(list, id) {
-    for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i].label;
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].id !== id) continue;
+      return list[i]["label_" + LANG] || list[i].label;
+    }
+    return id;
+  }
+
+  function fmtOne(id) {
+    for (var i = 0; i < state.formats.length; i++) {
+      if (state.formats[i].id === id) return labOne(state.formats[i]);
+    }
     return id;
   }
 
@@ -98,6 +198,7 @@
       if (state.category && !inCat(r, state.category)) return false;
       if (state.format   && r.format   !== state.format)   return false;
       if (state.level    && r.level    !== state.level)    return false;
+      if (!inScope(r)) return false;
       if (state.language && r.language !== state.language) return false;
       if (state.topic && (r.topics || []).indexOf(state.topic) === -1) return false;
       if (!q) return true;
@@ -124,18 +225,19 @@
   }
 
   function activeLabel() {
-    if (state.query.trim()) return "Results";
+    if (state.query.trim()) return T("Results");
     if (state.topic) return state.topic;
     if (state.category) return labelFor(state.categories, state.category);
     if (state.format) return labelFor(state.formats, state.format);
     if (state.level) return labelFor(state.levels, state.level);
-    if (state.language) return labelFor(state.languages, state.language);
-    return "Latest Resources";
+    return T("Latest Resources");
   }
 
   function countIn(pred) {
     var n = 0;
-    for (var i = 0; i < state.all.length; i++) if (pred(state.all[i])) n++;
+    for (var i = 0; i < state.all.length; i++) {
+      if (inScope(state.all[i]) && pred(state.all[i])) n++;
+    }
     return n;
   }
 
@@ -155,7 +257,7 @@
       b.appendChild(ico);
 
       var txt = el("span", "hub-cat-txt");
-      txt.appendChild(el("span", "hub-cat-label", c.label));
+      txt.appendChild(el("span", "hub-cat-label", lab(c)));
       txt.appendChild(el("span", "hub-cat-count", plural(n, "resource", "resources")));
       b.appendChild(txt);
 
@@ -186,10 +288,10 @@
       return li;
     }
 
-    ul.appendChild(row(null, "All Resources", "i-grid", state.all.length, state.format === null));
+    ul.appendChild(row(null, T("All Resources"), "i-grid", scopedAll().length, state.format === null));
     state.formats.forEach(function (f) {
       var n = countIn(function (r) { return r.format === f.id; });
-      ul.appendChild(row(f.id, f.label, f.icon, n, state.format === f.id));
+      ul.appendChild(row(f.id, lab(f), f.icon, n, state.format === f.id));
     });
   }
 
@@ -216,7 +318,7 @@
       return li;
     }
 
-    ul.appendChild(pill(null, "All", state.all.length, active === null));
+    ul.appendChild(pill(null, T("All"), scopedAll().length, active === null));
     list.forEach(function (o) {
       var n = countIn(function (r) { return r[o.field] === o.id; });
       ul.appendChild(pill(o.id, o.label, n, active === o.id));
@@ -225,7 +327,7 @@
 
   function withField(list, field) {
     return list.map(function (o) {
-      return { id: o.id, label: o.label, field: field };
+      return { id: o.id, label: lab(o), field: field };
     });
   }
 
@@ -234,16 +336,16 @@
                 state.level, function (id) { state.level = id; });
   }
 
-  function renderLanguages() {
-    renderPills("[data-hub-languages]", withField(state.languages, "language"),
-                state.language, function (id) { state.language = id; });
-  }
+  /* The Language filter card was removed when the hub split in two: on a
+     page that is already scoped to one language it could only ever offer the
+     visitor a way to break the page. The header EN/ES button replaces it. */
+
 
   function renderTopics() {
     var card = $("[data-hub-topics-card]");
     var ul   = $("[data-hub-topics]");
     var tally = {};
-    state.all.forEach(function (r) {
+    scopedAll().forEach(function (r) {
       (r.topics || []).forEach(function (t) { tally[t] = (tally[t] || 0) + 1; });
     });
     var topics = Object.keys(tally).sort(function (a, b) { return tally[b] - tally[a]; }).slice(0, 10);
@@ -271,7 +373,7 @@
   function art(src, cls, w, h, eager) {
     var span = el("span", cls);
     var img  = el("img");
-    img.src = src;
+    img.src = href(src);
     img.alt = "";
     img.width = w; img.height = h;
     img.loading = eager ? "eager" : "lazy";
@@ -282,7 +384,7 @@
 
   function card(r, big) {
     var a = el("a", "hub-feat" + (big ? " is-big" : ""));
-    a.href = r.url || "#";
+    a.href = href(r.url);
     if (/^https?:/.test(r.url || "")) { a.target = "_blank"; a.rel = "noopener noreferrer"; }
 
     /* The big card is above the fold and is drawn wide, so it gets the full
@@ -291,7 +393,7 @@
     var pic = big ? (r.hero || r.thumb) : (r.thumb || r.hero);
     if (pic) a.appendChild(art(pic, "hub-feat-art", big ? 1672 : 480, big ? 941 : 270, big));
 
-    var badge = el("span", "hub-badge", labelFor(state.formats, r.format).replace(/s$/, ""));
+    var badge = el("span", "hub-badge", fmtOne(r.format));
     a.appendChild(badge);
 
     a.appendChild(el(big ? "h3" : "h4", "hub-feat-h", r.title));
@@ -300,7 +402,7 @@
     var meta = el("div", "hub-feat-meta");
     if (r.author) meta.appendChild(el("span", null, r.author));
     meta.appendChild(el("span", null, formatDate(r.published)));
-    if (r.minutes) meta.appendChild(el("span", null, r.minutes + " min"));
+    if (r.minutes) meta.appendChild(el("span", null, r.minutes + T(" min")));
     a.appendChild(meta);
     return a;
   }
@@ -316,13 +418,13 @@
     }
     if (sec) sec.hidden = false;
     clear(wrap);
-    var feat = state.all.filter(function (r) { return r.featured; })
+    var feat = scopedAll().filter(function (r) { return r.featured; })
                         .sort(function (a, b) { return String(b.published).localeCompare(String(a.published)); });
 
     if (!feat.length) {
       wrap.appendChild(emptyState(
-        "Nothing featured yet",
-        "Mark a resource with “featured” in data/resources.json and it will appear here."
+        T("Nothing featured yet"),
+        T("Mark a resource with “featured” in data/resources.json and it will appear here.")
       ));
       return;
     }
@@ -348,30 +450,30 @@
     clear(wrap);
 
     var countEl = $("[data-hub-count]");
-    if (!state.all.length) {
+    if (!scopedAll().length) {
       countEl.textContent = "";
       wrap.appendChild(emptyState(
-        "No resources published yet",
-        "This hub is built and ready. Add entries to data/resources.json and they appear here — counts, filters and search all follow automatically."
+        T("No resources published yet"),
+        T("This hub is built and ready. Add entries to data/resources.json and they appear here — counts, filters and search all follow automatically.")
       ));
       return;
     }
 
     countEl.textContent = filtering()
-      ? plural(out.length, "resource", "resources") + " match"
+      ? plural(out.length, "resource", "resources") + T(" match")
       : plural(out.length, "resource", "resources");
 
     if (!out.length) {
       wrap.appendChild(emptyState(
-        "Nothing matches those filters",
-        "Try a different category, format or search term."
+        T("Nothing matches those filters"),
+        T("Try a different category, format or search term.")
       ));
       return;
     }
 
     out.forEach(function (r) {
       var a = el("a", "hub-row");
-      a.href = r.url || "#";
+      a.href = href(r.url);
       if (/^https?:/.test(r.url || "")) { a.target = "_blank"; a.rel = "noopener noreferrer"; }
 
       /* With a thumb, the format icon rides on the picture as a small chip:
@@ -393,11 +495,11 @@
       if (r.summary) body.appendChild(el("p", "hub-row-p", r.summary));
       var meta = el("div", "hub-row-meta");
       meta.appendChild(el("span", null, formatDate(r.published)));
-      if (r.minutes) meta.appendChild(el("span", null, r.minutes + " min"));
+      if (r.minutes) meta.appendChild(el("span", null, r.minutes + T(" min")));
       body.appendChild(meta);
       a.appendChild(body);
 
-      a.appendChild(el("span", "hub-row-tag", labelFor(state.formats, r.format).replace(/s$/, "")));
+      a.appendChild(el("span", "hub-row-tag", fmtOne(r.format)));
       wrap.appendChild(a);
     });
   }
@@ -431,7 +533,6 @@
     renderFormats();
     renderTopics();
     renderLevels();
-    renderLanguages();
     renderFeatured();
     renderList();
     renderChrome();
@@ -521,12 +622,12 @@
 
       var topic = form.elements.topic.value.trim();
       var email = form.elements.email.value.trim();
-      if (topic.length < 5) return showErr("Tell us a little more about what you'd like.");
+      if (topic.length < 5) return showErr(T("Tell us a little more about what you'd like."));
       if (email && (email.indexOf("@") < 1 || email.indexOf(".") === -1)) {
-        return showErr("That email address doesn't look right.");
+        return showErr(T("That email address doesn't look right."));
       }
 
-      sending = true; showErr(""); btn.disabled = true; btn.textContent = "Sending…";
+      sending = true; showErr(""); btn.disabled = true; btn.textContent = T("Sending…");
 
       fetch(API + "/content-request", {
         method: "POST",
@@ -539,11 +640,11 @@
       })
         .then(function (res) {
           if (res.ok) return;
-          if (res.status === 429) throw new Error("Too many requests just now. Please try again later.");
-          throw new Error("We couldn't send that. Please try again.");
+          if (res.status === 429) throw new Error(T("Too many requests just now. Please try again later."));
+          throw new Error(T("We couldn't send that. Please try again."));
         })
         .then(function () { form.hidden = true; done.hidden = false; })
-        .catch(function (ex) { showErr(ex && ex.message ? ex.message : "Something went wrong."); })
+        .catch(function (ex) { showErr(ex && ex.message ? ex.message : T("Something went wrong.")); })
         .then(function () {
           sending = false; btn.disabled = false; btn.textContent = "Send request";
         });
@@ -554,13 +655,16 @@
 
   /* The header language button is a plain link to ?lang=xx, so the hub works
      with JavaScript off and the filter still lands when it is on. */
+  /* Only syncs the header button now -- the filtering itself is SCOPE. */
   function applyQueryLanguage() {
     var want = null;
-    try { want = new URLSearchParams(location.search).get("lang"); } catch (e) { return; }
+    try { want = new URLSearchParams(location.search).get("lang"); } catch (e) { want = null; }
+    /* On a Spanish page the Spanish resources are the point, so preselect
+       them. An explicit ?lang= in the URL still wins over the default. */
+    if (!want) want = LANG;
     if (!want) return;
     var known = state.languages.some(function (o) { return o.id === want; });
     if (!known) return;
-    state.language = want;
 
     var sw = $(".lang-switch");
     if (!sw) return;
@@ -592,7 +696,7 @@
     .catch(function (ex) {
       var wrap = $("[data-hub-list]");
       clear(wrap);
-      wrap.appendChild(emptyState("Couldn't load the resource list", String(ex.message || ex)));
+      wrap.appendChild(emptyState(T("Couldn't load the resource list"), String(ex.message || ex)));
       renderCategories();
       renderFormats();
       renderFeatured();
