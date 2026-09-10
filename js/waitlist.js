@@ -82,6 +82,14 @@
 
   /* --------------------------------------------------------------- HELPERS */
 
+  /* User-facing strings live on the dialog as data-msg-* so a translated page
+     can carry its own, and pages without them keep the English below. */
+  function t(key, fallback) {
+    var v = dialog.getAttribute("data-msg-" + key);
+    return v ? v : fallback;
+  }
+  var submitLabel = submit ? submit.textContent : "Join the wait list";
+
   function showError(msg) {
     errorEl.textContent = msg || "";
     errorEl.hidden = !msg;
@@ -104,14 +112,14 @@
     var email  = form.elements.email.value.trim();
     var market = form.elements.marketplace.value;
 
-    if (!name)             return showError("Please tell us your name.");
-    if (!validEmail(email)) return showError("That email address doesn't look right.");
-    if (!market)           return showError("Please choose your main marketplace.");
+    if (!name)             return showError(t("name", "Please tell us your name."));
+    if (!validEmail(email)) return showError(t("email", "That email address doesn't look right."));
+    if (!market)           return showError(t("market", "Please choose your main marketplace."));
 
     sending = true;
     showError("");
     submit.disabled = true;
-    submit.textContent = "Joining…";
+    submit.textContent = t("sending", "Joining…");
 
     fetch(API + "/waitlist", {
       method: "POST",
@@ -133,11 +141,11 @@
         /* Read the server's message, but only ever as text. 429 gets its own
            wording because "too many requests" is meaningless to a visitor. */
         if (res.status === 429) {
-          throw new Error("Too many attempts just now. Please try again in a little while.");
+          throw new Error(t("rate", "Too many attempts just now. Please try again in a little while."));
         }
         return res.json().then(
-          function (b) { throw new Error(b && b.detail ? String(b.detail) : "Something went wrong."); },
-          function ()  { throw new Error("Something went wrong."); }
+          function (b) { throw new Error(b && b.detail ? String(b.detail) : t("generic", "Something went wrong.")); },
+          function ()  { throw new Error(t("generic", "Something went wrong.")); }
         );
       })
       .then(function () {
@@ -149,12 +157,12 @@
       .catch(function (err) {
         showError(err && err.message
           ? err.message
-          : "We couldn't reach the server. Please try again.");
+          : t("network", "We couldn't reach the server. Please try again."));
       })
       .then(function () {
         sending = false;
         submit.disabled = false;
-        submit.textContent = "Join the wait list";
+        submit.textContent = submitLabel;
       });
   });
 })();
