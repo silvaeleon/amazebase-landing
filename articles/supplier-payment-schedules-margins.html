@@ -823,6 +823,14 @@ tbody tr:last-child td{border-bottom:1px solid var(--rule-strong);font-weight:60
   margin-inline:auto;      /* the rule above keeps its 28px bottom margin */
   padding:22px var(--gutter) 0;
 }
+
+/* Chart series colours. These live on .art-diagram rather than :root so
+   they cannot shadow the site's --s1..--s8 spacing scale. Values are the
+   draft's own dark-mode series colours. */
+.art-diagram{
+  --ser-a:#9F7BF2;  --ser-b:#12A594;
+  --ser-a-fill:rgba(159,123,242,.15);  --ser-b-fill:rgba(18,165,148,.15);
+}
 </style>
 <link rel="stylesheet" href="/css/navigation.css">
 <link rel="stylesheet" href="/css/responsive.css">
@@ -907,7 +915,7 @@ tbody tr:last-child td{border-bottom:1px solid var(--rule-strong);font-weight:60
   </ul>
 
   <div class="nav-actions">
-    <a class="btn btn--quiet" href="https://amz-analytics-production.up.railway.app/login">Log in</a>
+    <a class="btn btn--quiet" href="https://analytics.amazebase.pro/login">Log in</a>
     <a class="btn btn--primary" href="/index.html#waitlist" data-magnetic>Join the Wait List</a>
     <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="navMobile">
       <svg class="icon"><use href="#i-menu"/></svg>
@@ -924,7 +932,7 @@ tbody tr:last-child td{border-bottom:1px solid var(--rule-strong);font-weight:60
   <a href="/resources.html">Resources</a>
   <a href="/about.html">About</a>
   <a href="/contact.html">Contact</a>
-  <a class="btn btn--quiet btn--block" href="https://amz-analytics-production.up.railway.app/login">Log in</a>
+  <a class="btn btn--quiet btn--block" href="https://analytics.amazebase.pro/login">Log in</a>
   <a class="btn btn--primary btn--block" href="/index.html#waitlist">Join the Wait List</a>
 </div>
 </header>
@@ -1050,8 +1058,8 @@ peak exposure       = the largest amount you are out of pocket
         <h4>Cash exposure through one order cycle</h4>
         <p class="sub">How far out of pocket you are, day by day, from first payment to full recovery.</p>
         <div class="legend">
-          <span><i class="swatch" style="background:var(--s1)"></i>Supplier A — $6.80, 30/70, 75d to sellable</span>
-          <span><i class="swatch" style="background:var(--s2)"></i>Supplier B — $7.20, 20/80 net 30, 55d to sellable</span>
+          <span><i class="swatch" style="background:var(--ser-a)"></i>Supplier A — $6.80, 30/70, 75d to sellable</span>
+          <span><i class="swatch" style="background:var(--ser-b)"></i>Supplier B — $7.20, 20/80 net 30, 55d to sellable</span>
         </div>
         <svg viewBox="0 0 700 300" role="img" aria-label="Two cash exposure curves over 140 days. Supplier A steps to 6,120 dollars out of pocket on day 0, to 20,400 on day 45, stays there until day 95, and returns to zero on day 129. Supplier B steps to 4,320 on day 0, to 21,600 on day 55, stays there until day 75, and returns to zero on day 111.">
           <line class="grid" x1="66" y1="40" x2="672" y2="40" stroke="var(--rule-strong)"></line>
@@ -1065,16 +1073,16 @@ peak exposure       = the largest amount you are out of pocket
           <text class="ax" x="58" y="186" text-anchor="end">−$15k</text>
           <text class="ax" x="58" y="234" text-anchor="end">−$20k</text>
 
-          <path fill="var(--s1-fill)" stroke="none" d="M66,40 L66,98.4 L260.8,98.4 L260.8,234.7 L477.2,234.7 L624.4,40 Z"></path>
-          <path fill="var(--s2-fill)" stroke="none" d="M66,40 L66,81.2 L304.1,81.2 L304.1,246.2 L390.7,246.2 L546.5,40 Z"></path>
+          <path fill="var(--ser-a-fill)" stroke="none" d="M66,40 L66,98.4 L260.8,98.4 L260.8,234.7 L477.2,234.7 L624.4,40 Z"></path>
+          <path fill="var(--ser-b-fill)" stroke="none" d="M66,40 L66,81.2 L304.1,81.2 L304.1,246.2 L390.7,246.2 L546.5,40 Z"></path>
 
-          <polyline fill="none" stroke="var(--s1)" stroke-width="2" stroke-linejoin="round"
+          <polyline fill="none" stroke="var(--ser-a)" stroke-width="2" stroke-linejoin="round"
                     points="66,40 66,98.4 260.8,98.4 260.8,234.7 477.2,234.7 624.4,40"></polyline>
-          <polyline fill="none" stroke="var(--s2)" stroke-width="2" stroke-linejoin="round"
+          <polyline fill="none" stroke="var(--ser-b)" stroke-width="2" stroke-linejoin="round"
                     points="66,40 66,81.2 304.1,81.2 304.1,246.2 390.7,246.2 546.5,40"></polyline>
 
-          <circle cx="624.4" cy="40" r="4.5" fill="var(--s1)" stroke="var(--panel)" stroke-width="2"></circle>
-          <circle cx="546.5" cy="40" r="4.5" fill="var(--s2)" stroke="var(--panel)" stroke-width="2"></circle>
+          <circle cx="624.4" cy="40" r="4.5" fill="var(--ser-a)" stroke="var(--panel)" stroke-width="2"></circle>
+          <circle cx="546.5" cy="40" r="4.5" fill="var(--ser-b)" stroke="var(--panel)" stroke-width="2"></circle>
 
           <text class="anno" x="270" y="228">A · −$20,400</text>
           <text class="anno-2" x="270" y="240">balance due day 45</text>
@@ -1280,9 +1288,7 @@ Next 60 days    $91,500 committed    incl. 2 POs with no schedule yet</code></pr
       <h2>A purchase order is a financial decision</h2>
       <p>Supplier payments get filed as admin. They're the point where inventory, margin, lead time and cash all become the same decision — and the only place you can still change your mind cheaply.</p>
       <p>What am I buying, what will it really cost, when do I pay, when does it arrive, how fast will it sell, what will it contribute, and what does all of that do to my cash. Those aren't seven questions. They're one, asked once, before you send the deposit.</p>
-    
-
-    
+    </section>
 
   
 </main>
@@ -1306,6 +1312,7 @@ Next 60 days    $91,500 committed    incl. 2 POs with no schedule yet</code></pr
   <p class="rail-src">Figures from this article&rsquo;s own worked example, not an industry survey.</p>
 </aside>
 
+</div><!-- /.shell -->
 
 </div><!-- /.wrap -->
 

@@ -156,3 +156,53 @@
   grid-template-columns:repeat(2,minmax(168px,1fr));
   gap:2px 4px;
 }
+
+
+/* ---------- LANGUAGE SWITCH ------------------------------------------------
+   Reuses the .nav-drop panel, but the wrapper lives in .nav-actions rather
+   than .nav-menu, so it needs its own hover/focus rules and its own
+   positioning: .nav-drop is centred on its trigger, which would run a 230px
+   panel off the right edge of a phone. -------------------------------------- */
+
+.lang-switch{ position:relative; }
+
+.lang-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  height:36px;
+  padding:0 10px;
+  border:1px solid var(--line);
+  border-radius:var(--r-xs);
+  background:var(--surface);
+  color:var(--text-2);
+  font-family:inherit;
+  font-size:12px;
+  font-weight:700;
+  line-height:1;
+  letter-spacing:.06em;
+  cursor:pointer;
+  transition:color var(--fast),background var(--fast),border-color var(--fast);
+}
+.lang-btn:hover{ color:var(--text); }
+.lang-btn .chev{ width:12px; height:12px; opacity:.7; transition:transform var(--fast); }
+.lang-switch:hover .chev{ transform:rotate(180deg); }
+
+.lang-drop{
+  left:auto;
+  right:0;
+  translate:none;
+  min-width:172px;
+}
+.lang-switch:hover .lang-drop,
+.lang-switch:focus-within .lang-drop{
+  opacity:1; visibility:visible; transform:translateY(0);
+}
+.lang-drop a[aria-current="true"]{ color:var(--text); background:var(--surface); }
+.lang-drop .lc{
+  flex:0 0 22px;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.06em;
+  opacity:.55;
+}

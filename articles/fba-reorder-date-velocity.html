@@ -818,6 +818,13 @@ figure svg{display:block;width:100%;height:auto}
   margin-inline:auto;      /* the rule above keeps its 28px bottom margin */
   padding:22px var(--gutter) 0;
 }
+
+/* Chart series colours. These live on .art-diagram rather than :root so
+   they cannot shadow the site's --s1..--s8 spacing scale. Values are the
+   draft's own dark-mode series colours. */
+.art-diagram{
+  --accent-fill:rgba(173,143,245,.16);
+}
 </style>
 <link rel="stylesheet" href="/css/navigation.css">
 <link rel="stylesheet" href="/css/responsive.css">
@@ -902,7 +909,7 @@ figure svg{display:block;width:100%;height:auto}
   </ul>
 
   <div class="nav-actions">
-    <a class="btn btn--quiet" href="https://amz-analytics-production.up.railway.app/login">Log in</a>
+    <a class="btn btn--quiet" href="https://analytics.amazebase.pro/login">Log in</a>
     <a class="btn btn--primary" href="/index.html#waitlist" data-magnetic>Join the Wait List</a>
     <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="navMobile">
       <svg class="icon"><use href="#i-menu"/></svg>
@@ -919,7 +926,7 @@ figure svg{display:block;width:100%;height:auto}
   <a href="/resources.html">Resources</a>
   <a href="/about.html">About</a>
   <a href="/contact.html">Contact</a>
-  <a class="btn btn--quiet btn--block" href="https://amz-analytics-production.up.railway.app/login">Log in</a>
+  <a class="btn btn--quiet btn--block" href="https://analytics.amazebase.pro/login">Log in</a>
   <a class="btn btn--primary btn--block" href="/index.html#waitlist">Join the Wait List</a>
 </div>
 </header>
@@ -1257,9 +1264,7 @@ order-by date       ≈ 10 Aug   — 30 days ago</code></pre>
       <h2>A deadline, not a date</h2>
       <p>You can't know that you'll need to reorder an ASIN on a particular day. You can know what today's evidence implies, how sensitive that conclusion is to the one number you're least sure of, and how much time is left before the choice gets made for you.</p>
       <p>That's what a reorder forecast is for. Not the date. The deadline, and how much confidence it deserves.</p>
-    
-
-    
+    </section>
 
   
 </main>
@@ -1283,6 +1288,7 @@ order-by date       ≈ 10 Aug   — 30 days ago</code></pre>
   <p class="rail-src">Figures from this article&rsquo;s own worked example, not an industry survey.</p>
 </aside>
 
+</div><!-- /.shell -->
 
 </div><!-- /.wrap -->
 

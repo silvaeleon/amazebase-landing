@@ -125,19 +125,7 @@
     },
     {
       "id": "es",
-      "label": "Spanish"
-    },
-    {
-      "id": "fr",
-      "label": "French"
-    },
-    {
-      "id": "pt",
-      "label": "Portuguese"
-    },
-    {
-      "id": "de",
-      "label": "German"
+      "label": "Español"
     }
   ],
   "resources": [
@@ -1380,6 +1368,74 @@
       ],
       "level": "expert",
       "language": "en"
+    },
+    {
+      "id": "reorder-point-formula-es",
+      "title": "Punto de reorden en Amazon: la fórmula simple que todo vendedor debería conocer",
+      "summary": "La mayoría de los quiebres de stock empiezan semanas antes de quedarte sin inventario, en el momento en que dejas pasar la siguiente orden. La fórmula del punto de reorden, las cinco métricas semanales y las señales de alerta que nunca deberías ignorar.",
+      "category": "inventory",
+      "format": "article",
+      "author": "AmazeBase",
+      "published": "2026-07-14",
+      "minutes": 5,
+      "url": "es/articulos/punto-de-reorden.html",
+      "thumb": "assets/img/thumb-reorder-point.webp",
+      "hero": "assets/img/hero-reorder-point.webp",
+      "topics": [
+        "Punto de reorden",
+        "Planificación de reposición",
+        "Stock de seguridad",
+        "Tiempo de reposición",
+        "Días de cobertura"
+      ],
+      "level": "expert",
+      "language": "es",
+      "translationOf": "reorder-point-formula"
+    },
+    {
+      "id": "stop-optimizing-acos-es",
+      "title": "Deja de optimizar el ACOS: por qué perseguir un ACOS más bajo te está costando dinero",
+      "summary": "El número más peligroso de la publicidad en Amazon no es un ACOS alto: es creer que el ACOS siempre debería bajar. Por qué una métrica de eficiencia es una mala métrica de decisión.",
+      "category": "ppc",
+      "format": "article",
+      "author": "AmazeBase",
+      "published": "2026-07-22",
+      "minutes": 6,
+      "url": "es/articulos/deja-de-optimizar-el-acos.html",
+      "thumb": "assets/img/thumb-stop-optimizing-acos.webp",
+      "hero": "assets/img/hero-stop-optimizing-acos.webp",
+      "topics": [
+        "ACOS",
+        "Estrategia de campañas",
+        "Asignación de capital",
+        "Incrementalidad",
+        "Posicionamiento orgánico",
+        "Lanzamiento de producto"
+      ],
+      "level": "expert",
+      "language": "es",
+      "translationOf": "stop-optimizing-acos"
+    },
+    {
+      "id": "first-product-succeeds-cash-es",
+      "title": "¿Y si tu primer producto funciona?",
+      "summary": "Casi todos los vendedores nuevos de Amazon planifican para que el producto falle. Casi nadie planifica para que funcione, que es justamente el caso que los deja sin dinero.",
+      "category": "growth",
+      "format": "article",
+      "level": "beginner",
+      "language": "es",
+      "author": "AmazeBase",
+      "published": "2026-09-05",
+      "minutes": 11,
+      "url": "es/articulos/y-si-tu-primer-producto-funciona.html",
+      "topics": [
+        "Flujo de caja",
+        "Escalar",
+        "Asignación de capital",
+        "Investigación de productos",
+        "Toma de decisiones"
+      ],
+      "translationOf": "first-product-succeeds-cash"
     }
   ],
   "_testimonials_README": [

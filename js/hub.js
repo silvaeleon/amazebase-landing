@@ -550,6 +550,28 @@
     });
   })();
 
+  /* -------------------------------------------------------------- LANGUAGE */
+
+  /* The header language button is a plain link to ?lang=xx, so the hub works
+     with JavaScript off and the filter still lands when it is on. */
+  function applyQueryLanguage() {
+    var want = null;
+    try { want = new URLSearchParams(location.search).get("lang"); } catch (e) { return; }
+    if (!want) return;
+    var known = state.languages.some(function (o) { return o.id === want; });
+    if (!known) return;
+    state.language = want;
+
+    var sw = $(".lang-switch");
+    if (!sw) return;
+    var cur = sw.querySelector(".lang-btn");
+    if (cur) cur.firstChild.nodeValue = want.toUpperCase() + " ";
+    Array.prototype.forEach.call(sw.querySelectorAll("a[hreflang]"), function (a) {
+      if (a.getAttribute("hreflang") === want) a.setAttribute("aria-current", "true");
+      else a.removeAttribute("aria-current");
+    });
+  }
+
   /* ------------------------------------------------------------------ BOOT */
 
   fetch(DATA_URL, { cache: "no-cache" })
@@ -563,6 +585,7 @@
       state.languages  = d.languages  || [];
       state.formats    = d.formats || [];
       state.all        = d.resources || [];
+      applyQueryLanguage();
       renderAll();
       renderTestimonials(d.testimonials);
     })

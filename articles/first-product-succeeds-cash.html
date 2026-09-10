@@ -818,10 +818,22 @@ td.bad{color:var(--crit)}
   margin-inline:auto;      /* the rule above keeps its 28px bottom margin */
   padding:22px var(--gutter) 0;
 }
+
+/* Chart series colours. These live on .art-diagram rather than :root so
+   they cannot shadow the site's --s1..--s8 spacing scale. Values are the
+   draft's own dark-mode series colours. */
+.art-diagram{
+  --ser-a:#9F7BF2;  --ser-b:#12A594;
+  --ser-a-fill:rgba(159,123,242,.13);  --ser-b-fill:rgba(18,165,148,.13);
+}
 </style>
 <link rel="stylesheet" href="/css/navigation.css">
 <link rel="stylesheet" href="/css/responsive.css">
 <link rel="stylesheet" href="/css/site-footer.css">
+<link rel="canonical" href="https://amazebase.pro/articles/first-product-succeeds-cash.html">
+<link rel="alternate" hreflang="en" href="https://amazebase.pro/articles/first-product-succeeds-cash.html">
+<link rel="alternate" hreflang="es" href="https://amazebase.pro/es/articulos/y-si-tu-primer-producto-funciona.html">
+<link rel="alternate" hreflang="x-default" href="https://amazebase.pro/articles/first-product-succeeds-cash.html">
 </head>
 
 <body>
@@ -902,7 +914,16 @@ td.bad{color:var(--crit)}
   </ul>
 
   <div class="nav-actions">
-    <a class="btn btn--quiet" href="https://amz-analytics-production.up.railway.app/login">Log in</a>
+    <div class="nav-item lang-switch">
+      <button class="lang-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Idioma / Language">
+        EN <svg class="chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+      </button>
+      <div class="nav-drop lang-drop">
+        <a href="/articles/first-product-succeeds-cash.html" hreflang="en" lang="en" aria-current="true"><span class="lc">EN</span>English</a>
+        <a href="/es/articulos/y-si-tu-primer-producto-funciona.html" hreflang="es" lang="es"><span class="lc">ES</span>Español</a>
+      </div>
+    </div>
+    <a class="btn btn--quiet" href="https://analytics.amazebase.pro/login">Log in</a>
     <a class="btn btn--primary" href="/index.html#waitlist" data-magnetic>Join the Wait List</a>
     <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="navMobile">
       <svg class="icon"><use href="#i-menu"/></svg>
@@ -919,7 +940,7 @@ td.bad{color:var(--crit)}
   <a href="/resources.html">Resources</a>
   <a href="/about.html">About</a>
   <a href="/contact.html">Contact</a>
-  <a class="btn btn--quiet btn--block" href="https://amz-analytics-production.up.railway.app/login">Log in</a>
+  <a class="btn btn--quiet btn--block" href="https://analytics.amazebase.pro/login">Log in</a>
   <a class="btn btn--primary btn--block" href="/index.html#waitlist">Join the Wait List</a>
 </div>
 </header>
@@ -1068,8 +1089,8 @@ cash cycle          ~ 5.5 months</code></pre>
         <h4>The same product, two different plans</h4>
         <p class="sub">Ana's cash position over eight months. Identical product, identical success.</p>
         <div class="legend">
-          <span><i class="swatch" style="background:var(--s1)"></i>Scale fast — reorder big, launch #2 immediately</span>
-          <span><i class="swatch" style="background:var(--s2)"></i>Pace it — reorder to fit cash, delay #2</span>
+          <span><i class="swatch" style="background:var(--ser-a)"></i>Scale fast — reorder big, launch #2 immediately</span>
+          <span><i class="swatch" style="background:var(--ser-b)"></i>Pace it — reorder to fit cash, delay #2</span>
         </div>
         <svg viewBox="0 0 700 320" role="img" aria-label="Line chart of cash over eight months. The scale-fast plan falls from 27,600 dollars to 11,800 in month 3, recovers to 20,200 in month 4, drops to 3,400 in month 5 and reaches minus 5,000 in month 6. The paced plan never falls below 14,200 and reaches 33,000 by month 7.">
           <line class="grid" x1="66" y1="54.4" x2="672" y2="54.4" stroke-dasharray="2 4"></line>
@@ -1083,17 +1104,17 @@ cash cycle          ~ 5.5 months</code></pre>
           <text class="ax" x="58" y="204" text-anchor="end">$0</text>
           <text class="ax" x="58" y="253" text-anchor="end">−$10k</text>
 
-          <path fill="var(--s2-fill)" stroke="none" d="M66,66.2 L141.75,66.2 L217.5,93.6 L293.25,131.7 L369,73 L444.75,127.8 L520.5,127.8 L596.25,39.8 L672,39.8 L672,201.1 L66,201.1 Z"></path>
+          <path fill="var(--ser-b-fill)" stroke="none" d="M66,66.2 L141.75,66.2 L217.5,93.6 L293.25,131.7 L369,73 L444.75,127.8 L520.5,127.8 L596.25,39.8 L672,39.8 L672,201.1 L66,201.1 Z"></path>
 
-          <polyline fill="none" stroke="var(--s2)" stroke-width="2" stroke-linejoin="round"
+          <polyline fill="none" stroke="var(--ser-b)" stroke-width="2" stroke-linejoin="round"
                     points="66,66.2 141.75,66.2 217.5,93.6 293.25,131.7 369,73 444.75,127.8 520.5,127.8 596.25,39.8 672,39.8"></polyline>
-          <polyline fill="none" stroke="var(--s1)" stroke-width="2" stroke-linejoin="round"
+          <polyline fill="none" stroke="var(--ser-a)" stroke-width="2" stroke-linejoin="round"
                     points="66,66.2 141.75,66.2 217.5,93.6 293.25,143.4 369,102.4 444.75,184.5 520.5,225.6"></polyline>
-          <polyline fill="none" stroke="var(--s1)" stroke-width="2" stroke-dasharray="4 4" opacity=".45"
+          <polyline fill="none" stroke="var(--ser-a)" stroke-width="2" stroke-dasharray="4 4" opacity=".45"
                     points="520.5,225.6 596.25,137.6 672,137.6"></polyline>
 
           <circle cx="520.5" cy="225.6" r="5" fill="var(--crit)" stroke="var(--panel)" stroke-width="2"></circle>
-          <circle cx="596.25" cy="39.8" r="4.5" fill="var(--s2)" stroke="var(--panel)" stroke-width="2"></circle>
+          <circle cx="596.25" cy="39.8" r="4.5" fill="var(--ser-b)" stroke="var(--panel)" stroke-width="2"></circle>
 
           <text class="anno-c" x="513" y="243" text-anchor="end">−$5,000 · payment you can't make</text>
           <text class="anno" x="668" y="32" text-anchor="end">$33,000 · ready for #2</text>
@@ -1226,9 +1247,7 @@ for Ana                = $30,000 / ~$12,000
       <p>They just don't get there by jumping. Every step consumes cash before it returns any, and the size of the step is limited by what you have while you wait.</p>
       <p>So ask the better question early. Not <em>how many products can I launch?</em> but <em>how far can my cash carry me — and what happens if this works?</em></p>
       <p>Get that right and the hundred-product version stays possible. Get it wrong and it ends at month six, with a product that was working.</p>
-    
-
-    
+    </section>
 
   
 </main>
@@ -1252,6 +1271,7 @@ for Ana                = $30,000 / ~$12,000
   <p class="rail-src">Figures from this article&rsquo;s own worked example, not an industry survey.</p>
 </aside>
 
+</div><!-- /.shell -->
 
 </div><!-- /.wrap -->
 

@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>The five margins of one product &mdash; AmazeBase</title>
+<title>&iquest;Y si tu primer producto funciona? &mdash; AmazeBase</title>
 
-<meta name="description" content="Calculating true product margin after advertising — and why &quot;what&#x27;s my margin?&quot; is the wrong question until you say what you&#x27;re deciding.">
+<meta name="description" content="Casi todos los vendedores nuevos de Amazon planifican para que el producto falle. Casi nadie planifica para que funcione, que es justamente el caso que los deja sin dinero.">
 <meta name="theme-color" content="#030917">
 <meta name="author" content="AmazeBase">
-<meta property="og:title" content="The five margins of one product">
-<meta property="og:description" content="Calculating true product margin after advertising — and why &quot;what&#x27;s my margin?&quot; is the wrong question until you say what you&#x27;re deciding.">
+<meta property="og:title" content="What if your first product succeeds?">
+<meta property="og:description" content="Most new Amazon sellers plan for the product failing. Almost nobody plans for it working — which is the case that actually runs them out of money.">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 
@@ -586,42 +586,38 @@ strong{font-weight:600}
 .fix .k{display:block;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:.45rem}
 .fix p{margin:0}
 .fix p+p{margin-top:.7rem}
-pre{font-family:var(--f-mono);font-size:.83rem;line-height:1.75;background:var(--panel-2);border:1px solid var(--rule);padding:1rem 1.1rem;margin:1.6rem 0;overflow-x:auto}
+pre{font-family:var(--f-mono);font-size:.84rem;line-height:1.8;background:var(--panel-2);border:1px solid var(--rule);padding:1rem 1.1rem;margin:1.6rem 0;overflow-x:auto}
 code{font-family:var(--f-mono);font-size:.88em;background:var(--panel-2);padding:.1em .35em;border-radius:2px}
 pre code{background:none;padding:0;font-size:1em}
+.spec{background:var(--panel);border:1px solid var(--rule);padding:1.2rem 1.3rem;margin:1.8rem 0}
+.spec h4{margin:0 0 .8rem;font-size:.72rem;font-family:var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+.spec dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:.45rem 1rem}
+.spec dt{color:var(--ink-2);font-size:.95rem}
+.spec dd{margin:0;font-family:var(--f-mono);font-size:.88rem;font-variant-numeric:tabular-nums;text-align:right}
 figure h4{margin:0 0 .2rem;font-size:1rem;font-weight:600}
-figure .sub{margin:0 0 .9rem;font-size:.85rem;color:var(--ink-2)}
+figure .sub{margin:0 0 .8rem;font-size:.85rem;color:var(--ink-2)}
 figure svg{display:block;width:100%;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:1.1rem;margin:0 0 .8rem;font-size:.83rem;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:.4rem}
+.swatch{width:11px;height:11px;border-radius:2px;display:inline-block}
 .ax{fill:var(--ink-3);font-family:"IBM Plex Mono",monospace;font-size:9.5px}
-.val{fill:var(--ink);font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:500}
-.lbl{fill:var(--ink-2);font-family:"IBM Plex Sans",sans-serif;font-size:10px}
-.lbl-b{fill:var(--ink);font-family:"IBM Plex Sans",sans-serif;font-size:10px;font-weight:600}
+.anno{fill:var(--ink);font-family:"IBM Plex Sans",sans-serif;font-size:10.5px;font-weight:600}
+.anno-2{fill:var(--ink-2);font-family:"IBM Plex Sans",sans-serif;font-size:9.5px}
+.anno-c{fill:var(--crit);font-family:"IBM Plex Sans",sans-serif;font-size:10.5px;font-weight:600}
 .grid{stroke:var(--rule);stroke-width:1}
-.levels{list-style:none;padding:0;margin:1.5rem 0 2rem;border-top:1px solid var(--rule)}
-.levels li{margin:0;display:grid;grid-template-columns:2.4rem 1fr auto;gap:.9rem;padding:.85rem .2rem;border-bottom:1px solid var(--rule);align-items:baseline}
-.levels .n{font-family:var(--f-mono);font-size:.72rem;color:var(--accent)}
-.levels b{display:block;font-weight:600}
-.levels .d{color:var(--ink-2);font-size:.93rem}
-.levels .q{font-family:var(--f-mono);font-size:.78rem;color:var(--ink-3);text-align:right;white-space:nowrap}
-@media (max-width:620px){
-.levels li{grid-template-columns:2.4rem 1fr}
-.levels .q{grid-column:2;text-align:left}
-}
-.kinds{display:grid;gap:.55rem;margin:1.4rem 0 1.9rem}
-.kind{display:grid;grid-template-columns:6.5rem 1fr;gap:1rem;align-items:baseline;padding:.7rem .9rem;background:var(--panel);border:1px solid var(--rule)}
-.kind .lab{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
-.kind.m .lab{color:var(--good)}
-.kind.a .lab{color:var(--accent)}
-.kind.s .lab{color:var(--warn)}
-.kind .txt{font-size:.95rem;color:var(--ink-2)}
 .tblwrap{overflow-x:auto;margin:1.6rem 0}
 table{border-collapse:collapse;width:100%;font-size:.92rem;min-width:26rem}
-caption{caption-side:bottom;text-align:left;font-size:.8rem;color:var(--ink-3);padding-top:.7rem;line-height:1.5}
+caption{caption-side:bottom;text-align:left;font-size:.8rem;color:var(--ink-3);padding-top:.7rem;line-height:1.55}
 th, td{padding:.55rem .7rem;text-align:right;border-bottom:1px solid var(--rule);font-variant-numeric:tabular-nums}
 th:first-child, td:first-child{text-align:left}
 thead th{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500;border-bottom:1px solid var(--rule-strong)}
 tbody tr:last-child td{border-bottom:1px solid var(--rule-strong);font-weight:600}
-td.neg{color:var(--ink-2)}
+td.bad{color:var(--crit)}
+.steps{list-style:none;padding:0;margin:1.5rem 0 2rem;border-top:1px solid var(--rule)}
+.steps li{margin:0;display:grid;grid-template-columns:2.4rem 1fr;gap:.9rem;padding:.85rem .2rem;border-bottom:1px solid var(--rule)}
+.steps .n{font-family:var(--f-mono);font-size:.72rem;color:var(--accent);padding-top:.15rem}
+.steps b{display:block;font-weight:600}
+.steps .d{color:var(--ink-2);font-size:.93rem}
 .faq details{border-bottom:1px solid var(--rule);padding:.9rem 0}
 .faq summary{cursor:pointer;font-weight:600;list-style:none;display:flex;gap:.75rem;align-items:flex-start}
 .faq summary::-webkit-details-marker{display:none}
@@ -822,15 +818,34 @@ td.neg{color:var(--ink-2)}
   margin-inline:auto;      /* the rule above keeps its 28px bottom margin */
   padding:22px var(--gutter) 0;
 }
+
+/* Chart series colours. These live on .art-diagram rather than :root so
+   they cannot shadow the site's --s1..--s8 spacing scale. Values are the
+   draft's own dark-mode series colours. */
+.art-diagram{
+  --ser-a:#9F7BF2;  --ser-b:#12A594;
+  --ser-a-fill:rgba(159,123,242,.13);  --ser-b-fill:rgba(18,165,148,.13);
+}
 </style>
 <link rel="stylesheet" href="/css/navigation.css">
 <link rel="stylesheet" href="/css/responsive.css">
 <link rel="stylesheet" href="/css/site-footer.css">
+<link rel="canonical" href="https://amazebase.pro/es/articulos/y-si-tu-primer-producto-funciona.html">
+<link rel="alternate" hreflang="en" href="https://amazebase.pro/articles/first-product-succeeds-cash.html">
+<link rel="alternate" hreflang="es" href="https://amazebase.pro/es/articulos/y-si-tu-primer-producto-funciona.html">
+<link rel="alternate" hreflang="x-default" href="https://amazebase.pro/articles/first-product-succeeds-cash.html">
+<meta property="og:site_name" content="AmazeBase">
+<meta property="og:locale" content="es_LA">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://amazebase.pro/es/articulos/y-si-tu-primer-producto-funciona.html">
+<meta property="og:title" content="&iquest;Y si tu primer producto funciona?">
+<meta property="og:description" content="Casi todos los vendedores nuevos de Amazon planifican para que el producto falle. Casi nadie planifica para que funcione, que es justamente el caso que los deja sin dinero.">
 </head>
 
 <body>
 
-<a class="skip-link" href="#main">Skip to content</a>
+<a class="skip-link" href="#main">Saltar al contenido</a>
 <div class="bg-layer" aria-hidden="true"></div>
 
 <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
@@ -860,9 +875,9 @@ td.neg{color:var(--ink-2)}
 
 <header class="site-header">
 <div class="container">
-<nav class="nav" aria-label="Primary">
+<nav class="nav" aria-label="Principal">
 
-  <a href="/index.html" class="brand" aria-label="AmazeBase home">
+  <a href="/index.html" class="brand" aria-label="Inicio de AmazeBase">
     <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
       <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
       <path d="M16 17.6l4.4 8.2h-8.8z" fill="#C56BF5" opacity=".85"/>
@@ -872,43 +887,52 @@ td.neg{color:var(--ink-2)}
 
   <ul class="nav-menu">
     <li class="nav-item">
-      <a class="nav-link" href="/product.html#modules">Product <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <a class="nav-link" href="/product.html#modules">Producto <svg class="chev"><use href="#i-chevron"/></svg></a>
       <div class="nav-drop nav-drop--wide">
-        <a href="/product.html#advertising"><svg class="icon-sm"><use href="#i-mega"/></svg>Advertising &amp; PPC</a>
-        <a href="/product.html#financials"><svg class="icon-sm"><use href="#i-dollar"/></svg>Financials</a>
+        <a href="/product.html#advertising"><svg class="icon-sm"><use href="#i-mega"/></svg>Publicidad y PPC</a>
+        <a href="/product.html#financials"><svg class="icon-sm"><use href="#i-dollar"/></svg>Finanzas</a>
         <a href="/product.html#ledger"><svg class="icon-sm"><use href="#i-stack"/></svg>Ledger</a>
-        <a href="/product.html#inventory"><svg class="icon-sm"><use href="#i-box"/></svg>Inventory</a>
-        <a href="/product.html#research"><svg class="icon-sm"><use href="#i-search"/></svg>Product Research</a>
-        <a href="/product.html#simulations"><svg class="icon-sm"><use href="#i-chart"/></svg>Simulations</a>
-        <a href="/product.html#sales"><svg class="icon-sm"><use href="#i-trend"/></svg>Sales</a>
-        <a href="/product.html#data"><svg class="icon-sm"><use href="#i-db"/></svg>Data &amp; Sync</a>
-        <a href="/product.html#security"><svg class="icon-sm"><use href="#i-shield"/></svg>Security</a>
-        <a href="/product.html#assistant"><svg class="icon-sm"><use href="#i-spark"/></svg>AI Assistant &mdash; soon</a>
+        <a href="/product.html#inventory"><svg class="icon-sm"><use href="#i-box"/></svg>Inventario</a>
+        <a href="/product.html#research"><svg class="icon-sm"><use href="#i-search"/></svg>Investigaci&oacute;n de productos</a>
+        <a href="/product.html#simulations"><svg class="icon-sm"><use href="#i-chart"/></svg>Simulaciones</a>
+        <a href="/product.html#sales"><svg class="icon-sm"><use href="#i-trend"/></svg>Ventas</a>
+        <a href="/product.html#data"><svg class="icon-sm"><use href="#i-db"/></svg>Datos y sincronizaci&oacute;n</a>
+        <a href="/product.html#security"><svg class="icon-sm"><use href="#i-shield"/></svg>Seguridad</a>
+        <a href="/product.html#assistant"><svg class="icon-sm"><use href="#i-spark"/></svg>Asistente de IA &mdash; pronto</a>
       </div>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="/solutions.html">Solutions <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <a class="nav-link" href="/solutions.html">Soluciones <svg class="chev"><use href="#i-chevron"/></svg></a>
       <div class="nav-drop">
-        <a href="/solutions.html#beginners"><svg class="icon-sm"><use href="#i-rocket"/></svg>Beginners</a>
-        <a href="/solutions.html#experts"><svg class="icon-sm"><use href="#i-dollar"/></svg>Experienced sellers</a>
-        <a href="/solutions.html#agencies"><svg class="icon-sm"><use href="#i-case"/></svg>Agencies</a>
+        <a href="/solutions.html#beginners"><svg class="icon-sm"><use href="#i-rocket"/></svg>Principiantes</a>
+        <a href="/solutions.html#experts"><svg class="icon-sm"><use href="#i-dollar"/></svg>Vendedores con experiencia</a>
+        <a href="/solutions.html#agencies"><svg class="icon-sm"><use href="#i-case"/></svg>Agencias</a>
       </div>
     </li>
-    <li class="nav-item"><a class="nav-link" href="/index.html#pricing">Pricing</a></li>
-    <li class="nav-item"><a class="nav-link" href="/resources.html">Resources</a></li>
+    <li class="nav-item"><a class="nav-link" href="/index.html#pricing">Precios</a></li>
+    <li class="nav-item"><a class="nav-link" href="/resources.html?lang=es">Recursos</a></li>
     <li class="nav-item">
-      <a class="nav-link" href="/about.html">Company <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <a class="nav-link" href="/about.html">Empresa <svg class="chev"><use href="#i-chevron"/></svg></a>
       <div class="nav-drop">
-        <a href="/about.html"><svg class="icon-sm"><use href="#i-info"/></svg>About</a>
-        <a href="/contact.html"><svg class="icon-sm"><use href="#i-msg"/></svg>Contact</a>
+        <a href="/about.html"><svg class="icon-sm"><use href="#i-info"/></svg>Nosotros</a>
+        <a href="/contact.html"><svg class="icon-sm"><use href="#i-msg"/></svg>Contacto</a>
       </div>
     </li>
   </ul>
 
   <div class="nav-actions">
-    <a class="btn btn--quiet" href="https://analytics.amazebase.pro/login">Log in</a>
-    <a class="btn btn--primary" href="/index.html#waitlist" data-magnetic>Join the Wait List</a>
-    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="navMobile">
+    <div class="nav-item lang-switch">
+      <button class="lang-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Idioma / Language">
+        ES <svg class="chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+      </button>
+      <div class="nav-drop lang-drop">
+        <a href="/articles/first-product-succeeds-cash.html" hreflang="en" lang="en"><span class="lc">EN</span>English</a>
+        <a href="/es/articulos/y-si-tu-primer-producto-funciona.html" hreflang="es" lang="es" aria-current="true"><span class="lc">ES</span>Español</a>
+      </div>
+    </div>
+    <a class="btn btn--quiet" href="https://analytics.amazebase.pro/login">Iniciar sesi&oacute;n</a>
+    <a class="btn btn--primary" href="/index.html#waitlist" data-magnetic>&Uacute;nete a la lista de espera</a>
+    <button class="nav-toggle" aria-label="Abrir men&uacute;" aria-expanded="false" aria-controls="navMobile">
       <svg class="icon"><use href="#i-menu"/></svg>
     </button>
   </div>
@@ -917,372 +941,331 @@ td.neg{color:var(--ink-2)}
 </div>
 
 <div class="nav-mobile" id="navMobile">
-  <a href="/product.html#modules">Product</a>
-  <a href="/solutions.html">Solutions</a>
-  <a href="/index.html#pricing">Pricing</a>
-  <a href="/resources.html">Resources</a>
-  <a href="/about.html">About</a>
-  <a href="/contact.html">Contact</a>
-  <a class="btn btn--quiet btn--block" href="https://analytics.amazebase.pro/login">Log in</a>
-  <a class="btn btn--primary btn--block" href="/index.html#waitlist">Join the Wait List</a>
+  <a href="/product.html#modules">Producto</a>
+  <a href="/solutions.html">Soluciones</a>
+  <a href="/index.html#pricing">Precios</a>
+  <a href="/resources.html?lang=es">Recursos</a>
+  <a href="/about.html">Nosotros</a>
+  <a href="/contact.html">Contacto</a>
+  <a class="btn btn--quiet btn--block" href="https://analytics.amazebase.pro/login">Iniciar sesi&oacute;n</a>
+  <a class="btn btn--primary btn--block" href="/index.html#waitlist">&Uacute;nete a la lista de espera</a>
 </div>
 </header>
 
 <div class="wrap">
-<p class="back-link"><a href="/resources.html">&larr; Knowledge Hub</a></p>
+<p class="back-link"><a href="/resources.html?lang=es">&larr; Centro de Conocimiento</a></p>
 <header class="article-head">
-  <p class="eyebrow">Profit &amp; Finances</p>
-  <h1>The five margins <span class="accent">of one product</span></h1>
-  <p class="deck">Calculating true product margin after advertising — and why "what's my margin?" is the wrong question until you say what you're deciding.</p>
+  <p class="eyebrow">Manual de crecimiento</p>
+  <h1>&iquest;Y si tu <span class="accent">primer producto funciona?</span></h1>
+  <p class="deck">Casi todos los vendedores nuevos de Amazon planifican para que el producto falle. Casi nadie planifica para que funcione, que es justamente el caso que los deja sin dinero.</p>
   <p class="meta">
     <span>AmazeBase</span>
     <span class="dot" aria-hidden="true"></span>
-    <span>13 min read</span>
+    <span>11 min de lectura</span>
     <span class="dot" aria-hidden="true"></span>
-    <span>Margin &amp; Advertising</span>
+    <span>Flujo de caja y crecimiento</span>
   </p>
 </header>
 
-<!-- HERO IMAGE GOES HERE. Drop the image in as assets/img/hero-true-product-margin-after-ads.webp at 1672x941, uncomment, and write the alt text:
+<!-- AQU&Iacute; VA LA IMAGEN HERO. Coloca la imagen como assets/img/hero-first-product-succeeds-cash.webp a 1672x941, descomenta y escribe el texto alternativo:
 <figure class="hero-shot">
-  <img src="../assets/img/hero-true-product-margin-after-ads.webp"
+  <img src="/assets/img/hero-first-product-succeeds-cash.webp"
        alt=""
        width="1672" height="941" loading="eager" decoding="async">
 </figure>
 -->
 
 <div class="shell">
+
 <main id="main" class="article">
-  <p class="lead">A product sells for $40. It costs $10. So the margin is $30 — and every part of that sentence is wrong except the arithmetic.</p>
+  <p class="lead">Casi todo vendedor nuevo de Amazon ha hecho la misma cuenta mental. Encuentra un producto. L&aacute;nzalo. Gana dinero. Usa ese dinero para lanzar el siguiente. Repite hasta tener veinte productos y un negocio que se maneja solo.</p>
   <nav class="toc" aria-labelledby="toc-title">
-    <h2 id="toc-title">What&rsquo;s in this piece</h2>
+    <h2 id="toc-title">Qu&eacute; encontrar&aacute;s en este art&iacute;culo</h2>
     <ol>
-      <li><a href="#s1">Five margins, not one</a></li>
-      <li><a href="#s2">The test for a product cost</a></li>
-      <li><a href="#s3">Measured, allocated, assumed</a></li>
-      <li><a href="#s4">Landed cost, and which basis</a></li>
-      <li><a href="#s5">Amazon fees: two kinds</a></li>
-      <li><a href="#s6">Allocating advertising</a></li>
-      <li><a href="#s7">Break-even ACOS</a></li>
-      <li><a href="#s8">The waterfall</a></li>
-      <li><a href="#s9">One number, one definition</a></li>
-      <li><a href="#s10">Margin for which decision?</a></li>
-      <li><a href="#s11">Ranges, not decimals</a></li>
-      <li><a href="#s12">Questions</a></li>
+      <li><a href="#s1">El plan con el que todos empiezan</a></li>
+      <li><a href="#s2">Pides antes de saber</a></li>
+      <li><a href="#s3">Tu ciclo de efectivo</a></li>
+      <li><a href="#s4">M&iacute;ralo romperse</a></li>
+      <li><a href="#s5">Por qu&eacute; el &eacute;xito es el riesgo</a></li>
+      <li><a href="#s6">&iquest;Reponer o lanzar?</a></li>
+      <li><a href="#s7">Tu piso de efectivo</a></li>
+      <li><a href="#s8">&iquest;Cu&aacute;ntos productos?</a></li>
+      <li><a href="#s9">Planifica esto</a></li>
+      <li><a href="#s10">Simula el buen escenario</a></li>
+      <li><a href="#s11">Preguntas</a></li>
     </ol>
   </nav>
 
+    <p>Es un plan razonable. La parte de los productos suele estar bien: much&iacute;simos principiantes eligen de verdad algo que vende.</p>
 
-    
+    <p>Lo que el plan deja fuera es <em>cu&aacute;ndo</em> se mueve el dinero. Y en un negocio de inventario, el momento no es un detalle. Es todo.</p>
 
-    <p>Amazon takes its fees. Advertising takes more. Freight was never in the $10. Returns happen. By the time the money settles, the $30 has become something you'd have wanted to know before ordering another container.</p>
+    <p>Esta es la frase que sorprende a la gente:</p>
 
-    <p>The usual response is to hunt for the real number — one figure, per product, that finally tells the truth. That hunt fails, and not because the arithmetic is hard.</p>
-
-    <p>It fails because <strong>there isn't one margin. There are five, they're all correct, and they answer different questions.</strong> A seller who knows which one they're looking at makes better decisions than a seller with a more precise version of the wrong one.</p>
-
-    <p>So let's build all five, decide what belongs in each, and then work out which one to use when.</p>
-
-    <h2 id="s1"><span class="num">01</span>Five margins, in order</h2>
-      <p>Every honest product P&amp;L is this ladder. Each rung subtracts one category and answers one question.</p>
-
-      <ul class="levels">
-        <li><span class="n">L1</span><span><b>Net revenue</b><span class="d">Gross sales less refunds, returns and promotional rebates — the money you keep.</span></span><span class="q">What did it really sell for?</span></li>
-        <li><span class="n">L2</span><span><b>Gross margin</b><span class="d">After landed product cost.</span></span><span class="q">Is the sourcing good?</span></li>
-        <li><span class="n">L3</span><span><b>Margin after Amazon</b><span class="d">After referral, fulfilment, storage and the rest of Amazon's take.</span></span><span class="q">Does it work on this channel?</span></li>
-        <li><span class="n">L4</span><span><b>Contribution after ads</b><span class="d">After the advertising required to sell it.</span></span><span class="q">What does it contribute?</span></li>
-        <li><span class="n">L5</span><span><b>Net business profit</b><span class="d">After overheads — salaries, software, accounting, everything that runs regardless.</span></span><span class="q">Is the company healthy?</span></li>
-      </ul>
-
-      <p>The critical structural point: <strong>L1 to L4 are product numbers. L5 is a company number.</strong> They aren't different levels of the same measurement — they're different measurements. Trying to push overheads down to the SKU is where most profitability projects die.</p>
-      <blockquote>
-    <p>A product doesn't have a net profit. A company does. A product has a contribution.</p>
+    <blockquote>
+    <p>Lo m&aacute;s peligroso que le puede pasar a tu primer producto es que venda mejor de lo que esperabas.</p>
   </blockquote>
-    
 
-    <h2 id="s2"><span class="num">02</span>The test for whether a cost belongs to a product</h2>
-      <p>Almost every argument about product profitability is really an argument about where a cost goes. There's a single test that settles most of them:</p>
+    <p>No que falle. Que funcione. Este art&iacute;culo te muestra exactamente c&oacute;mo ocurre, con n&uacute;meros reales que puedes seguir, y qu&eacute; hacer en su lugar. No es una advertencia contra la ambici&oacute;n. Es la aritm&eacute;tica que permite que la ambici&oacute;n sobreviva al primer contacto con un proveedor.</p>
 
+    <h2 id="s1"><span class="num">01</span>El plan con el que todos empiezan</h2>
+      <p>Usemos una principiante realista. Ll&aacute;mala Ana. Tiene <strong>$30,000</strong> que est&aacute; dispuesta de verdad a poner en esto: no su patrimonio, no &laquo;dinero que voy a tener m&aacute;s adelante&raquo;. Efectivo.</p>
+
+      <div class="spec">
+        <h4>El primer producto de Ana</h4>
+        <dl>
+          <dt>Cantidad de la orden</dt><dd>1,000 unidades</dd>
+          <dt>Costo puesto en destino por unidad</dt><dd>$8.00</dd>
+          <dt>Valor de la orden</dt><dd>$8,000</dd>
+          <dt>Condiciones del proveedor</dt><dd>30&nbsp;% al pedir, 70&nbsp;% al embarcar</dd>
+          <dt>Producci&oacute;n + env&iacute;o + recepci&oacute;n</dt><dd>~3 meses</dd>
+          <dt>Precio de venta</dt><dd>$30</dd>
+          <dt>Efectivo que regresa por unidad, tras comisiones de Amazon y publicidad</dt><dd>$12.00</dd>
+          <dt>Costos de lanzamiento (fotos, muestras, primeros anuncios)</dt><dd>$3,000</dd>
+          <dt>Ventas esperadas</dt><dd>20 al d&iacute;a</dd>
+        </dl>
+      </div>
+
+      <p>En el papel es un buen producto. $12 de efectivo de retorno sobre una unidad de $8 es sano. Ana no est&aacute; siendo imprudente: usa menos de un tercio de su dinero en la primera orden y le quedan $22,000 de reserva.</p>
+      <p>Todos los n&uacute;meros de arriba est&aacute;n bien. Aun as&iacute; termina en problemas, y le toma unos seis meses.</p>
+
+    <h2 id="s2"><span class="num">02</span>Tienes que volver a pedir antes de saber nada</h2>
+      <p>Esta es la parte que nadie menciona en los videos para principiantes, y agarra a todo el mundo.</p>
+      <p>El proveedor de Ana tarda unos tres meses desde el pago hasta tener unidades vendibles. Sus 1,000 unidades, a 20 por d&iacute;a, duran <strong>50 d&iacute;as</strong>.</p>
+      <p>Haz la resta:</p>
+<pre><code>el stock dura        50 d&iacute;as
+la siguiente orden   90 d&iacute;as
+────────────────────────────────
+debes volver a pedir 40 d&iacute;as ANTES
+                     de que llegue el
+                     primer embarque</code></pre>
+      <p>L&eacute;elo otra vez. Para no quedarse con un hueco, Ana tiene que comprometerse con su segunda orden m&aacute;s de un mes antes de que aterrice la primera: antes de que un solo cliente haya comprado nada, antes de conocer su tasa de conversi&oacute;n, antes de saber si el producto funciona siquiera.</p>
+      <p>Tiene dos opciones y las dos son inc&oacute;modas. Pedir a ciegas y arriesgarse a comprar 1,000 unidades m&aacute;s de algo que nadie quiere. O esperar datos de venta reales y aceptar que se va a quedar sin stock unas seis semanas.</p>
+      <p>La mayor&iacute;a de los principiantes elige esperar, lo cual es defendible. Lo que no ven es que ya eligieron quedarse sin stock, y que quedarse sin stock cuesta posicionamiento, que a su vez cuesta la velocidad de ventas que estaban esperando medir.</p>
       <div class="fixbox">
-        <span class="fixbox-k">The test</span>
-        <p><strong>Does this cost change because you sold one more unit?</strong></p>
-        <p>Yes → it belongs in the product's ladder. No → it belongs to the business, below L4.</p>
+        <span class="fixbox-k">Qu&eacute; hacer</span>
+        <p>Pide en la primera orden lo suficiente para cubrir tu tiempo de reposici&oacute;n m&aacute;s un colch&oacute;n, no la cantidad m&aacute;s peque&ntilde;a que te alcance. Una primera orden de 1,000 unidades con 90 d&iacute;as de reposici&oacute;n es un quiebre de stock con pasos extra.</p>
+        <p>Si el efectivo no te da para tanto, eso es informaci&oacute;n real: puede que el producto sea demasiado caro para que lo manejes bien todav&iacute;a. Mejor enterarte ahora que en el mes cinco.</p>
       </div>
 
-      <p>Freight per unit: yes. Referral fee: yes. FBA pick-and-pack: yes. Your bookkeeper's monthly retainer: no — it's the same whether you sell 900 units or 1,100.</p>
-      <p>You <em>can</em> divide $5,000 of accounting across every ASIN. It will produce a number. Ask what you'd do differently knowing that Product A carries $0.37 of accounting cost, and the answer is nothing — which is how you know the allocation was decoration.</p>
-      <p>Worse, it's actively misleading: allocated overhead makes low-volume products look unprofitable purely because there are fewer units to divide by, and a seller who discontinues one hasn't removed the cost. It just redistributes onto the survivors.</p>
-      <p>Keep the ladder clean. Let overheads sit at the company level where they can be managed as what they are.</p>
-    
-
-    <h2 id="s3"><span class="num">03</span>Every margin is made of three kinds of number</h2>
-      <p>Two products can both show "24% contribution" and one of those numbers can be worth ten times the other. The difference isn't the formula. It's where the inputs came from.</p>
-
-      <div class="kinds">
-        <div class="kind m"><span class="lab">Measured</span><span class="txt">A recorded fact with a document behind it. A referral fee on a settlement line. An invoice.</span></div>
-        <div class="kind a"><span class="lab">Allocated</span><span class="txt">A real cost, divided by a rule you chose. Freight across a multi-SKU container. Storage across everything in the warehouse.</span></div>
-        <div class="kind s"><span class="lab">Assumed</span><span class="txt">A number nobody measured. A typed default, an industry rule of thumb, last year's figure carried forward.</span></div>
-      </div>
-
-      <p>All three are legitimate. What isn't legitimate is presenting them identically. A margin built mostly of measured numbers can carry a purchasing decision; one where landed cost is a typed default and freight is spread evenly can't.</p>
-      <p>So a product margin should carry its basis the way a chart carries its axis: <em>contribution $9.20 — measured, except freight (allocated by units) and storage (allocated by revenue share).</em></p>
-      <p>This one habit does more for trust than any refinement of the formula. It also makes the system tell you what to fix: the assumed inputs are your work queue.</p>
-    
-
-    <h2 id="s4"><span class="num">04</span>Landed cost — and which basis you're using</h2>
-      <p>Using the supplier's unit price as your product cost is the most common single error in Amazon accounting, and it's usually wrong by 20 to 40%.</p>
-      <p>Landed cost is everything required to make a unit sellable:</p>
-<pre><code>manufacturing + international freight + duty + customs
-+ inspection + prep + labelling + inbound transport
-─────────────────────────────────────────────────────
-= landed unit cost</code></pre>
-      <p>An $8 factory price with $3 of everything else is an $11 product. Across 10,000 units that's $30,000 — the difference between a good year and a flat one, invisible in the number most sellers use.</p>
-
-      <h3>The part nobody mentions: there are three landed costs</h3>
-      <p>Even with perfect records, the same unit has more than one defensible cost, depending on which batch you say it came from:</p>
+    <h2 id="s3"><span class="num">03</span>Tu ciclo de efectivo, y por qu&eacute; es m&aacute;s largo de lo que crees</h2>
+      <p>Si vas a aprender una sola cuenta antes de gastar un peso, que sea esta. Tu <strong>ciclo de efectivo</strong> es el tiempo que pasa entre que tu dinero sale y tu dinero vuelve.</p>
+<pre><code>anticipo pagado         d&iacute;a 0
+producci&oacute;n             60 d&iacute;as
+env&iacute;o                  30 d&iacute;as
+recepci&oacute;n en Amazon    14 d&iacute;as
+venta del inventario    50 d&iacute;as
+Amazon te paga          14 d&iacute;as
+──────────────────────────────────
+ciclo de efectivo    ~ 5.5 meses</code></pre>
+      <p>Cinco meses y medio. Ese es el tiempo que un d&oacute;lar que gastas hoy no est&aacute; disponible para ti.</p>
+      <p>No es un detalle menor: es el l&iacute;mite de velocidad de todo tu negocio. Significa que:</p>
       <ul>
-        <li><strong>FIFO</strong> — the cost of the actual oldest batch. Right for what a sale really cost you.</li>
-        <li><strong>Weighted average</strong> — all batches pooled. Smoother, and what most accountants prefer.</li>
-        <li><strong>Latest known</strong> — the most recent batch. Right for <em>should I buy more of this?</em>, because it's what the next unit will cost.</li>
+        <li>El dinero que &laquo;ganaste&raquo; en el mes 4 se gast&oacute; en el mes 0.</li>
+        <li>Con $30,000 solo puedes financiar unos dos de estos ciclos a la vez.</li>
+        <li>Cualquier plan que asuma que la utilidad estar&aacute; disponible para reinvertir el mes que viene se equivoca por unos cinco meses.</li>
       </ul>
-      <p>These are all correct and they disagree — often by 10 to 15% after a freight-rate swing. Two rules keep it sane: <strong>state which basis a number uses</strong>, and <strong>never rank two products on different bases.</strong> A comparison across bases isn't a close call; it's a category error.</p>
-    
+      <p>Todo lo dem&aacute;s en este art&iacute;culo es consecuencia de ese n&uacute;mero. Calcula el tuyo: toma cinco minutos y va a ser lo m&aacute;s &uacute;til de tu hoja de c&aacute;lculo.</p>
 
-    <h2 id="s5"><span class="num">05</span>Amazon fees come in two kinds, and only one is really per-product</h2>
-      <p>This distinction matters more than its airtime usually suggests.</p>
-      <p><strong>Transaction fees</strong> — referral, fulfilment, refund administration — arrive on the settlement line <em>attached to the sale that caused them</em>. They're measured. Assign them and move on.</p>
-      <p><strong>Account charges</strong> — monthly storage, long-term storage, inbound placement, removals, the subscription — arrive as account-level charges. Amazon does not tell you which ASIN owes what.</p>
-      <p>So they must be allocated, and the rule you pick shapes every number downstream:</p>
-      <ul>
-        <li><strong>By revenue share</strong> — simple; systematically over-charges your high-price, fast-moving SKUs and under-charges the slow bulky one actually consuming the shelf.</li>
-        <li><strong>By units</strong> — better for anything priced per unit handled.</li>
-        <li><strong>By cubic feet held × days</strong> — the honest one for storage, because that's literally how Amazon bills it.</li>
-      </ul>
-      <p>Storage allocated by revenue is the classic quiet distortion: the slow-moving product that occupies a pallet for eight months looks cheaper to hold than the fast one that never sits still. Since that's precisely the SKU you're trying to find, the allocation rule defeats the analysis.</p>
-      <p>Whichever you choose — label it, and use the same rule everywhere.</p>
-    
-
-    <h2 id="s6"><span class="num">06</span>Allocating advertising, without pretending</h2>
-      <p>Here's the genuinely hard part, and it has a workable answer.</p>
-
-      <h3>Start with what's already per-product</h3>
-      <p>Advertised-product reporting attributes spend to a SKU directly. Where that exists, use it — no allocation needed, no methodology to defend. This covers most spend for most sellers.</p>
-
-      <h3>For multi-product campaigns, split by attributed sales</h3>
-      <p>A campaign advertising three ASINs spends $300 and generates attributed sales across all three. Split the $300 in proportion to each product's attributed sales within that campaign. It's simple, it's reproducible, and it degrades sensibly — a campaign with one product gets an exact answer.</p>
-
-      <h3>For spend that fits no product, stop allocating</h3>
-      <p>Brand campaigns, Sponsored Display audiences, external traffic, the agency retainer. Smearing these across ASINs by revenue is how a healthy product gets convicted of a cost it never incurred.</p>
-      <p>These belong in a <strong>marketing line at the company level</strong> — below L4, beside overheads. That's not a fudge; it's a claim about what the money was for. It was spent on the brand, not on a SKU.</p>
-
-      <div class="fixbox">
-        <span class="fixbox-k">The principle</span>
-        <p>Category picks the line; attribution picks the SKU. If attribution can't name a product, the cost doesn't get one — it moves up a level. Unattributed money should be <em>visible</em>, not hidden by being divided.</p>
-      </div>
-
-      <h3>And be careful with the word "attributed"</h3>
-      <p>If a product does $100,000 in sales and ads are attributed $30,000, that isn't $30,000 of incremental revenue. Some of those customers were going to buy anyway.</p>
-      <p>Attribution tells you how the ad platform assigned credit under its own measurement window. Incrementality — what would have happened without the ad — is a different question that attribution data cannot answer. Use attribution for allocation, which is what it's good for. Don't use it as a claim about causation.</p>
-    
-
-    <h2 id="s7"><span class="num">07</span>Break-even ACOS is your L3 margin</h2>
-      <p>ACOS is fine. It just answers a question about advertising efficiency, not one about profit — and sellers keep asking it to do the second job.</p>
-      <p>One number connects them:</p>
-<pre><code>break-even ACOS = margin after Amazon fees ÷ net revenue</code></pre>
-      <p>Which is to say: <strong>your break-even ACOS is your L3 margin percentage.</strong> Spend that fraction of a sale on ads and you make nothing. Below it you profit; above it you're buying revenue with contribution.</p>
-      <p>That identity is what makes ACOS meaningful, because it's per-product. Take the two products people always compare:</p>
+    <h2 id="s4"><span class="num">04</span>M&iacute;ralo romperse, mes a mes</h2>
+      <p>Ahora la parte interesante. El producto de Ana no vende 20 al d&iacute;a. Vende <strong>50 al d&iacute;a</strong>. Es un &eacute;xito.</p>
+      <p>Sus 1,000 unidades se acaban en 20 d&iacute;as. Est&aacute; feliz, y hace exactamente lo que hace una persona sensata cuando algo funciona: pide m&aacute;s, esta vez m&aacute;s grande, y arranca con el producto n.&deg;&nbsp;2.</p>
 
       <div class="tblwrap">
 <div class="tblwrap"><table>
-          <caption>Same price, same ACOS, entirely different situations. The ACOS was never the useful number — the gap was.</caption>
+          <caption>El efectivo de Ana, mes a mes. Cada decisi&oacute;n individual aqu&iacute; es razonable.</caption>
           <thead>
-            <tr><th scope="col">Per unit</th><th scope="col">Product A</th><th scope="col">Product B</th></tr>
+            <tr><th scope="col">Mes</th><th scope="col">Qu&eacute; pasa</th><th scope="col">Efectivo</th></tr>
           </thead>
           <tbody>
-            <tr><td>Net revenue</td><td>$40.00</td><td>$40.00</td></tr>
-            <tr><td class="neg">Landed cost</td><td class="neg">−$8.00</td><td class="neg">−$15.00</td></tr>
-            <tr><td class="neg">Amazon fees</td><td class="neg">−$10.00</td><td class="neg">−$12.00</td></tr>
-            <tr><td>Margin after Amazon</td><td>$22.00</td><td>$13.00</td></tr>
-            <tr><td>Break-even ACOS</td><td>55%</td><td>32.5%</td></tr>
-            <tr><td>Actual ACOS</td><td>20%</td><td>20%</td></tr>
-            <tr><td>Headroom</td><td>35 pts</td><td>12.5 pts</td></tr>
+            <tr><td>0</td><td>Anticipo de la orden n.&deg;&nbsp;1, $2,400</td><td>$27,600</td></tr>
+            <tr><td>2</td><td>Saldo de la orden n.&deg;&nbsp;1, $5,600</td><td>$22,000</td></tr>
+            <tr><td>3</td><td>Costos de lanzamiento $3,000 &middot; repone 3,000 unidades, anticipo $7,200</td><td>$11,800</td></tr>
+            <tr><td>4</td><td>Entra efectivo de ventas $12,000 &middot; anticipo del producto n.&deg;&nbsp;2 $3,600</td><td>$20,200</td></tr>
+            <tr><td>5</td><td>Saldo de la reposici&oacute;n $16,800 &middot; sigue sin stock</td><td>$3,400</td></tr>
+            <tr><td>6</td><td>Vence el saldo del producto n.&deg;&nbsp;2, $8,400</td><td class="bad">&minus;$5,000</td></tr>
           </tbody>
         </table></div>
       </div>
-
-      <p>A can absorb a bad month, a competitor's bidding war, and a fee increase. B is one change away from advertising at a loss. Identical ACOS; opposite risk. A dashboard that shows both as green 20% has told you nothing.</p>
-      <p>TACOS — total ad spend over total revenue — is worth watching too, but it's a business-health indicator, not a margin. It tells you how dependent your revenue has become on paid traffic. Useful, different question.</p>
-    
-
-    <h2 id="s8"><span class="num">08</span>One product, all the way down</h2>
-      <p>A $40 product with a 3.5% return rate, a $11 landed cost, and honest fees.</p>
 
       <figure class="art-diagram">
-        <h4>Contribution waterfall — per unit sold</h4>
-        <p class="sub">Each bar is a level of the ladder. The last is what the product contributes to the company.</p>
-        <svg viewBox="0 0 700 300" role="img" aria-label="Waterfall chart, per unit. Net revenue 38.60 dollars, less landed cost 11.00, less Amazon fees 12.00, less advertising 5.00, less other direct costs 1.40, leaving a contribution of 9.20 dollars.">
-          <line class="grid" x1="60" y1="250" x2="672" y2="250" stroke="var(--rule-strong)"></line>
-          <line class="grid" x1="60" y1="195" x2="672" y2="195" stroke-dasharray="2 4"></line>
-          <line class="grid" x1="60" y1="140" x2="672" y2="140" stroke-dasharray="2 4"></line>
-          <line class="grid" x1="60" y1="85" x2="672" y2="85" stroke-dasharray="2 4"></line>
-          <line class="grid" x1="60" y1="30" x2="672" y2="30" stroke-dasharray="2 4"></line>
-          <text class="ax" x="52" y="253" text-anchor="end">$0</text>
-          <text class="ax" x="52" y="198" text-anchor="end">$10</text>
-          <text class="ax" x="52" y="143" text-anchor="end">$20</text>
-          <text class="ax" x="52" y="88" text-anchor="end">$30</text>
-          <text class="ax" x="52" y="33" text-anchor="end">$40</text>
+        <h4>El mismo producto, dos planes distintos</h4>
+        <p class="sub">La posici&oacute;n de efectivo de Ana a lo largo de ocho meses. Producto id&eacute;ntico, &eacute;xito id&eacute;ntico.</p>
+        <div class="legend">
+          <span><i class="swatch" style="background:var(--ser-a)"></i>Escalar r&aacute;pido: reponer en grande y lanzar el n.&deg;&nbsp;2 de inmediato</span>
+          <span><i class="swatch" style="background:var(--ser-b)"></i>Ir al paso del efectivo: reponer a la medida y aplazar el n.&deg;&nbsp;2</span>
+        </div>
+        <svg viewBox="0 0 700 320" role="img" aria-label="Gr&aacute;fico de l&iacute;neas del efectivo a lo largo de ocho meses. El plan de escalar r&aacute;pido cae de 27,600 d&oacute;lares a 11,800 en el mes 3, se recupera a 20,200 en el mes 4, baja a 3,400 en el mes 5 y llega a menos 5,000 en el mes 6. El plan al paso del efectivo nunca baja de 14,200 y llega a 33,000 en el mes 7.">
+          <line class="grid" x1="66" y1="54.4" x2="672" y2="54.4" stroke-dasharray="2 4"></line>
+          <line class="grid" x1="66" y1="103.3" x2="672" y2="103.3" stroke-dasharray="2 4"></line>
+          <line class="grid" x1="66" y1="152.2" x2="672" y2="152.2" stroke-dasharray="2 4"></line>
+          <line class="grid" x1="66" y1="250" x2="672" y2="250" stroke-dasharray="2 4"></line>
+          <line x1="66" y1="201.1" x2="672" y2="201.1" stroke="var(--rule-strong)" stroke-width="1"></line>
+          <text class="ax" x="58" y="57" text-anchor="end">$30k</text>
+          <text class="ax" x="58" y="106" text-anchor="end">$20k</text>
+          <text class="ax" x="58" y="155" text-anchor="end">$10k</text>
+          <text class="ax" x="58" y="204" text-anchor="end">$0</text>
+          <text class="ax" x="58" y="253" text-anchor="end">&minus;$10k</text>
 
-          <!-- connectors -->
-          <line x1="144" y1="37.7" x2="172" y2="37.7" stroke="var(--rule-strong)" stroke-dasharray="3 3"></line>
-          <line x1="244" y1="98.2" x2="272" y2="98.2" stroke="var(--rule-strong)" stroke-dasharray="3 3"></line>
-          <line x1="344" y1="164.2" x2="372" y2="164.2" stroke="var(--rule-strong)" stroke-dasharray="3 3"></line>
-          <line x1="444" y1="191.7" x2="472" y2="191.7" stroke="var(--rule-strong)" stroke-dasharray="3 3"></line>
-          <line x1="544" y1="199.4" x2="572" y2="199.4" stroke="var(--rule-strong)" stroke-dasharray="3 3"></line>
+          <path fill="var(--ser-b-fill)" stroke="none" d="M66,66.2 L141.75,66.2 L217.5,93.6 L293.25,131.7 L369,73 L444.75,127.8 L520.5,127.8 L596.25,39.8 L672,39.8 L672,201.1 L66,201.1 Z"></path>
 
-          <!-- bars -->
-          <rect x="72"  y="37.7"  width="72" height="212.3" fill="var(--accent)" rx="2"></rect>
-          <rect x="172" y="37.7"  width="72" height="60.5"  fill="var(--cost)" rx="2"></rect>
-          <rect x="272" y="98.2"  width="72" height="66"    fill="var(--cost)" rx="2"></rect>
-          <rect x="372" y="164.2" width="72" height="27.5"  fill="var(--cost)" rx="2"></rect>
-          <rect x="472" y="191.7" width="72" height="7.7"   fill="var(--cost)" rx="2"></rect>
-          <rect x="572" y="199.4" width="72" height="50.6"  fill="var(--accent)" rx="2"></rect>
+          <polyline fill="none" stroke="var(--ser-b)" stroke-width="2" stroke-linejoin="round"
+                    points="66,66.2 141.75,66.2 217.5,93.6 293.25,131.7 369,73 444.75,127.8 520.5,127.8 596.25,39.8 672,39.8"></polyline>
+          <polyline fill="none" stroke="var(--ser-a)" stroke-width="2" stroke-linejoin="round"
+                    points="66,66.2 141.75,66.2 217.5,93.6 293.25,143.4 369,102.4 444.75,184.5 520.5,225.6"></polyline>
+          <polyline fill="none" stroke="var(--ser-a)" stroke-width="2" stroke-dasharray="4 4" opacity=".45"
+                    points="520.5,225.6 596.25,137.6 672,137.6"></polyline>
 
-          <!-- values above bars -->
-          <text class="val" x="108" y="30"    text-anchor="middle">$38.60</text>
-          <text class="val" x="208" y="30"    text-anchor="middle">−$11.00</text>
-          <text class="val" x="308" y="90.5"  text-anchor="middle">−$12.00</text>
-          <text class="val" x="408" y="156.5" text-anchor="middle">−$5.00</text>
-          <text class="val" x="508" y="184"   text-anchor="middle">−$1.40</text>
-          <text class="val" x="608" y="191.7" text-anchor="middle">$9.20</text>
+          <circle cx="520.5" cy="225.6" r="5" fill="var(--crit)" stroke="var(--panel)" stroke-width="2"></circle>
+          <circle cx="596.25" cy="39.8" r="4.5" fill="var(--ser-b)" stroke="var(--panel)" stroke-width="2"></circle>
 
-          <!-- x labels -->
-          <text class="lbl-b" x="108" y="268" text-anchor="middle">Net revenue</text>
-          <text class="lbl"   x="108" y="281" text-anchor="middle">L1</text>
-          <text class="lbl-b" x="208" y="268" text-anchor="middle">Landed cost</text>
-          <text class="lbl"   x="208" y="281" text-anchor="middle">→ L2 · 71.5%</text>
-          <text class="lbl-b" x="308" y="268" text-anchor="middle">Amazon fees</text>
-          <text class="lbl"   x="308" y="281" text-anchor="middle">→ L3 · 40.4%</text>
-          <text class="lbl-b" x="408" y="268" text-anchor="middle">Advertising</text>
-          <text class="lbl"   x="408" y="281" text-anchor="middle">→ L4 · 27.5%</text>
-          <text class="lbl-b" x="508" y="268" text-anchor="middle">Other direct</text>
-          <text class="lbl"   x="508" y="281" text-anchor="middle">prep, returns</text>
-          <text class="lbl-b" x="608" y="268" text-anchor="middle">Contribution</text>
-          <text class="lbl"   x="608" y="281" text-anchor="middle">23.8%</text>
+          <text class="anno-c" x="513" y="243" text-anchor="end">&minus;$5,000 &middot; un pago que no puedes hacer</text>
+          <text class="anno" x="668" y="32" text-anchor="end">$33,000 &middot; listo para el n.&deg; 2</text>
+          <text class="anno-2" x="600" y="160">recuperaci&oacute;n que</text>
+          <text class="anno-2" x="600" y="171">nunca llega</text>
+
+          <text class="ax" x="66" y="292">mes 0</text>
+          <text class="ax" x="217.5" y="292" text-anchor="middle">2</text>
+          <text class="ax" x="369" y="292" text-anchor="middle">4</text>
+          <text class="ax" x="520.5" y="292" text-anchor="middle">6</text>
+          <text class="ax" x="672" y="292" text-anchor="end">8</text>
         </svg>
-        <figcaption>Net revenue is $40.00 gross less a $1.40 returns allowance. The break-even ACOS for this product is 40.4% — its L3 margin. It currently spends 13% of net revenue on ads, so it has 27 points of headroom.</figcaption>
+        <figcaption>El tramo punteado es hipot&eacute;tico. Un pago al proveedor que no puedes hacer no es una bajada en un gr&aacute;fico: la mercanc&iacute;a no se embarca, la reposici&oacute;n no llega y la recuperaci&oacute;n de la derecha nunca aparece. Por eso el n&uacute;mero que hay que mirar es el punto m&aacute;s bajo, no el &uacute;ltimo.</figcaption>
       </figure>
 
-      <p>Four percentages, all true, all about the same product: 71.5% gross, 40.4% after Amazon, 27.5% after ads, 23.8% contribution. Quote any one of them without saying which and you've had a misunderstanding, not a conversation.</p>
-      <p>And note the $30 we started with is nowhere on this chart. It never existed.</p>
-    
+      <p>Ana no eligi&oacute; un mal producto. Eligi&oacute; uno bueno, le fue mejor de lo que esperaba, y comprometi&oacute; el dinero antes de que volviera. Para el mes 6 le debe $8,400 a un proveedor que no tiene, mientras est&aacute; sentada sobre un producto probado y rentable que no puede reponer.</p>
 
-    <h2 id="s9"><span class="num">09</span>One number, one definition, everywhere</h2>
-      <p>The failure that quietly destroys trust isn't an inaccurate margin. It's <strong>two accurate margins that disagree.</strong></p>
-      <p>It happens easily. The advertising screen computes margin after ads on FIFO cost, before refunds. The inventory screen computes contribution on average cost, after refunds. Both are defensible. Both were written by someone careful. The seller opens two tabs, sees 27% and 24% for the same SKU, and from then on trusts neither.</p>
-      <p>Three rules prevent it:</p>
+    <h2 id="s5"><span class="num">05</span>Por qu&eacute; vender m&aacute;s r&aacute;pido cuesta m&aacute;s dinero</h2>
+      <p>Esta es la parte que se siente al rev&eacute;s hasta que la ves escrita.</p>
+      <p>Ana planific&oacute; para 20 unidades al d&iacute;a. Le llegaron 50. Eso es 2.5 veces las ventas, y triplica lo que el producto le exige:</p>
       <ul>
-        <li><strong>One definition per level, owned in one place.</strong> Every screen reads it; none re-derives it.</li>
-        <li><strong>Every margin declares its cost basis and its window.</strong> "FIFO landed, last 90 days of data, refunds included."</li>
-        <li><strong>Refunds sit at a fixed rung.</strong> Wherever you put them, put them there always. Moving refunds between levels is the single most common source of two-tabs-disagree.</li>
+        <li><strong>El stock se acaba 2.5 veces antes.</strong> 50 d&iacute;as de cobertura se vuelven 20.</li>
+        <li><strong>La reposici&oacute;n tiene que ser 2.5 veces m&aacute;s grande</strong> para cubrir el mismo periodo. $8,000 se vuelven $20,000.</li>
+        <li><strong>Y hay que colocarla 2.5 veces antes</strong>, as&iacute; que choca con dinero que todav&iacute;a no ha recibido.</li>
+        <li><strong>La inversi&oacute;n publicitaria sube</strong>, porque m&aacute;s ventas significan m&aacute;s clics.</li>
+        <li><strong>El hueco sale caro.</strong> Quedarse sin stock con un producto que est&aacute; posicionando cuesta un impulso que toma meses reconstruir.</li>
       </ul>
-      <p>If two screens must differ — and sometimes they legitimately must, because they answer different questions — say so on the screen. A named difference is a feature. An unexplained one is a bug the user finds before you do.</p>
-    
+      <p>&iquest;Y el dinero de esas ventas r&aacute;pidas? Sigue tres a seis semanas atr&aacute;s, movi&eacute;ndose por el ciclo de pagos de Amazon.</p>
+      <p>As&iacute; que mientras mejor venda, m&aacute;s grande es el cheque que tienes que firmar, y antes tienes que firmarlo. Eso no es un modo de falla. Eso <em>es</em> lo que significa crecer en un negocio de inventario.</p>
+      <blockquote>
+    <p>Todo negocio de inventario que crece r&aacute;pido es, temporalmente, un negocio que gasta m&aacute;s de lo que cobra. La &uacute;nica pregunta es si lo planificaste.</p>
+  </blockquote>
 
-    <h2 id="s10"><span class="num">10</span>Margin for which decision?</h2>
-      <p>Now the ladder earns its keep. The right level isn't the deepest one — it's the one that matches the choice in front of you.</p>
+    <h2 id="s6"><span class="num">06</span>&iquest;Repongo, o lanzo el siguiente?</h2>
+      <p>Tarde o temprano &mdash; normalmente cerca del mes 4 &mdash; vas a poder pagar uno de los dos y no los dos. Esta es la primera decisi&oacute;n real de asignaci&oacute;n de capital de tu negocio, y hay una opci&oacute;n por defecto que es la correcta casi siempre.</p>
 
-      <div class="tblwrap">
-<div class="tblwrap"><table>
-          <caption>Using L4 for a sourcing negotiation, or L2 for an ad budget, is how good numbers produce bad decisions.</caption>
-          <thead>
-            <tr><th scope="col">The decision</th><th scope="col">Use</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Negotiating with a supplier</td><td>L2 gross</td></tr>
-            <tr><td>Should this SKU be on Amazon at all</td><td>L3 after Amazon</td></tr>
-            <tr><td>Raising or cutting PPC budget</td><td>L3, as break-even ACOS</td></tr>
-            <tr><td>How much price room do I have</td><td>L4 contribution</td></tr>
-            <tr><td>Which SKU gets the next $30k of stock</td><td>L4 ÷ capital tied up</td></tr>
-            <tr><td>Can we afford another hire</td><td>L5 net profit</td></tr>
-            <tr><td>Is this launch worth doing</td><td>Forecast L4</td></tr>
-          </tbody>
-        </table></div>
+      <div class="fixbox">
+        <span class="fixbox-k">La regla</span>
+        <p><strong>Repone el producto que est&aacute; funcionando antes de financiar el que quiz&aacute;s funcione.</strong></p>
+        <p>Un producto probado tiene demanda conocida, una tasa de conversi&oacute;n conocida y un posicionamiento que ya pagaste. Un producto nuevo no tiene nada de eso, necesita todo el gasto de lanzamiento otra vez, y es el que de verdad tiene m&aacute;s probabilidades de decepcionar.</p>
       </div>
 
-      <p>The inventory row is the one sellers most often get wrong. When capital is the constraint — and for most sellers it is — the best product isn't the one with the highest contribution margin. It's the one with the highest <strong>contribution per dollar per year</strong>: contribution per unit × units per year ÷ dollars tied up. A 40% margin that turns twice loses to a 20% margin that turns six times, every time.</p>
-    
+      <p>Los principiantes suelen hacerlo al rev&eacute;s, por una raz&oacute;n entendible: un producto nuevo se siente como avanzar y una reposici&oacute;n se siente como quedarse quieto. No lo es. Dejar que un ganador se quede sin stock tira a la basura el posicionamiento que compraste con tu presupuesto de lanzamiento, y reconstruirlo cuesta m&aacute;s que la reposici&oacute;n.</p>
+      <p>La excepci&oacute;n es un producto cuya econom&iacute;a ya no te convence: margen delgado, muchas devoluciones, un competidor que te baj&oacute; el precio. Ah&iacute; no reponer es una decisi&oacute;n, no un descuido.</p>
+      <p>El segundo producto no se cancela. Se pone en la cola, detr&aacute;s de un negocio que pueda pagarlo.</p>
 
-    <h2 id="s11"><span class="num">11</span>Ranges, not decimals</h2>
-      <p>A margin displayed as <strong>27.43%</strong> claims a precision it cannot have when freight was allocated by a rule you chose and returns came from a historical average. The decimals don't add accuracy. They add unearned confidence.</p>
-      <p>Better:</p>
-<pre><code>Contribution after ads    ~27%   (22% – 30%)
+    <h2 id="s7"><span class="num">07</span>Fija un piso de efectivo antes de necesitarlo</h2>
+      <p>El error de Ana no fue ninguna orden en particular. Fue que nada le imped&iacute;a comprometer dinero que iba a necesitar despu&eacute;s.</p>
+      <p>As&iacute; que decide el l&iacute;mite por adelantado, mientras est&aacute;s tranquilo:</p>
+<pre><code>piso de efectivo = una reposici&oacute;n completa
+                   de tu mejor producto
+                 + 2 meses de costos fijos
 
-  low   freight allocated by units, returns at 5%
-  base  freight allocated by units, returns at 3.5%
-  high  measured freight, returns at 2%</code></pre>
-      <p>The range isn't hedging. It's the answer to the only question that matters next: <em>which assumption is this conclusion resting on, and how much would I have to be wrong for the decision to flip?</em></p>
-      <p>Sometimes the range is tight and the decision is easy. Sometimes it straddles zero, and then the useful output isn't a margin at all — it's a list of the two inputs worth going and measuring properly.</p>
-    
+nunca dejes que un compromiso
+planeado te lleve por debajo</code></pre>
+      <p>Para Ana eso son unos $20,000 de la reposici&oacute;n m&aacute;s unos $1,000 de publicidad y software: dig&aacute;moslo en $21,000. Con esa regla, el producto n.&deg;&nbsp;2 simplemente no se pide en el mes 4, y el mes 6 nunca ocurre.</p>
+      <p>El piso no es prudencia por prudencia. Es lo que te permite decir que s&iacute; a la reposici&oacute;n cuando tu producto despega, que es justo el momento en el que m&aacute;s quieres poder decir que s&iacute;.</p>
 
-    <h2 id="s12">Frequently asked</h2>
+    <h2 id="s8"><span class="num">08</span>Entonces, &iquest;cu&aacute;ntos productos puedes lanzar de verdad?</h2>
+      <p>Menos de los que insin&uacute;an los gur&uacute;s, y la aritm&eacute;tica es simple:</p>
+<pre><code>efectivo inmovilizado   = valor de la orden
+por producto              + costos de lanzamiento
+
+productos que puedes    = tu efectivo / efectivo
+manejar                   inmovilizado por producto
+
+para Ana                = $30,000 / ~$12,000
+                        ≈ 2 productos
+</code></pre>
+      <p>Dos. No diez, no cien. Y puede sumar aproximadamente <strong>un producto m&aacute;s por ciclo de efectivo</strong>, o sea cada cinco o seis meses, hasta que las utilidades empiecen a financiar el siguiente m&aacute;s r&aacute;pido que ella.</p>
+      <p>Suena lento. Mira a d&oacute;nde llega en realidad: un producto en el a&ntilde;o uno, dos o tres para el a&ntilde;o dos, y cada uno financiado por un negocio que sigue en pie. Contra un plan de cien productos que termina en el mes seis, no es nada lento.</p>
+      <p>El vendedor con tres productos y sin crisis de efectivo le gana al vendedor con ocho productos y un proveedor que dej&oacute; de contestar. Siempre.</p>
+
+    <h2 id="s9"><span class="num">09</span>No necesitas un plan de negocios. Necesitas cinco n&uacute;meros.</h2>
+      <ul class="steps">
+        <li><span class="n">01</span><span><b>El efectivo que vas a comprometer de verdad</b><span class="d">No tu patrimonio. No dinero que quiz&aacute;s tengas. Lo que puedes perder sin que te cambie la vida.</span></span></li>
+        <li><span class="n">02</span><span><b>Lo que cuesta operar un producto</b><span class="d">Valor de la orden, flete, aranceles, gasto de lanzamiento, los dos primeros meses de publicidad: el ciclo entero.</span></span></li>
+        <li><span class="n">03</span><span><b>Tres ritmos de venta, no uno</b><span class="d">Lento, esperado y &mdash; el que todos se saltan &mdash; mucho m&aacute;s r&aacute;pido de lo que esperabas.</span></span></li>
+        <li><span class="n">04</span><span><b>Tu fecha de reposici&oacute;n</b><span class="d">Cu&aacute;ndo se acaba el stock, menos el tiempo de reposici&oacute;n de tu proveedor. Casi siempre antes de lo que se siente correcto.</span></span></li>
+        <li><span class="n">05</span><span><b>Tu piso de efectivo</b><span class="d">La l&iacute;nea por debajo de la cual no se permite ning&uacute;n compromiso nuevo.</span></span></li>
+      </ul>
+      <p>Eso es una tarde de trabajo. Y es la diferencia entre las dos l&iacute;neas de Ana en el gr&aacute;fico de arriba.</p>
+
+    <h2 id="s10"><span class="num">10</span>Simula el buen escenario</h2>
+      <p>Todo el mundo le hace prueba de estr&eacute;s al desastre. &iquest;Y si no vende? &iquest;Y si sube el flete? &iquest;Y si un competidor me baja el precio? Preguntas &uacute;tiles, y la respuesta suele ser &laquo;pierdo parte de mi dinero&raquo;, cosa que ya hab&iacute;as aceptado.</p>
+      <p>Casi nadie corre la otra. <em>&iquest;Y si esto funciona mejor de lo que planifiqu&eacute;?</em> &mdash; y ese es el escenario que trae dentro un pago al proveedor que no puedes hacer.</p>
+      <p>As&iacute; que antes de mandar un anticipo, camina el dinero hacia adelante mes a mes. Efectivo inicial, anticipo, saldo, flete, gasto de lanzamiento, el mes en que llega el stock, el mes en que empiezan las ventas, el mes en que Amazon te paga de verdad, el mes en que tienes que reponer. Despu&eacute;s agrega el segundo producto y mira qu&eacute; choca.</p>
+      <p>No est&aacute;s tratando de predecir el futuro. Est&aacute;s buscando una sola cosa: <strong>el punto m&aacute;s bajo, y el mes en que ocurre</strong>. Si ese n&uacute;mero es c&oacute;modo en el escenario lento, en el esperado <em>y</em> en el r&aacute;pido, tienes un plan. Si se vuelve negativo en alguno, acabas de enterarte gratis.</p>
+      <div class="fixbox">
+        <span class="fixbox-k">La idea entera, en una l&iacute;nea</span>
+        <p>No simules solo si tu producto puede tener &eacute;xito. Simula si tu negocio puede sobrevivir a ese &eacute;xito.</p>
+      </div>
+
+    <h2 id="s11">Preguntas frecuentes</h2>
       <div class="faq">
         <details open>
-          <summary>What is the best way to calculate true product margin after advertising costs?</summary>
-          <p>Build a five-level ladder rather than one number: net revenue after refunds, minus landed cost, minus Amazon fees, minus advertising, with business overheads kept below and outside the product. The fourth level — contribution after ads — is the product's real economic output. Label each input as measured, allocated or assumed so the number carries its own reliability.</p>
+          <summary>&iquest;Cu&aacute;nto efectivo necesito para empezar a vender en Amazon?</summary>
+          <p>El suficiente para financiar un producto a lo largo de dos ciclos de efectivo completos, porque tu segunda orden vence antes de que vuelva el dinero de la primera. Si un producto cuesta $12,000 lanzarlo y operarlo, planifica unos $25,000 a $30,000, no $12,000. Empezar con exactamente lo de una orden es como los vendedores terminan sin poder reponer algo que est&aacute; funcionando.</p>
         </details>
         <details>
-          <summary>Should I allocate overhead to each product?</summary>
-          <p>Generally no. If a cost doesn't change when you sell one more unit, allocating it makes low-volume products look bad for arithmetic reasons and doesn't change any decision. Keep overheads at the company level and compare products on contribution.</p>
+          <summary>&iquest;Por qu&eacute; me quedo sin dinero si mi producto es rentable?</summary>
+          <p>Porque la utilidad y el efectivo llegan en momentos distintos. Le pagas a tu proveedor meses antes de que Amazon te pague a ti, y un producto que crece necesita una reposici&oacute;n m&aacute;s grande antes de que la anterior haya terminado de devolver su dinero. Los negocios rentables se quedan sin efectivo todo el tiempo: es el modo de falla normal de un negocio de inventario, no una rareza.</p>
         </details>
         <details>
-          <summary>How do I split advertising spend across multiple products in one campaign?</summary>
-          <p>Use per-SKU advertised-product data where it exists. For genuinely multi-product campaigns, split spend in proportion to each product's attributed sales within that campaign. Spend that fits no product — brand campaigns, external traffic, agency fees — goes to a company-level marketing line rather than being smeared across ASINs.</p>
+          <summary>&iquest;Repongo mi primer producto o lanzo un segundo?</summary>
+          <p>Repone, en casi todos los casos. El producto que funciona tiene demanda que ya mediste y un posicionamiento que ya pagaste; el nuevo necesita su propio presupuesto de lanzamiento y puede que no funcione. Solo te saltas la reposici&oacute;n si decidiste que la econom&iacute;a del producto no la justifica, y eso deber&iacute;a ser una decisi&oacute;n, no la consecuencia de haber gastado de m&aacute;s en otra parte.</p>
         </details>
         <details>
-          <summary>What is break-even ACOS and how do I calculate it?</summary>
-          <p>Margin after Amazon fees ÷ net revenue — which is to say, your L3 margin percentage. It's the ACOS at which advertising a sale produces zero contribution. The distance between it and your actual ACOS is your real advertising headroom, and it's per-product.</p>
+          <summary>&iquest;Cu&aacute;nto tarda en volver el dinero de mi primera orden?</summary>
+          <p>T&iacute;picamente cinco o seis meses desde el anticipo hasta tener el efectivo en la mano: producci&oacute;n, env&iacute;o, recepci&oacute;n en Amazon, el periodo de venta y luego el ciclo de pagos de Amazon. Calcula tu propia versi&oacute;n antes de comprometer dinero: es el l&iacute;mite de velocidad de tu crecimiento.</p>
         </details>
         <details>
-          <summary>Why do two tools show different margins for the same product?</summary>
-          <p>Almost always one of three things: a different cost basis (FIFO vs weighted average vs latest), refunds placed at a different level, or a different allocation rule for account-level charges like storage. All three can be individually correct. That's why every margin should state its basis and window.</p>
+          <summary>&iquest;Cu&aacute;ntos productos deber&iacute;a lanzar un principiante el primer a&ntilde;o?</summary>
+          <p>Normalmente uno, a veces dos. Divide tu efectivo disponible entre lo que cuesta operar un producto a lo largo de un ciclo completo &mdash; para la mayor&iacute;a de los principiantes eso da uno o dos &mdash; y suma aproximadamente uno m&aacute;s por ciclo de efectivo. La cantidad de productos no es la meta; sobrevivir lo suficiente para que el negocio se multiplique, s&iacute;.</p>
         </details>
         <details>
-          <summary>Is contribution margin the same as profit?</summary>
-          <p>No. Contribution is what a product leaves over to cover the costs of running the company. Profit is what remains after those costs. A product with strong contribution can sit inside an unprofitable business, and often does.</p>
-        </details>
-        <details>
-          <summary>Should product cost be FIFO or average?</summary>
-          <p>FIFO for what a past sale actually cost you. Weighted average for smoother reporting and most accounting purposes. Latest-known for deciding whether to buy more, since it reflects what the next unit will cost. Pick per decision, label it, and never rank two products on different bases.</p>
+          <summary>&iquest;Qu&eacute; pasa si mi producto vende mucho m&aacute;s r&aacute;pido de lo esperado?</summary>
+          <p>El stock se acaba antes, la reposici&oacute;n tiene que ser m&aacute;s grande y vence antes; todo a la vez, y antes de que esas ventas r&aacute;pidas se hayan convertido en efectivo. Es el escenario con m&aacute;s probabilidades de causar una crisis de efectivo, y el que casi nadie planifica. Mod&eacute;lalo antes de lanzar.</p>
         </details>
       </div>
-    
 
     <section class="sec">
-      <h2>Not "what's my margin"</h2>
-      <p>The question isn't what your margin is. It's which products are creating value, which are consuming it, and what the numbers are solid enough to justify doing about it.</p>
-      <p>Five levels, each honest about what it includes and where its inputs came from, answer that. One number carried to two decimal places doesn't — however carefully it was computed.</p>
+      <h2>Sue&ntilde;a en grande. Fin&aacute;ncialo bien.</h2>
+      <p>Nada de lo que dice este art&iacute;culo es que apuntes m&aacute;s bajo. Mucha gente construye negocios grandes en Amazon, y llegan ah&iacute; exactamente por la secuencia que est&aacute;s imaginando: un producto, luego otro, luego otro.</p>
+      <p>Lo que no hacen es llegar de un salto. Cada paso consume efectivo antes de devolver nada, y el tama&ntilde;o del paso lo limita lo que tengas mientras esperas.</p>
+      <p>As&iacute; que hazte la mejor pregunta desde temprano. No <em>&iquest;cu&aacute;ntos productos puedo lanzar?</em>, sino <em>&iquest;hasta d&oacute;nde me alcanza el efectivo, y qu&eacute; pasa si esto funciona?</em></p>
+      <p>Si aciertas en eso, la versi&oacute;n de cien productos sigue siendo posible. Si te equivocas, termina en el mes seis, con un producto que estaba funcionando.</p>
     </section>
 
-  
 </main>
 
-<aside class="rail" aria-label="Key figures from this article">
+<aside class="rail" aria-label="Cifras clave de este art&iacute;culo">
   <div class="rail-card">
-    <span class="rail-k">Margins per product</span>
-    <span class="rail-v">Five</span>
-    <p>L1 through L5. They disagree on purpose, because each one answers a different decision.</p>
+    <span class="rail-k">El caso trabajado</span>
+    <span class="rail-v">$8,000</span>
+    <p>La primera orden de Ana. 1,000 unidades a $8.00 puestas en destino, pagadas 30&nbsp;% al pedir y 70&nbsp;% al embarcar.</p>
   </div>
   <div class="rail-card">
-    <span class="rail-k">False precision</span>
-    <span class="rail-v is-amber">27.43%</span>
-    <p>A margin quoted to two decimals on top of an allocated freight figure and an averaged return rate.</p>
+    <span class="rail-k">El &eacute;xito cuesta m&aacute;s</span>
+    <span class="rail-v is-amber">2.5&times;</span>
+    <p>A 50 al d&iacute;a en vez de 20, el stock se acaba 2.5&times; antes, la reposici&oacute;n es 2.5&times; m&aacute;s grande y vence 2.5&times; antes.</p>
   </div>
   <div class="rail-card">
-    <span class="rail-k">The right question</span>
-    <span class="rail-v is-violet">Which decision?</span>
-    <p>Margin for repricing, for reordering and for killing a product are three different numbers.</p>
+    <span class="rail-k">Fija esto primero</span>
+    <span class="rail-v is-violet">Piso de efectivo</span>
+    <p>El saldo por debajo del cual no vas a bajar. Def&iacute;nelo antes de necesitarlo, no durante el mes en que lo necesitas.</p>
   </div>
-  <p class="rail-src">Figures from this article&rsquo;s own worked example, not an industry survey.</p>
+  <p class="rail-src">Cifras del ejemplo trabajado de este art&iacute;culo, no de un estudio de mercado.</p>
 </aside>
 
 </div><!-- /.shell -->
@@ -1306,37 +1289,37 @@ td.neg{color:var(--ink-2)}
 
   <div class="footer-top">
     <div class="footer-brand">
-      <a href="/index.html" class="brand" aria-label="AmazeBase home">
+      <a href="/index.html" class="brand" aria-label="Inicio de AmazeBase">
         <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
           <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
         </svg>
         <span data-brand>AmazeBase</span>
       </a>
-      <p>The operating system for Amazon sellers. Everything connected, everything in sync.</p>
+      <p>El sistema operativo para vendedores de Amazon. Todo conectado, todo sincronizado.</p>
     </div>
 
     <div class="footer-col">
-      <h4>Product</h4>
-      <a href="/product.html#modules">Product</a>
-      <a href="/index.html#pricing">Pricing</a>
+      <h4>Producto</h4>
+      <a href="/product.html#modules">Producto</a>
+      <a href="/index.html#pricing">Precios</a>
     </div>
 
     <div class="footer-col">
-      <h4>Resources</h4>
-      <a href="/resources.html">Knowledge Hub</a>
+      <h4>Recursos</h4>
+      <a href="/resources.html?lang=es">Centro de Conocimiento</a>
     </div>
 
     <div class="footer-col">
-      <h4>Company</h4>
-      <a href="/about.html">About</a>
-      <a href="/contact.html">Contact</a>
-      <a href="/privacy.html">Privacy</a>
-      <a href="/terms.html">Terms</a>
+      <h4>Empresa</h4>
+      <a href="/about.html">Nosotros</a>
+      <a href="/contact.html">Contacto</a>
+      <a href="/privacy.html">Privacidad</a>
+      <a href="/terms.html">T&eacute;rminos</a>
     </div>
   </div>
 
   <div class="footer-bottom">
-    <span>&copy; 2026 <span data-brand>AmazeBase</span>. All rights reserved.</span>
+    <span>&copy; 2026 <span data-brand>AmazeBase</span>. Todos los derechos reservados.</span>
     <div class="footer-social">
       <a href="#" aria-label="LinkedIn"><svg class="icon-sm"><use href="#i-in"/></svg></a>
       <a href="#" aria-label="X"><svg class="icon-sm"><use href="#i-tw"/></svg></a>
