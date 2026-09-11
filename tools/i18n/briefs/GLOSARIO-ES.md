@@ -34,8 +34,12 @@ read as though written by someone who has never used Seller Central.
 `ACOS` · `TACOS` · `ROAS` · `CPC` · `PPC` · `FBA` · `SKU` · `ASIN` ·
 `Buy Box` · `listing` · `Seller Central` · `Ledger` (the AmazeBase module name)
 
-*Advertising Cost of Sales* appears once, in italics, the first time ACOS is
-expanded — same as the English original does.
+"Advertising Cost of Sales" appears once, in plain text, where ACOS is
+expanded in the lead of the ACOS article — as the English does. *(Corrected
+2026-09-11: this line used to say "in italics … same as the English original
+does". The English was never italic; the Spanish page alone wrapped it in
+`<em>`, which is the one structural difference the gate found across all 51
+Spanish pages. The page is fixed in the same commit.)*
 
 ---
 
