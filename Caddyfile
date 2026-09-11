@@ -66,6 +66,14 @@
 		#               goes static: recompute with
 		#                 python -c "import hashlib,base64,sys;print(base64.b64encode(hashlib.sha256(open(sys.argv[1],'rb').read()).digest()).decode())" script.txt
 		#               where script.txt is the text BETWEEN the script tags.
+		#               Plus www.googletagmanager.com for Google Analytics 4:
+		#               gtag.js comes from there, and its init lines live in
+		#               /js/analytics.js (allowed by 'self') precisely so they
+		#               need no second hash.
+		#   img-src / connect-src also name Google Analytics' collection
+		#               origins. Without them the tag loads and every beacon is
+		#               refused, which shows in the console and nowhere else.
+		#               tools/analytics.py --check asserts all of these origins.
 		#   style-src   needs 'unsafe-inline' — 18 inline style="" attributes
 		#               remain in the HTML. Inline STYLES cannot execute code,
 		#               so this is a formatting concession, not a script hole.
@@ -80,7 +88,7 @@
 		#   frame-ancestors 'none' -> the clickjacking rule above
 		#   object-src 'none' -> no Flash/Java/embed legacy plugins
 		#   base-uri 'self' -> an injected <base> tag can't redirect our URLs
-		Content-Security-Policy "default-src 'self'; script-src 'self' 'sha256-C3Lmc3qMncd1P492JzpHzLfTKaMxj+oxEm1lWKQnQng='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self' https://analytics.amazebase.pro; form-action 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests"
+		Content-Security-Policy "default-src 'self'; script-src 'self' 'sha256-C3Lmc3qMncd1P492JzpHzLfTKaMxj+oxEm1lWKQnQng=' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; media-src 'self'; connect-src 'self' https://analytics.amazebase.pro https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; form-action 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests"
 
 		# Don't advertise the server software.
 		-Server
