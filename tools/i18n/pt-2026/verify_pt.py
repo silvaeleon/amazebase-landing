@@ -230,10 +230,19 @@ def check_page(tree, tr, brief, pt_map):
             P.append("hero alt is %d words" % nwd)
         facts.append("hero alt %d words, identical in img / og:image:alt / twitter:image:alt" % nwd)
     else:
-        facts.append("no hero (empty slot); og:image:alt %s, twitter:image:alt %s"
-                     % (og or "absent", tw or "absent"))
-        if og or tw:
-            P.append("image alt meta without a hero")
+        # No hero: the share image is a placeholder (the hub's picture, as
+        # og-<slug>.jpg) until the real one exists, and seo.py's fallback alt
+        # is the page's og:title. So the alt must be present in both places
+        # and be exactly the og:title -- anything else is a real mismatch.
+        ogt = one(r'<meta property="og:title" content="([^"]*)"')
+        img = one(r'<meta property="og:image" content="https://amazebase.pro/([^"]+)"')
+        if og or tw or img:
+            if og != ogt or tw != ogt:
+                P.append("no hero: image alts must both equal og:title (og %s, twitter %s)" % (og, tw))
+            if not img or not os.path.isfile(os.path.join(tree, img[0])):
+                P.append("no hero: og:image missing or not on disk (%s)" % img)
+        facts.append("no hero (empty slot); share image %s, alt = og:title in og and twitter"
+                     % (img[0] if img else "absent"))
 
     # ---- body skeleton identical to the English page, hrefs mapped back
     back = dict((pt, en) for en, pt in build_pt.CHROME_HREF.items())
