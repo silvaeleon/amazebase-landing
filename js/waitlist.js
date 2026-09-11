@@ -153,6 +153,28 @@
         done.hidden = false;
         var closeBtn = done.querySelector("[data-waitlist-close]");
         if (closeBtn) closeBtn.focus();
+
+        /* Measure the lead. Fired only after the server accepted the signup,
+           so the count is real submissions rather than clicks on the button.
+           gtag comes from js/analytics.js, which every page loads; the guard
+           is for the visitor whose blocker ate that file -- a missing tag must
+           never break the form. No name or email goes to Google: which CTA was
+           used and which marketplace was picked is all it sees.
+
+           The Ads send_to is <conversion ID>/<conversion label> for the
+           "Waitlist signup" action in Google Ads account 116-477-6109. The ID
+           half is also in tools/analytics.py, which configures it; the label
+           half lives ONLY here, so if the conversion is ever recreated in Ads
+           the new label must be pasted into this line. */
+        if (typeof window.gtag === "function") {
+          window.gtag("event", "generate_lead", {
+            signup_source: sourceField,
+            signup_marketplace: market
+          });
+          window.gtag("event", "conversion", {
+            send_to: "AW-11127271562/HOxuCMvEzvQcEIrh8rkp"
+          });
+        }
       })
       .catch(function (err) {
         showError(err && err.message

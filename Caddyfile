@@ -69,11 +69,25 @@
 		#               Plus www.googletagmanager.com for Google Analytics 4:
 		#               gtag.js comes from there, and its init lines live in
 		#               /js/analytics.js (allowed by 'self') precisely so they
-		#               need no second hash.
+		#               need no second hash. googleadservices.com and
+		#               googleads.g.doubleclick.net are the Google Ads
+		#               conversion, which js/waitlist.js fires on a signup.
 		#   img-src / connect-src also name Google Analytics' collection
-		#               origins. Without them the tag loads and every beacon is
+		#               origins, and the Ads ones for the same reason -- a
+		#               conversion is often recorded as an image request.
+		#               Without them the tag loads and every beacon is
 		#               refused, which shows in the console and nowhere else.
 		#               tools/analytics.py --check asserts all of these origins.
+		#               Ads also pings country domains (www.google.com.mx and
+		#               the like) that no wildcard can express; only
+		#               www.google.com is listed, so expect a console warning
+		#               for those. The conversion itself goes to
+		#               googleadservices.com and is not affected.
+		#   frame-src   Ads writes a hidden iframe to doubleclick to join a
+		#               click to a conversion. default-src 'self' would
+		#               otherwise refuse it and the conversion would be
+		#               attributed to nobody. This is NOT frame-ancestors,
+		#               which still refuses everyone below.
 		#   style-src   needs 'unsafe-inline' — 18 inline style="" attributes
 		#               remain in the HTML. Inline STYLES cannot execute code,
 		#               so this is a formatting concession, not a script hole.
@@ -88,7 +102,7 @@
 		#   frame-ancestors 'none' -> the clickjacking rule above
 		#   object-src 'none' -> no Flash/Java/embed legacy plugins
 		#   base-uri 'self' -> an injected <base> tag can't redirect our URLs
-		Content-Security-Policy "default-src 'self'; script-src 'self' 'sha256-C3Lmc3qMncd1P492JzpHzLfTKaMxj+oxEm1lWKQnQng=' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; media-src 'self'; connect-src 'self' https://analytics.amazebase.pro https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; form-action 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests"
+		Content-Security-Policy "default-src 'self'; script-src 'self' 'sha256-C3Lmc3qMncd1P492JzpHzLfTKaMxj+oxEm1lWKQnQng=' https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com; media-src 'self'; connect-src 'self' https://analytics.amazebase.pro https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com; frame-src https://td.doubleclick.net https://googleads.g.doubleclick.net; form-action 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests"
 
 		# Don't advertise the server software.
 		-Server

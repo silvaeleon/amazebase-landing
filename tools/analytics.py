@@ -9,8 +9,14 @@ second CSP hash. Instead every page carries, right after its viewport meta,
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-...">
     <script src="/js/analytics.js">
 
-and js/analytics.js holds Google's four init lines. An external file is
-already allowed by script-src 'self', so the Caddyfile keeps its ONE hash.
+and js/analytics.js holds the init lines. An external file is already
+allowed by script-src 'self', so the Caddyfile keeps its ONE hash.
+
+That file also carries the Consent Mode v2 defaults -- ads storage denied
+everywhere, analytics storage denied in the EEA, the UK and Switzerland and
+granted elsewhere -- and configures Google Ads AW-11127271562, whose
+"Waitlist signup" conversion js/waitlist.js fires. --check compares the file
+to INIT_JS below byte for byte, so edit THIS file, never js/analytics.js.
 
 The Caddyfile CSP must name Google's origins, or the browser refuses the
 tag, its script or its beacons. All three failures are silent: the tag is
@@ -39,18 +45,79 @@ TAG_GTAG = '<script async src="https://www.googletagmanager.com/gtag/js?id=%s"><
 TAG_INIT = '<script src="/js/analytics.js"></script>\n'
 TAGS = TAG_GTAG + TAG_INIT
 
-INIT_JS = ("window.dataLayer = window.dataLayer || [];\n"
-           "function gtag(){dataLayer.push(arguments);}\n"
-           "gtag('js', new Date());\n"
-           "gtag('config', '%s');\n" % GA_ID)
+# The whole of js/analytics.js. It is longer than Google's four init lines
+# because it also sets the Consent Mode v2 defaults and configures the Ads
+# account; --check compares the file to this byte for byte, so change it
+# HERE and re-run, never by editing js/analytics.js.
+INIT_JS = """/* ==========================================================================
+   FILE: js/analytics.js -- WRITTEN BY tools/analytics.py. Edit that, not this:
+   `python tools/analytics.py --check` compares this file byte for byte and
+   the pre-push hook fails if they differ.
+
+   Every page loads gtag.js and then this file. The config lines live in a
+   file rather than inline because the CSP carries exactly one sha256 hash and
+   we are keeping it that way -- see tools/analytics.py for the whole story.
+
+   CONSENT
+   Consent Mode v2 defaults are set below, before any measurement command.
+   gtag.js processes the dataLayer queue in order, so it sees consent first
+   whichever of the two scripts finishes loading first. Advertising storage is
+   denied everywhere. Analytics storage is denied in the EEA, the UK and
+   Switzerland -- those visits are still counted, cookielessly and modelled --
+   and granted everywhere else. There is no cookie banner on the site; if one
+   is added it calls gtag('consent', 'update', ...) on accept and nothing here
+   changes.
+
+   WHAT IS CONFIGURED
+       G-M8R4ZTFM6H     Google Analytics 4, property "amazebase.pro"
+       AW-11127271562   Google Ads, for the "Waitlist signup" conversion that
+                        js/waitlist.js fires once the server accepts a signup
+========================================================================== */
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+
+gtag('consent', 'default', {
+  ad_storage: 'denied',
+  ad_user_data: 'denied',
+  ad_personalization: 'denied',
+  analytics_storage: 'granted',
+  wait_for_update: 500
+});
+gtag('consent', 'default', {
+  region: ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU',
+           'IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES',
+           'SE','IS','LI','NO','GB','CH'],
+  ad_storage: 'denied',
+  ad_user_data: 'denied',
+  ad_personalization: 'denied',
+  analytics_storage: 'denied',
+  wait_for_update: 500
+});
+gtag('set', 'url_passthrough', true);
+gtag('set', 'ads_data_redaction', true);
+
+gtag('js', new Date());
+gtag('config', 'G-M8R4ZTFM6H');
+gtag('config', 'AW-11127271562');
+"""
 
 # Every origin GA4 needs, by directive. Remove one and the tag still sits in
 # every page while the browser refuses it.
 CSP_NEEDS = {
-    "script-src": ["https://www.googletagmanager.com"],
+    "script-src": ["https://www.googletagmanager.com",
+                   "https://www.googleadservices.com",
+                   "https://googleads.g.doubleclick.net"],
     "connect-src": ["https://*.google-analytics.com", "https://*.analytics.google.com",
-                    "https://*.googletagmanager.com"],
-    "img-src": ["https://*.google-analytics.com", "https://*.googletagmanager.com"],
+                    "https://*.googletagmanager.com",
+                    "https://www.googleadservices.com",
+                    "https://googleads.g.doubleclick.net", "https://www.google.com"],
+    "img-src": ["https://*.google-analytics.com", "https://*.googletagmanager.com",
+                "https://www.googleadservices.com",
+                "https://googleads.g.doubleclick.net", "https://www.google.com"],
+    # Ads writes a hidden iframe to doubleclick to join a click to a
+    # conversion. default-src 'self' would otherwise refuse it and the
+    # conversion would be attributed to nobody.
+    "frame-src": ["https://td.doubleclick.net", "https://googleads.g.doubleclick.net"],
 }
 
 # 178 on 2026-09-11. A floor, not an exact count, so adding a page never breaks
