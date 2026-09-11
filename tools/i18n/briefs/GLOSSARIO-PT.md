@@ -286,7 +286,7 @@ agreement in Portuguese depends on what they label.
 | The usual question | A pergunta de sempre | approved 2026-09-11 |
 | Traditional research asks | A pesquisa tradicional pergunta | approved 2026-09-11 |
 | The business question | A pergunta de negócio | approved 2026-09-11 |
-| Podcast episode | Episódio de podcast | approved 2026-09-11 |
+| Podcast episode | Episódio de podcast · áudio em inglês | approved 2026-09-11 — Leon: the three podcast pages play the English audio, and the player says so; a Portuguese page must not play English silently |
 | The long tail | A cauda longa | approved 2026-09-11 — a distribution, not time (O longo prazo was wrong) |
 | Scheduled | Programado | approved 2026-09-11 — bulk run had Agendado and Programado; Programado matches its series Comprometido / Programado / A vencer |
 | Operating Systems | Sistemas operacionais | approved 2026-09-11 — found in the bulk run |
