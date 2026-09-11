@@ -48,6 +48,26 @@ agree is making one of them wrong.
 products `Sponsored Products / Brands / Display`. AmazeBase module names stay
 exactly as they appear (`Ledger`).
 
+**The seven verdicts are the exception: they are translated** (Leon,
+2026-09-11, over keeping them in English like `Ledger`), matching the Spanish
+page. Use these forms and no others, on the product page and anywhere an
+article names a verdict:
+
+| English | Portuguese | Spanish (for reference) |
+|---|---|---|
+| Scale | Escalar | Escalar |
+| Optimize | Otimizar | Optimizar |
+| Cut | Cortar | Cortar |
+| Hold-flywheel | Manter pelo flywheel | Sostener-flywheel |
+| Negate | Negativar | Negativizar |
+| Harvest | Colher | Cosechar |
+| Review | Revisar | Revisar |
+
+Known cost, accepted: the product screenshots and the app itself show the
+verdicts in English, so a Portuguese reader sees "Escalar" in the text and
+"Scale" in the picture. Ordinary imperatives in running prose ("Otimize mais
+uma campanha", "Escale com confiança") are not verdicts and stay as they are.
+
 "Advertising Cost of Sales" appears once in the English, in the lead of the
 ACOS article, in **plain text**. `GLOSARIO-ES.md` says it is italic "same as the
 English original does"; measured on 2026-09-10, it is not, and the Spanish page
