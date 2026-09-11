@@ -294,3 +294,14 @@
    the column be the width of the screen and the content wrap inside it.
    Closes HANDOVER section 6 item 2. Only article pages have .shell. */
 .shell > *{ min-width:0; }
+
+/* ── PORTUGUESE ARTICLES ON PHONES: hyphenate ───────────────────────────
+   Some Portuguese words are longer than a narrow card on a phone
+   ("Participação", "Reconhecimento"), so two articles ran 7px and 16px past
+   the right edge of a 390px screen. Hyphenating in Portuguese lets them wrap
+   properly. Scoped to Portuguese pages (:lang(pt), from <html lang="pt">) and
+   to phone widths, so English, Spanish and every desktop layout are untouched.
+   Leon's decision, 2026-09-11. */
+@media (max-width: 600px){
+  :lang(pt) .article{ -webkit-hyphens:auto; hyphens:auto; }
+}
