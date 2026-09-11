@@ -136,7 +136,12 @@ def check(tree, key, en_rel, pt_rel, es_rel, tr, pt_map):
     def hb(h):
         b_, _, f_ = h.partition("#")
         return back.get(b_, b_) + ("#" + f_ if f_ else "")
-    ka, kb = VP.body_skeleton(en, hb), VP.body_skeleton(s, hb)
+    # The hub's no-JS card list is generated from each language's OWN rows and is
+    # checked above (count, /pt/artigos/, on disk). Its length legitimately
+    # differs once English has an English-only article (the first: 2026-09-11),
+    # so it is not part of the cross-language structure comparison.
+    en_c, s_c = (BT.FALLBACK.sub("", en), BT.FALLBACK.sub("", s)) if key == "resources" else (en, s)
+    ka, kb = VP.body_skeleton(en_c, hb), VP.body_skeleton(s_c, hb)
     if ka != kb:
         n = min(len(ka), len(kb))
         i = next((x for x in range(n) if ka[x] != kb[x]), n)

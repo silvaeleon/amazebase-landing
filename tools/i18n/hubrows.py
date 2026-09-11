@@ -61,12 +61,36 @@ def translated_row(en, **local):
     return row
 
 
+def english_row(data, id, title, summary, categories, level, topics, minutes, published,
+                format="article", author="AmazeBase", **extra):
+    """A new ENGLISH row. `categories` must be a LIST of hub category ids, even
+    for one value: it is the field hub.js reads FIRST, and the 12-row Spanish
+    defect came from it being dropped. `category` (the older single field)
+    is set to its first entry, as the rows that carry both have it."""
+    assert isinstance(categories, list) and categories, "categories must be a non-empty LIST: %r" % (categories,)
+    known = set(c["id"] for c in data["categories"])
+    assert set(categories) <= known, "unknown category ids %s (known: %s)" % (sorted(set(categories) - known), sorted(known))
+    assert level in set(l["id"] for l in data["levels"]), "unknown level %r" % level
+    assert format in set(f["id"] for f in data["formats"]), "unknown format %r" % format
+    row = {"id": id, "title": title, "summary": summary, "category": categories[0],
+           "categories": list(categories), "format": format, "level": level, "language": SOURCE_LANG,
+           "author": author, "published": published, "minutes": int(minutes),
+           "url": "articles/%s.html" % id, "topics": list(topics)}
+    row.update(extra)
+    return row
+
+
 def check(data):
     """Returns (checked, problems). Empty problems means every translated row
     carries exactly its English source's taxonomy."""
     rows = data["resources"]
     source = dict((r["id"], r) for r in rows if r.get("language") == SOURCE_LANG)
     problems, checked = [], 0
+
+    # `categories`, where a row has it, is the field hub.js reads first: it must be a list
+    for r in rows:
+        if "categories" in r and not (isinstance(r["categories"], list) and r["categories"]):
+            problems.append("%s: categories is %r, must be a non-empty list" % (r.get("id"), r["categories"]))
 
     for r in rows:
         if r.get("language") == SOURCE_LANG:

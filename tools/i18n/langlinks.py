@@ -191,6 +191,9 @@ def run(tree, cfg_dir=None, check=False, verbose=True):
     # A slug map with holes fails SILENTLY: the pages it forgot simply omit that
     # language from their alternates and switcher, render fine, error nowhere,
     # and are found months later in Search Console. So check coverage up front.
+    # An article that is English-ONLY on purpose is written into the map with
+    # the value null (the first: how-much-data-before-changing-a-campaign,
+    # 2026-09-11). A present key is a decision; a missing key is a hole.
     top_keys = set(cfg["languages"][0]["top"])
     for lang in cfg["languages"]:
         c = lang["code"]
