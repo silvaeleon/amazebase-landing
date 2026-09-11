@@ -115,8 +115,13 @@ def ld(v):
 
 def load_cfg():
     cfg, slugs = langlinks.load()
-    assert all(l["code"] != LANG for l in cfg["languages"]), \
-        "pt is already in languages.json -- run langlinks, not this pilot path"
+    have = [l for l in cfg["languages"] if l["code"] == LANG]
+    if have:
+        # pt has shipped into the manifest: build against it, and refuse if the
+        # manifest and this builder disagree about where the pages live
+        assert have[0] == PT_ENTRY, "languages.json pt entry differs from PT_ENTRY: %r" % have[0]
+        return cfg, slugs
+    # before launch (the pilot): pt exists only here, for these pages' own links
     cfg = dict(cfg, languages=cfg["languages"] + [PT_ENTRY])
     return cfg, slugs
 
