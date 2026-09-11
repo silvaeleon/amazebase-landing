@@ -108,8 +108,11 @@ block rather than rebuilding the page, so each page's own quirks survive.
 
 `data/resources.json` is the whole Knowledge Hub. For a new language:
 
-- **51 new entries**, each with `language`, `url`, and `translationOf` pointing
-  at the English `id`.
+- **51 new entries**, each made by `hubrows.translated_row()`: a copy of the
+  **whole** English entry with only the six language-specific fields replaced
+  (`id`, `title`, `summary`, `url`, `topics`, `language`) and `translationOf`
+  pointing at the English `id`. Do not build rows from a list of fields to
+  copy — see *An enumeration of names that looked complete* below.
 - **25 taxonomy labels** — `label_<code>` on 6 categories, 7 formats, 2 levels
   and each row of `languages`, plus `label_one_<code>` on all 7 formats.
 - Thumbnails and heroes are derived from the **slug in `url`, never `id`**.
@@ -120,10 +123,23 @@ the English literal. Adding a language is one column in `STR`. A hub is
 **scoped** to its own language — `SCOPE` filters everything the page counts,
 tiles, searches and features, and is never offered as a clearable filter.
 
-**Before you copy the gaps forward:** 7 English articles and their 7 Spanish
-counterparts have no `category`, so they list but sit under no tile. Fixing
-that is a content decision for Leon, and it is much cheaper now than after it
-has been replicated into four more languages.
+`python tools/i18n/hubrows.py . --check` then asserts, for every row with a
+`translationOf`, that its key set equals the English source's in both
+directions and that every field outside those six holds an identical value.
+You do not have to remember it: `langlinks.py` runs the same check and refuses
+to run on a failure (step 7).
+
+**A correction.** This file and `HANDOVER.md` used to say *7 English articles
+and their 7 Spanish counterparts have no `category`*. That was wrong, and it
+was wrong because it counted the wrong field. `hub.js` reads `categories`
+(a list) before `category`, and all 51 English entries sit on a tile. The
+defect was only ever in Spanish: the Spanish rows were copied field by field,
+`categories` was not on the list, and **12** Spanish rows lost it — 7 fell off
+every tile, 5 kept their first tile and lost their second. Measured 2026-09-10,
+per language, by the rule `hub.js` itself uses (`catsOf()`: `categories` if
+present, else `category`): English 0 of 51 without a tile, Spanish 7 of 51, and
+12 of 51 Spanish rows missing a field their English source has.
+`hubrows.py --check` reported exactly those 12 before the fix and 0 after.
 
 ### 7. Run langlinks.py
 
@@ -136,7 +152,9 @@ python3 tools/i18n/langlinks.py .           # write it
 ```
 
 It rewrites the alternates block, the switcher chip and the switcher menu on
-every page in every language. It refuses to run if a slug map has holes,
+every page in every language. It also runs `hubrows.check()` and refuses to run
+— `--check` included — if any translated hub row has lost or changed a field
+its English source carries. It refuses to run if a slug map has holes,
 because a hole means those pages would quietly drop the new language from their
 alternates and nothing would look wrong.
 
@@ -168,6 +186,29 @@ asserts clean — that is exactly how the hero on `/es/recursos.html` shipped
 the browser supports and does **not** fall back to the `<img>` beneath it, so a
 single missed attribute kills the image outright. Assert on each candidate
 inside a srcset list, not on the attribute as a whole.
+
+**An enumeration of names that looked complete.** This has now happened twice,
+at two different layers, and the shape is identical:
+
+1. `rootify()` made paths root-absolute by rewriting `href="` and `src="`.
+   `srcset` contains the letters *src* but not `src="`, so it was never seen,
+   and the hero on `/es/recursos.html` 404'd with no error anywhere.
+2. The Spanish hub rows were built by copying a named list of fields from each
+   English entry. `category` was on it; `categories` — which `hub.js` reads
+   first — was not. 12 Spanish articles lost tiles and nothing errored.
+
+Both lists looked complete and both were written from memory. So: **do not
+enumerate what to carry across. Copy the whole thing and enumerate only what is
+allowed to change** (`hubrows.translated_row()` does this), and **assert on
+whole sets, not on named members** — compare every key, every URL-carrying
+attribute, every candidate in a list. A check that names the fields it checks
+cannot catch the field nobody named.
+
+A second lesson came out of the same bug. The "7 per language" figure was
+stated three times, including once as an explicit recount, and every count
+checked the same wrong field. **Counting again is not measuring if you count
+the same wrong thing.** What found it was asking *which language*, and reading
+the field the code actually reads.
 
 **Narrowing a check past the thing it was checking for.** The Spanish
 builder's postflight was scoped to the body so English comments inside the
@@ -204,6 +245,7 @@ is a thousands separator only when digits follow it — that regex is
 | `slugs/<code>.json` | English article slug → that language's slug. |
 | `langlinks.py` | Regenerates the alternates block, switcher chip and switcher menu on every page. `--check` for a dry run, `--cfg DIR` to point at a different manifest. |
 | `reextract.py` | Extracts one brief per English article. `--compare` diffs against a previous extraction. |
+| `hubrows.py` | `translated_row()` makes a hub row from the whole English entry; `--check` asserts every translated row carries its English source's taxonomy exactly. |
 | `pipeline.py` | `brief()`, `skeleton()`, `skeleton_diff()`, `check()`. The structural fingerprint is the ordered sequence of every tag with its `id/class/href/src/style/points/d/viewBox/...`. |
 | `briefs/TRANSLATOR-es.md` | The Spanish translator brief. Copy and rewrite the language half. |
 | `briefs/GLOSARIO-ES.md` | The five Spanish judgement calls Leon approved, with alternatives. The model for the next language's glossary. |

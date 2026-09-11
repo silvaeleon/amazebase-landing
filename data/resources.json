@@ -1454,6 +1454,7 @@
       "title": "¿Y si tu primer producto funciona?",
       "summary": "Casi todos los vendedores nuevos de Amazon planifican para que el producto falle. Casi nadie planifica para que funcione, que es justamente el caso que los deja sin dinero.",
       "category": "growth",
+      "categories": ["growth", "profit"],
       "format": "article",
       "level": "beginner",
       "language": "es",
@@ -1525,6 +1526,10 @@
       "id": "advertising-is-inventory-es",
       "title": "Toda decisión publicitaria es en realidad una decisión de inventario",
       "summary": "La publicidad no solo reporta la demanda. La crea — y cada unidad de demanda que crea es una orden de compra futura que tu proveedor todavía no ha visto.",
+      "categories": [
+        "ppc",
+        "inventory"
+      ],
       "format": "article",
       "author": "AmazeBase",
       "published": "2026-08-02",
@@ -1575,6 +1580,10 @@
       "id": "analyze-systems-es",
       "title": "La mayoría de los vendedores analiza productos. Las grandes empresas analizan sistemas.",
       "summary": "Los productos son temporales. Los sistemas son duraderos.",
+      "categories": [
+        "research",
+        "growth"
+      ],
       "format": "article",
       "level": "expert",
       "language": "es",
@@ -1652,6 +1661,7 @@
       "title": "Cómo automatizar el pronóstico de flujo de caja y la gestión de inventario",
       "summary": "La automatización no te compra una mejor predicción. Te compra una distancia más corta entre el momento en que un dato cambia y el momento en que sabes qué cambia ese dato.",
       "category": "inventory",
+      "categories": ["inventory", "profit"],
       "format": "article",
       "level": "expert",
       "language": "es",
@@ -1773,6 +1783,10 @@
       "id": "capital-allocation-products-es",
       "title": "Cada producto es una decisión de asignación de capital",
       "summary": "Los productos no crean negocios excepcionales. La asignación inteligente de capital sí.",
+      "categories": [
+        "research",
+        "profit"
+      ],
       "format": "article",
       "level": "expert",
       "language": "es",
@@ -1901,6 +1915,7 @@
       "title": "Una factura que falta",
       "summary": "Por qué un vacío en una esquina de tu operación de Amazon no se queda en esa esquina — y cómo saber cuáles vacíos sí importan.",
       "category": "tools",
+      "categories": ["tools", "profit"],
       "format": "article",
       "level": "expert",
       "language": "es",
@@ -2018,6 +2033,10 @@
       "id": "growth-is-cash-flow-es",
       "title": "El crecimiento suele ser un problema de flujo de caja disfrazado de problema de ventas",
       "summary": "Los ingresos son una opinión. El efectivo es la realidad. La restricción en la mayoría de los negocios maduros de Amazon no es la demanda.",
+      "categories": [
+        "growth",
+        "profit"
+      ],
       "format": "article",
       "level": "expert",
       "language": "es",
@@ -2136,6 +2155,10 @@
       "id": "launch-opportunity-cost-es",
       "title": "El costo de oportunidad de cada lanzamiento de producto",
       "summary": "Una decisión rentable no es necesariamente una buena decisión. Lo bueno suele ser enemigo de lo excelente.",
+      "categories": [
+        "research",
+        "profit"
+      ],
       "format": "article",
       "level": "expert",
       "language": "es",
@@ -2237,6 +2260,10 @@
       "id": "portfolio-complexity-es",
       "title": "El costo oculto de la complejidad en los portafolios de producto",
       "summary": "Los ingresos escalan solos. La complejidad no. El mejor portafolio no es el más grande — es el más coherente.",
+      "categories": [
+        "research",
+        "growth"
+      ],
       "format": "article",
       "level": "expert",
       "language": "es",
@@ -2494,6 +2521,7 @@
       "title": "Una orden de compra son dos objetos",
       "summary": "Cómo seguir los calendarios de pago a proveedores junto con los márgenes de producto — y el número que decide qué proveedor sale realmente más barato.",
       "category": "profit",
+      "categories": ["profit", "inventory"],
       "format": "article",
       "level": "expert",
       "language": "es",
@@ -2540,6 +2568,10 @@
       "id": "think-like-investors-es",
       "title": "Por qué los mejores investigadores de producto piensan como inversionistas",
       "summary": "El reto nunca fue encontrar oportunidades. Es decidir cuáles merecen años de tu capital.",
+      "categories": [
+        "research",
+        "profit"
+      ],
       "format": "article",
       "level": "expert",
       "language": "es",
@@ -2566,6 +2598,7 @@
       "title": "Los cinco márgenes de un producto",
       "summary": "Cómo calcular el margen real de un producto después de la publicidad — y por qué «¿cuál es mi margen?» es la pregunta equivocada hasta que digas qué estás decidiendo.",
       "category": "profit",
+      "categories": ["profit", "ppc"],
       "format": "article",
       "level": "expert",
       "language": "es",

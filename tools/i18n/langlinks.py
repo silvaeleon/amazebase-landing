@@ -28,6 +28,11 @@ WHAT IT REWRITES, AND NOTHING ELSE
 It does not touch the canonical, <html lang>, og:locale, or any content. Those
 belong to the page builder. This script has one job.
 
+It also REFUSES to run -- --check included -- if hubrows.check() finds a
+translated hub row that does not carry its English source's taxonomy exactly.
+That check lives here because this is the script every language run must
+execute; a check that has to be remembered gets forgotten exactly once.
+
 CALIBRATION
 -----------
 Run with --check against the current tree first. With the manifest describing
@@ -39,6 +44,8 @@ generate what comes next. See --check in main().
 import io, os, re, sys, json, glob
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+import hubrows
 
 
 # --------------------------------------------------------------- the manifest
@@ -195,6 +202,15 @@ def run(tree, cfg_dir=None, check=False, verbose=True):
         if gaps and c != cfg["languages"][0]["code"]:
             print("  note: %s has no %s page yet" % (c, "/".join(gaps)))
 
+    # The hub rows are checked here, not only by hand, because this is the one
+    # script every language run must execute. A translated row that lost a
+    # taxonomy field fails as silently as a slug-map hole: the article lists
+    # in the hub and sits under no tile. See hubrows.py.
+    res = os.path.join(tree, "data", "resources.json")
+    hub_checked, hub_problems = hubrows.check(
+        json.load(io.open(res, encoding="utf-8")))
+    problems.extend("data/resources.json: " + p for p in hub_problems)
+
     # every page that carries a switcher must be in a group, and vice versa
     on_disk = set()
     for p in glob.glob(os.path.join(tree, "**", "*.html"), recursive=True):
@@ -228,6 +244,8 @@ def run(tree, cfg_dir=None, check=False, verbose=True):
             missing.append(path)
 
     if verbose:
+        print("%d hub rows checked against their English source, %d problems"
+              % (hub_checked, len(hub_problems)))
         print("%d pages carry a switcher" % len(on_disk))
         print("  unchanged: %d" % len(same))
         print("  rewritten: %d" % len(changed))
