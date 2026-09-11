@@ -1,0 +1,34 @@
+{
+  "site": "https://amazebase.pro",
+  "x_default": "en",
+  "_note": "Adding a language: append an entry here, add slugs/<code>.json mapping every English article slug to the local one, then run langlinks.py. It rewrites the alternates block and the switcher on EVERY page in EVERY language, so languages already shipped pick up the new one without being hand-edited. Order here is the order they appear in the switcher and in the <head>.",
+  "languages": [
+    {
+      "code": "en",
+      "label": "English",
+      "chip": "EN",
+      "articles": "articles",
+      "top": {
+        "resources": "resources.html",
+        "product": "product.html",
+        "solutions": "solutions.html",
+        "about": "about.html",
+        "contact": "contact.html"
+      }
+    },
+    {
+      "code": "es",
+      "label": "Español",
+      "chip": "ES",
+      "articles": "es/articulos",
+      "top": {
+        "resources": "es/recursos.html",
+        "product": "es/producto.html",
+        "solutions": "es/soluciones.html",
+        "about": "es/nosotros.html",
+        "contact": "es/contacto.html"
+      }
+    }
+  ],
+  "no_switcher": ["index.html", "privacy.html", "terms.html"]
+}
