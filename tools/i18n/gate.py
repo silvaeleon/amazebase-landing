@@ -71,9 +71,18 @@ LEAK = {
 }
 
 
+def untagged(frag):
+    """The fragment with HTML comments and tags replaced by spaces. Comments
+    FIRST: they never render, and a comment that mentions a tag ("<svg ...>")
+    left its own words behind as 'text' when tags were stripped first -- found
+    2026-09-11 by the Portuguese homepage translator (English survived, a
+    straight quote) in developer comments nobody reads."""
+    return re.sub(r"<[^>]+>", " ", re.sub(r"<!--.*?-->", " ", frag or "", flags=re.S))
+
+
 def text_of(frag):
-    """Rendered text of a fragment: tags out, entities decoded."""
-    return html.unescape(re.sub(r"<[^>]+>", " ", frag or ""))
+    """Rendered text of a fragment: comments and tags out, entities decoded."""
+    return html.unescape(untagged(frag))
 
 
 # ------------------------------------------------------------- <pre> blocks
@@ -194,7 +203,7 @@ def settle(text, vocab):
 
 def check_vocab(tr_v, field, lang):
     vocab = load_vocab(lang)
-    t = norm(re.sub(r"<[^>]+>", " ", tr_v or "")).lower()
+    t = norm(untagged(tr_v)).lower()
     return ["%s: %r is a settled variant; use %r" % (field, var, good)
             for var, good in vocab if var.lower() in t]
 
@@ -321,7 +330,7 @@ def nums(frag):
     # Entities are decoded first: "&#215;" is the sign x, not the number 215.
     # Without this, a translation that writes the same sign as &times; fails
     # the figure check (found 2026-09-11 by a translator, growth-vs-complexity).
-    return NUM.findall(html.unescape(re.sub(r"<[^>]+>", " ", frag or "")))
+    return NUM.findall(html.unescape(untagged(frag)))
 
 
 def words(s):
@@ -397,7 +406,7 @@ def audit(brief, tr, lang, slug_key=None, href_back=None, leak=True, pre=True):
                 prob.append("%s: percentage with a space (decision 2 says 25%%)" % field)
             if "«" in plain or "»" in plain:
                 prob.append("%s: angle quotes (decision 2 says curly quotes)" % field)
-            if '"' in re.sub(r"<[^>]+>", " ", tr_v):
+            if '"' in untagged(tr_v):
                 prob.append("%s: straight double quote in text (use &ldquo; &rdquo;)" % field)
 
     if prob:
