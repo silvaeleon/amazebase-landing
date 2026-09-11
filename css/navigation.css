@@ -2,6 +2,27 @@
    FILE: css/navigation.css
 ========================================================================== */
 
+/* Three tokens used across the site and defined nowhere until 2026-09-11 (a
+   scan of every var() use against every definition), so each rule using one
+   fell back to nothing: square corners, inherited text colour.
+
+   They live HERE, not in variables.css, because this is the one stylesheet
+   every page links (177 of 177). The 153 article pages carry their own inline
+   copy of the tokens and do not link variables.css, and 72 of the pages using
+   these are articles. One definition for the whole site; no page patched.
+
+     --ink-1   95 uses in 19 articles + hub.css. Articles alias --ink-2/--ink-3
+               to --text-2/--text-3, so --ink-1 is --text.
+     --text-1  about.css, contact.css, beside --text-2/--text-3: --text.
+     --r3      189 radius uses in 24 articles + about.css. Every one is a
+               bordered box, and in those same files bordered boxes most often
+               use 14px (338 times; then 12px 192, 16px 148).                */
+:root{
+  --ink-1:  var(--text);
+  --text-1: var(--text);
+  --r3:     14px;
+}
+
 .site-header{
   position:fixed;
   top:0; left:0;

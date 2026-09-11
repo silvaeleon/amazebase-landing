@@ -30,6 +30,8 @@
      focus ring) and sections.css (security cards, their links) -- and defined
      nowhere until 2026-09-11, so every one of those fell back to nothing. */
   --brand:           var(--violet-soft);
+  /* --ink-1, --text-1 and --r3 are defined in navigation.css, not here: they are
+     used by article pages, which do not link this file (see there). */
 
   --green:           #2ED47A;
   --amber:           #F5A524;
