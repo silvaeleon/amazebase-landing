@@ -1,0 +1,11 @@
+{
+ "_note": "The rail's key-figure cards. The content-first source format has no rail, but every article carries 3-4 cards, so these were drafted on 2026-09-11 for Leon's review. Each number and each sentence is taken verbatim from the article; only the short 'k' labels are new. build_article.py verify refuses a rail number the article does not contain.",
+ "cards": [
+  {"k": "Zero sales after 8 clicks", "v": "43%",
+   "p": "A keyword that is performing exactly as expected will show you zero sales after eight clicks roughly four times out of ten."},
+  {"k": "Clicks before zero means something", "v": "22", "tone": "amber",
+   "p": "If you do not know your conversion rate yet, use 22 clicks."},
+  {"k": "Days for one keyword to get there", "v": "11 days", "tone": "violet",
+   "p": "Spread across 10 keywords that is 2 clicks per keyword per day, so a single keyword takes 11 days to reach 22 clicks."}
+ ]
+}

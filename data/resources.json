@@ -191,6 +191,28 @@
   ],
   "resources": [
     {
+      "id": "how-much-data-before-changing-a-campaign",
+      "title": "How Much Data Do You Need Before You Change a Campaign?",
+      "summary": "Zero sales on a keyword means nothing until you have enough clicks. Here is how many, and how to count them correctly.",
+      "category": "ppc",
+      "categories": [
+        "ppc"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-11",
+      "minutes": 7,
+      "url": "articles/how-much-data-before-changing-a-campaign.html",
+      "topics": [
+        "Campaign Strategy",
+        "Decision Making",
+        "Data Quality",
+        "Product Launch"
+      ]
+    },
+    {
       "id": "fba-reorder-date-velocity",
       "title": "When should I reorder this ASIN?",
       "summary": "Stock on hand is easy. Knowing when you must reorder is the hard part, and the honest output is a range with a deadline rather than one confident date.",
