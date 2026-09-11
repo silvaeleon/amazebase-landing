@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Como automatizar a previs&atilde;o de fluxo de caixa e a gest&atilde;o de estoque &mdash; AmazeBase</title>
+
+<meta name="description" content="A automa&ccedil;&atilde;o n&atilde;o compra uma previs&atilde;o melhor. Ela compra uma dist&acirc;ncia menor entre um fato mudar e voc&ecirc; saber o que ele muda.">
+<meta name="theme-color" content="#030917">
+<meta name="author" content="AmazeBase">
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+/* ==========================================================================
+   ARTICLE — Amazon Inventory Forecasting
+   Self-contained. Tokens mirror css/variables.css so this page can either
+   stand alone OR have this <style> block deleted once it sits inside the
+   site's normal stylesheet chain.
+========================================================================== */
+
+:root{
+  --z-nav:100;          /* navigation.css */
+  --container:1280px;   /* .container, below */
+  --t-body:15px;        /* .btn, below */
+  --bg:#030917; --bg-deep:#01050E; --bg-raise:#060D1E;
+  --surface:rgba(255,255,255,.030); --surface-2:rgba(255,255,255,.055);
+  --surface-solid:#0A1224;
+  --line:rgba(255,255,255,.070); --line-strong:rgba(255,255,255,.140);
+
+  --text:#EEF1F8; --text-2:#98A2B8; --text-3:#616C84;
+
+  --violet:#8B3BF1; --violet-soft:#A971F7; --indigo:#5B4FE6;
+  --blue:#3B82F6; --blue-soft:#7EB3FF;
+  --green:#2ED47A; --amber:#F5A524; --red:#F0435C;
+
+  --grad-brand:linear-gradient(135deg,#5B4FE6 0%,#8B3BF1 100%);
+  --grad-text:linear-gradient(90deg,#6153E6 0%,#9D50F7 55%,#C56BF5 100%);
+  --grad-card:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  --grad-rule:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,monospace;
+
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px;
+  --s5:48px; --s6:64px; --s7:96px; --s8:128px;
+
+  --gutter:clamp(20px,4vw,40px);
+  --measure:720px;
+
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
+  --sh-2:0 18px 40px rgba(0,0,0,.42);
+  --sh-brand:0 16px 40px rgba(107,63,232,.35);
+  --ease:cubic-bezier(.22,.61,.36,1); --fast:.18s; --mid:.28s;
+
+  color-scheme:dark;
+  scrollbar-color:#26304A var(--bg);
+  scrollbar-width:thin;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation:none !important; transition:none !important; }
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+::selection{ background:var(--violet); color:#fff; }
+
+.skip-link{
+  position:absolute; left:-9999px; top:0;
+  background:var(--surface-solid); color:var(--text);
+  padding:12px 20px; border-radius:0 0 var(--r-sm) 0;
+  z-index:1000; text-decoration:none; font-weight:600;
+}
+.skip-link:focus{ left:0; }
+
+:focus-visible{
+  outline:2px solid var(--violet-soft);
+  outline-offset:3px;
+  border-radius:var(--r-xs);
+}
+
+/* ---------- ambient background ------------------------------------------ */
+.bg-layer{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(760px 520px at 18% -8%,  rgba(91,79,230,.20), transparent 62%),
+    radial-gradient(680px 480px at 88% 4%,   rgba(139,59,241,.15), transparent 60%),
+    radial-gradient(900px 700px at 50% 108%, rgba(59,130,246,.09), transparent 66%);
+}
+
+.wrap{ position:relative; z-index:1; }
+
+/* ---------- shell ------------------------------------------------------- */
+.article{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:0 var(--gutter) var(--s8);
+}
+
+/* ---------- header ------------------------------------------------------ */
+.article-head{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:clamp(64px,9vw,120px) var(--gutter) clamp(32px,4vw,48px);
+}
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--violet-soft);
+  background:var(--surface); border:1px solid var(--line);
+  padding:7px 14px; border-radius:var(--r-pill);
+  margin:0 0 var(--s3);
+}
+.eyebrow::before{
+  content:""; width:6px; height:6px; border-radius:50%;
+  background:var(--violet-soft);
+  box-shadow:0 0 10px rgba(169,113,247,.9);
+}
+
+h1{
+  font-size:clamp(34px,5vw,58px);
+  line-height:1.08;
+  letter-spacing:-.025em;
+  font-weight:800;
+  margin:0 0 var(--s3);
+  text-wrap:balance;
+}
+h1 .accent{
+  background:var(--grad-text);
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+}
+
+.deck{
+  font-size:clamp(18px,2.1vw,21px);
+  line-height:1.6;
+  color:var(--text-2);
+  margin:0 0 var(--s4);
+  max-width:62ch;
+}
+
+.meta{
+  display:flex; flex-wrap:wrap; align-items:center; gap:var(--s2);
+  font-size:14px; color:var(--text-3);
+  padding-top:var(--s3);
+  border-top:1px solid var(--line);
+}
+.meta .dot{ width:3px; height:3px; border-radius:50%; background:var(--text-3); }
+
+/* ---------- table of contents ------------------------------------------- */
+.toc{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:0 0 var(--s6);
+}
+.toc h2{
+  font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--text-3); margin:0 0 var(--s3); padding:0; border:0;
+}
+.toc ol{
+  list-style:none; margin:0; padding:0;
+  counter-reset:toc;
+  display:grid; gap:2px;
+}
+.toc li{ counter-increment:toc; margin:0; }
+.toc a{
+  display:flex; gap:14px; align-items:baseline;
+  color:var(--text-2); text-decoration:none;
+  font-size:15px; line-height:1.5;
+  padding:8px 10px; margin:0 -10px;
+  border-radius:var(--r-xs);
+  transition:color var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+.toc a::before{
+  content:counter(toc,decimal-leading-zero);
+  font-family:var(--font-mono); font-size:12px; font-weight:600;
+  color:var(--text-3); flex:none; min-width:22px;
+  transition:color var(--fast) var(--ease);
+}
+.toc a:hover{ color:var(--text); background:var(--surface); }
+.toc a:hover::before{ color:var(--violet-soft); }
+
+/* ---------- body typography --------------------------------------------- */
+.article p{ margin:0 0 1.1em; color:#D5DBE9; }
+.article p.lead{ font-size:20px; color:var(--text); }
+
+.article h2{
+  font-size:clamp(26px,3.2vw,34px);
+  line-height:1.2;
+  letter-spacing:-.02em;
+  font-weight:700;
+  color:var(--text);
+  margin:var(--s7) 0 var(--s3);
+  padding-top:var(--s5);
+  border-top:1px solid var(--line);
+  scroll-margin-top:32px;
+  text-wrap:balance;
+}
+.article h2:first-of-type{ margin-top:0; }
+
+.article h2 .num{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:13px; font-weight:600; letter-spacing:.16em;
+  color:var(--violet-soft);
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
+
+.article strong{ color:var(--text); font-weight:700; }
+
+.article ul{
+  margin:0 0 1.4em;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:10px;
+}
+.article ul li{
+  position:relative;
+  padding-left:26px;
+  color:#D5DBE9;
+  line-height:1.6;
+}
+.article ul li::before{
+  content:"";
+  position:absolute; left:6px; top:.68em;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--violet);
+  box-shadow:0 0 8px rgba(139,59,241,.55);
+}
+
+/* ---------- pull quote --------------------------------------------------- */
+blockquote{
+  margin:var(--s4) 0;
+  padding:var(--s3) var(--s4);
+  border-left:2px solid var(--violet);
+  background:linear-gradient(90deg,rgba(139,59,241,.10),transparent 80%);
+  border-radius:0 var(--r-md) var(--r-md) 0;
+}
+blockquote p{
+  margin:0;
+  font-size:20px;
+  line-height:1.5;
+  font-weight:600;
+  color:var(--text);
+}
+
+/* ---------- callouts ----------------------------------------------------- */
+.callout{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:var(--s4) 0 var(--s5);
+}
+.callout .label{
+  display:block;
+  font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--text-3);
+  margin-bottom:var(--s2);
+}
+.callout p:last-child, .callout ul:last-child{ margin-bottom:0; }
+
+.formula{
+  font-family:var(--font-mono);
+  font-size:clamp(15px,2.1vw,19px);
+  font-weight:600;
+  line-height:1.6;
+  color:var(--text);
+  background:var(--bg-deep);
+  border:1px solid var(--line-strong);
+  border-radius:var(--r-md);
+  padding:var(--s3);
+  margin:0 0 var(--s3);
+  text-align:center;
+  overflow-x:auto;
+}
+.formula .op{ color:var(--violet-soft); }
+
+/* ---------- numbers strip ------------------------------------------------ */
+.figures{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:var(--s2);
+  margin:var(--s4) 0 var(--s5);
+  padding:0; list-style:none;
+}
+.figures li{ padding:0; }
+.figures li::before{ display:none; }
+.fig{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:var(--s3) var(--s2);
+  text-align:center;
+}
+.fig .v{
+  display:block;
+  font-size:28px; font-weight:800; letter-spacing:-.02em; line-height:1.1;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.fig .k{
+  display:block;
+  font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.fig.is-bad .v{ color:var(--red); }
+.fig.is-real .v{ color:var(--green); }
+
+/* ---------- divider ------------------------------------------------------ */
+.rule{
+  height:1px; border:0;
+  background:var(--grad-rule);
+  margin:var(--s6) 0;
+}
+
+/* ---------- closing CTA -------------------------------------------------- */
+.cta{
+  max-width:var(--measure);
+  margin:var(--s7) auto 0;
+  padding:clamp(32px,5vw,56px) var(--gutter);
+  text-align:center;
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-xl);
+  box-shadow:var(--sh-2);
+}
+.cta h2{
+  font-size:clamp(24px,3vw,32px);
+  font-weight:700; letter-spacing:-.02em; line-height:1.2;
+  margin:0 0 var(--s2); padding:0; border:0;
+  text-wrap:balance;
+}
+.cta p{
+  color:var(--text-2);
+  max-width:52ch;
+  margin:0 auto var(--s4);
+  font-size:17px;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--grad-brand);
+  color:#fff; text-decoration:none;
+  font-weight:600; font-size:16px;
+  padding:14px 28px;
+  border-radius:var(--r-pill);
+  box-shadow:var(--sh-brand);
+  transition:transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+.btn:hover{ transform:translateY(-2px); box-shadow:0 22px 50px rgba(107,63,232,.45); }
+.btn svg{ width:18px; height:18px; }
+
+/* ---------- responsive --------------------------------------------------- */
+@media (max-width:640px){
+  body{ font-size:17px; }
+  .article p.lead{ font-size:18px; }
+  blockquote p{ font-size:18px; }
+  .article h2{ margin-top:var(--s6); padding-top:var(--s4); }
+}
+
+/* ---------- print -------------------------------------------------------- */
+@media print{
+  .bg-layer,.toc,.cta,.skip-link{ display:none; }
+  body{ background:#fff; color:#111; font-size:12pt; }
+  .article p,.article ul li{ color:#222; }
+  .article h2{ color:#000; }
+}
+.back-link{ margin:0 0 28px; font-size:13px; }
+.back-link a{ color:var(--text-2); text-decoration:none; }
+.back-link a:hover{ color:var(--text); }
+
+/* ── HERO IMAGE ─────────────────────────────────────────────────────── */
+.hero-shot{
+  margin:0 0 52px;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  background:var(--bg-raise);
+  line-height:0;
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+.hero-shot img{ width:100%; height:auto; display:block; }
+
+/* ── MISTAKE CARDS ──────────────────────────────────────────────────── */
+.mistake{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.mistake::before{
+  content:"";
+  position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+  background:var(--amber);
+}
+.mistake h2{ margin-top:0 !important; }
+.article .mistake h2:first-of-type{ margin-top:0; }
+
+/* ── PULL QUOTES ────────────────────────────────────────────────────── */
+blockquote{
+  margin:44px 0;
+  padding:0 0 0 26px;
+  border-left:3px solid var(--amber);
+  background:none;
+}
+blockquote p{
+  font-size:23px;
+  line-height:1.45;
+  font-style:italic;
+  font-weight:600;
+  color:var(--text);
+  margin:0;
+}
+
+/* ── MID-ARTICLE STRIP ──────────────────────────────────────────────── */
+.strip{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px; flex-wrap:wrap;
+  margin:44px 0;
+  padding:26px 30px;
+  border-radius:16px;
+  background:linear-gradient(120deg,#0A1224,#131A33);
+  border:1px solid var(--line-strong);
+}
+.strip h3{ margin:0 0 6px; font-size:19px; color:var(--text); }
+.strip p{ margin:0; font-size:14px; color:var(--text-2); }
+.strip-btn{
+  flex:0 0 auto;
+  display:inline-block;
+  padding:12px 22px;
+  border-radius:10px;
+  background:var(--amber);
+  color:#1A1200;
+  font-size:14px; font-weight:700;
+  text-decoration:none;
+  transition:filter .15s ease;
+}
+.strip-btn:hover{ filter:brightness(1.08); }
+
+@media (max-width:640px){
+  .mistake{ padding:24px 20px 8px; }
+  .mistake::before{ top:20px; bottom:20px; }
+  blockquote p{ font-size:20px; }
+  .strip{ padding:22px; }
+  .strip-btn{ width:100%; text-align:center; }
+}
+
+/* ── WIDE SHELL: content + rail, so the page uses the screen ─────────── */
+.shell{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 var(--gutter);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 300px;
+  gap:64px;
+  align-items:start;
+}
+.shell > .article{ max-width:none; margin:0; padding:0 0 var(--s8); }
+
+.rail{ position:sticky; top:40px; display:flex; flex-direction:column; gap:14px; }
+.rail-card{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+  padding:20px;
+}
+.rail-k{
+  display:block; margin-bottom:10px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.rail-v{
+  display:block; margin-bottom:10px;
+  font-size:34px; line-height:1; font-weight:800; letter-spacing:-.02em;
+  color:var(--green);
+}
+.rail-v.is-amber{ color:var(--amber); }
+.rail-v.is-violet{ color:var(--violet-soft); }
+.rail-card p{ margin:0; font-size:13px; line-height:1.55; color:var(--text-2); }
+.rail-src{
+  margin:0; padding-top:14px;
+  border-top:1px solid var(--line);
+  font-size:11px; line-height:1.5; color:var(--text-3);
+}
+
+/* header + hero align to the same shell */
+.article-head, .hero-shot{ max-width:1180px; }
+
+/* ── HERO: a band, not a giant square ───────────────────────────────── */
+.hero-shot{
+  margin:0 auto 56px;
+  padding:0 var(--gutter);
+  border:0; background:none; box-shadow:none;
+  border-radius:0;
+  overflow:visible;
+}
+.hero-shot img{
+  width:100%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
+  border-radius:18px;
+  border:1px solid var(--line-strong);
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+
+/* ── THE FIX callout ────────────────────────────────────────────────── */
+.fixbox{
+  margin:22px 0 4px;
+  padding:16px 18px;
+  border-radius:12px;
+  border:1px solid rgba(46,212,122,.28);
+  background:rgba(46,212,122,.07);
+}
+.fixbox-k{
+  display:block; margin-bottom:6px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--green);
+}
+.fixbox p{ margin:0 !important; color:var(--text) !important; }
+
+@media (max-width:1080px){
+  .shell{ grid-template-columns:1fr; gap:40px; max-width:820px; }
+  .rail{ position:static; flex-direction:row; flex-wrap:wrap; }
+  .rail-card{ flex:1 1 220px; }
+  .rail-src{ flex:1 1 100%; border-top:0; padding-top:0; }
+  .article-head, .hero-shot{ max-width:820px; }
+}
+@media (max-width:640px){
+  .shell{ gap:28px; }
+}
+
+
+/* ── FIGURES CARRIED OVER FROM THE DRAFT ──────────────────────────────
+   This piece ships its own tables, charts and spec blocks. Rather than
+   import a second design system for them, the palette they were written
+   against is repointed at this site's tokens, and only their component
+   rules are carried over. --measure is deliberately absent: it collides
+   with the site's, and the ported rules should use the site's column.
+   ------------------------------------------------------------------- */
+:root{
+  --paper:var(--bg); --panel:var(--surface-solid); --panel-2:var(--surface-2);
+  --ink:var(--text); --ink-2:var(--text-2); --ink-3:var(--text-3);
+  --rule:var(--line); --rule-strong:var(--line-strong);
+  --accent:var(--violet-soft); --accent-soft:rgba(139,59,241,.16);
+  --cost:var(--text-3);
+  --good:var(--green);  --good-soft:rgba(46,212,122,.10);
+  --warn:var(--amber);  --warn-soft:rgba(245,165,36,.10);
+  --crit:var(--red);    --crit-soft:rgba(240,67,92,.10);
+  --f-display:var(--font); --f-body:var(--font);
+  --f-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+article p{margin:0 0 1.15rem}
+article ul, article ol{margin:0 0 1.3rem;padding-left:1.15rem}
+article li{margin-bottom:.5rem}
+article li::marker{color:var(--ink-3)}
+strong{font-weight:600}
+em{font-style:italic}
+.fix{background:var(--panel);
+  border:1px solid var(--rule);
+  border-left:3px solid var(--accent);
+  padding:1.1rem 1.3rem;
+  margin:1.9rem 0;}
+.fix .k{display:block;
+  font-family:var(--f-mono);
+  font-size:.68rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:.45rem;}
+.fix p{margin:0}
+pre{font-family:var(--f-mono);
+  font-size:.83rem;
+  line-height:1.75;
+  background:var(--panel-2);
+  border:1px solid var(--rule);
+  padding:1rem 1.1rem;
+  margin:1.6rem 0;
+  overflow-x:auto;}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--panel-2);padding:.1em .35em;border-radius:2px}
+pre code{background:none;padding:0;font-size:1em}
+.inputs{list-style:none;padding:0;margin:1.4rem 0 1.9rem;
+  display:flex;flex-direction:column;gap:0;
+  border-top:1px solid var(--rule);}
+.inputs li{margin:0;
+  display:grid;
+  grid-template-columns:2.2rem 1fr;
+  gap:.9rem;
+  padding:.85rem .2rem;
+  border-bottom:1px solid var(--rule);}
+.inputs .n{font-family:var(--f-mono);font-size:.78rem;color:var(--ink-3);padding-top:.15rem}
+.inputs b{display:block;font-weight:600}
+.inputs span.d{color:var(--ink-2);font-size:.95rem}
+.src{font-family:var(--f-mono);
+  font-size:.68rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  margin:1.6rem 0 .2rem;}
+.bands{display:grid;gap:.55rem;margin:1.4rem 0 1.8rem}
+.band{display:grid;grid-template-columns:6.5rem 1fr;gap:1rem;align-items:baseline;
+  padding:.7rem .9rem;background:var(--panel);border:1px solid var(--rule);}
+.band .lab{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
+.band.c .lab{color:var(--good)}
+.band.s .lab{color:var(--accent)}
+.band.a .lab{color:var(--warn)}
+.band .txt{font-size:.95rem;color:var(--ink-2)}
+.never{margin:1.5rem 0}
+.never dt{font-weight:600;margin-top:1.1rem}
+.never dd{margin:.25rem 0 0;color:var(--ink-2)}
+.faq{margin-top:1.5rem}
+.faq details{border-bottom:1px solid var(--rule);padding:.9rem 0}
+.faq summary{cursor:pointer;font-weight:600;list-style:none;
+  display:flex;gap:.75rem;align-items:flex-start;}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::before{content:"+";font-family:var(--f-mono);color:var(--accent);
+  font-weight:400;line-height:1.6;}
+.faq details[open] summary::before{content:"–"}
+.faq p{margin:.65rem 0 0 1.5rem;color:var(--ink-2)}
+.faq summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* ── PIECES THIS ARTICLE ADDS ─────────────────────────────────────────
+   h3, tables, the FAQ and the carried-over figure. The 44 articles that
+   came before this one had no h3 and no tables, so the core stylesheet
+   never needed rules for them.
+   ------------------------------------------------------------------- */
+.article h3{
+  margin:var(--s5) 0 var(--s2);
+  font-size:clamp(19px,1.6vw,22px);
+  font-weight:650; letter-spacing:-.01em; color:var(--text);
+}
+.tblwrap{ margin:var(--s4) 0; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.article table{
+  width:100%; border-collapse:collapse;
+  font-size:.94rem; line-height:1.5;
+}
+.article th, .article td{
+  padding:10px 14px; text-align:left; vertical-align:top;
+  border-bottom:1px solid var(--line);
+}
+.article th{
+  font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+  color:var(--text-3); border-bottom-color:var(--line-strong); white-space:nowrap;
+}
+.article tbody tr:last-child td{ border-bottom:0; }
+.art-diagram{ margin:var(--s4) 0; }
+.art-diagram svg{ width:100%; height:auto; display:block; }
+.art-diagram .sub, .art-diagram figcaption{
+  margin-top:10px; font-size:var(--t-micro,.82rem); color:var(--text-3); line-height:1.5;
+}
+.faq{ margin:var(--s4) 0; }
+.faq details{
+  border:1px solid var(--line); border-radius:var(--r-md);
+  background:var(--surface); padding:14px 18px; margin-bottom:10px;
+}
+.faq summary{
+  cursor:pointer; font-weight:600; color:var(--text);
+  list-style:none; padding-right:24px; position:relative;
+}
+.faq summary::-webkit-details-marker{ display:none; }
+.faq summary::after{
+  content:"+"; position:absolute; right:0; top:-2px;
+  font-size:19px; line-height:1; color:var(--violet-soft);
+}
+.faq details[open] summary::after{ content:"\2013"; }
+.faq details p{ margin:10px 0 0 !important; color:var(--text-2); }
+
+/* ── KEEPING WIDE THINGS INSIDE A PHONE ───────────────────────────────
+   These pieces carry long monospace formulas, wide comparison tables and
+   the draft's scenario rows. Each has a min-content width larger than a
+   390px screen, and the shell's mobile track is `1fr` - which means
+   minmax(auto,1fr), so a single one of them widens the whole column and
+   the entire page scrolls sideways. Cap the track, then let each wide
+   block scroll inside itself instead of pushing the article around.
+   ------------------------------------------------------------------- */
+@media (max-width:1080px){
+  .shell{ grid-template-columns:minmax(0,1fr); }
+}
+.shell > .article{ min-width:0; }
+.article > *{ max-width:100%; }
+.formula{ overflow-x:auto; }
+.formula code{ white-space:pre; }
+.tblwrap{ min-width:0; max-width:100%; }
+.scn, .scnrow, .bands, .band, .inputs, .facts, .spec, .grid{ min-width:0; max-width:100%; }
+@media (max-width:640px){
+  .scnrow{ display:block; }
+  .scnrow > *{ display:block; }
+}
+
+/* ── SITE HEADER ──────────────────────────────────────────────────────
+   The header markup is the site's, and navigation.css styles it. These are
+   the pieces it also leans on from base.css, which this page does not load.
+   Every selector is scoped to the header or the mobile drawer: an article is
+   built out of bare a/p/h3/h4, and base.css restyles all of those.
+
+   The scope is written with :where() so it adds no specificity. Scoped the
+   plain way, `.site-header .btn` is (0,2,0) - the same weight as
+   navigation.css's own `.nav-actions .btn--quiet` and `.nav-mobile a`, and
+   loaded after them, so these copies quietly outranked the real rules: the
+   hamburger got pushed off a 390px screen and the drawer buttons lost their
+   sizing. Inside :where() each rule keeps exactly the weight it has in
+   base.css, which is the weight navigation.css was written against.
+   ------------------------------------------------------------------- */
+/* The header inherits from <body>, and this page's body is set for reading:
+   18px at 1.72. The site's is var(--t-body) at 1.6. Left alone, every element
+   in the bar came out a size and a half too tall. Reset it at the root of the
+   header so everything inside inherits the site's figures instead. */
+:where(.site-header),
+:where(.nav-mobile){
+  font-size:var(--t-body);
+  line-height:1.6;
+}
+
+:where(.site-header) .container{
+  width:min(100%,var(--container));
+  margin-inline:auto;
+  padding-inline:var(--gutter);
+  position:relative;
+}
+:where(.site-header, .nav-mobile) .brand{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:19px; font-weight:700; letter-spacing:-.01em;
+  color:var(--text); text-decoration:none;
+}
+:where(.site-header) .brand-mark{ width:26px; height:26px; flex:none; }
+:where(.site-header) .icon,    :where(.nav-mobile) .icon{    width:20px; height:20px; flex:none; stroke-width:1.7; }
+:where(.site-header) .icon-sm, :where(.nav-mobile) .icon-sm{ width:16px; height:16px; flex:none; stroke-width:1.8; }
+/* margin-block only: navigation.css centres this with margin-inline:auto,
+   and a shorthand `margin:0` here would outrank it and shove the menu
+   over against the brand. */
+:where(.site-header) .nav-menu{ list-style:none; padding:0; margin-block:0; }
+.site-header a, .nav-mobile a{ text-decoration:none; }
+/* base.css resets these globally; this page does not load it. Without the
+   padding reset the UA's 1px 6px survives and the 44px tap target
+   responsive.css asks for comes out 40px. */
+:where(.site-header) .nav-toggle{ font:inherit; cursor:pointer; padding:0; }
+:where(.site-header) svg, :where(.nav-mobile) svg{ display:block; }
+
+:where(.site-header) .btn, :where(.nav-mobile) .btn{
+  /* This page defines its own .btn - a filled gradient pill used in the body -
+     and it reaches the header buttons too. base.css's .btn sets none of these,
+     so the variant classes below are what should decide them. Cleared here or
+     "Log in", which is .btn--quiet and meant to read as plain text, arrives
+     wearing the brand gradient. */
+  background:none;
+  box-shadow:none;
+  color:inherit;
+  text-decoration:none;
+  position:relative;
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  padding:13px 22px;
+  border-radius:var(--r-sm);
+  font-size:var(--t-body); font-weight:600; line-height:1;
+  white-space:nowrap;
+  transition:transform var(--fast) var(--ease),
+             box-shadow var(--fast) var(--ease),
+             background var(--fast) var(--ease),
+             border-color var(--fast) var(--ease);
+}
+:where(.site-header) .btn:active, :where(.nav-mobile) .btn:active{ transform:translateY(0) scale(.99); }
+:where(.site-header) .btn--primary, :where(.nav-mobile) .btn--primary{
+  background:var(--grad-brand); color:#fff;
+  box-shadow:var(--sh-brand); overflow:hidden;
+}
+:where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{
+  content:""; position:absolute; top:0; left:-130%;
+  width:55%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);
+  transition:left .65s var(--ease);
+}
+:where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{
+  transform:translateY(-2px); box-shadow:0 22px 52px rgba(107,63,232,.45);
+}
+:where(.site-header) .btn--primary:hover::after, :where(.nav-mobile) .btn--primary:hover::after{ left:150%; }
+:where(.site-header) .btn--quiet, :where(.nav-mobile) .btn--quiet{ color:var(--text-2); padding:13px 8px; }
+:where(.site-header) .btn--quiet:hover, :where(.nav-mobile) .btn--quiet:hover{ color:var(--text); }
+:where(.nav-mobile) .btn--block{ width:100%; }
+
+@media (prefers-reduced-motion:reduce){
+  :where(.site-header) .btn, :where(.nav-mobile) .btn,
+  :where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{ transition:none; }
+  :where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{ transform:none; }
+}
+
+/* navigation.css hides these two buttons on small screens so the hamburger
+   fits. Its selectors are (0,2,0) and so is `:where(.site-header) .btn` above, which
+   is loaded after it - equal weight, later wins, and display:inline-flex beat
+   display:none. The hamburger ended up 107px off the right of a 390px screen
+   with no way to open the menu. Restating the hide at (0,3,0) settles it.
+   The breakpoints are read out of navigation.css at build time, not typed. */
+
+/* Clear the fixed site header. Reserving its height on .wrap keeps the gap
+   between the bar and the eyebrow the same as the gap used to be between the
+   top of the window and the eyebrow. */
+.wrap{ padding-top:70px; }
+@media (max-width:640px){ .wrap{ padding-top:64px; } }
+
+/* Anchor targets. .article h2 carried scroll-margin-top:32px, which was right
+   when this page had no fixed bar: 32px was breathing room. Now a jump from
+   the contents list lands 38px underneath the header. responsive.css puts the
+   rest of the site on 84px for exactly this reason; the article's own rule is
+   (0,2,0) and outranks it, so it is restated here at the same weight. */
+.article h2{ scroll-margin-top:84px; }
+
+/* The back-link sat hard against the left edge of the window, in line with
+   nothing. That was always true, but with the nav above it the thing reads as
+   stranded rather than as a heading. Same shell as .article-head, so it lines
+   up with the title beneath it and behaves as the breadcrumb it is. */
+.back-link{
+  max-width:1180px;
+  margin-inline:auto;      /* the rule above keeps its 28px bottom margin */
+  padding:22px var(--gutter) 0;
+}
+</style>
+<link rel="stylesheet" href="/css/navigation.css">
+<link rel="stylesheet" href="/css/responsive.css">
+<link rel="stylesheet" href="/css/site-footer.css">
+<link rel="canonical" href="https://amazebase.pro/pt/artigos/automatizar-a-previsao-de-fluxo-de-caixa.html">
+<link rel="alternate" hreflang="en" href="https://amazebase.pro/articles/automate-cash-flow-inventory.html">
+<link rel="alternate" hreflang="es" href="https://amazebase.pro/es/articulos/automatizar-flujo-de-caja-e-inventario.html">
+<link rel="alternate" hreflang="pt" href="https://amazebase.pro/pt/artigos/automatizar-a-previsao-de-fluxo-de-caixa.html">
+<link rel="alternate" hreflang="x-default" href="https://amazebase.pro/articles/automate-cash-flow-inventory.html">
+<meta property="og:site_name" content="AmazeBase">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://amazebase.pro/pt/artigos/automatizar-a-previsao-de-fluxo-de-caixa.html">
+<meta property="og:title" content="Como automatizar a previs&atilde;o de fluxo de caixa e a gest&atilde;o de estoque">
+<meta property="og:description" content="A automa&ccedil;&atilde;o n&atilde;o compra uma previs&atilde;o melhor. Ela compra uma dist&acirc;ncia menor entre um fato mudar e voc&ecirc; saber o que ele muda.">
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Pular para o conte&uacute;do</a>
+<div class="bg-layer" aria-hidden="true"></div>
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+</defs>
+  <symbol id="i-chevron"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-menu"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-mega"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l7 4V5L8 9H4zM19 9a4 4 0 010 6"/></symbol>
+  <symbol id="i-dollar"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5v19M16.5 6.5H10a3.2 3.2 0 000 6.4h4a3.2 3.2 0 010 6.4H7"/></symbol>
+  <symbol id="i-stack"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/></symbol>
+  <symbol id="i-box"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></symbol>
+  <symbol id="i-search"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></symbol>
+  <symbol id="i-chart"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-trend"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></symbol>
+  <symbol id="i-db"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3.2"/><path d="M4 6v12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2V6M4 12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2"/></symbol>
+  <symbol id="i-shield"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-9.5V5.5L12 2.5 4 5.5V12.5C4 18.5 12 22 12 22z"/></symbol>
+  <symbol id="i-spark"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+  <symbol id="i-rocket"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15s-1.5 3 1 5.5S11 20 11 20M14.5 4.5c3-2 6-1 6-1s1 3-1 6l-6 6-5-5 6-6z"/><circle cx="15" cy="9" r="1.4"/></symbol>
+  <symbol id="i-case"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8.5 7V5a2 2 0 012-2h3a2 2 0 012 2v2M2.5 12.5h19"/></symbol>
+  <symbol id="i-info"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></symbol>
+  <symbol id="i-msg"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-8 8 8.6 8.6 0 01-3.6-.8L3 21l1.8-6.4A8 8 0 1121 12z"/></symbol>
+</svg>
+
+<header class="site-header">
+<div class="container">
+<nav class="nav" aria-label="Principal">
+
+  <a href="/index.html" class="brand" aria-label="P&aacute;gina inicial da AmazeBase">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+      <path d="M16 17.6l4.4 8.2h-8.8z" fill="#C56BF5" opacity=".85"/>
+    </svg>
+    <span data-brand>AmazeBase</span>
+  </a>
+
+  <ul class="nav-menu">
+    <li class="nav-item">
+      <a class="nav-link" href="/pt/produto.html#modules">Produto <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop nav-drop--wide">
+        <a href="/pt/produto.html#advertising"><svg class="icon-sm"><use href="#i-mega"/></svg>Publicidade e PPC</a>
+        <a href="/pt/produto.html#financials"><svg class="icon-sm"><use href="#i-dollar"/></svg>Finan&ccedil;as</a>
+        <a href="/pt/produto.html#ledger"><svg class="icon-sm"><use href="#i-stack"/></svg>Ledger</a>
+        <a href="/pt/produto.html#inventory"><svg class="icon-sm"><use href="#i-box"/></svg>Estoque</a>
+        <a href="/pt/produto.html#research"><svg class="icon-sm"><use href="#i-search"/></svg>Pesquisa de produtos</a>
+        <a href="/pt/produto.html#simulations"><svg class="icon-sm"><use href="#i-chart"/></svg>Simula&ccedil;&otilde;es</a>
+        <a href="/pt/produto.html#sales"><svg class="icon-sm"><use href="#i-trend"/></svg>Vendas</a>
+        <a href="/pt/produto.html#data"><svg class="icon-sm"><use href="#i-db"/></svg>Dados e sincroniza&ccedil;&atilde;o</a>
+        <a href="/pt/produto.html#security"><svg class="icon-sm"><use href="#i-shield"/></svg>Seguran&ccedil;a</a>
+        <a href="/pt/produto.html#assistant"><svg class="icon-sm"><use href="#i-spark"/></svg>Assistente de IA &mdash; em breve</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/pt/solucoes.html">Solu&ccedil;&otilde;es <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/pt/solucoes.html#beginners"><svg class="icon-sm"><use href="#i-rocket"/></svg>Iniciantes</a>
+        <a href="/pt/solucoes.html#experts"><svg class="icon-sm"><use href="#i-dollar"/></svg>Vendedores experientes</a>
+        <a href="/pt/solucoes.html#agencies"><svg class="icon-sm"><use href="#i-case"/></svg>Ag&ecirc;ncias</a>
+      </div>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="/index.html#pricing">Pre&ccedil;os</a></li>
+    <li class="nav-item"><a class="nav-link" href="/pt/recursos.html">Recursos</a></li>
+    <li class="nav-item">
+      <a class="nav-link" href="/pt/sobre.html">Empresa <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/pt/sobre.html"><svg class="icon-sm"><use href="#i-info"/></svg>Sobre</a>
+        <a href="/pt/contato.html"><svg class="icon-sm"><use href="#i-msg"/></svg>Contato</a>
+      </div>
+    </li>
+  </ul>
+
+  <div class="nav-actions">
+    <div class="nav-item lang-switch">
+      <button class="lang-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Idioma / Language">
+        PT <svg class="chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+      </button>
+      <div class="nav-drop lang-drop">
+        <a href="/articles/automate-cash-flow-inventory.html" hreflang="en" lang="en"><span class="lc">EN</span>English</a>
+        <a href="/es/articulos/automatizar-flujo-de-caja-e-inventario.html" hreflang="es" lang="es"><span class="lc">ES</span>Español</a>
+        <a href="/pt/artigos/automatizar-a-previsao-de-fluxo-de-caixa.html" hreflang="pt" lang="pt" aria-current="true"><span class="lc">PT</span>Português</a>
+      </div>
+    </div>
+    <a class="btn btn--quiet" href="https://analytics.amazebase.pro/login">Entrar</a>
+    <a class="btn btn--primary" href="/index.html#waitlist" data-magnetic>Entre na lista de espera</a>
+    <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navMobile">
+      <svg class="icon"><use href="#i-menu"/></svg>
+    </button>
+  </div>
+
+</nav>
+</div>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="/pt/produto.html#modules">Produto</a>
+  <a href="/pt/solucoes.html">Solu&ccedil;&otilde;es</a>
+  <a href="/index.html#pricing">Pre&ccedil;os</a>
+  <a href="/pt/recursos.html">Recursos</a>
+  <a href="/pt/sobre.html">Sobre</a>
+  <a href="/pt/contato.html">Contato</a>
+  <a class="btn btn--quiet btn--block" href="https://analytics.amazebase.pro/login">Entrar</a>
+  <a class="btn btn--primary btn--block" href="/index.html#waitlist">Entre na lista de espera</a>
+</div>
+</header>
+
+<div class="wrap">
+<p class="back-link"><a href="/pt/recursos.html">&larr; Central de Conhecimento</a></p>
+<header class="article-head">
+  <p class="eyebrow">Sistemas operacionais</p>
+  <h1>Como automatizar a previs&atilde;o <span class="accent">de fluxo de caixa e a gest&atilde;o de estoque</span></h1>
+  <p class="deck">A automa&ccedil;&atilde;o n&atilde;o compra uma previs&atilde;o melhor. Ela compra uma dist&acirc;ncia menor entre um fato mudar e voc&ecirc; saber o que ele muda.</p>
+  <p class="meta">
+    <span>AmazeBase</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>12&nbsp;min de leitura</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>Estoque e fluxo de caixa</span>
+  </p>
+</header>
+
+<!-- HERO IMAGE GOES HERE. Drop the image in as assets/img/hero-automate-cash-flow-inventory.webp at 1672x941, uncomment, and write the alt text:
+<figure class="hero-shot">
+  <img src="/assets/img/hero-automate-cash-flow-inventory.webp"
+       alt=""
+       width="1672" height="941" loading="eager" decoding="async">
+</figure>
+-->
+
+<div class="shell">
+<main id="main" class="article">
+  <p class="lead">A maioria dos vendedores que faz essa pergunta, na verdade, est&aacute; fazendo duas perguntas ao mesmo tempo.</p>
+  <nav class="toc" aria-labelledby="toc-title">
+    <h2 id="toc-title">O que voc&ecirc; vai encontrar neste artigo</h2>
+    <ol>
+      <li><a href="#s1"><span>00</span>O que &ldquo;automatizado&rdquo; significa</a></li>
+      <li><a href="#s2"><span>01</span>Conecte as seis entradas</a></li>
+      <li><a href="#s3"><span>02</span>Deixe os n&uacute;meros honestos</a></li>
+      <li><a href="#s4"><span>03</span>Estoque → uma decis&atilde;o com data</a></li>
+      <li><a href="#s5"><span>04</span>Caixa → uma linha do tempo com datas</a></li>
+      <li><a href="#s6"><span>05</span>O cruzamento com o caixa</a></li>
+      <li><a href="#s7"><span>06</span>Cen&aacute;rios e fragilidade</a></li>
+      <li><a href="#s8"><span>07</span>Previsto vs. realizado</a></li>
+      <li><a href="#s9"><span>—</span>O que nunca automatizar</a></li>
+      <li><a href="#s10"><span>—</span>Uma sequ&ecirc;ncia de 30&nbsp;dias</a></li>
+      <li><a href="#s11"><span>—</span>Perguntas</a></li>
+    </ol>
+  </nav>
+
+
+    
+
+    <p>A primeira &eacute; mec&acirc;nica: <em>um software consegue fazer as contas por mim?</em> Sim. Essa parte foi resolvida h&aacute; d&eacute;cadas.</p>
+
+    <p>A segunda &eacute; a que importa: <em>posso confiar na resposta a ponto de gastar $40,000 com base nela?</em></p>
+
+    <p>A automa&ccedil;&atilde;o n&atilde;o conquista essa confian&ccedil;a prevendo melhor. Ela a conquista <strong>encurtando a dist&acirc;ncia entre um fato mudar e voc&ecirc; saber o que esse fato muda.</strong></p>
+
+    <p>Um fornecedor atrasa duas semanas. Um concorrente fica sem estoque e a sua velocidade de vendas dobra. Um cont&ecirc;iner chega antes do previsto. Cada uma dessas coisas muda um n&uacute;mero &mdash; e todas as decis&otilde;es que dependem dele. Numa planilha, voc&ecirc; descobre quando abre a planilha da pr&oacute;xima vez. Num sistema interligado, voc&ecirc; descobre no mesmo dia.</p>
+
+    <p>&Eacute; isso que a automa&ccedil;&atilde;o compra. N&atilde;o certeza. Velocidade de corre&ccedil;&atilde;o.</p>
+
+    <p>Veja como montar isso, na ordem que realmente funciona.</p>
+
+    <h2 id="s1"><span class="num">00</span>O que &ldquo;automatizado&rdquo; significa de verdade</h2>
+      <p>Um sistema que automatiza o fluxo de caixa e o estoque precisa fazer quatro coisas, nesta ordem. Pule uma e o resto &eacute; enfeite.</p>
+      <ul>
+        <li><strong>Coletar</strong> &mdash; todo fato chega sem que voc&ecirc; precise digit&aacute;-lo de novo.</li>
+        <li><strong>Datar</strong> &mdash; todo fato traz o dia em que o dinheiro se movimentou ou a unidade foi vendida, n&atilde;o o dia em que voc&ecirc; percebeu.</li>
+        <li><strong>Decidir</strong> &mdash; o sistema converte fatos em uma a&ccedil;&atilde;o com data, n&atilde;o em um n&uacute;mero num gr&aacute;fico.</li>
+        <li><strong>Comparar</strong> &mdash; a resposta da semana passada fica guardada e &eacute; avaliada contra o que de fato aconteceu.</li>
+      </ul>
+      <p>A maioria das ferramentas para em <em>coletar</em> e chama o gr&aacute;fico de previs&atilde;o. O valor est&aacute; nas duas &uacute;ltimas.</p>
+      <blockquote>
+    <p>Uma previs&atilde;o que n&atilde;o termina em uma data e uma quantidade n&atilde;o &eacute; previs&atilde;o. &Eacute; um estado de esp&iacute;rito.</p>
+  </blockquote>
+    
+
+    <h2 id="s2">Conecte as seis entradas</h2>
+      <p>A previs&atilde;o de caixa e de estoque precisa de exatamente seis entradas. Tr&ecirc;s delas a Amazon conhece. Tr&ecirc;s delas <strong>s&oacute; voc&ecirc; conhece</strong> &mdash; e s&atilde;o essas tr&ecirc;s que fazem as ferramentas gen&eacute;ricas darem respostas gen&eacute;ricas.</p>
+
+      <p class="src">A Amazon conhece</p>
+      <ul class="inputs">
+        <li><span class="n">01</span><span><b>Unidades vendidas, por SKU, por dia</b><span class="d">O seu sinal real de demanda &mdash; incluindo os dias em que voc&ecirc; ficou sem estoque.</span></span></li>
+        <li><span class="n">02</span><span><b>Entradas e sa&iacute;das da liquida&ccedil;&atilde;o</b><span class="d">Vendas, reembolsos, comiss&otilde;es de venda, tarifas do FBA, armazenagem, repasses &mdash; com a data em que a Amazon os lan&ccedil;ou.</span></span></li>
+        <li><span class="n">03</span><span><b>Estoque dispon&iacute;vel e em tr&acirc;nsito</b><span class="d">Dispon&iacute;vel para venda, reservado, em tr&acirc;nsito, al&eacute;m do registro de cada movimenta&ccedil;&atilde;o.</span></span></li>
+      </ul>
+
+      <p class="src">S&oacute; voc&ecirc; conhece</p>
+      <ul class="inputs">
+        <li><span class="n">04</span><span><b>Custo total de importa&ccedil;&atilde;o por unidade (landed cost)</b><span class="d">Fabrica&ccedil;&atilde;o, frete, impostos de importa&ccedil;&atilde;o, inspe&ccedil;&atilde;o &mdash; por unidade, por lote. N&atilde;o uma m&eacute;dia que voc&ecirc; digitou uma vez.</span></span></li>
+        <li><span class="n">05</span><span><b>Lead times reais</b><span class="d">Dias entre <em>fazer o pedido</em> e <em>a Amazon liberar o produto para venda</em>, por fornecedor, medidos nos seus &uacute;ltimos pedidos.</span></span></li>
+        <li><span class="n">06</span><span><b>Condi&ccedil;&otilde;es de pagamento</b><span class="d">30% no pedido, 70% no embarque, prazo de 30&nbsp;dias ap&oacute;s a chegada. &Eacute; isso que transforma um pedido de compra em uma sa&iacute;da de caixa com data.</span></span></li>
+      </ul>
+
+      <p>As entradas 4 a 6 s&atilde;o o jogo inteiro. Uma ferramenta que s&oacute; l&ecirc; a sua conta da Amazon consegue dizer o que aconteceu. N&atilde;o consegue dizer o que voc&ecirc; pode bancar, porque n&atilde;o sabe o que voc&ecirc; deve nem quando.</p>
+
+      <div class="fixbox">
+        <span class="fixbox-k">O que fazer</span>
+        <p>Registre custos, lead times e condi&ccedil;&otilde;es de pagamento <strong>uma vez s&oacute;, no momento em que voc&ecirc; faz o pedido</strong> &mdash; n&atilde;o no fim do m&ecirc;s. Se n&atilde;o for registrado quando o pedido de compra &eacute; criado, nunca mais ser&aacute;.</p>
+      </div>
+    
+
+    <h2 id="s3">Deixe os n&uacute;meros honestos antes de automatiz&aacute;-los</h2>
+      <p>Automatizar um n&uacute;mero errado s&oacute; produz respostas erradas mais r&aacute;pido. Quatro regras tornam as entradas confi&aacute;veis.</p>
+
+      <h3>Ancore nos dados, n&atilde;o no calend&aacute;rio</h3>
+      <p>Se o seu &uacute;ltimo arquivo de transa&ccedil;&otilde;es termina 12&nbsp;dias atr&aacute;s, o seu n&uacute;mero de &ldquo;vendas di&aacute;rias&rdquo; &eacute; a m&eacute;dia de 12&nbsp;dias reais e 12&nbsp;dias de zero. Isso corta a sua velocidade de vendas pela metade sem avisar &mdash; e um sistema que depois divide o seu estoque por essa velocidade vai dizer que o seu estoque dura o dobro do que de fato dura.</p>
+      <p>Toda taxa precisa ser calculada em rela&ccedil;&atilde;o <strong>ao &uacute;ltimo dia que os dados realmente cobrem</strong>, e a tela precisa dizer que dia &eacute; esse. A atualidade dos dados n&atilde;o &eacute; nota de rodap&eacute;; &eacute; pr&eacute;-requisito.</p>
+
+      <h3>Dinheiro que entra, dinheiro que sai &mdash; nada rateado</h3>
+      <p>Um P&amp;L que tenta atribuir cada custo a um produto vai consumir a sua vida arbitrando rateios que n&atilde;o mudam uma &uacute;nica decis&atilde;o. Na previs&atilde;o de caixa, um custo &eacute; um custo <strong>no dia em que o dinheiro se movimentou</strong>. A qual ASIN ele pertence &eacute; outra pergunta, respondida por outra tela.</p>
+      <p>S&oacute; essa regra elimina a maior parte do trabalho de concilia&ccedil;&atilde;o que faz os vendedores abandonarem os pr&oacute;prios n&uacute;meros.</p>
+
+      <h3>Rotule a certeza; nunca a maquie</h3>
+      <p>Nem todo d&oacute;lar futuro &eacute; igualmente real. Tr&ecirc;s faixas bastam:</p>
+      <div class="bands">
+        <div class="band c"><span class="lab">Confirmado</span><span class="txt">Pago, com data no comprovante.</span></div>
+        <div class="band s"><span class="lab">Programado</span><span class="txt">N&atilde;o pago, mas o gatilho e a data de vencimento s&atilde;o conhecidos.</span></div>
+        <div class="band a"><span class="lab">Presumido</span><span class="txt">Um custo que sabemos que existe, sem cronograma definido, com uma data atribu&iacute;da por padr&atilde;o.</span></div>
+      </div>
+      <p>Mostre as tr&ecirc;s faixas separadas e empilhadas. Um gr&aacute;fico de caixa que mistura as tr&ecirc;s em uma &uacute;nica barra &eacute; pior do que nenhum gr&aacute;fico, porque parece conhecimento.</p>
+
+      <h3>Quando os fatos divergem, quem resolve &eacute; uma pessoa</h3>
+      <p>Dois registros v&atilde;o se contradizer: a sua contagem de recebimento contra a da Amazon, a sua fatura de frete contra a remessa a que ela pertence. Um software que escolhe um vencedor em sil&ecirc;ncio &eacute; um software em que, cedo ou tarde, voc&ecirc; vai deixar de acreditar.</p>
+      <p>O comportamento certo &eacute; expor o conflito, recusar-se a resolv&ecirc;-lo tirando a m&eacute;dia e colocar uma barreira diante da resposta errada &mdash; deixando a decis&atilde;o com a pessoa que sabe.</p>
+    
+
+    <h2 id="s4">Estoque: transforme o que est&aacute; na prateleira em uma decis&atilde;o com data</h2>
+      <p>Agora, as contas. Repare na ordem: <strong>a data vem antes da quantidade.</strong></p>
+
+      <h3>Velocidade, com uma janela que voc&ecirc; consiga defender</h3>
+      <p>Use janelas m&oacute;veis exatas &mdash; 7, 30, 60, 90&nbsp;dias &mdash; ancoradas na &uacute;ltima data dos dados. D&ecirc; mais peso &agrave; janela recente do que &agrave; longa (algo como 60/40 entre 7&nbsp;dias e 30&nbsp;dias) para que uma tend&ecirc;ncia real apare&ccedil;a em dias, e n&atilde;o em meses, e recorra a janelas mais longas quando um SKU vende pouco demais para ser lido.</p>
+      <p>Nunca use a m&eacute;dia de toda a vida do produto. Um produto que vendia 20/dia em janeiro e 80/dia em mar&ccedil;o n&atilde;o vende 47/dia.</p>
+
+      <h3>Dias de cobertura e a data de ruptura</h3>
+<pre><code>dias de cobertura            = estoque dispon&iacute;vel / velocidade di&aacute;ria
+dias de cobertura (l&iacute;quido)  = (estoque dispon&iacute;vel + em tr&acirc;nsito) / velocidade di&aacute;ria
+ruptura projetada            = &uacute;ltima data dos dados + dias de cobertura</code></pre>
+      <p>A linha do estoque em tr&acirc;nsito importa mais do que os vendedores imaginam. Unidades num navio n&atilde;o s&atilde;o estoque, mas tamb&eacute;m n&atilde;o s&atilde;o nada.</p>
+
+      <h3>Lead time: me&ccedil;a, n&atilde;o digite</h3>
+      <p>A maior fonte de erro na hora de repor &eacute; um lead time que algu&eacute;m digitou uma vez, com otimismo, em outro ano.</p>
+      <p>Me&ccedil;a a partir do seu pr&oacute;prio hist&oacute;rico: <strong>data do pedido → data em que as unidades ficaram dispon&iacute;veis para venda</strong>, por fornecedor, e guarde tanto a m&eacute;dia <em>quanto o pior caso</em>. A diferen&ccedil;a entre os dois n&atilde;o &eacute; detalhe &mdash; &eacute; exatamente o tamanho do estoque de seguran&ccedil;a de que voc&ecirc; precisa.</p>
+
+      <h3>Estoque de seguran&ccedil;a &eacute; um n&iacute;vel de servi&ccedil;o comprado, n&atilde;o &ldquo;extra&rdquo;</h3>
+<pre><code>dias de seguran&ccedil;a     ≈ (pior lead time − lead time m&eacute;dio)
+                        + margem para varia&ccedil;&atilde;o da demanda
+
+ponto de reposi&ccedil;&atilde;o    = velocidade × (lead time m&eacute;dio + dias de seguran&ccedil;a)
+
+data-limite do pedido = &uacute;ltima data dos dados
+                        + (dias de cobertura − lead time m&eacute;dio − dias de seguran&ccedil;a)</code></pre>
+      <p>Se a data-limite do pedido j&aacute; passou, o pedido est&aacute; <strong>atrasado</strong>, e o sistema deve dizer isso com essas palavras.</p>
+
+      <h3>S&oacute; ent&atilde;o, a quantidade</h3>
+<pre><code>quantidade sugerida = velocidade × (lead time + cobertura-alvo)
+                      − estoque dispon&iacute;vel − em tr&acirc;nsito</code></pre>
+      <p>A cobertura-alvo &eacute; uma escolha de neg&oacute;cio &mdash; quantos dias de estoque voc&ecirc; quer ter quando a remessa chegar. Quando voc&ecirc; tem um custo real de frete por pedido e um custo real de manuten&ccedil;&atilde;o de estoque, o lote econ&ocirc;mico de compra (EOQ) mostra se o tamanho habitual dos seus pedidos est&aacute; custando dinheiro:</p>
+<pre><code>Q* = √( 2 × demanda anual × custo por pedido de compra
+        / custo anual de manuten&ccedil;&atilde;o por unidade )</code></pre>
+      <p>Trate o EOQ como uma <em>checagem do seu instinto</em>, n&atilde;o como uma ordem. Ele pressup&otilde;e demanda est&aacute;vel, e a sua n&atilde;o &eacute;.</p>
+
+      <h3>Mostre a composi&ccedil;&atilde;o, n&atilde;o s&oacute; o n&uacute;mero</h3>
+      <p>&ldquo;Pe&ccedil;a 1,400&nbsp;unidades&rdquo; &eacute; imposs&iacute;vel de auditar. &ldquo;1,400 = 62/dia × (lead time de 45&nbsp;dias + cobertura-alvo de 60&nbsp;dias) − 3,100 dispon&iacute;veis − 1,200 em tr&acirc;nsito&rdquo; &eacute; um n&uacute;mero que um vendedor pode contestar &mdash; e &eacute; o &uacute;nico tipo que vale a pena seguir.</p>
+    
+
+    <h2 id="s5">Caixa: transforme um P&amp;L em uma linha do tempo com datas</h2>
+      <p>Uma demonstra&ccedil;&atilde;o de resultados diz se o neg&oacute;cio funciona. N&atilde;o diz se voc&ecirc; consegue pagar o cont&ecirc;iner. S&atilde;o perguntas diferentes, e elas precisam de telas diferentes.</p>
+      <p>Uma linha do tempo de caixa precisa de quatro fluxos, cada um com data.</p>
+
+      <p class="src">Dinheiro que entra</p>
+      <ul>
+        <li><strong>Repasses da Amazon</strong> &mdash; o seu saldo de liquida&ccedil;&atilde;o, liberado no ritmo da Amazon, que chega depois da venda. Modele esse atraso; n&atilde;o finja que a data da venda &eacute; a data do dinheiro.</li>
+        <li>Qualquer faturamento fora da Amazon.</li>
+      </ul>
+
+      <p class="src">Dinheiro que sai</p>
+      <ul>
+        <li><strong>Parcelas do fornecedor</strong> &mdash; definidas pelos gatilhos de pagamento do pedido de compra: <em>no pedido</em>, <em>no embarque</em>, <em>N dias ap&oacute;s o embarque</em>, <em>em data fixa</em>. &Eacute; esta que arru&iacute;na trimestres.</li>
+        <li><strong>As dedu&ccedil;&otilde;es da pr&oacute;pria Amazon</strong> &mdash; tarifas, an&uacute;ncios, armazenagem &mdash; que em geral j&aacute; saem descontadas do repasse em vez de chegar como uma conta.</li>
+        <li><strong>Despesas gerais</strong> &mdash; as que n&atilde;o est&atilde;o ligadas a nenhum produto: software, assistentes virtuais, ag&ecirc;ncias, o seu pr&oacute;-labore.</li>
+      </ul>
+
+      <p>Comece de um <strong>saldo inicial conhecido</strong> em uma data conhecida. Um gr&aacute;fico de caixa sem saldo inicial &eacute; um gr&aacute;fico de diferen&ccedil;as fingindo ser uma posi&ccedil;&atilde;o.</p>
+      <p>A&iacute; o resultado &eacute; uma linha s&oacute;: o seu saldo projetado, semana a semana, com <strong>o ponto mais baixo e a data em que ele acontece</strong> em destaque. Esse saldo m&iacute;nimo &eacute; o n&uacute;mero que decide se um pedido &eacute; poss&iacute;vel.</p>
+    
+
+    <h2 id="s6">O cruzamento: um pedido que voc&ecirc; n&atilde;o consegue financiar n&atilde;o &eacute; um plano</h2>
+      <p>Esta &eacute; a parte que quase toda ferramenta pula, e &eacute; onde as duas metades deste artigo viram um s&oacute; sistema.</p>
+      <p>O seu m&oacute;dulo de estoque diz: <em>pe&ccedil;a 1,400&nbsp;unidades do SKU-A at&eacute; o dia 14, e 900 do SKU-B at&eacute; o dia 22.</em><br>
+      A sua linha do tempo de caixa diz: <em>o seu saldo chega ao m&iacute;nimo de $8,200 no dia 19.</em></p>
+      <p>Separadas, as duas est&atilde;o certas. Juntas, s&atilde;o uma decis&atilde;o:</p>
+      <ul>
+        <li>Fazer os dois pedidos no prazo deixa o saldo m&iacute;nimo negativo no dia 19.</li>
+        <li>Adiar o SKU-B em nove dias custa cerca de seis dias de ruptura de estoque &mdash; um n&uacute;mero cont&aacute;vel de unidades e de d&oacute;lares de margem de contribui&ccedil;&atilde;o &mdash; e mant&eacute;m o saldo m&iacute;nimo positivo.</li>
+        <li>Dividir o SKU-A em duas remessas aumenta o frete por unidade, mas achata a sa&iacute;da de caixa.</li>
+      </ul>
+      <p>Essa compara&ccedil;&atilde;o &mdash; <strong>o pedido que voc&ecirc; deveria fazer versus o caixa que voc&ecirc; vai de fato ter</strong> &mdash; &eacute; todo o sentido de conectar os dois sistemas.</p>
+      <p>Priorizar &eacute; aloca&ccedil;&atilde;o de capital. Quando voc&ecirc; n&atilde;o consegue financiar tudo, financie os SKUs com o maior <strong>retorno por d&oacute;lar por ano</strong>: margem de contribui&ccedil;&atilde;o por unidade × unidades vendidas por ano ÷ d&oacute;lares imobilizados. Um produto com 40% de margem que gira duas vezes por ano perde para um produto com 20% de margem que gira seis vezes.</p>
+      <div class="fixbox">
+        <span class="fixbox-k">O que fazer</span>
+        <p>Nunca olhe uma lista de reposi&ccedil;&atilde;o sem o saldo m&iacute;nimo de caixa na mesma tela. Uma sugest&atilde;o de reposi&ccedil;&atilde;o que ignora o seu saldo banc&aacute;rio &eacute; uma lista de desejos.</p>
+      </div>
+    
+
+    <h2 id="s7">Cen&aacute;rios, e para que eles realmente servem</h2>
+      <p>Ferramentas de cen&aacute;rio s&atilde;o vendidas como m&aacute;quinas de previs&atilde;o. N&atilde;o s&atilde;o, e fingir o contr&aacute;rio &eacute; como os vendedores se queimam.</p>
+      <p>A fun&ccedil;&atilde;o real delas &eacute; o <strong>teste de fragilidade</strong>: descobrir qual premissa, se estiver errada, d&oacute;i mais.</p>
+      <p>Rode o seu plano com:</p>
+      <ul>
+        <li>o lead time no pior valor observado, n&atilde;o na m&eacute;dia</li>
+        <li>velocidade de vendas em ±30%</li>
+        <li>uma parcela do fornecedor vencendo duas semanas antes do prometido</li>
+        <li>custo de an&uacute;ncio por venda 20% maior</li>
+      </ul>
+      <p>Depois leia o resultado como uma classifica&ccedil;&atilde;o, n&atilde;o como uma previs&atilde;o: <em>o meu plano sobrevive a um erro de demanda, mas n&atilde;o a um erro de lead time.</em> Isso mostra onde comprar seguro &mdash; um refor&ccedil;o por frete a&eacute;reo, um sinal renegociado, um primeiro pedido menor.</p>
+      <p>O bot&atilde;o de cen&aacute;rio mais &uacute;til n&atilde;o &eacute; o pre&ccedil;o. &Eacute; a <strong>taxa de convers&atilde;o</strong>. Voc&ecirc; n&atilde;o consegue medir se fotos novas funcionam, mas consegue medir o que uma mudan&ccedil;a de um ponto na convers&atilde;o faz com a sua cobertura de estoque e com o seu saldo m&iacute;nimo de caixa &mdash; e esse n&uacute;mero costuma ser muito maior do que os vendedores imaginam.</p>
+    
+
+    <h2 id="s8">Previsto vs. realizado: o ciclo que se paga sozinho</h2>
+      <p>Tudo o que veio acima n&atilde;o vale nada se ningu&eacute;m mantiver o placar.</p>
+      <p>Toda semana, guarde o que o sistema previu: velocidade por SKU, data de ruptura projetada, data-limite sugerida para o pedido, saldo m&iacute;nimo de caixa projetado. Depois compare com o que aconteceu.</p>
+      <p>Tr&ecirc;s perguntas, feitas em dia marcado:</p>
+      <ol>
+        <li><strong>Onde a velocidade errou, e em que dire&ccedil;&atilde;o?</strong> Um erro consistente numa s&oacute; dire&ccedil;&atilde;o &eacute; problema de configura&ccedil;&atilde;o, n&atilde;o azar.</li>
+        <li><strong>Onde o lead time errou?</strong> Cada pedido de compra conclu&iacute;do &eacute; uma medi&ccedil;&atilde;o gratuita. Devolva essa medi&ccedil;&atilde;o ao sistema automaticamente.</li>
+        <li><strong>Onde o caixa errou?</strong> Quase sempre, um pagamento cuja data de gatilho nunca foi registrada.</li>
+      </ol>
+      <p>Erro sistem&aacute;tico &eacute; um defeito que d&aacute; para corrigir. Erro aleat&oacute;rio &eacute; o custo de fazer neg&oacute;cios. Sem o registro, voc&ecirc; n&atilde;o consegue distinguir um do outro.</p>
+    
+
+    <h2 id="s9">O que voc&ecirc; nunca deve automatizar</h2>
+      <p>A automa&ccedil;&atilde;o deve encurtar a dist&acirc;ncia entre um fato e uma decis&atilde;o &mdash; n&atilde;o tomar a decis&atilde;o.</p>
+      <p><strong>Automatize:</strong> coleta, data&ccedil;&atilde;o, contas, alertas, o ciclo de manter o placar.</p>
+      <dl class="never">
+        <dt>Nunca automatize &mdash; fazer o pedido</dt>
+        <dd>Uma ruptura de estoque custa vendas. Um pedido errado de $40,000 custa o trimestre.</dd>
+        <dt>Nunca automatize &mdash; resolver registros contradit&oacute;rios</dt>
+        <dd>Exponha o conflito; deixe quem sabe decidir.</dd>
+        <dt>Nunca automatize &mdash; inventar dados que voc&ecirc; n&atilde;o tem</dt>
+        <dd>Se o frete por pedido nunca foi medido, o resultado honesto &eacute; &ldquo;n&atilde;o medido&rdquo; &mdash; e n&atilde;o um valor padr&atilde;o plaus&iacute;vel fazendo as contas em sil&ecirc;ncio.</dd>
+      </dl>
+      <p>Uma tela vazia que diz o que est&aacute; faltando vale mais do que uma tela cheia constru&iacute;da sobre suposi&ccedil;&otilde;es.</p>
+    
+
+    <h2 id="s10">Uma sequ&ecirc;ncia de 30&nbsp;dias para montar tudo isso</h2>
+      <ol>
+        <li><strong>Semana 1 &mdash; Verdade.</strong> Carregue as transa&ccedil;&otilde;es e o registro de movimenta&ccedil;&otilde;es de estoque do FBA. Confirme a &uacute;ltima data dos dados. Corrija as diverg&ecirc;ncias de estoque. Nada do que vem depois &eacute; real enquanto isso n&atilde;o for.</li>
+        <li><strong>Semana 2 &mdash; Custo.</strong> Registre os seus pedidos de compra em aberto com custos totais de importa&ccedil;&atilde;o reais, gatilhos de pagamento reais e datas reais. Lance retroativamente os tr&ecirc;s &uacute;ltimos pedidos de compra conclu&iacute;dos para que o lead time tenha o que medir.</li>
+        <li><strong>Semana 3 &mdash; Decis&otilde;es.</strong> Ative as datas de reposi&ccedil;&atilde;o e os dias de cobertura. Defina a cobertura-alvo de cada SKU de prop&oacute;sito. Confira a composi&ccedil;&atilde;o de cada sugest&atilde;o com o seu pr&oacute;prio julgamento &mdash; voc&ecirc; est&aacute; calibrando o sistema, n&atilde;o obedecendo a ele.</li>
+        <li><strong>Semana 4 &mdash; Caixa.</strong> Informe um saldo inicial. Monte a linha do tempo. Encontre o saldo m&iacute;nimo. Depois coloque a lista de reposi&ccedil;&atilde;o ao lado e veja quais dos seus pedidos planejados sobrevivem.</li>
+      </ol>
+      <p>A partir da&iacute;, &eacute; um ritmo semanal: o que mudou, o que est&aacute; atrasado, o que cabe no caixa e onde eu errei na semana passada.</p>
+    
+
+    <h2 id="s11">Perguntas frequentes</h2>
+      <div class="faq">
+        <details open>
+          <summary>A previs&atilde;o de fluxo de caixa pode ser totalmente automatizada em um neg&oacute;cio na Amazon?</summary>
+          <p>A coleta, a data&ccedil;&atilde;o e as contas, sim. As entradas, n&atilde;o: custos totais de importa&ccedil;&atilde;o, condi&ccedil;&otilde;es de pagamento dos fornecedores e o seu saldo inicial s&oacute; existem nos seus registros. Conte com uma hora de configura&ccedil;&atilde;o por fornecedor e, depois disso, alguns minutos por pedido de compra.</p>
+        </details>
+        <details>
+          <summary>De que dados eu preciso antes de conseguir prever alguma coisa?</summary>
+          <p>Seis coisas: unidades vendidas por dia, entradas e sa&iacute;das da liquida&ccedil;&atilde;o, estoque dispon&iacute;vel e em tr&acirc;nsito, custo total de importa&ccedil;&atilde;o por unidade, lead times dos fornecedores medidos e condi&ccedil;&otilde;es de pagamento. As tr&ecirc;s primeiras v&ecirc;m da Amazon; as tr&ecirc;s &uacute;ltimas v&ecirc;m de voc&ecirc;.</p>
+        </details>
+        <details>
+          <summary>Qual &eacute; a precis&atilde;o da previs&atilde;o de estoque automatizada?</summary>
+          <p>Precisa o bastante para superar uma planilha, e nunca precisa o bastante para voc&ecirc; confiar cegamente. O ganho mensur&aacute;vel n&atilde;o &eacute; a precis&atilde;o da previs&atilde;o &mdash; &eacute; a redu&ccedil;&atilde;o do tempo entre algo mudar e voc&ecirc; reagir, e a elimina&ccedil;&atilde;o dos erros de conta na rea&ccedil;&atilde;o.</p>
+        </details>
+        <details>
+          <summary>Qual &eacute; a diferen&ccedil;a entre um P&amp;L e uma previs&atilde;o de fluxo de caixa?</summary>
+          <p>Um P&amp;L diz se o neg&oacute;cio &eacute; lucrativo ao longo de um per&iacute;odo. Uma previs&atilde;o de fluxo de caixa diz se voc&ecirc; consegue pagar algo em um dia espec&iacute;fico. Um neg&oacute;cio lucrativo na Amazon pode, sim, ficar sem caixa &mdash; esse &eacute; o modo normal de fracasso, n&atilde;o o ex&oacute;tico.</p>
+        </details>
+        <details>
+          <summary>Como eu calculo um ponto de reposi&ccedil;&atilde;o?</summary>
+          <p>Velocidade × (lead time m&eacute;dio + dias de seguran&ccedil;a), em que a velocidade &eacute; uma m&eacute;dia m&oacute;vel recente ancorada na sua &uacute;ltima data dos dados, e os dias de seguran&ccedil;a v&ecirc;m da diferen&ccedil;a entre o seu lead time m&eacute;dio e o pior lead time medido. Calcule a data primeiro; a quantidade vem dela.</p>
+        </details>
+        <details>
+          <summary>Por que a minha previs&atilde;o insiste em dizer que eu tenho mais estoque do que tenho?</summary>
+          <p>Geralmente, uma de tr&ecirc;s coisas: velocidade calculada pelo calend&aacute;rio em vez da &uacute;ltima data dos dados, unidades em tr&acirc;nsito contadas como dispon&iacute;veis para venda, ou um lead time digitado uma vez e nunca medido.</p>
+        </details>
+      </div>
+    
+
+    <section class="sec">
+      <h2>Mais r&aacute;pidos para corrigir, n&atilde;o melhores em prever</h2>
+      <p>Automatizar a previs&atilde;o de fluxo de caixa e de estoque n&atilde;o &eacute; comprar uma bola de cristal. &Eacute; construir um sistema em que cada fato que voc&ecirc; j&aacute; tem ganha data, fica conectado e aponta para uma decis&atilde;o &mdash; para que, quando a realidade mudar, voc&ecirc; descubra nesta semana, e n&atilde;o no pr&oacute;ximo trimestre.</p>
+      <p>Os vendedores que fazem isso bem n&atilde;o s&atilde;o melhores em prever. S&atilde;o mais r&aacute;pidos para corrigir.</p>
+    </section>
+
+  
+</main>
+
+<aside class="rail" aria-label="N&uacute;meros-chave deste artigo">
+  <div class="rail-card">
+    <span class="rail-k">Camadas a automatizar</span>
+    <span class="rail-v">Sete</span>
+    <p>Das entradas conectadas na base at&eacute; o ciclo de previsto vs. realizado que corrige tudo o que est&aacute; acima dele.</p>
+  </div>
+  <div class="rail-card">
+    <span class="rail-k">Sequ&ecirc;ncia de implanta&ccedil;&atilde;o</span>
+    <span class="rail-v is-amber">30&nbsp;dias</span>
+    <p>Semana um, verdade; semana dois, custo; semana tr&ecirc;s, decis&otilde;es; semana quatro, caixa. Nessa ordem, porque cada camada precisa da que est&aacute; abaixo dela.</p>
+  </div>
+  <div class="rail-card">
+    <span class="rail-k">O que isso compra para voc&ecirc;</span>
+    <span class="rail-v is-violet">Lat&ecirc;ncia</span>
+    <p>N&atilde;o uma previs&atilde;o melhor. Uma dist&acirc;ncia menor entre um fato mudar e voc&ecirc; saber o que ele muda.</p>
+  </div>
+  <p class="rail-src">N&uacute;meros do pr&oacute;prio exemplo deste artigo, n&atilde;o de uma pesquisa de mercado.</p>
+</aside>
+
+</div><!-- /.shell -->
+
+</div><!-- /.wrap -->
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+  <symbol id="i-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12.5 17v-4a2.5 2.5 0 015 0v4"/></symbol>
+  <symbol id="i-tw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M20 4L4 20"/></symbol>
+  <symbol id="i-gh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4 1.4-4-2.2-5.6-2.6M15 21v-3.4a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 2.6 5.5 2.9 5.5 2.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 9.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></symbol>
+</defs>
+</svg>
+
+<footer class="footer">
+<div class="container">
+
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/index.html" class="brand" aria-label="P&aacute;gina inicial da AmazeBase">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+        </svg>
+        <span data-brand>AmazeBase</span>
+      </a>
+      <p>O sistema operacional para vendedores da Amazon. Tudo conectado, tudo sincronizado.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Produto</h4>
+      <a href="/pt/produto.html#modules">Produto</a>
+      <a href="/index.html#pricing">Pre&ccedil;os</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Recursos</h4>
+      <a href="/pt/recursos.html">Central de Conhecimento</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <a href="/pt/sobre.html">Sobre</a>
+      <a href="/pt/contato.html">Contato</a>
+      <a href="/privacy.html">Privacidade</a>
+      <a href="/terms.html">Termos</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>&copy; 2026 <span data-brand>AmazeBase</span>. Todos os direitos reservados.</span>
+    <div class="footer-social">
+      <a href="#" aria-label="LinkedIn"><svg class="icon-sm"><use href="#i-in"/></svg></a>
+      <a href="#" aria-label="X"><svg class="icon-sm"><use href="#i-tw"/></svg></a>
+      <a href="#" aria-label="GitHub"><svg class="icon-sm"><use href="#i-gh"/></svg></a>
+    </div>
+  </div>
+
+</div>
+</footer>
+
+<script src="/js/main.js" defer></script>
+</body>
+</html>

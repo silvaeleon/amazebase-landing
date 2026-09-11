@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>As cinco margens de um produto &mdash; AmazeBase</title>
+
+<meta name="description" content="Como calcular a margem real do produto depois da publicidade &mdash; e por que &ldquo;qual &eacute; a minha margem?&rdquo; &eacute; a pergunta errada at&eacute; voc&ecirc; dizer o que est&aacute; decidindo.">
+<meta name="theme-color" content="#030917">
+<meta name="author" content="AmazeBase">
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+/* ==========================================================================
+   ARTICLE — Amazon Inventory Forecasting
+   Self-contained. Tokens mirror css/variables.css so this page can either
+   stand alone OR have this <style> block deleted once it sits inside the
+   site's normal stylesheet chain.
+========================================================================== */
+
+:root{
+  --z-nav:100;          /* navigation.css */
+  --container:1280px;   /* .container, below */
+  --t-body:15px;        /* .btn, below */
+  --bg:#030917; --bg-deep:#01050E; --bg-raise:#060D1E;
+  --surface:rgba(255,255,255,.030); --surface-2:rgba(255,255,255,.055);
+  --surface-solid:#0A1224;
+  --line:rgba(255,255,255,.070); --line-strong:rgba(255,255,255,.140);
+
+  --text:#EEF1F8; --text-2:#98A2B8; --text-3:#616C84;
+
+  --violet:#8B3BF1; --violet-soft:#A971F7; --indigo:#5B4FE6;
+  --blue:#3B82F6; --blue-soft:#7EB3FF;
+  --green:#2ED47A; --amber:#F5A524; --red:#F0435C;
+
+  --grad-brand:linear-gradient(135deg,#5B4FE6 0%,#8B3BF1 100%);
+  --grad-text:linear-gradient(90deg,#6153E6 0%,#9D50F7 55%,#C56BF5 100%);
+  --grad-card:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  --grad-rule:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,monospace;
+
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px;
+  --s5:48px; --s6:64px; --s7:96px; --s8:128px;
+
+  --gutter:clamp(20px,4vw,40px);
+  --measure:720px;
+
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
+  --sh-2:0 18px 40px rgba(0,0,0,.42);
+  --sh-brand:0 16px 40px rgba(107,63,232,.35);
+  --ease:cubic-bezier(.22,.61,.36,1); --fast:.18s; --mid:.28s;
+
+  color-scheme:dark;
+  scrollbar-color:#26304A var(--bg);
+  scrollbar-width:thin;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation:none !important; transition:none !important; }
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+::selection{ background:var(--violet); color:#fff; }
+
+.skip-link{
+  position:absolute; left:-9999px; top:0;
+  background:var(--surface-solid); color:var(--text);
+  padding:12px 20px; border-radius:0 0 var(--r-sm) 0;
+  z-index:1000; text-decoration:none; font-weight:600;
+}
+.skip-link:focus{ left:0; }
+
+:focus-visible{
+  outline:2px solid var(--violet-soft);
+  outline-offset:3px;
+  border-radius:var(--r-xs);
+}
+
+/* ---------- ambient background ------------------------------------------ */
+.bg-layer{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(760px 520px at 18% -8%,  rgba(91,79,230,.20), transparent 62%),
+    radial-gradient(680px 480px at 88% 4%,   rgba(139,59,241,.15), transparent 60%),
+    radial-gradient(900px 700px at 50% 108%, rgba(59,130,246,.09), transparent 66%);
+}
+
+.wrap{ position:relative; z-index:1; }
+
+/* ---------- shell ------------------------------------------------------- */
+.article{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:0 var(--gutter) var(--s8);
+}
+
+/* ---------- header ------------------------------------------------------ */
+.article-head{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:clamp(64px,9vw,120px) var(--gutter) clamp(32px,4vw,48px);
+}
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--violet-soft);
+  background:var(--surface); border:1px solid var(--line);
+  padding:7px 14px; border-radius:var(--r-pill);
+  margin:0 0 var(--s3);
+}
+.eyebrow::before{
+  content:""; width:6px; height:6px; border-radius:50%;
+  background:var(--violet-soft);
+  box-shadow:0 0 10px rgba(169,113,247,.9);
+}
+
+h1{
+  font-size:clamp(34px,5vw,58px);
+  line-height:1.08;
+  letter-spacing:-.025em;
+  font-weight:800;
+  margin:0 0 var(--s3);
+  text-wrap:balance;
+}
+h1 .accent{
+  background:var(--grad-text);
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+}
+
+.deck{
+  font-size:clamp(18px,2.1vw,21px);
+  line-height:1.6;
+  color:var(--text-2);
+  margin:0 0 var(--s4);
+  max-width:62ch;
+}
+
+.meta{
+  display:flex; flex-wrap:wrap; align-items:center; gap:var(--s2);
+  font-size:14px; color:var(--text-3);
+  padding-top:var(--s3);
+  border-top:1px solid var(--line);
+}
+.meta .dot{ width:3px; height:3px; border-radius:50%; background:var(--text-3); }
+
+/* ---------- table of contents ------------------------------------------- */
+.toc{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:0 0 var(--s6);
+}
+.toc h2{
+  font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--text-3); margin:0 0 var(--s3); padding:0; border:0;
+}
+.toc ol{
+  list-style:none; margin:0; padding:0;
+  counter-reset:toc;
+  display:grid; gap:2px;
+}
+.toc li{ counter-increment:toc; margin:0; }
+.toc a{
+  display:flex; gap:14px; align-items:baseline;
+  color:var(--text-2); text-decoration:none;
+  font-size:15px; line-height:1.5;
+  padding:8px 10px; margin:0 -10px;
+  border-radius:var(--r-xs);
+  transition:color var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+.toc a::before{
+  content:counter(toc,decimal-leading-zero);
+  font-family:var(--font-mono); font-size:12px; font-weight:600;
+  color:var(--text-3); flex:none; min-width:22px;
+  transition:color var(--fast) var(--ease);
+}
+.toc a:hover{ color:var(--text); background:var(--surface); }
+.toc a:hover::before{ color:var(--violet-soft); }
+
+/* ---------- body typography --------------------------------------------- */
+.article p{ margin:0 0 1.1em; color:#D5DBE9; }
+.article p.lead{ font-size:20px; color:var(--text); }
+
+.article h2{
+  font-size:clamp(26px,3.2vw,34px);
+  line-height:1.2;
+  letter-spacing:-.02em;
+  font-weight:700;
+  color:var(--text);
+  margin:var(--s7) 0 var(--s3);
+  padding-top:var(--s5);
+  border-top:1px solid var(--line);
+  scroll-margin-top:32px;
+  text-wrap:balance;
+}
+.article h2:first-of-type{ margin-top:0; }
+
+.article h2 .num{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:13px; font-weight:600; letter-spacing:.16em;
+  color:var(--violet-soft);
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
+
+.article strong{ color:var(--text); font-weight:700; }
+
+.article ul{
+  margin:0 0 1.4em;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:10px;
+}
+.article ul li{
+  position:relative;
+  padding-left:26px;
+  color:#D5DBE9;
+  line-height:1.6;
+}
+.article ul li::before{
+  content:"";
+  position:absolute; left:6px; top:.68em;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--violet);
+  box-shadow:0 0 8px rgba(139,59,241,.55);
+}
+
+/* ---------- pull quote --------------------------------------------------- */
+blockquote{
+  margin:var(--s4) 0;
+  padding:var(--s3) var(--s4);
+  border-left:2px solid var(--violet);
+  background:linear-gradient(90deg,rgba(139,59,241,.10),transparent 80%);
+  border-radius:0 var(--r-md) var(--r-md) 0;
+}
+blockquote p{
+  margin:0;
+  font-size:20px;
+  line-height:1.5;
+  font-weight:600;
+  color:var(--text);
+}
+
+/* ---------- callouts ----------------------------------------------------- */
+.callout{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:var(--s4) 0 var(--s5);
+}
+.callout .label{
+  display:block;
+  font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--text-3);
+  margin-bottom:var(--s2);
+}
+.callout p:last-child, .callout ul:last-child{ margin-bottom:0; }
+
+.formula{
+  font-family:var(--font-mono);
+  font-size:clamp(15px,2.1vw,19px);
+  font-weight:600;
+  line-height:1.6;
+  color:var(--text);
+  background:var(--bg-deep);
+  border:1px solid var(--line-strong);
+  border-radius:var(--r-md);
+  padding:var(--s3);
+  margin:0 0 var(--s3);
+  text-align:center;
+  overflow-x:auto;
+}
+.formula .op{ color:var(--violet-soft); }
+
+/* ---------- numbers strip ------------------------------------------------ */
+.figures{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:var(--s2);
+  margin:var(--s4) 0 var(--s5);
+  padding:0; list-style:none;
+}
+.figures li{ padding:0; }
+.figures li::before{ display:none; }
+.fig{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:var(--s3) var(--s2);
+  text-align:center;
+}
+.fig .v{
+  display:block;
+  font-size:28px; font-weight:800; letter-spacing:-.02em; line-height:1.1;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.fig .k{
+  display:block;
+  font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.fig.is-bad .v{ color:var(--red); }
+.fig.is-real .v{ color:var(--green); }
+
+/* ---------- divider ------------------------------------------------------ */
+.rule{
+  height:1px; border:0;
+  background:var(--grad-rule);
+  margin:var(--s6) 0;
+}
+
+/* ---------- closing CTA -------------------------------------------------- */
+.cta{
+  max-width:var(--measure);
+  margin:var(--s7) auto 0;
+  padding:clamp(32px,5vw,56px) var(--gutter);
+  text-align:center;
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-xl);
+  box-shadow:var(--sh-2);
+}
+.cta h2{
+  font-size:clamp(24px,3vw,32px);
+  font-weight:700; letter-spacing:-.02em; line-height:1.2;
+  margin:0 0 var(--s2); padding:0; border:0;
+  text-wrap:balance;
+}
+.cta p{
+  color:var(--text-2);
+  max-width:52ch;
+  margin:0 auto var(--s4);
+  font-size:17px;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--grad-brand);
+  color:#fff; text-decoration:none;
+  font-weight:600; font-size:16px;
+  padding:14px 28px;
+  border-radius:var(--r-pill);
+  box-shadow:var(--sh-brand);
+  transition:transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+.btn:hover{ transform:translateY(-2px); box-shadow:0 22px 50px rgba(107,63,232,.45); }
+.btn svg{ width:18px; height:18px; }
+
+/* ---------- responsive --------------------------------------------------- */
+@media (max-width:640px){
+  body{ font-size:17px; }
+  .article p.lead{ font-size:18px; }
+  blockquote p{ font-size:18px; }
+  .article h2{ margin-top:var(--s6); padding-top:var(--s4); }
+}
+
+/* ---------- print -------------------------------------------------------- */
+@media print{
+  .bg-layer,.toc,.cta,.skip-link{ display:none; }
+  body{ background:#fff; color:#111; font-size:12pt; }
+  .article p,.article ul li{ color:#222; }
+  .article h2{ color:#000; }
+}
+.back-link{ margin:0 0 28px; font-size:13px; }
+.back-link a{ color:var(--text-2); text-decoration:none; }
+.back-link a:hover{ color:var(--text); }
+
+/* ── HERO IMAGE ─────────────────────────────────────────────────────── */
+.hero-shot{
+  margin:0 0 52px;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  background:var(--bg-raise);
+  line-height:0;
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+.hero-shot img{ width:100%; height:auto; display:block; }
+
+/* ── MISTAKE CARDS ──────────────────────────────────────────────────── */
+.mistake{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.mistake::before{
+  content:"";
+  position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+  background:var(--amber);
+}
+.mistake h2{ margin-top:0 !important; }
+.article .mistake h2:first-of-type{ margin-top:0; }
+
+/* ── PULL QUOTES ────────────────────────────────────────────────────── */
+blockquote{
+  margin:44px 0;
+  padding:0 0 0 26px;
+  border-left:3px solid var(--amber);
+  background:none;
+}
+blockquote p{
+  font-size:23px;
+  line-height:1.45;
+  font-style:italic;
+  font-weight:600;
+  color:var(--text);
+  margin:0;
+}
+
+/* ── MID-ARTICLE STRIP ──────────────────────────────────────────────── */
+.strip{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px; flex-wrap:wrap;
+  margin:44px 0;
+  padding:26px 30px;
+  border-radius:16px;
+  background:linear-gradient(120deg,#0A1224,#131A33);
+  border:1px solid var(--line-strong);
+}
+.strip h3{ margin:0 0 6px; font-size:19px; color:var(--text); }
+.strip p{ margin:0; font-size:14px; color:var(--text-2); }
+.strip-btn{
+  flex:0 0 auto;
+  display:inline-block;
+  padding:12px 22px;
+  border-radius:10px;
+  background:var(--amber);
+  color:#1A1200;
+  font-size:14px; font-weight:700;
+  text-decoration:none;
+  transition:filter .15s ease;
+}
+.strip-btn:hover{ filter:brightness(1.08); }
+
+@media (max-width:640px){
+  .mistake{ padding:24px 20px 8px; }
+  .mistake::before{ top:20px; bottom:20px; }
+  blockquote p{ font-size:20px; }
+  .strip{ padding:22px; }
+  .strip-btn{ width:100%; text-align:center; }
+}
+
+/* ── WIDE SHELL: content + rail, so the page uses the screen ─────────── */
+.shell{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 var(--gutter);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 300px;
+  gap:64px;
+  align-items:start;
+}
+.shell > .article{ max-width:none; margin:0; padding:0 0 var(--s8); }
+
+.rail{ position:sticky; top:40px; display:flex; flex-direction:column; gap:14px; }
+.rail-card{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+  padding:20px;
+}
+.rail-k{
+  display:block; margin-bottom:10px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.rail-v{
+  display:block; margin-bottom:10px;
+  font-size:34px; line-height:1; font-weight:800; letter-spacing:-.02em;
+  color:var(--green);
+}
+.rail-v.is-amber{ color:var(--amber); }
+.rail-v.is-violet{ color:var(--violet-soft); }
+.rail-card p{ margin:0; font-size:13px; line-height:1.55; color:var(--text-2); }
+.rail-src{
+  margin:0; padding-top:14px;
+  border-top:1px solid var(--line);
+  font-size:11px; line-height:1.5; color:var(--text-3);
+}
+
+/* header + hero align to the same shell */
+.article-head, .hero-shot{ max-width:1180px; }
+
+/* ── HERO: a band, not a giant square ───────────────────────────────── */
+.hero-shot{
+  margin:0 auto 56px;
+  padding:0 var(--gutter);
+  border:0; background:none; box-shadow:none;
+  border-radius:0;
+  overflow:visible;
+}
+.hero-shot img{
+  width:100%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
+  border-radius:18px;
+  border:1px solid var(--line-strong);
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+
+/* ── THE FIX callout ────────────────────────────────────────────────── */
+.fixbox{
+  margin:22px 0 4px;
+  padding:16px 18px;
+  border-radius:12px;
+  border:1px solid rgba(46,212,122,.28);
+  background:rgba(46,212,122,.07);
+}
+.fixbox-k{
+  display:block; margin-bottom:6px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--green);
+}
+.fixbox p{ margin:0 !important; color:var(--text) !important; }
+
+@media (max-width:1080px){
+  .shell{ grid-template-columns:1fr; gap:40px; max-width:820px; }
+  .rail{ position:static; flex-direction:row; flex-wrap:wrap; }
+  .rail-card{ flex:1 1 220px; }
+  .rail-src{ flex:1 1 100%; border-top:0; padding-top:0; }
+  .article-head, .hero-shot{ max-width:820px; }
+}
+@media (max-width:640px){
+  .shell{ gap:28px; }
+}
+
+
+/* ── FIGURES CARRIED OVER FROM THE DRAFT ──────────────────────────────
+   This piece ships its own tables, charts and spec blocks. Rather than
+   import a second design system for them, the palette they were written
+   against is repointed at this site's tokens, and only their component
+   rules are carried over. --measure is deliberately absent: it collides
+   with the site's, and the ported rules should use the site's column.
+   ------------------------------------------------------------------- */
+:root{
+  --paper:var(--bg); --panel:var(--surface-solid); --panel-2:var(--surface-2);
+  --ink:var(--text); --ink-2:var(--text-2); --ink-3:var(--text-3);
+  --rule:var(--line); --rule-strong:var(--line-strong);
+  --accent:var(--violet-soft); --accent-soft:rgba(139,59,241,.16);
+  --cost:var(--text-3);
+  --good:var(--green);  --good-soft:rgba(46,212,122,.10);
+  --warn:var(--amber);  --warn-soft:rgba(245,165,36,.10);
+  --crit:var(--red);    --crit-soft:rgba(240,67,92,.10);
+  --f-display:var(--font); --f-body:var(--font);
+  --f-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+article p{margin:0 0 1.15rem}
+article ul, article ol{margin:0 0 1.3rem;padding-left:1.15rem}
+article li{margin-bottom:.5rem}
+article li::marker{color:var(--ink-3)}
+strong{font-weight:600}
+.fix{background:var(--panel);border:1px solid var(--rule);border-left:3px solid var(--accent);padding:1.1rem 1.3rem;margin:1.9rem 0}
+.fix .k{display:block;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:.45rem}
+.fix p{margin:0}
+.fix p+p{margin-top:.7rem}
+pre{font-family:var(--f-mono);font-size:.83rem;line-height:1.75;background:var(--panel-2);border:1px solid var(--rule);padding:1rem 1.1rem;margin:1.6rem 0;overflow-x:auto}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--panel-2);padding:.1em .35em;border-radius:2px}
+pre code{background:none;padding:0;font-size:1em}
+figure h4{margin:0 0 .2rem;font-size:1rem;font-weight:600}
+figure .sub{margin:0 0 .9rem;font-size:.85rem;color:var(--ink-2)}
+figure svg{display:block;width:100%;height:auto}
+.ax{fill:var(--ink-3);font-family:"IBM Plex Mono",monospace;font-size:9.5px}
+.val{fill:var(--ink);font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:500}
+.lbl{fill:var(--ink-2);font-family:"IBM Plex Sans",sans-serif;font-size:10px}
+.lbl-b{fill:var(--ink);font-family:"IBM Plex Sans",sans-serif;font-size:10px;font-weight:600}
+.grid{stroke:var(--rule);stroke-width:1}
+.levels{list-style:none;padding:0;margin:1.5rem 0 2rem;border-top:1px solid var(--rule)}
+.levels li{margin:0;display:grid;grid-template-columns:2.4rem 1fr auto;gap:.9rem;padding:.85rem .2rem;border-bottom:1px solid var(--rule);align-items:baseline}
+.levels .n{font-family:var(--f-mono);font-size:.72rem;color:var(--accent)}
+.levels b{display:block;font-weight:600}
+.levels .d{color:var(--ink-2);font-size:.93rem}
+.levels .q{font-family:var(--f-mono);font-size:.78rem;color:var(--ink-3);text-align:right;white-space:nowrap}
+@media (max-width:620px){
+.levels li{grid-template-columns:2.4rem 1fr}
+.levels .q{grid-column:2;text-align:left}
+}
+.kinds{display:grid;gap:.55rem;margin:1.4rem 0 1.9rem}
+.kind{display:grid;grid-template-columns:6.5rem 1fr;gap:1rem;align-items:baseline;padding:.7rem .9rem;background:var(--panel);border:1px solid var(--rule)}
+.kind .lab{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
+.kind.m .lab{color:var(--good)}
+.kind.a .lab{color:var(--accent)}
+.kind.s .lab{color:var(--warn)}
+.kind .txt{font-size:.95rem;color:var(--ink-2)}
+.tblwrap{overflow-x:auto;margin:1.6rem 0}
+table{border-collapse:collapse;width:100%;font-size:.92rem;min-width:26rem}
+caption{caption-side:bottom;text-align:left;font-size:.8rem;color:var(--ink-3);padding-top:.7rem;line-height:1.5}
+th, td{padding:.55rem .7rem;text-align:right;border-bottom:1px solid var(--rule);font-variant-numeric:tabular-nums}
+th:first-child, td:first-child{text-align:left}
+thead th{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500;border-bottom:1px solid var(--rule-strong)}
+tbody tr:last-child td{border-bottom:1px solid var(--rule-strong);font-weight:600}
+td.neg{color:var(--ink-2)}
+.faq details{border-bottom:1px solid var(--rule);padding:.9rem 0}
+.faq summary{cursor:pointer;font-weight:600;list-style:none;display:flex;gap:.75rem;align-items:flex-start}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::before{content:"+";font-family:var(--f-mono);color:var(--accent);font-weight:400;line-height:1.6}
+.faq details[open] summary::before{content:"–"}
+.faq p{margin:.65rem 0 0 1.5rem;color:var(--ink-2)}
+.faq summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* ── PIECES THIS ARTICLE ADDS ─────────────────────────────────────────
+   h3, tables, the FAQ and the carried-over figure. The 44 articles that
+   came before this one had no h3 and no tables, so the core stylesheet
+   never needed rules for them.
+   ------------------------------------------------------------------- */
+.article h3{
+  margin:var(--s5) 0 var(--s2);
+  font-size:clamp(19px,1.6vw,22px);
+  font-weight:650; letter-spacing:-.01em; color:var(--text);
+}
+.tblwrap{ margin:var(--s4) 0; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.article table{
+  width:100%; border-collapse:collapse;
+  font-size:.94rem; line-height:1.5;
+}
+.article th, .article td{
+  padding:10px 14px; text-align:left; vertical-align:top;
+  border-bottom:1px solid var(--line);
+}
+.article th{
+  font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+  color:var(--text-3); border-bottom-color:var(--line-strong); white-space:nowrap;
+}
+.article tbody tr:last-child td{ border-bottom:0; }
+.art-diagram{ margin:var(--s4) 0; }
+.art-diagram svg{ width:100%; height:auto; display:block; }
+.art-diagram .sub, .art-diagram figcaption{
+  margin-top:10px; font-size:var(--t-micro,.82rem); color:var(--text-3); line-height:1.5;
+}
+.faq{ margin:var(--s4) 0; }
+.faq details{
+  border:1px solid var(--line); border-radius:var(--r-md);
+  background:var(--surface); padding:14px 18px; margin-bottom:10px;
+}
+.faq summary{
+  cursor:pointer; font-weight:600; color:var(--text);
+  list-style:none; padding-right:24px; position:relative;
+}
+.faq summary::-webkit-details-marker{ display:none; }
+.faq summary::after{
+  content:"+"; position:absolute; right:0; top:-2px;
+  font-size:19px; line-height:1; color:var(--violet-soft);
+}
+.faq details[open] summary::after{ content:"\2013"; }
+.faq details p{ margin:10px 0 0 !important; color:var(--text-2); }
+
+/* ── KEEPING WIDE THINGS INSIDE A PHONE ───────────────────────────────
+   These pieces carry long monospace formulas, wide comparison tables and
+   the draft's scenario rows. Each has a min-content width larger than a
+   390px screen, and the shell's mobile track is `1fr` - which means
+   minmax(auto,1fr), so a single one of them widens the whole column and
+   the entire page scrolls sideways. Cap the track, then let each wide
+   block scroll inside itself instead of pushing the article around.
+   ------------------------------------------------------------------- */
+@media (max-width:1080px){
+  .shell{ grid-template-columns:minmax(0,1fr); }
+}
+.shell > .article{ min-width:0; }
+.article > *{ max-width:100%; }
+.formula{ overflow-x:auto; }
+.formula code{ white-space:pre; }
+.tblwrap{ min-width:0; max-width:100%; }
+.scn, .scnrow, .bands, .band, .inputs, .facts, .spec, .grid{ min-width:0; max-width:100%; }
+@media (max-width:640px){
+  .scnrow{ display:block; }
+  .scnrow > *{ display:block; }
+}
+
+/* ── SITE HEADER ──────────────────────────────────────────────────────
+   The header markup is the site's, and navigation.css styles it. These are
+   the pieces it also leans on from base.css, which this page does not load.
+   Every selector is scoped to the header or the mobile drawer: an article is
+   built out of bare a/p/h3/h4, and base.css restyles all of those.
+
+   The scope is written with :where() so it adds no specificity. Scoped the
+   plain way, `.site-header .btn` is (0,2,0) - the same weight as
+   navigation.css's own `.nav-actions .btn--quiet` and `.nav-mobile a`, and
+   loaded after them, so these copies quietly outranked the real rules: the
+   hamburger got pushed off a 390px screen and the drawer buttons lost their
+   sizing. Inside :where() each rule keeps exactly the weight it has in
+   base.css, which is the weight navigation.css was written against.
+   ------------------------------------------------------------------- */
+/* The header inherits from <body>, and this page's body is set for reading:
+   18px at 1.72. The site's is var(--t-body) at 1.6. Left alone, every element
+   in the bar came out a size and a half too tall. Reset it at the root of the
+   header so everything inside inherits the site's figures instead. */
+:where(.site-header),
+:where(.nav-mobile){
+  font-size:var(--t-body);
+  line-height:1.6;
+}
+
+:where(.site-header) .container{
+  width:min(100%,var(--container));
+  margin-inline:auto;
+  padding-inline:var(--gutter);
+  position:relative;
+}
+:where(.site-header, .nav-mobile) .brand{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:19px; font-weight:700; letter-spacing:-.01em;
+  color:var(--text); text-decoration:none;
+}
+:where(.site-header) .brand-mark{ width:26px; height:26px; flex:none; }
+:where(.site-header) .icon,    :where(.nav-mobile) .icon{    width:20px; height:20px; flex:none; stroke-width:1.7; }
+:where(.site-header) .icon-sm, :where(.nav-mobile) .icon-sm{ width:16px; height:16px; flex:none; stroke-width:1.8; }
+/* margin-block only: navigation.css centres this with margin-inline:auto,
+   and a shorthand `margin:0` here would outrank it and shove the menu
+   over against the brand. */
+:where(.site-header) .nav-menu{ list-style:none; padding:0; margin-block:0; }
+.site-header a, .nav-mobile a{ text-decoration:none; }
+/* base.css resets these globally; this page does not load it. Without the
+   padding reset the UA's 1px 6px survives and the 44px tap target
+   responsive.css asks for comes out 40px. */
+:where(.site-header) .nav-toggle{ font:inherit; cursor:pointer; padding:0; }
+:where(.site-header) svg, :where(.nav-mobile) svg{ display:block; }
+
+:where(.site-header) .btn, :where(.nav-mobile) .btn{
+  /* This page defines its own .btn - a filled gradient pill used in the body -
+     and it reaches the header buttons too. base.css's .btn sets none of these,
+     so the variant classes below are what should decide them. Cleared here or
+     "Log in", which is .btn--quiet and meant to read as plain text, arrives
+     wearing the brand gradient. */
+  background:none;
+  box-shadow:none;
+  color:inherit;
+  text-decoration:none;
+  position:relative;
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  padding:13px 22px;
+  border-radius:var(--r-sm);
+  font-size:var(--t-body); font-weight:600; line-height:1;
+  white-space:nowrap;
+  transition:transform var(--fast) var(--ease),
+             box-shadow var(--fast) var(--ease),
+             background var(--fast) var(--ease),
+             border-color var(--fast) var(--ease);
+}
+:where(.site-header) .btn:active, :where(.nav-mobile) .btn:active{ transform:translateY(0) scale(.99); }
+:where(.site-header) .btn--primary, :where(.nav-mobile) .btn--primary{
+  background:var(--grad-brand); color:#fff;
+  box-shadow:var(--sh-brand); overflow:hidden;
+}
+:where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{
+  content:""; position:absolute; top:0; left:-130%;
+  width:55%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);
+  transition:left .65s var(--ease);
+}
+:where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{
+  transform:translateY(-2px); box-shadow:0 22px 52px rgba(107,63,232,.45);
+}
+:where(.site-header) .btn--primary:hover::after, :where(.nav-mobile) .btn--primary:hover::after{ left:150%; }
+:where(.site-header) .btn--quiet, :where(.nav-mobile) .btn--quiet{ color:var(--text-2); padding:13px 8px; }
+:where(.site-header) .btn--quiet:hover, :where(.nav-mobile) .btn--quiet:hover{ color:var(--text); }
+:where(.nav-mobile) .btn--block{ width:100%; }
+
+@media (prefers-reduced-motion:reduce){
+  :where(.site-header) .btn, :where(.nav-mobile) .btn,
+  :where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{ transition:none; }
+  :where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{ transform:none; }
+}
+
+/* navigation.css hides these two buttons on small screens so the hamburger
+   fits. Its selectors are (0,2,0) and so is `:where(.site-header) .btn` above, which
+   is loaded after it - equal weight, later wins, and display:inline-flex beat
+   display:none. The hamburger ended up 107px off the right of a 390px screen
+   with no way to open the menu. Restating the hide at (0,3,0) settles it.
+   The breakpoints are read out of navigation.css at build time, not typed. */
+
+/* Clear the fixed site header. Reserving its height on .wrap keeps the gap
+   between the bar and the eyebrow the same as the gap used to be between the
+   top of the window and the eyebrow. */
+.wrap{ padding-top:70px; }
+@media (max-width:640px){ .wrap{ padding-top:64px; } }
+
+/* Anchor targets. .article h2 carried scroll-margin-top:32px, which was right
+   when this page had no fixed bar: 32px was breathing room. Now a jump from
+   the contents list lands 38px underneath the header. responsive.css puts the
+   rest of the site on 84px for exactly this reason; the article's own rule is
+   (0,2,0) and outranks it, so it is restated here at the same weight. */
+.article h2{ scroll-margin-top:84px; }
+
+/* The back-link sat hard against the left edge of the window, in line with
+   nothing. That was always true, but with the nav above it the thing reads as
+   stranded rather than as a heading. Same shell as .article-head, so it lines
+   up with the title beneath it and behaves as the breadcrumb it is. */
+.back-link{
+  max-width:1180px;
+  margin-inline:auto;      /* the rule above keeps its 28px bottom margin */
+  padding:22px var(--gutter) 0;
+}
+</style>
+<link rel="stylesheet" href="/css/navigation.css">
+<link rel="stylesheet" href="/css/responsive.css">
+<link rel="stylesheet" href="/css/site-footer.css">
+<link rel="canonical" href="https://amazebase.pro/pt/artigos/as-cinco-margens-de-um-produto.html">
+<link rel="alternate" hreflang="en" href="https://amazebase.pro/articles/true-product-margin-after-ads.html">
+<link rel="alternate" hreflang="es" href="https://amazebase.pro/es/articulos/los-cinco-margenes-de-un-producto.html">
+<link rel="alternate" hreflang="pt" href="https://amazebase.pro/pt/artigos/as-cinco-margens-de-um-produto.html">
+<link rel="alternate" hreflang="x-default" href="https://amazebase.pro/articles/true-product-margin-after-ads.html">
+<meta property="og:site_name" content="AmazeBase">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://amazebase.pro/pt/artigos/as-cinco-margens-de-um-produto.html">
+<meta property="og:title" content="As cinco margens de um produto">
+<meta property="og:description" content="Como calcular a margem real do produto depois da publicidade &mdash; e por que &ldquo;qual &eacute; a minha margem?&rdquo; &eacute; a pergunta errada at&eacute; voc&ecirc; dizer o que est&aacute; decidindo.">
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Pular para o conte&uacute;do</a>
+<div class="bg-layer" aria-hidden="true"></div>
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+</defs>
+  <symbol id="i-chevron"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-menu"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-mega"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l7 4V5L8 9H4zM19 9a4 4 0 010 6"/></symbol>
+  <symbol id="i-dollar"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5v19M16.5 6.5H10a3.2 3.2 0 000 6.4h4a3.2 3.2 0 010 6.4H7"/></symbol>
+  <symbol id="i-stack"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/></symbol>
+  <symbol id="i-box"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></symbol>
+  <symbol id="i-search"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></symbol>
+  <symbol id="i-chart"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-trend"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></symbol>
+  <symbol id="i-db"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3.2"/><path d="M4 6v12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2V6M4 12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2"/></symbol>
+  <symbol id="i-shield"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-9.5V5.5L12 2.5 4 5.5V12.5C4 18.5 12 22 12 22z"/></symbol>
+  <symbol id="i-spark"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+  <symbol id="i-rocket"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15s-1.5 3 1 5.5S11 20 11 20M14.5 4.5c3-2 6-1 6-1s1 3-1 6l-6 6-5-5 6-6z"/><circle cx="15" cy="9" r="1.4"/></symbol>
+  <symbol id="i-case"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8.5 7V5a2 2 0 012-2h3a2 2 0 012 2v2M2.5 12.5h19"/></symbol>
+  <symbol id="i-info"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></symbol>
+  <symbol id="i-msg"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-8 8 8.6 8.6 0 01-3.6-.8L3 21l1.8-6.4A8 8 0 1121 12z"/></symbol>
+</svg>
+
+<header class="site-header">
+<div class="container">
+<nav class="nav" aria-label="Principal">
+
+  <a href="/index.html" class="brand" aria-label="P&aacute;gina inicial da AmazeBase">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+      <path d="M16 17.6l4.4 8.2h-8.8z" fill="#C56BF5" opacity=".85"/>
+    </svg>
+    <span data-brand>AmazeBase</span>
+  </a>
+
+  <ul class="nav-menu">
+    <li class="nav-item">
+      <a class="nav-link" href="/pt/produto.html#modules">Produto <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop nav-drop--wide">
+        <a href="/pt/produto.html#advertising"><svg class="icon-sm"><use href="#i-mega"/></svg>Publicidade e PPC</a>
+        <a href="/pt/produto.html#financials"><svg class="icon-sm"><use href="#i-dollar"/></svg>Finan&ccedil;as</a>
+        <a href="/pt/produto.html#ledger"><svg class="icon-sm"><use href="#i-stack"/></svg>Ledger</a>
+        <a href="/pt/produto.html#inventory"><svg class="icon-sm"><use href="#i-box"/></svg>Estoque</a>
+        <a href="/pt/produto.html#research"><svg class="icon-sm"><use href="#i-search"/></svg>Pesquisa de produtos</a>
+        <a href="/pt/produto.html#simulations"><svg class="icon-sm"><use href="#i-chart"/></svg>Simula&ccedil;&otilde;es</a>
+        <a href="/pt/produto.html#sales"><svg class="icon-sm"><use href="#i-trend"/></svg>Vendas</a>
+        <a href="/pt/produto.html#data"><svg class="icon-sm"><use href="#i-db"/></svg>Dados e sincroniza&ccedil;&atilde;o</a>
+        <a href="/pt/produto.html#security"><svg class="icon-sm"><use href="#i-shield"/></svg>Seguran&ccedil;a</a>
+        <a href="/pt/produto.html#assistant"><svg class="icon-sm"><use href="#i-spark"/></svg>Assistente de IA &mdash; em breve</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/pt/solucoes.html">Solu&ccedil;&otilde;es <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/pt/solucoes.html#beginners"><svg class="icon-sm"><use href="#i-rocket"/></svg>Iniciantes</a>
+        <a href="/pt/solucoes.html#experts"><svg class="icon-sm"><use href="#i-dollar"/></svg>Vendedores experientes</a>
+        <a href="/pt/solucoes.html#agencies"><svg class="icon-sm"><use href="#i-case"/></svg>Ag&ecirc;ncias</a>
+      </div>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="/index.html#pricing">Pre&ccedil;os</a></li>
+    <li class="nav-item"><a class="nav-link" href="/pt/recursos.html">Recursos</a></li>
+    <li class="nav-item">
+      <a class="nav-link" href="/pt/sobre.html">Empresa <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/pt/sobre.html"><svg class="icon-sm"><use href="#i-info"/></svg>Sobre</a>
+        <a href="/pt/contato.html"><svg class="icon-sm"><use href="#i-msg"/></svg>Contato</a>
+      </div>
+    </li>
+  </ul>
+
+  <div class="nav-actions">
+    <div class="nav-item lang-switch">
+      <button class="lang-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Idioma / Language">
+        PT <svg class="chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+      </button>
+      <div class="nav-drop lang-drop">
+        <a href="/articles/true-product-margin-after-ads.html" hreflang="en" lang="en"><span class="lc">EN</span>English</a>
+        <a href="/es/articulos/los-cinco-margenes-de-un-producto.html" hreflang="es" lang="es"><span class="lc">ES</span>Español</a>
+        <a href="/pt/artigos/as-cinco-margens-de-um-produto.html" hreflang="pt" lang="pt" aria-current="true"><span class="lc">PT</span>Português</a>
+      </div>
+    </div>
+    <a class="btn btn--quiet" href="https://analytics.amazebase.pro/login">Entrar</a>
+    <a class="btn btn--primary" href="/index.html#waitlist" data-magnetic>Entre na lista de espera</a>
+    <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navMobile">
+      <svg class="icon"><use href="#i-menu"/></svg>
+    </button>
+  </div>
+
+</nav>
+</div>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="/pt/produto.html#modules">Produto</a>
+  <a href="/pt/solucoes.html">Solu&ccedil;&otilde;es</a>
+  <a href="/index.html#pricing">Pre&ccedil;os</a>
+  <a href="/pt/recursos.html">Recursos</a>
+  <a href="/pt/sobre.html">Sobre</a>
+  <a href="/pt/contato.html">Contato</a>
+  <a class="btn btn--quiet btn--block" href="https://analytics.amazebase.pro/login">Entrar</a>
+  <a class="btn btn--primary btn--block" href="/index.html#waitlist">Entre na lista de espera</a>
+</div>
+</header>
+
+<div class="wrap">
+<p class="back-link"><a href="/pt/recursos.html">&larr; Central de Conhecimento</a></p>
+<header class="article-head">
+  <p class="eyebrow">Lucro e finan&ccedil;as</p>
+  <h1>As cinco margens <span class="accent">de um produto</span></h1>
+  <p class="deck">Como calcular a margem real do produto depois da publicidade — e por que &ldquo;qual &eacute; a minha margem?&rdquo; &eacute; a pergunta errada at&eacute; voc&ecirc; dizer o que est&aacute; decidindo.</p>
+  <p class="meta">
+    <span>AmazeBase</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>13&nbsp;min de leitura</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>Margem e publicidade</span>
+  </p>
+</header>
+
+<!-- HERO IMAGE GOES HERE. Drop the image in as assets/img/hero-true-product-margin-after-ads.webp at 1672x941, uncomment, and write the alt text:
+<figure class="hero-shot">
+  <img src="/assets/img/hero-true-product-margin-after-ads.webp"
+       alt=""
+       width="1672" height="941" loading="eager" decoding="async">
+</figure>
+-->
+
+<div class="shell">
+<main id="main" class="article">
+  <p class="lead">Um produto &eacute; vendido por $40. Custa $10. Ent&atilde;o a margem &eacute; de $30 — e tudo nessa frase est&aacute; errado, menos a conta.</p>
+  <nav class="toc" aria-labelledby="toc-title">
+    <h2 id="toc-title">O que voc&ecirc; vai encontrar neste artigo</h2>
+    <ol>
+      <li><a href="#s1">Cinco margens, n&atilde;o uma</a></li>
+      <li><a href="#s2">O teste de um custo de produto</a></li>
+      <li><a href="#s3">Medido, rateado, presumido</a></li>
+      <li><a href="#s4">Custo total de importa&ccedil;&atilde;o, e com qual base</a></li>
+      <li><a href="#s5">Taxas da Amazon: dois tipos</a></li>
+      <li><a href="#s6">Rateando a publicidade</a></li>
+      <li><a href="#s7">ACOS de equil&iacute;brio</a></li>
+      <li><a href="#s8">A cascata</a></li>
+      <li><a href="#s9">Um n&uacute;mero, uma defini&ccedil;&atilde;o</a></li>
+      <li><a href="#s10">Margem para qual decis&atilde;o?</a></li>
+      <li><a href="#s11">Faixas, n&atilde;o decimais</a></li>
+      <li><a href="#s12">Perguntas</a></li>
+    </ol>
+  </nav>
+
+
+
+
+    <p>A Amazon cobra as taxas dela. A publicidade leva mais. O frete nunca esteve nos $10. Devolu&ccedil;&otilde;es acontecem. Quando o dinheiro finalmente cai na conta, os $30 viraram algo que voc&ecirc; gostaria de saber antes de encomendar mais um cont&ecirc;iner.</p>
+
+    <p>A rea&ccedil;&atilde;o comum &eacute; sair &agrave; ca&ccedil;a do n&uacute;mero real — um valor, por produto, que finalmente diga a verdade. Essa ca&ccedil;a fracassa, e n&atilde;o porque a conta seja dif&iacute;cil.</p>
+
+    <p>Ela fracassa porque <strong>n&atilde;o existe uma margem. Existem cinco, todas corretas, e elas respondem a perguntas diferentes.</strong> O vendedor que sabe qual delas est&aacute; olhando toma decis&otilde;es melhores do que o vendedor com uma vers&atilde;o mais precisa da errada.</p>
+
+    <p>Ent&atilde;o vamos montar as cinco, decidir o que entra em cada uma e depois descobrir qual usar em cada situa&ccedil;&atilde;o.</p>
+
+    <h2 id="s1"><span class="num">01</span>Cinco margens, em ordem</h2>
+      <p>Todo P&amp;L honesto de um produto &eacute; esta escada. Cada degrau subtrai uma categoria e responde a uma pergunta.</p>
+
+      <ul class="levels">
+        <li><span class="n">L1</span><span><b>Receita l&iacute;quida</b><span class="d">Vendas brutas menos reembolsos, devolu&ccedil;&otilde;es e descontos promocionais — o dinheiro que fica com voc&ecirc;.</span></span><span class="q">Por quanto vendeu de fato?</span></li>
+        <li><span class="n">L2</span><span><b>Margem bruta</b><span class="d">Depois do custo total de importa&ccedil;&atilde;o (landed cost) do produto.</span></span><span class="q">A compra foi bem negociada?</span></li>
+        <li><span class="n">L3</span><span><b>Margem ap&oacute;s a Amazon</b><span class="d">Depois da comiss&atilde;o de venda, da log&iacute;stica, da armazenagem e do resto do que a Amazon leva.</span></span><span class="q">Funciona neste canal?</span></li>
+        <li><span class="n">L4</span><span><b>Contribui&ccedil;&atilde;o ap&oacute;s an&uacute;ncios</b><span class="d">Depois da publicidade necess&aacute;ria para vend&ecirc;-lo.</span></span><span class="q">Quanto ele contribui?</span></li>
+        <li><span class="n">L5</span><span><b>Lucro l&iacute;quido da empresa</b><span class="d">Depois das despesas gerais — sal&aacute;rios, software, contabilidade, tudo o que roda de qualquer jeito.</span></span><span class="q">A empresa est&aacute; saud&aacute;vel?</span></li>
+      </ul>
+
+      <p>O ponto estrutural cr&iacute;tico: <strong>L1 a L4 s&atilde;o n&uacute;meros do produto. L5 &eacute; um n&uacute;mero da empresa.</strong> N&atilde;o s&atilde;o n&iacute;veis diferentes da mesma medida — s&atilde;o medidas diferentes. Tentar empurrar as despesas gerais at&eacute; o SKU &eacute; onde morre a maioria dos projetos de lucratividade.</p>
+      <blockquote>
+    <p>Um produto n&atilde;o tem lucro l&iacute;quido. Uma empresa tem. Um produto tem uma contribui&ccedil;&atilde;o.</p>
+  </blockquote>
+
+
+    <h2 id="s2"><span class="num">02</span>O teste para saber se um custo pertence a um produto</h2>
+      <p>Quase toda discuss&atilde;o sobre a lucratividade de um produto &eacute;, no fundo, uma discuss&atilde;o sobre para onde vai um custo. Um &uacute;nico teste resolve a maioria delas:</p>
+
+      <div class="fixbox">
+        <span class="fixbox-k">O teste</span>
+        <p><strong>Esse custo muda porque voc&ecirc; vendeu uma unidade a mais?</strong></p>
+        <p>Sim → ele entra na escada do produto. N&atilde;o → ele pertence &agrave; empresa, abaixo do L4.</p>
+      </div>
+
+      <p>Frete por unidade: sim. Comiss&atilde;o de venda: sim. Separa&ccedil;&atilde;o e embalagem do FBA: sim. A mensalidade do seu contador: n&atilde;o — ela &eacute; a mesma quer voc&ecirc; venda 900&nbsp;unidades, quer venda 1,100.</p>
+      <p>Voc&ecirc; <em>pode</em> dividir $5,000 de contabilidade entre todos os ASINs. Vai sair um n&uacute;mero. Pergunte o que voc&ecirc; faria de diferente sabendo que o Produto A carrega $0.37 de custo de contabilidade, e a resposta &eacute; nada — &eacute; assim que voc&ecirc; sabe que o rateio era enfeite.</p>
+      <p>Pior: ele engana ativamente. Despesas gerais rateadas fazem produtos de baixo volume parecerem n&atilde;o lucrativos s&oacute; porque h&aacute; menos unidades para dividir, e o vendedor que descontinua um deles n&atilde;o eliminou o custo. O custo apenas se redistribui entre os sobreviventes.</p>
+      <p>Mantenha a escada limpa. Deixe as despesas gerais no n&iacute;vel da empresa, onde podem ser administradas pelo que s&atilde;o.</p>
+
+
+    <h2 id="s3"><span class="num">03</span>Toda margem &eacute; feita de tr&ecirc;s tipos de n&uacute;mero</h2>
+      <p>Dois produtos podem mostrar &ldquo;24% de contribui&ccedil;&atilde;o&rdquo;, e um desses n&uacute;meros pode valer dez vezes o outro. A diferen&ccedil;a n&atilde;o est&aacute; na f&oacute;rmula. Est&aacute; na origem dos dados.</p>
+
+      <div class="kinds">
+        <div class="kind m"><span class="lab">Medido</span><span class="txt">Um fato registrado, com um documento por tr&aacute;s. Uma comiss&atilde;o de venda numa linha da liquida&ccedil;&atilde;o. Uma fatura.</span></div>
+        <div class="kind a"><span class="lab">Rateado</span><span class="txt">Um custo real, dividido por uma regra que voc&ecirc; escolheu. O frete de um cont&ecirc;iner com v&aacute;rios SKUs. A armazenagem de tudo o que est&aacute; no armaz&eacute;m.</span></div>
+        <div class="kind s"><span class="lab">Presumido</span><span class="txt">Um n&uacute;mero que ningu&eacute;m mediu. Um valor padr&atilde;o digitado, uma regra pr&aacute;tica do setor, o n&uacute;mero do ano passado repetido sem revis&atilde;o.</span></div>
+      </div>
+
+      <p>Os tr&ecirc;s s&atilde;o leg&iacute;timos. O que n&atilde;o &eacute; leg&iacute;timo &eacute; apresent&aacute;-los da mesma forma. Uma margem feita principalmente de n&uacute;meros medidos aguenta uma decis&atilde;o de compra; uma em que o custo total de importa&ccedil;&atilde;o &eacute; um valor padr&atilde;o digitado e o frete foi distribu&iacute;do por igual, n&atilde;o.</p>
+      <p>Por isso, uma margem de produto deveria trazer a sua base do jeito que um gr&aacute;fico traz o seu eixo: <em>contribui&ccedil;&atilde;o de $9.20 — medida, exceto frete (rateado por unidades) e armazenagem (rateada por participa&ccedil;&atilde;o no faturamento).</em></p>
+      <p>Esse &uacute;nico h&aacute;bito faz mais pela confian&ccedil;a do que qualquer refinamento da f&oacute;rmula. Ele tamb&eacute;m faz o sistema dizer o que voc&ecirc; precisa corrigir: os dados presumidos s&atilde;o a sua fila de trabalho.</p>
+
+
+    <h2 id="s4"><span class="num">04</span>Custo total de importa&ccedil;&atilde;o — e qual base voc&ecirc; est&aacute; usando</h2>
+      <p>Usar o pre&ccedil;o unit&aacute;rio do fornecedor como custo do produto &eacute; o erro isolado mais comum na contabilidade da Amazon, e ele costuma errar por 20 a 40%.</p>
+      <p>O custo total de importa&ccedil;&atilde;o &eacute; tudo o que &eacute; preciso para deixar uma unidade pronta para a venda:</p>
+<pre><code>fabrica&ccedil;&atilde;o + frete internacional + imposto de importa&ccedil;&atilde;o + alf&acirc;ndega
++ inspe&ccedil;&atilde;o + prepara&ccedil;&atilde;o + etiquetagem + envio &agrave; Amazon
+────────────────────────────────────────────────────────────────────
+= custo total de importa&ccedil;&atilde;o por unidade</code></pre>
+      <p>Um pre&ccedil;o de f&aacute;brica de $8 com $3 de todo o resto &eacute; um produto de $11. Em 10,000&nbsp;unidades, s&atilde;o $30,000 — a diferen&ccedil;a entre um bom ano e um ano parado, invis&iacute;vel no n&uacute;mero que a maioria dos vendedores usa.</p>
+
+      <h3>A parte que ningu&eacute;m menciona: existem tr&ecirc;s custos totais de importa&ccedil;&atilde;o</h3>
+      <p>Mesmo com registros perfeitos, a mesma unidade tem mais de um custo defens&aacute;vel, dependendo do lote de onde voc&ecirc; diz que ela saiu:</p>
+      <ul>
+        <li><strong>FIFO</strong> — o custo do lote real mais antigo. Certo para saber quanto uma venda realmente custou para voc&ecirc;.</li>
+        <li><strong>M&eacute;dia ponderada</strong> — todos os lotes juntos. Mais est&aacute;vel, e o que a maioria dos contadores prefere.</li>
+        <li><strong>&Uacute;ltimo conhecido</strong> — o lote mais recente. Certo para <em>devo comprar mais disto?</em>, porque &eacute; o que a pr&oacute;xima unidade vai custar.</li>
+      </ul>
+      <p>Todos est&atilde;o corretos e eles discordam — muitas vezes em 10 a 15% depois de uma oscila&ccedil;&atilde;o no pre&ccedil;o do frete. Duas regras mant&ecirc;m a sanidade: <strong>diga qual base um n&uacute;mero usa</strong> e <strong>nunca ranqueie dois produtos em bases diferentes.</strong> Uma compara&ccedil;&atilde;o entre bases n&atilde;o &eacute; um caso lim&iacute;trofe; &eacute; um erro de categoria.</p>
+
+
+    <h2 id="s5"><span class="num">05</span>As taxas da Amazon v&ecirc;m em dois tipos, e s&oacute; um &eacute; de fato por produto</h2>
+      <p>Essa distin&ccedil;&atilde;o importa mais do que o espa&ccedil;o que costuma receber.</p>
+      <p><strong>Taxas de transa&ccedil;&atilde;o</strong> — comiss&atilde;o de venda, log&iacute;stica, taxa de administra&ccedil;&atilde;o de reembolso — chegam na linha da liquida&ccedil;&atilde;o <em>ligadas &agrave; venda que as gerou</em>. S&atilde;o medidas. Atribua e siga em frente.</p>
+      <p><strong>Cobran&ccedil;as da conta</strong> — armazenagem mensal, armazenagem de longo prazo, coloca&ccedil;&atilde;o de estoque na entrada, remo&ccedil;&otilde;es, a assinatura — chegam como cobran&ccedil;as no n&iacute;vel da conta. A Amazon n&atilde;o diz qual ASIN deve o qu&ecirc;.</p>
+      <p>Ent&atilde;o elas precisam ser rateadas, e a regra que voc&ecirc; escolhe molda todos os n&uacute;meros que v&ecirc;m depois:</p>
+      <ul>
+        <li><strong>Por participa&ccedil;&atilde;o no faturamento</strong> — simples; cobra sistematicamente demais dos seus SKUs caros e de giro r&aacute;pido, e de menos daquele lento e volumoso que de fato ocupa a prateleira.</li>
+        <li><strong>Por unidades</strong> — melhor para tudo o que &eacute; cobrado por unidade manuseada.</li>
+        <li><strong>Por p&eacute;s c&uacute;bicos ocupados &times; dias</strong> — o honesto para a armazenagem, porque &eacute; literalmente assim que a Amazon cobra.</li>
+      </ul>
+      <p>A armazenagem rateada por faturamento &eacute; a cl&aacute;ssica distor&ccedil;&atilde;o silenciosa: o produto lento que ocupa um palete por oito meses parece mais barato de manter do que o r&aacute;pido que nunca fica parado. Como esse &eacute; justamente o SKU que voc&ecirc; est&aacute; tentando encontrar, a regra de rateio derruba a an&aacute;lise.</p>
+      <p>Seja qual for a sua escolha — identifique-a e use a mesma regra em todo lugar.</p>
+
+
+    <h2 id="s6"><span class="num">06</span>Ratear a publicidade, sem fingir</h2>
+      <p>Esta &eacute; a parte realmente dif&iacute;cil, e ela tem uma resposta vi&aacute;vel.</p>
+
+      <h3>Comece pelo que j&aacute; &eacute; por produto</h3>
+      <p>O relat&oacute;rio de produtos anunciados atribui o gasto diretamente a um SKU. Onde ele existir, use-o — sem rateio, sem metodologia para defender. Isso cobre a maior parte do gasto da maioria dos vendedores.</p>
+
+      <h3>Para campanhas com v&aacute;rios produtos, divida pelas vendas atribu&iacute;das</h3>
+      <p>Uma campanha que anuncia tr&ecirc;s ASINs gasta $300 e gera vendas atribu&iacute;das nos tr&ecirc;s. Divida os $300 na propor&ccedil;&atilde;o das vendas atribu&iacute;das de cada produto dentro dessa campanha. &Eacute; simples, &eacute; reproduz&iacute;vel e se degrada de forma sensata — uma campanha com um &uacute;nico produto recebe uma resposta exata.</p>
+
+      <h3>Para o gasto que n&atilde;o cabe em nenhum produto, pare de ratear</h3>
+      <p>Campanhas de marca, p&uacute;blicos de Sponsored Display, tr&aacute;fego externo, a mensalidade da ag&ecirc;ncia. Espalhar esses gastos pelos ASINs conforme o faturamento &eacute; como um produto saud&aacute;vel acaba condenado por um custo que nunca gerou.</p>
+      <p>Esses gastos pertencem a uma <strong>linha de marketing no n&iacute;vel da empresa</strong> — abaixo do L4, ao lado das despesas gerais. Isso n&atilde;o &eacute; um truque; &eacute; uma afirma&ccedil;&atilde;o sobre para que o dinheiro serviu. Ele foi gasto na marca, n&atilde;o num SKU.</p>
+
+      <div class="fixbox">
+        <span class="fixbox-k">O princ&iacute;pio</span>
+        <p>A categoria escolhe a linha; a atribui&ccedil;&atilde;o escolhe o SKU. Se a atribui&ccedil;&atilde;o n&atilde;o consegue apontar um produto, o custo n&atilde;o recebe um — ele sobe um n&iacute;vel. Dinheiro n&atilde;o atribu&iacute;do deveria ficar <em>vis&iacute;vel</em>, n&atilde;o escondido por ter sido dividido.</p>
+      </div>
+
+      <h3>E cuidado com a palavra &ldquo;atribu&iacute;do&rdquo;</h3>
+      <p>Se um produto faz $100,000 em vendas e $30,000 s&atilde;o atribu&iacute;dos aos an&uacute;ncios, isso n&atilde;o s&atilde;o $30,000 de faturamento incremental. Alguns desses clientes iam comprar de qualquer jeito.</p>
+      <p>A atribui&ccedil;&atilde;o diz como a plataforma de an&uacute;ncios distribuiu o cr&eacute;dito dentro da sua pr&oacute;pria janela de medi&ccedil;&atilde;o. A incrementalidade — o que teria acontecido sem o an&uacute;ncio — &eacute; outra pergunta, que os dados de atribui&ccedil;&atilde;o n&atilde;o conseguem responder. Use a atribui&ccedil;&atilde;o para o rateio, que &eacute; para o que ela serve. N&atilde;o a use como afirma&ccedil;&atilde;o sobre causa e efeito.</p>
+
+
+    <h2 id="s7"><span class="num">07</span>O ACOS de equil&iacute;brio &eacute; a sua margem L3</h2>
+      <p>O ACOS n&atilde;o tem nada de errado. Ele s&oacute; responde a uma pergunta sobre efici&ecirc;ncia de publicidade, n&atilde;o sobre lucro — e os vendedores insistem em pedir que ele fa&ccedil;a o segundo trabalho.</p>
+      <p>Um n&uacute;mero liga os dois:</p>
+<pre><code>ACOS de equil&iacute;brio = margem ap&oacute;s as taxas da Amazon &divide; receita l&iacute;quida</code></pre>
+      <p>Ou seja: <strong>o seu ACOS de equil&iacute;brio &eacute; o percentual da sua margem L3.</strong> Gaste essa fra&ccedil;&atilde;o de uma venda em an&uacute;ncios e voc&ecirc; n&atilde;o ganha nada. Abaixo disso, voc&ecirc; lucra; acima, est&aacute; comprando faturamento com contribui&ccedil;&atilde;o.</p>
+      <p>Essa identidade &eacute; o que d&aacute; sentido ao ACOS, porque ela &eacute; por produto. Pegue os dois produtos que as pessoas sempre comparam:</p>
+
+      <div class="tblwrap">
+<div class="tblwrap"><table>
+          <caption>Mesmo pre&ccedil;o, mesmo ACOS, situa&ccedil;&otilde;es completamente diferentes. O ACOS nunca foi o n&uacute;mero &uacute;til — a folga era.</caption>
+          <thead>
+            <tr><th scope="col">Por unidade</th><th scope="col">Produto A</th><th scope="col">Produto B</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Receita l&iacute;quida</td><td>$40.00</td><td>$40.00</td></tr>
+            <tr><td class="neg">Custo total de importa&ccedil;&atilde;o</td><td class="neg">−$8.00</td><td class="neg">−$15.00</td></tr>
+            <tr><td class="neg">Taxas da Amazon</td><td class="neg">−$10.00</td><td class="neg">−$12.00</td></tr>
+            <tr><td>Margem ap&oacute;s a Amazon</td><td>$22.00</td><td>$13.00</td></tr>
+            <tr><td>ACOS de equil&iacute;brio</td><td>55%</td><td>32.5%</td></tr>
+            <tr><td>ACOS real</td><td>20%</td><td>20%</td></tr>
+            <tr><td>Folga</td><td>35 p.p.</td><td>12.5 p.p.</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <p>O A aguenta um m&ecirc;s ruim, uma guerra de lances de um concorrente e um aumento de taxa. O B est&aacute; a uma &uacute;nica mudan&ccedil;a de anunciar no preju&iacute;zo. ACOS id&ecirc;ntico; risco oposto. Um painel que mostra os dois como 20% verde n&atilde;o disse nada a voc&ecirc;.</p>
+      <p>O TACOS — gasto total com an&uacute;ncios sobre o faturamento total — tamb&eacute;m vale acompanhar, mas &eacute; um indicador de sa&uacute;de do neg&oacute;cio, n&atilde;o uma margem. Ele mostra o quanto o seu faturamento passou a depender do tr&aacute;fego pago. &Uacute;til, mas &eacute; outra pergunta.</p>
+
+
+    <h2 id="s8"><span class="num">08</span>Um produto, de cima a baixo</h2>
+      <p>Um produto de $40 com taxa de devolu&ccedil;&atilde;o de 3.5%, custo total de importa&ccedil;&atilde;o de $11 e taxas honestas.</p>
+
+      <figure class="art-diagram">
+        <h4>Cascata de contribui&ccedil;&atilde;o — por unidade vendida</h4>
+        <p class="sub">Cada barra &eacute; um n&iacute;vel da escada. A &uacute;ltima &eacute; o que o produto contribui para a empresa.</p>
+        <svg viewBox="0 0 700 300" role="img" aria-label="Gr&aacute;fico de cascata, por unidade. Receita l&iacute;quida de 38.60 d&oacute;lares, menos custo total de importa&ccedil;&atilde;o de 11.00, menos taxas da Amazon de 12.00, menos publicidade de 5.00, menos outros custos diretos de 1.40, deixando uma contribui&ccedil;&atilde;o de 9.20 d&oacute;lares.">
+          <line class="grid" x1="60" y1="250" x2="672" y2="250" stroke="var(--rule-strong)"></line>
+          <line class="grid" x1="60" y1="195" x2="672" y2="195" stroke-dasharray="2 4"></line>
+          <line class="grid" x1="60" y1="140" x2="672" y2="140" stroke-dasharray="2 4"></line>
+          <line class="grid" x1="60" y1="85" x2="672" y2="85" stroke-dasharray="2 4"></line>
+          <line class="grid" x1="60" y1="30" x2="672" y2="30" stroke-dasharray="2 4"></line>
+          <text class="ax" x="52" y="253" text-anchor="end">$0</text>
+          <text class="ax" x="52" y="198" text-anchor="end">$10</text>
+          <text class="ax" x="52" y="143" text-anchor="end">$20</text>
+          <text class="ax" x="52" y="88" text-anchor="end">$30</text>
+          <text class="ax" x="52" y="33" text-anchor="end">$40</text>
+
+          <!-- connectors -->
+          <line x1="144" y1="37.7" x2="172" y2="37.7" stroke="var(--rule-strong)" stroke-dasharray="3 3"></line>
+          <line x1="244" y1="98.2" x2="272" y2="98.2" stroke="var(--rule-strong)" stroke-dasharray="3 3"></line>
+          <line x1="344" y1="164.2" x2="372" y2="164.2" stroke="var(--rule-strong)" stroke-dasharray="3 3"></line>
+          <line x1="444" y1="191.7" x2="472" y2="191.7" stroke="var(--rule-strong)" stroke-dasharray="3 3"></line>
+          <line x1="544" y1="199.4" x2="572" y2="199.4" stroke="var(--rule-strong)" stroke-dasharray="3 3"></line>
+
+          <!-- bars -->
+          <rect x="72"  y="37.7"  width="72" height="212.3" fill="var(--accent)" rx="2"></rect>
+          <rect x="172" y="37.7"  width="72" height="60.5"  fill="var(--cost)" rx="2"></rect>
+          <rect x="272" y="98.2"  width="72" height="66"    fill="var(--cost)" rx="2"></rect>
+          <rect x="372" y="164.2" width="72" height="27.5"  fill="var(--cost)" rx="2"></rect>
+          <rect x="472" y="191.7" width="72" height="7.7"   fill="var(--cost)" rx="2"></rect>
+          <rect x="572" y="199.4" width="72" height="50.6"  fill="var(--accent)" rx="2"></rect>
+
+          <!-- values above bars -->
+          <text class="val" x="108" y="30"    text-anchor="middle">$38.60</text>
+          <text class="val" x="208" y="30"    text-anchor="middle">−$11.00</text>
+          <text class="val" x="308" y="90.5"  text-anchor="middle">−$12.00</text>
+          <text class="val" x="408" y="156.5" text-anchor="middle">−$5.00</text>
+          <text class="val" x="508" y="184"   text-anchor="middle">−$1.40</text>
+          <text class="val" x="608" y="191.7" text-anchor="middle">$9.20</text>
+
+          <!-- x labels -->
+          <text class="lbl-b" x="108" y="268" text-anchor="middle">Receita l&iacute;quida</text>
+          <text class="lbl"   x="108" y="281" text-anchor="middle">L1</text>
+          <text class="lbl-b" x="208" y="268" text-anchor="middle">Custo de importa&ccedil;&atilde;o</text>
+          <text class="lbl"   x="208" y="281" text-anchor="middle">→ L2 · 71.5%</text>
+          <text class="lbl-b" x="308" y="268" text-anchor="middle">Taxas da Amazon</text>
+          <text class="lbl"   x="308" y="281" text-anchor="middle">→ L3 · 40.4%</text>
+          <text class="lbl-b" x="408" y="268" text-anchor="middle">Publicidade</text>
+          <text class="lbl"   x="408" y="281" text-anchor="middle">→ L4 · 27.5%</text>
+          <text class="lbl-b" x="508" y="268" text-anchor="middle">Outros diretos</text>
+          <text class="lbl"   x="508" y="281" text-anchor="middle">preparo, devolu&ccedil;&otilde;es</text>
+          <text class="lbl-b" x="608" y="268" text-anchor="middle">Contribui&ccedil;&atilde;o</text>
+          <text class="lbl"   x="608" y="281" text-anchor="middle">23.8%</text>
+        </svg>
+        <figcaption>A receita l&iacute;quida &eacute; de $40.00 brutos menos uma provis&atilde;o de $1.40 para devolu&ccedil;&otilde;es. O ACOS de equil&iacute;brio deste produto &eacute; de 40.4% — a sua margem L3. Hoje ele gasta 13% da receita l&iacute;quida em an&uacute;ncios, ent&atilde;o tem 27 pontos de folga.</figcaption>
+      </figure>
+
+      <p>Quatro percentuais, todos verdadeiros, todos sobre o mesmo produto: 71.5% de margem bruta, 40.4% ap&oacute;s a Amazon, 27.5% ap&oacute;s an&uacute;ncios, 23.8% de contribui&ccedil;&atilde;o. Cite qualquer um deles sem dizer qual &eacute; e voc&ecirc; teve um mal-entendido, n&atilde;o uma conversa.</p>
+      <p>E repare que os $30 do come&ccedil;o n&atilde;o aparecem em lugar nenhum deste gr&aacute;fico. Eles nunca existiram.</p>
+
+
+    <h2 id="s9"><span class="num">09</span>Um n&uacute;mero, uma defini&ccedil;&atilde;o, em todo lugar</h2>
+      <p>A falha que destr&oacute;i a confian&ccedil;a em sil&ecirc;ncio n&atilde;o &eacute; uma margem imprecisa. S&atilde;o <strong>duas margens precisas que discordam.</strong></p>
+      <p>Isso acontece com facilidade. A tela de publicidade calcula a margem ap&oacute;s an&uacute;ncios com custo FIFO, antes dos reembolsos. A tela de estoque calcula a contribui&ccedil;&atilde;o com custo m&eacute;dio, depois dos reembolsos. As duas s&atilde;o defens&aacute;veis. As duas foram feitas por algu&eacute;m cuidadoso. O vendedor abre duas abas, v&ecirc; 27% e 24% para o mesmo SKU e, a partir da&iacute;, n&atilde;o confia em nenhuma.</p>
+      <p>Tr&ecirc;s regras evitam isso:</p>
+      <ul>
+        <li><strong>Uma defini&ccedil;&atilde;o por n&iacute;vel, mantida em um s&oacute; lugar.</strong> Toda tela l&ecirc; essa defini&ccedil;&atilde;o; nenhuma a recalcula por conta pr&oacute;pria.</li>
+        <li><strong>Toda margem declara a sua base de custo e a sua janela.</strong> &ldquo;Custo total de importa&ccedil;&atilde;o FIFO, &uacute;ltimos 90&nbsp;dias de dados, reembolsos inclu&iacute;dos.&rdquo;</li>
+        <li><strong>Os reembolsos ficam num degrau fixo.</strong> Onde quer que voc&ecirc; os coloque, coloque-os sempre ali. Mover os reembolsos entre n&iacute;veis &eacute; a causa mais comum de duas abas que discordam.</li>
+      </ul>
+      <p>Se duas telas precisam divergir — e &agrave;s vezes precisam mesmo, porque respondem a perguntas diferentes — diga isso na tela. Uma diferen&ccedil;a com nome &eacute; um recurso. Uma sem explica&ccedil;&atilde;o &eacute; um bug que o usu&aacute;rio encontra antes de voc&ecirc;.</p>
+
+
+    <h2 id="s10"><span class="num">10</span>Margem para qual decis&atilde;o?</h2>
+      <p>Agora a escada mostra para que serve. O n&iacute;vel certo n&atilde;o &eacute; o mais profundo — &eacute; o que corresponde &agrave; escolha que voc&ecirc; tem pela frente.</p>
+
+      <div class="tblwrap">
+<div class="tblwrap"><table>
+          <caption>Usar o L4 numa negocia&ccedil;&atilde;o com o fornecedor, ou o L2 para um or&ccedil;amento de an&uacute;ncios, &eacute; assim que bons n&uacute;meros produzem decis&otilde;es ruins.</caption>
+          <thead>
+            <tr><th scope="col">A decis&atilde;o</th><th scope="col">Use</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Negociar com um fornecedor</td><td>L2, margem bruta</td></tr>
+            <tr><td>Este SKU deveria estar na Amazon?</td><td>L3, ap&oacute;s a Amazon</td></tr>
+            <tr><td>Aumentar ou cortar o or&ccedil;amento de PPC</td><td>L3, como ACOS de equil&iacute;brio</td></tr>
+            <tr><td>Quanto espa&ccedil;o eu tenho no pre&ccedil;o</td><td>L4, contribui&ccedil;&atilde;o</td></tr>
+            <tr><td>Qual SKU recebe os pr&oacute;ximos $30k de estoque</td><td>L4 &divide; capital empatado</td></tr>
+            <tr><td>Podemos bancar mais uma contrata&ccedil;&atilde;o</td><td>L5, lucro l&iacute;quido</td></tr>
+            <tr><td>Vale a pena fazer este lan&ccedil;amento</td><td>L4 prevista</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <p>A linha do estoque &eacute; a que os vendedores mais erram. Quando o capital &eacute; a restri&ccedil;&atilde;o — e, para a maioria dos vendedores, &eacute; — o melhor produto n&atilde;o &eacute; o de maior margem de contribui&ccedil;&atilde;o. &Eacute; o de maior <strong>contribui&ccedil;&atilde;o por d&oacute;lar por ano</strong>: contribui&ccedil;&atilde;o por unidade &times; unidades por ano &divide; d&oacute;lares empatados. Uma margem de 40% que gira duas vezes perde para uma margem de 20% que gira seis vezes, sempre.</p>
+
+
+    <h2 id="s11"><span class="num">11</span>Faixas, n&atilde;o decimais</h2>
+      <p>Uma margem exibida como <strong>27.43%</strong> alega uma precis&atilde;o que n&atilde;o pode ter quando o frete foi rateado por uma regra que voc&ecirc; escolheu e as devolu&ccedil;&otilde;es vieram de uma m&eacute;dia hist&oacute;rica. Os decimais n&atilde;o acrescentam exatid&atilde;o. Acrescentam uma confian&ccedil;a que n&atilde;o foi conquistada.</p>
+      <p>Melhor assim:</p>
+<pre><code>Contribui&ccedil;&atilde;o ap&oacute;s an&uacute;ncios    ~27%   (22% – 30%)
+
+  baixo  frete rateado por unidades, devolu&ccedil;&otilde;es de 5%
+  base   frete rateado por unidades, devolu&ccedil;&otilde;es de 3.5%
+  alto   frete medido, devolu&ccedil;&otilde;es de 2%</code></pre>
+      <p>A faixa n&atilde;o &eacute; ficar em cima do muro. &Eacute; a resposta &agrave; &uacute;nica pergunta que importa em seguida: <em>em qual premissa esta conclus&atilde;o se apoia, e quanto eu precisaria estar errado para a decis&atilde;o virar?</em></p>
+      <p>&Agrave;s vezes a faixa &eacute; estreita e a decis&atilde;o &eacute; f&aacute;cil. &Agrave;s vezes ela cruza o zero, e a&iacute; o resultado &uacute;til n&atilde;o &eacute; uma margem — &eacute; uma lista dos dois dados que vale a pena ir medir direito.</p>
+
+
+    <h2 id="s12">Perguntas frequentes</h2>
+      <div class="faq">
+        <details open>
+          <summary>Qual &eacute; a melhor forma de calcular a margem real do produto depois dos custos de publicidade?</summary>
+          <p>Monte uma escada de cinco n&iacute;veis em vez de um &uacute;nico n&uacute;mero: receita l&iacute;quida ap&oacute;s reembolsos, menos o custo total de importa&ccedil;&atilde;o, menos as taxas da Amazon, menos a publicidade, com as despesas gerais da empresa mantidas abaixo e fora do produto. O quarto n&iacute;vel — contribui&ccedil;&atilde;o ap&oacute;s an&uacute;ncios — &eacute; o resultado econ&ocirc;mico real do produto. Identifique cada dado como medido, rateado ou presumido, para que o n&uacute;mero carregue a sua pr&oacute;pria confiabilidade.</p>
+        </details>
+        <details>
+          <summary>Devo ratear as despesas gerais entre os produtos?</summary>
+          <p>Em geral, n&atilde;o. Se um custo n&atilde;o muda quando voc&ecirc; vende uma unidade a mais, ratear esse custo faz produtos de baixo volume parecerem ruins por motivos aritm&eacute;ticos e n&atilde;o muda nenhuma decis&atilde;o. Mantenha as despesas gerais no n&iacute;vel da empresa e compare os produtos pela contribui&ccedil;&atilde;o.</p>
+        </details>
+        <details>
+          <summary>Como divido o gasto com an&uacute;ncios entre v&aacute;rios produtos de uma mesma campanha?</summary>
+          <p>Use os dados de produtos anunciados por SKU onde eles existirem. Para campanhas realmente com v&aacute;rios produtos, divida o gasto na propor&ccedil;&atilde;o das vendas atribu&iacute;das de cada produto dentro daquela campanha. O gasto que n&atilde;o cabe em nenhum produto — campanhas de marca, tr&aacute;fego externo, honor&aacute;rios de ag&ecirc;ncia — vai para uma linha de marketing no n&iacute;vel da empresa, em vez de ser espalhado pelos ASINs.</p>
+        </details>
+        <details>
+          <summary>O que &eacute; o ACOS de equil&iacute;brio e como calcul&aacute;-lo?</summary>
+          <p>Margem ap&oacute;s as taxas da Amazon &divide; receita l&iacute;quida — ou seja, o percentual da sua margem L3. &Eacute; o ACOS em que anunciar uma venda gera contribui&ccedil;&atilde;o zero. A dist&acirc;ncia entre ele e o seu ACOS real &eacute; a sua verdadeira folga de publicidade, e ela &eacute; por produto.</p>
+        </details>
+        <details>
+          <summary>Por que duas ferramentas mostram margens diferentes para o mesmo produto?</summary>
+          <p>Quase sempre por um destes tr&ecirc;s motivos: uma base de custo diferente (FIFO vs m&eacute;dia ponderada vs &uacute;ltimo conhecido), reembolsos colocados num n&iacute;vel diferente ou uma regra de rateio diferente para cobran&ccedil;as no n&iacute;vel da conta, como a armazenagem. Os tr&ecirc;s podem estar corretos individualmente. &Eacute; por isso que toda margem deveria declarar a sua base e a sua janela.</p>
+        </details>
+        <details>
+          <summary>Margem de contribui&ccedil;&atilde;o &eacute; o mesmo que lucro?</summary>
+          <p>N&atilde;o. A contribui&ccedil;&atilde;o &eacute; o que um produto deixa para cobrir os custos de manter a empresa funcionando. O lucro &eacute; o que sobra depois desses custos. Um produto com contribui&ccedil;&atilde;o forte pode estar dentro de um neg&oacute;cio que d&aacute; preju&iacute;zo, e muitas vezes est&aacute;.</p>
+        </details>
+        <details>
+          <summary>O custo do produto deve ser FIFO ou m&eacute;dio?</summary>
+          <p>FIFO para saber quanto uma venda passada realmente custou. M&eacute;dia ponderada para relat&oacute;rios mais est&aacute;veis e para a maioria dos fins cont&aacute;beis. &Uacute;ltimo conhecido para decidir se vale comprar mais, j&aacute; que reflete o que a pr&oacute;xima unidade vai custar. Escolha por decis&atilde;o, identifique a base e nunca ranqueie dois produtos em bases diferentes.</p>
+        </details>
+      </div>
+
+
+    <section class="sec">
+      <h2>N&atilde;o &eacute; &ldquo;qual &eacute; a minha margem&rdquo;</h2>
+      <p>A pergunta n&atilde;o &eacute; qual &eacute; a sua margem. &Eacute; quais produtos est&atilde;o criando valor, quais o est&atilde;o consumindo e o que os n&uacute;meros s&atilde;o s&oacute;lidos o bastante para justificar que voc&ecirc; fa&ccedil;a a respeito.</p>
+      <p>Cinco n&iacute;veis, cada um honesto sobre o que inclui e de onde vieram os seus dados, respondem a isso. Um &uacute;nico n&uacute;mero levado a duas casas decimais n&atilde;o responde — por mais cuidado que se tenha tido ao calcul&aacute;-lo.</p>
+    </section>
+
+
+</main>
+
+<aside class="rail" aria-label="N&uacute;meros-chave deste artigo">
+  <div class="rail-card">
+    <span class="rail-k">Margens por produto</span>
+    <span class="rail-v">Cinco</span>
+    <p>Do L1 ao L5. Elas discordam de prop&oacute;sito, porque cada uma responde a uma decis&atilde;o diferente.</p>
+  </div>
+  <div class="rail-card">
+    <span class="rail-k">Falsa precis&atilde;o</span>
+    <span class="rail-v is-amber">27.43%</span>
+    <p>Uma margem citada com duas casas decimais em cima de um frete rateado e de uma taxa de devolu&ccedil;&atilde;o m&eacute;dia.</p>
+  </div>
+  <div class="rail-card">
+    <span class="rail-k">A pergunta certa</span>
+    <span class="rail-v is-violet">Qual decis&atilde;o?</span>
+    <p>A margem para reprecificar, a margem para repor e a margem para descontinuar um produto s&atilde;o tr&ecirc;s n&uacute;meros diferentes.</p>
+  </div>
+  <p class="rail-src">N&uacute;meros do pr&oacute;prio exemplo deste artigo, n&atilde;o de uma pesquisa de mercado.</p>
+</aside>
+
+</div><!-- /.shell -->
+
+</div><!-- /.wrap -->
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+  <symbol id="i-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12.5 17v-4a2.5 2.5 0 015 0v4"/></symbol>
+  <symbol id="i-tw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M20 4L4 20"/></symbol>
+  <symbol id="i-gh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4 1.4-4-2.2-5.6-2.6M15 21v-3.4a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 2.6 5.5 2.9 5.5 2.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 9.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></symbol>
+</defs>
+</svg>
+
+<footer class="footer">
+<div class="container">
+
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/index.html" class="brand" aria-label="P&aacute;gina inicial da AmazeBase">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+        </svg>
+        <span data-brand>AmazeBase</span>
+      </a>
+      <p>O sistema operacional para vendedores da Amazon. Tudo conectado, tudo sincronizado.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Produto</h4>
+      <a href="/pt/produto.html#modules">Produto</a>
+      <a href="/index.html#pricing">Pre&ccedil;os</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Recursos</h4>
+      <a href="/pt/recursos.html">Central de Conhecimento</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <a href="/pt/sobre.html">Sobre</a>
+      <a href="/pt/contato.html">Contato</a>
+      <a href="/privacy.html">Privacidade</a>
+      <a href="/terms.html">Termos</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>&copy; 2026 <span data-brand>AmazeBase</span>. Todos os direitos reservados.</span>
+    <div class="footer-social">
+      <a href="#" aria-label="LinkedIn"><svg class="icon-sm"><use href="#i-in"/></svg></a>
+      <a href="#" aria-label="X"><svg class="icon-sm"><use href="#i-tw"/></svg></a>
+      <a href="#" aria-label="GitHub"><svg class="icon-sm"><use href="#i-gh"/></svg></a>
+    </div>
+  </div>
+
+</div>
+</footer>
+
+<script src="/js/main.js" defer></script>
+</body>
+</html>

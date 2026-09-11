@@ -1,0 +1,175 @@
+{
+ "str": {
+  "All Resources": "Todos os recursos",
+  "All": "Todos",
+  "Results": "Resultados",
+  "Latest Resources": "Recursos mais recentes",
+  "resource": "recurso",
+  "resources": "recursos",
+  " match": " com esses filtros",
+  "Nothing featured yet": "Nada em destaque ainda",
+  "Mark a resource with “featured” in data/resources.json and it will appear here.": "Marque um recurso com “featured” em data/resources.json e ele vai aparecer aqui.",
+  "No resources published yet": "Nenhum recurso publicado ainda",
+  "This hub is built and ready. Add entries to data/resources.json and they appear here — counts, filters and search all follow automatically.": "Esta central está montada e pronta. Adicione entradas em data/resources.json e elas aparecem aqui — contagens, filtros e pesquisa acompanham automaticamente.",
+  "Nothing matches those filters": "Nada corresponde a esses filtros",
+  "Try a different category, format or search term.": "Tente outra categoria, outro formato ou outro termo de pesquisa.",
+  "Couldn't load the resource list": "Não foi possível carregar a lista de recursos",
+  " min": " min",
+  "Sending…": "Enviando…",
+  "Tell us a little more about what you'd like.": "Conte um pouco mais sobre o que você gostaria de ver.",
+  "That email address doesn't look right.": "Esse endereço de e-mail não parece correto.",
+  "Too many requests just now. Please try again later.": "Muitas solicitações neste momento. Tente de novo mais tarde.",
+  "We couldn't send that. Please try again.": "Não conseguimos enviar. Tente de novo.",
+  "Something went wrong.": "Algo deu errado."
+ },
+ "taxonomy": {
+  "categories": {
+   "inventory": "Estoque",
+   "ppc": "Publicidade e PPC",
+   "profit": "Lucro e finanças",
+   "growth": "Guia de crescimento",
+   "tools": "Ferramentas e tutoriais",
+   "research": "Pesquisa de produtos"
+  },
+  "formats": {
+   "article": {
+    "label_pt": "Artigos",
+    "label_one_pt": "Artigo"
+   },
+   "video": {
+    "label_pt": "Vídeos",
+    "label_one_pt": "Vídeo"
+   },
+   "podcast": {
+    "label_pt": "Podcasts",
+    "label_one_pt": "Podcast"
+   },
+   "webinar": {
+    "label_pt": "Webinars",
+    "label_one_pt": "Webinar"
+   },
+   "guide": {
+    "label_pt": "Guias e e-books",
+    "label_one_pt": "Guia"
+   },
+   "template": {
+    "label_pt": "Modelos",
+    "label_one_pt": "Modelo"
+   },
+   "case-study": {
+    "label_pt": "Estudos de caso",
+    "label_one_pt": "Estudo de caso"
+   }
+  },
+  "levels": {
+   "beginner": "Iniciante",
+   "expert": "Avançado"
+  },
+  "languages": {
+   "en": "Inglês",
+   "es": "Espanhol",
+   "pt": "Português"
+  }
+ },
+ "new_language_row": {
+  "id": "pt",
+  "label": "Portuguese",
+  "label_es": "Portugués",
+  "label_pt": "Português"
+ },
+ "topics": {
+  "ACOS": "ACOS",
+  "Advertising Debt": "Dívida de publicidade",
+  "Assumptions": "Premissas",
+  "Attention": "Atenção",
+  "Attribution": "Atribuição",
+  "Brand Building": "Construção de marca",
+  "Business Intelligence": "Inteligência de negócios",
+  "Campaign Strategy": "Estratégia de campanhas",
+  "Cannibalisation": "Canibalização",
+  "Capital Allocation": "Alocação de capital",
+  "Capital Velocity": "Velocidade do capital",
+  "Cash Conversion Cycle": "Ciclo de conversão de caixa",
+  "Cash Flow": "Fluxo de caixa",
+  "Cash Flow Management": "Gestão do fluxo de caixa",
+  "Competitive Moat": "Diferencial competitivo",
+  "Compounding": "Efeito composto",
+  "Concentration": "Concentração",
+  "Confirmation Bias": "Viés de confirmação",
+  "Constraints": "Restrições",
+  "Coordination Cost": "Custo de coordenação",
+  "Culture": "Cultura",
+  "Customer Acquisition": "Aquisição de clientes",
+  "Customer Lifetime Value": "Valor vitalício do cliente (LTV)",
+  "Customer Research": "Pesquisa com clientes",
+  "Data Quality": "Qualidade dos dados",
+  "Days of Supply": "Dias de cobertura",
+  "Decision Making": "Tomada de decisão",
+  "Delegation": "Delegação",
+  "Demand Forecasting": "Previsão de demanda",
+  "Demand Scenarios": "Cenários de demanda",
+  "Dependency": "Dependência",
+  "Diversification": "Diversificação",
+  "Expected Value": "Valor esperado",
+  "Exploration": "Exploração",
+  "Feedback Loops": "Ciclos de feedback",
+  "Focus": "Foco",
+  "Forecasting Process": "Processo de previsão",
+  "Founder Bottleneck": "Gargalo do fundador",
+  "Incentives": "Incentivos",
+  "Incrementality": "Incrementalidade",
+  "Inventory Forecasting": "Previsão de estoque",
+  "Inventory Value": "Valor do estoque",
+  "KPIs": "KPIs",
+  "Keyword Overlap": "Sobreposição de palavras-chave",
+  "Landed Cost": "Custo total por unidade (landed cost)",
+  "Lead Time": "Lead time",
+  "Leadership": "Liderança",
+  "Leading Indicators": "Indicadores antecedentes",
+  "Learning Curve": "Curva de aprendizado",
+  "Long-term Thinking": "Pensamento de longo prazo",
+  "Margin": "Margem",
+  "Market Analysis": "Análise de mercado",
+  "Niche Markets": "Nichos de mercado",
+  "Operating Systems": "Sistemas operacionais",
+  "Opportunity Cost": "Custo de oportunidade",
+  "Optionality": "Opcionalidade",
+  "Organic Ranking": "Ranqueamento orgânico",
+  "Organisational Design": "Desenho organizacional",
+  "Portfolio Allocation": "Alocação de portfólio",
+  "Pricing Power": "Poder de preço",
+  "Process Design": "Desenho de processos",
+  "Product Launch": "Lançamento de produto",
+  "Product Research": "Pesquisa de produtos",
+  "Purchase Orders": "Pedidos de compra",
+  "ROAS": "ROAS",
+  "Regulation": "Regulamentação",
+  "Reorder Point": "Ponto de reposição",
+  "Repeat Purchase": "Recompra",
+  "Resilience": "Resiliência",
+  "Restock Planning": "Planejamento de reposição",
+  "Return on Invested Capital": "Retorno sobre o capital investido",
+  "Risk": "Risco",
+  "Root Cause": "Causa raiz",
+  "Safety Stock": "Estoque de segurança",
+  "Scaling": "Escala",
+  "Second-order Thinking": "Pensamento de segunda ordem",
+  "Signal vs Noise": "Sinal e ruído",
+  "Statistical Significance": "Significância estatística",
+  "Stockouts": "Ruptura de estoque",
+  "Suppliers": "Fornecedores",
+  "Supply Chain": "Cadeia de suprimentos",
+  "Systems Thinking": "Pensamento sistêmico",
+  "TAM": "TAM",
+  "Working Capital": "Capital de giro"
+ },
+ "summaries": {
+  "fba-reorder-date-velocity": "Saber quanto estoque você tem é fácil. Saber quando precisa repor é a parte difícil, e a resposta honesta é uma faixa com um prazo-limite, não uma única data dita com toda a confiança.",
+  "supplier-payment-schedules-margins": "Um pedido de compra são dois objetos ao mesmo tempo: um custo que cai na margem e um cronograma de pagamentos que cai no caixa. Qual fornecedor é mais barato depende de qual dos dois você tem em mente.",
+  "true-product-margin-after-ads": "Um produto tem cinco margens, e elas discordam de propósito. Qual delas está certa depende inteiramente da decisão que você está prestes a tomar.",
+  "automate-cash-flow-inventory": "A automação não compra uma previsão melhor. Ela encurta a distância entre um fato mudar e você saber o que esse fato muda.",
+  "data-gaps-seep-everywhere": "Uma lacuna num canto de uma operação na Amazon não fica nesse canto. Quais lacunas se espalham, quais não se espalham e como encontrar as suas em vinte minutos.",
+  "first-product-succeeds-cash": "A maioria dos novos vendedores planeja o cenário em que o produto fracassa. Quase ninguém planeja o cenário em que ele dá certo, que é o que de fato os deixa sem dinheiro.",
+  "invented-numbers-amazon-analytics": "Toda ferramenta de análise preenche o que não sabe, em silêncio, na mesma fonte dos fatos. Seis verificações que encontram os números inventados em qualquer ferramenta que você use hoje."
+ }
+}

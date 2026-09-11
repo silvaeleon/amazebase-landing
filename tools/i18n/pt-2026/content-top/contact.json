@@ -1,0 +1,18 @@
+{
+ "slug": "contact",
+ "pt_slug": "contato",
+ "main": "<main id=\"main\">\n\n<!-- ====================================================================\n     CONTACT\n==================================================================== -->\n<section class=\"section\" id=\"contact\">\n<div class=\"container\">\n\n  <div class=\"section-head\" data-reveal>\n    <span class=\"eyebrow\">Empresa</span>\n    <h1>Entre em contato.</h1>\n    <p>D&uacute;vidas, parcerias ou imprensa &mdash; gostar&iacute;amos de ouvir voc&ecirc;.</p>\n  </div>\n\n  <!-- .is-flipped puts the figure on the LEFT and the details on the right -->\n  <article class=\"mod is-flipped\" data-reveal>\n\n    <div class=\"mod-copy\">\n      <span class=\"mod-eyebrow\">Nossos dados</span>\n      <h3>Silbros Trading LLC</h3>\n      <p class=\"mod-lead\">A AmazeBase &eacute; desenvolvida e operada pela Silbros Trading LLC.</p>\n\n      <div class=\"ct-details\">\n\n        <div class=\"ct-row\">\n          <span class=\"sec-ico\"><svg><use href=\"#i-globe\"/></svg></span>\n          <div>\n            <span class=\"ct-label\">Endere&ccedil;o da sede</span>\n            <address class=\"ct-value\">\n              <span class=\"ct-company\">Silbros Trading LLC</span><br>\n              1209 Mountain Road Pl NE # 11990<br>\n              Albuquerque, NM 87110<br>\n              Estados Unidos\n            </address>\n          </div>\n        </div>\n\n        <div class=\"ct-row\">\n          <span class=\"sec-ico\"><svg><use href=\"#i-msg\"/></svg></span>\n          <div>\n            <span class=\"ct-label\">E-mail</span>\n            <p class=\"ct-value\">\n              <a href=\"mailto:contact@silbrostrading.com\">contact@silbrostrading.com</a>\n            </p>\n          </div>\n        </div>\n\n        <div class=\"ct-row\">\n          <span class=\"sec-ico\"><svg><use href=\"#i-spark\"/></svg></span>\n          <div>\n            <span class=\"ct-label\">Acesso antecipado</span>\n            <p class=\"ct-value\">\n              Entre na lista de espera e responda ao e-mail que voc&ecirc; receber &mdash; ele chega\n              &agrave; mesma caixa de entrada.\n            </p>\n          </div>\n        </div>\n\n      </div>\n\n      <p class=\"mod-benefit\">Lemos tudo o que chega.\n         <b>Se voc&ecirc; &eacute; vendedor, conte para n&oacute;s onde voc&ecirc; est&aacute; travado</b> &mdash; &eacute; esse o\n         feedback que molda o produto.</p>\n\n      <p style=\"margin-top:var(--s4)\">\n        <a class=\"btn btn--primary btn--lg\" href=\"#waitlist\" data-waitlist-open data-source=\"contact\" data-magnetic>\n          Entre na lista de espera <svg class=\"icon-sm\"><use href=\"#i-arrow\"/></svg>\n        </a>\n      </p>\n    </div>\n\n    <figure class=\"mod-figure ct-figure\">\n      <img width=\"1000\" height=\"1280\" src=\"/assets/img/contact-message-loop.webp\"\n           alt=\"Mensagens de vendedores chegando, sendo lidas e virando mudan&ccedil;as no produto\" decoding=\"async\">\n    </figure>\n\n  </article>\n\n</div>\n</section>\n\n</main>",
+ "cta": null,
+ "title": "Contato &mdash; AmazeBase",
+ "desc": "Entre em contato com a AmazeBase. Desenvolvida e operada pela Silbros Trading LLC, Albuquerque, Novo M&eacute;xico. E-mail contact@silbrostrading.com.",
+ "og_title": "Entre em contato com a AmazeBase",
+ "og_desc": "Entre em contato com a AmazeBase. Desenvolvida e operada pela Silbros Trading LLC, Albuquerque, Novo M&eacute;xico. E-mail contact@silbrostrading.com.",
+ "og_img_alt": "Mensagens de vendedores chegando, sendo lidas e virando mudan&ccedil;as no produto",
+ "crumb": "Contato",
+ "keywords": [],
+ "ld_headline": null,
+ "ld_desc": null,
+ "hero_alt": null,
+ "article_head": null,
+ "rail": null
+}

@@ -1,0 +1,2543 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Seu ativo mais valioso n&atilde;o &eacute; o estoque. &Eacute; a aten&ccedil;&atilde;o. &mdash; AmazeBase</title>
+
+<meta name="description" content="Capital se pega emprestado, estoque se fabrica, pessoas se contratam. A aten&ccedil;&atilde;o n&atilde;o pode ser criada &mdash; e, na maioria dos neg&oacute;cios em crescimento na Amazon, &eacute; ela, e n&atilde;o o dinheiro, a verdadeira restri&ccedil;&atilde;o.">
+<meta name="theme-color" content="#030917">
+<meta name="author" content="AmazeBase">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   ARTICLE — Amazon Inventory Forecasting
+   Self-contained. Tokens mirror css/variables.css so this page can either
+   stand alone OR have this <style> block deleted once it sits inside the
+   site's normal stylesheet chain.
+========================================================================== */
+
+:root{
+  --z-nav:100;          /* navigation.css */
+  --container:1280px;   /* .container, below */
+  --t-body:15px;        /* .btn, below */
+  --bg:#030917; --bg-deep:#01050E; --bg-raise:#060D1E;
+  --surface:rgba(255,255,255,.030); --surface-2:rgba(255,255,255,.055);
+  --surface-solid:#0A1224;
+  --line:rgba(255,255,255,.070); --line-strong:rgba(255,255,255,.140);
+
+  --text:#EEF1F8; --text-2:#98A2B8; --text-3:#616C84;
+
+  --violet:#8B3BF1; --violet-soft:#A971F7; --indigo:#5B4FE6;
+  --blue:#3B82F6; --blue-soft:#7EB3FF;
+  --green:#2ED47A; --amber:#F5A524; --red:#F0435C;
+
+  --grad-brand:linear-gradient(135deg,#5B4FE6 0%,#8B3BF1 100%);
+  --grad-text:linear-gradient(90deg,#6153E6 0%,#9D50F7 55%,#C56BF5 100%);
+  --grad-card:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  --grad-rule:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,monospace;
+
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px;
+  --s5:48px; --s6:64px; --s7:96px; --s8:128px;
+
+  --gutter:clamp(20px,4vw,40px);
+  --measure:720px;
+
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
+  --sh-2:0 18px 40px rgba(0,0,0,.42);
+  --sh-brand:0 16px 40px rgba(107,63,232,.35);
+  --ease:cubic-bezier(.22,.61,.36,1); --fast:.18s; --mid:.28s;
+
+  color-scheme:dark;
+  scrollbar-color:#26304A var(--bg);
+  scrollbar-width:thin;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation:none !important; transition:none !important; }
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+::selection{ background:var(--violet); color:#fff; }
+
+.skip-link{
+  position:absolute; left:-9999px; top:0;
+  background:var(--surface-solid); color:var(--text);
+  padding:12px 20px; border-radius:0 0 var(--r-sm) 0;
+  z-index:1000; text-decoration:none; font-weight:600;
+}
+.skip-link:focus{ left:0; }
+
+:focus-visible{
+  outline:2px solid var(--violet-soft);
+  outline-offset:3px;
+  border-radius:var(--r-xs);
+}
+
+/* ---------- ambient background ------------------------------------------ */
+.bg-layer{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(760px 520px at 18% -8%,  rgba(91,79,230,.20), transparent 62%),
+    radial-gradient(680px 480px at 88% 4%,   rgba(139,59,241,.15), transparent 60%),
+    radial-gradient(900px 700px at 50% 108%, rgba(59,130,246,.09), transparent 66%);
+}
+
+.wrap{ position:relative; z-index:1; }
+
+/* ---------- shell ------------------------------------------------------- */
+.article{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:0 var(--gutter) var(--s8);
+}
+
+/* ---------- header ------------------------------------------------------ */
+.article-head{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:clamp(64px,9vw,120px) var(--gutter) clamp(32px,4vw,48px);
+}
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--violet-soft);
+  background:var(--surface); border:1px solid var(--line);
+  padding:7px 14px; border-radius:var(--r-pill);
+  margin:0 0 var(--s3);
+}
+.eyebrow::before{
+  content:""; width:6px; height:6px; border-radius:50%;
+  background:var(--violet-soft);
+  box-shadow:0 0 10px rgba(169,113,247,.9);
+}
+
+h1{
+  font-size:clamp(34px,5vw,58px);
+  line-height:1.08;
+  letter-spacing:-.025em;
+  font-weight:800;
+  margin:0 0 var(--s3);
+  text-wrap:balance;
+}
+h1 .accent{
+  background:var(--grad-text);
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+}
+
+.deck{
+  font-size:clamp(18px,2.1vw,21px);
+  line-height:1.6;
+  color:var(--text-2);
+  margin:0 0 var(--s4);
+  max-width:62ch;
+}
+
+.meta{
+  display:flex; flex-wrap:wrap; align-items:center; gap:var(--s2);
+  font-size:14px; color:var(--text-3);
+  padding-top:var(--s3);
+  border-top:1px solid var(--line);
+}
+.meta .dot{ width:3px; height:3px; border-radius:50%; background:var(--text-3); }
+
+/* ---------- table of contents ------------------------------------------- */
+.toc{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:0 0 var(--s6);
+}
+.toc h2{
+  font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--text-3); margin:0 0 var(--s3); padding:0; border:0;
+}
+.toc ol{
+  list-style:none; margin:0; padding:0;
+  counter-reset:toc;
+  display:grid; gap:2px;
+}
+.toc li{ counter-increment:toc; margin:0; }
+.toc a{
+  display:flex; gap:14px; align-items:baseline;
+  color:var(--text-2); text-decoration:none;
+  font-size:15px; line-height:1.5;
+  padding:8px 10px; margin:0 -10px;
+  border-radius:var(--r-xs);
+  transition:color var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+.toc a::before{
+  content:counter(toc,decimal-leading-zero);
+  font-family:var(--font-mono); font-size:12px; font-weight:600;
+  color:var(--text-3); flex:none; min-width:22px;
+  transition:color var(--fast) var(--ease);
+}
+.toc a:hover{ color:var(--text); background:var(--surface); }
+.toc a:hover::before{ color:var(--violet-soft); }
+
+/* ---------- body typography --------------------------------------------- */
+.article p{ margin:0 0 1.1em; color:#D5DBE9; }
+.article p.lead{ font-size:20px; color:var(--text); }
+
+.article h2{
+  font-size:clamp(26px,3.2vw,34px);
+  line-height:1.2;
+  letter-spacing:-.02em;
+  font-weight:700;
+  color:var(--text);
+  margin:var(--s7) 0 var(--s3);
+  padding-top:var(--s5);
+  border-top:1px solid var(--line);
+  scroll-margin-top:32px;
+  text-wrap:balance;
+}
+.article h2:first-of-type{ margin-top:0; }
+
+.article h2 .num{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:13px; font-weight:600; letter-spacing:.16em;
+  color:var(--violet-soft);
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
+
+.article strong{ color:var(--text); font-weight:700; }
+
+.article ul{
+  margin:0 0 1.4em;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:10px;
+}
+.article ul li{
+  position:relative;
+  padding-left:26px;
+  color:#D5DBE9;
+  line-height:1.6;
+}
+.article ul li::before{
+  content:"";
+  position:absolute; left:6px; top:.68em;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--violet);
+  box-shadow:0 0 8px rgba(139,59,241,.55);
+}
+
+/* ---------- pull quote --------------------------------------------------- */
+blockquote{
+  margin:var(--s4) 0;
+  padding:var(--s3) var(--s4);
+  border-left:2px solid var(--violet);
+  background:linear-gradient(90deg,rgba(139,59,241,.10),transparent 80%);
+  border-radius:0 var(--r-md) var(--r-md) 0;
+}
+blockquote p{
+  margin:0;
+  font-size:20px;
+  line-height:1.5;
+  font-weight:600;
+  color:var(--text);
+}
+
+/* ---------- callouts ----------------------------------------------------- */
+.callout{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:var(--s4) 0 var(--s5);
+}
+.callout .label{
+  display:block;
+  font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--text-3);
+  margin-bottom:var(--s2);
+}
+.callout p:last-child, .callout ul:last-child{ margin-bottom:0; }
+
+.formula{
+  font-family:var(--font-mono);
+  font-size:clamp(15px,2.1vw,19px);
+  font-weight:600;
+  line-height:1.6;
+  color:var(--text);
+  background:var(--bg-deep);
+  border:1px solid var(--line-strong);
+  border-radius:var(--r-md);
+  padding:var(--s3);
+  margin:0 0 var(--s3);
+  text-align:center;
+  overflow-x:auto;
+}
+.formula .op{ color:var(--violet-soft); }
+
+/* ---------- numbers strip ------------------------------------------------ */
+.figures{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:var(--s2);
+  margin:var(--s4) 0 var(--s5);
+  padding:0; list-style:none;
+}
+.figures li{ padding:0; }
+.figures li::before{ display:none; }
+.fig{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:var(--s3) var(--s2);
+  text-align:center;
+}
+.fig .v{
+  display:block;
+  font-size:28px; font-weight:800; letter-spacing:-.02em; line-height:1.1;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.fig .k{
+  display:block;
+  font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.fig.is-bad .v{ color:var(--red); }
+.fig.is-real .v{ color:var(--green); }
+
+/* ---------- divider ------------------------------------------------------ */
+.rule{
+  height:1px; border:0;
+  background:var(--grad-rule);
+  margin:var(--s6) 0;
+}
+
+/* ---------- closing CTA -------------------------------------------------- */
+.cta{
+  max-width:var(--measure);
+  margin:var(--s7) auto 0;
+  padding:clamp(32px,5vw,56px) var(--gutter);
+  text-align:center;
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-xl);
+  box-shadow:var(--sh-2);
+}
+.cta h2{
+  font-size:clamp(24px,3vw,32px);
+  font-weight:700; letter-spacing:-.02em; line-height:1.2;
+  margin:0 0 var(--s2); padding:0; border:0;
+  text-wrap:balance;
+}
+.cta p{
+  color:var(--text-2);
+  max-width:52ch;
+  margin:0 auto var(--s4);
+  font-size:17px;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--grad-brand);
+  color:#fff; text-decoration:none;
+  font-weight:600; font-size:16px;
+  padding:14px 28px;
+  border-radius:var(--r-pill);
+  box-shadow:var(--sh-brand);
+  transition:transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+.btn:hover{ transform:translateY(-2px); box-shadow:0 22px 50px rgba(107,63,232,.45); }
+.btn svg{ width:18px; height:18px; }
+
+/* ---------- responsive --------------------------------------------------- */
+@media (max-width:640px){
+  body{ font-size:17px; }
+  .article p.lead{ font-size:18px; }
+  blockquote p{ font-size:18px; }
+  .article h2{ margin-top:var(--s6); padding-top:var(--s4); }
+}
+
+/* ---------- print -------------------------------------------------------- */
+@media print{
+  .bg-layer,.toc,.cta,.skip-link{ display:none; }
+  body{ background:#fff; color:#111; font-size:12pt; }
+  .article p,.article ul li{ color:#222; }
+  .article h2{ color:#000; }
+}
+.back-link{ margin:0 0 28px; font-size:13px; }
+.back-link a{ color:var(--text-2); text-decoration:none; }
+.back-link a:hover{ color:var(--text); }
+
+/* ── HERO IMAGE ─────────────────────────────────────────────────────── */
+.hero-shot{
+  margin:0 0 52px;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  background:var(--bg-raise);
+  line-height:0;
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+.hero-shot img{ width:100%; height:auto; display:block; }
+
+/* ── MISTAKE CARDS ──────────────────────────────────────────────────── */
+.mistake{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.mistake::before{
+  content:"";
+  position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+  background:var(--amber);
+}
+.mistake h2{ margin-top:0 !important; }
+.article .mistake h2:first-of-type{ margin-top:0; }
+
+/* ── PULL QUOTES ────────────────────────────────────────────────────── */
+blockquote{
+  margin:44px 0;
+  padding:0 0 0 26px;
+  border-left:3px solid var(--amber);
+  background:none;
+}
+blockquote p{
+  font-size:23px;
+  line-height:1.45;
+  font-style:italic;
+  font-weight:600;
+  color:var(--text);
+  margin:0;
+}
+
+/* ── MID-ARTICLE STRIP ──────────────────────────────────────────────── */
+.strip{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px; flex-wrap:wrap;
+  margin:44px 0;
+  padding:26px 30px;
+  border-radius:16px;
+  background:linear-gradient(120deg,#0A1224,#131A33);
+  border:1px solid var(--line-strong);
+}
+.strip h3{ margin:0 0 6px; font-size:19px; color:var(--text); }
+.strip p{ margin:0; font-size:14px; color:var(--text-2); }
+.strip-btn{
+  flex:0 0 auto;
+  display:inline-block;
+  padding:12px 22px;
+  border-radius:10px;
+  background:var(--amber);
+  color:#1A1200;
+  font-size:14px; font-weight:700;
+  text-decoration:none;
+  transition:filter .15s ease;
+}
+.strip-btn:hover{ filter:brightness(1.08); }
+
+@media (max-width:640px){
+  .mistake{ padding:24px 20px 8px; }
+  .mistake::before{ top:20px; bottom:20px; }
+  blockquote p{ font-size:20px; }
+  .strip{ padding:22px; }
+  .strip-btn{ width:100%; text-align:center; }
+}
+
+/* ── WIDE SHELL: content + rail, so the page uses the screen ─────────── */
+.shell{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 var(--gutter);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 300px;
+  gap:64px;
+  align-items:start;
+}
+.shell > .article{ max-width:none; margin:0; padding:0 0 var(--s8); }
+
+.rail{ position:sticky; top:40px; display:flex; flex-direction:column; gap:14px; }
+.rail-card{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+  padding:20px;
+}
+.rail-k{
+  display:block; margin-bottom:10px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.rail-v{
+  display:block; margin-bottom:10px;
+  font-size:34px; line-height:1; font-weight:800; letter-spacing:-.02em;
+  color:var(--green);
+}
+.rail-v.is-amber{ color:var(--amber); }
+.rail-v.is-violet{ color:var(--violet-soft); }
+.rail-card p{ margin:0; font-size:13px; line-height:1.55; color:var(--text-2); }
+.rail-src{
+  margin:0; padding-top:14px;
+  border-top:1px solid var(--line);
+  font-size:11px; line-height:1.5; color:var(--text-3);
+}
+
+/* header + hero align to the same shell */
+.article-head, .hero-shot{ max-width:1180px; }
+
+/* ── HERO: a band, not a giant square ───────────────────────────────── */
+.hero-shot{
+  margin:0 auto 56px;
+  padding:0 var(--gutter);
+  border:0; background:none; box-shadow:none;
+  border-radius:0;
+  overflow:visible;
+}
+.hero-shot img{
+  width:100%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
+  border-radius:18px;
+  border:1px solid var(--line-strong);
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+
+/* ── THE FIX callout ────────────────────────────────────────────────── */
+.fixbox{
+  margin:22px 0 4px;
+  padding:16px 18px;
+  border-radius:12px;
+  border:1px solid rgba(46,212,122,.28);
+  background:rgba(46,212,122,.07);
+}
+.fixbox-k{
+  display:block; margin-bottom:6px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--green);
+}
+.fixbox p{ margin:0 !important; color:var(--text) !important; }
+
+@media (max-width:1080px){
+  .shell{ grid-template-columns:1fr; gap:40px; max-width:820px; }
+  .rail{ position:static; flex-direction:row; flex-wrap:wrap; }
+  .rail-card{ flex:1 1 220px; }
+  .rail-src{ flex:1 1 100%; border-top:0; padding-top:0; }
+  .article-head, .hero-shot{ max-width:820px; }
+}
+@media (max-width:640px){
+  .shell{ gap:28px; }
+}
+
+/* ── STEP / METRIC CARDS (same treatment as .mistake) ───────────────── */
+.step, .metric{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.step::before, .metric::before{
+  content:""; position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0; background:var(--amber);
+}
+.metric::before{ background:var(--blue-soft); }
+.step h2, .metric h2, .step h3, .metric h3{ margin-top:0 !important; }
+.article .step h2:first-of-type, .article .metric h2:first-of-type{ margin-top:0; }
+
+.metric h3{
+  font-size:20px; line-height:1.3; color:var(--text);
+  margin:0 0 14px; letter-spacing:-.01em;
+}
+.metric h3 .num{
+  display:inline-block; margin-right:10px;
+  min-width:26px; height:26px; line-height:26px; text-align:center;
+  border-radius:7px;
+  background:rgba(126,179,255,.14); color:var(--blue-soft);
+  font-size:12px; font-weight:700;
+}
+
+/* ── WARNING CARDS ──────────────────────────────────────────────────── */
+.warn{
+  position:relative;
+  border:1px solid rgba(240,67,92,.30);
+  border-radius:14px;
+  background:rgba(240,67,92,.07);
+  padding:22px 24px 6px;
+  margin:0 0 18px;
+}
+.warn h3{
+  margin:0 0 10px; font-size:17px; color:var(--text); line-height:1.35;
+}
+.warn h3::before{ content:"\26A0"; margin-right:9px; color:var(--red); }
+
+/* ── LEAD-TIME TABLE ────────────────────────────────────────────────── */
+.ltable{
+  width:100%; border-collapse:collapse;
+  margin:0 0 var(--s3);
+  font-size:15px;
+}
+.ltable th, .ltable td{
+  padding:12px 14px;
+  border-bottom:1px solid var(--line);
+  text-align:left; color:var(--text-2);
+}
+.ltable th{
+  font-size:11px; text-transform:uppercase; letter-spacing:.09em;
+  color:var(--text-3); font-weight:700;
+}
+.ltable td:last-child, .ltable th:last-child{ text-align:right; font-variant-numeric:tabular-nums; }
+.ltable tr:last-child td{
+  border-bottom:0; border-top:1px solid var(--line-strong);
+  color:var(--text); font-weight:700;
+}
+
+/* ── ROUTINE CHECKLIST ──────────────────────────────────────────────── */
+.routine{ counter-reset:r; list-style:none; padding:0; margin:0 0 var(--s3); }
+.routine li{
+  counter-increment:r;
+  position:relative;
+  padding:14px 16px 14px 52px;
+  margin-bottom:8px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  color:var(--text);
+  font-size:15.5px; line-height:1.5;
+}
+.routine li::before{
+  content:counter(r);
+  position:absolute; left:16px; top:13px;
+  width:24px; height:24px; line-height:24px; text-align:center;
+  border-radius:7px;
+  background:var(--grad-brand); color:#fff;
+  font-size:12px; font-weight:700;
+}
+.routine li::marker{ content:none; }
+
+@media (max-width:640px){
+  .step, .metric{ padding:24px 20px 8px; }
+  .step::before, .metric::before{ top:20px; bottom:20px; }
+  .ltable{ font-size:14px; }
+  .ltable th, .ltable td{ padding:10px 8px; }
+}
+
+/* ── PROBLEM / ALTERNATIVE PAIRS ────────────────────────────────────── */
+.problem, .alt{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 14px;
+}
+.problem::before, .alt::before{
+  content:""; position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.problem::before{ background:var(--red); }
+.alt{ margin-bottom:34px; border-color:rgba(46,212,122,.24); background:rgba(46,212,122,.05); }
+.alt::before{ background:var(--green); }
+
+.problem h2, .alt h2, .problem h3, .alt h3{ margin-top:0 !important; }
+.article .problem h2:first-of-type, .article .alt h2:first-of-type{ margin-top:0; }
+
+.problem h2 .num{ color:var(--red); }
+.alt h2 .num{ color:var(--green); }
+
+/* ── DELIVERY / DEMAND SAMPLES ──────────────────────────────────────── */
+.samples{
+  display:flex; flex-wrap:wrap; gap:8px;
+  list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.samples li{
+  padding:9px 14px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  background:var(--bg-raise);
+  font-family:var(--font-mono);
+  font-size:14px;
+  color:var(--text-2);
+  margin:0;
+}
+.samples li::before{ content:none; }
+.samples li.is-hi{ border-color:rgba(240,67,92,.42); color:#FF9AA9; }
+
+/* ── SCENARIO TRIO ──────────────────────────────────────────────────── */
+.scenarios{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:12px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.scenarios li{ margin:0; padding:0; }
+.scenarios li::before{ content:none; }
+.scen{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  padding:18px;
+  text-align:center;
+}
+.scen .n{ display:block; font-size:26px; font-weight:800; letter-spacing:-.02em; color:var(--text); margin-bottom:5px; }
+.scen .l{ display:block; font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--text-3); }
+.scen.is-low .n{ color:var(--blue-soft); }
+.scen.is-mid .n{ color:var(--text); }
+.scen.is-high .n{ color:var(--amber); }
+
+/* ── SIDE-BY-SIDE COMPARISON ────────────────────────────────────────── */
+.versus{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.versus > div{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  padding:20px;
+}
+.versus h4{
+  margin:0 0 12px; font-size:13px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.07em; color:var(--text-3);
+}
+.versus .big{ display:block; font-size:24px; font-weight:800; letter-spacing:-.02em; color:var(--text); margin-bottom:4px; }
+.versus .sub{ display:block; font-size:13px; color:var(--text-2); }
+.versus .big.is-warn{ color:var(--amber); }
+
+/* ── FOUR PILLARS ───────────────────────────────────────────────────── */
+.pillars{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+  gap:10px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.pillars li{
+  margin:0; padding:20px 14px; text-align:center;
+  border:1px solid var(--line-strong);
+  border-radius:12px;
+  background:var(--bg-raise);
+  font-size:15px; font-weight:600; color:var(--text);
+}
+.pillars li::before{ content:none; }
+
+@media (max-width:640px){
+  .problem, .alt{ padding:24px 20px 8px; }
+  .problem::before, .alt::before{ top:20px; bottom:20px; }
+  .versus{ grid-template-columns:1fr; }
+}
+
+/* ── TWO-CAMP DEFENCE CARDS ─────────────────────────────────────────── */
+.camp{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 20px;
+}
+.camp::before{
+  content:""; position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.camp.is-simple::before{ background:var(--blue-soft); }
+.camp.is-complex::before{ background:var(--violet-soft); }
+.camp h2, .camp h3{ margin-top:0 !important; }
+.article .camp h2:first-of-type{ margin-top:0; }
+.camp.is-simple h2 .num{ color:var(--blue-soft); }
+.camp.is-complex h2 .num{ color:var(--violet-soft); }
+
+/* ── ASSUMPTION PAIR ────────────────────────────────────────────────── */
+.assume{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.assume > div{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--bg-raise);
+  padding:20px;
+}
+.assume h4{
+  margin:0 0 10px; font-size:11px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.09em; color:var(--text-3);
+}
+.assume .eq{
+  display:block; font-family:var(--font-mono); font-size:14px;
+  color:var(--text); margin-bottom:12px; line-height:1.5;
+}
+.assume .as{
+  display:block; font-size:13px; line-height:1.55; color:var(--text-2);
+  padding-top:12px; border-top:1px solid var(--line);
+}
+
+/* ── RANGE ROWS ─────────────────────────────────────────────────────── */
+.ranges{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.ranges li{
+  display:grid; grid-template-columns:1fr auto 1fr;
+  align-items:center; gap:16px;
+  margin:0 0 10px; padding:16px 18px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+}
+.ranges li::before{ content:none; }
+.ranges .no{ font-size:14px; color:var(--text-3); text-decoration:line-through; }
+.ranges .arrow{ color:var(--violet-soft); font-size:16px; }
+.ranges .yes{ font-size:15px; color:var(--text); font-weight:600; }
+
+/* ── STAGE LADDER ───────────────────────────────────────────────────── */
+.stages{ counter-reset:st; list-style:none; margin:0 0 var(--s3); padding:0; }
+.stages li{
+  counter-increment:st;
+  position:relative;
+  margin:0 0 10px; padding:20px 22px 20px 74px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+}
+.stages li::before{
+  content:"Stage " counter(st);
+  position:absolute; left:20px; top:20px;
+  width:40px; padding:5px 0; text-align:center;
+  border-radius:8px;
+  background:var(--grad-brand); color:#fff;
+  font-size:9px; font-weight:700; letter-spacing:.04em;
+  text-transform:uppercase; line-height:1.25;
+}
+.stages li::marker{ content:none; }
+.stages h4{ margin:0 0 8px; font-size:16px; color:var(--text); }
+.stages p{ margin:0 !important; font-size:14.5px; color:var(--text-2); }
+
+/* ── COMPANY A / B ──────────────────────────────────────────────────── */
+.duel{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.duel > div{
+  border:1px solid var(--line); border-radius:14px;
+  background:var(--grad-card); padding:22px;
+}
+.duel > div.wins{ border-color:rgba(46,212,122,.35); background:rgba(46,212,122,.06); }
+.duel h4{ margin:0 0 10px; font-size:14px; color:var(--text); }
+.duel p{ margin:0 !important; font-size:14px; line-height:1.6; color:var(--text-2); }
+.duel .tag{
+  display:inline-block; margin-top:12px; padding:4px 10px;
+  border-radius:5px; font-size:10px; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase;
+}
+.duel .tag.win{ background:rgba(46,212,122,.15); color:var(--green); }
+.duel .tag.lose{ background:rgba(240,67,92,.13); color:#FF9AA9; }
+
+@media (max-width:640px){
+  .camp{ padding:24px 20px 8px; }
+  .camp::before{ top:20px; bottom:20px; }
+  .assume, .duel{ grid-template-columns:1fr; }
+  .ranges li{ grid-template-columns:1fr; gap:6px; }
+  .ranges .arrow{ display:none; }
+}
+
+/* ── BUSINESS A / B PROFILE CARDS ───────────────────────────────────── */
+.profiles{
+  display:grid; grid-template-columns:1fr 1fr; gap:14px;
+  margin:0 0 var(--s3);
+}
+.profile{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:26px 26px 10px;
+}
+.profile::before{
+  content:""; position:absolute; left:0; top:22px; bottom:22px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.profile.is-slow::before{ background:var(--red); }
+.profile.is-fast::before{ background:var(--green); }
+.profile h4{
+  margin:0 0 4px; font-size:17px; color:var(--text); letter-spacing:-.01em;
+}
+.profile .tagline{
+  display:block; margin-bottom:16px;
+  font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+}
+.profile.is-slow .tagline{ color:#FF9AA9; }
+.profile.is-fast .tagline{ color:var(--green); }
+.profile ul{ margin:0 0 16px; }
+.profile li{ font-size:14.5px; }
+
+/* ── CAPITAL CYCLE ──────────────────────────────────────────────────── */
+.cycle{
+  display:flex; flex-wrap:wrap; align-items:center; gap:8px;
+  list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.cycle li{
+  margin:0; padding:11px 15px;
+  border:1px solid var(--line-strong);
+  border-radius:9px;
+  background:var(--bg-raise);
+  font-size:14px; color:var(--text);
+}
+.cycle li::before{ content:none; }
+.cycle .sep{
+  border:0; background:none; padding:0 2px;
+  color:var(--violet-soft); font-size:15px;
+}
+
+/* ── WAITING LIST (where capital idles) ─────────────────────────────── */
+.waiting{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.waiting li{
+  position:relative;
+  margin:0 0 7px; padding:12px 16px 12px 42px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--amber);
+  border-radius:10px;
+  background:var(--grad-card);
+  font-size:15px; color:var(--text-2);
+}
+.waiting li::before{
+  content:"\23F1";
+  position:absolute; left:14px; top:12px;
+  color:var(--amber); font-size:14px;
+}
+
+/* ── QUESTION BLOCK ─────────────────────────────────────────────────── */
+.qbox{
+  margin:var(--s4) 0;
+  padding:26px 28px;
+  border:1px solid var(--line-strong);
+  border-radius:16px;
+  background:linear-gradient(120deg,rgba(91,79,230,.16),rgba(139,59,241,.07));
+}
+.qbox .label{
+  display:block; margin-bottom:12px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--violet-soft);
+}
+.qbox ul{ margin:0; padding-left:1.2em; }
+.qbox li{ font-size:15.5px; color:var(--text); margin-bottom:9px; }
+.qbox li::before{ content:none; }
+.qbox p{ margin:0 !important; font-size:19px; line-height:1.5; color:var(--text); font-weight:600; }
+
+@media (max-width:640px){
+  .profiles{ grid-template-columns:1fr; }
+  .profile{ padding:22px 20px 8px; }
+  .qbox{ padding:22px 20px; }
+}
+
+/* ── SPEC TABLE INSIDE PROFILE CARDS ────────────────────────────────── */
+.spec{ list-style:none; margin:0 0 16px; padding:0; }
+.spec li{
+  display:flex; justify-content:space-between; align-items:baseline; gap:14px;
+  margin:0; padding:9px 0;
+  border-bottom:1px solid var(--line);
+  font-size:14px;
+}
+.spec li:last-child{ border-bottom:0; }
+.spec li::before{ content:none; }
+.spec .sk{ color:var(--text-3); }
+.spec .sv{ color:var(--text); font-weight:600; text-align:right; font-variant-numeric:tabular-nums; }
+.spec .sv.hot{ color:#FF9AA9; }
+.spec .sv.cool{ color:var(--green); }
+
+/* ── LEDGER / TRADE-OFF LIST ────────────────────────────────────────── */
+.tradeoff{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.tradeoff li{
+  position:relative;
+  margin:0 0 7px; padding:12px 16px 12px 40px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--red);
+  border-radius:10px;
+  background:rgba(240,67,92,.05);
+  font-size:15px; color:var(--text-2);
+}
+.tradeoff li::before{
+  content:"\2715";
+  position:absolute; left:15px; top:12px;
+  color:var(--red); font-size:12px;
+}
+
+/* ── ALLOCATION OPTIONS ─────────────────────────────────────────────── */
+.options{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:10px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.options li{
+  margin:0; padding:16px;
+  border:1px solid var(--line-strong);
+  border-radius:12px;
+  background:var(--bg-raise);
+  font-size:14.5px; color:var(--text);
+  text-align:center;
+}
+.options li::before{ content:none; }
+
+@media (max-width:640px){
+  .spec li{ font-size:13.5px; }
+}
+
+/* ── FOREGONE / WHAT YOU GAVE UP ────────────────────────────────────── */
+.forgone{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:10px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.forgone li{
+  position:relative;
+  margin:0; padding:16px 16px 16px 42px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+  font-size:14.5px; line-height:1.5; color:var(--text-2);
+}
+.forgone li::before{
+  content:"\2205";
+  position:absolute; left:15px; top:15px;
+  color:var(--text-3); font-size:15px;
+}
+
+/* ── OPTIONALITY / TWO POSTURES ─────────────────────────────────────── */
+.posture{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.posture > div{
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:22px;
+  background:var(--grad-card);
+}
+.posture > div.open{ border-color:rgba(46,212,122,.30); background:rgba(46,212,122,.06); }
+.posture > div.shut{ border-color:rgba(240,67,92,.28); background:rgba(240,67,92,.05); }
+.posture h4{ margin:0 0 8px; font-size:15px; color:var(--text); }
+.posture p{ margin:0 !important; font-size:14.5px; line-height:1.6; color:var(--text-2); }
+
+/* ── THE TWO QUESTIONS ──────────────────────────────────────────────── */
+.swap{
+  margin:var(--s4) 0;
+  border:1px solid var(--line-strong);
+  border-radius:16px;
+  overflow:hidden;
+}
+.swap > div{ padding:22px 26px; }
+.swap .from{ background:rgba(240,67,92,.06); border-bottom:1px solid var(--line-strong); }
+.swap .to{ background:rgba(46,212,122,.06); }
+.swap .lab{
+  display:block; margin-bottom:8px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+}
+.swap .from .lab{ color:#FF9AA9; }
+.swap .to .lab{ color:var(--green); }
+.swap p{ margin:0 !important; font-size:19px; line-height:1.45; font-weight:600; color:var(--text); }
+
+@media (max-width:640px){
+  .posture{ grid-template-columns:1fr; }
+  .swap > div{ padding:20px; }
+  .swap p{ font-size:17px; }
+}
+
+/* ── VISIBLE vs INVISIBLE COST STACK ────────────────────────────────── */
+.coststack{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.coststack > div{
+  border:1px solid var(--line);
+  border-radius:14px; padding:22px;
+  background:var(--grad-card);
+}
+.coststack > div.hidden-cost{
+  border-color:rgba(245,165,36,.32);
+  background:rgba(245,165,36,.06);
+}
+.coststack h4{
+  margin:0 0 14px; font-size:11px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.09em; color:var(--text-3);
+}
+.coststack .hidden-cost h4{ color:var(--amber); }
+.coststack ul{ margin:0; padding:0; list-style:none; }
+.coststack li{
+  margin:0 0 7px; padding:0 0 0 18px; position:relative;
+  font-size:14.5px; color:var(--text-2);
+}
+.coststack li::before{
+  content:"\2022"; position:absolute; left:2px; top:-1px; color:var(--text-3);
+}
+.coststack .hidden-cost li{ color:var(--text); }
+.coststack .hidden-cost li::before{ color:var(--amber); }
+
+@media (max-width:640px){ .coststack{ grid-template-columns:1fr; } }
+
+/* ── CAMPAIGN COMPARISON CARDS ──────────────────────────────────────── */
+.campaign{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:24px 26px;
+}
+.campaign::before{
+  content:""; position:absolute; left:0; top:22px; bottom:22px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.campaign.is-tidy::before{ background:var(--blue-soft); }
+.campaign.is-messy::before{ background:var(--amber); }
+.campaign h4{ margin:0 0 4px; font-size:16px; color:var(--text); }
+.campaign .verdict{
+  display:block; margin-bottom:16px;
+  font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+}
+.campaign.is-tidy .verdict{ color:var(--blue-soft); }
+.campaign.is-messy .verdict{ color:var(--amber); }
+.campaign .acos{
+  display:block; font-size:34px; font-weight:800; letter-spacing:-.02em;
+  line-height:1; margin-bottom:14px; color:var(--text);
+}
+
+/* ── DIMINISHING-RETURNS CURVE ──────────────────────────────────────── */
+.curve{
+  margin:0 0 var(--s3);
+  padding:22px 24px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--bg-raise);
+}
+.curve-bars{ display:flex; align-items:flex-end; gap:6px; height:96px; margin-bottom:12px; }
+.curve-bars span{
+  flex:1; border-radius:4px 4px 0 0;
+  background:linear-gradient(180deg,var(--violet-soft),rgba(139,59,241,.25));
+}
+.curve-cap{ margin:0 !important; font-size:13px; color:var(--text-3); text-align:center; }
+
+/* ── CAPTURE vs CREATE ──────────────────────────────────────────────── */
+.jobs{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.jobs > div{
+  border:1px solid var(--line); border-radius:14px;
+  background:var(--grad-card); padding:22px;
+}
+.jobs h4{ margin:0 0 6px; font-size:15px; color:var(--text); }
+.jobs .n{ display:block; font-size:26px; font-weight:800; letter-spacing:-.02em; margin-bottom:10px; }
+.jobs .captures .n{ color:var(--green); }
+.jobs .creates .n{ color:var(--amber); }
+.jobs p{ margin:0 !important; font-size:14px; line-height:1.6; color:var(--text-2); }
+
+@media (max-width:640px){
+  .jobs{ grid-template-columns:1fr; }
+  .campaign{ padding:20px; }
+}
+
+/* ── COMPETING CLAIMS ON THE SAME POOL ──────────────────────────────── */
+.claims{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:9px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.claims li{
+  margin:0; padding:15px 14px; text-align:center;
+  border:1px solid var(--line-strong);
+  border-radius:11px;
+  background:var(--bg-raise);
+  font-size:14px; color:var(--text);
+}
+.claims li::before{ content:none; }
+.claims li.is-ppc{
+  border-color:var(--violet-soft);
+  background:rgba(139,59,241,.12);
+  font-weight:600;
+}
+
+/* ── BUDGET vs ALLOCATION ───────────────────────────────────────────── */
+.mindset{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.mindset > div{
+  border:1px solid var(--line); border-radius:14px; padding:22px;
+  background:var(--grad-card);
+}
+.mindset > div.owns{ border-color:rgba(240,67,92,.26); background:rgba(240,67,92,.05); }
+.mindset > div.competes{ border-color:rgba(46,212,122,.28); background:rgba(46,212,122,.06); }
+.mindset h4{ margin:0 0 6px; font-size:15px; color:var(--text); }
+.mindset .says{
+  display:block; margin-bottom:10px; font-size:15px;
+  font-style:italic; color:var(--text);
+}
+.mindset p{ margin:0 !important; font-size:14px; line-height:1.6; color:var(--text-2); }
+
+/* ── BOTTLENECK CHECKS ──────────────────────────────────────────────── */
+.bottleneck{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.bottleneck li{
+  position:relative;
+  margin:0 0 7px; padding:13px 16px 13px 44px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--blue-soft);
+  border-radius:10px;
+  background:var(--grad-card);
+  font-size:15px; color:var(--text-2);
+}
+.bottleneck li::before{
+  content:"?";
+  position:absolute; left:15px; top:12px;
+  width:18px; height:18px; line-height:18px; text-align:center;
+  border-radius:50%;
+  background:rgba(126,179,255,.16); color:var(--blue-soft);
+  font-size:11px; font-weight:700;
+}
+
+@media (max-width:640px){ .mindset{ grid-template-columns:1fr; } }
+
+/* ── FIVE CAMPAIGNS ASKING ──────────────────────────────────────────── */
+.asks{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.asks li{
+  display:grid; grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:center; gap:16px;
+  margin:0 0 8px; padding:14px 18px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--grad-card);
+}
+.asks li::before{ content:none; }
+.asks .who{
+  font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--violet-soft); white-space:nowrap;
+}
+.asks .why{ font-size:14.5px; color:var(--text-2); }
+.asks .amt{
+  font-size:15px; font-weight:700; color:var(--text);
+  font-variant-numeric:tabular-nums; white-space:nowrap;
+}
+.asks-total{
+  display:flex; justify-content:space-between; align-items:baseline;
+  padding:16px 18px; margin-top:12px;
+  border:1px solid rgba(240,67,92,.32);
+  border-radius:12px;
+  background:rgba(240,67,92,.07);
+}
+.asks-total .lab{ font-size:14px; color:var(--text-2); }
+.asks-total .val{ font-size:22px; font-weight:800; color:#FF9AA9; }
+
+/* ── RESOURCE CONTENTION ────────────────────────────────────────────── */
+.contend{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:9px; list-style:none; margin:0 0 var(--s3); padding:0;
+}
+.contend li{
+  margin:0; padding:18px 12px; text-align:center;
+  border:1px solid var(--line-strong);
+  border-radius:11px;
+  background:var(--bg-raise);
+  font-size:14px; color:var(--text);
+}
+.contend li::before{ content:none; }
+
+/* ── DEPARTMENT SILOS ───────────────────────────────────────────────── */
+.silos{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:10px; margin:0 0 var(--s3);
+}
+.silo{
+  border:1px solid var(--line); border-radius:12px;
+  background:var(--grad-card); padding:18px; text-align:center;
+}
+.silo .dept{
+  display:block; font-size:11px; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase; color:var(--text-3);
+  margin-bottom:8px;
+}
+.silo .wants{ display:block; font-size:15px; color:var(--text); font-weight:600; }
+
+@media (max-width:640px){
+  .asks li{ grid-template-columns:1fr auto; }
+  .asks .who{ grid-column:1 / -1; }
+}
+
+/* ── THOUGHT EXPERIMENT: PAUSE THE CAMPAIGN ─────────────────────────── */
+.experiment{
+  margin:var(--s4) 0;
+  border:1px solid var(--line-strong);
+  border-radius:16px;
+  overflow:hidden;
+}
+.experiment > div{ padding:24px 26px; }
+.experiment .pause-a{ background:rgba(126,179,255,.06); border-bottom:1px solid var(--line-strong); }
+.experiment .pause-b{ background:rgba(245,165,36,.06); }
+.experiment .what{
+  display:block; margin-bottom:10px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+}
+.experiment .pause-a .what{ color:var(--blue-soft); }
+.experiment .pause-b .what{ color:var(--amber); }
+.experiment h4{ margin:0 0 10px; font-size:17px; color:var(--text); }
+.experiment p{ margin:0 !important; font-size:14.5px; line-height:1.6; color:var(--text-2); }
+.experiment .verdict{
+  display:block; margin-top:12px; padding-top:12px;
+  border-top:1px solid var(--line);
+  font-size:14.5px; color:var(--text); font-weight:600;
+}
+
+/* ── SUPERMARKET ANALOGY BLOCK ──────────────────────────────────────── */
+.analogy{
+  margin:var(--s4) 0;
+  padding:26px 28px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--blue-soft);
+  border-radius:14px;
+  background:var(--bg-raise);
+}
+.analogy p{ margin:0 0 10px !important; font-size:15.5px; line-height:1.65; color:var(--text-2); }
+.analogy p:last-child{ margin-bottom:0 !important; color:var(--text); font-weight:600; }
+
+/* ── FUTURE DASHBOARD ROWS ──────────────────────────────────────────── */
+.dashrows{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.dashrows li{
+  position:relative;
+  margin:0 0 7px; padding:14px 16px 14px 46px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--green);
+  border-radius:10px;
+  background:var(--grad-card);
+  font-size:15px; color:var(--text);
+}
+.dashrows li::before{
+  content:"\25B8";
+  position:absolute; left:18px; top:13px;
+  color:var(--green); font-size:13px;
+}
+
+/* ── CAMPAIGN TYPE CARDS ────────────────────────────────────────────── */
+.types{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:12px; margin:0 0 var(--s3);
+}
+.type{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+  padding:22px 22px 18px;
+}
+.type::before{
+  content:""; position:absolute; left:0; top:20px; bottom:20px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.type.t-defend::before{ background:var(--green); }
+.type.t-acquire::before{ background:var(--amber); }
+.type.t-launch::before{ background:var(--violet-soft); }
+.type.t-research::before{ background:var(--blue-soft); }
+.type.t-seasonal::before{ background:#9AA6FF; }
+.type h4{ margin:0 0 12px; font-size:16px; color:var(--text); }
+.type ul{ margin:0; padding:0; list-style:none; }
+.type li{
+  margin:0 0 6px; padding:0 0 0 15px; position:relative;
+  font-size:13.5px; line-height:1.5; color:var(--text-2);
+}
+.type li::before{
+  content:"\2022"; position:absolute; left:2px; top:-1px; color:var(--text-3);
+}
+
+/* ── ALLOCATION BAR ─────────────────────────────────────────────────── */
+.alloc{ margin:0 0 var(--s3); }
+.alloc-bar{
+  display:flex; height:38px; border-radius:9px; overflow:hidden;
+  border:1px solid var(--line-strong);
+}
+.alloc-bar span{
+  display:grid; place-items:center;
+  font-size:12px; font-weight:700; color:#0A0F1E;
+}
+.alloc-bar .a1{ background:var(--green); }
+.alloc-bar .a2{ background:var(--amber); }
+.alloc-bar .a3{ background:var(--violet-soft); }
+.alloc-bar .a4{ background:var(--blue-soft); }
+.alloc-bar .a5{ background:var(--text-3); color:var(--text); }
+.alloc-key{
+  display:flex; flex-wrap:wrap; gap:14px; margin-top:12px;
+  font-size:12.5px; color:var(--text-2);
+}
+.alloc-key span{ display:inline-flex; align-items:center; gap:7px; }
+.alloc-key i{ width:11px; height:11px; border-radius:3px; display:inline-block; }
+
+/* ── SAME ACOS, DIFFERENT RISK ──────────────────────────────────────── */
+.risk{ width:100%; border-collapse:collapse; margin:0 0 var(--s3); font-size:14.5px; }
+.risk th, .risk td{
+  padding:12px 14px; text-align:left;
+  border-bottom:1px solid var(--line); color:var(--text-2);
+}
+.risk th{
+  font-size:11px; text-transform:uppercase; letter-spacing:.08em;
+  color:var(--text-3); font-weight:700;
+}
+.risk td:first-child{ color:var(--text-3); }
+.risk .fragile{ color:#FF9AA9; }
+.risk .robust{ color:var(--green); }
+.risk tr:last-child td{ border-bottom:0; }
+
+@media (max-width:640px){
+  .alloc-bar span{ font-size:10px; }
+  .risk th, .risk td{ padding:10px 8px; font-size:13.5px; }
+}
+
+/* ── MONTH REPORT PANEL ─────────────────────────────────────────────── */
+.report{
+  margin:0 0 var(--s3);
+  border:1px solid var(--line-strong);
+  border-radius:16px;
+  overflow:hidden;
+}
+.report-head{
+  padding:16px 22px;
+  background:var(--bg-raise);
+  border-bottom:1px solid var(--line-strong);
+  font-size:11px; font-weight:700; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.report-rows{ list-style:none; margin:0; padding:0; }
+.report-rows li{
+  display:flex; justify-content:space-between; align-items:baseline;
+  margin:0; padding:14px 22px;
+  border-bottom:1px solid var(--line);
+  font-size:15px; color:var(--text-2);
+}
+.report-rows li::before{ content:none; }
+.report-rows li:last-child{ border-bottom:0; }
+.report-rows .v{ color:var(--text); font-weight:700; font-variant-numeric:tabular-nums; }
+.report-q{
+  padding:20px 22px;
+  background:rgba(245,165,36,.08);
+  border-top:1px solid rgba(245,165,36,.30);
+}
+.report-q .lab{
+  display:block; margin-bottom:8px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--amber);
+}
+.report-q p{ margin:0 !important; font-size:18px; line-height:1.45; font-weight:600; color:var(--text); }
+
+/* ── TWO SHOPS ──────────────────────────────────────────────────────── */
+.shops{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.shop{
+  border:1px solid var(--line); border-radius:14px;
+  background:var(--grad-card); padding:22px;
+}
+.shop .role{
+  display:block; margin-bottom:8px;
+  font-size:10px; font-weight:700; letter-spacing:.09em; text-transform:uppercase;
+}
+.shop.guides .role{ color:var(--blue-soft); }
+.shop.creates .role{ color:var(--amber); }
+.shop h4{ margin:0 0 8px; font-size:16px; color:var(--text); }
+.shop p{ margin:0 !important; font-size:14px; line-height:1.6; color:var(--text-2); }
+
+@media (max-width:640px){ .shops{ grid-template-columns:1fr; } }
+
+/* ── DEPENDENCY SCALE ───────────────────────────────────────────────── */
+.depscale{ margin:0 0 var(--s3); }
+.depscale-bar{
+  display:flex; height:44px; border-radius:10px; overflow:hidden;
+  border:1px solid var(--line-strong);
+}
+.depscale-bar span{
+  display:grid; place-items:center;
+  font-size:13px; font-weight:700; color:#0A0F1E;
+}
+.depscale-bar .d10{ background:var(--green); }
+.depscale-bar .d30{ background:#8FD46A; }
+.depscale-bar .d60{ background:var(--amber); }
+.depscale-bar .d90{ background:var(--red); color:#fff; }
+.depscale-cap{
+  display:flex; justify-content:space-between; margin-top:10px;
+  font-size:12px; color:var(--text-3);
+}
+
+/* ── ESCALATION LADDER ──────────────────────────────────────────────── */
+.escalate{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.escalate li{
+  display:flex; justify-content:space-between; align-items:center; gap:16px;
+  margin:0 0 7px; padding:13px 18px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:var(--grad-card);
+  font-size:15px; color:var(--text-2);
+}
+.escalate li::before{ content:none; }
+.escalate .spend{
+  font-family:var(--font-mono); font-size:15px; font-weight:700;
+  color:var(--text); white-space:nowrap;
+}
+.escalate li:nth-child(1) .spend{ color:var(--green); }
+.escalate li:nth-child(2) .spend{ color:#8FD46A; }
+.escalate li:nth-child(3) .spend{ color:var(--amber); }
+.escalate li:nth-child(4) .spend{ color:#FF9AA9; }
+
+/* ── FUEL vs OXYGEN ─────────────────────────────────────────────────── */
+.fuelox{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.fuelox > div{
+  border:1px solid var(--line); border-radius:14px; padding:24px;
+  background:var(--grad-card); text-align:center;
+}
+.fuelox .fuel{ border-color:rgba(46,212,122,.30); background:rgba(46,212,122,.06); }
+.fuelox .oxygen{ border-color:rgba(240,67,92,.28); background:rgba(240,67,92,.05); }
+.fuelox .word{
+  display:block; font-size:26px; font-weight:800; letter-spacing:-.02em;
+  margin-bottom:8px;
+}
+.fuelox .fuel .word{ color:var(--green); }
+.fuelox .oxygen .word{ color:#FF9AA9; }
+.fuelox p{ margin:0 !important; font-size:14.5px; line-height:1.6; color:var(--text-2); }
+
+/* ── INTEREST PAYMENTS ──────────────────────────────────────────────── */
+.interest{ list-style:none; margin:0 0 var(--s3); padding:0; }
+.interest li{
+  position:relative;
+  margin:0 0 7px; padding:13px 16px 13px 44px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--red);
+  border-radius:10px;
+  background:rgba(240,67,92,.05);
+  font-size:15px; color:var(--text-2);
+}
+.interest li::before{
+  content:"%";
+  position:absolute; left:15px; top:12px;
+  width:19px; height:19px; line-height:19px; text-align:center;
+  border-radius:50%;
+  background:rgba(240,67,92,.16); color:#FF9AA9;
+  font-size:11px; font-weight:700;
+}
+
+@media (max-width:640px){
+  .fuelox{ grid-template-columns:1fr; }
+  .escalate li{ flex-direction:column; align-items:flex-start; gap:5px; }
+  .depscale-bar span{ font-size:11px; }
+}
+
+/* ── ONE CUSTOMER, THREE CLAIMS ─────────────────────────────────────── */
+.claimchain{ list-style:none; margin:0 0 14px; padding:0; }
+.claimchain li{
+  display:flex; align-items:center; gap:14px;
+  margin:0 0 7px; padding:14px 18px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--violet-soft);
+  border-radius:11px;
+  background:var(--grad-card);
+  font-size:15px; color:var(--text-2);
+}
+.claimchain li::before{ content:none; }
+.claimchain .step{
+  width:24px; height:24px; flex:0 0 auto;
+  display:grid; place-items:center;
+  border-radius:7px;
+  background:rgba(139,59,241,.16); color:var(--violet-soft);
+  font-size:12px; font-weight:700;
+}
+.claimchain-out{
+  display:flex; justify-content:space-between; align-items:baseline;
+  padding:16px 18px;
+  border:1px solid rgba(245,165,36,.32);
+  border-radius:11px;
+  background:rgba(245,165,36,.07);
+  margin-bottom:var(--s3);
+}
+.claimchain-out .lab{ font-size:14px; color:var(--text-2); }
+.claimchain-out .val{ font-size:20px; font-weight:800; color:var(--amber); }
+
+/* ── GOOD vs BAD CANNIBALISATION ────────────────────────────────────── */
+.cannibal{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.cannibal > div{
+  border:1px solid var(--line); border-radius:14px; padding:22px;
+  background:var(--grad-card);
+}
+.cannibal .deliberate{ border-color:rgba(46,212,122,.30); background:rgba(46,212,122,.06); }
+.cannibal .accidental{ border-color:rgba(240,67,92,.28); background:rgba(240,67,92,.05); }
+.cannibal .kind{
+  display:block; margin-bottom:8px;
+  font-size:10px; font-weight:700; letter-spacing:.09em; text-transform:uppercase;
+}
+.cannibal .deliberate .kind{ color:var(--green); }
+.cannibal .accidental .kind{ color:#FF9AA9; }
+.cannibal h4{ margin:0 0 8px; font-size:16px; color:var(--text); }
+.cannibal p{ margin:0 !important; font-size:14.5px; line-height:1.6; color:var(--text-2); }
+
+/* ── MALL ENTRANCES ─────────────────────────────────────────────────── */
+.entrances{
+  display:flex; align-items:stretch; gap:10px;
+  margin:0 0 var(--s3);
+}
+.entrances .door{
+  flex:1; padding:20px 14px; text-align:center;
+  border:1px dashed var(--line-strong);
+  border-radius:12px;
+  background:var(--bg-raise);
+  font-size:14px; color:var(--text-2);
+}
+.entrances .arrowcol{
+  display:grid; place-items:center;
+  color:var(--text-3); font-size:18px;
+  padding:0 4px;
+}
+.entrances .store{
+  flex:1.1; padding:20px 14px; text-align:center;
+  border:1px solid var(--violet-soft);
+  border-radius:12px;
+  background:rgba(139,59,241,.10);
+  color:var(--text); font-weight:600; font-size:14.5px;
+  display:grid; place-items:center;
+}
+
+@media (max-width:640px){
+  .cannibal{ grid-template-columns:1fr; }
+  .entrances{ flex-direction:column; }
+  .entrances .arrowcol{ transform:rotate(90deg); padding:2px 0; }
+}
+
+/* ── KPI / QUESTION PAIRS ───────────────────────────────────────────── */
+.kpiq{ list-style:none; margin:0 0 14px; padding:0; }
+.kpiq li{
+  display:grid; grid-template-columns:110px minmax(0,1fr);
+  align-items:center; gap:18px;
+  margin:0 0 7px; padding:14px 18px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:var(--grad-card);
+}
+.kpiq li::before{ content:none; }
+.kpiq .metric{
+  font-family:var(--font-mono); font-size:14px; font-weight:700;
+  color:var(--blue-soft); letter-spacing:.02em;
+}
+.kpiq .answers{ font-size:14.5px; color:var(--text-2); line-height:1.5; }
+.kpiq-gap{
+  margin:0 0 var(--s3); padding:18px 20px;
+  border:1px solid rgba(139,59,241,.34);
+  border-radius:12px;
+  background:rgba(139,59,241,.09);
+}
+.kpiq-gap .lab{
+  display:block; margin-bottom:7px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--violet-soft);
+}
+.kpiq-gap p{ margin:0 !important; font-size:18px; line-height:1.45; font-weight:600; color:var(--text); }
+
+/* ── SPEEDOMETER / DESCRIBES vs DECIDES ─────────────────────────────── */
+.instrument{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin:0 0 var(--s3);
+}
+.instrument > div{
+  border:1px solid var(--line); border-radius:14px; padding:24px;
+  background:var(--grad-card); text-align:center;
+}
+.instrument .reads{ border-color:rgba(126,179,255,.28); background:rgba(126,179,255,.05); }
+.instrument .acts{ border-color:rgba(46,212,122,.28); background:rgba(46,212,122,.06); }
+.instrument .big2{
+  display:block; font-size:24px; font-weight:800; letter-spacing:-.02em; margin-bottom:8px;
+}
+.instrument .reads .big2{ color:var(--blue-soft); }
+.instrument .acts .big2{ color:var(--green); }
+.instrument p{ margin:0 !important; font-size:14.5px; line-height:1.6; color:var(--text-2); }
+
+/* ── DECISION SCORE PANEL ───────────────────────────────────────────── */
+.dscore{
+  margin:var(--s4) 0;
+  border:1px solid var(--line-strong);
+  border-radius:16px; overflow:hidden;
+}
+.dscore-q{
+  padding:24px 26px;
+  background:linear-gradient(120deg,rgba(91,79,230,.18),rgba(139,59,241,.08));
+  border-bottom:1px solid var(--line-strong);
+}
+.dscore-q .lab{
+  display:block; margin-bottom:8px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--violet-soft);
+}
+.dscore-q p{ margin:0 !important; font-size:19px; line-height:1.45; font-weight:600; color:var(--text); }
+.dscore-rows{ list-style:none; margin:0; padding:0; }
+.dscore-rows li{
+  display:flex; justify-content:space-between; align-items:center; gap:16px;
+  margin:0; padding:16px 26px;
+  border-bottom:1px solid var(--line);
+  font-size:14.5px; color:var(--text-2);
+}
+.dscore-rows li::before{ content:none; }
+.dscore-rows li:last-child{ border-bottom:0; }
+.dscore-rows .score{
+  font-size:12px; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+  padding:5px 11px; border-radius:6px; white-space:nowrap;
+}
+.dscore-rows .high{ background:rgba(46,212,122,.15); color:var(--green); }
+.dscore-rows .low{ background:rgba(240,67,92,.13); color:#FF9AA9; }
+
+@media (max-width:640px){
+  .kpiq li{ grid-template-columns:1fr; gap:6px; }
+  .instrument{ grid-template-columns:1fr; }
+  .dscore-rows li{ flex-direction:column; align-items:flex-start; gap:8px; }
+}
+
+/* --- additions for this piece ------------------------------------- */
+.art-diagram{ margin:0 0 var(--s5); }
+.art-diagram svg{ width:100%; height:auto; display:block; }
+
+.leaks{ margin:var(--s5) 0; display:grid; gap:8px;
+        grid-template-columns:repeat(3,1fr); }
+.leaks span{ border:1px solid var(--line); border-radius:var(--r3);
+             background:var(--surface); padding:11px 12px;
+             font-size:.88rem; color:var(--ink-2); position:relative;
+             padding-left:28px; }
+.leaks span::before{ content:""; position:absolute; left:12px; top:15px;
+                     width:7px; height:7px; border-radius:50%; background:#fbbf24; }
+.leaks .note{ grid-column:1/-1; border:0; background:transparent; padding:4px 0 0;
+              font-size:.9rem; color:var(--ink-3); }
+.leaks .note::before{ display:none; }
+@media(max-width:760px){ .leaks{ grid-template-columns:repeat(2,1fr); } }
+@media(max-width:480px){ .leaks{ grid-template-columns:1fr; } }
+
+.clock{ margin:var(--s5) 0; border:1px solid var(--line); border-radius:var(--r3);
+        background:var(--surface); overflow:hidden; }
+.clock div{ display:flex; align-items:baseline; gap:var(--s3);
+            padding:11px var(--s4); border-bottom:1px solid var(--line); }
+.clock div:last-child{ border-bottom:0; }
+.clock .t{ flex:0 0 84px; font-weight:700; font-size:.9rem; color:#f87171;
+           font-variant-numeric:tabular-nums; }
+.clock .ev{ font-size:.93rem; color:var(--ink-2); }
+.clock .gone{ background:rgba(240,67,92,.07); }
+.clock .gone .t{ color:var(--ink-3); }
+.clock .gone .ev{ color:var(--ink-1); font-weight:600; }
+
+.bet{ margin:var(--s5) 0; display:grid; grid-template-columns:1fr 1fr; gap:var(--s3); }
+.bet > div{ border:1px solid var(--line); border-radius:var(--r3);
+            background:var(--surface); padding:var(--s4); }
+.bet .k{ display:block; font-size:.72rem; letter-spacing:.09em; text-transform:uppercase;
+         color:var(--ink-3); margin-bottom:8px; }
+.bet .v{ display:block; font-weight:700; font-size:1.02rem; margin-bottom:8px; }
+.bet .a .v{ color:#8fa3c8; }
+.bet .b .v{ color:#4ade80; }
+.bet p{ margin:0 !important; font-size:.92rem; color:var(--ink-2); }
+@media(max-width:700px){ .bet{ grid-template-columns:1fr; } }
+
+/* ── SITE HEADER ──────────────────────────────────────────────────────
+   The header markup is the site's, and navigation.css styles it. These are
+   the pieces it also leans on from base.css, which this page does not load.
+   Every selector is scoped to the header or the mobile drawer: an article is
+   built out of bare a/p/h3/h4, and base.css restyles all of those.
+
+   The scope is written with :where() so it adds no specificity. Scoped the
+   plain way, `.site-header .btn` is (0,2,0) - the same weight as
+   navigation.css's own `.nav-actions .btn--quiet` and `.nav-mobile a`, and
+   loaded after them, so these copies quietly outranked the real rules: the
+   hamburger got pushed off a 390px screen and the drawer buttons lost their
+   sizing. Inside :where() each rule keeps exactly the weight it has in
+   base.css, which is the weight navigation.css was written against.
+   ------------------------------------------------------------------- */
+/* The header inherits from <body>, and this page's body is set for reading:
+   18px at 1.72. The site's is var(--t-body) at 1.6. Left alone, every element
+   in the bar came out a size and a half too tall. Reset it at the root of the
+   header so everything inside inherits the site's figures instead. */
+:where(.site-header),
+:where(.nav-mobile){
+  font-size:var(--t-body);
+  line-height:1.6;
+}
+
+:where(.site-header) .container{
+  width:min(100%,var(--container));
+  margin-inline:auto;
+  padding-inline:var(--gutter);
+  position:relative;
+}
+:where(.site-header, .nav-mobile) .brand{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:19px; font-weight:700; letter-spacing:-.01em;
+  color:var(--text); text-decoration:none;
+}
+:where(.site-header) .brand-mark{ width:26px; height:26px; flex:none; }
+:where(.site-header) .icon,    :where(.nav-mobile) .icon{    width:20px; height:20px; flex:none; stroke-width:1.7; }
+:where(.site-header) .icon-sm, :where(.nav-mobile) .icon-sm{ width:16px; height:16px; flex:none; stroke-width:1.8; }
+/* margin-block only: navigation.css centres this with margin-inline:auto,
+   and a shorthand `margin:0` here would outrank it and shove the menu
+   over against the brand. */
+:where(.site-header) .nav-menu{ list-style:none; padding:0; margin-block:0; }
+.site-header a, .nav-mobile a{ text-decoration:none; }
+/* base.css resets these globally; this page does not load it. Without the
+   padding reset the UA's 1px 6px survives and the 44px tap target
+   responsive.css asks for comes out 40px. */
+:where(.site-header) .nav-toggle{ font:inherit; cursor:pointer; padding:0; }
+:where(.site-header) svg, :where(.nav-mobile) svg{ display:block; }
+
+:where(.site-header) .btn, :where(.nav-mobile) .btn{
+  /* This page defines its own .btn - a filled gradient pill used in the body -
+     and it reaches the header buttons too. base.css's .btn sets none of these,
+     so the variant classes below are what should decide them. Cleared here or
+     "Log in", which is .btn--quiet and meant to read as plain text, arrives
+     wearing the brand gradient. */
+  background:none;
+  box-shadow:none;
+  color:inherit;
+  text-decoration:none;
+  position:relative;
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  padding:13px 22px;
+  border-radius:var(--r-sm);
+  font-size:var(--t-body); font-weight:600; line-height:1;
+  white-space:nowrap;
+  transition:transform var(--fast) var(--ease),
+             box-shadow var(--fast) var(--ease),
+             background var(--fast) var(--ease),
+             border-color var(--fast) var(--ease);
+}
+:where(.site-header) .btn:active, :where(.nav-mobile) .btn:active{ transform:translateY(0) scale(.99); }
+:where(.site-header) .btn--primary, :where(.nav-mobile) .btn--primary{
+  background:var(--grad-brand); color:#fff;
+  box-shadow:var(--sh-brand); overflow:hidden;
+}
+:where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{
+  content:""; position:absolute; top:0; left:-130%;
+  width:55%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);
+  transition:left .65s var(--ease);
+}
+:where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{
+  transform:translateY(-2px); box-shadow:0 22px 52px rgba(107,63,232,.45);
+}
+:where(.site-header) .btn--primary:hover::after, :where(.nav-mobile) .btn--primary:hover::after{ left:150%; }
+:where(.site-header) .btn--quiet, :where(.nav-mobile) .btn--quiet{ color:var(--text-2); padding:13px 8px; }
+:where(.site-header) .btn--quiet:hover, :where(.nav-mobile) .btn--quiet:hover{ color:var(--text); }
+:where(.nav-mobile) .btn--block{ width:100%; }
+
+@media (prefers-reduced-motion:reduce){
+  :where(.site-header) .btn, :where(.nav-mobile) .btn,
+  :where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{ transition:none; }
+  :where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{ transform:none; }
+}
+
+/* navigation.css hides these two buttons on small screens so the hamburger
+   fits. Its selectors are (0,2,0) and so is `:where(.site-header) .btn` above, which
+   is loaded after it - equal weight, later wins, and display:inline-flex beat
+   display:none. The hamburger ended up 107px off the right of a 390px screen
+   with no way to open the menu. Restating the hide at (0,3,0) settles it.
+   The breakpoints are read out of navigation.css at build time, not typed. */
+
+/* Clear the fixed site header. Reserving its height on .wrap keeps the gap
+   between the bar and the eyebrow the same as the gap used to be between the
+   top of the window and the eyebrow. */
+.wrap{ padding-top:70px; }
+@media (max-width:640px){ .wrap{ padding-top:64px; } }
+
+/* Anchor targets. .article h2 carried scroll-margin-top:32px, which was right
+   when this page had no fixed bar: 32px was breathing room. Now a jump from
+   the contents list lands 38px underneath the header. responsive.css puts the
+   rest of the site on 84px for exactly this reason; the article's own rule is
+   (0,2,0) and outranks it, so it is restated here at the same weight. */
+.article h2{ scroll-margin-top:84px; }
+
+/* The back-link sat hard against the left edge of the window, in line with
+   nothing. That was always true, but with the nav above it the thing reads as
+   stranded rather than as a heading. Same shell as .article-head, so it lines
+   up with the title beneath it and behaves as the breadcrumb it is. */
+.back-link{
+  max-width:1180px;
+  margin-inline:auto;      /* the rule above keeps its 28px bottom margin */
+  padding:22px var(--gutter) 0;
+}
+</style>
+<link rel="stylesheet" href="/css/navigation.css">
+<link rel="stylesheet" href="/css/responsive.css">
+<link rel="stylesheet" href="/css/site-footer.css">
+<!-- SEO:START -->
+<link rel="canonical" href="https://amazebase.pro/pt/artigos/ativo-mais-valioso-nao-e-o-estoque.html">
+<link rel="alternate" hreflang="en" href="https://amazebase.pro/articles/attention-is-the-asset.html">
+<link rel="alternate" hreflang="es" href="https://amazebase.pro/es/articulos/tu-activo-mas-valioso-es-la-atencion.html">
+<link rel="alternate" hreflang="pt" href="https://amazebase.pro/pt/artigos/ativo-mais-valioso-nao-e-o-estoque.html">
+<link rel="alternate" hreflang="x-default" href="https://amazebase.pro/articles/attention-is-the-asset.html">
+<meta property="og:site_name" content="AmazeBase">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://amazebase.pro/pt/artigos/ativo-mais-valioso-nao-e-o-estoque.html">
+<meta property="og:title" content="Seu ativo mais valioso n&atilde;o &eacute; o estoque. &Eacute; a aten&ccedil;&atilde;o.">
+<meta property="og:description" content="A informa&ccedil;&atilde;o cria possibilidades. A aten&ccedil;&atilde;o determina quais delas viram realidade.">
+<meta property="og:image" content="https://amazebase.pro/assets/img/og/og-attention-is-the-asset.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Entre estoque e pain&eacute;is de dados, a aten&ccedil;&atilde;o &eacute; o recurso mais escasso">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Seu ativo mais valioso n&atilde;o &eacute; o estoque. &Eacute; a aten&ccedil;&atilde;o.">
+<meta name="twitter:description" content="A informa&ccedil;&atilde;o cria possibilidades. A aten&ccedil;&atilde;o determina quais delas viram realidade.">
+<meta name="twitter:image" content="https://amazebase.pro/assets/img/og/og-attention-is-the-asset.jpg">
+<meta name="twitter:image:alt" content="Entre estoque e pain&eacute;is de dados, a aten&ccedil;&atilde;o &eacute; o recurso mais escasso">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://amazebase.pro/#organization",
+      "name": "AmazeBase",
+      "legalName": "Silbros Trading LLC",
+      "url": "https://amazebase.pro/",
+      "email": "contact@silbrostrading.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://amazebase.pro/assets/img/og/og-home.jpg",
+        "width": 1200,
+        "height": 630
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Albuquerque",
+        "addressRegion": "NM",
+        "addressCountry": "US"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://amazebase.pro/#website",
+      "url": "https://amazebase.pro/",
+      "name": "AmazeBase",
+      "publisher": {
+        "@id": "https://amazebase.pro/#organization"
+      },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "Article",
+      "@id": "https://amazebase.pro/pt/artigos/ativo-mais-valioso-nao-e-o-estoque.html#article",
+      "isPartOf": {
+        "@id": "https://amazebase.pro/#website"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://amazebase.pro/pt/artigos/ativo-mais-valioso-nao-e-o-estoque.html"
+      },
+      "headline": "Seu ativo mais valioso n\u00e3o \u00e9 o estoque. \u00c9 a aten\u00e7\u00e3o.",
+      "description": "Capital se pega emprestado, estoque se fabrica, pessoas se contratam. A aten\u00e7\u00e3o s\u00f3 pode ser redirecionada \u2014 e, na maioria dos neg\u00f3cios em crescimento, \u00e9 ela, e n\u00e3o o dinheiro, a verdadeira restri\u00e7\u00e3o. O que a faz vazar e para que os sistemas realmente servem.",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://amazebase.pro/assets/img/og/og-attention-is-the-asset.jpg",
+        "width": 1200,
+        "height": 630
+      },
+      "datePublished": "2026-08-09",
+      "dateModified": "2026-08-09",
+      "author": {
+        "@id": "https://amazebase.pro/#organization"
+      },
+      "publisher": {
+        "@id": "https://amazebase.pro/#organization"
+      },
+      "inLanguage": "pt",
+      "keywords": [
+        "Lideran\u00e7a",
+        "Tomada de decis\u00e3o",
+        "Sistemas operacionais",
+        "Foco",
+        "Delega\u00e7\u00e3o",
+        "Escala",
+        "Custo de oportunidade"
+      ],
+      "timeRequired": "PT7M"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "In\u00edcio",
+          "item": "https://amazebase.pro/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Central de Conhecimento",
+          "item": "https://amazebase.pro/pt/recursos.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Seu ativo mais valioso n\u00e3o \u00e9 o estoque. \u00c9 a aten\u00e7\u00e3o."
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- SEO:END -->
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Pular para o conte&uacute;do</a>
+<div class="bg-layer" aria-hidden="true"></div>
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+</defs>
+  <symbol id="i-chevron"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-menu"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-mega"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l7 4V5L8 9H4zM19 9a4 4 0 010 6"/></symbol>
+  <symbol id="i-dollar"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5v19M16.5 6.5H10a3.2 3.2 0 000 6.4h4a3.2 3.2 0 010 6.4H7"/></symbol>
+  <symbol id="i-stack"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/></symbol>
+  <symbol id="i-box"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></symbol>
+  <symbol id="i-search"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></symbol>
+  <symbol id="i-chart"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-trend"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></symbol>
+  <symbol id="i-db"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3.2"/><path d="M4 6v12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2V6M4 12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2"/></symbol>
+  <symbol id="i-shield"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-9.5V5.5L12 2.5 4 5.5V12.5C4 18.5 12 22 12 22z"/></symbol>
+  <symbol id="i-spark"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+  <symbol id="i-rocket"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15s-1.5 3 1 5.5S11 20 11 20M14.5 4.5c3-2 6-1 6-1s1 3-1 6l-6 6-5-5 6-6z"/><circle cx="15" cy="9" r="1.4"/></symbol>
+  <symbol id="i-case"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8.5 7V5a2 2 0 012-2h3a2 2 0 012 2v2M2.5 12.5h19"/></symbol>
+  <symbol id="i-info"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></symbol>
+  <symbol id="i-msg"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-8 8 8.6 8.6 0 01-3.6-.8L3 21l1.8-6.4A8 8 0 1121 12z"/></symbol>
+</svg>
+
+<header class="site-header">
+<div class="container">
+<nav class="nav" aria-label="Principal">
+
+  <a href="/index.html" class="brand" aria-label="P&aacute;gina inicial da AmazeBase">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+      <path d="M16 17.6l4.4 8.2h-8.8z" fill="#C56BF5" opacity=".85"/>
+    </svg>
+    <span data-brand>AmazeBase</span>
+  </a>
+
+  <ul class="nav-menu">
+    <li class="nav-item">
+      <a class="nav-link" href="/pt/produto.html#modules">Produto <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop nav-drop--wide">
+        <a href="/pt/produto.html#advertising"><svg class="icon-sm"><use href="#i-mega"/></svg>Publicidade e PPC</a>
+        <a href="/pt/produto.html#financials"><svg class="icon-sm"><use href="#i-dollar"/></svg>Finan&ccedil;as</a>
+        <a href="/pt/produto.html#ledger"><svg class="icon-sm"><use href="#i-stack"/></svg>Ledger</a>
+        <a href="/pt/produto.html#inventory"><svg class="icon-sm"><use href="#i-box"/></svg>Estoque</a>
+        <a href="/pt/produto.html#research"><svg class="icon-sm"><use href="#i-search"/></svg>Pesquisa de produtos</a>
+        <a href="/pt/produto.html#simulations"><svg class="icon-sm"><use href="#i-chart"/></svg>Simula&ccedil;&otilde;es</a>
+        <a href="/pt/produto.html#sales"><svg class="icon-sm"><use href="#i-trend"/></svg>Vendas</a>
+        <a href="/pt/produto.html#data"><svg class="icon-sm"><use href="#i-db"/></svg>Dados e sincroniza&ccedil;&atilde;o</a>
+        <a href="/pt/produto.html#security"><svg class="icon-sm"><use href="#i-shield"/></svg>Seguran&ccedil;a</a>
+        <a href="/pt/produto.html#assistant"><svg class="icon-sm"><use href="#i-spark"/></svg>Assistente de IA &mdash; em breve</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/pt/solucoes.html">Solu&ccedil;&otilde;es <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/pt/solucoes.html#beginners"><svg class="icon-sm"><use href="#i-rocket"/></svg>Iniciantes</a>
+        <a href="/pt/solucoes.html#experts"><svg class="icon-sm"><use href="#i-dollar"/></svg>Vendedores experientes</a>
+        <a href="/pt/solucoes.html#agencies"><svg class="icon-sm"><use href="#i-case"/></svg>Ag&ecirc;ncias</a>
+      </div>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="/index.html#pricing">Pre&ccedil;os</a></li>
+    <li class="nav-item"><a class="nav-link" href="/pt/recursos.html">Recursos</a></li>
+    <li class="nav-item">
+      <a class="nav-link" href="/pt/sobre.html">Empresa <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/pt/sobre.html"><svg class="icon-sm"><use href="#i-info"/></svg>Sobre</a>
+        <a href="/pt/contato.html"><svg class="icon-sm"><use href="#i-msg"/></svg>Contato</a>
+      </div>
+    </li>
+  </ul>
+
+  <div class="nav-actions">
+    <div class="nav-item lang-switch">
+      <button class="lang-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Idioma / Language">
+        PT <svg class="chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+      </button>
+      <div class="nav-drop lang-drop">
+        <a href="/articles/attention-is-the-asset.html" hreflang="en" lang="en"><span class="lc">EN</span>English</a>
+        <a href="/es/articulos/tu-activo-mas-valioso-es-la-atencion.html" hreflang="es" lang="es"><span class="lc">ES</span>Español</a>
+        <a href="/pt/artigos/ativo-mais-valioso-nao-e-o-estoque.html" hreflang="pt" lang="pt" aria-current="true"><span class="lc">PT</span>Português</a>
+      </div>
+    </div>
+    <a class="btn btn--quiet" href="https://analytics.amazebase.pro/login">Entrar</a>
+    <a class="btn btn--primary" href="/index.html#waitlist" data-magnetic>Entre na lista de espera</a>
+    <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navMobile">
+      <svg class="icon"><use href="#i-menu"/></svg>
+    </button>
+  </div>
+
+</nav>
+</div>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="/pt/produto.html#modules">Produto</a>
+  <a href="/pt/solucoes.html">Solu&ccedil;&otilde;es</a>
+  <a href="/index.html#pricing">Pre&ccedil;os</a>
+  <a href="/pt/recursos.html">Recursos</a>
+  <a href="/pt/sobre.html">Sobre</a>
+  <a href="/pt/contato.html">Contato</a>
+  <a class="btn btn--quiet btn--block" href="https://analytics.amazebase.pro/login">Entrar</a>
+  <a class="btn btn--primary btn--block" href="/index.html#waitlist">Entre na lista de espera</a>
+</div>
+</header>
+
+<div class="wrap">
+
+<p class="back-link"><a href="/pt/recursos.html">&larr; Central de Conhecimento</a></p>
+
+<header class="article-head">
+  <p class="eyebrow">Guia de crescimento</p>
+
+  <h1>Seu ativo mais valioso n&atilde;o &eacute; o estoque. <span class="accent">&Eacute; a aten&ccedil;&atilde;o.</span></h1>
+
+  <p class="deck">
+    As maiores empresas do mundo n&atilde;o vencem porque t&ecirc;m mais
+    informa&ccedil;&atilde;o. Vencem porque sabem onde concentr&aacute;-la.
+  </p>
+
+  <p class="meta">
+    <span>AmazeBase</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span><time datetime="2026-08-09">9 de agosto de 2026</time></span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>7&nbsp;min de leitura</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>Guia de crescimento</span>
+  </p>
+</header>
+
+<figure class="hero-shot">
+  <img src="/assets/img/hero-attention-is-the-asset.webp"
+       alt="Entre estoque e pain&eacute;is de dados, a aten&ccedil;&atilde;o &eacute; o recurso mais escasso"
+       width="1672" height="941" loading="eager" decoding="async">
+</figure>
+
+<div class="shell">
+<main id="main" class="article">
+
+  <nav class="toc" aria-labelledby="toc-title">
+    <h2 id="toc-title">O que voc&ecirc; vai encontrar neste artigo</h2>
+    <ol>
+      <li><a href="#different">O dinheiro pode ser captado. A aten&ccedil;&atilde;o &eacute; diferente.</a></li>
+      <li><a href="#ten">Imagine comandar dez empresas</a></li>
+      <li><a href="#account">Toda decis&atilde;o consome aten&ccedil;&atilde;o</a></li>
+      <li><a href="#founder">O fundador &eacute; o maior consumidor</a></li>
+      <li><a href="#water">Imagine a aten&ccedil;&atilde;o como &aacute;gua</a></li>
+      <li><a href="#urgent">Problemas urgentes sempre vencem os importantes</a></li>
+      <li><a href="#interruption">Toda interrup&ccedil;&atilde;o tem um custo de oportunidade</a></li>
+      <li><a href="#scarce">A informa&ccedil;&atilde;o j&aacute; n&atilde;o &eacute; escassa. A aten&ccedil;&atilde;o, sim.</a></li>
+      <li><a href="#systems">Todo sistema existe para poupar aten&ccedil;&atilde;o</a></li>
+      <li><a href="#notthink">Grandes l&iacute;deres decidem em que n&atilde;o pensar</a></li>
+      <li><a href="#return">O investimento de maior retorno</a></li>
+    </ol>
+  </nav>
+
+  <p class="lead">
+    Entre em quase qualquer neg&oacute;cio em crescimento na Amazon e pergunte ao fundador o que
+    tira o sono dele. As respostas s&atilde;o previs&iacute;veis. Publicidade. Estoque. Concorr&ecirc;ncia.
+    Fluxo de caixa. Contrata&ccedil;&otilde;es. Mudan&ccedil;as de pol&iacute;tica. Margens.
+  </p>
+
+  <figure class="art-diagram">
+    <svg viewBox="0 0 1180 320" role="img" aria-labelledby="heroTitle" preserveAspectRatio="xMidYMid meet">
+      <title id="heroTitle">Um cano cheio de aten&ccedil;&atilde;o entra pela esquerda. Reuni&otilde;es, aprova&ccedil;&otilde;es, interrup&ccedil;&otilde;es, perguntas repetidas, relat&oacute;rios manuais e processos pouco claros drenam, cada um, uma parte dela. S&oacute; um fio fino chega ao trabalho marcado como estrat&eacute;gia.</title>
+      <defs>
+        <linearGradient id="gBg8" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#0b1225"/>
+          <stop offset="1" stop-color="#0a1730"/>
+        </linearGradient>
+        <linearGradient id="gPipe" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0"   stop-color="#7dd3fc"/>
+          <stop offset=".55" stop-color="#7dd3fc" stop-opacity=".6"/>
+          <stop offset="1"   stop-color="#7dd3fc" stop-opacity=".18"/>
+        </linearGradient>
+      </defs>
+      <rect width="1180" height="320" fill="url(#gBg8)"/>
+
+      <path d="M60 118 L900 150 L900 178 L60 202 Z" fill="url(#gPipe)"/>
+
+      <g stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" opacity=".9">
+        <line x1="180" y1="200" x2="180" y2="244"/>
+        <line x1="300" y1="197" x2="300" y2="238"/>
+        <line x1="420" y1="194" x2="420" y2="248"/>
+        <line x1="540" y1="190" x2="540" y2="236"/>
+        <line x1="660" y1="187" x2="660" y2="246"/>
+        <line x1="780" y1="183" x2="780" y2="240"/>
+      </g>
+      <g fill="#fbbf24">
+        <circle cx="180" cy="250" r="4"/><circle cx="300" cy="244" r="4"/>
+        <circle cx="420" cy="254" r="4"/><circle cx="540" cy="242" r="4"/>
+        <circle cx="660" cy="252" r="4"/><circle cx="780" cy="246" r="4"/>
+      </g>
+
+      <g font-family="Inter, sans-serif" font-size="10.5" font-weight="600" fill="#8fa3c8"
+         text-anchor="middle">
+        <text x="180" y="272">reuni&otilde;es</text>
+        <text x="300" y="266">aprova&ccedil;&otilde;es</text>
+        <text x="420" y="276">interrup&ccedil;&otilde;es</text>
+        <text x="540" y="264">perguntas repetidas</text>
+        <text x="660" y="274">relat&oacute;rios manuais</text>
+        <text x="780" y="268">processo confuso</text>
+      </g>
+
+      <rect x="905" y="146" width="215" height="36" rx="8"
+            fill="#101b33" stroke="#4ade80" stroke-width="2"/>
+      <text x="1012" y="170" font-family="Inter, sans-serif" font-size="13.5"
+            font-weight="700" fill="#4ade80" text-anchor="middle" letter-spacing="1.2">ESTRAT&Eacute;GIA</text>
+
+      <g font-family="Inter, sans-serif" font-weight="700" letter-spacing="1.6">
+        <text x="60" y="96" font-size="12.5" fill="#7dd3fc">ATEN&Ccedil;&Atilde;O QUE ENTRA &mdash; A MESMA TODO DIA</text>
+        <text x="1120" y="118" font-size="12.5" fill="#5f7398" text-anchor="end">O QUE CHEGA</text>
+        <text x="60" y="298" font-size="12" fill="#fbbf24">CADA VAZAMENTO PARECE PEQUENO DEMAIS PARA CONSERTAR</text>
+      </g>
+    </svg>
+  </figure>
+
+  <p>Agora fa&ccedil;a outra pergunta: no que voc&ecirc; realmente passou a maior parte do tempo pensando nesta semana?</p>
+
+  <p>A resposta costuma ser completamente diferente. Um problema com um funcion&aacute;rio. Uma remessa atrasada. Uma disputa com um fornecedor. Uma reclama&ccedil;&atilde;o de cliente. Um bug no software. Uma planilha. Uma reuni&atilde;o que deveria ter durado quinze minutos e consumiu metade do dia.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">A parte inc&ocirc;moda</span>
+    <p>O que consome a sua aten&ccedil;&atilde;o raramente &eacute; o que cria mais valor. Com o tempo, a aten&ccedil;&atilde;o &mdash; n&atilde;o o dinheiro &mdash; se torna o verdadeiro recurso limitante de todo neg&oacute;cio em crescimento.</p>
+  </div>
+
+  <h2 id="different">O dinheiro pode ser captado. O tempo pode ser agendado. A aten&ccedil;&atilde;o &eacute; diferente.</h2>
+
+  <p>Se voc&ecirc; precisa de capital, pode pegar emprestado. Se precisa de estoque, pode fabricar. Se precisa de funcion&aacute;rios, pode contratar.</p>
+
+  <p>A aten&ccedil;&atilde;o n&atilde;o pode ser criada. Toda manh&atilde;, todo CEO recebe exatamente a mesma quantidade. A pergunta nunca &eacute; quanta aten&ccedil;&atilde;o voc&ecirc; tem. &Eacute; para onde ela vai &mdash; e essa decis&atilde;o determina, em sil&ecirc;ncio, o futuro do neg&oacute;cio.</p>
+
+  <h2 id="ten">Imagine comandar dez empresas</h2>
+
+  <p>Suponha que voc&ecirc; tivesse dez neg&oacute;cios e cada um exigisse uma hora de aten&ccedil;&atilde;o por dia. D&aacute; para administrar, provavelmente. Agora imagine um &uacute;nico neg&oacute;cio exigindo dez horas todos os dias. A mesma quantidade de trabalho. Uma experi&ecirc;ncia completamente diferente.</p>
+
+  <div class="qbox">
+    <span class="label">Onde os fundadores viram gargalos</span>
+    <p>Os neg&oacute;cios n&atilde;o ficam dif&iacute;ceis porque crescem. Ficam dif&iacute;ceis quando exigem mais aten&ccedil;&atilde;o do que uma pessoa consegue dar. N&atilde;o &eacute; incapacidade &mdash; &eacute; capacidade.</p>
+  </div>
+
+  <h2 id="account">Toda decis&atilde;o consome aten&ccedil;&atilde;o</h2>
+
+  <p>Pense no dia de ontem. Aprovar estoque. Revisar a publicidade. Responder a fornecedores. Discutir contrata&ccedil;&otilde;es. Resolver um problema operacional. Revisar relat&oacute;rios financeiros. Responder mensagens. Reunir-se com a equipe.</p>
+
+  <p>Nenhuma dessas decis&otilde;es parece cara. Mas cada uma faz um saque de uma conta invis&iacute;vel: energia mental, capacidade de decis&atilde;o, aten&ccedil;&atilde;o.</p>
+
+  <p>Ao contr&aacute;rio do dinheiro, voc&ecirc; nunca recebe um extrato mostrando o que sobrou. S&oacute; percebe que, no fim da tarde, as decis&otilde;es ficam mais lentas, a paci&ecirc;ncia encurta e o discernimento piora. A conta est&aacute; zerada.</p>
+
+  <h2 id="founder">O fundador costuma ser o maior consumidor de aten&ccedil;&atilde;o</h2>
+
+  <p>No in&iacute;cio da vida de uma empresa, isso faz todo o sentido. O fundador sabe de tudo, e toda decis&atilde;o importante passa por uma &uacute;nica pessoa &mdash; produtos, fornecedores, pre&ccedil;os, publicidade, contrata&ccedil;&otilde;es, finan&ccedil;as, atendimento ao cliente.</p>
+
+  <p>Essa centraliza&ccedil;&atilde;o gera velocidade. No come&ccedil;o. Com o tempo, gera depend&ecirc;ncia, e o fundador vira o sistema operacional da empresa. Todo e-mail sem resposta, toda aprova&ccedil;&atilde;o atrasada, toda reuni&atilde;o adiada, todas as f&eacute;rias e toda doen&ccedil;a deixam a organiza&ccedil;&atilde;o inteira mais lenta.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">O diagn&oacute;stico</span>
+    <p>O neg&oacute;cio n&atilde;o ficou sem oportunidades. Ficou sem a aten&ccedil;&atilde;o do fundador. Vistas de dentro, as duas situa&ccedil;&otilde;es parecem id&ecirc;nticas e exigem solu&ccedil;&otilde;es completamente diferentes.</p>
+  </div>
+
+  <h2 id="water">Imagine a aten&ccedil;&atilde;o como &aacute;gua</h2>
+
+  <p>Pense na sua aten&ccedil;&atilde;o como &aacute;gua correndo por uma rede de canos. Cada problema vaza um pouco.</p>
+
+  <div class="leaks">
+    <span>Reuni&otilde;es desnecess&aacute;rias</span>
+    <span>Perguntas repetidas</span>
+    <span>Processos pouco claros</span>
+    <span>Relat&oacute;rios manuais</span>
+    <span>Aprova&ccedil;&otilde;es</span>
+    <span>Interrup&ccedil;&otilde;es</span>
+    <span class="note">Individualmente, insignificantes. Juntos, fazem com que quase nenhuma press&atilde;o chegue aonde importa.</span>
+  </div>
+
+  <p>A maioria dos fundadores n&atilde;o precisa trabalhar mais. Precisa de menos vazamentos.</p>
+
+  <h2 id="urgent">Problemas urgentes sempre vencem os importantes</h2>
+
+  <p>Imagine abrir o notebook amanh&atilde; com um plano claro: revisar a estrat&eacute;gia de expans&atilde;o do pr&oacute;ximo ano, analisar a aloca&ccedil;&atilde;o de capital, avaliar duas oportunidades de aquisi&ccedil;&atilde;o. Em vez disso:</p>
+
+  <div class="clock">
+    <div><span class="t">08:12</span><span class="ev">Uma remessa atrasa</span></div>
+    <div><span class="t">08:40</span><span class="ev">Um funcion&aacute;rio pede demiss&atilde;o</span></div>
+    <div><span class="t">09:05</span><span class="ev">A Amazon suprime um listing</span></div>
+    <div><span class="t">09:30</span><span class="ev">Um fornecedor muda os pre&ccedil;os</span></div>
+    <div><span class="t">09:55</span><span class="ev">O atendimento ao cliente escala uma reclama&ccedil;&atilde;o</span></div>
+    <div class="gone"><span class="t">10:00</span><span class="ev">O trabalho estrat&eacute;gico sumiu. De novo.</span></div>
+  </div>
+
+  <p>A urg&ecirc;ncia atrai aten&ccedil;&atilde;o naturalmente. A import&acirc;ncia, raramente. Sem gest&atilde;o, os neg&oacute;cios ficam extraordinariamente eficientes em resolver as emerg&ecirc;ncias de hoje enquanto, em sil&ecirc;ncio, deixam de lado as oportunidades de amanh&atilde;.</p>
+
+  <h2 id="interruption">Toda interrup&ccedil;&atilde;o tem um custo de oportunidade</h2>
+
+  <p>Suponha que algu&eacute;m interrompa voc&ecirc; por cinco minutos. Isso n&atilde;o custa necessariamente cinco minutos. Pode custar a concentra&ccedil;&atilde;o necess&aacute;ria para voltar a um trabalho complexo, a ideia que sumiu no meio do racioc&iacute;nio, a discuss&atilde;o estrat&eacute;gica adiada para a semana que vem, a decis&atilde;o que nunca foi explorada por inteiro.</p>
+
+  <p>A aten&ccedil;&atilde;o n&atilde;o muda de foco instantaneamente. Toda interrup&ccedil;&atilde;o cria custos ocultos que nunca aparecem na agenda.</p>
+
+<aside class="strip">
+  <div>
+    <h3>Deixe as decis&otilde;es de rotina se resolverem sozinhas</h3>
+    <p>A AmazeBase conecta estoque, publicidade, margem e caixa para que s&oacute; as exce&ccedil;&otilde;es precisem de voc&ecirc;.</p>
+  </div>
+  <a class="strip-btn" href="/index.html#waitlist">Entre na lista de espera</a>
+</aside>
+
+  <h2 id="scarce">A informa&ccedil;&atilde;o j&aacute; n&atilde;o &eacute; escassa. A aten&ccedil;&atilde;o, sim.</h2>
+
+  <p>Vinte anos atr&aacute;s, as empresas tinham dificuldade para obter informa&ccedil;&atilde;o. Hoje se afogam nela: pain&eacute;is, notifica&ccedil;&otilde;es, relat&oacute;rios, e-mails, chat, resumos de IA, alertas de publicidade, alertas de estoque, alertas de concorrentes, alertas financeiros.</p>
+
+  <p>O desafio n&atilde;o &eacute; coletar mais informa&ccedil;&atilde;o. &Eacute; decidir qual informa&ccedil;&atilde;o merece aten&ccedil;&atilde;o. &Eacute; um problema fundamentalmente diferente, e a maioria dos softwares ainda resolve o antigo.</p>
+
+  <h2 id="protect">As empresas que escalam protegem a aten&ccedil;&atilde;o dos executivos</h2>
+
+  <p>Imagine dois CEOs. O primeiro participa de todas as reuni&otilde;es, aprova todos os pedidos de compra, l&ecirc; todos os relat&oacute;rios, responde a todas as mensagens. O segundo desenhou sistemas que filtram a informa&ccedil;&atilde;o &mdash; s&oacute; as situa&ccedil;&otilde;es fora do comum chegam at&eacute; ele, e as decis&otilde;es de rotina acontecem automaticamente.</p>
+
+  <p>Qual dos dois toma decis&otilde;es estrat&eacute;gicas melhores depois de cinco anos? Provavelmente o segundo. N&atilde;o porque seja mais inteligente, mas porque protegeu o &uacute;nico recurso que ningu&eacute;m consegue repor.</p>
+
+  <h2 id="systems">Todo sistema existe para poupar aten&ccedil;&atilde;o</h2>
+
+  <p>A maioria das pessoas acredita que os sistemas existem para aumentar a efici&ecirc;ncia. E existem. Mas o maior prop&oacute;sito deles talvez seja outro: reduzir a carga cognitiva.</p>
+
+  <div class="instrument">
+    <div class="reads">
+      <span class="big2">Sem sistemas</span>
+      <p>Revisar cada SKU manualmente. Estimar a demanda. Calcular as quantidades de reposi&ccedil;&atilde;o. Avaliar fornecedores. Repetir sem parar.</p>
+    </div>
+    <div class="acts">
+      <span class="big2">Com sistemas</span>
+      <p>S&oacute; as exce&ccedil;&otilde;es exigem uma pessoa. O fundador n&atilde;o gerencia mais o estoque &mdash; o fundador gerencia exce&ccedil;&otilde;es.</p>
+    </div>
+  </div>
+
+  <p>&Eacute; uma diferen&ccedil;a enorme, e ela tem efeito composto: cada decis&atilde;o de rotina eliminada libera capacidade para uma que s&oacute; a lideran&ccedil;a pode tomar.</p>
+
+  <h2 id="notthink">Grandes l&iacute;deres decidem em que n&atilde;o pensar</h2>
+
+  <p>Parece estranho, mas &eacute; uma das caracter&iacute;sticas que definem os CEOs excepcionais. Eles tiram decis&otilde;es da pr&oacute;pria cabe&ccedil;a de prop&oacute;sito &mdash; n&atilde;o porque essas decis&otilde;es n&atilde;o importem, mas porque n&atilde;o s&atilde;o o melhor uso da aten&ccedil;&atilde;o dos executivos.</p>
+
+  <p>Steve Jobs ficou famoso por simplificar a linha de produtos da Apple, cancelando a maior parte dos modelos quando voltou, em 1997, e reduzindo a linha a quatro quadrantes. Jeff Bezos empurrou as decis&otilde;es rotineiras e revers&iacute;veis para baixo e para fora da camada executiva, reservando a delibera&ccedil;&atilde;o para as irrevers&iacute;veis. O princ&iacute;pio continua notavelmente consistente.</p>
+
+  <div class="qbox">
+    <span class="label">A regra</span>
+    <p>Proteja a aten&ccedil;&atilde;o para as decis&otilde;es que s&oacute; a lideran&ccedil;a pode tomar. Todo o resto pertence a um sistema.</p>
+  </div>
+
+  <h2 id="measuring">Imagine medir a aten&ccedil;&atilde;o</h2>
+
+  <p>Suponha que o seu software acompanhasse algo que nenhum painel mede hoje: para onde a aten&ccedil;&atilde;o dos executivos realmente foi. Horas gastas com problemas operacionais, planejamento estrat&eacute;gico, contrata&ccedil;&otilde;es, problemas de clientes, apagar inc&ecirc;ndios, inova&ccedil;&atilde;o, reuni&otilde;es, aprova&ccedil;&otilde;es.</p>
+
+  <p>Revise isso todo m&ecirc;s e muitos fundadores encontrariam algo alarmante. A agenda revela as prioridades reais da empresa &mdash; n&atilde;o as que est&atilde;o escritas no documento de estrat&eacute;gia.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">A frase para guardar</span>
+    <p>A aten&ccedil;&atilde;o &eacute; a estrat&eacute;gia tornada vis&iacute;vel. Se as duas discordam, quem diz a verdade &eacute; a agenda.</p>
+  </div>
+
+  <h2 id="return">O investimento de maior retorno</h2>
+
+  <p>Suponha que algu&eacute;m oferecesse dois investimentos a voc&ecirc;.</p>
+
+  <div class="bet">
+    <div class="a">
+      <span class="k">Investimento A</span>
+      <span class="v">15% ao ano</span>
+      <p>Um retorno convencional, respeit&aacute;vel, totalmente mensur&aacute;vel.</p>
+    </div>
+    <div class="b">
+      <span class="k">Investimento B</span>
+      <span class="v">Uma hora de foco por dia, durante dez anos</span>
+      <p>Imensur&aacute;vel e, para a maioria dos fundadores, muito mais valioso.</p>
+    </div>
+  </div>
+
+  <p>Uma hora a mais de reflex&atilde;o de alta qualidade pode mudar decis&otilde;es de contrata&ccedil;&atilde;o, a aloca&ccedil;&atilde;o de capital, a estrat&eacute;gia de produto, a expans&atilde;o de mercado e a cultura da empresa. A aten&ccedil;&atilde;o tem efeito composto porque as decis&otilde;es t&ecirc;m efeito composto.</p>
+
+  <h2 id="dashboard">O painel de que realmente precisamos</h2>
+
+  <p>Imagine o software do seu neg&oacute;cio abrindo n&atilde;o com m&eacute;tricas de faturamento e publicidade, mas com perguntas:</p>
+
+  <ul class="bottleneck">
+    <li>Para onde foi a aten&ccedil;&atilde;o da lideran&ccedil;a nesta semana?</li>
+    <li>Quantas horas foram para problemas recorrentes?</li>
+    <li>Quantas decis&otilde;es exigiram a aprova&ccedil;&atilde;o do fundador?</li>
+    <li>Quantas interrup&ccedil;&otilde;es vieram de problemas evit&aacute;veis?</li>
+    <li>Quanto trabalho estrat&eacute;gico foi conclu&iacute;do?</li>
+    <li>Quanto tempo dos executivos foi consumido por falhas operacionais?</li>
+  </ul>
+
+  <p>Assim, a gest&atilde;o n&atilde;o mede apenas o desempenho do neg&oacute;cio. Mede tamb&eacute;m se a lideran&ccedil;a est&aacute; gastando bem o seu recurso mais valioso.</p>
+
+  <h2 id="stages">Toda grande empresa acaba aprendendo isso</h2>
+
+  <p>Empresas em est&aacute;gio inicial funcionam &agrave; base de esfor&ccedil;o. Empresas em crescimento funcionam &agrave; base de coordena&ccedil;&atilde;o. Empresas excepcionais funcionam &agrave; base de aten&ccedil;&atilde;o concentrada &mdash; n&atilde;o porque trabalham menos, mas porque entendem algo sutil.</p>
+
+  <p>A qualidade da lideran&ccedil;a n&atilde;o &eacute; determinada por quantas horas os executivos trabalham. &Eacute; determinada pela qualidade das decis&otilde;es que essas horas produzem. A aten&ccedil;&atilde;o determina a qualidade das decis&otilde;es. A qualidade das decis&otilde;es determina a qualidade do neg&oacute;cio.</p>
+
+  <h2 id="final">Para fechar</h2>
+
+  <p>Os fundadores costumam achar que o neg&oacute;cio deles &eacute; vender produtos, gerenciar estoque ou otimizar publicidade. Na verdade, eles gerenciam aten&ccedil;&atilde;o. Toda reuni&atilde;o a fortalece ou a enfraquece. Toda aprova&ccedil;&atilde;o desnecess&aacute;ria a consome. Todo problema recorrente a rouba. Todo sistema mal desenhado a deixa vazar. Toda interrup&ccedil;&atilde;o a desvia.</p>
+
+  <p>As empresas mais fortes da pr&oacute;xima d&eacute;cada n&atilde;o ter&atilde;o necessariamente dados melhores. Todo mundo ter&aacute; acesso a informa&ccedil;&otilde;es extraordin&aacute;rias. Os vencedores ser&atilde;o os que sabem onde concentrar uma aten&ccedil;&atilde;o limitada &mdash; porque a informa&ccedil;&atilde;o cria possibilidades, e a aten&ccedil;&atilde;o determina quais delas viram realidade.</p>
+
+  <p>Dinheiro pode ser emprestado. Estoque pode ser reposto. Funcion&aacute;rios podem ser contratados. At&eacute; o tempo &agrave;s vezes pode ser comprado com delega&ccedil;&atilde;o e automa&ccedil;&atilde;o. A aten&ccedil;&atilde;o &eacute; diferente. Depois de dispersa, nenhuma quantia de dinheiro recupera por completo as oportunidades que ela nunca teve a chance de reconhecer.</p>
+
+  <div class="fixbox">
+    <span class="fixbox-k">A pergunta de sexta-feira</span>
+    <p>N&atilde;o &ldquo;o que conseguimos fazer?&rdquo;, mas &ldquo;gastamos a nossa aten&ccedil;&atilde;o nas decis&otilde;es que v&atilde;o importar daqui a cinco anos?&rdquo;</p>
+  </div>
+
+  <p>Porque, no fim, as empresas se tornam aquilo a que seus l&iacute;deres prestam aten&ccedil;&atilde;o com const&acirc;ncia. Isso faz da aten&ccedil;&atilde;o n&atilde;o apenas mais um recurso &mdash; faz dela o &uacute;nico recurso do qual nasce toda outra vantagem competitiva.</p>
+
+  <div class="callout">
+    <span class="label">Leitura relacionada</span>
+    <p>
+      Este &eacute; o quarto artigo da s&eacute;rie Guia de crescimento.
+      <a href="/pt/artigos/problema-de-qualidade-das-decisoes.html">Qualidade das decis&otilde;es</a> defende que o neg&oacute;cio
+      &eacute; a soma das suas decis&otilde;es;
+      <a href="/pt/artigos/seu-negocio-nao-esta-crescendo.html">crescimento versus complexidade</a> explica
+      o que as sufoca;
+      <a href="/pt/artigos/exatamente-o-que-foi-projetado-para-produzir.html">sistemas produzem resultados</a>
+      explica por que os mesmos problemas voltam. Este explica pelo que os tr&ecirc;s est&atilde;o
+      realmente competindo.
+    </p>
+  </div>
+
+</main>
+
+<aside class="rail" aria-label="Pontos-chave">
+
+  <div class="rail-card">
+    <span class="rail-k">O recurso escasso</span>
+    <span class="rail-v is-violet">Aten&ccedil;&atilde;o</span>
+    <p>Capital se pega emprestado, estoque se fabrica, pessoas se contratam. A aten&ccedil;&atilde;o s&oacute; pode ser redirecionada.</p>
+  </div>
+
+  <div class="rail-card">
+    <span class="rail-k">A armadilha</span>
+    <span class="rail-v is-amber">Urg&ecirc;ncia</span>
+    <p>O trabalho urgente atrai aten&ccedil;&atilde;o automaticamente. O trabalho importante precisa ser defendido de prop&oacute;sito.</p>
+  </div>
+
+  <div class="rail-card">
+    <span class="rail-k">Para que servem os sistemas</span>
+    <span class="rail-v">Menos vazamentos</span>
+    <p>N&atilde;o &eacute; principalmente efici&ecirc;ncia. O trabalho real deles &eacute; tirar decis&otilde;es da cabe&ccedil;a do fundador.</p>
+  </div>
+
+  <div class="rail-card">
+    <span class="rail-k">A auditoria</span>
+    <span class="rail-v">A sua agenda</span>
+    <p>A aten&ccedil;&atilde;o &eacute; a estrat&eacute;gia tornada vis&iacute;vel. Para onde ela foi na semana passada &eacute; o que a empresa realmente priorizou.</p>
+  </div>
+
+</aside>
+</div>
+
+<aside class="cta">
+  <h2>Coloque a sua aten&ccedil;&atilde;o onde ela gera efeito composto</h2>
+  <p>
+    A AmazeBase conecta estoque, publicidade, margem e caixa em um s&oacute; lugar &mdash; para que
+    as decis&otilde;es de rotina sigam regras e s&oacute; as exce&ccedil;&otilde;es cheguem at&eacute; voc&ecirc;.
+  </p>
+  <a class="btn" href="/index.html#waitlist">
+    Entre na lista de espera
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M5 12h14M13 6l6 6-6 6"/>
+    </svg>
+  </a>
+</aside>
+
+</div><!-- /.wrap -->
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+  <symbol id="i-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12.5 17v-4a2.5 2.5 0 015 0v4"/></symbol>
+  <symbol id="i-tw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M20 4L4 20"/></symbol>
+  <symbol id="i-gh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4 1.4-4-2.2-5.6-2.6M15 21v-3.4a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 2.6 5.5 2.9 5.5 2.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 9.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></symbol>
+</defs>
+</svg>
+
+<footer class="footer">
+<div class="container">
+
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/index.html" class="brand" aria-label="P&aacute;gina inicial da AmazeBase">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+        </svg>
+        <span data-brand>AmazeBase</span>
+      </a>
+      <p>O sistema operacional para vendedores da Amazon. Tudo conectado, tudo sincronizado.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Produto</h4>
+      <a href="/pt/produto.html#modules">Produto</a>
+      <a href="/index.html#pricing">Pre&ccedil;os</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Recursos</h4>
+      <a href="/pt/recursos.html">Central de Conhecimento</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <a href="/pt/sobre.html">Sobre</a>
+      <a href="/pt/contato.html">Contato</a>
+      <a href="/privacy.html">Privacidade</a>
+      <a href="/terms.html">Termos</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>&copy; 2026 <span data-brand>AmazeBase</span>. Todos os direitos reservados.</span>
+    <div class="footer-social">
+      <a href="#" aria-label="LinkedIn"><svg class="icon-sm"><use href="#i-in"/></svg></a>
+      <a href="#" aria-label="X"><svg class="icon-sm"><use href="#i-tw"/></svg></a>
+      <a href="#" aria-label="GitHub"><svg class="icon-sm"><use href="#i-gh"/></svg></a>
+    </div>
+  </div>
+
+</div>
+</footer>
+
+<script src="/js/main.js" defer></script>
+</body>
+</html>

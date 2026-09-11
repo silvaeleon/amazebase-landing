@@ -59,7 +59,7 @@
 
   /* ------------------------------------------------------------- LANGUAGE */
 
-  /* The hub exists at /resources.html and /es/recursos.html and is driven by
+  /* The hub exists at /resources.html, /es/recursos.html and /pt/recursos.html, driven by
      one script and one data file. Every user-facing string goes through T(),
      which falls back to the English literal, so adding a language means adding
      a column here and a `label_xx` beside each `label` in resources.json. */
@@ -109,6 +109,50 @@
       "We couldn't send that. Please try again.":
         "No pudimos enviarlo. Int\u00e9ntalo de nuevo.",
       "Something went wrong.": "Algo sali\u00f3 mal."
+    },
+    pt: {
+      "All Resources":
+        "Todos os recursos",
+      "All":
+        "Todos",
+      "Results":
+        "Resultados",
+      "Latest Resources":
+        "Recursos mais recentes",
+      "resource":
+        "recurso",
+      "resources":
+        "recursos",
+      " match":
+        " com esses filtros",
+      "Nothing featured yet":
+        "Nada em destaque ainda",
+      "Mark a resource with \u201cfeatured\u201d in data/resources.json and it will appear here.":
+        "Marque um recurso com \u201cfeatured\u201d em data/resources.json e ele vai aparecer aqui.",
+      "No resources published yet":
+        "Nenhum recurso publicado ainda",
+      "This hub is built and ready. Add entries to data/resources.json and they appear here \u2014 counts, filters and search all follow automatically.":
+        "Esta central est\u00e1 montada e pronta. Adicione entradas em data/resources.json e elas aparecem aqui \u2014 contagens, filtros e pesquisa acompanham automaticamente.",
+      "Nothing matches those filters":
+        "Nada corresponde a esses filtros",
+      "Try a different category, format or search term.":
+        "Tente outra categoria, outro formato ou outro termo de pesquisa.",
+      "Couldn't load the resource list":
+        "N\u00e3o foi poss\u00edvel carregar a lista de recursos",
+      " min":
+        " min",
+      "Sending\u2026":
+        "Enviando\u2026",
+      "Tell us a little more about what you'd like.":
+        "Conte um pouco mais sobre o que voc\u00ea gostaria de ver.",
+      "That email address doesn't look right.":
+        "Esse endere\u00e7o de e-mail n\u00e3o parece correto.",
+      "Too many requests just now. Please try again later.":
+        "Muitas solicita\u00e7\u00f5es neste momento. Tente de novo mais tarde.",
+      "We couldn't send that. Please try again.":
+        "N\u00e3o conseguimos enviar. Tente de novo.",
+      "Something went wrong.":
+        "Algo deu errado."
     }
   };
 
@@ -153,7 +197,7 @@
   function formatDate(iso) {
     var d = new Date(iso + "T00:00:00");
     if (isNaN(d)) return iso;
-    return d.toLocaleDateString(LANG === "es" ? "es-ES" : "en-GB",
+    return d.toLocaleDateString({ es: "es-ES", pt: "pt-BR" }[LANG] || "en-GB",
                             { day: "numeric", month: "short", year: "numeric" });
   }
 

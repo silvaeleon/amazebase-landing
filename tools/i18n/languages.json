@@ -28,6 +28,19 @@
         "about": "es/nosotros.html",
         "contact": "es/contacto.html"
       }
+    },
+    {
+      "code": "pt",
+      "label": "Português",
+      "chip": "PT",
+      "articles": "pt/artigos",
+      "top": {
+        "resources": "pt/recursos.html",
+        "product": "pt/produto.html",
+        "solutions": "pt/solucoes.html",
+        "about": "pt/sobre.html",
+        "contact": "pt/contato.html"
+      }
     }
   ],
   "no_switcher": ["index.html", "privacy.html", "terms.html"]
