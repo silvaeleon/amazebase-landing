@@ -192,8 +192,15 @@ PPC*, *Profit & Finances* → *Lucro e finanças*, *Inventory* → *Estoque*,
 crescimento*, *Product Research* → *Pesquisa de produtos*, *Tools & Tutorials*
 → *Ferramentas e tutoriais*.
 
-Pricing, the brand mark, Privacy and Terms point at the English pages — there
-is no Portuguese homepage, pricing, privacy or terms, by decision.
+~~Pricing, the brand mark, Privacy and Terms point at the English pages — there
+is no Portuguese homepage, pricing, privacy or terms, by decision.~~ Superseded
+2026-09-11: Leon asked for all three, in Portuguese and Spanish, prices staying
+in USD. They are `/pt/` (homepage and its #pricing), `/pt/privacidade.html` and
+`/pt/termos.html`, built by `tools/i18n/home_legal.py` (see
+`briefs/HOME-LEGAL.md`). Every link on a Portuguese page now points at them
+(`locallinks.py`). Plan names stay as they are (*Pro*, *Enterprise*), like
+module names. The legal pages carry a one-line note that the English version
+governs.
 
 ---
 

@@ -41,7 +41,9 @@ LANG = "pt"
 ARTICLES = "pt/artigos"
 TOP = {"resources": "pt/recursos.html", "product": "pt/produto.html",
        "solutions": "pt/solucoes.html", "about": "pt/sobre.html",
-       "contact": "pt/contato.html"}
+       "contact": "pt/contato.html",
+       # built by tools/i18n/home_legal.py (2026-09-11)
+       "home": "pt/", "privacy": "pt/privacidade.html", "terms": "pt/termos.html"}
 # The manifest entry langlinks will get when all 51 exist. Until then it is
 # used only to generate these pages' own alternates and switcher.
 PT_ENTRY = {"code": "pt", "label": u"Português", "chip": "PT",

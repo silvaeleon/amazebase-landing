@@ -17,7 +17,7 @@ import copy, io, json, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(HERE))
-import gate
+import gate, langlinks, locallinks
 
 PILOT_ES = {
     "reorder-point": "punto-de-reorden",
@@ -75,6 +75,8 @@ def main(tree, briefs):
     back.update({"/es/recursos.html": "/resources.html", "/es/producto.html": "/product.html",
                  "/es/soluciones.html": "/solutions.html", "/es/nosotros.html": "/about.html",
                  "/es/contacto.html": "/contact.html"})
+    # every other local top page (the homepage /es/, privacy, terms), from the manifest
+    back.update(locallinks.back_map(langlinks.load()[0], "es"))
 
     def href_back(h):
         base, frag = (h.split("#", 1) + [""])[:2]

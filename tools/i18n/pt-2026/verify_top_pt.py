@@ -119,7 +119,8 @@ def check(tree, key, en_rel, pt_rel, es_rel, tr, pt_map):
         if re.match(r"^(#|[a-z]+:)", u) or not u.startswith("/"):
             continue
         f = os.path.join(tree, u.split("#")[0].split("?")[0].lstrip("/"))
-        if not os.path.isfile(f) and not os.path.isfile(f + ".html"):
+        folder = os.path.join(tree, langlinks.file_of(u.split("#")[0].split("?")[0].lstrip("/")))
+        if not os.path.isfile(f) and not os.path.isfile(f + ".html") and not os.path.isfile(folder):
             miss.append(u)
     if rel:
         P.append("relative URLs %s" % rel[:4])

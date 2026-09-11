@@ -983,3 +983,10 @@
   border-radius:50%;
   display:block;
 }
+
+/* The translated legal pages' "this is a translation" line (tools/i18n/home_legal.py).
+   Its link to the English version sits outside .legal, which is the only place
+   terms styles links, so it would otherwise read as plain text. */
+.translation-note{ margin:0 0 var(--s3); font-size:14px; line-height:1.6; color:var(--text-2); }
+.translation-note a{ color:var(--violet-soft); text-decoration:underline; text-underline-offset:2px; }
+.translation-note a:hover{ color:var(--text); }

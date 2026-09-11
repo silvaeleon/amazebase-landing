@@ -62,7 +62,8 @@ def main(tree, content, slug):
          lambda s: s.replace("</p>", " and the rest of your stock</p>", 1),
          "English stopwords"),
         ("link to a page that does not exist",
-         lambda s: s.replace('href="/index.html#waitlist"', 'href="/nowhere.html"', 1),
+         # the wait-list link is /pt/#waitlist since the Portuguese homepage exists (2026-09-11)
+         lambda s: s.replace('href="/pt/#waitlist"', 'href="/nowhere.html"', 1),
          "resolve to nothing"),
         ("a CRLF line ending",
          lambda s: s.replace("\n", "\r\n", 1),

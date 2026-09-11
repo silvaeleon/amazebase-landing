@@ -52,7 +52,7 @@ LEGAL  = "Silbros Trading LLC"
 EMAIL  = "contact@silbrostrading.com"
 TODAY  = "2026-08-26"
 # sitemap lastmod for each language's top-level pages (English uses TODAY)
-TOP_LASTMOD = {"es": "2026-09-10", "pt": "2026-09-11"}
+TOP_LASTMOD = {"es": "2026-09-11", "pt": "2026-09-11"}
 
 START, END = "<!-- SEO:START -->", "<!-- SEO:END -->"
 
@@ -434,7 +434,7 @@ def do_hub(resources):
 def do_sitemap(resources):
     urls = [(p["url"], TODAY) for p in TOP]
     for lang in _CFG["languages"][1:]:             # English is TOP above
-        for key in ("product", "solutions", "resources", "about", "contact"):
+        for key in [p["slug"] for p in TOP]:       # every top page it has, in English order
             if key in lang.get("top", {}):
                 urls.append(("%s/%s" % (SITE, lang["top"][key]), TOP_LASTMOD[lang["code"]]))
     urls += [("%s/%s" % (SITE, r["url"]), r["published"]) for r in

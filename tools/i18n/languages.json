@@ -13,7 +13,10 @@
         "product": "product.html",
         "solutions": "solutions.html",
         "about": "about.html",
-        "contact": "contact.html"
+        "contact": "contact.html",
+        "home": "",
+        "privacy": "privacy.html",
+        "terms": "terms.html"
       }
     },
     {
@@ -26,7 +29,10 @@
         "product": "es/producto.html",
         "solutions": "es/soluciones.html",
         "about": "es/nosotros.html",
-        "contact": "es/contacto.html"
+        "contact": "es/contacto.html",
+        "home": "es/",
+        "privacy": "es/privacidad.html",
+        "terms": "es/terminos.html"
       }
     },
     {
@@ -39,9 +45,13 @@
         "product": "pt/produto.html",
         "solutions": "pt/solucoes.html",
         "about": "pt/sobre.html",
-        "contact": "pt/contato.html"
+        "contact": "pt/contato.html",
+        "home": "pt/",
+        "privacy": "pt/privacidade.html",
+        "terms": "pt/termos.html"
       }
     }
   ],
-  "no_switcher": ["index.html", "privacy.html", "terms.html"]
+  "no_switcher": [],
+  "_note_home": "A top path is what a visitor sees. The homepages are folders: \"\" is https://amazebase.pro/ (its canonical), \"es/\" is /es/ -- each served from index.html by the Caddyfile's try_files; langlinks.file_of() maps a path to its file."
 }

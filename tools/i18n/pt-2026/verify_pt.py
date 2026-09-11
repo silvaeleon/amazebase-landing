@@ -202,7 +202,8 @@ def check_page(tree, tr, brief, pt_map):
             continue
         path = u.split("#")[0].split("?")[0]
         f = os.path.join(tree, path.lstrip("/"))
-        if os.path.isfile(f) or os.path.isfile(f + ".html"):
+        if os.path.isfile(f) or os.path.isfile(f + ".html") or \
+                os.path.isfile(os.path.join(tree, langlinks.file_of(path.lstrip("/")))):
             continue
         # a top-level page not built yet is pending; once it exists it is checked
         if path in PENDING:

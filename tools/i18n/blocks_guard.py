@@ -81,7 +81,8 @@ def main(tree, ref=None):
 
     allowed = csp_hash(tree)
     cfg, _ = langlinks.load()
-    homes = [l["top"]["home"] for l in cfg["languages"] if "home" in l.get("top", {})] or ["index.html"]
+    homes = [langlinks.file_of(l["top"]["home"]) for l in cfg["languages"]
+             if "home" in l.get("top", {})] or ["index.html"]
     for rel in homes:
         if not os.path.exists(os.path.join(tree, rel)):
             print("%-16s not built yet" % rel)
