@@ -24,6 +24,10 @@ start.
 | 4 | **"lead time"** | **tiempo de reposición** (and *tiempo total de reposición* for the full chain) | Leaving *lead time* in English. Sellers use both; the Spanish reads better in a formula. |
 | 5 | **Quotation marks** | `«…»` angle quotes | `"…"` curly quotes. Angle quotes are the Spanish convention and already render correctly in the dark theme. |
 
+Decision 1 is now a **site-wide convention**, not a Spanish one: every number
+in every language keeps US formatting — see `tools/i18n/README.md`, *Shared
+conventions*. The row above stays as the record of how it was first decided.
+
 ---
 
 ## 2. Terms kept in English on purpose

@@ -31,6 +31,31 @@ one run.
 
 ---
 
+## Shared conventions — every language inherits these
+
+These are decided once for the whole site. A language's glossary
+cross-references them; it does not restate them as its own row, and they are
+not re-argued per language.
+
+### Numbers: US formatting, every number, every language
+
+`$30,000` · `$8.00` · `1,200 unidades` · `3,160 unidades`. Money **and** plain
+counts, in every language — no localised separators in Portuguese, and none
+in French, Italian or German later. Decided by Leon, 2026-09-11. Every figure
+on the site is USD copied from US sources, and one format across the site
+cannot be mistranscribed between languages.
+
+**The tradeoff, accepted on purpose — not an oversight:** unit counts were
+considered explicitly and included. Measured 2026-09-11 in the English source,
+51 articles carry 223 thousands-separated numbers, 56 of them NOT money, across
+11 articles (`1,200` units, `3,160` units); a reader used to `1.200` can read
+`1,200` as 1.2. One consistent format across the whole site was chosen over
+per-language correctness on that minority case. Do not "fix" it in one
+language, and do not change `gate.py`'s figure check to accept local
+separators.
+
+---
+
 ## Adding a language, in order
 
 ### 1. Regenerate the briefs
