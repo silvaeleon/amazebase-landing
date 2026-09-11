@@ -101,7 +101,10 @@
   color:var(--text-2);
 }
 
-.legal a{ color:var(--brand); }
+/* var(--brand) was defined nowhere until 2026-09-11 (now in variables.css), so
+   these links rendered as plain text. Colour plus an underline: colour alone
+   is not an affordance. */
+.legal a{ color:var(--brand); text-decoration:underline; text-underline-offset:2px; }
 .legal a:hover{ color:var(--text); }
 
 .legal-address{

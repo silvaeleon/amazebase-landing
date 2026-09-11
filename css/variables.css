@@ -26,6 +26,10 @@
   --indigo:          #5B4FE6;
   --blue:            #3B82F6;
   --blue-soft:       #7EB3FF;
+  /* Used by page.css (terms links), hub.css (hub filter pills: hover, selected,
+     focus ring) and sections.css (security cards, their links) -- and defined
+     nowhere until 2026-09-11, so every one of those fell back to nothing. */
+  --brand:           var(--violet-soft);
 
   --green:           #2ED47A;
   --amber:           #F5A524;
