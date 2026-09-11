@@ -222,6 +222,7 @@ def head_seo(s, tr, en_url, pt_url, has_seo):
     s, n = re.subn(r'"keywords": \[.*?\]', lambda m: kw, s, count=1, flags=re.S)
     assert n == 1, "keywords"
     s = rep(s, '"name": "Home"', '"name": "%s"' % ld(u"Início"), label="crumb home")
+    s = rep(s, '"item": "%s/"' % SITE, '"item": "%s/pt/"' % SITE, label="crumb home url")
     s = rep(s, '"name": "Knowledge Hub"', '"name": "Central de Conhecimento"', label="crumb hub")
     s = rep(s, '"item": "%s/resources.html"' % SITE, '"item": "%s/pt/recursos.html"' % SITE,
             label="crumb hub url")

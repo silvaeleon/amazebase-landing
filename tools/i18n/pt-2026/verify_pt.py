@@ -154,9 +154,9 @@ def check_page(tree, tr, brief, pt_map):
                 P.append("Article mainEntityOfPage")
         items = crumbs[0]["itemListElement"] if crumbs else []
         got = [(i.get("name"), i.get("item")) for i in items]
-        want = [(u"Início", SITE + "/"), ("Central de Conhecimento", SITE + "/pt/recursos.html"),
+        want = [(u"Início", SITE + "/pt/"), ("Central de Conhecimento", SITE + "/pt/recursos.html"),
                 (tr["crumb"], None)]
-        if [g[0] for g in got] != [w[0] for w in want] or got[1][1] != want[1][1]:
+        if [g[0] for g in got] != [w[0] for w in want] or got[1][1] != want[1][1] or got[0][1] != want[0][1]:
             P.append("breadcrumbs %s" % got)
         facts.append("JSON-LD: %d blocks parse, Article inLanguage pt, breadcrumbs %s"
                      % (len(blocks), " > ".join(g[0] for g in got)))

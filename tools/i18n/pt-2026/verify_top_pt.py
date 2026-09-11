@@ -58,7 +58,7 @@ def check(tree, key, en_rel, pt_rel, es_rel, tr, pt_map):
     g = json.loads(m.group(1))["@graph"]
     crumbs = [n for n in g if n.get("@type") == "BreadcrumbList"][0]["itemListElement"]
     names = [c["name"] for c in crumbs]
-    if names[0] != u"Início" or names[-1] != tr["crumb"]:
+    if names[0] != u"Início" or names[-1] != tr["crumb"] or crumbs[0].get("item") != SITE + "/pt/":
         P.append("breadcrumbs %s" % names)
     facts.append("JSON-LD parses; breadcrumbs %s" % " > ".join(names))
     if key == "resources":

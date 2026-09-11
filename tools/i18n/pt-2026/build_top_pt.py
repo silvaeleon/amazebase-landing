@@ -121,6 +121,7 @@ def build(tree, key, en_rel, pt_rel, es_rel, tr, dialog_pt, cfg, data):
             items = n["itemListElement"]
             assert items[0]["name"] == "Home"
             items[0]["name"] = u"Início"
+            items[0]["item"] = SITE + "/pt/"      # the Portuguese homepage (2026-09-11)
             items[-1]["name"] = tr["crumb"]
             if "item" in items[-1]:
                 items[-1]["item"] = pt_url
