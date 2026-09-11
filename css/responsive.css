@@ -284,3 +284,13 @@
   background:rgba(59,130,246,.16);
   color:#B9D4FC;
 }
+
+/* ── ARTICLES: let the content column shrink to the screen ─────────────
+   Every article lays out as a grid (.shell) whose track is sized from its
+   children. A grid item's default min-width is auto, so the column grew to
+   the widest unbreakable line inside <main> -- an .expiry row, a nowrap SVG
+   label, a long table-of-contents heading -- and pushed the page past the
+   right edge of a phone: 403-417px wide on a 390px screen. min-width:0 lets
+   the column be the width of the screen and the content wrap inside it.
+   Closes HANDOVER section 6 item 2. Only article pages have .shell. */
+.shell > *{ min-width:0; }
