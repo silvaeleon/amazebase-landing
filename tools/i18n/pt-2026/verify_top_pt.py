@@ -16,7 +16,7 @@ import html, io, json, os, re, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(HERE))
 sys.path.insert(0, HERE)
-import gate, langlinks, build_pt as BP, verify_pt as VP, build_top_pt as BT
+import gate, langlinks, locallinks, build_pt as BP, verify_pt as VP, build_top_pt as BT
 
 SITE = BP.SITE
 
@@ -130,6 +130,7 @@ def check(tree, key, en_rel, pt_rel, es_rel, tr, pt_map):
     # body structure against the English page
     back = dict((pt, en_) for en_, pt in BP.CHROME_HREF.items())
     back.update(("/pt/artigos/%s.html" % v, "/articles/%s.html" % k) for k, v in pt_map.items())
+    back.update(locallinks.back_map(BP.load_cfg()[0], "pt"))
 
     def hb(h):
         b_, _, f_ = h.partition("#")

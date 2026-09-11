@@ -65,16 +65,26 @@ def load(cfg_dir=None):
     return cfg, slugs
 
 
+def file_of(path):
+    """The file a manifest path is served from. A path is what a visitor sees:
+    the English homepage is "" (https://amazebase.pro/, its canonical) and the
+    Spanish one "es/" -- both served from an index.html by the Caddyfile's
+    try_files. Every other path is its own file."""
+    return path if path.endswith(".html") else path + "index.html"
+
+
 def groups(cfg, slugs, en_slugs):
     """Every set of pages that are the same page in different languages.
 
-    Returns {path -> {code: path}}, keyed by EVERY member path, so a page can
-    look itself up by its own location without knowing which language it is."""
+    Returns {file -> {code: path}}, keyed by EVERY member's FILE, so a page can
+    look itself up by its own location without knowing which language it is.
+    The member values stay URL paths: they are what the alternates and the
+    switcher link to."""
     out = {}
 
     def add(members):
         for p in members.values():
-            out[p] = members
+            out[file_of(p)] = members
 
     for key in cfg["languages"][0]["top"]:
         members = {}
@@ -163,7 +173,7 @@ def rewrite(s, cfg, members, current):
 
 def page_lang(cfg, path, members):
     for c, p in members.items():
-        if p == path:
+        if file_of(p) == path:
             return c
     return None
 
@@ -210,6 +220,16 @@ def run(tree, cfg_dir=None, check=False, verbose=True):
     hub_checked, hub_problems = hubrows.check(
         json.load(io.open(res, encoding="utf-8")))
     problems.extend("data/resources.json: " + p for p in hub_problems)
+
+    # A translated page linking to the ENGLISH version of a page its language
+    # has fails as silently again: the reader just lands in English. On
+    # 2026-09-11 that was 1,797 links on the Spanish pages. See locallinks.py.
+    import locallinks
+    for rel, n in locallinks.check(tree, cfg):
+        problems.append("%s: %d links point at English pages this language has "
+                        "(run locallinks.py)" % (rel, n))
+    for rel, h, why in locallinks.fragments(tree, cfg):
+        problems.append("%s: link %s -- %s" % (rel, h, why))
 
     # every page that carries a switcher must be in a group, and vice versa
     on_disk = set()

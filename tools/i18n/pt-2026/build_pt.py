@@ -34,6 +34,7 @@ I18N = os.path.dirname(HERE)
 sys.path.insert(0, I18N)
 import gate
 import langlinks
+import locallinks
 
 SITE = "https://amazebase.pro"
 LANG = "pt"
@@ -303,6 +304,7 @@ def build_one(tree, tr, cfg, slugs, pt_map):
     if slug in es:
         members["es"] = "es/articulos/%s.html" % es[slug]
     s = langlinks.rewrite(s, cfg, members, LANG)
+    s, _ = locallinks.localise(s, cfg, LANG)
 
     out = os.path.join(tree, pt_rel)
     os.makedirs(os.path.dirname(out), exist_ok=True)

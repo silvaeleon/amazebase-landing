@@ -31,7 +31,7 @@ import html, io, json, os, re, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(HERE))
 sys.path.insert(0, HERE)
-import gate, langlinks
+import gate, langlinks, locallinks
 import build_pt as BP
 
 SITE = BP.SITE
@@ -169,6 +169,7 @@ def build(tree, key, en_rel, pt_rel, es_rel, tr, dialog_pt, cfg, data):
     # ---- alternates + switcher
     members = {"en": en_rel, "es": es_rel, "pt": pt_rel}
     s = langlinks.rewrite(s, cfg, members, "pt")
+    s, _ = locallinks.localise(s, cfg, "pt")
 
     s = BP.rootify(s)
     out = os.path.join(tree, pt_rel)

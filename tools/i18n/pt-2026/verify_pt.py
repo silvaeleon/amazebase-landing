@@ -17,7 +17,7 @@ from html.parser import HTMLParser
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(HERE))
 sys.path.insert(0, HERE)
-import gate, langlinks, build_pt
+import gate, langlinks, locallinks, build_pt
 
 SITE = build_pt.SITE
 # Chrome pages that will exist when Portuguese is complete, not in the pilot.
@@ -247,6 +247,7 @@ def check_page(tree, tr, brief, pt_map):
     # ---- body skeleton identical to the English page, hrefs mapped back
     back = dict((pt, en) for en, pt in build_pt.CHROME_HREF.items())
     back.update(("/pt/artigos/%s.html" % v, "/articles/%s.html" % k) for k, v in pt_map.items())
+    back.update(locallinks.back_map(build_pt.load_cfg()[0], "pt"))
 
     def href_back(h):
         base, _, frag = h.partition("#")
