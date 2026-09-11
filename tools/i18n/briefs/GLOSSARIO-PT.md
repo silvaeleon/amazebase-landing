@@ -177,7 +177,7 @@ translation; translators may type a plain space.
 | Primary *(nav label)* / AmazeBase home / Open menu | Principal / Página inicial da AmazeBase / Abrir menu |
 | Home *(breadcrumb)* | Início |
 | min read | min de leitura |
-| The fix *(callout label)* | O que fazer |
+| What to do *(callout label; "The fix" until 2026-09-11)* | O que fazer |
 | Step 01 | Passo 01 |
 | What's in this guide / piece | O que você vai encontrar neste guia / neste artigo |
 | Final thoughts | Para fechar |
@@ -255,6 +255,7 @@ agreement in Portuguese depends on what they label.
 | The question | A pergunta | approved 2026-09-11 |
 | The risk | O risco | approved 2026-09-11 |
 | Ask these instead | Pergunte assim | approved 2026-09-11 — the review first supplied "Try this instead → Faça assim", a label the corpus does not contain; "Faça" (do) would have replaced "ask". Kept as a record that a reviewer can invent a source string. |
+| What to do | O que fazer | approved (§4); the English label was "The fix" until 2026-09-11 |
 | The fix | O que fazer | approved (§4) |
 | Worked example | Exemplo prático | approved (§4) |
 | PPC & Advertising | Publicidade e PPC | approved (§4) |

@@ -177,7 +177,7 @@ def check_page(tree, tr, brief, pt_map):
     left = [t for t in build_pt.CHROME_TEXT if re.search(r">\s*%s\s*<" % re.escape(t), visible)]
     left += ["aria-label=%s" % a for a in build_pt.CHROME_ARIA
              if 'aria-label="%s"' % a in visible]
-    for phrase in ("Skip to content", "min read", "The fix", "Worked example",
+    for phrase in ("Skip to content", "min read", "The fix", "What to do", "Worked example",
                    "Key figures from this article", "Final thoughts", "Frequently asked"):
         if phrase in visible:
             left.append(phrase)

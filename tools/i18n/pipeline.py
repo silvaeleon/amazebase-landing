@@ -153,7 +153,7 @@ def write_briefs(slugs):
 STOP_EN = [
     " the ", " and ", " your ", " you ", " that ", " with ", " this ",
     " what ", " which ", " because ", " every ", " most ", " when ",
-    "Join the Wait List", "Knowledge Hub", "min read", "The fix",
+    "Join the Wait List", "Knowledge Hub", "min read", "The fix", "What to do",
 ]
 
 
