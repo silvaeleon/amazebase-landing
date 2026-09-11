@@ -54,6 +54,20 @@ per-language correctness on that minority case. Do not "fix" it in one
 language, and do not change `gate.py`'s figure check to accept local
 separators.
 
+### Slugs: at most 50 characters AND at most 7 words — forward-only
+
+`gate.py` refuses a new slug that breaks either cap, and never shortens one
+for you: a silently trimmed slug is a broken URL that still builds. Both caps,
+because each alone fails in the other direction (the Spanish rule knew only
+words and let a 56-character slug through).
+
+**The caps are FORWARD-ONLY. They do not apply to slugs that already ship.**
+Measured 2026-09-11, 10 Spanish slugs exceed them — 9 are over 7 words, 2 are
+over 50 characters. Those are live, indexed URLs. Changing one without a
+redirect breaks a page a search engine and a reader already know; leave them.
+A future language starts inside the caps; an existing one is not renamed to
+fit them.
+
 ---
 
 ## Adding a language, in order

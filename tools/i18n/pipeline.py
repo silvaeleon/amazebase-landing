@@ -46,6 +46,12 @@ def skeleton(frag):
             out.append(("/" + tag,))
             continue
         kept = []
+        # Boolean attributes (open, selected) are looked for OUTSIDE quoted
+        # values. Searched in the raw tag, the word "open" inside an alt text
+        # ("...open purchase orders...") read as an `open` attribute, so the
+        # English skeleton had an attribute its correct translation could not
+        # have (found 2026-09-11 on solutions.html).
+        bare = re.sub(r'"[^"]*"', '""', attrs)
         for a in KEEP:
             am = re.search(r'\b%s="([^"]*)"' % re.escape(a), attrs)
             if am:
@@ -53,7 +59,7 @@ def skeleton(frag):
                 # hrefs and ids must survive translation; a #anchor that
                 # changes silently breaks the table of contents.
                 kept.append((a, v))
-            elif re.search(r"\b%s(?=[\s>])" % re.escape(a), attrs):
+            elif re.search(r"\b%s(?=[\s>]|$)" % re.escape(a), bare):
                 kept.append((a, ""))
         out.append((tag, tuple(kept)))
         if tag in VOID or self_close:
