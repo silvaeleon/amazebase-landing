@@ -34,7 +34,10 @@ PILOT_ES = {
 # column alignment of its worked sums. The page as shipped must FAIL, and every
 # failure must be a <pre> failure; with the <pre> checks off it must PASS, which
 # proves the gate saw that and nothing else. Not fixed here -- its own concern.
-KNOWN_PRE_DEFECT = {"first-product-succeeds-cash"}
+# FIXED 2026-09-11 (after Portuguese shipped): the four blocks re-laid on the
+# English line structure, same words and numbers; the page must now pass
+# outright, <pre> checks on. The mechanism stays for the next known defect.
+KNOWN_PRE_DEFECT = set()
 
 
 def region(s, start, end):
