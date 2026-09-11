@@ -68,6 +68,31 @@ redirect breaks a page a search engine and a reader already know; leave them.
 A future language starts inside the caps; an existing one is not renamed to
 fit them.
 
+### An error found in a translation is an error in the English. Fix it there.
+
+A faithful translation copies the source's mistakes faithfully. That is the
+point of "faithful over helpful". So when a translator or reviewer finds
+something wrong, the fix goes into the **English page**, and every language is
+rebuilt from it. Never patch only the translation. A fix made there is lost at
+the next rebuild, and it leaves the languages disagreeing about what the site
+says.
+
+Found this way on 2026-09-11, all in the English:
+- the terms' §11 carve-out without its subject;
+- "Amaze Base" spelled with a space;
+- capitalised terms left undefined;
+- the homepage claiming "Six connected systems" and "8 Connected modules" on
+  the same page;
+- an AI card worded as live while the nav says "soon".
+
+The translators flagged each one and translated it as written.
+
+The other direction applies too. When the English changes, the translations
+of the changed sentences change with it, at the same time, through the
+translation source (`pt-2026/content/`, `home-legal/<lang>/`), then the gate,
+then a rebuild. `home_legal.py build` refuses to run when a brief no longer
+matches its English page.
+
 ---
 
 ## Adding a language, in order
