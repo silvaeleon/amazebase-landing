@@ -14,3 +14,19 @@ hero-editor.js
 *-test.html
 *-tuning.html
 preview-standalone.html
+
+# Private working pages. They stay on disk and still open locally, but they
+# are never part of the published site and can't be committed by accident.
+editor.html
+index-v2.html
+index-v3.html
+index-dense.html
+index-preview.html
+css/pipeline-frame.css
+css/preview-edits.css
+css/spacing-dense.css
+css/v2-tuning.css
+
+# graphify code-map output (regenerate with: graphify update .)
+graphify-out/
+_to_delete/
