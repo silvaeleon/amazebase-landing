@@ -113,7 +113,8 @@ Spanish pages. The page is fixed in the same commit.)*
 | Data & Sync / Security / AI Assistant — soon | Datos y sincronización / Seguridad / Asistente de IA — pronto |
 | Skip to content | Saltar al contenido |
 | min read | min de lectura |
-| The fix *(callout label)* | Qué hacer |
+| The fix / What to do *(callout label)* | Qué hacer |
+| Podcast episode *(player label)* | Episodio de podcast · audio en inglés *(the audio stays in English; Leon, 2026-09-11)* |
 | Step 01 | Paso 01 |
 | What's in this guide / piece | Qué encontrarás en esta guía / en este artículo |
 | Final thoughts | Para cerrar |
