@@ -13,8 +13,8 @@ srcset candidate), then the chrome links are pointed at the Portuguese pages.
 
   head     html lang, <title>, description, canonical, og/twitter strings,
            og:locale, image alts, breadcrumbs; on the hub, the CollectionPage
-           node (id, url, name, description, inLanguage, hasPart = the 51
-           Portuguese articles) -- the node Spanish shipped in English (37c7b86)
+           node (id, url, name, description, inLanguage, hasPart = every
+           Portuguese article in data/resources.json) -- the node Spanish shipped in English (37c7b86)
   chrome   header, footer, skip link, back-to-top: build_pt.translate_chrome()
   main     the gated translation
   dialog   the waitlist dialog (translated once, on product; identical on all
@@ -23,7 +23,9 @@ srcset candidate), then the chrome links are pointed at the Portuguese pages.
            resources.json (as build_hub.py did for Spanish)
   links    alternates + switcher by langlinks.rewrite()
 
-The hub is built only if data/resources.json already has the 51 pt rows.
+The hub is built from the pt rows of data/resources.json, however many there
+are: the card list and hasPart are both that set, and the two are asserted
+equal. It was 51 at launch and grows by one per translated article.
 """
 
 import html, io, json, os, re, sys
@@ -152,8 +154,10 @@ def build(tree, key, en_rel, pt_rel, es_rel, tr, dialog_pt, cfg, data):
     a, b = region(s, '<main id="main">', "</main>")
     main = tr["main"]
     if key == "resources":
-        blk, n = fallback([r for r in data["resources"] if r.get("language") == "pt"], data)
-        assert n == 51, n
+        pt_rows = [r for r in data["resources"] if r.get("language") == "pt"]
+        have_pt_rows = len(pt_rows)
+        blk, n = fallback(pt_rows, data)
+        assert n == have_pt_rows, (n, have_pt_rows)
         mark = "<!-- SEO:HUB-FALLBACK:START --><!-- SEO:HUB-FALLBACK:END -->"
         assert main.count(mark) == 1, "fallback marker missing from the hub translation"
         main = main.replace(mark, blk)
@@ -201,8 +205,8 @@ def main(tree):
 
     built = []
     for key, en_rel, pt_rel, es_rel in PAGES:
-        if key == "resources" and have_pt_rows != 51:
-            print("skip   resources (data/resources.json has %d pt rows, needs 51)" % have_pt_rows)
+        if key == "resources" and not have_pt_rows:
+            print("skip   resources (data/resources.json has no pt rows)")
             continue
         brief = json.load(io.open(os.path.join(briefs, key + ".json"), encoding="utf-8"))
         tr = json.load(io.open(os.path.join(content, key + ".json"), encoding="utf-8"))

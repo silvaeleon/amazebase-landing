@@ -62,18 +62,20 @@ def check(tree, key, en_rel, pt_rel, es_rel, tr, pt_map):
         P.append("breadcrumbs %s" % names)
     facts.append("JSON-LD parses; breadcrumbs %s" % " > ".join(names))
     if key == "resources":
+        data = json.load(io.open(os.path.join(tree, "data", "resources.json"), encoding="utf-8"))
+        n_pt = sum(1 for r in data["resources"] if r.get("language") == "pt")
         cp = [n for n in g if n.get("@type") == "CollectionPage"][0]
         parts = cp.get("hasPart", [])
         ok = (cp.get("inLanguage") == "pt" and cp.get("url") == pt_url and cp.get("@id") == pt_url + "#collection"
-              and len(parts) == 51 and all("/pt/artigos/" in p_["url"] for p_ in parts)
+              and len(parts) == n_pt and all("/pt/artigos/" in p_["url"] for p_ in parts)
               and all(os.path.isfile(os.path.join(tree, p_["url"].split(SITE + "/")[1])) for p_ in parts))
         if not ok:
             P.append("CollectionPage not Portuguese / hasPart wrong")
-        facts.append("CollectionPage inLanguage %s, %d hasPart, all /pt/artigos/ and on disk: %s"
-                     % (cp.get("inLanguage"), len(parts), ok))
+        facts.append("CollectionPage inLanguage %s, %d hasPart (%d pt rows in resources.json), "
+                     "all /pt/artigos/ and on disk: %s" % (cp.get("inLanguage"), len(parts), n_pt, ok))
         rows = re.findall(r'<a class="hub-row" href="([^"]+)"', s)
         missing = [h for h in rows if not os.path.isfile(os.path.join(tree, h.lstrip("/")))]
-        if len(rows) != 51 or missing or not all(h.startswith("/pt/artigos/") for h in rows):
+        if len(rows) != n_pt or missing or not all(h.startswith("/pt/artigos/") for h in rows):
             P.append("fallback rows %d, missing %s" % (len(rows), missing[:3]))
         facts.append("fallback: %d rows, all /pt/artigos/, all on disk" % len(rows))
 
