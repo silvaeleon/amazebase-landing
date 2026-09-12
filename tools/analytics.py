@@ -142,10 +142,47 @@ CSP_NEEDS = {
     "frame-src": ["https://td.doubleclick.net", "https://googleads.g.doubleclick.net"],
 }
 
-# 178 on 2026-09-11. A floor, not an exact count, so adding a page never breaks
-# the check -- but a page set that silently shrank (a changed exclusion, a
-# failed git call) cannot pass by checking nothing.
-MIN_PAGES = 178
+# 180 on 2026-09-12 (178 on 2026-09-11). A floor, not an exact count, so adding
+# a page never breaks the check -- but a page set that silently shrank (a
+# changed exclusion, a failed git call) cannot pass by checking nothing. Raise
+# it as the site grows, or it keeps passing a set that shrank to an older size.
+MIN_PAGES = 180
+
+
+def strip_js_comments(src):
+    """`src` with its comments removed and its string literals left alone.
+
+    The abc- guard in check() reads the result of this, not the file itself.
+    js/consent.js's header comment names that prefix half a dozen times, on
+    purpose, to record why it must never come back; a guard that matched
+    those would be permanently red, and a permanently red guard gets deleted.
+    Comments are prose ABOUT the code. Only what survives this is code.
+
+    String-aware, because "https://www.clarity.ms/tag/" is not a comment.
+    The file carries no regular-expression literals, so a "/" outside a
+    string is read here as a division sign. If one ever appears, this wants
+    a real tokeniser rather than a wider pattern.
+    """
+    out, i, n = [], 0, len(src)
+    while i < n:
+        c = src[i]
+        if c in "\"'`":
+            j = i + 1
+            while j < n and src[j] != c:
+                j += 2 if src[j] == "\\" else 1
+            out.append(src[i:j + 1])
+            i = j + 1
+        elif src.startswith("//", i):
+            i = src.find("\n", i)
+            if i < 0:
+                break
+        elif src.startswith("/*", i):
+            j = src.find("*/", i + 2)
+            i = n if j < 0 else j + 2
+        else:
+            out.append(c)
+            i += 1
+    return "".join(out)
 
 
 class Tree:
@@ -224,22 +261,36 @@ def check(tree):
     if not cjs:
         problems.append("js/consent.js is missing -- js/analytics.js loads it, so the "
                         "cookie banner would 404 on every page")
-    elif '"abc-' in cjs or "'.abc-" in cjs:
+    else:
+        # Three independent faults, deliberately not chained. The first version
+        # of this was an elif ladder, in which an abc- regression would have
+        # hidden a missing Clarity id in the same run: you would have fixed the
+        # first, pushed, and learned about the second one push later.
+
         # The banner injects its CSS globally, so a class it shares with the
         # site restyles the site. abc- is the homepage comparison block and it
-        # already owns abc-card, abc-bar, abc-title, abc-btn, abc-link and a
-        # dozen more; shipping the banner under that prefix on 2026-09-12 set
-        # the two homepage comparison cards to opacity 0 in production. The
-        # banner's own classes are all abconsent-.
-        problems.append("js/consent.js uses an abc- class or selector. That prefix "
-                        "belongs to the site's homepage block -- the banner's styles "
-                        "would silently restyle it. Use abconsent-.")
-    elif "yh4nta35du" not in cjs:
-        problems.append("js/consent.js no longer carries the Microsoft Clarity project "
-                        "id yh4nta35du -- Clarity would silently stop recording")
-    elif "ab_consent_v1" not in cjs:
-        problems.append("js/consent.js does not use the ab_consent_v1 storage key that "
-                        "js/analytics.js reads -- the two would disagree about consent")
+        # already owns abc-card, abc-bar, abc-title, abc-body, abc-btn,
+        # abc-link and a dozen more; shipping the banner under that prefix on
+        # 2026-09-12 set the two homepage comparison cards to opacity 0 in
+        # production, and restyled abc-link's seven uses besides.
+        #
+        # Matched against the code with comments stripped, not against the two
+        # spellings the file happened to use ('"abc-' and "'.abc-"). Those are
+        # what a rewrite would have been LIKELY to contain, which is a weaker
+        # thing to assert than what it must not contain at all: 'abc-btn' in
+        # single quotes, in a class list, in a template literal or inside a
+        # querySelector all went through. The banner's classes are abconsent-.
+        if "abc-" in strip_js_comments(cjs):
+            problems.append("js/consent.js uses the abc- prefix somewhere in its code. "
+                            "That prefix belongs to the site's homepage comparison "
+                            "block -- the banner's injected styles would silently "
+                            "restyle it. Use abconsent-.")
+        if "yh4nta35du" not in cjs:
+            problems.append("js/consent.js no longer carries the Microsoft Clarity project "
+                            "id yh4nta35du -- Clarity would silently stop recording")
+        if "ab_consent_v1" not in cjs:
+            problems.append("js/consent.js does not use the ab_consent_v1 storage key that "
+                            "js/analytics.js reads -- the two would disagree about consent")
 
     js = tree.read("js/analytics.js")
     print("js/analytics.js %s" % ("matches" if js == INIT_JS else "MISSING" if js is None else "DIFFERS"))
