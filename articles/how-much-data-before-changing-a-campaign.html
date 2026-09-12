@@ -1114,7 +1114,7 @@ td.neg{color:var(--ink-2)}
     <ol>
       <li><a href="#s1">Why a keyword with no sales is not automatically a bad keyword</a></li>
       <li><a href="#s2">How many clicks you need before zero sales means something</a></li>
-      <li><a href="#s3">How to find your own conversion rate in Seller Central</a></li>
+      <li><a href="#s3">How to find your own ad conversion rate in the advertising console</a></li>
       <li><a href="#s4">Why your campaign total is not the number that matters</a></li>
       <li><a href="#s5">How long it takes to collect enough clicks</a></li>
       <li><a href="#s6">What to do while you wait</a></li>
@@ -1123,8 +1123,8 @@ td.neg{color:var(--ink-2)}
   <p>The cause is almost never impatience about time. It is impatience about data. Three days is not too short a wait because three days is short; it is too short because three days has not produced enough clicks to tell you anything.</p>
   <p>This guide gives you a number: how many clicks a keyword needs before &ldquo;no sales&rdquo; is real evidence, where that number comes from, and how to work out your own.</p>
   <h2 id="s1"><span class="num">01</span>Why does a keyword with no sales not mean the keyword is bad?</h2>
-  <p>Your conversion rate is the share of clicks that turn into orders. If your conversion rate is 10%, then on average one click in ten becomes a sale. That average is the only thing 10% promises. It does not promise that the tenth click will be a sale.</p>
-  <p>With a 10% conversion rate, a run of clicks with no sale is completely ordinary. Nine clicks in a row with nothing is the expected experience some of the time, not a sign that anything is broken.</p>
+  <p>Your ad conversion rate is the share of ad clicks that turn into ad-attributed orders. If your ad conversion rate is 10%, then on average one click in ten becomes a sale. That average is the only thing 10% promises. It does not promise that the tenth click will be a sale.</p>
+  <p>With a 10% ad conversion rate, a run of clicks with no sale is completely ordinary. Nine clicks in a row with nothing is the expected experience some of the time, not a sign that anything is broken.</p>
   <p>You can calculate how ordinary. For each click, the chance of no sale is 90%. For eight clicks in a row with no sale, multiply 0.90 by itself once per click.</p>
   <div class="report">
     <ul class="report-rows">
@@ -1141,10 +1141,10 @@ td.neg{color:var(--ink-2)}
   <h2 id="s2"><span class="num">02</span>How many clicks do you need before zero sales means something?</h2>
   <p>You need enough clicks that a run of zeros becomes unlikely rather than ordinary. A workable standard is to wait until the chance of seeing zero sales from a normally performing keyword drops below 10%.</p>
   <p>At that point, one of two things is true: either the keyword really is underperforming, or you have been unlucky in a way that happens less than one time in ten. That is a reasonable basis for a decision.</p>
-  <p>The number of clicks that takes depends entirely on your conversion rate. The lower your conversion rate, the longer a run of zeros can be before it means anything.</p>
+  <p>The number of clicks that takes depends entirely on your ad conversion rate. The lower your ad conversion rate, the longer a run of zeros can be before it means anything.</p>
   <div class="tblwrap">
     <table>
-      <thead><tr><th>Your conversion rate</th><th>Clicks with no sale before zero is meaningful</th></tr></thead>
+      <thead><tr><th>Your ad conversion rate</th><th>Clicks with no sale before zero is meaningful</th></tr></thead>
       <tbody>
         <tr><td>20%</td><td>11</td></tr>
         <tr><td>15%</td><td>15</td></tr>
@@ -1157,17 +1157,27 @@ td.neg{color:var(--ink-2)}
   </div>
   <div class="fixbox">
     <span class="fixbox-k">The rule</span>
-    <p>If you do not know your conversion rate yet, use 22 clicks. It assumes a 10% conversion rate, which is a reasonable planning number for a product that is converting normally. Below 22 clicks on a single keyword, you do not have a result. You have a gap in the data.</p>
+    <p>If you do not know your ad conversion rate yet, use 22 clicks. It assumes a 10% ad conversion rate, which is a reasonable planning number for a product that is converting normally. Below 22 clicks on a single keyword, you do not have a result. You have a gap in the data.</p>
   </div>
-  <p>Notice what the table does to the common advice that 10 clicks is enough. Ten clicks is not enough even at a 20% conversion rate &mdash; the table above says 11. For a product converting at 5%, acting on 10 clicks means acting on roughly a fifth of the evidence you need.</p>
-  <h2 id="s3"><span class="num">03</span>How do you find your own conversion rate?</h2>
-  <p>Seller Central reports this for you, under a name that does not sound like conversion rate. In Business Reports, the column called unit session percentage is the share of visits to your listing that resulted in units ordered. That is your conversion rate for the whole listing.</p>
-  <p>Use the last 30 days, and use the figure for the specific ASIN you are advertising, not an account-wide average across different products.</p>
+  <p>Notice what the table does to the common advice that 10 clicks is enough. Ten clicks does not clear the threshold at any ad conversion rate in the table: even the 20% row asks for 11. For a product converting at 5%, acting on 10 clicks means acting on roughly a fifth of the evidence you need.</p>
+  <h2 id="s3"><span class="num">03</span>How do you find your own ad conversion rate?</h2>
+  <p>Your ad conversion rate is ad-attributed orders divided by clicks. It comes from the advertising console, not from Seller Central.</p>
+  <p>In Campaign Manager, set a date range of at least 30 days and read two columns for the ASIN you are advertising: clicks, and ad-attributed orders. Divide the second by the first. The console also displays a conversion rate column calculated the same way, but column names change over time, so the division is the version that will always work.</p>
+  <div class="report">
+    <ul class="report-rows">
+      <li><span>Clicks in the last 30 days</span><span class="v">640</span></li>
+      <li><span>Ad-attributed orders in the same period</span><span class="v">51</span></li>
+      <li><span>Ad conversion rate, 51 divided by 640</span><span class="v">8.0%</span></li>
+      <li><span>Row to use from the table above</span><span class="v">28 clicks</span></li>
+    </ul>
+  </div>
   <div class="fixbox">
-    <span class="fixbox-k">The blind spot</span>
-    <p>Your listing conversion rate covers organic visits as well as ad clicks, so it is an approximation for advertising purposes rather than an exact match. It is close enough to pick a row in the table above, and it is far better than guessing.</p>
+    <span class="fixbox-k">The distinction</span>
+    <p>Do not use unit session percentage from Seller Central Business Reports for this. That figure divides orders by sessions on your listing, and it counts organic visits alongside ad clicks. It answers a different question &mdash; how well your listing converts overall. The threshold in this guide needs how well your ads convert, which is a different number on a different denominator.</p>
   </div>
-  <p>If the ASIN is new and has almost no sessions yet, you do not have a measured conversion rate at all. Use 10% as a planning assumption, take the 22-click row, and replace the assumption with a measured figure once the listing has 30 days of history.</p>
+  <p>Take the rate at account or campaign level, not from the keyword you are about to judge. A single keyword does not have enough clicks to produce a reliable rate, which is the reason you are reading this guide. The rate comes from the larger pool of clicks; the threshold then gets applied to the individual keyword.</p>
+  <p>One caution about the date range. Ad-attributed orders are counted after the click, so the most recent days in any window are still filling in. End your date range about a week before today, or the rate you calculate will come out too low.</p>
+  <p>If the ASIN has no advertising history at all, you have no measured rate. Use 10% as a planning assumption, take the 22-click row, and replace it with a measured figure once the campaign has a few hundred clicks behind it.</p>
   <h2 id="s4"><span class="num">04</span>Why is your campaign total not the number that matters?</h2>
   <p>This is the mistake that survives even after sellers learn the click threshold. They check the campaign, see hundreds of clicks, and conclude they have plenty of data. Then they make decisions about individual keywords using a number that belongs to the campaign.</p>
   <p>A campaign total tells you nothing about any keyword inside it. Clicks are never spread evenly. One keyword usually takes a large share of the spend while several others sit on two or three clicks each.</p>
@@ -1232,7 +1242,12 @@ td.neg{color:var(--ink-2)}
     </details>
     <details>
       <summary>My product converts at 25%. Can I decide faster?</summary>
-      <p>Yes. Higher conversion rates need fewer clicks, because a run of zeros becomes unlikely sooner. Extend the table using the same standard and you will find 25% needs 9 clicks.</p>
+      <p>Yes. Higher ad conversion rates need fewer clicks, because a run of zeros becomes unlikely sooner. Extend the table using the same standard and you will find 25% needs 9 clicks.</p>
+    </details>
+    <details>
+      <summary>How was the click threshold calculated?</summary>
+      <p>Start by assuming the keyword converts at your ad conversion rate. Each click then has a chance of producing no sale equal to 100% minus that rate, and the chance that a whole run of clicks produces nothing is that figure multiplied by itself once per click. At a 10% ad conversion rate, a run of 21 clicks with no sale happens to a perfectly normal keyword 10.9% of the time, and a run of 22 clicks happens 9.8% of the time. The threshold is the first click count where that figure falls below 10%, which is the point where zero stops being an ordinary result and starts being evidence. Every row of the table is the same calculation at a different rate.</p>
+      <p>The choice of 10% as the cutoff is a convention, not a law of the platform. A stricter standard &mdash; waiting until the chance falls below 5% &mdash; would ask for 29 clicks instead of 22 at a 10% ad conversion rate. The looser standard is used here because it is reachable on a small launch budget while still being far more evidence than the eight or ten clicks most sellers act on.</p>
     </details>
   </div>
   <section class="sec">
@@ -1251,7 +1266,7 @@ td.neg{color:var(--ink-2)}
   <div class="rail-card">
     <span class="rail-k">Clicks before zero means something</span>
     <span class="rail-v is-amber">22</span>
-    <p>If you do not know your conversion rate yet, use 22 clicks.</p>
+    <p>If you do not know your ad conversion rate yet, use 22 clicks.</p>
   </div>
   <div class="rail-card">
     <span class="rail-k">Days for one keyword to get there</span>

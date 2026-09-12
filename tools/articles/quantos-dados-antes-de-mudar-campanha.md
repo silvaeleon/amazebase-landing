@@ -16,16 +16,16 @@ Este guia dá um número a você: quantos cliques uma palavra-chave precisa ante
 
 - Por que uma palavra-chave sem vendas não é automaticamente uma palavra-chave ruim
 - Quantos cliques você precisa antes de que zero vendas signifique algo
-- Como encontrar a sua própria taxa de conversão no Seller Central
+- Como encontrar a sua própria taxa de conversão de anúncios no console de publicidade
 - Por que o total da sua campanha não é o número que importa
 - Quanto tempo leva para juntar cliques suficientes
 - O que fazer enquanto você espera
 
 ## Por que uma palavra-chave sem vendas não significa que a palavra-chave é ruim?
 
-A sua taxa de conversão é a proporção de cliques que viram pedidos. Se a sua taxa de conversão é de 10%, em média um clique em cada dez vira uma venda. Essa média é a única coisa que os 10% prometem. Eles não prometem que o décimo clique vai ser uma venda.
+A sua taxa de conversão de anúncios é a proporção de cliques de anúncios que viram pedidos atribuídos ao anúncio. Se a sua taxa de conversão de anúncios é de 10%, em média um clique em cada dez vira uma venda. Essa média é a única coisa que os 10% prometem. Eles não prometem que o décimo clique vai ser uma venda.
 
-Com uma taxa de conversão de 10%, uma sequência de cliques sem venda é completamente comum. Nove cliques seguidos sem nada é o que se espera em parte das vezes, não um sinal de que algo está quebrado.
+Com uma taxa de conversão de anúncios de 10%, uma sequência de cliques sem venda é completamente comum. Nove cliques seguidos sem nada é o que se espera em parte das vezes, não um sinal de que algo está quebrado.
 
 Você pode calcular o quanto isso é comum. Para cada clique, a chance de não haver venda é de 90%. Para oito cliques seguidos sem venda, multiplique 0.90 por ele mesmo uma vez por clique.
 
@@ -43,9 +43,9 @@ Você precisa de cliques suficientes para que uma sequência de zeros passe de c
 
 Nesse ponto, uma de duas coisas é verdade: ou a palavra-chave está mesmo performando abaixo, ou você teve azar de um jeito que acontece menos de uma vez em dez. Essa é uma base razoável para decidir.
 
-Quantos cliques isso leva depende inteiramente da sua taxa de conversão. Quanto mais baixa ela for, mais longa pode ser uma sequência de zeros antes de significar alguma coisa.
+Quantos cliques isso leva depende inteiramente da sua taxa de conversão de anúncios. Quanto mais baixa ela for, mais longa pode ser uma sequência de zeros antes de significar alguma coisa.
 
-| Sua taxa de conversão | Cliques sem venda antes de o zero significar algo |
+| Sua taxa de conversão de anúncios | Cliques sem venda antes de o zero significar algo |
 |---|---|
 | 20% | 11 |
 | 15% | 15 |
@@ -55,20 +55,29 @@ Quantos cliques isso leva depende inteiramente da sua taxa de conversão. Quanto
 | 3% | 76 |
 
 [[A regra]]
-Se você ainda não conhece a sua taxa de conversão, use 22 cliques. Isso pressupõe uma taxa de conversão de 10%, que é um número de planejamento razoável para um produto que converte normalmente. Abaixo de 22 cliques em uma única palavra-chave, você não tem um resultado. Você tem uma lacuna nos dados.
+Se você ainda não conhece a sua taxa de conversão de anúncios, use 22 cliques. Isso pressupõe uma taxa de conversão de anúncios de 10%, que é um número de planejamento razoável para um produto que converte normalmente. Abaixo de 22 cliques em uma única palavra-chave, você não tem um resultado. Você tem uma lacuna nos dados.
 
-Repare no que a tabela faz com o conselho comum de que 10 cliques bastam. Dez cliques não bastam nem com uma taxa de conversão de 20%: a tabela acima diz 11. Para um produto que converte a 5%, agir com 10 cliques é agir com mais ou menos um quinto da evidência de que você precisa.
+Repare no que a tabela faz com o conselho comum de que 10 cliques bastam. Dez cliques não atingem o limite com nenhuma taxa de conversão de anúncios da tabela: até a linha de 20% pede 11. Para um produto que converte a 5%, agir com 10 cliques é agir com mais ou menos um quinto da evidência de que você precisa.
 
-## Como você encontra a sua própria taxa de conversão?
+## Como você encontra a sua própria taxa de conversão de anúncios?
 
-O Seller Central reporta isso para você, com um nome que não parece taxa de conversão. Em Business Reports, a coluna chamada unit session percentage (porcentagem de sessões por unidade) é a proporção de visitas ao seu listing que resultaram em unidades pedidas. Essa é a sua taxa de conversão para o listing inteiro.
+A sua taxa de conversão de anúncios são os pedidos atribuídos ao anúncio divididos pelos cliques. Ela vem do console de publicidade, não do Seller Central.
 
-Use os últimos 30 dias, e use o número do ASIN específico que você está anunciando, não uma média da conta inteira com produtos diferentes.
+No Campaign Manager, escolha um intervalo de datas de pelo menos 30 dias e leia duas colunas para o ASIN que você está anunciando: cliques, e pedidos atribuídos ao anúncio. Divida a segunda pela primeira. O console também mostra uma coluna de taxa de conversão calculada do mesmo jeito, mas nomes de coluna mudam com o tempo, então a divisão é a versão que sempre vai funcionar.
 
-[[O ponto cego]]
-A taxa de conversão do seu listing inclui as visitas orgânicas além dos cliques de anúncios, então para fins de publicidade ela é uma aproximação, não uma correspondência exata. É perto o bastante para escolher uma linha da tabela acima, e é muito melhor do que chutar.
+Cliques nos últimos 30 dias | 640
+Pedidos atribuídos ao anúncio no mesmo período | 51
+Taxa de conversão de anúncios, 51 dividido por 640 | 8.0%
+Linha para usar da tabela acima | 28 cliques
 
-Se o ASIN é novo e ainda quase não tem sessões, você não tem taxa de conversão medida nenhuma. Use 10% como suposição de planejamento, pegue a linha de 22 cliques, e troque a suposição por um número medido quando o listing tiver 30 dias de histórico.
+[[A distinção]]
+Não use unit session percentage do Business Reports do Seller Central para isso. Esse número divide os pedidos pelas sessões do seu listing, e conta as visitas orgânicas junto com os cliques de anúncios. Ele responde a outra pergunta: o quão bem o seu listing converte no geral. O limite deste guia precisa do quão bem os seus anúncios convertem, que é um número diferente sobre um denominador diferente.
+
+Pegue a taxa no nível da conta ou da campanha, não da palavra-chave que você está prestes a julgar. Uma única palavra-chave não tem cliques suficientes para produzir uma taxa confiável, que é justamente o motivo pelo qual você está lendo este guia. A taxa vem do conjunto maior de cliques; o limite é aplicado depois à palavra-chave individual.
+
+Um cuidado com o intervalo de datas. Os pedidos atribuídos ao anúncio são contados depois do clique, então os dias mais recentes de qualquer janela ainda estão se completando. Termine o seu intervalo de datas mais ou menos uma semana antes de hoje, ou a taxa que você calcular vai sair baixa demais.
+
+Se o ASIN não tem nenhum histórico de publicidade, você não tem taxa medida nenhuma. Use 10% como suposição de planejamento, pegue a linha de 22 cliques, e troque por um número medido quando a campanha tiver algumas centenas de cliques atrás dela.
 
 ## Por que o total da sua campanha não é o número que importa?
 
@@ -129,7 +138,12 @@ Essa é uma decisão diferente e o limite não se aplica da mesma forma. Uma vez
 Vale o mesmo padrão de evidência, com um acréscimo: relevância. Um termo de pesquisa que claramente não tem relação com o seu produto pode ser excluído na hora, porque você não está fazendo um julgamento estatístico, está fazendo um julgamento de relevância.
 
 **Meu produto converte a 25%. Posso decidir mais rápido?**
-Sim. Taxas de conversão mais altas precisam de menos cliques, porque uma sequência de zeros fica improvável mais cedo. Estenda a tabela com o mesmo padrão e você vai ver que 25% precisa de 9 cliques.
+Sim. Taxas de conversão de anúncios mais altas precisam de menos cliques, porque uma sequência de zeros fica improvável mais cedo. Estenda a tabela com o mesmo padrão e você vai ver que 25% precisa de 9 cliques.
+
+**Como o limite de cliques foi calculado?**
+Comece supondo que a palavra-chave converte à sua taxa de conversão de anúncios. Cada clique tem então uma chance de não produzir venda igual a 100% menos essa taxa, e a chance de que uma sequência inteira de cliques não produza nada é esse número multiplicado por ele mesmo uma vez por clique. Com uma taxa de conversão de anúncios de 10%, uma sequência de 21 cliques sem venda acontece com uma palavra-chave perfeitamente normal 10.9% das vezes, e uma sequência de 22 cliques acontece 9.8% das vezes. O limite é a primeira contagem de cliques em que esse número cai abaixo de 10%, que é o ponto em que o zero deixa de ser um resultado comum e passa a ser evidência. Cada linha da tabela é o mesmo cálculo a uma taxa diferente.
+
+A escolha de 10% como corte é uma convenção, não uma lei da plataforma. Um padrão mais rigoroso — esperar até a chance cair abaixo de 5% — pediria 29 cliques em vez de 22 com uma taxa de conversão de anúncios de 10%. Aqui se usa o padrão mais flexível porque ele é alcançável com um orçamento pequeno de lançamento e ainda assim é muito mais evidência do que os oito ou dez cliques com que a maioria dos vendedores age.
 
 ## Para fechar
 
@@ -141,10 +155,11 @@ Números dos exemplos deste artigo, não de uma pesquisa de mercado.
 
 ## New terms
 
-- taxa de conversão — NOVO no glossário PT. Frase do dia a dia: com que frequência um clique vira venda.
+- taxa de conversão de anúncios — pedidos atribuídos ao anúncio divididos pelos cliques. Frase do dia a dia: com que frequência um clique de anúncio vira venda. NOVO no glossário PT. Precisa ficar distinta da taxa de conversão do listing no artigo inteiro: os denominadores são diferentes.
+- pedido atribuído ao anúncio — um pedido que a Amazon credita a um clique de anúncio dentro da janela de atribuição. Frase do dia a dia: uma venda pela qual o anúncio leva o crédito. NOVO no glossário PT.
 - termo de pesquisa — já está em GLOSSARIO-PT §3. Sem mudanças.
 - impressões — NOVO no glossário PT.
 - palavra-chave negativa — NOVO no glossário PT. Ligado ao veredito Negativar, mas o veredito é a decisão e isto é a configuração que a executa.
-- unit session percentage — nome de coluna do Seller Central. Fica em inglês com a glosa "porcentagem de sessões por unidade" no primeiro uso, para o leitor achar a coluna com o Seller Central no idioma que ele tiver.
+- unit session percentage — a coluna do Business Reports que divide as unidades pedidas pelas sessões do listing. Fica em inglês. Neste artigo ela aparece SÓ como a métrica que o leitor NÃO deve usar para decisões de publicidade, então o contraste com a taxa de conversão de anúncios precisa sobreviver à tradução.
 - Business Reports — nome de seção do Seller Central. Fica em inglês, mesma regra de Seller Central (§2).
-- Nenhum rótulo de callout novo. Todos usam rótulos aprovados: O problema, A regra, O ponto cego, A armadilha, Exemplo prático, O que fazer.
+- Nenhum rótulo de callout novo. Todos usam rótulos aprovados: O problema, A regra, A distinção, A armadilha, Exemplo prático, O que fazer.

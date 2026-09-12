@@ -16,16 +16,16 @@ Esta guía te da un número: cuántos clics necesita una palabra clave antes de 
 
 - Por qué una palabra clave sin ventas no es automáticamente una mala palabra clave
 - Cuántos clics necesitas antes de que cero ventas signifique algo
-- Cómo encontrar tu propia tasa de conversión en Seller Central
+- Cómo encontrar tu propia tasa de conversión de anuncios en la consola de publicidad
 - Por qué el total de tu campaña no es el número que importa
 - Cuánto tarda en juntarse suficientes clics
 - Qué hacer mientras esperas
 
 ## ¿Por qué una palabra clave sin ventas no significa que la palabra clave sea mala?
 
-Tu tasa de conversión es la proporción de clics que se convierten en pedidos. Si tu tasa de conversión es del 10%, en promedio un clic de cada diez se convierte en venta. Ese promedio es lo único que promete el 10%. No promete que el décimo clic vaya a ser una venta.
+Tu tasa de conversión de anuncios es la proporción de clics de anuncios que se convierten en pedidos atribuidos al anuncio. Si tu tasa de conversión de anuncios es del 10%, en promedio un clic de cada diez se convierte en venta. Ese promedio es lo único que promete el 10%. No promete que el décimo clic vaya a ser una venta.
 
-Con una tasa de conversión del 10%, una racha de clics sin venta es completamente normal. Nueve clics seguidos sin nada es lo que cabe esperar parte del tiempo, no una señal de que algo esté roto.
+Con una tasa de conversión de anuncios del 10%, una racha de clics sin venta es completamente normal. Nueve clics seguidos sin nada es lo que cabe esperar parte del tiempo, no una señal de que algo esté roto.
 
 Puedes calcular cuán normal. Para cada clic, la probabilidad de que no haya venta es del 90%. Para ocho clics seguidos sin venta, multiplica 0.90 por sí mismo una vez por clic.
 
@@ -43,9 +43,9 @@ Necesitas suficientes clics para que una racha de ceros pase de normal a improba
 
 En ese punto, una de dos cosas es cierta: o la palabra clave de verdad está rindiendo por debajo, o has tenido mala suerte de una forma que ocurre menos de una vez de cada diez. Esa es una base razonable para decidir.
 
-Cuántos clics hacen falta depende por completo de tu tasa de conversión. Cuanto más baja sea, más larga puede ser una racha de ceros antes de significar algo.
+Cuántos clics hacen falta depende por completo de tu tasa de conversión de anuncios. Cuanto más baja sea, más larga puede ser una racha de ceros antes de significar algo.
 
-| Tu tasa de conversión | Clics sin venta antes de que el cero signifique algo |
+| Tu tasa de conversión de anuncios | Clics sin venta antes de que el cero signifique algo |
 |---|---|
 | 20% | 11 |
 | 15% | 15 |
@@ -55,20 +55,29 @@ Cuántos clics hacen falta depende por completo de tu tasa de conversión. Cuant
 | 3% | 76 |
 
 [[La regla]]
-Si aún no conoces tu tasa de conversión, usa 22 clics. Supone una tasa de conversión del 10%, que es un número de planificación razonable para un producto que convierte con normalidad. Por debajo de 22 clics en una sola palabra clave no tienes un resultado. Tienes un hueco en los datos.
+Si aún no conoces tu tasa de conversión de anuncios, usa 22 clics. Supone una tasa de conversión de anuncios del 10%, que es un número de planificación razonable para un producto que convierte con normalidad. Por debajo de 22 clics en una sola palabra clave no tienes un resultado. Tienes un hueco en los datos.
 
-Fíjate en lo que la tabla le hace al consejo habitual de que con 10 clics basta. Diez clics no bastan ni siquiera con una tasa de conversión del 20%: la tabla de arriba dice 11. Para un producto que convierte al 5%, actuar con 10 clics es actuar con aproximadamente una quinta parte de la evidencia que necesitas.
+Fíjate en lo que la tabla le hace al consejo habitual de que con 10 clics basta. Diez clics no alcanzan el umbral con ninguna tasa de conversión de anuncios de la tabla: incluso la fila del 20% pide 11. Para un producto que convierte al 5%, actuar con 10 clics es actuar con aproximadamente una quinta parte de la evidencia que necesitas.
 
-## ¿Cómo encuentras tu propia tasa de conversión?
+## ¿Cómo encuentras tu propia tasa de conversión de anuncios?
 
-Seller Central te lo reporta, con un nombre que no suena a tasa de conversión. En Business Reports, la columna llamada unit session percentage (porcentaje de sesiones por unidad) es la proporción de visitas a tu listing que terminaron en unidades pedidas. Esa es tu tasa de conversión para todo el listing.
+Tu tasa de conversión de anuncios son los pedidos atribuidos al anuncio divididos entre los clics. Viene de la consola de publicidad, no de Seller Central.
 
-Usa los últimos 30 días, y usa la cifra del ASIN concreto que estás publicitando, no un promedio de toda la cuenta con productos distintos.
+En Campaign Manager, elige un rango de fechas de al menos 30 días y lee dos columnas para el ASIN que estás publicitando: clics, y pedidos atribuidos al anuncio. Divide la segunda entre la primera. La consola también muestra una columna de tasa de conversión calculada igual, pero los nombres de las columnas cambian con el tiempo, así que la división es la versión que siempre va a funcionar.
 
-[[El punto ciego]]
-Tu tasa de conversión del listing incluye las visitas orgánicas además de los clics de anuncios, así que para efectos de publicidad es una aproximación, no una coincidencia exacta. Es lo bastante cercana para elegir una fila de la tabla de arriba, y es mucho mejor que adivinar.
+Clics en los últimos 30 días | 640
+Pedidos atribuidos al anuncio en el mismo periodo | 51
+Tasa de conversión de anuncios, 51 dividido entre 640 | 8.0%
+Fila que debes usar de la tabla de arriba | 28 clics
 
-Si el ASIN es nuevo y todavía casi no tiene sesiones, no tienes una tasa de conversión medida en absoluto. Usa el 10% como supuesto de planificación, toma la fila de 22 clics, y sustituye el supuesto por una cifra medida cuando el listing tenga 30 días de historial.
+[[La distinción]]
+No uses unit session percentage de Business Reports de Seller Central para esto. Esa cifra divide los pedidos entre las sesiones de tu listing, y cuenta las visitas orgánicas junto con los clics de anuncios. Responde a otra pregunta: qué tan bien convierte tu listing en general. El umbral de esta guía necesita qué tan bien convierten tus anuncios, que es un número distinto sobre un denominador distinto.
+
+Toma la tasa a nivel de cuenta o de campaña, no de la palabra clave que estás a punto de juzgar. Una sola palabra clave no tiene suficientes clics para producir una tasa confiable, que es justamente la razón por la que estás leyendo esta guía. La tasa sale del conjunto más grande de clics; el umbral se aplica después a la palabra clave individual.
+
+Una advertencia sobre el rango de fechas. Los pedidos atribuidos al anuncio se cuentan después del clic, así que los días más recientes de cualquier ventana todavía se están completando. Termina tu rango de fechas más o menos una semana antes de hoy, o la tasa que calcules va a salir demasiado baja.
+
+Si el ASIN no tiene ningún historial de publicidad, no tienes una tasa medida. Usa el 10% como supuesto de planificación, toma la fila de 22 clics, y sustitúyelo por una cifra medida cuando la campaña tenga unos cuantos cientos de clics detrás.
 
 ## ¿Por qué el total de tu campaña no es el número que importa?
 
@@ -129,7 +138,12 @@ Esa es una decisión distinta y el umbral no aplica de la misma forma. Una vez q
 Aplica el mismo estándar de evidencia, con una adición: la relevancia. Un término de búsqueda que claramente no tiene relación con tu producto se puede excluir de inmediato, porque no estás haciendo un juicio estadístico, estás haciendo un juicio de relevancia.
 
 **Mi producto convierte al 25%. ¿Puedo decidir más rápido?**
-Sí. Las tasas de conversión más altas necesitan menos clics, porque una racha de ceros se vuelve improbable antes. Extiende la tabla con el mismo estándar y verás que el 25% necesita 9 clics.
+Sí. Las tasas de conversión de anuncios más altas necesitan menos clics, porque una racha de ceros se vuelve improbable antes. Extiende la tabla con el mismo estándar y verás que el 25% necesita 9 clics.
+
+**¿Cómo se calculó el umbral de clics?**
+Empieza suponiendo que la palabra clave convierte a tu tasa de conversión de anuncios. Cada clic tiene entonces una probabilidad de no producir venta igual a 100% menos esa tasa, y la probabilidad de que toda una racha de clics no produzca nada es esa cifra multiplicada por sí misma una vez por clic. Con una tasa de conversión de anuncios del 10%, una racha de 21 clics sin venta le ocurre a una palabra clave perfectamente normal el 10.9% de las veces, y una racha de 22 clics ocurre el 9.8% de las veces. El umbral es el primer conteo de clics donde esa cifra cae por debajo del 10%, que es el punto donde el cero deja de ser un resultado común y empieza a ser evidencia. Cada fila de la tabla es el mismo cálculo a una tasa distinta.
+
+La elección del 10% como corte es una convención, no una ley de la plataforma. Un estándar más estricto — esperar hasta que la probabilidad caiga por debajo del 5% — pediría 29 clics en lugar de 22 con una tasa de conversión de anuncios del 10%. Aquí se usa el estándar más flexible porque es alcanzable con un presupuesto de lanzamiento pequeño y aun así es mucha más evidencia que los ocho o diez clics con los que actúa la mayoría de los vendedores.
 
 ## Para cerrar
 
@@ -141,10 +155,12 @@ Cifras de los ejemplos trabajados de este artículo, no de un estudio de mercado
 
 ## New terms
 
-- tasa de conversión — ya está en GLOSARIO-ES §3. Sin cambios.
+- tasa de conversión de anuncios — pedidos atribuidos al anuncio divididos entre los clics. Frase del día a día: con qué frecuencia un clic de anuncio se convierte en venta. NUEVO en el glosario ES. Debe mantenerse distinta de la tasa de conversión del listing en todo el artículo: tienen denominadores distintos.
+- pedido atribuido al anuncio — un pedido que Amazon acredita a un clic de anuncio dentro de la ventana de atribución. Frase del día a día: una venta por la que el anuncio se lleva el crédito. NUEVO en el glosario ES.
+- tasa de conversión — ya está en GLOSARIO-ES §3. Sin cambios, pero ya no se usa sola en este artículo.
 - término de búsqueda — NUEVO en el glosario ES. El portugués ya tiene «termo de pesquisa» (§3 PT). Propuesta: añadirlo a GLOSARIO-ES §3.
 - impresiones — NUEVO en el glosario ES.
 - palabra clave negativa — NUEVO en el glosario ES.
-- unit session percentage — nombre de columna de Seller Central. Se deja en inglés con la glosa «porcentaje de sesiones por unidad» en el primer uso, para que el lector la encuentre tenga Seller Central en el idioma que tenga.
+- unit session percentage — la columna de Business Reports que divide las unidades pedidas entre las sesiones del listing. Se deja en inglés. En este artículo aparece SOLO como la métrica que el lector NO debe usar para decisiones de publicidad, así que el contraste con la tasa de conversión de anuncios tiene que sobrevivir a la traducción.
 - Business Reports — nombre de sección de Seller Central. Se deja en inglés, misma regla que Seller Central (§2).
 - [[Ejemplo trabajado]] — la etiqueta que ya usa el corpus español: el rail de `punto-de-reorden.html`, cuyo original en inglés lleva «Worked example» en el mismo lugar (medido 2026-09-11). Se propuso «Ejemplo práctico», que coincide con el portugués «Exemplo prático»; queda pendiente de la decisión de Leon.

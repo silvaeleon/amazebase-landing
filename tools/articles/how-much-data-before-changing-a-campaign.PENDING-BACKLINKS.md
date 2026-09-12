@@ -1,8 +1,9 @@
 # Pending backlinks: how-much-data-before-changing-a-campaign
 
-The source had four `[[SEE: slug]]` markers. On 2026-09-11 none of the four
-target articles existed in `articles/`, so the markers were removed and their
-sentences kept, since each reads correctly without the link. **When one of
+The source had four `[[SEE: slug]]` markers on 2026-09-11 and a fifth was added
+on 2026-09-12. None of the five target articles existed in `articles/`, so the
+markers were removed and their sentences kept, since each reads correctly
+without the link. **When one of
 these articles lands, add the link back at the sentence named here, in the
 source and in the built page.** This note exists so they get added, not
 rediscovered.
@@ -13,6 +14,7 @@ rediscovered.
 | `not-showing-not-indexed-not-selling` | What should you do while you wait? | "There is one exception to leaving campaigns alone. … zero impressions is a different problem with different causes." |
 | `acos-tacos-and-your-margin` | Frequently asked: "What if a keyword has clicks and sales, but a bad ACOS?" | "… you are asking whether it converts profitably, which is a question about your margin." |
 | `when-to-negate-a-keyword` | Frequently asked: "Should I use 22 clicks for negative keywords too?" | "… you are not making a statistical judgement, you are making a relevance judgement." |
+| `how-amazon-ads-bills-you` | How do you find your own ad conversion rate? | "End your date range about a week before today, or the rate you calculate will come out too low." (added 2026-09-12 with the ad-conversion-rate correction) |
 
 ## The ACOS-and-margin link: checked, not assumed
 

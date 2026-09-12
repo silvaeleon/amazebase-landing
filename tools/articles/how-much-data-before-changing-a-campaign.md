@@ -15,16 +15,16 @@ This guide gives you a number: how many clicks a keyword needs before "no sales"
 
 - Why a keyword with no sales is not automatically a bad keyword
 - How many clicks you need before zero sales means something
-- How to find your own conversion rate in Seller Central
+- How to find your own ad conversion rate in the advertising console
 - Why your campaign total is not the number that matters
 - How long it takes to collect enough clicks
 - What to do while you wait
 
 ## Why does a keyword with no sales not mean the keyword is bad?
 
-Your conversion rate is the share of clicks that turn into orders. If your conversion rate is 10%, then on average one click in ten becomes a sale. That average is the only thing 10% promises. It does not promise that the tenth click will be a sale.
+Your ad conversion rate is the share of ad clicks that turn into ad-attributed orders. If your ad conversion rate is 10%, then on average one click in ten becomes a sale. That average is the only thing 10% promises. It does not promise that the tenth click will be a sale.
 
-With a 10% conversion rate, a run of clicks with no sale is completely ordinary. Nine clicks in a row with nothing is the expected experience some of the time, not a sign that anything is broken.
+With a 10% ad conversion rate, a run of clicks with no sale is completely ordinary. Nine clicks in a row with nothing is the expected experience some of the time, not a sign that anything is broken.
 
 You can calculate how ordinary. For each click, the chance of no sale is 90%. For eight clicks in a row with no sale, multiply 0.90 by itself once per click.
 
@@ -42,9 +42,9 @@ You need enough clicks that a run of zeros becomes unlikely rather than ordinary
 
 At that point, one of two things is true: either the keyword really is underperforming, or you have been unlucky in a way that happens less than one time in ten. That is a reasonable basis for a decision.
 
-The number of clicks that takes depends entirely on your conversion rate. The lower your conversion rate, the longer a run of zeros can be before it means anything.
+The number of clicks that takes depends entirely on your ad conversion rate. The lower your ad conversion rate, the longer a run of zeros can be before it means anything.
 
-| Your conversion rate | Clicks with no sale before zero is meaningful |
+| Your ad conversion rate | Clicks with no sale before zero is meaningful |
 |---|---|
 | 20% | 11 |
 | 15% | 15 |
@@ -54,20 +54,29 @@ The number of clicks that takes depends entirely on your conversion rate. The lo
 | 3% | 76 |
 
 [[The rule]]
-If you do not know your conversion rate yet, use 22 clicks. It assumes a 10% conversion rate, which is a reasonable planning number for a product that is converting normally. Below 22 clicks on a single keyword, you do not have a result. You have a gap in the data.
+If you do not know your ad conversion rate yet, use 22 clicks. It assumes a 10% ad conversion rate, which is a reasonable planning number for a product that is converting normally. Below 22 clicks on a single keyword, you do not have a result. You have a gap in the data.
 
-Notice what the table does to the common advice that 10 clicks is enough. Ten clicks is not enough even at a 20% conversion rate — the table above says 11. For a product converting at 5%, acting on 10 clicks means acting on roughly a fifth of the evidence you need.
+Notice what the table does to the common advice that 10 clicks is enough. Ten clicks does not clear the threshold at any ad conversion rate in the table: even the 20% row asks for 11. For a product converting at 5%, acting on 10 clicks means acting on roughly a fifth of the evidence you need.
 
-## How do you find your own conversion rate?
+## How do you find your own ad conversion rate?
 
-Seller Central reports this for you, under a name that does not sound like conversion rate. In Business Reports, the column called unit session percentage is the share of visits to your listing that resulted in units ordered. That is your conversion rate for the whole listing.
+Your ad conversion rate is ad-attributed orders divided by clicks. It comes from the advertising console, not from Seller Central.
 
-Use the last 30 days, and use the figure for the specific ASIN you are advertising, not an account-wide average across different products.
+In Campaign Manager, set a date range of at least 30 days and read two columns for the ASIN you are advertising: clicks, and ad-attributed orders. Divide the second by the first. The console also displays a conversion rate column calculated the same way, but column names change over time, so the division is the version that will always work.
 
-[[The blind spot]]
-Your listing conversion rate covers organic visits as well as ad clicks, so it is an approximation for advertising purposes rather than an exact match. It is close enough to pick a row in the table above, and it is far better than guessing.
+Clicks in the last 30 days | 640
+Ad-attributed orders in the same period | 51
+Ad conversion rate, 51 divided by 640 | 8.0%
+Row to use from the table above | 28 clicks
 
-If the ASIN is new and has almost no sessions yet, you do not have a measured conversion rate at all. Use 10% as a planning assumption, take the 22-click row, and replace the assumption with a measured figure once the listing has 30 days of history.
+[[The distinction]]
+Do not use unit session percentage from Seller Central Business Reports for this. That figure divides orders by sessions on your listing, and it counts organic visits alongside ad clicks. It answers a different question — how well your listing converts overall. The threshold in this guide needs how well your ads convert, which is a different number on a different denominator.
+
+Take the rate at account or campaign level, not from the keyword you are about to judge. A single keyword does not have enough clicks to produce a reliable rate, which is the reason you are reading this guide. The rate comes from the larger pool of clicks; the threshold then gets applied to the individual keyword.
+
+One caution about the date range. Ad-attributed orders are counted after the click, so the most recent days in any window are still filling in. End your date range about a week before today, or the rate you calculate will come out too low.
+
+If the ASIN has no advertising history at all, you have no measured rate. Use 10% as a planning assumption, take the 22-click row, and replace it with a measured figure once the campaign has a few hundred clicks behind it.
 
 ## Why is your campaign total not the number that matters?
 
@@ -128,7 +137,12 @@ That is a different decision and the threshold does not apply in the same way. O
 The same evidence standard applies, with one addition: relevance. A search term that is clearly unrelated to your product can be excluded immediately, because you are not making a statistical judgement, you are making a relevance judgement.
 
 **My product converts at 25%. Can I decide faster?**
-Yes. Higher conversion rates need fewer clicks, because a run of zeros becomes unlikely sooner. Extend the table using the same standard and you will find 25% needs 9 clicks.
+Yes. Higher ad conversion rates need fewer clicks, because a run of zeros becomes unlikely sooner. Extend the table using the same standard and you will find 25% needs 9 clicks.
+
+**How was the click threshold calculated?**
+Start by assuming the keyword converts at your ad conversion rate. Each click then has a chance of producing no sale equal to 100% minus that rate, and the chance that a whole run of clicks produces nothing is that figure multiplied by itself once per click. At a 10% ad conversion rate, a run of 21 clicks with no sale happens to a perfectly normal keyword 10.9% of the time, and a run of 22 clicks happens 9.8% of the time. The threshold is the first click count where that figure falls below 10%, which is the point where zero stops being an ordinary result and starts being evidence. Every row of the table is the same calculation at a different rate.
+
+The choice of 10% as the cutoff is a convention, not a law of the platform. A stricter standard — waiting until the chance falls below 5% — would ask for 29 clicks instead of 22 at a 10% ad conversion rate. The looser standard is used here because it is reachable on a small launch budget while still being far more evidence than the eight or ten clicks most sellers act on.
 
 ## Final thoughts
 
@@ -140,8 +154,9 @@ Figures from this article's worked examples, not an industry survey.
 
 ## New terms
 
-- conversion rate — the share of ad clicks that become orders. Everyday phrase: how often a click turns into a sale.
-- unit session percentage — the Seller Central Business Reports column that reports conversion rate for a listing. Everyday phrase: the share of visits that ended in an order.
+- ad conversion rate — ad-attributed orders divided by clicks. Everyday phrase: how often an ad click turns into a sale. Must stay distinct from listing conversion rate throughout; they have different denominators.
+- ad-attributed order — an order Amazon credits to an ad click within the attribution window. Everyday phrase: a sale the ad gets credit for.
+- unit session percentage — the Seller Central Business Reports column that divides units ordered by listing sessions. Everyday phrase: the share of listing visits that ended in an order. Appears in this article only as the metric readers are told not to use for advertising decisions, so the contrast with ad conversion rate must survive translation.
 - impressions — the number of times an ad was displayed, whether or not anyone clicked. Everyday phrase: how many times the ad was shown.
 - negative keyword — a search term you tell Amazon not to show your ad for. Everyday phrase: a blocked search term. Related to the verdict Negate, but the verdict is a decision and this is the setting that carries it out.
-- No new callout labels were needed. All callouts in this article use approved labels: The problem, The rule, The blind spot, The trap, Worked example, What to do.
+- No new callout labels were needed. All callouts in this article use approved labels: The problem, The rule, The distinction, The trap, Worked example, What to do.

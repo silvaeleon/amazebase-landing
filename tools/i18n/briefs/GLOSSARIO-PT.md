@@ -53,9 +53,30 @@ exactly as they appear (`Ledger`).
 *Quantos dados você precisa antes de mudar uma campanha?*. They are a Seller
 Central section and one of its column headings: a reader hunting for that
 column needs the string Amazon shows them, whatever language their Seller
-Central is in. Same rule as `Seller Central` itself, with one addition — on
-**first use only** the Portuguese follows in brackets: *a coluna chamada unit
-session percentage (porcentagem de sessões por unidade)*. Later uses are bare.
+Central is in. Same rule as `Seller Central` itself.
+
+**Rewritten 2026-09-12, and the change of role is the point.** In the first
+version of that article `unit session percentage` was the metric the reader was
+sent to fetch. It was the wrong metric: it divides orders by listing sessions,
+so it counts organic visits alongside ad clicks, and the article's click
+threshold needs a rate measured on ad clicks alone. The article now sends the
+reader to a **taxa de conversão de anúncios** instead, and
+`unit session percentage` survives in exactly one place — the *A distinção*
+callout, which tells them **not** to use it here.
+
+So the entry is no longer an instrument, it is a warning, and it must be
+translated as one. A future translator working from the old entry could
+reasonably soften *Não use unit session percentage … para isso* into
+a recommendation, or quietly swap in the local phrase for a listing conversion
+rate. Either would put back the error this correction removed. The contrast
+between the two rates is the section; if a rendering blurs it, the rendering is
+wrong.
+
+The bracketed first-use gloss the earlier entry required is **not** used in
+this article, and that is deliberate: the sentence after the term now defines
+it in full (*Esse número divide os pedidos pelas sessões do seu listing, e conta as visitas orgânicas junto com os cliques de anúncios*), which
+tells the reader more than the bracket did. Where a future article genuinely
+uses the column, reinstate the bracket on first use.
 
 **The seven verdicts are the exception: they are translated** (Leon,
 2026-09-11, over keeping them in English like `Ledger`), matching the Spanish
@@ -129,7 +150,9 @@ Portuguese adds no emphasis the English does not have.
 | organic ranking | ranqueamento orgânico | keeps it apart from *posicionamento* |
 | dayparting | programação por horário | |
 | branded campaign | campanha de marca | |
-| conversion rate | taxa de conversão | |
+| conversion rate | taxa de conversão | the LISTING rate, on sessions. Never the bare phrase where the English means the ad rate — see the two rows below |
+| ad conversion rate | taxa de conversão de anúncios | added 2026-09-12; ad-attributed orders divided by ad CLIQUES. Must stay audibly distinct from *taxa de conversão*: different denominator, and one article turns on the difference |
+| ad-attributed order | pedido atribuído ao anúncio | added 2026-09-12; an order Amazon credits to an ad click inside the attribution window |
 | incrementality | incrementalidade | |
 | to negate (a keyword) | negativar | |
 | dashboard | painel | *dashboard* only for the software genre |

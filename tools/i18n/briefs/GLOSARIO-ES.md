@@ -36,17 +36,43 @@ These are how sellers actually talk. Translating them would make the articles
 read as though written by someone who has never used Seller Central.
 
 `ACOS` · `TACOS` · `ROAS` · `CPC` · `PPC` · `FBA` · `SKU` · `ASIN` ·
-`Buy Box` · `listing` · `Seller Central` · `Business Reports` ·
-`unit session percentage` · `Ledger` (the AmazeBase module name)
+`Buy Box` · `listing` · `Seller Central` · `Campaign Manager` ·
+`Business Reports` · `unit session percentage` · `Ledger` (the AmazeBase
+module name)
+
+`Campaign Manager` added 2026-09-12. Portuguese has kept it in English
+since the pt corpus was written (GLOSSARIO-PT §2) and Spanish never wrote
+the decision down, so each article was settling it again. It is the name of
+a screen the reader has to find: same rule as `Seller Central`.
 
 `Business Reports` and `unit session percentage` were added 2026-09-11 with
 *¿Cuántos datos necesitas antes de cambiar una campaña?*. They are a Seller
 Central section and one of its column headings: a reader hunting for that
 column needs the string Amazon shows them, whatever language their Seller
-Central is in. Same rule as `Seller Central` itself, with one addition — on
-**first use only** the Spanish follows in brackets, so the reader learns what
-it measures without losing the string: *la columna llamada unit session
-percentage (porcentaje de sesiones por unidad)*. Later uses are bare.
+Central is in. Same rule as `Seller Central` itself.
+
+**Rewritten 2026-09-12, and the change of role is the point.** In the first
+version of that article `unit session percentage` was the metric the reader was
+sent to fetch. It was the wrong metric: it divides orders by listing sessions,
+so it counts organic visits alongside ad clicks, and the article's click
+threshold needs a rate measured on ad clicks alone. The article now sends the
+reader to la **tasa de conversión de anuncios** instead, and
+`unit session percentage` survives in exactly one place — the *La distinción*
+callout, which tells them **not** to use it here.
+
+So the entry is no longer an instrument, it is a warning, and it must be
+translated as one. A future translator working from the old entry could
+reasonably soften *No uses unit session percentage … para esto* into
+a recommendation, or quietly swap in the local phrase for a listing conversion
+rate. Either would put back the error this correction removed. The contrast
+between the two rates is the section; if a rendering blurs it, the rendering is
+wrong.
+
+The bracketed first-use gloss the earlier entry required is **not** used in
+this article, and that is deliberate: the sentence after the term now defines
+it in full (*Esa cifra divide los pedidos entre las sesiones de tu listing, y cuenta las visitas orgánicas junto con los clics de anuncios*), which
+tells the reader more than the bracket did. Where a future article genuinely
+uses the column, reinstate the bracket on first use.
 
 "Advertising Cost of Sales" appears once, in plain text, where ACOS is
 expanded in the lead of the ACOS article — as the English does. *(Corrected
@@ -100,7 +126,9 @@ Spanish pages. The page is fixed in the same commit.)*
 | impressions | impresiones | added 2026-09-11 |
 | negative keyword | palabra clave negativa | added 2026-09-11; the setting that stops a search term, not the decision to stop it |
 | branded / generic campaign | campaña de marca / de palabras clave genéricas | |
-| conversion rate | tasa de conversión | |
+| conversion rate | tasa de conversión | the LISTING rate, on sessions. Never the bare phrase where the English means the ad rate — see the two rows below |
+| ad conversion rate | tasa de conversión de anuncios | added 2026-09-12; ad-attributed orders divided by ad CLICKS. Must stay audibly distinct from *tasa de conversión*: different denominator, and one article turns on the difference |
+| ad-attributed order | pedido atribuido al anuncio | added 2026-09-12; an order Amazon credits to an ad click inside the attribution window |
 | organic ranking | posicionamiento orgánico | |
 | incrementality | incrementalidad | |
 | dashboard | panel | *dashboard* only where the English is talking about the software genre |

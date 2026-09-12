@@ -4,7 +4,7 @@
   {"k": "Zero sales after 8 clicks", "v": "43%",
    "p": "A keyword that is performing exactly as expected will show you zero sales after eight clicks roughly four times out of ten."},
   {"k": "Clicks before zero means something", "v": "22", "tone": "amber",
-   "p": "If you do not know your conversion rate yet, use 22 clicks."},
+   "p": "If you do not know your ad conversion rate yet, use 22 clicks."},
   {"k": "Days for one keyword to get there", "v": "11 days", "tone": "violet",
    "p": "Spread across 10 keywords that is 2 clicks per keyword per day, so a single keyword takes 11 days to reach 22 clicks."}
  ]
