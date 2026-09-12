@@ -1,0 +1,22 @@
+{
+ "_note": "The rail's key-figure cards. The content-first source format has no rail, so these were drafted 2026-09-11 from the SPANISH source, not translated from the English rail. Every sentence below is lifted VERBATIM from tools/articles/cuantos-datos-antes-de-cambiar-campana.md, and each 'k' is that figure's own worked-sum row label from the same source, also verbatim -- so the only new Spanish on the card is nothing at all. build_article.py verify refuses a rail number the article does not contain. NEEDS LEON'S EYE anyway: a rail is editorial, and he is the one who reads Spanish.",
+ "cards": [
+  {
+   "k": "Probabilidad de que no haya venta en los 8 clics",
+   "v": "43%",
+   "p": "Una palabra clave que funciona exactamente como se espera te mostrará cero ventas después de ocho clics unas cuatro veces de cada diez."
+  },
+  {
+   "k": "Clics necesarios en una palabra clave",
+   "v": "22",
+   "tone": "amber",
+   "p": "Si aún no conoces tu tasa de conversión, usa 22 clics."
+  },
+  {
+   "k": "Días hasta que una palabra clave llega a ese número",
+   "v": "11 días",
+   "tone": "violet",
+   "p": "Repartidos entre 10 palabras clave son 2 clics por palabra clave por día, así que una sola palabra clave tarda 11 días en llegar a 22 clics."
+  }
+ ]
+}

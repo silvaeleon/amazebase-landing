@@ -155,9 +155,24 @@ def check_pre(en_v, tr_v, field):
 LABEL_CLASSES = {"fixbox-k", "rail-k", "label", "lab", "eyebrow", "player-kind"}
 
 
+def brief(lang):
+    """The language's glossary file, or None.
+
+    Two spellings, because each is correct in its own language: the Portuguese
+    brief is GLOSSARIO-PT.md and the Spanish one is GLOSARIO-ES.md, with one S.
+    Only the Portuguese spelling was ever tried, so load_labels("es") returned
+    an empty table and the label check passed VACUOUSLY on every Spanish page --
+    found 2026-09-11 while building the first Spanish content-first article."""
+    for name in ("GLOSSARIO-%s.md", "GLOSARIO-%s.md"):
+        p = os.path.join(HERE, "briefs", name % lang.upper())
+        if os.path.exists(p):
+            return p
+    return None
+
+
 def load_labels(lang):
-    p = os.path.join(HERE, "briefs", "GLOSSARIO-%s.md" % lang.upper())
-    if not os.path.exists(p):
+    p = brief(lang)
+    if not p:
         return {}, []
     s = io.open(p, encoding="utf-8").read()
     m = re.search(r"<!-- FIXED-LABELS:START -->(.*?)<!-- FIXED-LABELS:END -->", s, re.S)
@@ -178,8 +193,8 @@ def load_labels(lang):
 
 def load_vocab(lang):
     """[(variant, settled)] from the glossary's VOCAB-SETTLE table."""
-    p = os.path.join(HERE, "briefs", "GLOSSARIO-%s.md" % lang.upper())
-    if not os.path.exists(p):
+    p = brief(lang)
+    if not p:
         return []
     s = io.open(p, encoding="utf-8").read()
     m = re.search(r"<!-- VOCAB-SETTLE:START -->(.*?)<!-- VOCAB-SETTLE:END -->", s, re.S)

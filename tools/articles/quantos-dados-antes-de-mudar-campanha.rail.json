@@ -1,0 +1,22 @@
+{
+ "_note": "The rail's key-figure cards. The content-first source format has no rail, so these were drafted 2026-09-11 from the PORTUGUESE source, not translated from the English rail. Every sentence below is lifted VERBATIM from tools/articles/quantos-dados-antes-de-mudar-campanha.md, and each 'k' is that figure's own worked-sum row label from the same source, also verbatim. build_article.py verify refuses a rail number the article does not contain.",
+ "cards": [
+  {
+   "k": "Chance de não haver venda nos 8 cliques",
+   "v": "43%",
+   "p": "Uma palavra-chave que está performando exatamente como se espera vai mostrar zero vendas depois de oito cliques mais ou menos quatro vezes em cada dez."
+  },
+  {
+   "k": "Cliques necessários em uma palavra-chave",
+   "v": "22",
+   "tone": "amber",
+   "p": "Se você ainda não conhece a sua taxa de conversão, use 22 cliques."
+  },
+  {
+   "k": "Dias até uma palavra-chave chegar a esse número",
+   "v": "11 dias",
+   "tone": "violet",
+   "p": "Distribuídos entre 10 palavras-chave, são 2 cliques por palavra-chave por dia, então uma única palavra-chave leva 11 dias para chegar a 22 cliques."
+  }
+ ]
+}

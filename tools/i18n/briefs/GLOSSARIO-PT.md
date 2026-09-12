@@ -44,9 +44,18 @@ agree is making one of them wrong.
 
 `ACOS` `ACoS` `TACOS` `TACoS` `ROAS` `CPC` `PPC` `FBA` `AWD` `3PL` `SKU`
 `ASIN` `TAM` `ROI` `LTV` `P&L` `Buy Box` `listing` `lead time` `bulksheet` `trade-off`
-`flywheel` `Seller Central` `Campaign Manager` `Amazon` and the Amazon ad
+`flywheel` `Seller Central` `Campaign Manager` `Amazon` `Business Reports`
+`unit session percentage` and the Amazon ad
 products `Sponsored Products / Brands / Display`. AmazeBase module names stay
 exactly as they appear (`Ledger`).
+
+`Business Reports` and `unit session percentage` were added 2026-09-11 with
+*Quantos dados você precisa antes de mudar uma campanha?*. They are a Seller
+Central section and one of its column headings: a reader hunting for that
+column needs the string Amazon shows them, whatever language their Seller
+Central is in. Same rule as `Seller Central` itself, with one addition — on
+**first use only** the Portuguese follows in brackets: *a coluna chamada unit
+session percentage (porcentagem de sessões por unidade)*. Later uses are bare.
 
 **The seven verdicts are the exception: they are translated** (Leon,
 2026-09-11, over keeping them in English like `Ledger`), matching the Spanish
@@ -114,6 +123,8 @@ Portuguese adds no emphasis the English does not have.
 | ad spend | gasto com anúncios | neutral, as *spend* is; not *investimento* |
 | bid | lance | Amazon Ads Brazil's own word |
 | keyword / search term | palavra-chave / termo de pesquisa | |
+| impressions | impressões | added 2026-09-11 |
+| negative keyword | palavra-chave negativa | added 2026-09-11; the setting that carries out the Negativar verdict, not the verdict itself |
 | placement | posicionamento | |
 | organic ranking | ranqueamento orgânico | keeps it apart from *posicionamento* |
 | dayparting | programação por horário | |

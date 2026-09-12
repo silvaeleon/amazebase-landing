@@ -2744,6 +2744,29 @@
       "translationOf": "wrong-kpi"
     },
     {
+      "id": "how-much-data-before-changing-a-campaign-es",
+      "title": "¿Cuántos datos necesitas antes de cambiar una campaña?",
+      "summary": "Cero ventas en una palabra clave no significa nada hasta que tengas suficientes clics. Aquí está cuántos, y cómo contarlos bien.",
+      "category": "ppc",
+      "categories": [
+        "ppc"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "es",
+      "author": "AmazeBase",
+      "published": "2026-09-11",
+      "minutes": 7,
+      "url": "es/articulos/cuantos-datos-antes-de-cambiar-campana.html",
+      "topics": [
+        "Estrategia de campañas",
+        "Toma de decisiones",
+        "Data Quality",
+        "Lanzamiento de producto"
+      ],
+      "translationOf": "how-much-data-before-changing-a-campaign"
+    },
+    {
       "id": "fba-reorder-date-velocity-pt",
       "title": "Quando devo repor este ASIN?",
       "summary": "Saber quanto estoque você tem é fácil. Saber quando precisa repor é a parte difícil, e a resposta honesta é uma faixa com um prazo-limite, não uma única data dita com toda a confiança.",
@@ -4048,6 +4071,29 @@
       "level": "expert",
       "language": "pt",
       "translationOf": "inventory-forecasting-mistakes"
+    },
+    {
+      "id": "how-much-data-before-changing-a-campaign-pt",
+      "title": "Quantos dados você precisa antes de mudar uma campanha?",
+      "summary": "Zero vendas em uma palavra-chave não significa nada até você ter cliques suficientes. Aqui está quantos, e como contá-los corretamente.",
+      "category": "ppc",
+      "categories": [
+        "ppc"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "pt",
+      "author": "AmazeBase",
+      "published": "2026-09-11",
+      "minutes": 7,
+      "url": "pt/artigos/quantos-dados-antes-de-mudar-campanha.html",
+      "topics": [
+        "Estratégia de campanhas",
+        "Tomada de decisão",
+        "Qualidade dos dados",
+        "Lançamento de produto"
+      ],
+      "translationOf": "how-much-data-before-changing-a-campaign"
     }
   ],
   "_testimonials_README": [

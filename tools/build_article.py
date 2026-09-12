@@ -1,10 +1,27 @@
 # -*- coding: utf-8 -*-
 """
-Build an English article from a content-first source file, into the site's
-existing article template.
+Build an article from a content-first source file, into the site's existing
+article template, in any of the site's languages.
 
     python tools/build_article.py build  <slug>
     python tools/build_article.py verify <slug>
+
+LANGUAGES
+---------
+The language is never passed as a flag. A translated source names its English
+original in `translation_of`, and language_of() asks which slug map sends that
+original to this slug -- so a source whose tools/i18n/slugs/<lang>.json entry is
+still null is refused before it can be written into the wrong directory.
+Everything that then differs per language is one row of LANGS: the donor, the
+output directory, the asset prefix, the month names, the three structural
+headings, the figures disclaimer, the read-time wording and which category label
+to read. Added 2026-09-11 with the Spanish and Portuguese twins of the first
+content-first article.
+
+Two things are deliberately NOT translated: the hero and figure FILES (one
+picture serves all three languages, named for the English slug, only the alt
+text changes) and the "## New terms" appendix marker (a working note for Leon,
+never page content)
 
 The source lives in version control: tools/articles/<slug>.md (tools/ is not
 served, see the Caddyfile). The first article authored this way is
@@ -51,14 +68,75 @@ tools/articles/<slug>.rail.json: numbers and sentences taken from the article.
 """
 
 import html, io, json, os, re, sys
+from html.entities import codepoint2name as NAME
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "tools", "articles")
-DONOR = "articles/true-product-margin-after-ads.html"
 SITE = "https://amazebase.pro"
-DISCLAIMER = "Figures from this article's worked examples, not an industry survey."
-MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August",
-          "September", "October", "November", "December"]
+
+# Everything about a built page that depends on which language it is.
+#
+# The DONOR is that language's OWN twin of the English donor, never the English
+# file patched afterwards. A translated article differs from its English source
+# in more than prose: the breadcrumb is /es/recursos.html, the switcher chip is
+# ES, and every asset path is ROOT-ABSOLUTE (/assets/img/...) where the English
+# pages use ../assets/img/. Taking the real twin as the shell means none of that
+# is retyped here and none of it can drift.
+#
+# "toc" is a prefix, not a whole heading: English carries both "What's in this
+# guide" and "What's in this piece", and the other languages carry the matching
+# pair.
+LANGS = {
+    "en": {
+        "donor": "articles/true-product-margin-after-ads.html",
+        "out": "articles",
+        "assets": "../assets/img/",
+        "back": "resources.html",
+        "toc": ("What's in this",),
+        "faq": "Frequently asked",
+        "final": "Final thoughts",
+        "disclaimer": "Figures from this article's worked examples, not an industry survey.",
+        "read": "%d min read",
+        "date": "%(d)d %(month)s %(y)d",
+        "cat": "label",
+        "months": ["January", "February", "March", "April", "May", "June", "July",
+                   "August", "September", "October", "November", "December"],
+    },
+    "es": {
+        "donor": "es/articulos/los-cinco-margenes-de-un-producto.html",
+        "out": "es/articulos",
+        "assets": "/assets/img/",
+        "back": "es/recursos.html",
+        "toc": ("Qué encontrarás",),
+        "faq": "Preguntas frecuentes",
+        "final": "Para cerrar",
+        "disclaimer": "Cifras de los ejemplos trabajados de este artículo, "
+                      "no de un estudio de mercado.",
+        # a plain space: measured across the 48 Spanish articles that carry a
+        # read time, every one of them uses one (Portuguese uses &nbsp;)
+        "read": "%d min de lectura",
+        "date": "%(d)d de %(month)s de %(y)d",
+        "cat": "label_es",
+        "months": ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio",
+                   "agosto", "septiembre", "octubre", "noviembre", "diciembre"],
+    },
+    "pt": {
+        "donor": "pt/artigos/as-cinco-margens-de-um-produto.html",
+        "out": "pt/artigos",
+        "assets": "/assets/img/",
+        "back": "pt/recursos.html",
+        "toc": ("O que você vai encontrar",),
+        "faq": "Perguntas frequentes",
+        "final": "Para fechar",
+        "disclaimer": "Números dos exemplos deste artigo, "
+                      "não de uma pesquisa de mercado.",
+        "read": "%d&nbsp;min de leitura",
+        "date": "%(d)d de %(month)s de %(y)d",
+        "cat": "label_pt",
+        "months": ["janeiro", "fevereiro", "março", "abril", "maio", "junho",
+                   "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"],
+    },
+}
 
 EXTRA_CSS = """
 /* ── WORKED-SUM ROWS: labelled rows, one per line, value right-aligned.
@@ -93,13 +171,50 @@ EXTRA_CSS = """
 
 def inline(t):
     """Source text -> the house style: & < > escaped, **bold**, curly quotes
-    and apostrophes and dashes as named entities (as the other articles are)."""
+    and apostrophes and dashes as named entities (as the other articles are).
+
+    Every OTHER non-ASCII character becomes its named entity too. That is not a
+    nicety: the shipped Spanish and Portuguese articles hold &aacute; and
+    &ccedil;, never a raw accent (measured across all 102 translated pages,
+    2026-09-11), and gate.py refuses a raw accented character in an attribute.
+    Spanish angle quotes arrive from the source as literal guillemets and become
+    &laquo; / &raquo; here, so the straight-quote rule above stays English-and-
+    Portuguese only -- which is right, as those are the two sources using "...".
+    """
     t = html.escape(t, quote=False)
     t = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", t)
     t = re.sub(r'"([^"]*)"', r"&ldquo;\1&rdquo;", t)
     t = t.replace("'", "&rsquo;").replace("—", "&mdash;").replace("–", "&ndash;")
+    t = "".join(c if ord(c) < 128 else
+                "&%s;" % NAME[ord(c)] if ord(c) in NAME else "&#%d;" % ord(c)
+                for c in t)
     assert not re.search(r"[^\x00-\x7f]", t), "unmapped character in %r" % t[:60]
     return t
+
+
+def language_of(meta, slug):
+    """Which language a source builds into, and the slug of its English source.
+
+    Taken from the source itself, never from a flag that can be passed wrongly:
+    a translated source names its English original in `translation_of`, and the
+    language is whichever slug map sends that original to THIS slug. A source
+    whose slug map entry is still null is therefore refused here, before it can
+    be built into the wrong directory."""
+    en = meta.get("translation_of")
+    if not en:
+        return "en", slug
+    hits = []
+    for code in LANGS:
+        if code == "en":
+            continue
+        m = json.load(io.open(os.path.join(ROOT, "tools", "i18n", "slugs", code + ".json"),
+                              encoding="utf-8"))
+        if m.get(en) == slug:
+            hits.append(code)
+    assert len(hits) == 1, ("%r says it translates %r, but %d slug maps send that one to it "
+                            "(fill tools/i18n/slugs/<lang>.json first): %s"
+                            % (slug, en, len(hits), hits))
+    return hits[0], en
 
 
 def parse(slug):
@@ -127,13 +242,15 @@ def render_block(b, section):
     if m and len(lines) == 1:
         alt = inline(m.group(1))
         n = section["figures"] = section.get("figures", 0) + 1
-        name = "fig-%s-%d.webp" % (section["slug"], n)
+        # named for the ENGLISH slug, so all three languages point at one file:
+        # the picture is the same picture, only its alt text is translated
+        name = "fig-%s-%d.webp" % (section["en_slug"], n)
         return ("<!-- FIGURE GOES HERE. Drop the image in as assets/img/%s, uncomment:\n"
                 "<figure class=\"art-figure\">\n"
-                "  <img src=\"../assets/img/%s\"\n"
+                "  <img src=\"%s%s\"\n"
                 "       alt=\"%s\"\n"
                 "       loading=\"lazy\" decoding=\"async\">\n"
-                "</figure>\n-->" % (name, name, alt))
+                "</figure>\n-->" % (name, section["assets"], name, alt))
     m = re.fullmatch(r"\[\[(.+)\]\]", lines[0])
     if m:
         label, rest = m.group(1), lines[1:]
@@ -165,18 +282,18 @@ def render_block(b, section):
     return "<p>%s</p>" % inline(" ".join(lines))
 
 
-def build_main(meta, intro, sections):
-    slug = meta["slug"]
-    state = {"slug": slug, "labels": []}
+def build_main(meta, intro, sections, lang, en_slug):
+    L = LANGS[lang]
+    state = {"slug": meta["slug"], "en_slug": en_slug, "assets": L["assets"], "labels": []}
     ib = blocks(intro)
     out = ['<main id="main" class="article">', '  <p class="lead">%s</p>' % inline(" ".join(ib[0].splitlines()))]
     toc, questions, faq, final = None, [], None, None
     for title, chunk in sections:
-        if title.startswith("What's in this guide"):
+        if any(title.startswith(t) for t in L["toc"]):
             toc = (title, [re.sub(r"^- ", "", l) for l in chunk.strip().splitlines()])
-        elif title == "Frequently asked":
+        elif title == L["faq"]:
             faq = (title, chunk)
-        elif title == "Final thoughts":
+        elif title == L["final"]:
             final = (title, chunk)
         else:
             questions.append((title, chunk))
@@ -206,7 +323,7 @@ def build_main(meta, intro, sections):
     disclaimer = None
     if final:
         bs = blocks(final[1])
-        if bs and bs[-1].strip() == DISCLAIMER:
+        if bs and bs[-1].strip() == L["disclaimer"]:
             disclaimer = bs.pop()
         out.append('  <section class="sec">')
         out.append("    <h2>%s</h2>" % inline(final[0]))
@@ -216,14 +333,16 @@ def build_main(meta, intro, sections):
     return "\n".join(out), state["labels"], disclaimer
 
 
-def build_rail(slug, disclaimer):
+def build_rail(slug, disclaimer, lang):
     rail = json.load(io.open(os.path.join(SRC, slug + ".rail.json"), encoding="utf-8"))
     out = ['<aside class="rail" aria-label="Key figures from this article">']
     for c in rail["cards"]:
         cls = "rail-v" + (" is-%s" % c["tone"] if c.get("tone") else "")
         out += ['  <div class="rail-card">', '    <span class="rail-k">%s</span>' % inline(c["k"]),
                 '    <span class="%s">%s</span>' % (cls, inline(c["v"])), "    <p>%s</p>" % inline(c["p"]), "  </div>"]
-    assert disclaimer == DISCLAIMER, "the source must end its closing section with the figures disclaimer"
+    assert disclaimer == LANGS[lang]["disclaimer"], \
+        "the source must end its closing section with the %s figures disclaimer:\n  want %r\n  got  %r" \
+        % (lang, LANGS[lang]["disclaimer"], disclaimer)
     out.append('  <p class="rail-src">%s</p>' % inline(disclaimer))
     out.append("</aside>")
     return "\n".join(out)
@@ -237,23 +356,83 @@ def split_title(t):
     return " ".join(words[:best]), " ".join(words[best:])
 
 
-def category_label(label):
+def category(label):
+    """The hub category whose English label the source names. Refused, not
+    guessed, when it is not exactly one of them."""
     data = json.load(io.open(os.path.join(ROOT, "data", "resources.json"), encoding="utf-8"))
-    ids = [c["id"] for c in data["categories"] if c["label"] == label]
-    assert len(ids) == 1, "category %r is not one hub category" % label
-    return ids[0]
+    hits = [c for c in data["categories"] if c["label"] == label]
+    assert len(hits) == 1, "category %r is not one hub category" % label
+    return hits[0]
+
+
+def category_id(label):
+    return category(label)["id"]
+
+
+def category_label(label, lang):
+    """That category's label in the page's own language. data/resources.json
+    holds label / label_es / label_pt on every category, which is also what the
+    hub tiles read, so the page and the tile can never disagree."""
+    c = category(label)
+    key = LANGS[lang]["cat"]
+    assert key in c, "category %r has no %s (data/resources.json)" % (c["id"], key)
+    return c[key]
 
 
 # ------------------------------------------------------------------ building
 
+def seo_twin(lang, slug, en_slug, meta):
+    """The translated page's SEO block, localised from the English page's.
+
+    seo.py deliberately writes ENGLISH pages only, so a twin's head is somebody
+    else's job. tools/i18n/seo_twins.py already does the localising and is the
+    code that produced the other 102 twins -- its localise_block() is reused
+    here verbatim. What is NOT reused is its complete_es/complete_pt glue: those
+    read loose og tags the old Spanish builder left on the page, and a
+    pt-2026/content/<slug>.json that only the Portuguese builder writes. A
+    content-first article has neither, so this supplies the same two values
+    (title, summary) straight from the source and hands them over.
+
+    So the English page must already carry its own block: run tools/seo.py
+    after building the English article and before building its twins. The
+    assert below says so rather than writing a half-localised head.
+    """
+    sys.path.insert(0, os.path.join(ROOT, "tools", "i18n"))
+    import seo_twins as ST
+    en_page = os.path.join(ROOT, "articles", en_slug + ".html")
+    en_html = io.open(en_page, encoding="utf-8").read()
+    assert ST.START in en_html, (
+        "articles/%s.html has no SEO block yet, so there is nothing to localise. "
+        "Run: python tools/seo.py  (it writes the English block), then rebuild this page."
+        % en_slug)
+    rel = "%s/%s.html" % (LANGS[lang]["out"], slug)
+    row = [r for r in json.load(io.open(os.path.join(ROOT, "data", "resources.json"),
+                                       encoding="utf-8"))["resources"] if r.get("url") == rel]
+    assert len(row) == 1, ("data/resources.json has %d rows for %s; add the hub row first "
+                           "(tools/i18n/hubrows.py translated_row)" % (len(row), rel))
+    b = ST.localise_block(ST.en_block(ROOT, en_slug), lang,
+                          "%s/%s" % (SITE, rel), "%s/articles/%s.html" % (SITE, en_slug),
+                          inline(meta["title"]), inline(meta["summary"]), row[0])
+    # localise_block sets the image alt to the title -- seo.py's fallback for an
+    # article with NO hero. This one has a hero, so its alt is the translated
+    # hero_alt, which is also what verify() requires.
+    for attr in ('property="og:image:alt"', 'name="twitter:image:alt"'):
+        b, n = re.subn(r'<meta %s content="[^"]*">' % re.escape(attr),
+                       lambda _m: '<meta %s content="%s">' % (attr, inline(meta["hero_alt"])), b)
+        assert n == 1, attr
+    return b
+
+
 def build(slug, published):
     meta, intro, sections = parse(slug)
-    main, labels, disclaimer = build_main(meta, intro, sections)
-    rail = build_rail(slug, disclaimer)
+    lang, en_slug = language_of(meta, slug)
+    L = LANGS[lang]
+    main, labels, disclaimer = build_main(meta, intro, sections, lang, en_slug)
+    rail = build_rail(slug, disclaimer, lang)
     y, m, d = (int(x) for x in published.split("-"))
-    s = io.open(os.path.join(ROOT, DONOR), encoding="utf-8", newline="").read()
+    s = io.open(os.path.join(ROOT, L["donor"]), encoding="utf-8", newline="").read()
     assert "\r" not in s
-    donor_slug = os.path.basename(DONOR)[:-5]
+    donor_slug = os.path.basename(L["donor"])[:-5]
 
     def rep(pat, new, flags=re.S):
         nonlocal s
@@ -264,32 +443,44 @@ def build(slug, published):
     rep(r'<meta name="description" content="[^"]*">', '<meta name="description" content="%s">'
         % inline(meta["summary"]).replace("&ldquo;", "&quot;").replace("&rdquo;", "&quot;"))
     rep(r"<!-- SEO:START -->.*?<!-- SEO:END -->\n?", "")          # seo.py writes it from the hub row
+    seo_block = seo_twin(lang, slug, en_slug, meta) if lang != "en" else None
     plain, accent = split_title(meta["title"])
+    # The eyebrow and the last meta span carry the hub category in the page's
+    # OWN language. The source names the English hub label in every language,
+    # because that is the taxonomy key; data/resources.json holds the rest.
+    eyebrow = inline(category_label(meta["categories"], lang))
+    date = L["date"] % {"d": d, "month": L["months"][m - 1], "y": y}
     head = "\n".join([
         '<header class="article-head">',
-        '  <p class="eyebrow">%s</p>' % inline(meta["categories"]),
+        '  <p class="eyebrow">%s</p>' % eyebrow,
         '  <h1>%s <span class="accent">%s</span></h1>' % (inline(plain), inline(accent)),
         '  <p class="deck">%s</p>' % inline(meta["summary"]),
         '  <p class="meta">',
         "    <span>AmazeBase</span>",
         '    <span class="dot" aria-hidden="true"></span>',
-        '    <span><time datetime="%s">%d %s %d</time></span>' % (published, d, MONTHS[m - 1], y),
+        '    <span><time datetime="%s">%s</time></span>' % (published, inline(date)),
         '    <span class="dot" aria-hidden="true"></span>',
-        "    <span>%s min read</span>" % int(meta["reading_time"]),
+        "    <span>%s</span>" % (L["read"] % int(meta["reading_time"])),
         '    <span class="dot" aria-hidden="true"></span>',
-        "    <span>%s</span>" % inline(meta["categories"]),
+        "    <span>%s</span>" % eyebrow,
         "  </p>",
         "</header>"])
     rep(r'<header class="article-head">.*?</header>', head)
-    hero = ("<!-- HERO IMAGE PLACEHOLDER. assets/img/hero-%s.webp is a stand-in at 1672x941 until the real\n"
+    # ONE hero file for all three languages, named for the English slug: the
+    # picture is the same picture and only the alt text is translated, so a
+    # replacement drops in once instead of three times.
+    hero_file = "hero-%s.webp" % en_slug
+    hero = ("<!-- HERO IMAGE PLACEHOLDER. assets/img/%s is a stand-in at 1672x941 until the real\n"
             "     picture exists: replace that file, keep the name and this alt text, then run tools/build_og.py.\n"
             "     Tracked with the other awaiting-replacement heroes in HANDOVER.md section 6 item 7. -->\n"
             '<figure class="hero-shot">\n'
-            '  <img src="../assets/img/hero-%s.webp"\n'
+            '  <img src="%s%s"\n'
             '       alt="%s"\n'
             '       width="1672" height="941" loading="eager" decoding="async">\n'
-            "</figure>") % (slug, slug, inline(meta["hero_alt"]))
-    rep(r"<!-- HERO IMAGE GOES HERE\..*?-->", hero)
+            "</figure>") % (hero_file, L["assets"], hero_file, inline(meta["hero_alt"]))
+    # the English donor still has an empty hero slot; the translated donors were
+    # built with the hero already commented out around a <figure>
+    rep(r"<!-- HERO IMAGE (?:GOES HERE|PLACEHOLDER)\..*?-->", hero)
     rep(r'<main id="main" class="article">.*?</main>', main)
     rep(r'<aside class="rail".*?</aside>', rail)
     rep(r"\n</style>", EXTRA_CSS.rstrip("\n") + "\n</style>")
@@ -299,17 +490,23 @@ def build(slug, published):
     import langlinks
     cfg, slugs = langlinks.load()
     en_slugs = sorted(f[:-5] for f in os.listdir(os.path.join(ROOT, "articles")) if f.endswith(".html"))
-    members = langlinks.groups(cfg, slugs, en_slugs + [slug]).get("articles/%s.html" % slug) or \
-        {"en": "articles/%s.html" % slug}
+    rel = "%s/%s.html" % (L["out"], slug)
+    # groups() is keyed by every member's own file, so a translated page looks
+    # itself up by its own path without having to know the English one
+    members = langlinks.groups(cfg, slugs, en_slugs + [en_slug]).get(rel) or {lang: rel}
     mm = langlinks.MENU_RUN.search(s)
     indent = re.match(r"[ \t]*", mm.group(2)).group(0)
-    s = langlinks.MENU_RUN.sub(lambda m_: m_.group(1) + langlinks.menu_block(cfg, members, "en", indent)
+    s = langlinks.MENU_RUN.sub(lambda m_: m_.group(1) + langlinks.menu_block(cfg, members, lang, indent)
                                + "\n" + m_.group(3), s, count=1)
+    if seo_block:
+        assert s.count("</head>") == 1
+        s = s.replace("</head>", seo_block + "\n</head>", 1)
     assert donor_slug not in s, "the donor's slug survived into the page: %s" % \
         s[max(0, s.find(donor_slug) - 80):s.find(donor_slug) + 40]
-    out = os.path.join(ROOT, "articles", slug + ".html")
+    out = os.path.join(ROOT, L["out"], slug + ".html")
     io.open(out, "w", encoding="utf-8", newline="").write(s)
-    print("built  articles/%s.html  (%d sections, callouts: %s)" % (slug, len([1 for t, _ in sections]), ", ".join(labels)))
+    print("built  %s  [%s]  (%d sections, callouts: %s)"
+          % (rel, lang, len([1 for t, _ in sections]), ", ".join(labels)))
     return meta, labels
 
 
@@ -348,6 +545,49 @@ def placeholder(slug):
     print("placeholder  assets/img/hero-%s.webp  %dx%d  %d bytes" % (slug, W, H, os.path.getsize(out)))
 
 
+# --------------------------------------------------------------- logo hero
+
+LOGO_BG = (0x03, 0x09, 0x17)      # --bg in css/variables.css
+LOGO_BOX = 480                    # the 32-unit viewBox scaled to this square
+
+
+def logohero(en_slug):
+    """The interim hero: the site's own mark, centred on the site background.
+
+    Leon asked for the logo rather than a blank stand-in while the real picture
+    is drawn (2026-09-11), so the page shows something deliberate instead of an
+    empty frame. Nothing else is on it -- no glow, no grid, no wordmark, because
+    there is no wordmark file and a wordmark set in the wrong face would be
+    worse than none.
+
+    The mark is not redrawn here. tools/build_favicon.py already holds the two
+    polygons and the #5B4FE6 -> #A93BF1 gradient as the single source of truth
+    for the brand mark, and this calls its renderer, so the hero cannot drift
+    from the favicon.
+
+    One file serves all three languages -- see build(): the hero is named for
+    the English slug because the picture is the same picture.
+    """
+    from PIL import Image
+    sys.path.insert(0, os.path.join(ROOT, "tools"))
+    import build_favicon as BF
+    W, H = 1672, 941
+    rows = BF.render(LOGO_BOX, pad=0.0, bg=None, ss=4)      # RGBA, transparent ground
+    mark = Image.frombytes("RGBA", (LOGO_BOX, LOGO_BOX), b"".join(rows))
+    # Centre the MARK, not its square: the outer polygon spans y 3.2..27.5 of a
+    # 32-unit box, so its centre sits above the square's own centre.
+    k = LOGO_BOX / 32.0
+    cx = (min(p[0] for p in BF.OUTER) + max(p[0] for p in BF.OUTER)) / 2.0
+    cy = (min(p[1] for p in BF.OUTER) + max(p[1] for p in BF.OUTER)) / 2.0
+    img = Image.new("RGB", (W, H), LOGO_BG)
+    img.paste(mark, (int(round(W / 2.0 - cx * k)), int(round(H / 2.0 - cy * k))), mark)
+    out = os.path.join(ROOT, "assets", "img", "hero-%s.webp" % en_slug)
+    img.save(out, "WEBP", quality=92, method=6)
+    print("logo hero  assets/img/hero-%s.webp  %dx%d  %d bytes  (mark %d tall, centred)"
+          % (en_slug, W, H, os.path.getsize(out),
+             round((max(p[1] for p in BF.OUTER) - min(p[1] for p in BF.OUTER)) * k)))
+
+
 # ------------------------------------------------------------------ verify
 
 def verify(slug):
@@ -355,10 +595,12 @@ def verify(slug):
     sys.path.insert(0, os.path.join(ROOT, "tools", "i18n", "pt-2026"))
     import verify_pt as VP, gate
     P, facts = [], []
-    rel = "articles/%s.html" % slug
+    meta, intro, sections = parse(slug)
+    lang, en_slug = language_of(meta, slug)
+    L = LANGS[lang]
+    rel = "%s/%s.html" % (L["out"], slug)
     raw = io.open(os.path.join(ROOT, rel), "rb").read()
     s = raw.decode("utf-8")
-    meta, intro, sections = parse(slug)
     if b"\r" in raw:
         P.append("CR bytes")
     bal = VP.Balance(); bal.feed(s); bal.close()
@@ -366,8 +608,9 @@ def verify(slug):
         P.append("unbalanced HTML: %s %s" % (bal.errors[:3], [t for t, _ in bal.stack][:4]))
     live = re.sub(r"<!--.*?-->", " ", s, flags=re.S)
     main = re.search(r'<main id="main" class="article">.*?</main>', live, re.S).group(0)
+    donor_slug = os.path.basename(L["donor"])[:-5]
     for bad, why in (("[[", "a source marker"), ("New terms", "the unpublished appendix"),
-                     ("Everyday phrase", "the unpublished appendix"), ("true-product-margin", "the donor")):
+                     ("Everyday phrase", "the unpublished appendix"), (donor_slug, "the donor")):
         if bad in live:
             P.append("%s survived into the page: %r" % (why, bad))
     # order of the standard regions, as every article has them
@@ -384,19 +627,30 @@ def verify(slug):
     if toc != ids:
         P.append("contents %s != sections %s" % (toc, ids))
     facts.append("contents: %d entries, each an h2 with its .num" % len(toc))
-    # callout labels: approved ones only (GLOSSARIO-PT's fixed-label table is the approved English set)
-    approved = set(gate.load_labels("pt")[0]) if isinstance(gate.load_labels("pt"), tuple) else set(gate.load_labels("pt"))
+    # Callout labels: approved ones only. Which COLUMN of the fixed-label table
+    # is the approved set depends on the language. An English page's labels are
+    # the table's English keys; a translated page's labels are its translations,
+    # so comparing a Spanish page against the English column would reject every
+    # label it has. English reads the Portuguese table because that table's
+    # English column is the corpus-wide approved English set.
+    exact, rules = gate.load_labels("pt" if lang == "en" else lang)
+    approved = set(exact) if lang == "en" else set(exact.values())
+    assert approved, ("no fixed-label table for %s: gate.load_labels found none, so this "
+                      "check would pass vacuously" % lang)
     labels = [html.unescape(x) for x in re.findall(r'<span class="fixbox-k">([^<]*)</span>', main)]
-    unknown = [l for l in labels if l not in approved]
+    unknown = [l for l in labels if l not in approved
+               and not any(r.match(l) for r, _ in rules)]
     if unknown:
         P.append("callout labels not in the approved set: %s" % unknown)
-    facts.append("callouts: %s (all approved labels)" % ", ".join(labels))
+    facts.append("callouts: %s (all approved %s labels, of %d in the table)"
+                 % (", ".join(labels), lang, len(approved)))
     # every figure in the source body is on the page, in order, and nothing else
     # in ORDER. Structural numbering is not a figure: the page's section numbers
     # (.num "01") and the source's "1." step markers (rendered as an <ol>).
-    body_src = intro + "\n".join("\n" + c for t, c in sections if not t.startswith("What's in this guide"))
+    body_src = intro + "\n".join("\n" + c for t, c in sections
+                                 if not any(t.startswith(x) for x in L["toc"]))
     body_src = re.sub(r"^\d+\. ", "", re.sub(r"\[\[FIGURE:.*?\]\]", "", body_src), flags=re.M)
-    src_nums = gate.nums(html.escape(body_src.replace(DISCLAIMER, "")))
+    src_nums = gate.nums(html.escape(body_src.replace(L["disclaimer"], "")))
     page_main = re.sub(r'<nav class="toc".*?</nav>|<span class="num">\d+</span>', " ", main, flags=re.S)
     page_nums = gate.nums(page_main)
     rail = re.search(r'<aside class="rail".*?</aside>', live, re.S).group(0)
@@ -417,13 +671,15 @@ def verify(slug):
                 miss.append(u)
             continue
         p = u.split("#")[0].split("?")[0]
-        f = os.path.normpath(os.path.join(ROOT, "articles", p)) if not p.startswith("/") else os.path.join(ROOT, p.lstrip("/"))
+        # a relative link resolves against the page's OWN directory, which is
+        # es/articulos or pt/artigos on a translated page
+        f = os.path.normpath(os.path.join(ROOT, L["out"], p)) if not p.startswith("/") else os.path.join(ROOT, p.lstrip("/"))
         if not os.path.isfile(f) and not os.path.isfile(os.path.join(ROOT, p.lstrip("/"), "index.html")):
             miss.append(u)
     if miss:
         P.append("links or files that resolve to nothing: %s" % sorted(set(miss))[:8])
     facts.append("every link and file on the page resolves")
-    hero = "assets/img/hero-%s.webp" % slug
+    hero = "assets/img/hero-%s.webp" % en_slug
     hb = io.open(os.path.join(ROOT, hero), "rb").read() if os.path.exists(os.path.join(ROOT, hero)) else b""
     if hb[:4] != b"RIFF" or hb[8:12] != b"WEBP":
         P.append("%s missing or not a WebP" % hero)
@@ -460,5 +716,9 @@ if __name__ == "__main__":
         raise SystemExit(1 if verify(slug) else 0)
     elif cmd == "placeholder":
         placeholder(slug)
+    elif cmd == "logohero":
+        logohero(slug)
     else:
-        raise SystemExit("usage: build_article.py build|verify <slug> [published YYYY-MM-DD]")
+        raise SystemExit("usage: build_article.py build|verify|placeholder|logohero <slug> "
+                         "[published YYYY-MM-DD]\n"
+                         "  logohero takes the ENGLISH slug: one hero serves all languages")
