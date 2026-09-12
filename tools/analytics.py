@@ -224,6 +224,16 @@ def check(tree):
     if not cjs:
         problems.append("js/consent.js is missing -- js/analytics.js loads it, so the "
                         "cookie banner would 404 on every page")
+    elif '"abc-' in cjs or "'.abc-" in cjs:
+        # The banner injects its CSS globally, so a class it shares with the
+        # site restyles the site. abc- is the homepage comparison block and it
+        # already owns abc-card, abc-bar, abc-title, abc-btn, abc-link and a
+        # dozen more; shipping the banner under that prefix on 2026-09-12 set
+        # the two homepage comparison cards to opacity 0 in production. The
+        # banner's own classes are all abconsent-.
+        problems.append("js/consent.js uses an abc- class or selector. That prefix "
+                        "belongs to the site's homepage block -- the banner's styles "
+                        "would silently restyle it. Use abconsent-.")
     elif "yh4nta35du" not in cjs:
         problems.append("js/consent.js no longer carries the Microsoft Clarity project "
                         "id yh4nta35du -- Clarity would silently stop recording")

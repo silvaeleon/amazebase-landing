@@ -22,10 +22,19 @@
    Consent is not forever. The stored answer carries the moment it was given
    and is treated as absent once it is older than 365 days.
 
-   STYLING
+   STYLING -- AND WHY EVERY CLASS IS abconsent-
    The styles are injected from here rather than added to css/, because the
-   178 pages do not all link the same stylesheets -- article pages skip
-   base.css. Every custom property is used with a literal fallback
+   pages do not all link the same stylesheets -- article pages skip base.css.
+
+   The prefix is NOT abc-. The site already owns that namespace for the
+   homepage comparison block, and it owns almost exactly the names a cookie
+   banner reaches for: abc-card, abc-bar, abc-title, abc-body, abc-btn,
+   abc-link, abc-row, abc-note, abc-opt, abc-primary, abc-secondary,
+   abc-spacer, abc-in, abc-on. Shipped with abc- on 2026-09-12 and the
+   injected `.abc-card{opacity:0}` turned the homepage's two comparison cards
+   invisible in production -- the styles are global the moment this file runs,
+   so a collision here silently breaks pages that have nothing to do with
+   consent. Check a new class against the live site before adding one. Every custom property is used with a literal fallback
    (var(--text, #EEF1F8)) so the banner looks native where the design tokens
    are loaded and correct where they are not. Injected <style> is allowed by
    the CSP because style-src carries 'unsafe-inline'; script-src does not,
@@ -169,55 +178,55 @@
   /* --------------------------------------------------------------- STYLES */
 
   var CSS =
-    '.abc-bar{position:fixed;left:0;right:0;bottom:0;z-index:var(--z-top,1000);' +
+    '.abconsent-bar{position:fixed;left:0;right:0;bottom:0;z-index:var(--z-top,1000);' +
       'display:flex;justify-content:center;padding:12px;pointer-events:none;}' +
-    '.abc-card{pointer-events:auto;width:min(100%,760px);box-sizing:border-box;' +
+    '.abconsent-card{pointer-events:auto;width:min(100%,760px);box-sizing:border-box;' +
       'background:var(--surface-solid,#0A1224);color:var(--text,#EEF1F8);' +
       'border:1px solid var(--line-strong,rgba(255,255,255,.14));' +
       'border-radius:var(--r-md,16px);box-shadow:var(--sh-2,0 18px 40px rgba(0,0,0,.42));' +
       'font-family:var(--font,"Inter",system-ui,sans-serif);font-size:var(--t-body,15px);' +
       'line-height:1.55;padding:20px 22px;' +
       'transform:translateY(12px);opacity:0;transition:transform .28s cubic-bezier(.22,.61,.36,1),opacity .28s cubic-bezier(.22,.61,.36,1);}' +
-    '.abc-card.abc-in{transform:none;opacity:1;}' +
-    '.abc-title{margin:0 0 6px;font-size:16px;font-weight:600;color:var(--text,#EEF1F8);}' +
-    '.abc-body{margin:0 0 16px;color:var(--text-2,#98A2B8);max-width:62ch;}' +
-    '.abc-body a{color:var(--violet-soft,#A971F7);}' +
-    '.abc-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}' +
-    '.abc-btn{font:inherit;font-weight:600;cursor:pointer;border-radius:var(--r-sm,12px);' +
+    '.abconsent-card.abconsent-in{transform:none;opacity:1;}' +
+    '.abconsent-title{margin:0 0 6px;font-size:16px;font-weight:600;color:var(--text,#EEF1F8);}' +
+    '.abconsent-body{margin:0 0 16px;color:var(--text-2,#98A2B8);max-width:62ch;}' +
+    '.abconsent-body a{color:var(--violet-soft,#A971F7);}' +
+    '.abconsent-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}' +
+    '.abconsent-btn{font:inherit;font-weight:600;cursor:pointer;border-radius:var(--r-sm,12px);' +
       'padding:10px 20px;border:1px solid transparent;transition:opacity .18s,border-color .18s;}' +
-    '.abc-btn:hover{opacity:.86;}' +
-    '.abc-primary{background:var(--violet,#8B3BF1);color:#fff;}' +
-    '.abc-secondary{background:transparent;color:var(--text,#EEF1F8);' +
+    '.abconsent-btn:hover{opacity:.86;}' +
+    '.abconsent-primary{background:var(--violet,#8B3BF1);color:#fff;}' +
+    '.abconsent-secondary{background:transparent;color:var(--text,#EEF1F8);' +
       'border-color:var(--line-strong,rgba(255,255,255,.14));}' +
-    '.abc-link{background:none;border:0;padding:10px 4px;font:inherit;cursor:pointer;' +
+    '.abconsent-link{background:none;border:0;padding:10px 4px;font:inherit;cursor:pointer;' +
       'color:var(--text-2,#98A2B8);text-decoration:underline;text-underline-offset:3px;}' +
-    '.abc-link:hover{color:var(--text,#EEF1F8);}' +
-    '.abc-spacer{flex:1 1 auto;}' +
-    '.abc-opts{margin:4px 0 16px;display:none;flex-direction:column;gap:12px;' +
+    '.abconsent-link:hover{color:var(--text,#EEF1F8);}' +
+    '.abconsent-spacer{flex:1 1 auto;}' +
+    '.abconsent-opts{margin:4px 0 16px;display:none;flex-direction:column;gap:12px;' +
       'border-top:1px solid var(--line,rgba(255,255,255,.07));padding-top:16px;}' +
-    '.abc-opts.abc-on{display:flex;}' +
-    '.abc-opt{display:flex;gap:12px;align-items:flex-start;}' +
-    '.abc-opt input{margin:3px 0 0;width:18px;height:18px;flex:none;' +
+    '.abconsent-opts.abconsent-on{display:flex;}' +
+    '.abconsent-opt{display:flex;gap:12px;align-items:flex-start;}' +
+    '.abconsent-opt input{margin:3px 0 0;width:18px;height:18px;flex:none;' +
       'accent-color:var(--violet,#8B3BF1);cursor:pointer;}' +
-    '.abc-opt label{cursor:pointer;}' +
-    '.abc-opt b{display:block;font-weight:600;color:var(--text,#EEF1F8);}' +
-    '.abc-opt span{color:var(--text-2,#98A2B8);font-size:var(--t-micro,13px);}' +
-    '.abc-note{color:var(--text-3,#616C84);font-size:var(--t-micro,13px);margin:12px 0 0;}' +
-    '.abc-card :focus-visible{outline:2px solid var(--violet-soft,#A971F7);outline-offset:3px;}' +
+    '.abconsent-opt label{cursor:pointer;}' +
+    '.abconsent-opt b{display:block;font-weight:600;color:var(--text,#EEF1F8);}' +
+    '.abconsent-opt span{color:var(--text-2,#98A2B8);font-size:var(--t-micro,13px);}' +
+    '.abconsent-note{color:var(--text-3,#616C84);font-size:var(--t-micro,13px);margin:12px 0 0;}' +
+    '.abconsent-card :focus-visible{outline:2px solid var(--violet-soft,#A971F7);outline-offset:3px;}' +
     '@media (max-width:520px){' +
-      '.abc-card{padding:18px;}' +
-      '.abc-row{flex-direction:column;align-items:stretch;}' +
-      '.abc-spacer{display:none;}' +
-      '.abc-btn,.abc-link{width:100%;}' +
+      '.abconsent-card{padding:18px;}' +
+      '.abconsent-row{flex-direction:column;align-items:stretch;}' +
+      '.abconsent-spacer{display:none;}' +
+      '.abconsent-btn,.abconsent-link{width:100%;}' +
     '}' +
     '@media (prefers-reduced-motion:reduce){' +
-      '.abc-card{transition:none;transform:none;opacity:1;}' +
+      '.abconsent-card{transition:none;transform:none;opacity:1;}' +
     '}';
 
   function injectStyles() {
-    if (document.getElementById("abc-style")) return;
+    if (document.getElementById("abconsent-style")) return;
     var s = document.createElement("style");
-    s.id = "abc-style";
+    s.id = "abconsent-style";
     s.textContent = CSS;
     document.head.appendChild(s);
   }
@@ -237,20 +246,20 @@
     injectStyles();
 
     bar = document.createElement("div");
-    bar.className = "abc-bar";
+    bar.className = "abconsent-bar";
 
     var card = document.createElement("div");
-    card.className = "abc-card";
+    card.className = "abconsent-card";
     card.setAttribute("role", "dialog");
     card.setAttribute("aria-live", "polite");
     card.setAttribute("aria-label", t.title);
 
     var h = document.createElement("p");
-    h.className = "abc-title";
+    h.className = "abconsent-title";
     h.textContent = t.title;
 
     var p = document.createElement("p");
-    p.className = "abc-body";
+    p.className = "abconsent-body";
     p.textContent = t.body + " ";
     var a = document.createElement("a");
     a.href = t.privacyHref;
@@ -259,11 +268,11 @@
 
     /* -- the granular pair, hidden until asked for ------------------------ */
     var opts = document.createElement("div");
-    opts.className = "abc-opts";
+    opts.className = "abconsent-opts";
 
     function optRow(id, labelText, helpText, checked) {
       var row = document.createElement("div");
-      row.className = "abc-opt";
+      row.className = "abconsent-opt";
       var box = document.createElement("input");
       box.type = "checkbox";
       box.id = id;
@@ -283,36 +292,36 @@
     }
 
     var prev = existing || { analytics: false, ads: false };
-    var boxA = optRow("abc-analytics", t.analyticsLabel, t.analyticsHelp, prev.analytics);
-    var boxD = optRow("abc-ads", t.adsLabel, t.adsHelp, prev.ads);
+    var boxA = optRow("abconsent-analytics", t.analyticsLabel, t.analyticsHelp, prev.analytics);
+    var boxD = optRow("abconsent-ads", t.adsLabel, t.adsHelp, prev.ads);
 
     /* -- buttons ---------------------------------------------------------- */
     var row = document.createElement("div");
-    row.className = "abc-row";
+    row.className = "abconsent-row";
 
     var accept = document.createElement("button");
     accept.type = "button";
-    accept.className = "abc-btn abc-primary";
+    accept.className = "abconsent-btn abconsent-primary";
     accept.textContent = t.accept;
 
     var reject = document.createElement("button");
     reject.type = "button";
-    reject.className = "abc-btn abc-secondary";
+    reject.className = "abconsent-btn abconsent-secondary";
     reject.textContent = t.reject;
 
     var choose = document.createElement("button");
     choose.type = "button";
-    choose.className = "abc-link";
+    choose.className = "abconsent-link";
     choose.textContent = t.choose;
 
     var save = document.createElement("button");
     save.type = "button";
-    save.className = "abc-btn abc-primary";
+    save.className = "abconsent-btn abconsent-primary";
     save.textContent = t.save;
     save.hidden = true;
 
     var spacer = document.createElement("div");
-    spacer.className = "abc-spacer";
+    spacer.className = "abconsent-spacer";
 
     row.appendChild(accept);
     row.appendChild(reject);
@@ -321,7 +330,7 @@
     row.appendChild(save);
 
     var note = document.createElement("p");
-    note.className = "abc-note";
+    note.className = "abconsent-note";
     note.textContent = t.region;
 
     card.appendChild(h);
@@ -332,7 +341,7 @@
     bar.appendChild(card);
     document.body.appendChild(bar);
 
-    requestAnimationFrame(function () { card.classList.add("abc-in"); });
+    requestAnimationFrame(function () { card.classList.add("abconsent-in"); });
 
     function decide(analytics, ads) {
       write(analytics, ads);
@@ -345,7 +354,7 @@
     save.addEventListener("click", function () { decide(boxA.checked, boxD.checked); });
 
     choose.addEventListener("click", function () {
-      opts.classList.add("abc-on");
+      opts.classList.add("abconsent-on");
       choose.hidden = true;
       accept.hidden = true;
       reject.hidden = true;
