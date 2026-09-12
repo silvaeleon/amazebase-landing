@@ -329,7 +329,7 @@ para Ana                = $30,000 / ~$12,000
     <span class="rail-v is-violet">Piso de efectivo</span>
     <p>El saldo por debajo del cual no vas a bajar. Def&iacute;nelo antes de necesitarlo, no durante el mes en que lo necesitas.</p>
   </div>
-  <p class="rail-src">Cifras del ejemplo trabajado de este art&iacute;culo, no de un estudio de mercado.</p>
+  <p class="rail-src">Cifras del propio ejemplo trabajado de este art&iacute;culo, no de un estudio de mercado.</p>
 </aside>
 
 </div><!-- /.shell -->

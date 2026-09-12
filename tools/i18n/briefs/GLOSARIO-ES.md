@@ -241,6 +241,13 @@ it needs a decision.
 | Profit & Finances | Utilidad y finanzas | measured 2026-09-11 — 6 eyebrows |
 | Tools & Tutorials | Herramientas y tutoriales | measured 2026-09-11 — 1 eyebrow |
 | Podcast episode | Episodio de podcast · audio en inglés | measured 2026-09-11 — 3 uses; the three podcast pages play the English audio and the player says so (Leon, 2026-09-11) |
+| The risk | El riesgo | measured 2026-09-12 by Leon's reviewer — all 52 shipped Spanish pages aligned positionally against their English twins (zero length mismatches); 1 use, 1/1 paired. Chrome, not prose: GLOSSARIO-PT §6 carries `The risk | O risco`. Flagged as unrecorded by four separate translators before this row existed. |
+| The limit | El límite | measured 2026-09-12 by Leon's reviewer — all 52 shipped Spanish pages aligned positionally against their English twins (zero length mismatches); 2 uses, 2/2 paired (`el-ppc-es-asignacion-de-capital`, `la-trampa-del-roas-mas-alto`). PT has `The limit | O limite`. |
+| Why | Por qué | measured 2026-09-12 by Leon's reviewer — all 52 shipped Spanish pages aligned positionally against their English twins (zero length mismatches); 3 uses, 3/3 paired. PT has `Why | O porquê`. |
+| The real issue | El problema de fondo | measured 2026-09-12 by Leon's reviewer — all 52 shipped Spanish pages aligned positionally against their English twins (zero length mismatches); 1 use, 1/1 paired (`deja-de-optimizar-el-acos`). PT has `The real issue | O verdadeiro problema`. |
+| The confusion | La confusión | measured 2026-09-12 — 2 uses, both in `span.rail-k`, not `span.fixbox-k`, which is why a fixbox-only search reported zero. Pairs 2/2 with the two English pages carrying `The confusion` in the same element (`growth-is-cash-flow`, `stopping-too-soon`). PT has `The confusion | A confusão`. |
+| Ask these instead | Pregunta esto en su lugar | measured 2026-09-12 — 3 uses, in `span.label`, not `span.fixbox-k` (same hiding place as The confusion). Pairs 2/2 with the English pages carrying `Ask these instead` (`highest-roas-trap`, `stop-optimizing-acos`). Not a calque of the approved Portuguese `Pergunte assim`: each language keeps its own measured form. |
+| The trade | La concesión | RULED 2026-09-12, not measured to a winner — the corpus is a dead tie, `La concesión` (`atribucion-vs-incrementalidad`) against `El intercambio` (`el-costo-de-oportunidad-que-todo-vendedor-ignora`), one use each. Settled on `La concesión` for the reason GLOSSARIO-PT §6 already recorded against this label: every English use means *what you give up*, which is why PT rejected *A troca*. `El intercambio` is that same swap reading. **Open task: change the label in `el-costo-de-oportunidad-que-todo-vendedor-ignora` so the corpus matches this table.** |
 | `re:^Step (\d+)$` | `Paso \1` | §4 |
 | `re:^(\d+) min read$` | `\1 min de lectura` | §4 |
 | `re:^What’s in this guide$` | `Qué encontrarás en esta guía` | §4 |
@@ -248,6 +255,8 @@ it needs a decision.
 | `re:^Final thoughts$` | `Para cerrar` | §4 |
 | `re:^Frequently asked$` | `Preguntas frecuentes` | §4 |
 | `re:^Figures from this article’s worked examples, not an industry survey\.$` | `Cifras de los ejemplos trabajados de este artículo, no de un estudio de mercado.` | §4 |
+| `re:^Figures from this article’s own worked example, not an industry survey\.$` | `Cifras del propio ejemplo trabajado de este artículo, no de un estudio de mercado.` | measured 2026-09-12 — the SINGULAR variant, used by 7 shipped English articles when the article has exactly one `[[Worked example]]`. Portuguese already had this rule; Spanish did not, and the seven Spanish twins carry five different renderings of it. This is the plurality form (2 of 7) and the one whose tail matches the plural rule above. The other four are drift and should be corrected to this. |
+| `re:^Examples from this article, not an industry survey\.$` | `Ejemplos de este artículo, no de un estudio de mercado.` | measured 2026-09-12 — the third English variant, 2 shipped articles (`campaign-cannibalisation`, `wrong-kpi`); both Spanish twins agree, 2/2. Portuguese already had this rule. |
 <!-- FIXED-LABELS:END -->
 
 ### Not in this table on purpose
