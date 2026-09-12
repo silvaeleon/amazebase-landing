@@ -233,7 +233,7 @@ it needs a decision.
 | The consequence | La consecuencia | measured 2026-09-11 — 3 uses |
 | The problem | El problema | measured 2026-09-11 — 3 uses |
 | The through-line | El hilo conductor | measured 2026-09-11 — 3 uses |
-| Worked example | Ejemplo trabajado | **measured 2026-09-11 — 1 use**, the rail of `punto-de-reorden.html`, whose English (`reorder-point`) has "Worked example" in the same slot. Re-measured 2026-09-11 after a first pass recorded "zero precedent": there is one. **Open for Leon:** *Ejemplo práctico* was proposed instead, and matches Portuguese *Exemplo prático* (PT §6). Switching means changing this row and the two pages that carry the label. |
+| Worked example | Ejemplo práctico | **Leon, 2026-09-12**, over the one form the corpus already had. The measurement stands and is worth keeping: on 2026-09-11 the only Spanish use was *Ejemplo trabajado*, in the rail of `punto-de-reorden.html`, whose English (`reorder-point`) has "Worked example" in the same slot. Leon chose *Ejemplo práctico* anyway, which is the better Spanish and matches Portuguese *Exemplo prático* (PT §6). Both pages that carried the old form were changed at their source and rebuilt — the rail of `punto-de-reorden.html` and the callout of `cuantos-datos-antes-de-cambiar-campana.html` — so no use of *Ejemplo trabajado* is left on the site. |
 | PPC & Advertising | Publicidad y PPC | measured 2026-09-11 — 12 eyebrows; matches label_es in data/resources.json |
 | Product Research | Investigación de productos | measured 2026-09-11 — 11 eyebrows |
 | Growth Playbook | Manual de crecimiento | measured 2026-09-11 — 9 eyebrows |

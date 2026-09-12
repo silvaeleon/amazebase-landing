@@ -274,7 +274,7 @@ BODY = u'''<div class="wrap">
 <aside class="rail" aria-label="Cifras clave de este art&iacute;culo">
 
   <div class="rail-card">
-    <span class="rail-k">Ejemplo trabajado</span>
+    <span class="rail-k">Ejemplo práctico</span>
     <span class="rail-v">3,160</span>
     <p>Unidades. El punto de reorden de un producto que vende 40 al d&iacute;a, con 69 d&iacute;as de reposici&oacute;n y 400 unidades de stock de seguridad.</p>
   </div>
