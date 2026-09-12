@@ -42,7 +42,8 @@ THE SOURCE FORMAT
   "| a | b |" markdown table              .tblwrap > table
   [[FIGURE: alt]]                         a figure SLOT, commented out like the
                                           hero slots, carrying that alt
-  ## Frequently asked + "**Q**" / answer  .faq > details > summary
+  ## Frequently asked + "**Q**" / answer  .faq > details > summary; an answer
+                                          may run to more than one paragraph
   ## Final thoughts                       section.sec, the closing section
   the figures-disclaimer sentence         the rail's p.rail-src
   ## New terms                            NOT PUBLISHED: a working appendix; it
@@ -313,12 +314,25 @@ def build_main(meta, intro, sections, lang, en_slug):
     if faq:
         out.append('  <h2 id="faq">%s</h2>' % inline(faq[0]))
         out.append('  <div class="faq">')
+        # An answer may run to more than one paragraph. The threshold question
+        # is the first that does: it gives the calculation, then says why the
+        # 10% cutoff is a convention rather than a rule of the platform. A
+        # block that does not open with **a question** continues the answer
+        # above it; a block before the first question is still refused.
+        entries = []
         for b in blocks(faq[1]):
             lines = b.splitlines()
             q = re.fullmatch(r"\*\*(.+)\*\*", lines[0])
-            assert q and len(lines) >= 2, "FAQ entry needs **question** then an answer: %r" % b[:60]
-            out += ["    <details>", "      <summary>%s</summary>" % inline(q.group(1)),
-                    "      <p>%s</p>" % inline(" ".join(lines[1:])), "    </details>"]
+            if q:
+                assert len(lines) >= 2, "FAQ entry needs **question** then an answer: %r" % b[:60]
+                entries.append((q.group(1), [" ".join(lines[1:])]))
+            else:
+                assert entries, "FAQ entry needs **question** then an answer: %r" % b[:60]
+                entries[-1][1].append(" ".join(lines))
+        for q, paras in entries:
+            out += ["    <details>", "      <summary>%s</summary>" % inline(q)]
+            out += ["      <p>%s</p>" % inline(p) for p in paras]
+            out.append("    </details>")
         out.append("  </div>")
     disclaimer = None
     if final:
@@ -333,10 +347,20 @@ def build_main(meta, intro, sections, lang, en_slug):
     return "\n".join(out), state["labels"], disclaimer
 
 
-def build_rail(slug, disclaimer, lang):
+def build_rail(slug, disclaimer, lang, body=None):
     rail = json.load(io.open(os.path.join(SRC, slug + ".rail.json"), encoding="utf-8"))
     out = ['<aside class="rail" aria-label="Key figures from this article">']
     for c in rail["cards"]:
+        # A card quotes the article; it does not paraphrase it. verify() checks
+        # that the rail's NUMBERS are in the article, which is not enough: when
+        # the ad-conversion-rate correction landed (2026-09-12), the middle card
+        # of all three languages still read "your conversion rate" while the
+        # callout it quotes had become "your AD conversion rate". The number 22
+        # was still right, so nothing caught it. The sentence must be there.
+        assert body is None or c["p"] in body, (
+            "rail card %r quotes a sentence the article does not contain:\n  %r\n"
+            "Rail cards quote the body verbatim -- fix the card, or the source it "
+            "quotes, so the two agree." % (c["k"], c["p"]))
         cls = "rail-v" + (" is-%s" % c["tone"] if c.get("tone") else "")
         out += ['  <div class="rail-card">', '    <span class="rail-k">%s</span>' % inline(c["k"]),
                 '    <span class="%s">%s</span>' % (cls, inline(c["v"])), "    <p>%s</p>" % inline(c["p"]), "  </div>"]
@@ -428,7 +452,8 @@ def build(slug, published):
     lang, en_slug = language_of(meta, slug)
     L = LANGS[lang]
     main, labels, disclaimer = build_main(meta, intro, sections, lang, en_slug)
-    rail = build_rail(slug, disclaimer, lang)
+    src = io.open(os.path.join(SRC, slug + ".md"), encoding="utf-8", newline="").read()
+    rail = build_rail(slug, disclaimer, lang, src.split("\n## New terms", 1)[0])
     y, m, d = (int(x) for x in published.split("-"))
     s = io.open(os.path.join(ROOT, L["donor"]), encoding="utf-8", newline="").read()
     assert "\r" not in s
