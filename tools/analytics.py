@@ -199,11 +199,30 @@ class Tree:
         self.files = set(ls.split("\n")) - {""}
 
     def read(self, rel):
+        """File content with CRLF folded to LF.
+
+        Line endings are a property of the checkout, not of the content. git
+        stores LF; a clone on a machine with core.autocrlf=true writes CRLF to
+        disk. Without this fold the two halves of this class disagreed: the
+        git-ref half read LF from the object store, the working-tree half read
+        whatever the checkout happened to have. Every assertion below is
+        written against \\n -- the byte-for-byte compare with INIT_JS, the tag
+        patterns, the CSP parse -- so on such a clone all 180 pages and
+        js/analytics.js failed at once, in the one shape that looks like
+        catastrophe and is actually nothing (2026-09-12).
+
+        A check that passes here and fails on a colleague's laptop teaches
+        people to ignore it, which is worse than not having it.
+        """
         if self.ref:
             r = subprocess.run(["git", "-C", ROOT, "show", "%s:%s" % (self.ref, rel)], capture_output=True)
-            return r.stdout.decode("utf-8") if r.returncode == 0 else None
+            if r.returncode != 0:
+                return None
+            return r.stdout.decode("utf-8").replace("\r\n", "\n")
         p = os.path.join(ROOT, rel)
-        return io.open(p, encoding="utf-8", newline="").read() if os.path.exists(p) else None
+        if not os.path.exists(p):
+            return None
+        return io.open(p, encoding="utf-8", newline="").read().replace("\r\n", "\n")
 
     def pages(self):
         """Live pages that must carry the tag.
