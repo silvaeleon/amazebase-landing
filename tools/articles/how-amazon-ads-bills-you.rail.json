@@ -1,0 +1,13 @@
+{
+ "_note": "Drafted 2026-09-12 for Leon's review: every number and every sentence below is taken verbatim from tools/articles/how-amazon-ads-bills-you.md, quoting the same four places as its two twins, and only the short 'k' labels are new.",
+ "cards": [
+  {"k": "What triggers a charge", "v": "Amount or date",
+   "p": "Two things trigger a charge: reaching a spending amount your account has been assigned, or reaching a recurring date. Whichever comes first is when you are billed."},
+  {"k": "Two different clocks", "v": "Reported vs settled",
+   "p": "Campaign Manager reports spend by the day the click happened. Your invoice and your payout record money actually settled, which happens later, in blocks, on the trigger described earlier."},
+  {"k": "The payout's own row", "v": "Cost of Advertising", "tone": "amber",
+   "p": "In Seller Central, open Payments and generate a Date Range Report: rows described as Cost of Advertising are amounts settled in that window, not spend incurred in it."},
+  {"k": "Charged above your bid", "v": "$1.10 vs $0.90", "tone": "violet",
+   "p": "The second campaign charged $1.10 against a $0.90 bid, and nothing was overcharged: the placement adjustment raised the maximum to $1.35, and the auction settled below it."}
+ ]
+}

@@ -1,0 +1,13 @@
+{
+ "_note": "Drafted 2026-09-12 for Leon's review: every number and every sentence below is taken verbatim from tools/articles/cuando-te-cobra-amazon-la-publicidad.md, quoting the same four places as its two twins, and only the short 'k' labels are new.",
+ "cards": [
+  {"k": "Qué dispara un cargo", "v": "Monto o fecha",
+   "p": "Dos cosas disparan un cargo: llegar a un monto de gasto que tu cuenta tiene asignado, o llegar a una fecha recurrente. Lo que ocurra primero es cuando se te cobra."},
+  {"k": "Dos relojes distintos", "v": "Reportado vs liquidado",
+   "p": "Campaign Manager reporta la inversión según el día en que ocurrió el clic. Tu factura y tu pago registran dinero efectivamente liquidado, lo que sucede después, en bloques, con el disparador descrito antes."},
+  {"k": "La fila del pago", "v": "Cost of Advertising", "tone": "amber",
+   "p": "En Seller Central, abre Payments y genera un Date Range Report: las filas descritas como Cost of Advertising son montos liquidados en esa ventana, no inversión incurrida en ella."},
+  {"k": "Por encima de tu puja", "v": "$1.10 vs $0.90", "tone": "violet",
+   "p": "A la segunda campaña se le cobró $1.10 contra una puja de $0.90, y no hubo ningún cobro de más: el ajuste de ubicación subió el máximo a $1.35, y la subasta se resolvió por debajo."}
+ ]
+}

@@ -1,0 +1,13 @@
+{
+ "_note": "Drafted 2026-09-12 for Leon's review: every number and every sentence below is taken verbatim from tools/articles/quando-a-amazon-cobra-pela-publicidade.md, quoting the same four places as its two twins, and only the short 'k' labels are new.",
+ "cards": [
+  {"k": "O que dispara uma cobrança", "v": "Valor ou data",
+   "p": "Duas coisas disparam uma cobrança: chegar a um valor de gasto que a sua conta recebeu, ou chegar a uma data recorrente. O que vier primeiro é quando você é cobrado."},
+  {"k": "Dois relógios diferentes", "v": "Reportado vs liquidado",
+   "p": "O Campaign Manager reporta o gasto pelo dia em que o clique aconteceu. A sua fatura e o seu repasse registram dinheiro efetivamente liquidado, o que acontece depois, em blocos, pelo disparo descrito antes."},
+  {"k": "A linha do repasse", "v": "Cost of Advertising", "tone": "amber",
+   "p": "No Seller Central, abra Payments e gere um Date Range Report: as linhas descritas como Cost of Advertising são valores liquidados naquela janela, não gasto incorrido nela."},
+  {"k": "Cobrado acima do seu lance", "v": "$1.10 vs $0.90", "tone": "violet",
+   "p": "A segunda campanha cobrou $1.10 contra um lance de $0.90, e nada foi cobrado a mais: o ajuste de posicionamento levantou o máximo para $1.35, e o leilão se resolveu abaixo dele."}
+ ]
+}

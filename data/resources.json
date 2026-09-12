@@ -191,6 +191,29 @@
   ],
   "resources": [
     {
+      "id": "how-amazon-ads-bills-you",
+      "title": "How and When Does Amazon Charge You for Advertising?",
+      "summary": "What triggers an advertising charge, why reported spend keeps moving, and why the console never matches the payout.",
+      "category": "ppc",
+      "categories": [
+        "ppc",
+        "profit"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 7,
+      "url": "articles/how-amazon-ads-bills-you.html",
+      "topics": [
+        "Campaign Strategy",
+        "Cash Flow",
+        "Decision Making",
+        "Data Quality"
+      ]
+    },
+    {
       "id": "acos-tacos-and-your-margin",
       "title": "What ACOS Should You Be Aiming For?",
       "summary": "There is no universal ACOS target. Calculate your own break-even ACOS from your fees and costs, then use TACOS to see real progress.",
@@ -1651,6 +1674,30 @@
       ],
       "level": "expert",
       "language": "en"
+    },
+    {
+      "id": "how-amazon-ads-bills-you-es",
+      "title": "¿Cómo y cuándo te cobra Amazon la publicidad?",
+      "summary": "Qué dispara un cargo de publicidad, por qué la inversión reportada sigue moviéndose, y por qué la consola nunca cuadra con el pago.",
+      "category": "ppc",
+      "categories": [
+        "ppc",
+        "profit"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "es",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 7,
+      "url": "es/articulos/cuando-te-cobra-amazon-la-publicidad.html",
+      "topics": [
+        "Estrategia de campañas",
+        "Flujo de caja",
+        "Toma de decisiones",
+        "Data Quality"
+      ],
+      "translationOf": "how-amazon-ads-bills-you"
     },
     {
       "id": "acos-tacos-and-your-margin-es",
@@ -3174,6 +3221,30 @@
         "Lanzamiento de producto"
       ],
       "translationOf": "how-much-data-before-changing-a-campaign"
+    },
+    {
+      "id": "how-amazon-ads-bills-you-pt",
+      "title": "Como e quando a Amazon cobra pela publicidade?",
+      "summary": "O que dispara uma cobrança de publicidade, por que o gasto reportado fica mudando, e por que o console nunca bate com o repasse.",
+      "category": "ppc",
+      "categories": [
+        "ppc",
+        "profit"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "pt",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 7,
+      "url": "pt/artigos/quando-a-amazon-cobra-pela-publicidade.html",
+      "topics": [
+        "Estratégia de campanhas",
+        "Fluxo de caixa",
+        "Tomada de decisão",
+        "Qualidade dos dados"
+      ],
+      "translationOf": "how-amazon-ads-bills-you"
     },
     {
       "id": "acos-tacos-and-your-margin-pt",

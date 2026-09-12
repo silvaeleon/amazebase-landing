@@ -34,7 +34,7 @@ tree before the fix, it reports those 12 rows.
     python tools/i18n/hubrows.py . --check
 """
 
-import copy, io, json, os, sys
+import copy, io, json, os, re, sys
 
 # The only fields a translation may change. Measured 2026-09-10 across all 51
 # Spanish rows -- see the module docstring before adding anything here.
@@ -122,6 +122,56 @@ def check(data):
     return checked, problems
 
 
+def hubs(root, data):
+    """Every language's hub page lists exactly that language's rows.
+
+    THE BUG THIS EXISTS TO PREVENT
+    ------------------------------
+    A hub carries the corpus TWICE outside hub.js: the no-JS card list between
+    the SEO:HUB-FALLBACK markers, and the CollectionPage `hasPart` in the
+    JSON-LD. Both are generated -- but seo.py regenerates only the ENGLISH hub,
+    and each translated hub has its own generator that has to be run by hand.
+    So three batches running shipped with the Spanish and Portuguese hubs a
+    release behind the data: 51 against 52, then 52 against 61, then 61 against
+    62. A reader with JavaScript saw the new articles because hub.js builds the
+    list from resources.json; a crawler, and a reader without JavaScript, saw
+    the stale one.
+
+    It kept coming back because nothing caught it. verify_top_pt.py checks the
+    Portuguese hub and no equivalent exists for Spanish, so the Spanish hub was
+    unchecked in every batch. This compares both lists, in every language, to
+    the rows in data/resources.json -- the file all three are generated from.
+    """
+    cfg = json.load(io.open(os.path.join(root, "tools", "i18n", "languages.json"), encoding="utf-8"))
+    site = cfg["site"].rstrip("/") + "/"
+    problems, checked = [], 0
+    for lang in cfg["languages"]:
+        code, rel = lang["code"], lang["top"]["resources"]
+        p = os.path.join(root, rel.replace("/", os.sep))
+        if not os.path.exists(p):
+            problems.append("%s: %s does not exist" % (code, rel))
+            continue
+        want = sorted(r["url"].lstrip("/") for r in data["resources"] if r.get("language") == code)
+        s = io.open(p, encoding="utf-8").read()
+        cards = sorted(h.lstrip("/") for h in re.findall(r'<a class="hub-row" href="([^"]+)"', s))
+        m = re.search(r'<script type="application/ld\+json">(.*?)</script>', s, re.S)
+        cp = [n for n in json.loads(m.group(1))["@graph"]
+              if n.get("@type") == "CollectionPage"] if m else []
+        parts = sorted(x["url"].split(site, 1)[-1] for x in cp[0].get("hasPart", [])) if cp else None
+        checked += 1
+        for what, have in (("no-JS card list", cards), ("CollectionPage hasPart", parts)):
+            if have is None:
+                problems.append("%s (%s): no CollectionPage in the JSON-LD" % (rel, code))
+            elif have != want:
+                miss, extra = sorted(set(want) - set(have)), sorted(set(have) - set(want))
+                problems.append(
+                    "%s (%s): the %s has %d entries, data/resources.json has %d %s rows.%s%s"
+                    % (rel, code, what, len(have), len(want), code,
+                       "\n      missing: %s" % ", ".join(miss[:4]) if miss else "",
+                       "\n      not in the data: %s" % ", ".join(extra[:4]) if extra else ""))
+    return checked, problems
+
+
 if __name__ == "__main__":
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     if not args or "--check" not in sys.argv:
@@ -132,9 +182,13 @@ if __name__ == "__main__":
     n = len(data["resources"])
     print("%d entries, %d English, %d translations checked against their English source"
           % (n, sum(1 for r in data["resources"] if r.get("language") == SOURCE_LANG), checked))
+    n_hubs, hub_problems = hubs(args[0], data)
+    problems += hub_problems
+    print("%d hub pages checked against the rows they are generated from" % n_hubs)
     if problems:
         print("\nCHECK FAILED: %d problems" % len(problems))
         for p in problems:
             print("  " + p)
         raise SystemExit(1)
-    print("\nCHECK PASSED: every translated row carries its English source's taxonomy exactly.")
+    print("\nCHECK PASSED: every translated row carries its English source's taxonomy exactly,\n"
+          "and every language's hub lists exactly that language's rows.")
