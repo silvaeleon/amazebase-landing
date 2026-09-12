@@ -74,7 +74,7 @@ Do not use unit session percentage from Seller Central Business Reports for this
 
 Take the rate at account or campaign level, not from the keyword you are about to judge. A single keyword does not have enough clicks to produce a reliable rate, which is the reason you are reading this guide. The rate comes from the larger pool of clicks; the threshold then gets applied to the individual keyword.
 
-One caution about the date range. Ad-attributed orders are counted after the click, so the most recent days in any window are still filling in. End your date range about a week before today, or the rate you calculate will come out too low.
+One caution about the date range. Ad-attributed orders are [[SEE: how-amazon-ads-bills-you | counted after the click]], so the most recent days in any window are still filling in. End your date range about a week before today, or the rate you calculate will come out too low.
 
 If the ASIN has no advertising history at all, you have no measured rate. Use 10% as a planning assumption, take the 22-click row, and replace it with a measured figure once the campaign has a few hundred clicks behind it.
 
@@ -110,7 +110,7 @@ Two things follow from this arithmetic, and both are more useful than any biddin
 
 The first is that fewer keywords per campaign produce usable data faster. The same $12.00 spread across 4 keywords gives each one 5 clicks per day and a decision in 5 days instead of 11. You are not buying more data by narrowing the campaign; you are concentrating it where you can read it.
 
-The second is that cutting your budget when results look bad makes the problem worse. A smaller budget buys fewer clicks, which means a longer wait before you know anything, during which you keep spending.
+The second is that [[SEE: daily-budget-runs-out-by-midday | cutting your budget when results look bad]] makes the problem worse. A smaller budget buys fewer clicks, which means a longer wait before you know anything, during which you keep spending.
 
 ## What should you do while you wait?
 
@@ -123,7 +123,7 @@ Waiting does not mean doing nothing. It means not changing the thing you are mea
 4. Work on the parts of the listing that do not disturb the measurement: supplier questions, images awaiting replacement, stock planning.
 5. Record every change you do make, with the date. A change you cannot date is a change you cannot evaluate.
 
-There is one exception to leaving campaigns alone. If a keyword has no impressions at all, waiting will not help, because no data is being collected in the first place. Impressions are the number of times your ad was displayed, and zero impressions is a different problem with different causes.
+There is one exception to leaving campaigns alone. If a keyword has no impressions at all, waiting will not help, because no data is being collected in the first place. Impressions are the number of times your ad was displayed, and zero impressions is [[SEE: not-showing-not-indexed-not-selling | a different problem with different causes]].
 
 ## Frequently asked
 
@@ -131,10 +131,10 @@ There is one exception to leaving campaigns alone. If a keyword has no impressio
 Use clicks. Spend is a poor substitute because it mixes two different things: how many chances a keyword had to convert, and what each chance cost. A keyword that has spent $40.00 at a $4.00 CPC has had 10 chances, not 40.
 
 **What if a keyword has clicks and sales, but a bad ACOS?**
-That is a different decision and the threshold does not apply in the same way. Once a keyword has produced sales you are no longer asking whether it can convert; you are asking whether it converts profitably, which is a question about your margin.
+That is a different decision and the threshold does not apply in the same way. Once a keyword has produced sales you are no longer asking whether it can convert; you are asking whether it converts profitably, which is [[SEE: acos-tacos-and-your-margin | a question about your margin]].
 
 **Should I use 22 clicks for negative keywords too?**
-The same evidence standard applies, with one addition: relevance. A search term that is clearly unrelated to your product can be excluded immediately, because you are not making a statistical judgement, you are making a relevance judgement.
+The same evidence standard applies, with one addition: relevance. A search term that is clearly unrelated to your product can be excluded immediately, because you are not making a statistical judgement, you are making [[SEE: when-to-negate-a-keyword | a relevance judgement]].
 
 **My product converts at 25%. Can I decide faster?**
 Yes. Higher ad conversion rates need fewer clicks, because a run of zeros becomes unlikely sooner. Extend the table using the same standard and you will find 25% needs 9 clicks.

@@ -75,7 +75,7 @@ No uses unit session percentage de Business Reports de Seller Central para esto.
 
 Toma la tasa a nivel de cuenta o de campaña, no de la palabra clave que estás a punto de juzgar. Una sola palabra clave no tiene suficientes clics para producir una tasa confiable, que es justamente la razón por la que estás leyendo esta guía. La tasa sale del conjunto más grande de clics; el umbral se aplica después a la palabra clave individual.
 
-Una advertencia sobre el rango de fechas. Los pedidos atribuidos al anuncio se cuentan después del clic, así que los días más recientes de cualquier ventana todavía se están completando. Termina tu rango de fechas más o menos una semana antes de hoy, o la tasa que calcules va a salir demasiado baja.
+Una advertencia sobre el rango de fechas. Los pedidos atribuidos al anuncio [[SEE: how-amazon-ads-bills-you | se cuentan después del clic]], así que los días más recientes de cualquier ventana todavía se están completando. Termina tu rango de fechas más o menos una semana antes de hoy, o la tasa que calcules va a salir demasiado baja.
 
 Si el ASIN no tiene ningún historial de publicidad, no tienes una tasa medida. Usa el 10% como supuesto de planificación, toma la fila de 22 clics, y sustitúyelo por una cifra medida cuando la campaña tenga unos cuantos cientos de clics detrás.
 
@@ -111,7 +111,7 @@ De esta aritmética se siguen dos cosas, y ambas son más útiles que cualquier 
 
 La primera es que menos palabras clave por campaña producen datos utilizables más rápido. Los mismos $12.00 repartidos entre 4 palabras clave le dan a cada una 5 clics por día y una decisión en 5 días en lugar de 11. No estás comprando más datos al estrechar la campaña; los estás concentrando donde puedes leerlos.
 
-La segunda es que recortar el presupuesto cuando los resultados se ven mal empeora el problema. Un presupuesto más pequeño compra menos clics, lo que significa una espera más larga antes de saber algo, y mientras tanto sigues gastando.
+La segunda es que [[SEE: daily-budget-runs-out-by-midday | recortar el presupuesto cuando los resultados se ven mal]] empeora el problema. Un presupuesto más pequeño compra menos clics, lo que significa una espera más larga antes de saber algo, y mientras tanto sigues gastando.
 
 ## ¿Qué deberías hacer mientras esperas?
 
@@ -124,7 +124,7 @@ Esperar no significa no hacer nada. Significa no cambiar aquello que estás midi
 4. Trabaja en las partes del listing que no perturban la medición: preguntas al proveedor, imágenes pendientes de reemplazo, planificación de stock.
 5. Registra cada cambio que sí hagas, con la fecha. Un cambio que no puedes fechar es un cambio que no puedes evaluar.
 
-Hay una excepción a dejar las campañas en paz. Si una palabra clave no tiene ninguna impresión, esperar no ayudará, porque para empezar no se están recogiendo datos. Las impresiones son la cantidad de veces que se mostró tu anuncio, y cero impresiones es un problema distinto con causas distintas.
+Hay una excepción a dejar las campañas en paz. Si una palabra clave no tiene ninguna impresión, esperar no ayudará, porque para empezar no se están recogiendo datos. Las impresiones son la cantidad de veces que se mostró tu anuncio, y cero impresiones es [[SEE: not-showing-not-indexed-not-selling | un problema distinto con causas distintas]].
 
 ## Preguntas frecuentes
 
@@ -132,10 +132,10 @@ Hay una excepción a dejar las campañas en paz. Si una palabra clave no tiene n
 Usa los clics. El gasto es un mal sustituto porque mezcla dos cosas distintas: cuántas oportunidades tuvo una palabra clave de convertir, y cuánto costó cada oportunidad. Una palabra clave que ha gastado $40.00 con un CPC de $4.00 ha tenido 10 oportunidades, no 40.
 
 **¿Y si una palabra clave tiene clics y ventas, pero un mal ACOS?**
-Esa es una decisión distinta y el umbral no aplica de la misma forma. Una vez que una palabra clave ha producido ventas ya no preguntas si puede convertir; preguntas si convierte de forma rentable, que es una pregunta sobre tu margen.
+Esa es una decisión distinta y el umbral no aplica de la misma forma. Una vez que una palabra clave ha producido ventas ya no preguntas si puede convertir; preguntas si convierte de forma rentable, que es [[SEE: acos-tacos-and-your-margin | una pregunta sobre tu margen]].
 
 **¿Debería usar 22 clics también para palabras clave negativas?**
-Aplica el mismo estándar de evidencia, con una adición: la relevancia. Un término de búsqueda que claramente no tiene relación con tu producto se puede excluir de inmediato, porque no estás haciendo un juicio estadístico, estás haciendo un juicio de relevancia.
+Aplica el mismo estándar de evidencia, con una adición: la relevancia. Un término de búsqueda que claramente no tiene relación con tu producto se puede excluir de inmediato, porque no estás haciendo un juicio estadístico, estás haciendo [[SEE: when-to-negate-a-keyword | un juicio de relevancia]].
 
 **Mi producto convierte al 25%. ¿Puedo decidir más rápido?**
 Sí. Las tasas de conversión de anuncios más altas necesitan menos clics, porque una racha de ceros se vuelve improbable antes. Extiende la tabla con el mismo estándar y verás que el 25% necesita 9 clics.

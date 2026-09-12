@@ -48,8 +48,11 @@ THE SOURCE FORMAT
   the figures-disclaimer sentence         the rail's p.rail-src
   ## New terms                            NOT PUBLISHED: a working appendix; it
   ## Sources                              stays in the source, never the page
-  [[SEE: slug]]                           refused: a link to an article that
-                                          must exist (resolve it in the source)
+  [[SEE: en-slug | link text]]            a cross-link to another article,
+                                          inline in the sentence. Always the
+                                          ENGLISH slug; each language resolves
+                                          it through slugs/<lang>.json. Refused
+                                          if that language has no page for it
 
 Anything the builder cannot place is refused, never guessed.
 
@@ -175,7 +178,57 @@ EXTRA_CSS = """
 
 # ------------------------------------------------------------------ parsing
 
-def inline(t):
+# A cross-link to another article, inline in a sentence:
+#
+#     [[SEE: english-slug | the words that become the link]]
+#
+# The slug is always the ENGLISH one, in every language, and each language
+# resolves it through tools/i18n/slugs/<lang>.json. One marker in the English
+# source and the same marker in its translations therefore produce
+# /articles/x.html, /es/articulos/y.html and /pt/artigos/z.html without any
+# source naming a translated slug.
+#
+# The link TEXT is carried because the corpus links a phrase inside the
+# sentence, never a bare title: "managing an advertising portfolio",
+# "la trampa del ROAS mas alto". Measured 2026-09-12 across the corpus: 116
+# body cross-links per language in 39 articles, every one a bare <a href>
+# with no class or other attribute, root-relative. Cross-linking is house
+# style; what was missing was a way for a content-first source to express it.
+# The link text must contain something VISIBLE. `[[SEE: slug | ]]` matched an
+# earlier pattern and built <a href="...">&nbsp;</a> -- a link with nothing to
+# click, which no check would have seen. The text therefore has to start and
+# end with a character that is not a space, a "]" or a "|".
+SEE = re.compile(r"\[\[SEE:\s*([a-z0-9][a-z0-9-]*)\s*\|\s*"
+                 r"([^\]|\s](?:[^\]|]*[^\]|\s])?)\s*\]\]")
+
+
+def see_href(en_slug, lang):
+    """The root-relative href this language uses for that English article.
+
+    Refused, never guessed, when the language has no slug for it or the page is
+    not on disk. That refusal is the one the old blanket `[[SEE:]] is refused`
+    was protecting: a link to an article that does not exist yet is a dead link,
+    and PENDING-BACKLINKS.md existed only because the builder could not tell the
+    difference between "not written yet" and "cannot link at all".
+    """
+    local = en_slug
+    if lang != "en":
+        m = json.load(io.open(os.path.join(ROOT, "tools", "i18n", "slugs", lang + ".json"),
+                              encoding="utf-8"))
+        assert en_slug in m, ("[[SEE: %s]] -- tools/i18n/slugs/%s.json has no entry for that "
+                              "English slug. A missing key is a hole; add the key with a null "
+                              "value if the article is deliberately English-only." % (en_slug, lang))
+        local = m[en_slug]
+        assert local, ("[[SEE: %s]] -- slugs/%s.json maps it to null, so this language has no "
+                       "page to link to. Remove the marker here or translate the article."
+                       % (en_slug, lang))
+    rel = "%s/%s.html" % (LANGS[lang]["out"], local)
+    assert os.path.exists(os.path.join(ROOT, rel.replace("/", os.sep))), \
+        "[[SEE: %s]] -> /%s does not exist" % (en_slug, rel)
+    return "/" + rel
+
+
+def inline(t, lang=None):
     """Source text -> the house style: & < > escaped, **bold**, curly quotes
     and apostrophes and dashes as named entities (as the other articles are).
 
@@ -191,6 +244,15 @@ def inline(t):
     t = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", t)
     t = re.sub(r'"([^"]*)"', r"&ldquo;\1&rdquo;", t)
     t = t.replace("'", "&rsquo;").replace("—", "&mdash;").replace("–", "&ndash;")
+    # Cross-links go in HERE, after the text has been escaped and before the
+    # non-ascii pass, so the link TEXT is escaped and entity-mapped like any
+    # other prose while the tag this builds -- pure ascii, href and all -- is
+    # left alone. Doing it before the escape would have the tag escaped; doing
+    # it after the non-ascii pass would leave an accent in the link text raw.
+    if SEE.search(t):
+        assert lang, "a [[SEE:]] marker reached inline() with no language to resolve it: %r" % t[:70]
+        t = SEE.sub(lambda m: '<a href="%s">%s</a>' % (see_href(m.group(1), lang), m.group(2)), t)
+    assert "[[SEE:" not in t, "malformed [[SEE:]] marker: %r" % t[:90]
     t = "".join(c if ord(c) < 128 else
                 "&%s;" % NAME[ord(c)] if ord(c) in NAME else "&#%d;" % ord(c)
                 for c in t)
@@ -250,7 +312,14 @@ def parse(slug):
         meta[k.strip()] = v.strip()
     assert meta["slug"] == slug, "slug %r != file %r" % (meta["slug"], slug)
     body = published_part(body)                        # working appendices are never published
-    assert "[[SEE:" not in body, "[[SEE:]] left in the source: resolve or remove it first"
+    # Every [[SEE: ...]] must be well formed. It used to be refused outright,
+    # which is why the eleven content-first articles carry none of the corpus's
+    # 116 cross-links per language; it is now built (see SEE / see_href), and
+    # what is refused is a marker this cannot read.
+    for m in re.finditer(r"\[\[SEE:[^\]]*\]\]", body):
+        assert SEE.fullmatch(m.group(0)), (
+            "malformed cross-link %r -- the form is [[SEE: english-slug | link text]]"
+            % m.group(0)[:90])
     parts = re.split(r"^## (.+)$", body, flags=re.M)
     intro, sections = parts[0], list(zip(parts[1::2], parts[2::2]))
     return meta, intro, sections
@@ -262,6 +331,15 @@ def blocks(chunk):
 
 def render_block(b, section):
     lines = b.splitlines()
+    lang = section.get("lang")
+    # What KIND of block this is, is decided on the lines with any cross-link
+    # marker masked out. A marker holds a "|", and a worked-sum row is detected
+    # as "[^|]+ | [^|]+" over the whole line -- so an ordinary sentence ending
+    # in a cross-link ("...the same trap as [[SEE: highest-roas-trap | the
+    # highest-ROAS trap]].") matches that pattern exactly and would be rendered
+    # as a two-column row. The marker is markup, not content, and must not
+    # influence which branch the block takes.
+    probe = [SEE.sub("\x01", l) for l in lines]
     m = re.fullmatch(r"\[\[FIGURE: (.+)\]\]", lines[0])
     if m and len(lines) == 1:
         alt = inline(m.group(1))
@@ -275,41 +353,41 @@ def render_block(b, section):
                 "       alt=\"%s\"\n"
                 "       loading=\"lazy\" decoding=\"async\">\n"
                 "</figure>\n-->" % (name, section["assets"], name, alt))
-    m = re.fullmatch(r"\[\[(.+)\]\]", lines[0])
+    m = re.fullmatch(r"\[\[(.+)\]\]", probe[0])
     if m:
-        label, rest = m.group(1), lines[1:]
+        label, rest = lines[0][2:-2], lines[1:]
         assert rest, "callout %r has no body" % label
         if all(re.match(r"\d+\. ", l) for l in rest):
             inner = "<ol>\n%s\n    </ol>" % "\n".join(
-                "      <li>%s</li>" % inline(re.sub(r"^\d+\. ", "", l)) for l in rest)
+                "      <li>%s</li>" % inline(re.sub(r"^\d+\. ", "", l), lang) for l in rest)
         else:
-            inner = "<p>%s</p>" % inline(" ".join(rest))
+            inner = "<p>%s</p>" % inline(" ".join(rest), lang)
         section["labels"].append(label)
         return ('<div class="fixbox">\n    <span class="fixbox-k">%s</span>\n    %s\n  </div>'
-                % (inline(label), inner))
-    if all(re.fullmatch(r"[^|]+ \| [^|]+", l) for l in lines):
+                % (inline(label, lang), inner))
+    if all(re.fullmatch(r"[^|]+ \| [^|]+", l) for l in probe):
         rows = [l.split(" | ", 1) for l in lines]
         return ('<div class="report">\n    <ul class="report-rows">\n%s\n    </ul>\n  </div>'
-                % "\n".join('      <li><span>%s</span><span class="v">%s</span></li>' % (inline(a), inline(v))
+                % "\n".join('      <li><span>%s</span><span class="v">%s</span></li>' % (inline(a, lang), inline(v, lang))
                             for a, v in rows))
-    if all(l.startswith("|") for l in lines):
+    if all(l.startswith("|") for l in probe):
         cells = [[c.strip() for c in l.strip("|").split("|")] for l in lines]
         assert re.fullmatch(r"[-: |]+", lines[1]), "table without a separator row"
         head, rows = cells[0], cells[2:]
         return ('<div class="tblwrap">\n    <table>\n      <thead><tr>%s</tr></thead>\n      <tbody>\n%s\n      '
                 '</tbody>\n    </table>\n  </div>'
-                % ("".join("<th>%s</th>" % inline(c) for c in head),
-                   "\n".join("        <tr>%s</tr>" % "".join("<td>%s</td>" % inline(c) for c in r) for r in rows)))
-    if all(re.match(r"\d+\. ", l) for l in lines):
-        return "<ol>\n%s\n  </ol>" % "\n".join("    <li>%s</li>" % inline(re.sub(r"^\d+\. ", "", l)) for l in lines)
+                % ("".join("<th>%s</th>" % inline(c, lang) for c in head),
+                   "\n".join("        <tr>%s</tr>" % "".join("<td>%s</td>" % inline(c, lang) for c in r) for r in rows)))
+    if all(re.match(r"\d+\. ", l) for l in probe):
+        return "<ol>\n%s\n  </ol>" % "\n".join("    <li>%s</li>" % inline(re.sub(r"^\d+\. ", "", l), lang) for l in lines)
     # A bullet list. Bare <ul>, as 107 body lists in the shipped corpus are;
     # the classed variants (ul.spec, ul.tradeoff) are hand-written pages and are
     # not something a source can ask for. Only OUTSIDE the contents block --
     # build_main takes that section before any block reaches here.
-    if all(l.startswith("- ") for l in lines):
-        return "<ul>\n%s\n  </ul>" % "\n".join("    <li>%s</li>" % inline(l[2:]) for l in lines)
-    assert not any(l.startswith(("|", "[[", "- ", "#")) for l in lines), "unplaceable block: %r" % b[:80]
-    return "<p>%s</p>" % inline(" ".join(lines))
+    if all(l.startswith("- ") for l in probe):
+        return "<ul>\n%s\n  </ul>" % "\n".join("    <li>%s</li>" % inline(l[2:], lang) for l in lines)
+    assert not any(l.startswith(("|", "[[", "- ", "#")) for l in probe), "unplaceable block: %r" % b[:80]
+    return "<p>%s</p>" % inline(" ".join(lines), lang)
 
 
 # The figures disclaimer is a FAMILY, not one sentence. Three English forms are
@@ -349,9 +427,10 @@ def disclaimer_of(line, lang):
 
 def build_main(meta, intro, sections, lang, en_slug):
     L = LANGS[lang]
-    state = {"slug": meta["slug"], "en_slug": en_slug, "assets": L["assets"], "labels": []}
+    state = {"slug": meta["slug"], "en_slug": en_slug, "assets": L["assets"], "labels": [],
+             "lang": lang}
     ib = blocks(intro)
-    out = ['<main id="main" class="article">', '  <p class="lead">%s</p>' % inline(" ".join(ib[0].splitlines()))]
+    out = ['<main id="main" class="article">', '  <p class="lead">%s</p>' % inline(" ".join(ib[0].splitlines()), lang)]
     toc, questions, faq, final = None, [], None, None
     for title, chunk in sections:
         if any(title.startswith(t) for t in L["toc"]):
@@ -395,7 +474,7 @@ def build_main(meta, intro, sections, lang, en_slug):
                 entries[-1][1].append(" ".join(lines))
         for q, paras in entries:
             out += ["    <details>", "      <summary>%s</summary>" % inline(q)]
-            out += ["      <p>%s</p>" % inline(p) for p in paras]
+            out += ["      <p>%s</p>" % inline(p, lang) for p in paras]
             out.append("    </details>")
         out.append("  </div>")
     disclaimer = None
@@ -405,7 +484,7 @@ def build_main(meta, intro, sections, lang, en_slug):
             disclaimer = bs.pop()
         out.append('  <section class="sec">')
         out.append("    <h2>%s</h2>" % inline(final[0]))
-        out += ["    <p>%s</p>" % inline(" ".join(b.splitlines())) for b in bs]
+        out += ["    <p>%s</p>" % inline(" ".join(b.splitlines()), lang) for b in bs]
         out.append("  </section>")
     out.append("</main>")
     return "\n".join(out), state["labels"], disclaimer
@@ -767,6 +846,10 @@ def verify(slug):
     body_src = intro + "\n".join("\n" + c for t, c in sections
                                  if not any(t.startswith(x) for x in L["toc"]))
     body_src = re.sub(r"^\d+\. ", "", re.sub(r"\[\[FIGURE:.*?\]\]", "", body_src), flags=re.M)
+    # a cross-link marker is markup: the page keeps only its TEXT (gate.nums
+    # strips tags, so the href never reaches the count), and the slug would
+    # otherwise be counted on the source side alone
+    body_src = SEE.sub(lambda m: m.group(2), body_src)
     # the disclaimer is the rail's source line, not body prose: strip whichever
     # recognised variant THIS source ends with, not the language's usual one
     final_bs = blocks(next((c for t, c in sections if t == L["final"]), ""))

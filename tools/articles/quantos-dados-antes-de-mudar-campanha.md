@@ -75,7 +75,7 @@ Não use unit session percentage do Business Reports do Seller Central para isso
 
 Pegue a taxa no nível da conta ou da campanha, não da palavra-chave que você está prestes a julgar. Uma única palavra-chave não tem cliques suficientes para produzir uma taxa confiável, que é justamente o motivo pelo qual você está lendo este guia. A taxa vem do conjunto maior de cliques; o limite é aplicado depois à palavra-chave individual.
 
-Um cuidado com o intervalo de datas. Os pedidos atribuídos ao anúncio são contados depois do clique, então os dias mais recentes de qualquer janela ainda estão se completando. Termine o seu intervalo de datas mais ou menos uma semana antes de hoje, ou a taxa que você calcular vai sair baixa demais.
+Um cuidado com o intervalo de datas. Os pedidos atribuídos ao anúncio [[SEE: how-amazon-ads-bills-you | são contados depois do clique]], então os dias mais recentes de qualquer janela ainda estão se completando. Termine o seu intervalo de datas mais ou menos uma semana antes de hoje, ou a taxa que você calcular vai sair baixa demais.
 
 Se o ASIN não tem nenhum histórico de publicidade, você não tem taxa medida nenhuma. Use 10% como suposição de planejamento, pegue a linha de 22 cliques, e troque por um número medido quando a campanha tiver algumas centenas de cliques atrás dela.
 
@@ -111,7 +111,7 @@ Duas coisas decorrem dessa aritmética, e as duas são mais úteis do que qualqu
 
 A primeira é que menos palavras-chave por campanha produzem dados utilizáveis mais rápido. Os mesmos $12.00 distribuídos entre 4 palavras-chave dão a cada uma 5 cliques por dia e uma decisão em 5 dias em vez de 11. Você não está comprando mais dados ao estreitar a campanha; está concentrando os dados onde consegue lê-los.
 
-A segunda é que cortar o orçamento quando os resultados parecem ruins piora o problema. Um orçamento menor compra menos cliques, o que significa uma espera mais longa antes de você saber de alguma coisa, e nesse meio-tempo você continua gastando.
+A segunda é que [[SEE: daily-budget-runs-out-by-midday | cortar o orçamento quando os resultados parecem ruins]] piora o problema. Um orçamento menor compra menos cliques, o que significa uma espera mais longa antes de você saber de alguma coisa, e nesse meio-tempo você continua gastando.
 
 ## O que você deve fazer enquanto espera?
 
@@ -124,7 +124,7 @@ Esperar não significa não fazer nada. Significa não mudar aquilo que você es
 4. Trabalhe nas partes do listing que não atrapalham a medição: perguntas ao fornecedor, imagens esperando substituição, planejamento de estoque.
 5. Registre cada mudança que você de fato fizer, com a data. Uma mudança que você não consegue datar é uma mudança que você não consegue avaliar.
 
-Há uma exceção a deixar as campanhas em paz. Se uma palavra-chave não tem impressão nenhuma, esperar não vai ajudar, porque nem sequer estão sendo coletados dados. Impressões são a quantidade de vezes que o seu anúncio foi exibido, e zero impressões é um problema diferente, com causas diferentes.
+Há uma exceção a deixar as campanhas em paz. Se uma palavra-chave não tem impressão nenhuma, esperar não vai ajudar, porque nem sequer estão sendo coletados dados. Impressões são a quantidade de vezes que o seu anúncio foi exibido, e zero impressões é [[SEE: not-showing-not-indexed-not-selling | um problema diferente, com causas diferentes]].
 
 ## Perguntas frequentes
 
@@ -132,10 +132,10 @@ Há uma exceção a deixar as campanhas em paz. Se uma palavra-chave não tem im
 Use os cliques. O gasto é um substituto ruim porque mistura duas coisas diferentes: quantas chances uma palavra-chave teve de converter, e quanto custou cada chance. Uma palavra-chave que gastou $40.00 com um CPC de $4.00 teve 10 chances, não 40.
 
 **E se uma palavra-chave tem cliques e vendas, mas um ACOS ruim?**
-Essa é uma decisão diferente e o limite não se aplica da mesma forma. Uma vez que uma palavra-chave produziu vendas, você não está mais perguntando se ela consegue converter; está perguntando se ela converte com lucro, que é uma pergunta sobre a sua margem.
+Essa é uma decisão diferente e o limite não se aplica da mesma forma. Uma vez que uma palavra-chave produziu vendas, você não está mais perguntando se ela consegue converter; está perguntando se ela converte com lucro, que é [[SEE: acos-tacos-and-your-margin | uma pergunta sobre a sua margem]].
 
 **Devo usar 22 cliques para palavras-chave negativas também?**
-Vale o mesmo padrão de evidência, com um acréscimo: relevância. Um termo de pesquisa que claramente não tem relação com o seu produto pode ser excluído na hora, porque você não está fazendo um julgamento estatístico, está fazendo um julgamento de relevância.
+Vale o mesmo padrão de evidência, com um acréscimo: relevância. Um termo de pesquisa que claramente não tem relação com o seu produto pode ser excluído na hora, porque você não está fazendo um julgamento estatístico, está fazendo [[SEE: when-to-negate-a-keyword | um julgamento de relevância]].
 
 **Meu produto converte a 25%. Posso decidir mais rápido?**
 Sim. Taxas de conversão de anúncios mais altas precisam de menos cliques, porque uma sequência de zeros fica improvável mais cedo. Estenda a tabela com o mesmo padrão e você vai ver que 25% precisa de 9 cliques.
