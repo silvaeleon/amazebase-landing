@@ -36,16 +36,21 @@ PAGES = ["terms.html", "privacy.html", "es/terminos.html", "es/privacidad.html",
 
 COMMON = {"AmazeBase", "Silbros Trading LLC", "LLC", "Amazon", "Internet", "Albuquerque", "NM", "NE",
           "PL", "Mountain Road", "Stripe", "Google", "Seller Central", "Amazon Seller Central",
-          "Amazon Advertising", "GDPR", "CCPA", "I", "Mountain Road PL NE", "Helium"}
+          "Amazon Advertising", "GDPR", "CCPA", "I", "Mountain Road PL NE", "Helium",
+          # the analytics disclosure, added with GA4 (2026-09-11)
+          "Google Analytics", "Google Analytics 4", "Google Ads", "Google Consent Mode"}
 NAMES = {
     "en": COMMON | {"New Mexico", "United States", "State of New Mexico", "European Union",
                     "European Economic Area", "California", "AS IS", "AS AVAILABLE",
-                    "Effective Date", "Last Updated"},
+                    "Effective Date", "Last Updated", "United Kingdom", "Switzerland"},
     "es": COMMON | {"Nuevo México", "Estados Unidos", "Estado de Nuevo México", "Unión Europea",
-                    "TAL CUAL", "SEGÚN DISPONIBILIDAD", "Fecha de entrada en vigor", "Última actualización"},
+                    "TAL CUAL", "SEGÚN DISPONIBILIDAD", "Fecha de entrada en vigor", "Última actualización",
+                    "Espacio Económico Europeo", "Reino Unido", "Suiza",
+                    "Modo"},   # heads "Modo de consentimiento de Google", whose tail is lowercase
     "pt": COMMON | {"Novo México", "Estados Unidos", "Estado do Novo México", "União Europeia",
                     "NO ESTADO EM QUE SE ENCONTRA", "CONFORME DISPONÍVEL", "Data de vigência",
-                    "Última atualização"},
+                    "Última atualização", "Espaço Econômico Europeu", "Reino Unido", "Suíça",
+                    "Modo"},   # heads "Modo de consentimento do Google", whose tail is lowercase
 }
 TITLES = {
     "en": {"Terms of Service", "Privacy Policy", "This Privacy Policy", "These Terms", "Terms"},

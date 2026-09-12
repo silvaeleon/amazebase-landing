@@ -205,7 +205,7 @@ it needs a decision.
 | The consequence | La consecuencia | measured 2026-09-11 — 3 uses |
 | The problem | El problema | measured 2026-09-11 — 3 uses |
 | The through-line | El hilo conductor | measured 2026-09-11 — 3 uses |
-| Worked example | Ejemplo práctico | **proposed 2026-09-11, NOT approved** — zero precedent in the Spanish corpus: "Worked example" occurs in only two English articles and neither had a Spanish twin. Portuguese has "Exemplo prático" approved (PT §6). Needs Leon's yes before it is fixed. |
+| Worked example | Ejemplo trabajado | **measured 2026-09-11 — 1 use**, the rail of `punto-de-reorden.html`, whose English (`reorder-point`) has "Worked example" in the same slot. Re-measured 2026-09-11 after a first pass recorded "zero precedent": there is one. **Open for Leon:** *Ejemplo práctico* was proposed instead, and matches Portuguese *Exemplo prático* (PT §6). Switching means changing this row and the two pages that carry the label. |
 | PPC & Advertising | Publicidad y PPC | measured 2026-09-11 — 12 eyebrows; matches label_es in data/resources.json |
 | Product Research | Investigación de productos | measured 2026-09-11 — 11 eyebrows |
 | Growth Playbook | Manual de crecimiento | measured 2026-09-11 — 9 eyebrows |
@@ -213,8 +213,8 @@ it needs a decision.
 | Profit & Finances | Utilidad y finanzas | measured 2026-09-11 — 6 eyebrows |
 | Tools & Tutorials | Herramientas y tutoriales | measured 2026-09-11 — 1 eyebrow |
 | Podcast episode | Episodio de podcast · audio en inglés | measured 2026-09-11 — 3 uses; the three podcast pages play the English audio and the player says so (Leon, 2026-09-11) |
-| `re:^Step (\d+)$` | `Paso ` | §4 |
-| `re:^(\d+) min read$` | ` min de lectura` | §4 |
+| `re:^Step (\d+)$` | `Paso \1` | §4 |
+| `re:^(\d+) min read$` | `\1 min de lectura` | §4 |
 | `re:^What’s in this guide$` | `Qué encontrarás en esta guía` | §4 |
 | `re:^What’s in this piece$` | `Qué encontrarás en este artículo` | §4 |
 | `re:^Final thoughts$` | `Para cerrar` | §4 |

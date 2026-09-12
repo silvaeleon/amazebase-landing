@@ -129,12 +129,17 @@ def restore(frag, toks):
 
 
 def strict(frag):
-    """Every tag with every attribute, translatable attribute VALUES blanked."""
+    """Every tag with every attribute, translatable attribute VALUES blanked.
+
+    Whitespace INSIDE a tag is collapsed: where a long tag's attributes wrap is
+    formatting, not structure, and a page hand-edited after it was built can
+    wrap them differently from its source (found 2026-09-11 on the privacy
+    pages' Google opt-out link)."""
     out = []
     for t in re.findall(r"<[^>]+>", re.sub(r"<!--.*?-->", "", frag, flags=re.S)):
         for a in TEXT_ATTRS:
             t = re.sub(r'(\s%s=")[^"]*(")' % a, r"\1\2", t)
-        out.append(t)
+        out.append(re.sub(r"\s+", " ", t))
     return out
 
 

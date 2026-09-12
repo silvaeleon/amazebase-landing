@@ -119,8 +119,11 @@ def ico(pngs):
 
 
 def live_pages():
+    # google<token>.html is Google Search Console's verification file: one line
+    # of text with an .html name, which Google reads verbatim. It is not a page
+    # and must not be touched.
     out = subprocess.run(["git", "-C", ROOT, "ls-files", "*.html"], capture_output=True, text=True).stdout.split()
-    return [p for p in out if not re.match(r"(_|index-|editor|graphify-out/|assets/)", p)]
+    return [p for p in out if not re.match(r"(_|index-|editor|graphify-out/|assets/|google[0-9a-f]+\.html)", p)]
 
 
 def write(rel, data):

@@ -95,7 +95,7 @@ Clics promedio por palabra clave por día | 2
 Clics necesarios en una palabra clave | 22
 Días hasta que una palabra clave llega a ese número | 11
 
-[[Ejemplo práctico]]
+[[Ejemplo trabajado]]
 Con $12.00 al día y un CPC de $0.60, la campaña compra 20 clics por día. Repartidos entre 10 palabras clave son 2 clics por palabra clave por día, así que una sola palabra clave tarda 11 días en llegar a 22 clics. El reparto parejo es una simplificación para que el ejemplo se lea bien; en una campaña real el reparto es desparejo, lo que significa que tus palabras clave más lentas tardan más de 11 días, no menos.
 
 De esta aritmética se siguen dos cosas, y ambas son más útiles que cualquier consejo sobre pujas.
@@ -147,4 +147,4 @@ Cifras de los ejemplos trabajados de este artículo, no de un estudio de mercado
 - palabra clave negativa — NUEVO en el glosario ES.
 - unit session percentage — nombre de columna de Seller Central. Se deja en inglés con la glosa «porcentaje de sesiones por unidad» en el primer uso, para que el lector la encuentre tenga Seller Central en el idioma que tenga.
 - Business Reports — nombre de sección de Seller Central. Se deja en inglés, misma regla que Seller Central (§2).
-- [[Ejemplo práctico]] — ETIQUETA NUEVA EN ESPAÑOL. No existe en el corpus español; el portugués tiene «Exemplo prático» aprobada. Necesita el visto bueno de Leon antes de fijarse en la tabla de etiquetas.
+- [[Ejemplo trabajado]] — la etiqueta que ya usa el corpus español: el rail de `punto-de-reorden.html`, cuyo original en inglés lleva «Worked example» en el mismo lugar (medido 2026-09-11). Se propuso «Ejemplo práctico», que coincide con el portugués «Exemplo prático»; queda pendiente de la decisión de Leon.

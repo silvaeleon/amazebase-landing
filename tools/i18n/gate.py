@@ -155,7 +155,7 @@ def check_pre(en_v, tr_v, field):
 LABEL_CLASSES = {"fixbox-k", "rail-k", "label", "lab", "eyebrow", "player-kind"}
 
 
-def brief(lang):
+def glossary_path(lang):
     """The language's glossary file, or None.
 
     Two spellings, because each is correct in its own language: the Portuguese
@@ -171,7 +171,7 @@ def brief(lang):
 
 
 def load_labels(lang):
-    p = brief(lang)
+    p = glossary_path(lang)
     if not p:
         return {}, []
     s = io.open(p, encoding="utf-8").read()
@@ -193,7 +193,7 @@ def load_labels(lang):
 
 def load_vocab(lang):
     """[(variant, settled)] from the glossary's VOCAB-SETTLE table."""
-    p = brief(lang)
+    p = glossary_path(lang)
     if not p:
         return []
     s = io.open(p, encoding="utf-8").read()
