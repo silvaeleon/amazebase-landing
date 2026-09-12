@@ -1,0 +1,27 @@
+{
+ "_note": "The rail's key-figure cards. The content-first source format has no rail, so these were drafted 2026-09-12 for Leon's review from the PORTUGUESE source, not translated from the English rail; every number and every sentence below is taken verbatim from tools/articles/anunciar-no-primeiro-dia-ou-esperar-avaliacoes.md, and only the short 'k' labels are new. build_article.py verify refuses a rail number the article does not contain.",
+ "cards": [
+  {
+   "k": "Cliques nos dois casos",
+   "v": "300 cliques",
+   "p": "O mesmo orçamento compra os mesmos 300 cliques nas duas vezes. O que muda é quantos o listing consegue segurar."
+  },
+  {
+   "k": "Custo de começar cedo",
+   "v": "$162.00",
+   "tone": "amber",
+   "p": "A rodada inicial perde $219.00 e produz 9 vendas; a rodada posterior perde $57.00 e produz 27 vendas. A diferença é $162.00 e 18 vendas."
+  },
+  {
+   "k": "Custo de esperar",
+   "v": "18 vendas",
+   "tone": "violet",
+   "p": "O lado que começa vê 18 vendas de ranqueamento que o vendedor que esperou nunca teve, nas semanas em que ranquear um listing novo pode ser mais barato."
+  },
+  {
+   "k": "Dias de cobertura",
+   "v": "25 dias",
+   "p": "Suponha que você tem 200 unidades e as suas campanhas movem 8 unidades por dia. São 25 dias de cobertura."
+  }
+ ]
+}

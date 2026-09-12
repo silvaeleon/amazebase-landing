@@ -1,0 +1,13 @@
+{
+ "_note": "The rail's key-figure cards. The content-first source format has no rail, so these were drafted 2026-09-12 from the PORTUGUESE source for Leon's review, and every number and every sentence below is taken verbatim from tools/articles/usar-o-lance-que-a-amazon-sugere.md; only the short 'k' labels are new.",
+ "cards": [
+  {"k": "O que você pode pagar", "v": "$0.50",
+   "p": "Se a publicidade pode levar metade da contribuição, o seu teto é $0.50 por clique: $6.25 de gasto com anúncios por venda, e $6.25 de lucro."},
+  {"k": "O preço da sugestão", "v": "$4.38", "tone": "amber",
+   "p": "Se em vez disso você pagar a sugestão de $1.35, uma venda custa $1.35 multiplicado por 12.5 cliques, ou seja $16.88 contra $12.50 de contribuição: uma perda de $4.38 por unidade."},
+  {"k": "Quanto a Amazon pode aumentar", "v": "100%",
+   "p": "O limite que a Amazon publica para o up and down são os 100% dessa tabela. Um lance de $0.50 pode, portanto, competir em até $1.00 — o preço de equilíbrio acima, e o dobro do teto que você definiu."},
+  {"k": "Multiplicador em um posicionamento", "v": "900%", "tone": "violet",
+   "p": "A Amazon permite um ajuste de até 900% em cada um, para todos os tipos de segmentação e todas as estratégias de lances. Ele multiplica o lance que você informou, só para aquele posicionamento."}
+ ]
+}

@@ -1,0 +1,27 @@
+{
+ "_note": "The rail's key-figure cards. The content-first source format has no rail, so these were drafted 2026-09-12 for Leon's review from the SPANISH source, not translated from the English rail; every number and every sentence below is taken verbatim from tools/articles/anunciar-el-dia-uno-o-esperar-resenas.md, and only the short 'k' labels are new. build_article.py verify refuses a rail number the article does not contain.",
+ "cards": [
+  {
+   "k": "Clics en ambos casos",
+   "v": "300 clics",
+   "p": "El mismo presupuesto compra los mismos 300 clics las dos veces. Lo que cambia es cuántos puede retener el listing."
+  },
+  {
+   "k": "Costo de empezar temprano",
+   "v": "$162.00",
+   "tone": "amber",
+   "p": "La corrida temprana pierde $219.00 y produce 9 ventas; la posterior pierde $57.00 y produce 27 ventas. La diferencia es $162.00 y 18 ventas."
+  },
+  {
+   "k": "Costo de esperar",
+   "v": "18 ventas",
+   "tone": "violet",
+   "p": "El bando que empieza ve 18 ventas de posicionamiento que el vendedor que esperó nunca consiguió, en las semanas en que posicionar un listing nuevo puede ser más barato."
+  },
+  {
+   "k": "Días de cobertura",
+   "v": "25 días",
+   "p": "Supón que tienes 200 unidades y tus campañas mueven 8 unidades al día. Eso son 25 días de cobertura."
+  }
+ ]
+}

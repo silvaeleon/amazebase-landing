@@ -1,0 +1,27 @@
+{
+ "_note": "The rail's key-figure cards. The content-first source format has no rail, so these were drafted 2026-09-12 for Leon's review from the PORTUGUESE source, and every number and every sentence in them is taken verbatim from tools/articles/por-que-sua-campanha-nao-vende.md; only the short 'k' labels are new.",
+ "cards": [
+  {
+   "k": "A corrente",
+   "v": "Três elos",
+   "tone": "violet",
+   "p": "Uma campanha de publicidade é uma corrente: a Amazon exibe o seu anúncio, e isso produz impressões; alguns compradores clicam; alguns cliques viram pedidos."
+  },
+  {
+   "k": "O CTR contra o seu",
+   "v": "0.30% vs 0.70%",
+   "p": "O CTR dela é 0.30% contra um CTR de conta de 0.70%, menos da metade."
+  },
+  {
+   "k": "Quando o zero significa algo",
+   "v": "22",
+   "tone": "amber",
+   "p": "Com uma taxa de conversão de anúncios de 10%, 22 cliques sem venda é o primeiro ponto em que o zero deixa de ser um resultado comum."
+  },
+  {
+   "k": "Coisas para trabalhar",
+   "v": "Seis",
+   "p": "Seis coisas você consegue trabalhar em uma semana. Vinte, não."
+  }
+ ]
+}

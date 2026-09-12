@@ -296,6 +296,7 @@ agreement in Portuguese depends on what they label.
 | The question | A pergunta | approved 2026-09-11 |
 | The risk | O risco | approved 2026-09-11 |
 | Ask these instead | Pergunte assim | approved 2026-09-11 — the review first supplied "Try this instead → Faça assim", a label the corpus does not contain; "Faça" (do) would have replaced "ask". Kept as a record that a reviewer can invent a source string. |
+| Ask this instead | Pergunte assim | measured 2026-09-12 — the SINGULAR English wording, one page (`better-questions`), and both its twins render it exactly as the plural does. Three English label wordings now collapse onto one translation in each language, the same way `The fix` and `What to do about it` already collapse onto `Qué hacer`. It had no row in either language and was the third, unpaired use the reviewer counted against the plural. |
 | What to do | O que fazer | approved (§4); the English label was "The fix" until 2026-09-11 |
 | The fix | O que fazer | approved (§4) |
 | Worked example | Exemplo prático | approved (§4) |

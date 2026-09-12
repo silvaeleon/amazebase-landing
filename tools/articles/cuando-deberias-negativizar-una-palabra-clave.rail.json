@@ -1,0 +1,27 @@
+{
+ "_note": "The rail's key-figure cards. The content-first source format has no rail, so these were drafted 2026-09-12 for Leon's review: every number and every sentence below is taken verbatim from tools/articles/cuando-deberias-negativizar-una-palabra-clave.md, and only the short 'k' labels are new.",
+ "cards": [
+  {
+   "k": "El filtro de relevancia",
+   "v": "Sin clics",
+   "p": "Si la respuesta honesta es no, el término es irrelevante. Negativízalo ya."
+  },
+  {
+   "k": "Cuándo cuenta cero ventas",
+   "v": "22 clics",
+   "p": "A esa tasa, un término de búsqueda perfectamente normal sigue produciendo cero pedidos después de 22 clics menos del 10% de las veces."
+  },
+  {
+   "k": "Cuando tu tasa es más baja",
+   "v": "45 clics al 5%",
+   "tone": "amber",
+   "p": "Si partes la tasa a la mitad, los clics necesarios se duplican más o menos: al 5%, unos 45."
+  },
+  {
+   "k": "ACOS alto en un término central",
+   "v": "ACOS del 125%",
+   "tone": "violet",
+   "p": "Si un término de búsqueda es central para lo que vendes, un mal resultado es un problema de conversión, no un problema de segmentación."
+  }
+ ]
+}

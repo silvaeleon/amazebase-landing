@@ -1,0 +1,13 @@
+{
+ "_note": "The rail's key-figure cards. The content-first source format has no rail, so these were drafted 2026-09-12 from the ENGLISH source for Leon's review, and every number and every sentence below is taken verbatim from tools/articles/amazon-suggested-bid-and-down-only.md; only the short 'k' labels are new.",
+ "cards": [
+  {"k": "What you can afford", "v": "$0.50",
+   "p": "If advertising may take half the contribution, your ceiling is $0.50 per click: $6.25 of ad spend per sale, and $6.25 of profit."},
+  {"k": "The price of the suggestion", "v": "$4.38", "tone": "amber",
+   "p": "Pay the $1.35 suggestion instead and a sale costs $1.35 multiplied by 12.5 clicks, or $16.88 against $12.50 of contribution: a loss of $4.38 per unit."},
+  {"k": "How high Amazon may go", "v": "100%",
+   "p": "Amazon's published limit for up and down is the 100% in that table. A $0.50 bid can therefore compete at up to $1.00 — the break-even price above, and twice the ceiling you set."},
+  {"k": "Multiplier on one placement", "v": "900%", "tone": "violet",
+   "p": "Amazon allows an adjustment of up to 900% on each, for all targeting types and all bidding strategies. It multiplies the bid you entered, for that placement only."}
+ ]
+}

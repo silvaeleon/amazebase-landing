@@ -191,6 +191,206 @@
   ],
   "resources": [
     {
+      "id": "acos-tacos-and-your-margin",
+      "title": "What ACOS Should You Be Aiming For?",
+      "summary": "There is no universal ACOS target. Calculate your own break-even ACOS from your fees and costs, then use TACOS to see real progress.",
+      "category": "ppc",
+      "categories": [
+        "ppc",
+        "profit"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 7,
+      "url": "articles/acos-tacos-and-your-margin.html",
+      "topics": [
+        "ACOS",
+        "Margin",
+        "ROAS",
+        "Decision Making"
+      ]
+    },
+    {
+      "id": "amazon-suggested-bid-and-down-only",
+      "title": "Should You Use the Bid Amazon Suggests?",
+      "summary": "Amazon's suggested bid tells you what other advertisers pay. Your own costs and ad conversion rate tell you what you can afford.",
+      "category": "ppc",
+      "categories": [
+        "ppc"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 7,
+      "url": "articles/amazon-suggested-bid-and-down-only.html",
+      "topics": [
+        "Campaign Strategy",
+        "Margin",
+        "Decision Making"
+      ]
+    },
+    {
+      "id": "campaign-not-selling-where-it-breaks",
+      "title": "Why Is Your Campaign Not Selling?",
+      "summary": "A campaign that is not selling is broken at one of three points, and each break has a different repair.",
+      "category": "ppc",
+      "categories": [
+        "ppc"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 6,
+      "url": "articles/campaign-not-selling-where-it-breaks.html",
+      "topics": [
+        "Campaign Strategy",
+        "Root Cause",
+        "Data Quality",
+        "Decision Making"
+      ]
+    },
+    {
+      "id": "daily-budget-runs-out-by-midday",
+      "title": "Your Daily Budget Runs Out by Midday. Now What?",
+      "summary": "Running out of daily budget means two opposite things depending on whether the campaign converts profitably; check first, then add budget or stop spending.",
+      "category": "ppc",
+      "categories": [
+        "ppc"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 8,
+      "url": "articles/daily-budget-runs-out-by-midday.html",
+      "topics": [
+        "Campaign Strategy",
+        "Decision Making",
+        "Data Quality",
+        "Scaling"
+      ]
+    },
+    {
+      "id": "not-showing-not-indexed-not-selling",
+      "title": "Why Can't You Find Your Own Product When You Search for It?",
+      "summary": "Not finding your product is four different problems. Work out which one you have before you change a single bid.",
+      "category": "ppc",
+      "categories": [
+        "ppc"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 7,
+      "url": "articles/not-showing-not-indexed-not-selling.html",
+      "topics": [
+        "Organic Ranking",
+        "Campaign Strategy",
+        "Root Cause",
+        "Product Launch"
+      ]
+    },
+    {
+      "id": "one-keyword-per-campaign",
+      "title": "Should You Put One Keyword in Each Campaign?",
+      "summary": "One keyword per campaign buys budget and placement control, and costs you budget per campaign. Here is when the trade-off pays.",
+      "category": "ppc",
+      "categories": [
+        "ppc"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 8,
+      "url": "articles/one-keyword-per-campaign.html",
+      "topics": [
+        "Campaign Strategy",
+        "Keyword Overlap",
+        "Decision Making",
+        "Data Quality"
+      ]
+    },
+    {
+      "id": "ppc-day-one-or-wait-for-reviews",
+      "title": "Should You Start Advertising on Day One or Wait for Reviews?",
+      "summary": "Experienced sellers disagree. Here are both cases, plus a decision rule based on your stock, your margin, and what you can afford to lose.",
+      "category": "ppc",
+      "categories": [
+        "ppc",
+        "growth"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 7,
+      "url": "articles/ppc-day-one-or-wait-for-reviews.html",
+      "topics": [
+        "Product Launch",
+        "Organic Ranking",
+        "Opportunity Cost",
+        "Brand Building"
+      ]
+    },
+    {
+      "id": "when-to-negate-a-keyword",
+      "title": "When Should You Negate a Keyword?",
+      "summary": "There are two different reasons to stop spending on a search term, and treating them as one reason causes two opposite mistakes.",
+      "category": "ppc",
+      "categories": [
+        "ppc"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 7,
+      "url": "articles/when-to-negate-a-keyword.html",
+      "topics": [
+        "Campaign Strategy",
+        "Keyword Overlap",
+        "Statistical Significance",
+        "Decision Making"
+      ]
+    },
+    {
+      "id": "when-to-stop-optimizing-a-product",
+      "title": "When Should You Stop Optimizing a Product and Put the Money Elsewhere?",
+      "summary": "Optimizing has a stopping point. Here are criteria for deciding whether the next dollar belongs in this product or the next one.",
+      "category": "ppc",
+      "categories": [
+        "ppc",
+        "profit"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "en",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 7,
+      "url": "articles/when-to-stop-optimizing-a-product.html",
+      "topics": [
+        "Opportunity Cost",
+        "Capital Allocation",
+        "Margin",
+        "Decision Making"
+      ]
+    },
+    {
       "id": "how-much-data-before-changing-a-campaign",
       "title": "How Much Data Do You Need Before You Change a Campaign?",
       "summary": "Zero sales on a keyword means nothing until you have enough clicks. Here is how many, and how to count them correctly.",
@@ -1451,6 +1651,215 @@
       ],
       "level": "expert",
       "language": "en"
+    },
+    {
+      "id": "acos-tacos-and-your-margin-es",
+      "title": "¿A qué ACOS deberías apuntar?",
+      "summary": "No existe un ACOS objetivo universal. Calcula tu propio ACOS de equilibrio a partir de tus tarifas y costos, y usa TACOS para ver el avance real.",
+      "category": "ppc",
+      "categories": [
+        "ppc",
+        "profit"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "es",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 7,
+      "url": "es/articulos/a-que-acos-deberias-apuntar.html",
+      "topics": [
+        "ACOS",
+        "Margen",
+        "ROAS",
+        "Toma de decisiones"
+      ],
+      "translationOf": "acos-tacos-and-your-margin"
+    },
+    {
+      "id": "amazon-suggested-bid-and-down-only-es",
+      "title": "¿Deberías usar la puja que sugiere Amazon?",
+      "summary": "La puja sugerida de Amazon te dice lo que pagan otros anunciantes. Tus propios costos y tu tasa de conversión de anuncios te dicen lo que puedes pagar tú.",
+      "category": "ppc",
+      "categories": [
+        "ppc"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "es",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 7,
+      "url": "es/articulos/deberias-usar-la-puja-que-sugiere-amazon.html",
+      "topics": [
+        "Estrategia de campañas",
+        "Margen",
+        "Toma de decisiones"
+      ],
+      "translationOf": "amazon-suggested-bid-and-down-only"
+    },
+    {
+      "id": "campaign-not-selling-where-it-breaks-es",
+      "title": "¿Por qué tu campaña no vende?",
+      "summary": "Una campaña que no vende está rota en uno de tres puntos, y cada rotura tiene una reparación distinta.",
+      "category": "ppc",
+      "categories": [
+        "ppc"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "es",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 6,
+      "url": "es/articulos/por-que-tu-campana-no-vende.html",
+      "topics": [
+        "Estrategia de campañas",
+        "Causa raíz",
+        "Data Quality",
+        "Toma de decisiones"
+      ],
+      "translationOf": "campaign-not-selling-where-it-breaks"
+    },
+    {
+      "id": "daily-budget-runs-out-by-midday-es",
+      "title": "Tu presupuesto diario se acaba al mediodía. ¿Y ahora qué?",
+      "summary": "Quedarte sin presupuesto diario significa dos cosas opuestas según si la campaña convierte con utilidad; revisa primero, y después sube el presupuesto o deja de gastar.",
+      "category": "ppc",
+      "categories": [
+        "ppc"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "es",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 8,
+      "url": "es/articulos/presupuesto-diario-se-acaba-al-mediodia.html",
+      "topics": [
+        "Estrategia de campañas",
+        "Toma de decisiones",
+        "Data Quality",
+        "Escalamiento"
+      ],
+      "translationOf": "daily-budget-runs-out-by-midday"
+    },
+    {
+      "id": "not-showing-not-indexed-not-selling-es",
+      "title": "¿Por qué no encuentras tu propio producto cuando lo buscas?",
+      "summary": "No encontrar tu producto son cuatro problemas distintos. Averigua cuál tienes antes de cambiar una sola puja.",
+      "category": "ppc",
+      "categories": [
+        "ppc"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "es",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 7,
+      "url": "es/articulos/por-que-no-encuentras-tu-propio-producto.html",
+      "topics": [
+        "Posicionamiento orgánico",
+        "Estrategia de campañas",
+        "Causa raíz",
+        "Lanzamiento de producto"
+      ],
+      "translationOf": "not-showing-not-indexed-not-selling"
+    },
+    {
+      "id": "one-keyword-per-campaign-es",
+      "title": "¿Deberías poner una sola palabra clave en cada campaña?",
+      "summary": "Una palabra clave por campaña te compra control del presupuesto y de la ubicación, y te cuesta presupuesto por campaña. Aquí está cuándo compensa el trade-off.",
+      "category": "ppc",
+      "categories": [
+        "ppc"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "es",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 8,
+      "url": "es/articulos/una-sola-palabra-clave-por-campana.html",
+      "topics": [
+        "Estrategia de campañas",
+        "Traslape de palabras clave",
+        "Toma de decisiones",
+        "Data Quality"
+      ],
+      "translationOf": "one-keyword-per-campaign"
+    },
+    {
+      "id": "ppc-day-one-or-wait-for-reviews-es",
+      "title": "¿Deberías anunciar desde el día uno o esperar a las reseñas?",
+      "summary": "Los vendedores con experiencia no se ponen de acuerdo. Aquí están los dos casos, más una regla de decisión basada en tu stock, tu margen y lo que puedes permitirte perder.",
+      "category": "ppc",
+      "categories": [
+        "ppc",
+        "growth"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "es",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 7,
+      "url": "es/articulos/anunciar-el-dia-uno-o-esperar-resenas.html",
+      "topics": [
+        "Lanzamiento de producto",
+        "Posicionamiento orgánico",
+        "Costo de oportunidad",
+        "Construcción de marca"
+      ],
+      "translationOf": "ppc-day-one-or-wait-for-reviews"
+    },
+    {
+      "id": "when-to-negate-a-keyword-es",
+      "title": "¿Cuándo deberías negativizar una palabra clave?",
+      "summary": "Hay dos razones distintas para dejar de gastar en un término de búsqueda, y tratarlas como una sola provoca dos errores opuestos.",
+      "category": "ppc",
+      "categories": [
+        "ppc"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "es",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 7,
+      "url": "es/articulos/cuando-deberias-negativizar-una-palabra-clave.html",
+      "topics": [
+        "Estrategia de campañas",
+        "Traslape de palabras clave",
+        "Significancia estadística",
+        "Toma de decisiones"
+      ],
+      "translationOf": "when-to-negate-a-keyword"
+    },
+    {
+      "id": "when-to-stop-optimizing-a-product-es",
+      "title": "¿Cuándo deberías dejar de optimizar un producto y poner el dinero en otro lado?",
+      "summary": "Optimizar tiene un punto de término. Estos son los criterios para decidir si el próximo dólar va en este producto o en el siguiente.",
+      "category": "ppc",
+      "categories": [
+        "ppc",
+        "profit"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "es",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 7,
+      "url": "es/articulos/cuando-dejar-de-optimizar-un-producto.html",
+      "topics": [
+        "Costo de oportunidad",
+        "Asignación de capital",
+        "Margen",
+        "Toma de decisiones"
+      ],
+      "translationOf": "when-to-stop-optimizing-a-product"
     },
     {
       "id": "reorder-point-formula-es",
@@ -2765,6 +3174,215 @@
         "Lanzamiento de producto"
       ],
       "translationOf": "how-much-data-before-changing-a-campaign"
+    },
+    {
+      "id": "acos-tacos-and-your-margin-pt",
+      "title": "Qual ACOS você deve buscar?",
+      "summary": "Não existe uma meta universal de ACOS. Calcule o seu próprio ACOS de equilíbrio a partir das suas taxas e custos, e use TACOS para ver o progresso real.",
+      "category": "ppc",
+      "categories": [
+        "ppc",
+        "profit"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "pt",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 7,
+      "url": "pt/artigos/qual-acos-voce-deve-buscar.html",
+      "topics": [
+        "ACOS",
+        "Margem",
+        "ROAS",
+        "Tomada de decisão"
+      ],
+      "translationOf": "acos-tacos-and-your-margin"
+    },
+    {
+      "id": "amazon-suggested-bid-and-down-only-pt",
+      "title": "Você deve usar o lance que a Amazon sugere?",
+      "summary": "O lance sugerido da Amazon diz o que outros anunciantes pagam. Os seus próprios custos e a sua taxa de conversão de anúncios dizem o que você pode pagar.",
+      "category": "ppc",
+      "categories": [
+        "ppc"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "pt",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 7,
+      "url": "pt/artigos/usar-o-lance-que-a-amazon-sugere.html",
+      "topics": [
+        "Estratégia de campanhas",
+        "Margem",
+        "Tomada de decisão"
+      ],
+      "translationOf": "amazon-suggested-bid-and-down-only"
+    },
+    {
+      "id": "campaign-not-selling-where-it-breaks-pt",
+      "title": "Por que sua campanha não vende?",
+      "summary": "Uma campanha que não vende está quebrada em um de três pontos, e cada quebra tem um conserto diferente.",
+      "category": "ppc",
+      "categories": [
+        "ppc"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "pt",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 6,
+      "url": "pt/artigos/por-que-sua-campanha-nao-vende.html",
+      "topics": [
+        "Estratégia de campanhas",
+        "Causa raiz",
+        "Qualidade dos dados",
+        "Tomada de decisão"
+      ],
+      "translationOf": "campaign-not-selling-where-it-breaks"
+    },
+    {
+      "id": "daily-budget-runs-out-by-midday-pt",
+      "title": "Seu orçamento diário acaba ao meio-dia. E agora?",
+      "summary": "Ficar sem orçamento diário significa duas coisas opostas, dependendo de a campanha converter com lucro ou não; confira primeiro, depois aumente o orçamento ou pare de gastar.",
+      "category": "ppc",
+      "categories": [
+        "ppc"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "pt",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 8,
+      "url": "pt/artigos/orcamento-diario-acaba-ao-meio-dia.html",
+      "topics": [
+        "Estratégia de campanhas",
+        "Tomada de decisão",
+        "Qualidade dos dados",
+        "Escala"
+      ],
+      "translationOf": "daily-budget-runs-out-by-midday"
+    },
+    {
+      "id": "not-showing-not-indexed-not-selling-pt",
+      "title": "Por que você não encontra o seu próprio produto quando pesquisa?",
+      "summary": "Não encontrar o seu produto são quatro problemas diferentes. Descubra qual é o seu antes de mudar um único lance.",
+      "category": "ppc",
+      "categories": [
+        "ppc"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "pt",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 7,
+      "url": "pt/artigos/por-que-voce-nao-encontra-seu-produto.html",
+      "topics": [
+        "Ranqueamento orgânico",
+        "Estratégia de campanhas",
+        "Causa raiz",
+        "Lançamento de produto"
+      ],
+      "translationOf": "not-showing-not-indexed-not-selling"
+    },
+    {
+      "id": "one-keyword-per-campaign-pt",
+      "title": "Você deve colocar uma palavra-chave em cada campanha?",
+      "summary": "Uma palavra-chave por campanha compra controle de orçamento e de posicionamento, e custa orçamento por campanha. Aqui está quando o trade-off compensa.",
+      "category": "ppc",
+      "categories": [
+        "ppc"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "pt",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 8,
+      "url": "pt/artigos/uma-palavra-chave-por-campanha.html",
+      "topics": [
+        "Estratégia de campanhas",
+        "Sobreposição de palavras-chave",
+        "Tomada de decisão",
+        "Qualidade dos dados"
+      ],
+      "translationOf": "one-keyword-per-campaign"
+    },
+    {
+      "id": "ppc-day-one-or-wait-for-reviews-pt",
+      "title": "Você deve anunciar no primeiro dia ou esperar as avaliações?",
+      "summary": "Vendedores experientes discordam. Aqui estão os dois casos, mais uma regra de decisão baseada no seu estoque, na sua margem e no que você pode perder.",
+      "category": "ppc",
+      "categories": [
+        "ppc",
+        "growth"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "pt",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 7,
+      "url": "pt/artigos/anunciar-no-primeiro-dia-ou-esperar-avaliacoes.html",
+      "topics": [
+        "Lançamento de produto",
+        "Ranqueamento orgânico",
+        "Custo de oportunidade",
+        "Construção de marca"
+      ],
+      "translationOf": "ppc-day-one-or-wait-for-reviews"
+    },
+    {
+      "id": "when-to-negate-a-keyword-pt",
+      "title": "Quando você deve negativar uma palavra-chave?",
+      "summary": "Existem duas razões diferentes para parar de gastar em um termo de pesquisa, e tratar as duas como uma só causa dois erros opostos.",
+      "category": "ppc",
+      "categories": [
+        "ppc"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "pt",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 7,
+      "url": "pt/artigos/quando-negativar-uma-palavra-chave.html",
+      "topics": [
+        "Estratégia de campanhas",
+        "Sobreposição de palavras-chave",
+        "Significância estatística",
+        "Tomada de decisão"
+      ],
+      "translationOf": "when-to-negate-a-keyword"
+    },
+    {
+      "id": "when-to-stop-optimizing-a-product-pt",
+      "title": "Quando você deve parar de otimizar um produto e colocar o dinheiro em outro lugar?",
+      "summary": "Otimizar tem um ponto de parada. Estes são os critérios para decidir se o próximo dólar pertence a este produto ou ao próximo.",
+      "category": "ppc",
+      "categories": [
+        "ppc",
+        "profit"
+      ],
+      "format": "article",
+      "level": "beginner",
+      "language": "pt",
+      "author": "AmazeBase",
+      "published": "2026-09-12",
+      "minutes": 7,
+      "url": "pt/artigos/quando-parar-de-otimizar-um-produto.html",
+      "topics": [
+        "Custo de oportunidade",
+        "Alocação de capital",
+        "Margem",
+        "Tomada de decisão"
+      ],
+      "translationOf": "when-to-stop-optimizing-a-product"
     },
     {
       "id": "fba-reorder-date-velocity-pt",

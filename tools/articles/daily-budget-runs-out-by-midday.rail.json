@@ -1,0 +1,13 @@
+{
+ "_note": "Drafted 2026-09-12 for Leon's review: every number and every sentence below is taken verbatim from tools/articles/daily-budget-runs-out-by-midday.md, and only the short 'k' labels are new.",
+ "cards": [
+  {"k": "Profit at 30 days", "v": "$148.00",
+   "p": "An order costs $8.00 against the $10.00 you can afford, so each leaves $2.00. Over 30 days that is 74 × $2.00 = $148.00 of profit, earned while the campaign sat out of budget every afternoon."},
+  {"k": "Clicks before a reading", "v": "63 clicks", "tone": "amber",
+   "p": "Five orders' worth is 5 × 12.5 = 62.5, so 63 clicks. Below that you have a number, not a reading."},
+  {"k": "The monthly ceiling", "v": "$600.00",
+   "p": "On a $20.00 daily budget in a 30-day month, the month is capped at $20.00 × 30 = $600.00 either way. At the 25% setting one day may reach $25.00; at the 100% setting, $40.00."},
+  {"k": "Cost of spreading thin", "v": "15 clicks", "tone": "violet",
+   "p": "You cannot tell a keyword converting at 4% from one converting at 12% on 15 clicks. You paid $12.00 for that keyword's month and learned nothing."}
+ ]
+}

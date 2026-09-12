@@ -1,0 +1,27 @@
+{
+ "_note": "The rail's key-figure cards. The content-first source format has no rail, so these were drafted 2026-09-12 from the ENGLISH source for Leon's review: every number and every sentence below is taken VERBATIM from tools/articles/when-to-stop-optimizing-a-product.md, and only the short 'k' labels are new.",
+ "cards": [
+  {
+   "k": "What one sale leaves",
+   "v": "$6.39",
+   "p": "That $6.39 is the whole budget advertising has to fit inside."
+  },
+  {
+   "k": "The rate it needs",
+   "v": "14.1%",
+   "tone": "amber",
+   "p": "Over 400 clicks it is 10 orders, where the required 14.1% would have produced about 56. That gap is too large to be chance."
+  },
+  {
+   "k": "Three months apart",
+   "v": "$3,286.71",
+   "p": "Now the same money in two places. Take $4,000 you have not spent yet, and three months."
+  },
+  {
+   "k": "Cost of staying in",
+   "v": "−$29.61",
+   "tone": "violet",
+   "p": "What that $4,000 earns in the next product is unknown. But it is available, and it is not being spent at a known $29.61 loss per sale."
+  }
+ ]
+}

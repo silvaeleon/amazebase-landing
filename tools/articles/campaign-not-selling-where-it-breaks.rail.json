@@ -1,0 +1,27 @@
+{
+ "_note": "The rail's key-figure cards. The content-first source format has no rail, so these were drafted 2026-09-12 for Leon's review from the ENGLISH source, and every number and every sentence in them is taken verbatim from tools/articles/campaign-not-selling-where-it-breaks.md; only the short 'k' labels are new.",
+ "cards": [
+  {
+   "k": "The chain",
+   "v": "Three links",
+   "tone": "violet",
+   "p": "An advertising campaign is a chain: Amazon shows your ad, producing impressions; some shoppers click; some clicks become orders."
+  },
+  {
+   "k": "CTR against your own",
+   "v": "0.30% vs 0.70%",
+   "p": "Its CTR is 0.30% against an account CTR of 0.70%, less than half."
+  },
+  {
+   "k": "When zero means something",
+   "v": "22",
+   "tone": "amber",
+   "p": "At a 10% ad conversion rate, 22 clicks with no sale is the first point at which zero stops being an ordinary result."
+  },
+  {
+   "k": "Things to work through",
+   "v": "Six",
+   "p": "Six things you can work through in a week. Twenty you cannot."
+  }
+ ]
+}

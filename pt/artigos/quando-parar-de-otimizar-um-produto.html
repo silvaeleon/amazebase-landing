@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M8R4ZTFM6H"></script>
+<script src="/js/analytics.js"></script>
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<title>Quando voc&ecirc; deve parar de otimizar um produto e colocar o dinheiro em outro lugar? &mdash; AmazeBase</title>
+
+<meta name="description" content="Otimizar tem um ponto de parada. Estes s&atilde;o os crit&eacute;rios para decidir se o pr&oacute;ximo d&oacute;lar pertence a este produto ou ao pr&oacute;ximo.">
+<meta name="theme-color" content="#030917">
+<meta name="author" content="AmazeBase">
+
+<style>
+/* ==========================================================================
+   ARTICLE — Amazon Inventory Forecasting
+   Self-contained. Tokens mirror css/variables.css so this page can either
+   stand alone OR have this <style> block deleted once it sits inside the
+   site's normal stylesheet chain.
+========================================================================== */
+
+:root{
+  --z-nav:100;          /* navigation.css */
+  --container:1280px;   /* .container, below */
+  --t-body:15px;        /* .btn, below */
+  --bg:#030917; --bg-deep:#01050E; --bg-raise:#060D1E;
+  --surface:rgba(255,255,255,.030); --surface-2:rgba(255,255,255,.055);
+  --surface-solid:#0A1224;
+  --line:rgba(255,255,255,.070); --line-strong:rgba(255,255,255,.140);
+
+  --text:#EEF1F8; --text-2:#98A2B8; --text-3:#616C84;
+
+  --violet:#8B3BF1; --violet-soft:#A971F7; --indigo:#5B4FE6;
+  --blue:#3B82F6; --blue-soft:#7EB3FF;
+  --green:#2ED47A; --amber:#F5A524; --red:#F0435C;
+
+  --grad-brand:linear-gradient(135deg,#5B4FE6 0%,#8B3BF1 100%);
+  --grad-text:linear-gradient(90deg,#6153E6 0%,#9D50F7 55%,#C56BF5 100%);
+  --grad-card:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  --grad-rule:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,monospace;
+
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px;
+  --s5:48px; --s6:64px; --s7:96px; --s8:128px;
+
+  --gutter:clamp(20px,4vw,40px);
+  --measure:720px;
+
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
+  --sh-2:0 18px 40px rgba(0,0,0,.42);
+  --sh-brand:0 16px 40px rgba(107,63,232,.35);
+  --ease:cubic-bezier(.22,.61,.36,1); --fast:.18s; --mid:.28s;
+
+  color-scheme:dark;
+  scrollbar-color:#26304A var(--bg);
+  scrollbar-width:thin;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation:none !important; transition:none !important; }
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+::selection{ background:var(--violet); color:#fff; }
+
+.skip-link{
+  position:absolute; left:-9999px; top:0;
+  background:var(--surface-solid); color:var(--text);
+  padding:12px 20px; border-radius:0 0 var(--r-sm) 0;
+  z-index:1000; text-decoration:none; font-weight:600;
+}
+.skip-link:focus{ left:0; }
+
+:focus-visible{
+  outline:2px solid var(--violet-soft);
+  outline-offset:3px;
+  border-radius:var(--r-xs);
+}
+
+/* ---------- ambient background ------------------------------------------ */
+.bg-layer{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(760px 520px at 18% -8%,  rgba(91,79,230,.20), transparent 62%),
+    radial-gradient(680px 480px at 88% 4%,   rgba(139,59,241,.15), transparent 60%),
+    radial-gradient(900px 700px at 50% 108%, rgba(59,130,246,.09), transparent 66%);
+}
+
+.wrap{ position:relative; z-index:1; }
+
+/* ---------- shell ------------------------------------------------------- */
+.article{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:0 var(--gutter) var(--s8);
+}
+
+/* ---------- header ------------------------------------------------------ */
+.article-head{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:clamp(64px,9vw,120px) var(--gutter) clamp(32px,4vw,48px);
+}
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--violet-soft);
+  background:var(--surface); border:1px solid var(--line);
+  padding:7px 14px; border-radius:var(--r-pill);
+  margin:0 0 var(--s3);
+}
+.eyebrow::before{
+  content:""; width:6px; height:6px; border-radius:50%;
+  background:var(--violet-soft);
+  box-shadow:0 0 10px rgba(169,113,247,.9);
+}
+
+h1{
+  font-size:clamp(34px,5vw,58px);
+  line-height:1.08;
+  letter-spacing:-.025em;
+  font-weight:800;
+  margin:0 0 var(--s3);
+  text-wrap:balance;
+}
+h1 .accent{
+  background:var(--grad-text);
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+}
+
+.deck{
+  font-size:clamp(18px,2.1vw,21px);
+  line-height:1.6;
+  color:var(--text-2);
+  margin:0 0 var(--s4);
+  max-width:62ch;
+}
+
+.meta{
+  display:flex; flex-wrap:wrap; align-items:center; gap:var(--s2);
+  font-size:14px; color:var(--text-3);
+  padding-top:var(--s3);
+  border-top:1px solid var(--line);
+}
+.meta .dot{ width:3px; height:3px; border-radius:50%; background:var(--text-3); }
+
+/* ---------- table of contents ------------------------------------------- */
+.toc{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:0 0 var(--s6);
+}
+.toc h2{
+  font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--text-3); margin:0 0 var(--s3); padding:0; border:0;
+}
+.toc ol{
+  list-style:none; margin:0; padding:0;
+  counter-reset:toc;
+  display:grid; gap:2px;
+}
+.toc li{ counter-increment:toc; margin:0; }
+.toc a{
+  display:flex; gap:14px; align-items:baseline;
+  color:var(--text-2); text-decoration:none;
+  font-size:15px; line-height:1.5;
+  padding:8px 10px; margin:0 -10px;
+  border-radius:var(--r-xs);
+  transition:color var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+.toc a::before{
+  content:counter(toc,decimal-leading-zero);
+  font-family:var(--font-mono); font-size:12px; font-weight:600;
+  color:var(--text-3); flex:none; min-width:22px;
+  transition:color var(--fast) var(--ease);
+}
+.toc a:hover{ color:var(--text); background:var(--surface); }
+.toc a:hover::before{ color:var(--violet-soft); }
+
+/* ---------- body typography --------------------------------------------- */
+.article p{ margin:0 0 1.1em; color:#D5DBE9; }
+.article p.lead{ font-size:20px; color:var(--text); }
+
+.article h2{
+  font-size:clamp(26px,3.2vw,34px);
+  line-height:1.2;
+  letter-spacing:-.02em;
+  font-weight:700;
+  color:var(--text);
+  margin:var(--s7) 0 var(--s3);
+  padding-top:var(--s5);
+  border-top:1px solid var(--line);
+  scroll-margin-top:32px;
+  text-wrap:balance;
+}
+.article h2:first-of-type{ margin-top:0; }
+
+.article h2 .num{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:13px; font-weight:600; letter-spacing:.16em;
+  color:var(--violet-soft);
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
+
+.article strong{ color:var(--text); font-weight:700; }
+
+.article ul{
+  margin:0 0 1.4em;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:10px;
+}
+.article ul li{
+  position:relative;
+  padding-left:26px;
+  color:#D5DBE9;
+  line-height:1.6;
+}
+.article ul li::before{
+  content:"";
+  position:absolute; left:6px; top:.68em;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--violet);
+  box-shadow:0 0 8px rgba(139,59,241,.55);
+}
+
+/* ---------- pull quote --------------------------------------------------- */
+blockquote{
+  margin:var(--s4) 0;
+  padding:var(--s3) var(--s4);
+  border-left:2px solid var(--violet);
+  background:linear-gradient(90deg,rgba(139,59,241,.10),transparent 80%);
+  border-radius:0 var(--r-md) var(--r-md) 0;
+}
+blockquote p{
+  margin:0;
+  font-size:20px;
+  line-height:1.5;
+  font-weight:600;
+  color:var(--text);
+}
+
+/* ---------- callouts ----------------------------------------------------- */
+.callout{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:var(--s4) 0 var(--s5);
+}
+.callout .label{
+  display:block;
+  font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--text-3);
+  margin-bottom:var(--s2);
+}
+.callout p:last-child, .callout ul:last-child{ margin-bottom:0; }
+
+.formula{
+  font-family:var(--font-mono);
+  font-size:clamp(15px,2.1vw,19px);
+  font-weight:600;
+  line-height:1.6;
+  color:var(--text);
+  background:var(--bg-deep);
+  border:1px solid var(--line-strong);
+  border-radius:var(--r-md);
+  padding:var(--s3);
+  margin:0 0 var(--s3);
+  text-align:center;
+  overflow-x:auto;
+}
+.formula .op{ color:var(--violet-soft); }
+
+/* ---------- numbers strip ------------------------------------------------ */
+.figures{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:var(--s2);
+  margin:var(--s4) 0 var(--s5);
+  padding:0; list-style:none;
+}
+.figures li{ padding:0; }
+.figures li::before{ display:none; }
+.fig{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:var(--s3) var(--s2);
+  text-align:center;
+}
+.fig .v{
+  display:block;
+  font-size:28px; font-weight:800; letter-spacing:-.02em; line-height:1.1;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.fig .k{
+  display:block;
+  font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.fig.is-bad .v{ color:var(--red); }
+.fig.is-real .v{ color:var(--green); }
+
+/* ---------- divider ------------------------------------------------------ */
+.rule{
+  height:1px; border:0;
+  background:var(--grad-rule);
+  margin:var(--s6) 0;
+}
+
+/* ---------- closing CTA -------------------------------------------------- */
+.cta{
+  max-width:var(--measure);
+  margin:var(--s7) auto 0;
+  padding:clamp(32px,5vw,56px) var(--gutter);
+  text-align:center;
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-xl);
+  box-shadow:var(--sh-2);
+}
+.cta h2{
+  font-size:clamp(24px,3vw,32px);
+  font-weight:700; letter-spacing:-.02em; line-height:1.2;
+  margin:0 0 var(--s2); padding:0; border:0;
+  text-wrap:balance;
+}
+.cta p{
+  color:var(--text-2);
+  max-width:52ch;
+  margin:0 auto var(--s4);
+  font-size:17px;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--grad-brand);
+  color:#fff; text-decoration:none;
+  font-weight:600; font-size:16px;
+  padding:14px 28px;
+  border-radius:var(--r-pill);
+  box-shadow:var(--sh-brand);
+  transition:transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+.btn:hover{ transform:translateY(-2px); box-shadow:0 22px 50px rgba(107,63,232,.45); }
+.btn svg{ width:18px; height:18px; }
+
+/* ---------- responsive --------------------------------------------------- */
+@media (max-width:640px){
+  body{ font-size:17px; }
+  .article p.lead{ font-size:18px; }
+  blockquote p{ font-size:18px; }
+  .article h2{ margin-top:var(--s6); padding-top:var(--s4); }
+}
+
+/* ---------- print -------------------------------------------------------- */
+@media print{
+  .bg-layer,.toc,.cta,.skip-link{ display:none; }
+  body{ background:#fff; color:#111; font-size:12pt; }
+  .article p,.article ul li{ color:#222; }
+  .article h2{ color:#000; }
+}
+.back-link{ margin:0 0 28px; font-size:13px; }
+.back-link a{ color:var(--text-2); text-decoration:none; }
+.back-link a:hover{ color:var(--text); }
+
+/* ── HERO IMAGE ─────────────────────────────────────────────────────── */
+.hero-shot{
+  margin:0 0 52px;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  background:var(--bg-raise);
+  line-height:0;
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+.hero-shot img{ width:100%; height:auto; display:block; }
+
+/* ── MISTAKE CARDS ──────────────────────────────────────────────────── */
+.mistake{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.mistake::before{
+  content:"";
+  position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+  background:var(--amber);
+}
+.mistake h2{ margin-top:0 !important; }
+.article .mistake h2:first-of-type{ margin-top:0; }
+
+/* ── PULL QUOTES ────────────────────────────────────────────────────── */
+blockquote{
+  margin:44px 0;
+  padding:0 0 0 26px;
+  border-left:3px solid var(--amber);
+  background:none;
+}
+blockquote p{
+  font-size:23px;
+  line-height:1.45;
+  font-style:italic;
+  font-weight:600;
+  color:var(--text);
+  margin:0;
+}
+
+/* ── MID-ARTICLE STRIP ──────────────────────────────────────────────── */
+.strip{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px; flex-wrap:wrap;
+  margin:44px 0;
+  padding:26px 30px;
+  border-radius:16px;
+  background:linear-gradient(120deg,#0A1224,#131A33);
+  border:1px solid var(--line-strong);
+}
+.strip h3{ margin:0 0 6px; font-size:19px; color:var(--text); }
+.strip p{ margin:0; font-size:14px; color:var(--text-2); }
+.strip-btn{
+  flex:0 0 auto;
+  display:inline-block;
+  padding:12px 22px;
+  border-radius:10px;
+  background:var(--amber);
+  color:#1A1200;
+  font-size:14px; font-weight:700;
+  text-decoration:none;
+  transition:filter .15s ease;
+}
+.strip-btn:hover{ filter:brightness(1.08); }
+
+@media (max-width:640px){
+  .mistake{ padding:24px 20px 8px; }
+  .mistake::before{ top:20px; bottom:20px; }
+  blockquote p{ font-size:20px; }
+  .strip{ padding:22px; }
+  .strip-btn{ width:100%; text-align:center; }
+}
+
+/* ── WIDE SHELL: content + rail, so the page uses the screen ─────────── */
+.shell{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 var(--gutter);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 300px;
+  gap:64px;
+  align-items:start;
+}
+.shell > .article{ max-width:none; margin:0; padding:0 0 var(--s8); }
+
+.rail{ position:sticky; top:40px; display:flex; flex-direction:column; gap:14px; }
+.rail-card{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+  padding:20px;
+}
+.rail-k{
+  display:block; margin-bottom:10px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.rail-v{
+  display:block; margin-bottom:10px;
+  font-size:34px; line-height:1; font-weight:800; letter-spacing:-.02em;
+  color:var(--green);
+}
+.rail-v.is-amber{ color:var(--amber); }
+.rail-v.is-violet{ color:var(--violet-soft); }
+.rail-card p{ margin:0; font-size:13px; line-height:1.55; color:var(--text-2); }
+.rail-src{
+  margin:0; padding-top:14px;
+  border-top:1px solid var(--line);
+  font-size:11px; line-height:1.5; color:var(--text-3);
+}
+
+/* header + hero align to the same shell */
+.article-head, .hero-shot{ max-width:1180px; }
+
+/* ── HERO: a band, not a giant square ───────────────────────────────── */
+.hero-shot{
+  margin:0 auto 56px;
+  padding:0 var(--gutter);
+  border:0; background:none; box-shadow:none;
+  border-radius:0;
+  overflow:visible;
+}
+.hero-shot img{
+  width:100%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
+  border-radius:18px;
+  border:1px solid var(--line-strong);
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+
+/* ── THE FIX callout ────────────────────────────────────────────────── */
+.fixbox{
+  margin:22px 0 4px;
+  padding:16px 18px;
+  border-radius:12px;
+  border:1px solid rgba(46,212,122,.28);
+  background:rgba(46,212,122,.07);
+}
+.fixbox-k{
+  display:block; margin-bottom:6px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--green);
+}
+.fixbox p{ margin:0 !important; color:var(--text) !important; }
+
+@media (max-width:1080px){
+  .shell{ grid-template-columns:1fr; gap:40px; max-width:820px; }
+  .rail{ position:static; flex-direction:row; flex-wrap:wrap; }
+  .rail-card{ flex:1 1 220px; }
+  .rail-src{ flex:1 1 100%; border-top:0; padding-top:0; }
+  .article-head, .hero-shot{ max-width:820px; }
+}
+@media (max-width:640px){
+  .shell{ gap:28px; }
+}
+
+
+/* ── FIGURES CARRIED OVER FROM THE DRAFT ──────────────────────────────
+   This piece ships its own tables, charts and spec blocks. Rather than
+   import a second design system for them, the palette they were written
+   against is repointed at this site's tokens, and only their component
+   rules are carried over. --measure is deliberately absent: it collides
+   with the site's, and the ported rules should use the site's column.
+   ------------------------------------------------------------------- */
+:root{
+  --paper:var(--bg); --panel:var(--surface-solid); --panel-2:var(--surface-2);
+  --ink:var(--text); --ink-2:var(--text-2); --ink-3:var(--text-3);
+  --rule:var(--line); --rule-strong:var(--line-strong);
+  --accent:var(--violet-soft); --accent-soft:rgba(139,59,241,.16);
+  --cost:var(--text-3);
+  --good:var(--green);  --good-soft:rgba(46,212,122,.10);
+  --warn:var(--amber);  --warn-soft:rgba(245,165,36,.10);
+  --crit:var(--red);    --crit-soft:rgba(240,67,92,.10);
+  --f-display:var(--font); --f-body:var(--font);
+  --f-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+article p{margin:0 0 1.15rem}
+article ul, article ol{margin:0 0 1.3rem;padding-left:1.15rem}
+article li{margin-bottom:.5rem}
+article li::marker{color:var(--ink-3)}
+strong{font-weight:600}
+.fix{background:var(--panel);border:1px solid var(--rule);border-left:3px solid var(--accent);padding:1.1rem 1.3rem;margin:1.9rem 0}
+.fix .k{display:block;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:.45rem}
+.fix p{margin:0}
+.fix p+p{margin-top:.7rem}
+pre{font-family:var(--f-mono);font-size:.83rem;line-height:1.75;background:var(--panel-2);border:1px solid var(--rule);padding:1rem 1.1rem;margin:1.6rem 0;overflow-x:auto}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--panel-2);padding:.1em .35em;border-radius:2px}
+pre code{background:none;padding:0;font-size:1em}
+figure h4{margin:0 0 .2rem;font-size:1rem;font-weight:600}
+figure .sub{margin:0 0 .9rem;font-size:.85rem;color:var(--ink-2)}
+figure svg{display:block;width:100%;height:auto}
+.ax{fill:var(--ink-3);font-family:"IBM Plex Mono",monospace;font-size:9.5px}
+.val{fill:var(--ink);font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:500}
+.lbl{fill:var(--ink-2);font-family:"IBM Plex Sans",sans-serif;font-size:10px}
+.lbl-b{fill:var(--ink);font-family:"IBM Plex Sans",sans-serif;font-size:10px;font-weight:600}
+.grid{stroke:var(--rule);stroke-width:1}
+.levels{list-style:none;padding:0;margin:1.5rem 0 2rem;border-top:1px solid var(--rule)}
+.levels li{margin:0;display:grid;grid-template-columns:2.4rem 1fr auto;gap:.9rem;padding:.85rem .2rem;border-bottom:1px solid var(--rule);align-items:baseline}
+.levels .n{font-family:var(--f-mono);font-size:.72rem;color:var(--accent)}
+.levels b{display:block;font-weight:600}
+.levels .d{color:var(--ink-2);font-size:.93rem}
+.levels .q{font-family:var(--f-mono);font-size:.78rem;color:var(--ink-3);text-align:right;white-space:nowrap}
+@media (max-width:620px){
+.levels li{grid-template-columns:2.4rem 1fr}
+.levels .q{grid-column:2;text-align:left}
+}
+.kinds{display:grid;gap:.55rem;margin:1.4rem 0 1.9rem}
+.kind{display:grid;grid-template-columns:6.5rem 1fr;gap:1rem;align-items:baseline;padding:.7rem .9rem;background:var(--panel);border:1px solid var(--rule)}
+.kind .lab{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
+.kind.m .lab{color:var(--good)}
+.kind.a .lab{color:var(--accent)}
+.kind.s .lab{color:var(--warn)}
+.kind .txt{font-size:.95rem;color:var(--ink-2)}
+.tblwrap{overflow-x:auto;margin:1.6rem 0}
+table{border-collapse:collapse;width:100%;font-size:.92rem;min-width:26rem}
+caption{caption-side:bottom;text-align:left;font-size:.8rem;color:var(--ink-3);padding-top:.7rem;line-height:1.5}
+th, td{padding:.55rem .7rem;text-align:right;border-bottom:1px solid var(--rule);font-variant-numeric:tabular-nums}
+th:first-child, td:first-child{text-align:left}
+thead th{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500;border-bottom:1px solid var(--rule-strong)}
+tbody tr:last-child td{border-bottom:1px solid var(--rule-strong);font-weight:600}
+td.neg{color:var(--ink-2)}
+.faq details{border-bottom:1px solid var(--rule);padding:.9rem 0}
+.faq summary{cursor:pointer;font-weight:600;list-style:none;display:flex;gap:.75rem;align-items:flex-start}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::before{content:"+";font-family:var(--f-mono);color:var(--accent);font-weight:400;line-height:1.6}
+.faq details[open] summary::before{content:"–"}
+.faq p{margin:.65rem 0 0 1.5rem;color:var(--ink-2)}
+.faq summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* ── PIECES THIS ARTICLE ADDS ─────────────────────────────────────────
+   h3, tables, the FAQ and the carried-over figure. The 44 articles that
+   came before this one had no h3 and no tables, so the core stylesheet
+   never needed rules for them.
+   ------------------------------------------------------------------- */
+.article h3{
+  margin:var(--s5) 0 var(--s2);
+  font-size:clamp(19px,1.6vw,22px);
+  font-weight:650; letter-spacing:-.01em; color:var(--text);
+}
+.tblwrap{ margin:var(--s4) 0; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.article table{
+  width:100%; border-collapse:collapse;
+  font-size:.94rem; line-height:1.5;
+}
+.article th, .article td{
+  padding:10px 14px; text-align:left; vertical-align:top;
+  border-bottom:1px solid var(--line);
+}
+.article th{
+  font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+  color:var(--text-3); border-bottom-color:var(--line-strong); white-space:nowrap;
+}
+.article tbody tr:last-child td{ border-bottom:0; }
+.art-diagram{ margin:var(--s4) 0; }
+.art-diagram svg{ width:100%; height:auto; display:block; }
+.art-diagram .sub, .art-diagram figcaption{
+  margin-top:10px; font-size:var(--t-micro,.82rem); color:var(--text-3); line-height:1.5;
+}
+.faq{ margin:var(--s4) 0; }
+.faq details{
+  border:1px solid var(--line); border-radius:var(--r-md);
+  background:var(--surface); padding:14px 18px; margin-bottom:10px;
+}
+.faq summary{
+  cursor:pointer; font-weight:600; color:var(--text);
+  list-style:none; padding-right:24px; position:relative;
+}
+.faq summary::-webkit-details-marker{ display:none; }
+.faq summary::after{
+  content:"+"; position:absolute; right:0; top:-2px;
+  font-size:19px; line-height:1; color:var(--violet-soft);
+}
+.faq details[open] summary::after{ content:"\2013"; }
+.faq details p{ margin:10px 0 0 !important; color:var(--text-2); }
+
+/* ── KEEPING WIDE THINGS INSIDE A PHONE ───────────────────────────────
+   These pieces carry long monospace formulas, wide comparison tables and
+   the draft's scenario rows. Each has a min-content width larger than a
+   390px screen, and the shell's mobile track is `1fr` - which means
+   minmax(auto,1fr), so a single one of them widens the whole column and
+   the entire page scrolls sideways. Cap the track, then let each wide
+   block scroll inside itself instead of pushing the article around.
+   ------------------------------------------------------------------- */
+@media (max-width:1080px){
+  .shell{ grid-template-columns:minmax(0,1fr); }
+}
+.shell > .article{ min-width:0; }
+.article > *{ max-width:100%; }
+.formula{ overflow-x:auto; }
+.formula code{ white-space:pre; }
+.tblwrap{ min-width:0; max-width:100%; }
+.scn, .scnrow, .bands, .band, .inputs, .facts, .spec, .grid{ min-width:0; max-width:100%; }
+@media (max-width:640px){
+  .scnrow{ display:block; }
+  .scnrow > *{ display:block; }
+}
+
+/* ── SITE HEADER ──────────────────────────────────────────────────────
+   The header markup is the site's, and navigation.css styles it. These are
+   the pieces it also leans on from base.css, which this page does not load.
+   Every selector is scoped to the header or the mobile drawer: an article is
+   built out of bare a/p/h3/h4, and base.css restyles all of those.
+
+   The scope is written with :where() so it adds no specificity. Scoped the
+   plain way, `.site-header .btn` is (0,2,0) - the same weight as
+   navigation.css's own `.nav-actions .btn--quiet` and `.nav-mobile a`, and
+   loaded after them, so these copies quietly outranked the real rules: the
+   hamburger got pushed off a 390px screen and the drawer buttons lost their
+   sizing. Inside :where() each rule keeps exactly the weight it has in
+   base.css, which is the weight navigation.css was written against.
+   ------------------------------------------------------------------- */
+/* The header inherits from <body>, and this page's body is set for reading:
+   18px at 1.72. The site's is var(--t-body) at 1.6. Left alone, every element
+   in the bar came out a size and a half too tall. Reset it at the root of the
+   header so everything inside inherits the site's figures instead. */
+:where(.site-header),
+:where(.nav-mobile){
+  font-size:var(--t-body);
+  line-height:1.6;
+}
+
+:where(.site-header) .container{
+  width:min(100%,var(--container));
+  margin-inline:auto;
+  padding-inline:var(--gutter);
+  position:relative;
+}
+:where(.site-header, .nav-mobile) .brand{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:19px; font-weight:700; letter-spacing:-.01em;
+  color:var(--text); text-decoration:none;
+}
+:where(.site-header) .brand-mark{ width:26px; height:26px; flex:none; }
+:where(.site-header) .icon,    :where(.nav-mobile) .icon{    width:20px; height:20px; flex:none; stroke-width:1.7; }
+:where(.site-header) .icon-sm, :where(.nav-mobile) .icon-sm{ width:16px; height:16px; flex:none; stroke-width:1.8; }
+/* margin-block only: navigation.css centres this with margin-inline:auto,
+   and a shorthand `margin:0` here would outrank it and shove the menu
+   over against the brand. */
+:where(.site-header) .nav-menu{ list-style:none; padding:0; margin-block:0; }
+.site-header a, .nav-mobile a{ text-decoration:none; }
+/* base.css resets these globally; this page does not load it. Without the
+   padding reset the UA's 1px 6px survives and the 44px tap target
+   responsive.css asks for comes out 40px. */
+:where(.site-header) .nav-toggle{ font:inherit; cursor:pointer; padding:0; }
+:where(.site-header) svg, :where(.nav-mobile) svg{ display:block; }
+
+:where(.site-header) .btn, :where(.nav-mobile) .btn{
+  /* This page defines its own .btn - a filled gradient pill used in the body -
+     and it reaches the header buttons too. base.css's .btn sets none of these,
+     so the variant classes below are what should decide them. Cleared here or
+     "Log in", which is .btn--quiet and meant to read as plain text, arrives
+     wearing the brand gradient. */
+  background:none;
+  box-shadow:none;
+  color:inherit;
+  text-decoration:none;
+  position:relative;
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  padding:13px 22px;
+  border-radius:var(--r-sm);
+  font-size:var(--t-body); font-weight:600; line-height:1;
+  white-space:nowrap;
+  transition:transform var(--fast) var(--ease),
+             box-shadow var(--fast) var(--ease),
+             background var(--fast) var(--ease),
+             border-color var(--fast) var(--ease);
+}
+:where(.site-header) .btn:active, :where(.nav-mobile) .btn:active{ transform:translateY(0) scale(.99); }
+:where(.site-header) .btn--primary, :where(.nav-mobile) .btn--primary{
+  background:var(--grad-brand); color:#fff;
+  box-shadow:var(--sh-brand); overflow:hidden;
+}
+:where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{
+  content:""; position:absolute; top:0; left:-130%;
+  width:55%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);
+  transition:left .65s var(--ease);
+}
+:where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{
+  transform:translateY(-2px); box-shadow:0 22px 52px rgba(107,63,232,.45);
+}
+:where(.site-header) .btn--primary:hover::after, :where(.nav-mobile) .btn--primary:hover::after{ left:150%; }
+:where(.site-header) .btn--quiet, :where(.nav-mobile) .btn--quiet{ color:var(--text-2); padding:13px 8px; }
+:where(.site-header) .btn--quiet:hover, :where(.nav-mobile) .btn--quiet:hover{ color:var(--text); }
+:where(.nav-mobile) .btn--block{ width:100%; }
+
+@media (prefers-reduced-motion:reduce){
+  :where(.site-header) .btn, :where(.nav-mobile) .btn,
+  :where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{ transition:none; }
+  :where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{ transform:none; }
+}
+
+/* navigation.css hides these two buttons on small screens so the hamburger
+   fits. Its selectors are (0,2,0) and so is `:where(.site-header) .btn` above, which
+   is loaded after it - equal weight, later wins, and display:inline-flex beat
+   display:none. The hamburger ended up 107px off the right of a 390px screen
+   with no way to open the menu. Restating the hide at (0,3,0) settles it.
+   The breakpoints are read out of navigation.css at build time, not typed. */
+
+/* Clear the fixed site header. Reserving its height on .wrap keeps the gap
+   between the bar and the eyebrow the same as the gap used to be between the
+   top of the window and the eyebrow. */
+.wrap{ padding-top:70px; }
+@media (max-width:640px){ .wrap{ padding-top:64px; } }
+
+/* Anchor targets. .article h2 carried scroll-margin-top:32px, which was right
+   when this page had no fixed bar: 32px was breathing room. Now a jump from
+   the contents list lands 38px underneath the header. responsive.css puts the
+   rest of the site on 84px for exactly this reason; the article's own rule is
+   (0,2,0) and outranks it, so it is restated here at the same weight. */
+.article h2{ scroll-margin-top:84px; }
+
+/* The back-link sat hard against the left edge of the window, in line with
+   nothing. That was always true, but with the nav above it the thing reads as
+   stranded rather than as a heading. Same shell as .article-head, so it lines
+   up with the title beneath it and behaves as the breadcrumb it is. */
+.back-link{
+  max-width:1180px;
+  margin-inline:auto;      /* the rule above keeps its 28px bottom margin */
+  padding:22px var(--gutter) 0;
+}
+/* ── WORKED-SUM ROWS: labelled rows, one per line, value right-aligned.
+   Copied from attribution-vs-incrementality.html (.report / .report-rows);
+   added by tools/build_article.py for content-first sources. ──────────── */
+.report{
+  margin:0 0 var(--s3);
+  border:1px solid var(--line-strong);
+  border-radius:16px;
+  overflow:hidden;
+}
+/* scoped under .article ul: this template's `.article ul` / `.article ul li::before`
+   (grid gap, 26px indent, violet dot) otherwise outrank these rules */
+.article ul.report-rows{ list-style:none; margin:0; padding:0; display:block; gap:0; }
+.article ul.report-rows li{
+  display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+  margin:0; padding:14px 22px;
+  border-bottom:1px solid var(--line);
+  font-size:15px; line-height:1.5; color:var(--text-2);
+}
+.article ul.report-rows li::before{ content:none; }
+.article ul.report-rows li:last-child{ border-bottom:0; }
+.article ul.report-rows .v{ color:var(--text); font-weight:700; font-variant-numeric:tabular-nums; white-space:nowrap; }
+
+/* ── A numbered list inside a callout ("What to do" steps). ─────────────── */
+.fixbox ol{ margin:4px 0 0; padding-left:1.3em; color:var(--text); }
+.fixbox ol li{ margin:6px 0; padding-left:2px; }
+</style>
+<link rel="stylesheet" href="/css/navigation.css">
+<link rel="stylesheet" href="/css/responsive.css">
+<link rel="stylesheet" href="/css/site-footer.css">
+<!-- SEO:START -->
+<link rel="canonical" href="https://amazebase.pro/pt/artigos/quando-parar-de-otimizar-um-produto.html">
+<link rel="alternate" hreflang="en" href="https://amazebase.pro/articles/when-to-stop-optimizing-a-product.html">
+<link rel="alternate" hreflang="es" href="https://amazebase.pro/es/articulos/cuando-dejar-de-optimizar-un-producto.html">
+<link rel="alternate" hreflang="pt" href="https://amazebase.pro/pt/artigos/quando-parar-de-otimizar-um-produto.html">
+<link rel="alternate" hreflang="x-default" href="https://amazebase.pro/articles/when-to-stop-optimizing-a-product.html">
+<meta property="og:site_name" content="AmazeBase">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://amazebase.pro/pt/artigos/quando-parar-de-otimizar-um-produto.html">
+<meta property="og:title" content="Quando voc&ecirc; deve parar de otimizar um produto e colocar o dinheiro em outro lugar?">
+<meta property="og:description" content="Otimizar tem um ponto de parada. Estes s&atilde;o os crit&eacute;rios para decidir se o pr&oacute;ximo d&oacute;lar pertence a este produto ou ao pr&oacute;ximo.">
+<meta property="og:image" content="https://amazebase.pro/assets/img/og/og-when-to-stop-optimizing-a-product.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="O mesmo dinheiro comparado em dois usos, este produto e o pr&oacute;ximo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Quando voc&ecirc; deve parar de otimizar um produto e colocar o dinheiro em outro lugar?">
+<meta name="twitter:description" content="Otimizar tem um ponto de parada. Estes s&atilde;o os crit&eacute;rios para decidir se o pr&oacute;ximo d&oacute;lar pertence a este produto ou ao pr&oacute;ximo.">
+<meta name="twitter:image" content="https://amazebase.pro/assets/img/og/og-when-to-stop-optimizing-a-product.jpg">
+<meta name="twitter:image:alt" content="O mesmo dinheiro comparado em dois usos, este produto e o pr&oacute;ximo">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://amazebase.pro/#organization",
+      "name": "AmazeBase",
+      "legalName": "Silbros Trading LLC",
+      "url": "https://amazebase.pro/",
+      "email": "contact@silbrostrading.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://amazebase.pro/assets/img/og/og-home.jpg",
+        "width": 1200,
+        "height": 630
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Albuquerque",
+        "addressRegion": "NM",
+        "addressCountry": "US"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://amazebase.pro/#website",
+      "url": "https://amazebase.pro/",
+      "name": "AmazeBase",
+      "publisher": {
+        "@id": "https://amazebase.pro/#organization"
+      },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "Article",
+      "@id": "https://amazebase.pro/pt/artigos/quando-parar-de-otimizar-um-produto.html#article",
+      "isPartOf": {
+        "@id": "https://amazebase.pro/#website"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://amazebase.pro/pt/artigos/quando-parar-de-otimizar-um-produto.html"
+      },
+      "headline": "Quando você deve parar de otimizar um produto e colocar o dinheiro em outro lugar?",
+      "description": "Otimizar tem um ponto de parada. Estes são os critérios para decidir se o próximo dólar pertence a este produto ou ao próximo.",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://amazebase.pro/assets/img/og/og-when-to-stop-optimizing-a-product.jpg",
+        "width": 1200,
+        "height": 630
+      },
+      "datePublished": "2026-09-12",
+      "dateModified": "2026-09-12",
+      "author": {
+        "@id": "https://amazebase.pro/#organization"
+      },
+      "publisher": {
+        "@id": "https://amazebase.pro/#organization"
+      },
+      "inLanguage": "pt",
+      "keywords": [
+        "Custo de oportunidade",
+        "Alocação de capital",
+        "Margem",
+        "Tomada de decisão"
+      ],
+      "timeRequired": "PT7M"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Início",
+          "item": "https://amazebase.pro/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Central de Conhecimento",
+          "item": "https://amazebase.pro/pt/recursos.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Quando você deve parar de otimizar um produto e colocar o dinheiro em outro lugar?"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- SEO:END -->
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Pular para o conte&uacute;do</a>
+<div class="bg-layer" aria-hidden="true"></div>
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+</defs>
+  <symbol id="i-chevron"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-menu"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-mega"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l7 4V5L8 9H4zM19 9a4 4 0 010 6"/></symbol>
+  <symbol id="i-dollar"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5v19M16.5 6.5H10a3.2 3.2 0 000 6.4h4a3.2 3.2 0 010 6.4H7"/></symbol>
+  <symbol id="i-stack"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/></symbol>
+  <symbol id="i-box"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></symbol>
+  <symbol id="i-search"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></symbol>
+  <symbol id="i-chart"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-trend"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></symbol>
+  <symbol id="i-db"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3.2"/><path d="M4 6v12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2V6M4 12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2"/></symbol>
+  <symbol id="i-shield"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-9.5V5.5L12 2.5 4 5.5V12.5C4 18.5 12 22 12 22z"/></symbol>
+  <symbol id="i-spark"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+  <symbol id="i-rocket"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15s-1.5 3 1 5.5S11 20 11 20M14.5 4.5c3-2 6-1 6-1s1 3-1 6l-6 6-5-5 6-6z"/><circle cx="15" cy="9" r="1.4"/></symbol>
+  <symbol id="i-case"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8.5 7V5a2 2 0 012-2h3a2 2 0 012 2v2M2.5 12.5h19"/></symbol>
+  <symbol id="i-info"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></symbol>
+  <symbol id="i-msg"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-8 8 8.6 8.6 0 01-3.6-.8L3 21l1.8-6.4A8 8 0 1121 12z"/></symbol>
+</svg>
+
+<header class="site-header">
+<div class="container">
+<nav class="nav" aria-label="Principal">
+
+  <a href="/pt/" class="brand" aria-label="P&aacute;gina inicial da AmazeBase">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+      <path d="M16 17.6l4.4 8.2h-8.8z" fill="#C56BF5" opacity=".85"/>
+    </svg>
+    <span data-brand>AmazeBase</span>
+  </a>
+
+  <ul class="nav-menu">
+    <li class="nav-item">
+      <a class="nav-link" href="/pt/produto.html#modules">Produto <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop nav-drop--wide">
+        <a href="/pt/produto.html#advertising"><svg class="icon-sm"><use href="#i-mega"/></svg>Publicidade e PPC</a>
+        <a href="/pt/produto.html#financials"><svg class="icon-sm"><use href="#i-dollar"/></svg>Finan&ccedil;as</a>
+        <a href="/pt/produto.html#ledger"><svg class="icon-sm"><use href="#i-stack"/></svg>Ledger</a>
+        <a href="/pt/produto.html#inventory"><svg class="icon-sm"><use href="#i-box"/></svg>Estoque</a>
+        <a href="/pt/produto.html#research"><svg class="icon-sm"><use href="#i-search"/></svg>Pesquisa de produtos</a>
+        <a href="/pt/produto.html#simulations"><svg class="icon-sm"><use href="#i-chart"/></svg>Simula&ccedil;&otilde;es</a>
+        <a href="/pt/produto.html#sales"><svg class="icon-sm"><use href="#i-trend"/></svg>Vendas</a>
+        <a href="/pt/produto.html#data"><svg class="icon-sm"><use href="#i-db"/></svg>Dados e sincroniza&ccedil;&atilde;o</a>
+        <a href="/pt/produto.html#security"><svg class="icon-sm"><use href="#i-shield"/></svg>Seguran&ccedil;a</a>
+        <a href="/pt/produto.html#assistant"><svg class="icon-sm"><use href="#i-spark"/></svg>Assistente de IA &mdash; em breve</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/pt/solucoes.html">Solu&ccedil;&otilde;es <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/pt/solucoes.html#beginners"><svg class="icon-sm"><use href="#i-rocket"/></svg>Iniciantes</a>
+        <a href="/pt/solucoes.html#experts"><svg class="icon-sm"><use href="#i-dollar"/></svg>Vendedores experientes</a>
+        <a href="/pt/solucoes.html#agencies"><svg class="icon-sm"><use href="#i-case"/></svg>Ag&ecirc;ncias</a>
+      </div>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="/pt/#pricing">Pre&ccedil;os</a></li>
+    <li class="nav-item"><a class="nav-link" href="/pt/recursos.html">Recursos</a></li>
+    <li class="nav-item">
+      <a class="nav-link" href="/pt/sobre.html">Empresa <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/pt/sobre.html"><svg class="icon-sm"><use href="#i-info"/></svg>Sobre</a>
+        <a href="/pt/contato.html"><svg class="icon-sm"><use href="#i-msg"/></svg>Contato</a>
+      </div>
+    </li>
+  </ul>
+
+  <div class="nav-actions">
+    <div class="nav-item lang-switch">
+      <button class="lang-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Idioma / Language">
+        PT <svg class="chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+      </button>
+      <div class="nav-drop lang-drop">
+        <a href="/articles/when-to-stop-optimizing-a-product.html" hreflang="en" lang="en"><span class="lc">EN</span>English</a>
+        <a href="/es/articulos/cuando-dejar-de-optimizar-un-producto.html" hreflang="es" lang="es"><span class="lc">ES</span>Español</a>
+        <a href="/pt/artigos/quando-parar-de-otimizar-um-produto.html" hreflang="pt" lang="pt" aria-current="true"><span class="lc">PT</span>Português</a>
+      </div>
+    </div>
+    <a class="btn btn--quiet" href="https://analytics.amazebase.pro/login">Entrar</a>
+    <a class="btn btn--primary" href="/pt/#waitlist" data-magnetic>Entre na lista de espera</a>
+    <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navMobile">
+      <svg class="icon"><use href="#i-menu"/></svg>
+    </button>
+  </div>
+
+</nav>
+</div>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="/pt/produto.html#modules">Produto</a>
+  <a href="/pt/solucoes.html">Solu&ccedil;&otilde;es</a>
+  <a href="/pt/#pricing">Pre&ccedil;os</a>
+  <a href="/pt/recursos.html">Recursos</a>
+  <a href="/pt/sobre.html">Sobre</a>
+  <a href="/pt/contato.html">Contato</a>
+  <a class="btn btn--quiet btn--block" href="https://analytics.amazebase.pro/login">Entrar</a>
+  <a class="btn btn--primary btn--block" href="/pt/#waitlist">Entre na lista de espera</a>
+</div>
+</header>
+
+<div class="wrap">
+<p class="back-link"><a href="/pt/recursos.html">&larr; Central de Conhecimento</a></p>
+<header class="article-head">
+  <p class="eyebrow">Publicidade e PPC</p>
+  <h1>Quando voc&ecirc; deve parar de otimizar um <span class="accent">produto e colocar o dinheiro em outro lugar?</span></h1>
+  <p class="deck">Otimizar tem um ponto de parada. Estes s&atilde;o os crit&eacute;rios para decidir se o pr&oacute;ximo d&oacute;lar pertence a este produto ou ao pr&oacute;ximo.</p>
+  <p class="meta">
+    <span>AmazeBase</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span><time datetime="2026-09-12">12 de setembro de 2026</time></span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>7&nbsp;min de leitura</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>Publicidade e PPC</span>
+  </p>
+</header>
+
+<!-- HERO IMAGE PLACEHOLDER. assets/img/hero-when-to-stop-optimizing-a-product.webp is a stand-in at 1672x941 until the real
+     picture exists: replace that file, keep the name and this alt text, then run tools/build_og.py.
+     Tracked with the other awaiting-replacement heroes in HANDOVER.md section 6 item 7. -->
+<figure class="hero-shot">
+  <img src="/assets/img/hero-when-to-stop-optimizing-a-product.webp"
+       alt="O mesmo dinheiro comparado em dois usos, este produto e o pr&oacute;ximo"
+       width="1672" height="941" loading="eager" decoding="async">
+</figure>
+
+<div class="shell">
+<main id="main" class="article">
+  <p class="lead">Existe um guia para quase toda forma de melhorar um produto: baixar o lance, reescrever o t&iacute;tulo, trocar a imagem principal, negativar os termos de pesquisa fracos. Existem pouqu&iacute;ssimos guias para decidir que a melhoria acabou.</p>
+  <nav class="toc" aria-labelledby="toc-title">
+    <h2 id="toc-title">O que voc&ecirc; vai encontrar neste guia</h2>
+    <ol>
+      <li><a href="#s1">Por que o dinheiro que eu j&aacute; gastei n&atilde;o faz parte desta decis&atilde;o?</a></li>
+      <li><a href="#s2">O que eu preciso descartar antes de decidir que o problema &eacute; o produto?</a></li>
+      <li><a href="#s3">Quais s&atilde;o os crit&eacute;rios para parar?</a></li>
+      <li><a href="#s4">Como eu comparo gastar neste produto com gastar no pr&oacute;ximo?</a></li>
+      <li><a href="#s5">Eu tenho que escolher entre continuar exatamente como estou e parar completamente?</a></li>
+      <li><a href="#s6">Eu posso tomar essa decis&atilde;o enquanto o produto est&aacute; sem estoque?</a></li>
+    </ol>
+  </nav>
+  <p>Ent&atilde;o os vendedores continuam. Toda semana tem mais uma coisa para testar, e o dinheiro j&aacute; gasto parece um motivo para continuar gastando.</p>
+  <p>Este artigo d&aacute; crit&eacute;rios para essa decis&atilde;o e um jeito de aplic&aacute;-los; s&oacute; os seus pr&oacute;prios n&uacute;meros podem dizer o que concluir. Uma coisa para resolver antes: um produto que n&atilde;o funciona &eacute; informa&ccedil;&atilde;o que voc&ecirc; pagou, e o capital que ele segura est&aacute; parado, n&atilde;o perdido.</p>
+  <h2 id="s1"><span class="num">01</span>Por que o dinheiro que eu j&aacute; gastei n&atilde;o faz parte desta decis&atilde;o?</h2>
+  <p>Suponha que voc&ecirc; colocou $6,000 em um produto: o pedido de compra, o frete, quatro meses de gasto com an&uacute;ncios. Nada disso pode ser trazido de volta por nada que voc&ecirc; escolher hoje. Continuar n&atilde;o recupera esse dinheiro; parar n&atilde;o o destr&oacute;i. Ele se foi nos dois futuros, o que o torna in&uacute;til como evid&ecirc;ncia: um n&uacute;mero id&ecirc;ntico em todo futuro n&atilde;o consegue dizer qual futuro escolher.</p>
+  <div class="fixbox">
+    <span class="fixbox-k">A distin&ccedil;&atilde;o</span>
+    <p>O dinheiro j&aacute; gasto se chama custo irrecuper&aacute;vel, e &eacute; o &uacute;nico tipo de custo que nunca pertence a uma decis&atilde;o. O que pertence &eacute; o pr&oacute;ximo d&oacute;lar: o dinheiro que voc&ecirc; ainda n&atilde;o gastou e poderia gastar em outro lugar. Os vendedores respondem &agrave; primeira pergunta quando queriam responder &agrave; segunda.</p>
+  </div>
+  <div class="fixbox">
+    <span class="fixbox-k">O teste</span>
+    <p>Fa&ccedil;a a pergunta na forma que tem resposta. N&atilde;o &ldquo;ser&aacute; que eu j&aacute; gastei demais para parar agora?&rdquo;, que n&atilde;o tem nenhuma. Pergunte: se eu tivesse esse dinheiro hoje e nenhum hist&oacute;rico com este produto, eu colocaria ele aqui?</p>
+  </div>
+  <p>Isto n&atilde;o &eacute; um argumento a favor de parar. Muitos produtos merecem o pr&oacute;ximo d&oacute;lar. &Eacute; um argumento a favor de decidir com os n&uacute;meros que valem.</p>
+  <h2 id="s2"><span class="num">02</span>O que eu preciso descartar antes de decidir que o problema &eacute; o produto?</h2>
+  <p>Um resultado ruim n&atilde;o diz nada sobre o produto at&eacute; voc&ecirc; saber que o produto foi testado. Muitas vezes ele n&atilde;o foi, e a corrente que vai do an&uacute;ncio at&eacute; a venda quebrou antes.</p>
+  <div class="fixbox">
+    <span class="fixbox-k">Pergunte assim</span>
+    <ol>
+      <li>Os an&uacute;ncios chegaram a ser exibidos? Confira as impress&otilde;es no Campaign Manager. Quase nenhuma significa que o lance estava baixo demais ou que a campanha n&atilde;o estava eleg&iacute;vel, e nada foi testado.</li>
+      <li>Os cliques chegaram? Impress&otilde;es com pouqu&iacute;ssimos cliques &eacute; uma pergunta sobre o que o comprador v&ecirc; antes de clicar: imagem principal, pre&ccedil;o, avalia&ccedil;&atilde;o em estrelas, t&iacute;tulo.</li>
+      <li>O listing teve uma chance justa? Uma imagem principal que n&atilde;o mostra o que a coisa &eacute;, ou um pre&ccedil;o bem acima das alternativas vis&iacute;veis, d&aacute; um resultado do listing, n&atilde;o um resultado do produto.</li>
+      <li>Ele tinha avalia&ccedil;&atilde;o? Um listing sem avalia&ccedil;&otilde;es converte pior do que o mesmo listing com vinte, e essa lacuna n&atilde;o &eacute; o produto.</li>
+      <li>Ele ficou com estoque o tempo todo? Qualquer per&iacute;odo que contenha uma ruptura de estoque n&atilde;o &eacute; evid&ecirc;ncia.</li>
+    </ol>
+  </div>
+  <div class="fixbox">
+    <span class="fixbox-k">A armadilha</span>
+    <p>N&atilde;o use unit session percentage do seu Business Reports como a taxa de convers&atilde;o por tr&aacute;s de nada disso. O denominador dele s&atilde;o todas as sess&otilde;es, visitas org&acirc;nicas inclu&iacute;das, e os cliques de an&uacute;ncios costumam converter pior, ent&atilde;o o n&uacute;mero sai alto e voc&ecirc; conclui que o produto converte bem quando o seu tr&aacute;fego de an&uacute;ncios n&atilde;o converte. Use a taxa de convers&atilde;o de an&uacute;ncios: pedidos atribu&iacute;dos ao an&uacute;ncio divididos pelos cliques, do Campaign Manager, s&oacute; tr&aacute;fego de an&uacute;ncios.</p>
+  </div>
+  <!-- FIGURE GOES HERE. Drop the image in as assets/img/fig-when-to-stop-optimizing-a-product-1.webp, uncomment:
+<figure class="art-figure">
+  <img src="/assets/img/fig-when-to-stop-optimizing-a-product-1.webp"
+       alt="As verifica&ccedil;&otilde;es que precisam passar antes de um resultado contar como evid&ecirc;ncia sobre o produto"
+       loading="lazy" decoding="async">
+</figure>
+-->
+  <h2 id="s3"><span class="num">03</span>Quais s&atilde;o os crit&eacute;rios para parar?</h2>
+  <p>Quatro crit&eacute;rios. Eles n&atilde;o s&atilde;o uma nota e n&atilde;o precisam ser todos verdadeiros. Qualquer um deles, medido ao longo de um per&iacute;odo justo, move a decis&atilde;o de otimizar para alocar.</p>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>Crit&eacute;rio</th><th>Como medir</th><th>Onde os n&uacute;meros vivem</th></tr></thead>
+      <tbody>
+        <tr><td>A contribui&ccedil;&atilde;o por unidade &eacute; zero ou quase zero antes de qualquer publicidade</td><td>Pre&ccedil;o de venda, menos as taxas efetivamente descontadas, menos o custo total de importa&ccedil;&atilde;o (landed cost) por unidade, menos uma provis&atilde;o para devolu&ccedil;&otilde;es</td><td>Taxas: o detalhe da transa&ccedil;&atilde;o de um pedido liquidado, na se&ccedil;&atilde;o de Pagamentos do Seller Central. Custo total de importa&ccedil;&atilde;o: as suas pr&oacute;prias notas de fornecedor, frete, alf&acirc;ndega e transporte terrestre. Taxa de devolu&ccedil;&atilde;o: o seu relat&oacute;rio de devolu&ccedil;&otilde;es de clientes do FBA</td></tr>
+        <tr><td>A taxa de convers&atilde;o de an&uacute;ncios fica muito abaixo da taxa que este produto precisa, ao longo de cliques suficientes</td><td>Pedidos atribu&iacute;dos ao an&uacute;ncio divididos pelos cliques, contra o seu CPC m&eacute;dio dividido pela contribui&ccedil;&atilde;o por unidade</td><td>Campaign Manager, s&oacute; tr&aacute;fego de an&uacute;ncios, para um intervalo de datas que voc&ecirc; escolhe</td></tr>
+        <tr><td>As vendas totais n&atilde;o cresceram ao longo de meses de gasto com an&uacute;ncios sustentado</td><td>Unidades pedidas por m&ecirc;s, m&ecirc;s contra m&ecirc;s, junto do gasto com an&uacute;ncios dos mesmos meses</td><td>Unidades: Business Reports, o relat&oacute;rio de vendas e tr&aacute;fego da p&aacute;gina de detalhes por ASIN filho, todo o tr&aacute;fego. Gasto com an&uacute;ncios: Campaign Manager, s&oacute; tr&aacute;fego de an&uacute;ncios</td></tr>
+        <tr><td>O capital que est&aacute; no estoque tem um uso melhor</td><td>A compara&ccedil;&atilde;o do pr&oacute;ximo d&oacute;lar no exemplo pr&aacute;tico abaixo</td><td>Os seus pr&oacute;prios n&uacute;meros</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="fixbox">
+    <span class="fixbox-k">O limite</span>
+    <p>Nenhum relat&oacute;rio da Amazon diz qual taxa de convers&atilde;o de an&uacute;ncios a sua categoria sustenta, e qualquer n&uacute;mero vindo de fora da sua conta pertence ao produto de outra pessoa. Compare, em vez disso, com a taxa que o seu pr&oacute;prio produto exige: CPC m&eacute;dio dividido pela contribui&ccedil;&atilde;o por unidade. Essa &eacute; a taxa em que uma venda puxada por an&uacute;ncio fica no ponto de equil&iacute;brio. Abaixo dela, cada venda custa dinheiro a voc&ecirc;.</p>
+  </div>
+  <p>As unidades pedidas cobrem todo o tr&aacute;fego; o gasto com an&uacute;ncios cobre s&oacute; o tr&aacute;fego de an&uacute;ncios. Compare cada um com ele mesmo no passado, m&ecirc;s contra m&ecirc;s, e nunca subtraia um do outro: eles s&atilde;o contados em datas diferentes, ent&atilde;o a diferen&ccedil;a n&atilde;o seria um n&uacute;mero org&acirc;nico limpo.</p>
+  <h2 id="s4"><span class="num">04</span>Como eu comparo gastar neste produto com gastar no pr&oacute;ximo?</h2>
+  <div class="fixbox">
+    <span class="fixbox-k">Exemplo pr&aacute;tico</span>
+    <p>Todo n&uacute;mero &eacute; ilustrativo e todo dado de entrada est&aacute; na p&aacute;gina, ent&atilde;o voc&ecirc; pode substituir pelos seus. O produto &eacute; importado, ent&atilde;o o custo total de importa&ccedil;&atilde;o inclui o pre&ccedil;o unit&aacute;rio, o frete mar&iacute;timo, a alf&acirc;ndega e o transporte terrestre.</p>
+  </div>
+  <div class="report">
+    <ul class="report-rows">
+      <li><span>Pre&ccedil;o de venda</span><span class="v">$24.99</span></li>
+      <li><span>Taxa de comiss&atilde;o descontada em um pedido liquidado</span><span class="v">$3.75</span></li>
+      <li><span>Taxa de log&iacute;stica do FBA descontada no mesmo pedido</span><span class="v">$5.10</span></li>
+      <li><span>Custo total de importa&ccedil;&atilde;o por unidade, produto importado</span><span class="v">$8.40</span></li>
+      <li><span>Contribui&ccedil;&atilde;o antes de devolu&ccedil;&otilde;es e publicidade (24.99 &minus; 3.75 &minus; 5.10 &minus; 8.40)</span><span class="v">$7.74</span></li>
+      <li><span>Propor&ccedil;&atilde;o de pedidos reembolsados</span><span class="v">10%</span></li>
+      <li><span>N&atilde;o recuperado em um pedido reembolsado (5.10 + 8.40)</span><span class="v">$13.50</span></li>
+      <li><span>Provis&atilde;o para devolu&ccedil;&otilde;es por pedido vendido (10% &times; 13.50)</span><span class="v">$1.35</span></li>
+      <li><span>Contribui&ccedil;&atilde;o por unidade antes da publicidade (7.74 &minus; 1.35)</span><span class="v">$6.39</span></li>
+    </ul>
+  </div>
+  <p>Esses $6.39 s&atilde;o todo o or&ccedil;amento dentro do qual a publicidade precisa caber.</p>
+  <div class="report">
+    <ul class="report-rows">
+      <li><span>CPC m&eacute;dio</span><span class="v">$0.90</span></li>
+      <li><span>Taxa de convers&atilde;o de an&uacute;ncios (pedidos atribu&iacute;dos ao an&uacute;ncio &divide; cliques)</span><span class="v">2.5%</span></li>
+      <li><span>Custo de an&uacute;ncio por pedido atribu&iacute;do ao an&uacute;ncio (0.90 &divide; 0.025)</span><span class="v">$36.00</span></li>
+      <li><span>Resultado em cada venda puxada por an&uacute;ncio (6.39 &minus; 36.00)</span><span class="v">&minus;$29.61</span></li>
+      <li><span>Taxa de convers&atilde;o de an&uacute;ncios necess&aacute;ria para o ponto de equil&iacute;brio (0.90 &divide; 6.39)</span><span class="v">14.1%</span></li>
+    </ul>
+  </div>
+  <p>2.5% &eacute; um resultado de verdade, ou s&atilde;o cliques de menos para saber? Ao longo de 400 cliques s&atilde;o 10 pedidos, onde os 14.1% exigidos teriam produzido uns 56. Essa lacuna &eacute; grande demais para ser acaso.</p>
+  <p>Agora o mesmo dinheiro em dois lugares. Pegue $4,000 que voc&ecirc; ainda n&atilde;o gastou, e tr&ecirc;s meses.</p>
+  <div class="report">
+    <ul class="report-rows">
+      <li><span>Dinheiro ainda n&atilde;o gasto</span><span class="v">$4,000.00</span></li>
+      <li><span>Pedidos atribu&iacute;dos ao an&uacute;ncio que isso compra (4,000 &divide; 36.00, arredondado para baixo em pedidos inteiros)</span><span class="v">111</span></li>
+      <li><span>Gasto com an&uacute;ncios nesses 111 pedidos (111 &times; 36.00)</span><span class="v">$3,996.00</span></li>
+      <li><span>Contribui&ccedil;&atilde;o desses 111 pedidos (111 &times; 6.39)</span><span class="v">$709.29</span></li>
+      <li><span>Unidades vendidas por m&ecirc;s sem publicidade rodando</span><span class="v">8</span></li>
+      <li><span>Unidades em tr&ecirc;s meses (8 &times; 3)</span><span class="v">24</span></li>
+      <li><span>Contribui&ccedil;&atilde;o dessas 24 unidades (24 &times; 6.39)</span><span class="v">$153.36</span></li>
+    </ul>
+  </div>
+  <p>Se voc&ecirc; continuar anunciando, tamb&eacute;m fica com as vendas sem publicidade, ent&atilde;o a contribui&ccedil;&atilde;o &eacute; $709.29 + $153.36 = $862.65 contra $3,996.00 de gasto com an&uacute;ncios.</p>
+  <div class="report">
+    <ul class="report-rows">
+      <li><span>Caixa depois de tr&ecirc;s meses se voc&ecirc; continuar anunciando (4,000.00 &minus; 3,996.00 + 862.65)</span><span class="v">$866.65</span></li>
+      <li><span>Caixa depois de tr&ecirc;s meses se voc&ecirc; parar de anunciar (4,000.00 + 153.36)</span><span class="v">$4,153.36</span></li>
+      <li><span>Diferen&ccedil;a</span><span class="v">$3,286.71</span></li>
+    </ul>
+  </div>
+  <p>O que esses $4,000 rendem no pr&oacute;ximo produto &eacute; desconhecido. Mas ele est&aacute; dispon&iacute;vel, e n&atilde;o est&aacute; sendo gasto a uma perda conhecida de $29.61 por venda.</p>
+  <p>As 8 unidades por m&ecirc;s n&atilde;o s&atilde;o um chute. S&atilde;o unidades pedidas durante um m&ecirc;s em que a publicidade estava desligada, o &uacute;nico per&iacute;odo em que toda venda &eacute;, por defini&ccedil;&atilde;o, sem publicidade.</p>
+  <h2 id="s5"><span class="num">05</span>Eu tenho que escolher entre continuar exatamente como estou e parar completamente?</h2>
+  <p>N&atilde;o, e esse enquadramento de duas op&ccedil;&otilde;es &eacute; o que faz a decis&atilde;o parecer pesada. Existem quatro posi&ccedil;&otilde;es no meio, e todas as quatro s&atilde;o comuns.</p>
+  <div class="fixbox">
+    <span class="fixbox-k">O que fazer</span>
+    <ol>
+      <li>Reduza a publicidade ao que o produto consegue carregar. Mantenha s&oacute; os alvos cujo custo de an&uacute;ncio por pedido esteja abaixo da sua contribui&ccedil;&atilde;o por unidade, abaixo de $6.39 no exemplo. Baixe lances, n&atilde;o or&ccedil;amentos: um lance mais baixo muda o pre&ccedil;o que voc&ecirc; paga, um or&ccedil;amento mais baixo s&oacute; muda o quanto voc&ecirc; fica sem dinheiro mais cedo.</li>
+      <li>Venda o estoque restante sem publicidade. O listing mant&eacute;m o ranqueamento org&acirc;nico que tiver, o capital de giro volta conforme as unidades vendem, e nenhum dinheiro novo entra.</li>
+      <li>Baixe o pre&ccedil;o para escoar o estoque mais r&aacute;pido. Voc&ecirc; abre m&atilde;o de contribui&ccedil;&atilde;o por unidade em troca de o caixa chegar antes, uma compra justa quando esse caixa tem um lugar melhor para estar.</li>
+      <li>Mantenha o listing vivo a baixo custo. Pare de anunciar, segure uma quantidade pequena e deixe como um listing ao qual voc&ecirc; pode voltar. A Amazon cobra mais por estoque guardado por muito tempo, ent&atilde;o uma quantidade grande que n&atilde;o gira n&atilde;o &eacute; de gra&ccedil;a de manter.</li>
+    </ol>
+  </div>
+  <div class="fixbox">
+    <span class="fixbox-k">A consequ&ecirc;ncia</span>
+    <p>Antes de baixar o pre&ccedil;o, recalcule a contribui&ccedil;&atilde;o por unidade no pre&ccedil;o novo. A taxa de comiss&atilde;o &eacute; um percentual do pre&ccedil;o de venda, ent&atilde;o ela cai quando o pre&ccedil;o cai. A taxa de log&iacute;stica do FBA &eacute; baseada em tamanho e peso, ent&atilde;o ela n&atilde;o cai. Corte fundo o bastante e cada venda passa a custar dinheiro em vez de devolver alguma coisa, o que ainda pode estar certo se o objetivo &eacute; transformar estoque em caixa, desde que voc&ecirc; saiba qual das duas coisas est&aacute; fazendo.</p>
+  </div>
+  <h2 id="s6"><span class="num">06</span>Eu posso tomar essa decis&atilde;o enquanto o produto est&aacute; sem estoque?</h2>
+  <p>Pode, mas voc&ecirc; estaria lendo dados que a ruptura de estoque criou em vez de dados que o mercado deu. Quando um listing fica incompr&aacute;vel, as vendas param e o ranqueamento se degrada nas palavras-chave que ele segurava, ent&atilde;o toda janela recente mostra um produto que desabou. Nada disso descreve demanda, e depois de uma reposi&ccedil;&atilde;o a convers&atilde;o e o ranqueamento come&ccedil;am de uma posi&ccedil;&atilde;o pior, ent&atilde;o o per&iacute;odo seguinte tamb&eacute;m n&atilde;o &eacute; uma compara&ccedil;&atilde;o limpa.</p>
+  <div class="fixbox">
+    <span class="fixbox-k">O risco</span>
+    <p>Uma ruptura de estoque muda a pergunta em sil&ecirc;ncio. Sem estoque, voc&ecirc; n&atilde;o est&aacute; decidindo se continua otimizando; est&aacute; decidindo se coloca outro pedido de compra, um compromisso maior, no momento em que os seus dados est&atilde;o menos utiliz&aacute;veis.</p>
+  </div>
+  <p>Aplique os crit&eacute;rios sobre o &uacute;ltimo per&iacute;odo em que o listing esteve compr&aacute;vel todos os dias e tinha as imagens, o pre&ccedil;o e a avalia&ccedil;&atilde;o atuais. Se n&atilde;o existe um per&iacute;odo assim, o produto ainda n&atilde;o foi testado, o que &eacute; uma resposta diferente daquela que voc&ecirc; estava prestes a dar.</p>
+  <h2 id="faq">Perguntas frequentes</h2>
+  <div class="faq">
+    <details>
+      <summary>Quanto tempo &eacute; tempo suficiente antes de eu aplicar esses crit&eacute;rios?</summary>
+      <p>Tempo suficiente &eacute; definido por cliques e por estabilidade, n&atilde;o por semanas: cliques suficientes para a taxa de convers&atilde;o de an&uacute;ncios significar alguma coisa, ao longo de um per&iacute;odo em que pre&ccedil;o, imagem principal, avalia&ccedil;&atilde;o e situa&ccedil;&atilde;o de estoque n&atilde;o mudaram. Quatro semanas est&aacute;veis dizem mais a voc&ecirc; do que quatro meses de mudan&ccedil;as constantes.</p>
+    </details>
+    <details>
+      <summary>Meu produto vende, mas a publicidade leva toda a margem. &Eacute; a mesma decis&atilde;o?</summary>
+      <p>&Eacute; outra, e ela costuma ter uma resposta melhor. Se o produto converte quando os compradores o encontram e o problema &eacute; s&oacute; o pre&ccedil;o dos cliques, as tr&ecirc;s primeiras op&ccedil;&otilde;es acima valem. A contribui&ccedil;&atilde;o por unidade &eacute; o teste nos dois casos; s&oacute; a conclus&atilde;o muda.</p>
+    </details>
+    <details>
+      <summary>Parar significa que eu escolhi um produto ruim?</summary>
+      <p>Significa que este produto, neste pre&ccedil;o, com este listing, neste mercado, n&atilde;o devolveu o pr&oacute;ximo d&oacute;lar melhor do que a alternativa. Isso &eacute; mais estreito do que parece, e a parte &uacute;til &eacute; o que voc&ecirc; aprendeu sobre demanda, pre&ccedil;o e custo.</p>
+    </details>
+  </div>
+  <section class="sec">
+    <h2>Para fechar</h2>
+    <p>Duas coisas ainda podem dar errado mesmo se voc&ecirc; seguir tudo isso &agrave; risca.</p>
+    <p>A primeira &eacute; medir durante um per&iacute;odo que n&atilde;o era representativo: um vale de sazonalidade, um concorrente rodando um desconto agressivo, uma desacelera&ccedil;&atilde;o da categoria inteira. Compare os mesmos meses entre anos onde voc&ecirc; os tiver, e desconfie de uma decis&atilde;o apoiada em um &uacute;nico m&ecirc;s fora do comum.</p>
+    <p>A segunda custa mais. Voc&ecirc; pode mover o capital sem mover a li&ccedil;&atilde;o. Se um produto n&atilde;o funcionou por causa de uma estimativa de demanda feita antes do pedido de compra, essa estimativa viaja junto com o capital at&eacute; o pr&oacute;ximo produto. A decis&atilde;o de sair vale muito menos do que a pesquisa que vem depois dela.</p>
+    <p>Aplique os crit&eacute;rios sobre um per&iacute;odo justo, calcule a contribui&ccedil;&atilde;o por unidade a partir das suas pr&oacute;prias taxas e custos, compare o pr&oacute;ximo d&oacute;lar com a alternativa, e escolha uma das quatro posi&ccedil;&otilde;es em vez de um dos dois extremos. A decis&atilde;o &eacute; s&oacute; isso.</p>
+  </section>
+</main>
+
+<aside class="rail" aria-label="Key figures from this article">
+  <div class="rail-card">
+    <span class="rail-k">O que uma venda deixa</span>
+    <span class="rail-v">$6.39</span>
+    <p>Esses $6.39 s&atilde;o todo o or&ccedil;amento dentro do qual a publicidade precisa caber.</p>
+  </div>
+  <div class="rail-card">
+    <span class="rail-k">A taxa que ele exige</span>
+    <span class="rail-v is-amber">14.1%</span>
+    <p>Ao longo de 400 cliques s&atilde;o 10 pedidos, onde os 14.1% exigidos teriam produzido uns 56. Essa lacuna &eacute; grande demais para ser acaso.</p>
+  </div>
+  <div class="rail-card">
+    <span class="rail-k">Tr&ecirc;s meses de diferen&ccedil;a</span>
+    <span class="rail-v">$3,286.71</span>
+    <p>Agora o mesmo dinheiro em dois lugares. Pegue $4,000 que voc&ecirc; ainda n&atilde;o gastou, e tr&ecirc;s meses.</p>
+  </div>
+  <div class="rail-card">
+    <span class="rail-k">O custo de continuar</span>
+    <span class="rail-v is-violet">&minus;$29.61</span>
+    <p>O que esses $4,000 rendem no pr&oacute;ximo produto &eacute; desconhecido. Mas ele est&aacute; dispon&iacute;vel, e n&atilde;o est&aacute; sendo gasto a uma perda conhecida de $29.61 por venda.</p>
+  </div>
+  <p class="rail-src">N&uacute;meros do pr&oacute;prio exemplo deste artigo, n&atilde;o de uma pesquisa de mercado.</p>
+</aside>
+
+</div><!-- /.shell -->
+
+</div><!-- /.wrap -->
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+  <symbol id="i-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12.5 17v-4a2.5 2.5 0 015 0v4"/></symbol>
+  <symbol id="i-tw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M20 4L4 20"/></symbol>
+  <symbol id="i-gh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4 1.4-4-2.2-5.6-2.6M15 21v-3.4a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 2.6 5.5 2.9 5.5 2.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 9.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></symbol>
+</defs>
+</svg>
+
+<footer class="footer">
+<div class="container">
+
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/pt/" class="brand" aria-label="P&aacute;gina inicial da AmazeBase">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+        </svg>
+        <span data-brand>AmazeBase</span>
+      </a>
+      <p>O sistema operacional para vendedores da Amazon. Tudo conectado, tudo sincronizado.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Produto</h4>
+      <a href="/pt/produto.html#modules">Produto</a>
+      <a href="/pt/#pricing">Pre&ccedil;os</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Recursos</h4>
+      <a href="/pt/recursos.html">Central de Conhecimento</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <a href="/pt/sobre.html">Sobre</a>
+      <a href="/pt/contato.html">Contato</a>
+      <a href="/pt/privacidade.html">Privacidade</a>
+      <a href="/pt/termos.html">Termos</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>&copy; 2026 <span data-brand>AmazeBase</span>. Todos os direitos reservados.</span>
+    <div class="footer-social">
+      <a href="#" aria-label="LinkedIn"><svg class="icon-sm"><use href="#i-in"/></svg></a>
+      <a href="#" aria-label="X"><svg class="icon-sm"><use href="#i-tw"/></svg></a>
+      <a href="#" aria-label="GitHub"><svg class="icon-sm"><use href="#i-gh"/></svg></a>
+    </div>
+  </div>
+
+</div>
+</footer>
+
+<script src="/js/main.js" defer></script>
+</body>
+</html>

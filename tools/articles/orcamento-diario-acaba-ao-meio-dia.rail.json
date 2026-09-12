@@ -1,0 +1,13 @@
+{
+ "_note": "Drafted 2026-09-12 for Leon's review: every number and every sentence below is taken verbatim from tools/articles/orcamento-diario-acaba-ao-meio-dia.md, and only the short 'k' labels are new.",
+ "cards": [
+  {"k": "Lucro em 30 dias", "v": "$148.00",
+   "p": "Um pedido custa $8.00 contra os $10.00 que você pode pagar, então cada um deixa $2.00. Em 30 dias isso dá 74 × $2.00 = $148.00 de lucro, ganho enquanto a campanha ficava sem orçamento toda tarde."},
+  {"k": "Cliques antes de uma leitura", "v": "63 cliques", "tone": "amber",
+   "p": "Cinco pedidos equivalem a 5 × 12.5 = 62.5, ou seja, 63 cliques. Abaixo disso você tem um número, não uma leitura."},
+  {"k": "O teto mensal", "v": "$600.00",
+   "p": "Com um orçamento diário de $20.00 em um mês de 30 dias, o mês fica limitado a $20.00 × 30 = $600.00 nos dois casos. Na opção de 25%, um dia pode chegar a $25.00; na de 100%, a $40.00."},
+  {"k": "O custo de espalhar", "v": "15 cliques", "tone": "violet",
+   "p": "Você não consegue distinguir uma palavra-chave que converte a 4% de uma que converte a 12% com 15 cliques. Você pagou $12.00 pelo mês daquela palavra-chave e não aprendeu nada."}
+ ]
+}

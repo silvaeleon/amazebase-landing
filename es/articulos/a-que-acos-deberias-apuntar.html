@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M8R4ZTFM6H"></script>
+<script src="/js/analytics.js"></script>
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<title>&iquest;A qu&eacute; ACOS deber&iacute;as apuntar? &mdash; AmazeBase</title>
+
+<meta name="description" content="No existe un ACOS objetivo universal. Calcula tu propio ACOS de equilibrio a partir de tus tarifas y costos, y usa TACOS para ver el avance real.">
+<meta name="theme-color" content="#030917">
+<meta name="author" content="AmazeBase">
+
+<style>
+/* ==========================================================================
+   ARTICLE — Amazon Inventory Forecasting
+   Self-contained. Tokens mirror css/variables.css so this page can either
+   stand alone OR have this <style> block deleted once it sits inside the
+   site's normal stylesheet chain.
+========================================================================== */
+
+:root{
+  --z-nav:100;          /* navigation.css */
+  --container:1280px;   /* .container, below */
+  --t-body:15px;        /* .btn, below */
+  --bg:#030917; --bg-deep:#01050E; --bg-raise:#060D1E;
+  --surface:rgba(255,255,255,.030); --surface-2:rgba(255,255,255,.055);
+  --surface-solid:#0A1224;
+  --line:rgba(255,255,255,.070); --line-strong:rgba(255,255,255,.140);
+
+  --text:#EEF1F8; --text-2:#98A2B8; --text-3:#616C84;
+
+  --violet:#8B3BF1; --violet-soft:#A971F7; --indigo:#5B4FE6;
+  --blue:#3B82F6; --blue-soft:#7EB3FF;
+  --green:#2ED47A; --amber:#F5A524; --red:#F0435C;
+
+  --grad-brand:linear-gradient(135deg,#5B4FE6 0%,#8B3BF1 100%);
+  --grad-text:linear-gradient(90deg,#6153E6 0%,#9D50F7 55%,#C56BF5 100%);
+  --grad-card:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  --grad-rule:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,monospace;
+
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px;
+  --s5:48px; --s6:64px; --s7:96px; --s8:128px;
+
+  --gutter:clamp(20px,4vw,40px);
+  --measure:720px;
+
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
+  --sh-2:0 18px 40px rgba(0,0,0,.42);
+  --sh-brand:0 16px 40px rgba(107,63,232,.35);
+  --ease:cubic-bezier(.22,.61,.36,1); --fast:.18s; --mid:.28s;
+
+  color-scheme:dark;
+  scrollbar-color:#26304A var(--bg);
+  scrollbar-width:thin;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation:none !important; transition:none !important; }
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:18px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+::selection{ background:var(--violet); color:#fff; }
+
+.skip-link{
+  position:absolute; left:-9999px; top:0;
+  background:var(--surface-solid); color:var(--text);
+  padding:12px 20px; border-radius:0 0 var(--r-sm) 0;
+  z-index:1000; text-decoration:none; font-weight:600;
+}
+.skip-link:focus{ left:0; }
+
+:focus-visible{
+  outline:2px solid var(--violet-soft);
+  outline-offset:3px;
+  border-radius:var(--r-xs);
+}
+
+/* ---------- ambient background ------------------------------------------ */
+.bg-layer{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(760px 520px at 18% -8%,  rgba(91,79,230,.20), transparent 62%),
+    radial-gradient(680px 480px at 88% 4%,   rgba(139,59,241,.15), transparent 60%),
+    radial-gradient(900px 700px at 50% 108%, rgba(59,130,246,.09), transparent 66%);
+}
+
+.wrap{ position:relative; z-index:1; }
+
+/* ---------- shell ------------------------------------------------------- */
+.article{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:0 var(--gutter) var(--s8);
+}
+
+/* ---------- header ------------------------------------------------------ */
+.article-head{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:clamp(64px,9vw,120px) var(--gutter) clamp(32px,4vw,48px);
+}
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--violet-soft);
+  background:var(--surface); border:1px solid var(--line);
+  padding:7px 14px; border-radius:var(--r-pill);
+  margin:0 0 var(--s3);
+}
+.eyebrow::before{
+  content:""; width:6px; height:6px; border-radius:50%;
+  background:var(--violet-soft);
+  box-shadow:0 0 10px rgba(169,113,247,.9);
+}
+
+h1{
+  font-size:clamp(34px,5vw,58px);
+  line-height:1.08;
+  letter-spacing:-.025em;
+  font-weight:800;
+  margin:0 0 var(--s3);
+  text-wrap:balance;
+}
+h1 .accent{
+  background:var(--grad-text);
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+}
+
+.deck{
+  font-size:clamp(18px,2.1vw,21px);
+  line-height:1.6;
+  color:var(--text-2);
+  margin:0 0 var(--s4);
+  max-width:62ch;
+}
+
+.meta{
+  display:flex; flex-wrap:wrap; align-items:center; gap:var(--s2);
+  font-size:14px; color:var(--text-3);
+  padding-top:var(--s3);
+  border-top:1px solid var(--line);
+}
+.meta .dot{ width:3px; height:3px; border-radius:50%; background:var(--text-3); }
+
+/* ---------- table of contents ------------------------------------------- */
+.toc{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:0 0 var(--s6);
+}
+.toc h2{
+  font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--text-3); margin:0 0 var(--s3); padding:0; border:0;
+}
+.toc ol{
+  list-style:none; margin:0; padding:0;
+  counter-reset:toc;
+  display:grid; gap:2px;
+}
+.toc li{ counter-increment:toc; margin:0; }
+.toc a{
+  display:flex; gap:14px; align-items:baseline;
+  color:var(--text-2); text-decoration:none;
+  font-size:15px; line-height:1.5;
+  padding:8px 10px; margin:0 -10px;
+  border-radius:var(--r-xs);
+  transition:color var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+.toc a::before{
+  content:counter(toc,decimal-leading-zero);
+  font-family:var(--font-mono); font-size:12px; font-weight:600;
+  color:var(--text-3); flex:none; min-width:22px;
+  transition:color var(--fast) var(--ease);
+}
+.toc a:hover{ color:var(--text); background:var(--surface); }
+.toc a:hover::before{ color:var(--violet-soft); }
+
+/* ---------- body typography --------------------------------------------- */
+.article p{ margin:0 0 1.1em; color:#D5DBE9; }
+.article p.lead{ font-size:20px; color:var(--text); }
+
+.article h2{
+  font-size:clamp(26px,3.2vw,34px);
+  line-height:1.2;
+  letter-spacing:-.02em;
+  font-weight:700;
+  color:var(--text);
+  margin:var(--s7) 0 var(--s3);
+  padding-top:var(--s5);
+  border-top:1px solid var(--line);
+  scroll-margin-top:32px;
+  text-wrap:balance;
+}
+.article h2:first-of-type{ margin-top:0; }
+
+.article h2 .num{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:13px; font-weight:600; letter-spacing:.16em;
+  color:var(--violet-soft);
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
+
+.article strong{ color:var(--text); font-weight:700; }
+
+.article ul{
+  margin:0 0 1.4em;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:10px;
+}
+.article ul li{
+  position:relative;
+  padding-left:26px;
+  color:#D5DBE9;
+  line-height:1.6;
+}
+.article ul li::before{
+  content:"";
+  position:absolute; left:6px; top:.68em;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--violet);
+  box-shadow:0 0 8px rgba(139,59,241,.55);
+}
+
+/* ---------- pull quote --------------------------------------------------- */
+blockquote{
+  margin:var(--s4) 0;
+  padding:var(--s3) var(--s4);
+  border-left:2px solid var(--violet);
+  background:linear-gradient(90deg,rgba(139,59,241,.10),transparent 80%);
+  border-radius:0 var(--r-md) var(--r-md) 0;
+}
+blockquote p{
+  margin:0;
+  font-size:20px;
+  line-height:1.5;
+  font-weight:600;
+  color:var(--text);
+}
+
+/* ---------- callouts ----------------------------------------------------- */
+.callout{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--s4);
+  margin:var(--s4) 0 var(--s5);
+}
+.callout .label{
+  display:block;
+  font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--text-3);
+  margin-bottom:var(--s2);
+}
+.callout p:last-child, .callout ul:last-child{ margin-bottom:0; }
+
+.formula{
+  font-family:var(--font-mono);
+  font-size:clamp(15px,2.1vw,19px);
+  font-weight:600;
+  line-height:1.6;
+  color:var(--text);
+  background:var(--bg-deep);
+  border:1px solid var(--line-strong);
+  border-radius:var(--r-md);
+  padding:var(--s3);
+  margin:0 0 var(--s3);
+  text-align:center;
+  overflow-x:auto;
+}
+.formula .op{ color:var(--violet-soft); }
+
+/* ---------- numbers strip ------------------------------------------------ */
+.figures{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:var(--s2);
+  margin:var(--s4) 0 var(--s5);
+  padding:0; list-style:none;
+}
+.figures li{ padding:0; }
+.figures li::before{ display:none; }
+.fig{
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:var(--s3) var(--s2);
+  text-align:center;
+}
+.fig .v{
+  display:block;
+  font-size:28px; font-weight:800; letter-spacing:-.02em; line-height:1.1;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.fig .k{
+  display:block;
+  font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.fig.is-bad .v{ color:var(--red); }
+.fig.is-real .v{ color:var(--green); }
+
+/* ---------- divider ------------------------------------------------------ */
+.rule{
+  height:1px; border:0;
+  background:var(--grad-rule);
+  margin:var(--s6) 0;
+}
+
+/* ---------- closing CTA -------------------------------------------------- */
+.cta{
+  max-width:var(--measure);
+  margin:var(--s7) auto 0;
+  padding:clamp(32px,5vw,56px) var(--gutter);
+  text-align:center;
+  background:var(--grad-card);
+  border:1px solid var(--line);
+  border-radius:var(--r-xl);
+  box-shadow:var(--sh-2);
+}
+.cta h2{
+  font-size:clamp(24px,3vw,32px);
+  font-weight:700; letter-spacing:-.02em; line-height:1.2;
+  margin:0 0 var(--s2); padding:0; border:0;
+  text-wrap:balance;
+}
+.cta p{
+  color:var(--text-2);
+  max-width:52ch;
+  margin:0 auto var(--s4);
+  font-size:17px;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--grad-brand);
+  color:#fff; text-decoration:none;
+  font-weight:600; font-size:16px;
+  padding:14px 28px;
+  border-radius:var(--r-pill);
+  box-shadow:var(--sh-brand);
+  transition:transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+.btn:hover{ transform:translateY(-2px); box-shadow:0 22px 50px rgba(107,63,232,.45); }
+.btn svg{ width:18px; height:18px; }
+
+/* ---------- responsive --------------------------------------------------- */
+@media (max-width:640px){
+  body{ font-size:17px; }
+  .article p.lead{ font-size:18px; }
+  blockquote p{ font-size:18px; }
+  .article h2{ margin-top:var(--s6); padding-top:var(--s4); }
+}
+
+/* ---------- print -------------------------------------------------------- */
+@media print{
+  .bg-layer,.toc,.cta,.skip-link{ display:none; }
+  body{ background:#fff; color:#111; font-size:12pt; }
+  .article p,.article ul li{ color:#222; }
+  .article h2{ color:#000; }
+}
+.back-link{ margin:0 0 28px; font-size:13px; }
+.back-link a{ color:var(--text-2); text-decoration:none; }
+.back-link a:hover{ color:var(--text); }
+
+/* ── HERO IMAGE ─────────────────────────────────────────────────────── */
+.hero-shot{
+  margin:0 0 52px;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  background:var(--bg-raise);
+  line-height:0;
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+.hero-shot img{ width:100%; height:auto; display:block; }
+
+/* ── MISTAKE CARDS ──────────────────────────────────────────────────── */
+.mistake{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--grad-card);
+  padding:30px 32px 12px;
+  margin:0 0 26px;
+}
+.mistake::before{
+  content:"";
+  position:absolute; left:0; top:26px; bottom:26px;
+  width:3px; border-radius:0 3px 3px 0;
+  background:var(--amber);
+}
+.mistake h2{ margin-top:0 !important; }
+.article .mistake h2:first-of-type{ margin-top:0; }
+
+/* ── PULL QUOTES ────────────────────────────────────────────────────── */
+blockquote{
+  margin:44px 0;
+  padding:0 0 0 26px;
+  border-left:3px solid var(--amber);
+  background:none;
+}
+blockquote p{
+  font-size:23px;
+  line-height:1.45;
+  font-style:italic;
+  font-weight:600;
+  color:var(--text);
+  margin:0;
+}
+
+/* ── MID-ARTICLE STRIP ──────────────────────────────────────────────── */
+.strip{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px; flex-wrap:wrap;
+  margin:44px 0;
+  padding:26px 30px;
+  border-radius:16px;
+  background:linear-gradient(120deg,#0A1224,#131A33);
+  border:1px solid var(--line-strong);
+}
+.strip h3{ margin:0 0 6px; font-size:19px; color:var(--text); }
+.strip p{ margin:0; font-size:14px; color:var(--text-2); }
+.strip-btn{
+  flex:0 0 auto;
+  display:inline-block;
+  padding:12px 22px;
+  border-radius:10px;
+  background:var(--amber);
+  color:#1A1200;
+  font-size:14px; font-weight:700;
+  text-decoration:none;
+  transition:filter .15s ease;
+}
+.strip-btn:hover{ filter:brightness(1.08); }
+
+@media (max-width:640px){
+  .mistake{ padding:24px 20px 8px; }
+  .mistake::before{ top:20px; bottom:20px; }
+  blockquote p{ font-size:20px; }
+  .strip{ padding:22px; }
+  .strip-btn{ width:100%; text-align:center; }
+}
+
+/* ── WIDE SHELL: content + rail, so the page uses the screen ─────────── */
+.shell{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 var(--gutter);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 300px;
+  gap:64px;
+  align-items:start;
+}
+.shell > .article{ max-width:none; margin:0; padding:0 0 var(--s8); }
+
+.rail{ position:sticky; top:40px; display:flex; flex-direction:column; gap:14px; }
+.rail-card{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--grad-card);
+  padding:20px;
+}
+.rail-k{
+  display:block; margin-bottom:10px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--text-3);
+}
+.rail-v{
+  display:block; margin-bottom:10px;
+  font-size:34px; line-height:1; font-weight:800; letter-spacing:-.02em;
+  color:var(--green);
+}
+.rail-v.is-amber{ color:var(--amber); }
+.rail-v.is-violet{ color:var(--violet-soft); }
+.rail-card p{ margin:0; font-size:13px; line-height:1.55; color:var(--text-2); }
+.rail-src{
+  margin:0; padding-top:14px;
+  border-top:1px solid var(--line);
+  font-size:11px; line-height:1.5; color:var(--text-3);
+}
+
+/* header + hero align to the same shell */
+.article-head, .hero-shot{ max-width:1180px; }
+
+/* ── HERO: a band, not a giant square ───────────────────────────────── */
+.hero-shot{
+  margin:0 auto 56px;
+  padding:0 var(--gutter);
+  border:0; background:none; box-shadow:none;
+  border-radius:0;
+  overflow:visible;
+}
+.hero-shot img{
+  width:100%;
+  /* The hero is a 16:9 photograph shown whole. The rule this replaces forced a
+     260-400px band and cropped to it with object-fit, which cut the subject out
+     of every one of these images. aspect-ratio reserves the right box before the
+     file arrives, so the header below it never shifts on load. */
+  aspect-ratio:16 / 9;
+  height:auto;
+  border-radius:18px;
+  border:1px solid var(--line-strong);
+  box-shadow:0 30px 80px rgba(1,5,14,.55);
+}
+
+/* ── THE FIX callout ────────────────────────────────────────────────── */
+.fixbox{
+  margin:22px 0 4px;
+  padding:16px 18px;
+  border-radius:12px;
+  border:1px solid rgba(46,212,122,.28);
+  background:rgba(46,212,122,.07);
+}
+.fixbox-k{
+  display:block; margin-bottom:6px;
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--green);
+}
+.fixbox p{ margin:0 !important; color:var(--text) !important; }
+
+@media (max-width:1080px){
+  .shell{ grid-template-columns:1fr; gap:40px; max-width:820px; }
+  .rail{ position:static; flex-direction:row; flex-wrap:wrap; }
+  .rail-card{ flex:1 1 220px; }
+  .rail-src{ flex:1 1 100%; border-top:0; padding-top:0; }
+  .article-head, .hero-shot{ max-width:820px; }
+}
+@media (max-width:640px){
+  .shell{ gap:28px; }
+}
+
+
+/* ── FIGURES CARRIED OVER FROM THE DRAFT ──────────────────────────────
+   This piece ships its own tables, charts and spec blocks. Rather than
+   import a second design system for them, the palette they were written
+   against is repointed at this site's tokens, and only their component
+   rules are carried over. --measure is deliberately absent: it collides
+   with the site's, and the ported rules should use the site's column.
+   ------------------------------------------------------------------- */
+:root{
+  --paper:var(--bg); --panel:var(--surface-solid); --panel-2:var(--surface-2);
+  --ink:var(--text); --ink-2:var(--text-2); --ink-3:var(--text-3);
+  --rule:var(--line); --rule-strong:var(--line-strong);
+  --accent:var(--violet-soft); --accent-soft:rgba(139,59,241,.16);
+  --cost:var(--text-3);
+  --good:var(--green);  --good-soft:rgba(46,212,122,.10);
+  --warn:var(--amber);  --warn-soft:rgba(245,165,36,.10);
+  --crit:var(--red);    --crit-soft:rgba(240,67,92,.10);
+  --f-display:var(--font); --f-body:var(--font);
+  --f-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+article p{margin:0 0 1.15rem}
+article ul, article ol{margin:0 0 1.3rem;padding-left:1.15rem}
+article li{margin-bottom:.5rem}
+article li::marker{color:var(--ink-3)}
+strong{font-weight:600}
+.fix{background:var(--panel);border:1px solid var(--rule);border-left:3px solid var(--accent);padding:1.1rem 1.3rem;margin:1.9rem 0}
+.fix .k{display:block;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:.45rem}
+.fix p{margin:0}
+.fix p+p{margin-top:.7rem}
+pre{font-family:var(--f-mono);font-size:.83rem;line-height:1.75;background:var(--panel-2);border:1px solid var(--rule);padding:1rem 1.1rem;margin:1.6rem 0;overflow-x:auto}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--panel-2);padding:.1em .35em;border-radius:2px}
+pre code{background:none;padding:0;font-size:1em}
+figure h4{margin:0 0 .2rem;font-size:1rem;font-weight:600}
+figure .sub{margin:0 0 .9rem;font-size:.85rem;color:var(--ink-2)}
+figure svg{display:block;width:100%;height:auto}
+.ax{fill:var(--ink-3);font-family:"IBM Plex Mono",monospace;font-size:9.5px}
+.val{fill:var(--ink);font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:500}
+.lbl{fill:var(--ink-2);font-family:"IBM Plex Sans",sans-serif;font-size:10px}
+.lbl-b{fill:var(--ink);font-family:"IBM Plex Sans",sans-serif;font-size:10px;font-weight:600}
+.grid{stroke:var(--rule);stroke-width:1}
+.levels{list-style:none;padding:0;margin:1.5rem 0 2rem;border-top:1px solid var(--rule)}
+.levels li{margin:0;display:grid;grid-template-columns:2.4rem 1fr auto;gap:.9rem;padding:.85rem .2rem;border-bottom:1px solid var(--rule);align-items:baseline}
+.levels .n{font-family:var(--f-mono);font-size:.72rem;color:var(--accent)}
+.levels b{display:block;font-weight:600}
+.levels .d{color:var(--ink-2);font-size:.93rem}
+.levels .q{font-family:var(--f-mono);font-size:.78rem;color:var(--ink-3);text-align:right;white-space:nowrap}
+@media (max-width:620px){
+.levels li{grid-template-columns:2.4rem 1fr}
+.levels .q{grid-column:2;text-align:left}
+}
+.kinds{display:grid;gap:.55rem;margin:1.4rem 0 1.9rem}
+.kind{display:grid;grid-template-columns:6.5rem 1fr;gap:1rem;align-items:baseline;padding:.7rem .9rem;background:var(--panel);border:1px solid var(--rule)}
+.kind .lab{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
+.kind.m .lab{color:var(--good)}
+.kind.a .lab{color:var(--accent)}
+.kind.s .lab{color:var(--warn)}
+.kind .txt{font-size:.95rem;color:var(--ink-2)}
+.tblwrap{overflow-x:auto;margin:1.6rem 0}
+table{border-collapse:collapse;width:100%;font-size:.92rem;min-width:26rem}
+caption{caption-side:bottom;text-align:left;font-size:.8rem;color:var(--ink-3);padding-top:.7rem;line-height:1.5}
+th, td{padding:.55rem .7rem;text-align:right;border-bottom:1px solid var(--rule);font-variant-numeric:tabular-nums}
+th:first-child, td:first-child{text-align:left}
+thead th{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500;border-bottom:1px solid var(--rule-strong)}
+tbody tr:last-child td{border-bottom:1px solid var(--rule-strong);font-weight:600}
+td.neg{color:var(--ink-2)}
+.faq details{border-bottom:1px solid var(--rule);padding:.9rem 0}
+.faq summary{cursor:pointer;font-weight:600;list-style:none;display:flex;gap:.75rem;align-items:flex-start}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::before{content:"+";font-family:var(--f-mono);color:var(--accent);font-weight:400;line-height:1.6}
+.faq details[open] summary::before{content:"–"}
+.faq p{margin:.65rem 0 0 1.5rem;color:var(--ink-2)}
+.faq summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* ── PIECES THIS ARTICLE ADDS ─────────────────────────────────────────
+   h3, tables, the FAQ and the carried-over figure. The 44 articles that
+   came before this one had no h3 and no tables, so the core stylesheet
+   never needed rules for them.
+   ------------------------------------------------------------------- */
+.article h3{
+  margin:var(--s5) 0 var(--s2);
+  font-size:clamp(19px,1.6vw,22px);
+  font-weight:650; letter-spacing:-.01em; color:var(--text);
+}
+.tblwrap{ margin:var(--s4) 0; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.article table{
+  width:100%; border-collapse:collapse;
+  font-size:.94rem; line-height:1.5;
+}
+.article th, .article td{
+  padding:10px 14px; text-align:left; vertical-align:top;
+  border-bottom:1px solid var(--line);
+}
+.article th{
+  font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+  color:var(--text-3); border-bottom-color:var(--line-strong); white-space:nowrap;
+}
+.article tbody tr:last-child td{ border-bottom:0; }
+.art-diagram{ margin:var(--s4) 0; }
+.art-diagram svg{ width:100%; height:auto; display:block; }
+.art-diagram .sub, .art-diagram figcaption{
+  margin-top:10px; font-size:var(--t-micro,.82rem); color:var(--text-3); line-height:1.5;
+}
+.faq{ margin:var(--s4) 0; }
+.faq details{
+  border:1px solid var(--line); border-radius:var(--r-md);
+  background:var(--surface); padding:14px 18px; margin-bottom:10px;
+}
+.faq summary{
+  cursor:pointer; font-weight:600; color:var(--text);
+  list-style:none; padding-right:24px; position:relative;
+}
+.faq summary::-webkit-details-marker{ display:none; }
+.faq summary::after{
+  content:"+"; position:absolute; right:0; top:-2px;
+  font-size:19px; line-height:1; color:var(--violet-soft);
+}
+.faq details[open] summary::after{ content:"\2013"; }
+.faq details p{ margin:10px 0 0 !important; color:var(--text-2); }
+
+/* ── KEEPING WIDE THINGS INSIDE A PHONE ───────────────────────────────
+   These pieces carry long monospace formulas, wide comparison tables and
+   the draft's scenario rows. Each has a min-content width larger than a
+   390px screen, and the shell's mobile track is `1fr` - which means
+   minmax(auto,1fr), so a single one of them widens the whole column and
+   the entire page scrolls sideways. Cap the track, then let each wide
+   block scroll inside itself instead of pushing the article around.
+   ------------------------------------------------------------------- */
+@media (max-width:1080px){
+  .shell{ grid-template-columns:minmax(0,1fr); }
+}
+.shell > .article{ min-width:0; }
+.article > *{ max-width:100%; }
+.formula{ overflow-x:auto; }
+.formula code{ white-space:pre; }
+.tblwrap{ min-width:0; max-width:100%; }
+.scn, .scnrow, .bands, .band, .inputs, .facts, .spec, .grid{ min-width:0; max-width:100%; }
+@media (max-width:640px){
+  .scnrow{ display:block; }
+  .scnrow > *{ display:block; }
+}
+
+/* ── SITE HEADER ──────────────────────────────────────────────────────
+   The header markup is the site's, and navigation.css styles it. These are
+   the pieces it also leans on from base.css, which this page does not load.
+   Every selector is scoped to the header or the mobile drawer: an article is
+   built out of bare a/p/h3/h4, and base.css restyles all of those.
+
+   The scope is written with :where() so it adds no specificity. Scoped the
+   plain way, `.site-header .btn` is (0,2,0) - the same weight as
+   navigation.css's own `.nav-actions .btn--quiet` and `.nav-mobile a`, and
+   loaded after them, so these copies quietly outranked the real rules: the
+   hamburger got pushed off a 390px screen and the drawer buttons lost their
+   sizing. Inside :where() each rule keeps exactly the weight it has in
+   base.css, which is the weight navigation.css was written against.
+   ------------------------------------------------------------------- */
+/* The header inherits from <body>, and this page's body is set for reading:
+   18px at 1.72. The site's is var(--t-body) at 1.6. Left alone, every element
+   in the bar came out a size and a half too tall. Reset it at the root of the
+   header so everything inside inherits the site's figures instead. */
+:where(.site-header),
+:where(.nav-mobile){
+  font-size:var(--t-body);
+  line-height:1.6;
+}
+
+:where(.site-header) .container{
+  width:min(100%,var(--container));
+  margin-inline:auto;
+  padding-inline:var(--gutter);
+  position:relative;
+}
+:where(.site-header, .nav-mobile) .brand{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:19px; font-weight:700; letter-spacing:-.01em;
+  color:var(--text); text-decoration:none;
+}
+:where(.site-header) .brand-mark{ width:26px; height:26px; flex:none; }
+:where(.site-header) .icon,    :where(.nav-mobile) .icon{    width:20px; height:20px; flex:none; stroke-width:1.7; }
+:where(.site-header) .icon-sm, :where(.nav-mobile) .icon-sm{ width:16px; height:16px; flex:none; stroke-width:1.8; }
+/* margin-block only: navigation.css centres this with margin-inline:auto,
+   and a shorthand `margin:0` here would outrank it and shove the menu
+   over against the brand. */
+:where(.site-header) .nav-menu{ list-style:none; padding:0; margin-block:0; }
+.site-header a, .nav-mobile a{ text-decoration:none; }
+/* base.css resets these globally; this page does not load it. Without the
+   padding reset the UA's 1px 6px survives and the 44px tap target
+   responsive.css asks for comes out 40px. */
+:where(.site-header) .nav-toggle{ font:inherit; cursor:pointer; padding:0; }
+:where(.site-header) svg, :where(.nav-mobile) svg{ display:block; }
+
+:where(.site-header) .btn, :where(.nav-mobile) .btn{
+  /* This page defines its own .btn - a filled gradient pill used in the body -
+     and it reaches the header buttons too. base.css's .btn sets none of these,
+     so the variant classes below are what should decide them. Cleared here or
+     "Log in", which is .btn--quiet and meant to read as plain text, arrives
+     wearing the brand gradient. */
+  background:none;
+  box-shadow:none;
+  color:inherit;
+  text-decoration:none;
+  position:relative;
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  padding:13px 22px;
+  border-radius:var(--r-sm);
+  font-size:var(--t-body); font-weight:600; line-height:1;
+  white-space:nowrap;
+  transition:transform var(--fast) var(--ease),
+             box-shadow var(--fast) var(--ease),
+             background var(--fast) var(--ease),
+             border-color var(--fast) var(--ease);
+}
+:where(.site-header) .btn:active, :where(.nav-mobile) .btn:active{ transform:translateY(0) scale(.99); }
+:where(.site-header) .btn--primary, :where(.nav-mobile) .btn--primary{
+  background:var(--grad-brand); color:#fff;
+  box-shadow:var(--sh-brand); overflow:hidden;
+}
+:where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{
+  content:""; position:absolute; top:0; left:-130%;
+  width:55%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);
+  transition:left .65s var(--ease);
+}
+:where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{
+  transform:translateY(-2px); box-shadow:0 22px 52px rgba(107,63,232,.45);
+}
+:where(.site-header) .btn--primary:hover::after, :where(.nav-mobile) .btn--primary:hover::after{ left:150%; }
+:where(.site-header) .btn--quiet, :where(.nav-mobile) .btn--quiet{ color:var(--text-2); padding:13px 8px; }
+:where(.site-header) .btn--quiet:hover, :where(.nav-mobile) .btn--quiet:hover{ color:var(--text); }
+:where(.nav-mobile) .btn--block{ width:100%; }
+
+@media (prefers-reduced-motion:reduce){
+  :where(.site-header) .btn, :where(.nav-mobile) .btn,
+  :where(.site-header) .btn--primary::after, :where(.nav-mobile) .btn--primary::after{ transition:none; }
+  :where(.site-header) .btn--primary:hover, :where(.nav-mobile) .btn--primary:hover{ transform:none; }
+}
+
+/* navigation.css hides these two buttons on small screens so the hamburger
+   fits. Its selectors are (0,2,0) and so is `:where(.site-header) .btn` above, which
+   is loaded after it - equal weight, later wins, and display:inline-flex beat
+   display:none. The hamburger ended up 107px off the right of a 390px screen
+   with no way to open the menu. Restating the hide at (0,3,0) settles it.
+   The breakpoints are read out of navigation.css at build time, not typed. */
+
+/* Clear the fixed site header. Reserving its height on .wrap keeps the gap
+   between the bar and the eyebrow the same as the gap used to be between the
+   top of the window and the eyebrow. */
+.wrap{ padding-top:70px; }
+@media (max-width:640px){ .wrap{ padding-top:64px; } }
+
+/* Anchor targets. .article h2 carried scroll-margin-top:32px, which was right
+   when this page had no fixed bar: 32px was breathing room. Now a jump from
+   the contents list lands 38px underneath the header. responsive.css puts the
+   rest of the site on 84px for exactly this reason; the article's own rule is
+   (0,2,0) and outranks it, so it is restated here at the same weight. */
+.article h2{ scroll-margin-top:84px; }
+
+/* The back-link sat hard against the left edge of the window, in line with
+   nothing. That was always true, but with the nav above it the thing reads as
+   stranded rather than as a heading. Same shell as .article-head, so it lines
+   up with the title beneath it and behaves as the breadcrumb it is. */
+.back-link{
+  max-width:1180px;
+  margin-inline:auto;      /* the rule above keeps its 28px bottom margin */
+  padding:22px var(--gutter) 0;
+}
+/* ── WORKED-SUM ROWS: labelled rows, one per line, value right-aligned.
+   Copied from attribution-vs-incrementality.html (.report / .report-rows);
+   added by tools/build_article.py for content-first sources. ──────────── */
+.report{
+  margin:0 0 var(--s3);
+  border:1px solid var(--line-strong);
+  border-radius:16px;
+  overflow:hidden;
+}
+/* scoped under .article ul: this template's `.article ul` / `.article ul li::before`
+   (grid gap, 26px indent, violet dot) otherwise outrank these rules */
+.article ul.report-rows{ list-style:none; margin:0; padding:0; display:block; gap:0; }
+.article ul.report-rows li{
+  display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+  margin:0; padding:14px 22px;
+  border-bottom:1px solid var(--line);
+  font-size:15px; line-height:1.5; color:var(--text-2);
+}
+.article ul.report-rows li::before{ content:none; }
+.article ul.report-rows li:last-child{ border-bottom:0; }
+.article ul.report-rows .v{ color:var(--text); font-weight:700; font-variant-numeric:tabular-nums; white-space:nowrap; }
+
+/* ── A numbered list inside a callout ("What to do" steps). ─────────────── */
+.fixbox ol{ margin:4px 0 0; padding-left:1.3em; color:var(--text); }
+.fixbox ol li{ margin:6px 0; padding-left:2px; }
+</style>
+<link rel="stylesheet" href="/css/navigation.css">
+<link rel="stylesheet" href="/css/responsive.css">
+<link rel="stylesheet" href="/css/site-footer.css">
+<!-- SEO:START -->
+<link rel="canonical" href="https://amazebase.pro/es/articulos/a-que-acos-deberias-apuntar.html">
+<link rel="alternate" hreflang="en" href="https://amazebase.pro/articles/acos-tacos-and-your-margin.html">
+<link rel="alternate" hreflang="es" href="https://amazebase.pro/es/articulos/a-que-acos-deberias-apuntar.html">
+<link rel="alternate" hreflang="pt" href="https://amazebase.pro/pt/artigos/qual-acos-voce-deve-buscar.html">
+<link rel="alternate" hreflang="x-default" href="https://amazebase.pro/articles/acos-tacos-and-your-margin.html">
+<meta property="og:site_name" content="AmazeBase">
+<meta property="og:locale" content="es_LA">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://amazebase.pro/es/articulos/a-que-acos-deberias-apuntar.html">
+<meta property="og:title" content="&iquest;A qu&eacute; ACOS deber&iacute;as apuntar?">
+<meta property="og:description" content="No existe un ACOS objetivo universal. Calcula tu propio ACOS de equilibrio a partir de tus tarifas y costos, y usa TACOS para ver el avance real.">
+<meta property="og:image" content="https://amazebase.pro/assets/img/og/og-acos-tacos-and-your-margin.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ACOS de equilibrio calculado con las tarifas y el costo de un producto">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="&iquest;A qu&eacute; ACOS deber&iacute;as apuntar?">
+<meta name="twitter:description" content="No existe un ACOS objetivo universal. Calcula tu propio ACOS de equilibrio a partir de tus tarifas y costos, y usa TACOS para ver el avance real.">
+<meta name="twitter:image" content="https://amazebase.pro/assets/img/og/og-acos-tacos-and-your-margin.jpg">
+<meta name="twitter:image:alt" content="ACOS de equilibrio calculado con las tarifas y el costo de un producto">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://amazebase.pro/#organization",
+      "name": "AmazeBase",
+      "legalName": "Silbros Trading LLC",
+      "url": "https://amazebase.pro/",
+      "email": "contact@silbrostrading.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://amazebase.pro/assets/img/og/og-home.jpg",
+        "width": 1200,
+        "height": 630
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Albuquerque",
+        "addressRegion": "NM",
+        "addressCountry": "US"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://amazebase.pro/#website",
+      "url": "https://amazebase.pro/",
+      "name": "AmazeBase",
+      "publisher": {
+        "@id": "https://amazebase.pro/#organization"
+      },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "Article",
+      "@id": "https://amazebase.pro/es/articulos/a-que-acos-deberias-apuntar.html#article",
+      "isPartOf": {
+        "@id": "https://amazebase.pro/#website"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://amazebase.pro/es/articulos/a-que-acos-deberias-apuntar.html"
+      },
+      "headline": "¿A qué ACOS deberías apuntar?",
+      "description": "No existe un ACOS objetivo universal. Calcula tu propio ACOS de equilibrio a partir de tus tarifas y costos, y usa TACOS para ver el avance real.",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://amazebase.pro/assets/img/og/og-acos-tacos-and-your-margin.jpg",
+        "width": 1200,
+        "height": 630
+      },
+      "datePublished": "2026-09-12",
+      "dateModified": "2026-09-12",
+      "author": {
+        "@id": "https://amazebase.pro/#organization"
+      },
+      "publisher": {
+        "@id": "https://amazebase.pro/#organization"
+      },
+      "inLanguage": "es",
+      "keywords": [
+        "ACOS",
+        "Margen",
+        "ROAS",
+        "Toma de decisiones"
+      ],
+      "timeRequired": "PT7M"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Inicio",
+          "item": "https://amazebase.pro/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Centro de Conocimiento",
+          "item": "https://amazebase.pro/es/recursos.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "¿A qué ACOS deberías apuntar?"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- SEO:END -->
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+<div class="bg-layer" aria-hidden="true"></div>
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+</defs>
+  <symbol id="i-chevron"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-menu"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-mega"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l7 4V5L8 9H4zM19 9a4 4 0 010 6"/></symbol>
+  <symbol id="i-dollar"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5v19M16.5 6.5H10a3.2 3.2 0 000 6.4h4a3.2 3.2 0 010 6.4H7"/></symbol>
+  <symbol id="i-stack"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/></symbol>
+  <symbol id="i-box"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></symbol>
+  <symbol id="i-search"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></symbol>
+  <symbol id="i-chart"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-trend"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></symbol>
+  <symbol id="i-db"       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3.2"/><path d="M4 6v12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2V6M4 12c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2"/></symbol>
+  <symbol id="i-shield"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-9.5V5.5L12 2.5 4 5.5V12.5C4 18.5 12 22 12 22z"/></symbol>
+  <symbol id="i-spark"    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+  <symbol id="i-rocket"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15s-1.5 3 1 5.5S11 20 11 20M14.5 4.5c3-2 6-1 6-1s1 3-1 6l-6 6-5-5 6-6z"/><circle cx="15" cy="9" r="1.4"/></symbol>
+  <symbol id="i-case"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8.5 7V5a2 2 0 012-2h3a2 2 0 012 2v2M2.5 12.5h19"/></symbol>
+  <symbol id="i-info"     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></symbol>
+  <symbol id="i-msg"      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-8 8 8.6 8.6 0 01-3.6-.8L3 21l1.8-6.4A8 8 0 1121 12z"/></symbol>
+</svg>
+
+<header class="site-header">
+<div class="container">
+<nav class="nav" aria-label="Principal">
+
+  <a href="/es/" class="brand" aria-label="Inicio de AmazeBase">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+      <path d="M16 17.6l4.4 8.2h-8.8z" fill="#C56BF5" opacity=".85"/>
+    </svg>
+    <span data-brand>AmazeBase</span>
+  </a>
+
+  <ul class="nav-menu">
+    <li class="nav-item">
+      <a class="nav-link" href="/es/producto.html#modules">Producto <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop nav-drop--wide">
+        <a href="/es/producto.html#advertising"><svg class="icon-sm"><use href="#i-mega"/></svg>Publicidad y PPC</a>
+        <a href="/es/producto.html#financials"><svg class="icon-sm"><use href="#i-dollar"/></svg>Finanzas</a>
+        <a href="/es/producto.html#ledger"><svg class="icon-sm"><use href="#i-stack"/></svg>Ledger</a>
+        <a href="/es/producto.html#inventory"><svg class="icon-sm"><use href="#i-box"/></svg>Inventario</a>
+        <a href="/es/producto.html#research"><svg class="icon-sm"><use href="#i-search"/></svg>Investigaci&oacute;n de productos</a>
+        <a href="/es/producto.html#simulations"><svg class="icon-sm"><use href="#i-chart"/></svg>Simulaciones</a>
+        <a href="/es/producto.html#sales"><svg class="icon-sm"><use href="#i-trend"/></svg>Ventas</a>
+        <a href="/es/producto.html#data"><svg class="icon-sm"><use href="#i-db"/></svg>Datos y sincronizaci&oacute;n</a>
+        <a href="/es/producto.html#security"><svg class="icon-sm"><use href="#i-shield"/></svg>Seguridad</a>
+        <a href="/es/producto.html#assistant"><svg class="icon-sm"><use href="#i-spark"/></svg>Asistente de IA &mdash; pronto</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/es/soluciones.html">Soluciones <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/es/soluciones.html#beginners"><svg class="icon-sm"><use href="#i-rocket"/></svg>Principiantes</a>
+        <a href="/es/soluciones.html#experts"><svg class="icon-sm"><use href="#i-dollar"/></svg>Vendedores con experiencia</a>
+        <a href="/es/soluciones.html#agencies"><svg class="icon-sm"><use href="#i-case"/></svg>Agencias</a>
+      </div>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="/es/#pricing">Precios</a></li>
+    <li class="nav-item"><a class="nav-link" href="/es/recursos.html">Recursos</a></li>
+    <li class="nav-item">
+      <a class="nav-link" href="/es/nosotros.html">Empresa <svg class="chev"><use href="#i-chevron"/></svg></a>
+      <div class="nav-drop">
+        <a href="/es/nosotros.html"><svg class="icon-sm"><use href="#i-info"/></svg>Nosotros</a>
+        <a href="/es/contacto.html"><svg class="icon-sm"><use href="#i-msg"/></svg>Contacto</a>
+      </div>
+    </li>
+  </ul>
+
+  <div class="nav-actions">
+    <div class="nav-item lang-switch">
+      <button class="lang-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Idioma / Language">
+        ES <svg class="chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+      </button>
+      <div class="nav-drop lang-drop">
+        <a href="/articles/acos-tacos-and-your-margin.html" hreflang="en" lang="en"><span class="lc">EN</span>English</a>
+        <a href="/es/articulos/a-que-acos-deberias-apuntar.html" hreflang="es" lang="es" aria-current="true"><span class="lc">ES</span>Español</a>
+        <a href="/pt/artigos/qual-acos-voce-deve-buscar.html" hreflang="pt" lang="pt"><span class="lc">PT</span>Português</a>
+      </div>
+    </div>
+    <a class="btn btn--quiet" href="https://analytics.amazebase.pro/login">Iniciar sesi&oacute;n</a>
+    <a class="btn btn--primary" href="/es/#waitlist" data-magnetic>&Uacute;nete a la lista de espera</a>
+    <button class="nav-toggle" aria-label="Abrir men&uacute;" aria-expanded="false" aria-controls="navMobile">
+      <svg class="icon"><use href="#i-menu"/></svg>
+    </button>
+  </div>
+
+</nav>
+</div>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="/es/producto.html#modules">Producto</a>
+  <a href="/es/soluciones.html">Soluciones</a>
+  <a href="/es/#pricing">Precios</a>
+  <a href="/es/recursos.html">Recursos</a>
+  <a href="/es/nosotros.html">Nosotros</a>
+  <a href="/es/contacto.html">Contacto</a>
+  <a class="btn btn--quiet btn--block" href="https://analytics.amazebase.pro/login">Iniciar sesi&oacute;n</a>
+  <a class="btn btn--primary btn--block" href="/es/#waitlist">&Uacute;nete a la lista de espera</a>
+</div>
+</header>
+
+<div class="wrap">
+<p class="back-link"><a href="/es/recursos.html">&larr; Centro de Conocimiento</a></p>
+<header class="article-head">
+  <p class="eyebrow">Publicidad y PPC</p>
+  <h1>&iquest;A qu&eacute; ACOS <span class="accent">deber&iacute;as apuntar?</span></h1>
+  <p class="deck">No existe un ACOS objetivo universal. Calcula tu propio ACOS de equilibrio a partir de tus tarifas y costos, y usa TACOS para ver el avance real.</p>
+  <p class="meta">
+    <span>AmazeBase</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span><time datetime="2026-09-12">12 de septiembre de 2026</time></span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>7 min de lectura</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>Publicidad y PPC</span>
+  </p>
+</header>
+
+<!-- HERO IMAGE PLACEHOLDER. assets/img/hero-acos-tacos-and-your-margin.webp is a stand-in at 1672x941 until the real
+     picture exists: replace that file, keep the name and this alt text, then run tools/build_og.py.
+     Tracked with the other awaiting-replacement heroes in HANDOVER.md section 6 item 7. -->
+<figure class="hero-shot">
+  <img src="/assets/img/hero-acos-tacos-and-your-margin.webp"
+       alt="ACOS de equilibrio calculado con las tarifas y el costo de un producto"
+       width="1672" height="941" loading="eager" decoding="async">
+</figure>
+
+<div class="shell">
+<main id="main" class="article">
+  <p class="lead">Un n&uacute;mero circula entre los vendedores nuevos de Amazon: 10% de ACOS. Se repite hasta que suena como un est&aacute;ndar, y cada vendedor que reporta 45% o 70% concluye que est&aacute; reprobando un examen.</p>
+  <nav class="toc" aria-labelledby="toc-title">
+    <h2 id="toc-title">Qu&eacute; encontrar&aacute;s en esta gu&iacute;a</h2>
+    <ol>
+      <li><a href="#s1">&iquest;Qu&eacute; miden en realidad el ACOS y el TACOS?</a></li>
+      <li><a href="#s2">&iquest;Existe un n&uacute;mero de ACOS correcto al que apuntar?</a></li>
+      <li><a href="#s3">&iquest;C&oacute;mo calculo mi propio ACOS de equilibrio?</a></li>
+      <li><a href="#s4">&iquest;Qu&eacute; significa en dinero un ACOS por encima o por debajo de mi equilibrio?</a></li>
+      <li><a href="#s5">&iquest;Deber&iacute;a gastar alguna vez por encima de mi ACOS de equilibrio?</a></li>
+      <li><a href="#s6">&iquest;Por qu&eacute; un ACOS bajo puede ser una mala se&ntilde;al?</a></li>
+      <li><a href="#s7">&iquest;Qu&eacute; deber&iacute;a hacer el TACOS con el tiempo, y cu&aacute;ndo es una advertencia?</a></li>
+      <li><a href="#s8">&iquest;De d&oacute;nde salen estos n&uacute;meros, y cubren lo mismo?</a></li>
+    </ol>
+  </nav>
+  <p>El ACOS no es una calificaci&oacute;n. Es un costo, y un costo solo se puede juzgar contra aquello de lo que tienes que pagarlo. El mismo 45% es c&oacute;modo para un producto y ruinoso para otro, y la diferencia no es habilidad publicitaria. Es aritm&eacute;tica sobre tarifas y costos de producto, resuelta antes de que corra cualquier anuncio.</p>
+  <h2 id="s1"><span class="num">01</span>&iquest;Qu&eacute; miden en realidad el ACOS y el TACOS?</h2>
+  <p>El ACOS es la inversi&oacute;n publicitaria dividida entre las ventas atribuidas al anuncio, en porcentaje. Las ventas atribuidas al anuncio son las ventas que Amazon acredita a un clic en uno de tus anuncios, dentro de la ventana de atribuci&oacute;n de Amazon. Gasta $600, recibe $2,000 acreditados a esos anuncios, y el ACOS es 30%.</p>
+  <p>El TACOS es la inversi&oacute;n publicitaria dividida entre las ventas totales &mdash; las atribuidas al anuncio y las org&aacute;nicas juntas. Las ventas org&aacute;nicas son las que Amazon no acredita a un clic en un anuncio. Conserva esos mismos $600 y esos mismos $2,000, suma $500 de ventas org&aacute;nicas, y las ventas totales son $2,500. El TACOS es $600 dividido entre $2,500, que es 24%.</p>
+  <div class="fixbox">
+    <span class="fixbox-k">La distinci&oacute;n</span>
+    <p>Los dos comparten el mismo n&uacute;mero de arriba y solo se diferencian en el de abajo. Ese &uacute;nico cambio de denominador es lo que los separa: el ACOS pregunta qu&eacute; tan cara es tu publicidad, el TACOS pregunta qu&eacute; parte de todo tu negocio est&aacute; pagando.</p>
+  </div>
+  <h2 id="s2"><span class="num">02</span>&iquest;Existe un n&uacute;mero de ACOS correcto al que apuntar?</h2>
+  <p>No, porque el ACOS compara la inversi&oacute;n publicitaria contra un precio de venta, y cu&aacute;nto de ese precio te quedas es distinto en cada producto. Dos vendedores reportan 35% de ACOS en un art&iacute;culo de $30. Cada uno paga $10.50 por unidad en publicidad. Si el primero se queda con $12 por unidad despu&eacute;s de tarifas y costos, eso es rentable. Si el segundo se queda con $8, cada unidad pierde dinero. El mismo porcentaje, el resultado opuesto.</p>
+  <div class="fixbox">
+    <span class="fixbox-k">La trampa</span>
+    <p>Un objetivo prestado de alguien m&aacute;s se calcul&oacute; con los costos de alguien m&aacute;s. Perseguirlo te puede empujar a bajar pujas en publicidad que era rentable, o a relajarte con publicidad que no lo era. Esa es una elecci&oacute;n al azar, no una elecci&oacute;n prudente.</p>
+  </div>
+  <h2 id="s3"><span class="num">03</span>&iquest;C&oacute;mo calculo mi propio ACOS de equilibrio?</h2>
+  <p>El ACOS de equilibrio es el ACOS al que una unidad vendida por publicidad deja exactamente cero: la contribuci&oacute;n que queda por unidad antes de publicidad, como porcentaje del precio de venta. La contribuci&oacute;n antes de publicidad es lo que queda despu&eacute;s de las tarifas de Amazon y de todos los costos del producto. Cada cifra de abajo es ilustrativa; reemplaza cada l&iacute;nea con la tuya.</p>
+  <div class="fixbox">
+    <span class="fixbox-k">Ejemplo pr&aacute;ctico</span>
+    <p>Precio de venta | $29.99 Comisi&oacute;n por referencia de Amazon, 15% en la categor&iacute;a de este ejemplo | $4.50 Tarifa de fulfillment de FBA, para el tama&ntilde;o y el peso de este ejemplo | $5.60 Costo puesto en destino por unidad, importado: precio de f&aacute;brica, flete, aranceles, transporte terrestre | $7.20 Provisi&oacute;n de almacenamiento y reembolsos por unidad | $0.70 Costo total antes de publicidad | $18.00 Contribuci&oacute;n antes de publicidad, $29.99 menos $18.00 | $11.99 ACOS de equilibrio, $11.99 dividido entre $29.99 | 39.98%</p>
+  </div>
+  <p>La l&iacute;nea de la comisi&oacute;n por referencia es el 15% de $29.99, que son $4.4985, redondeado a $4.50. Cada cifra de la pila de costos est&aacute; redondeada al centavo m&aacute;s cercano.</p>
+  <p>Este producto llega al equilibrio en 39.98%, no en 10%. Un vendedor que lo opera a 30% de ACOS y se preocupa est&aacute; ganando dinero y preocup&aacute;ndose de todos modos.</p>
+  <div class="fixbox">
+    <span class="fixbox-k">La regla</span>
+    <p>Cada costo que dejas fuera sube tu ACOS de equilibrio, y los reembolsos son la l&iacute;nea que los principiantes omiten con m&aacute;s frecuencia. Eso se equivoca en la direcci&oacute;n peligrosa: hace que el equilibrio parezca m&aacute;s alto de lo que es, lo que hace que gastar m&aacute;s parezca seguro. Hasta que puedas calcular tu propia tasa de reembolsos, pon una provisi&oacute;n deliberadamente prudente en lugar de nada.</p>
+  </div>
+  <h2 id="s4"><span class="num">04</span>&iquest;Qu&eacute; significa en dinero un ACOS por encima o por debajo de mi equilibrio?</h2>
+  <p>El costo publicitario por unidad atribuida al anuncio es el ACOS multiplicado por el precio de venta; la utilidad de esa unidad es la contribuci&oacute;n menos ese costo publicitario. El mismo producto ilustrativo, con cuatro cifras de ACOS:</p>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>ACOS</th><th>Costo publicitario por unidad atribuida al anuncio</th><th>Contribuci&oacute;n antes de publicidad</th><th>Utilidad por unidad atribuida al anuncio</th></tr></thead>
+      <tbody>
+        <tr><td>10%</td><td>$3.00</td><td>$11.99</td><td>$8.99</td></tr>
+        <tr><td>20%</td><td>$6.00</td><td>$11.99</td><td>$5.99</td></tr>
+        <tr><td>39.98% (equilibrio)</td><td>$11.99</td><td>$11.99</td><td>$0.00</td></tr>
+        <tr><td>55%</td><td>$16.49</td><td>$11.99</td><td>-$4.50</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Con 55% de ACOS este producto pierde $4.50 en cada unidad que vende la publicidad, y vender m&aacute;s unidades hace la p&eacute;rdida m&aacute;s grande, no m&aacute;s peque&ntilde;a. Esa es la situaci&oacute;n detr&aacute;s de cada vendedor que reporta buenas ventas y nada de dinero.</p>
+  <h2 id="s5"><span class="num">05</span>&iquest;Deber&iacute;a gastar alguna vez por encima de mi ACOS de equilibrio?</h2>
+  <p>S&iacute;, de forma deliberada y por un periodo declarado. La publicidad vende una unidad ahora, y esa venta tambi&eacute;n sube tu posicionamiento org&aacute;nico para el t&eacute;rmino de b&uacute;squeda que hay detr&aacute;s de ella. Un mejor posicionamiento produce ventas posteriores que no cargan ning&uacute;n costo publicitario.</p>
+  <div class="fixbox">
+    <span class="fixbox-k">El replanteo</span>
+    <p>Gastar por encima del equilibrio durante un lanzamiento es una inversi&oacute;n con un periodo de recuperaci&oacute;n, no una p&eacute;rdida que haya que eliminar. La pregunta no es si el ACOS est&aacute; por encima del equilibrio &mdash; lo va a estar &mdash; sino cu&aacute;nto est&aacute;s invirtiendo y cu&aacute;ndo lo devuelven las ventas org&aacute;nicas.</p>
+  </div>
+  <div class="fixbox">
+    <span class="fixbox-k">Ejemplo pr&aacute;ctico</span>
+    <p>ACOS de equilibrio | 39.98% ACOS real durante el mes de lanzamiento | 70% Ventas atribuidas al anuncio ese mes | $2,000.00 Inversi&oacute;n publicitaria, 70% de $2,000.00 | $1,400.00 Contribuci&oacute;n que generan esas ventas, 39.98% de $2,000.00 | $799.60 Monto invertido ese mes | $600.40 Ventas org&aacute;nicas por mes cuando el posicionamiento se asienta | $1,500.00 Contribuci&oacute;n de esas ventas org&aacute;nicas | $599.70 Meses a ese nivel org&aacute;nico para recuperar la inversi&oacute;n | poco m&aacute;s de 1</p>
+  </div>
+  <p>Un ACOS por encima del equilibrio sin un monto escrito y sin una recuperaci&oacute;n esperada no es una inversi&oacute;n. Es una p&eacute;rdida con un nombre optimista.</p>
+  <div class="fixbox">
+    <span class="fixbox-k">El riesgo</span>
+    <p>La recuperaci&oacute;n solo llega si el posicionamiento se sostiene. Si tu posici&oacute;n org&aacute;nica depende de que la publicidad corra sin parar, la est&aacute;s rentando, no invirtiendo. Vigila esa posici&oacute;n cada semana, no solo tu ACOS.</p>
+  </div>
+  <h2 id="s6"><span class="num">06</span>&iquest;Por qu&eacute; un ACOS bajo puede ser una mala se&ntilde;al?</h2>
+  <p>Porque el ACOS no tiene idea de qu&eacute; tan grande es tu negocio. Un vendedor que puja casi nada, consigue unos cuantos clics y convierte dos de ellos reporta un ACOS precioso en un producto que casi no vende. La proporci&oacute;n se ve id&eacute;ntica con $100 de ventas atribuidas al anuncio y con $100,000.</p>
+  <div class="fixbox">
+    <span class="fixbox-k">El punto ciego</span>
+    <p>El ACOS tampoco puede ver las ventas org&aacute;nicas. Un producto cuyas ventas org&aacute;nicas se est&aacute;n derrumbando y otro cuyas ventas org&aacute;nicas est&aacute;n creciendo pueden reportar el mismo ACOS, porque las ventas org&aacute;nicas no est&aacute;n en ninguna de sus dos mitades.</p>
+  </div>
+  <h2 id="s7"><span class="num">07</span>&iquest;Qu&eacute; deber&iacute;a hacer el TACOS con el tiempo, y cu&aacute;ndo es una advertencia?</h2>
+  <p>En un producto que funciona, el TACOS baja. La tabla de abajo mantiene constantes la inversi&oacute;n publicitaria y las ventas atribuidas al anuncio a lo largo de tres meses ilustrativos, y solo hace crecer las ventas org&aacute;nicas.</p>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>Mes</th><th>Inversi&oacute;n publicitaria</th><th>Ventas atribuidas al anuncio</th><th>Ventas org&aacute;nicas</th><th>Ventas totales</th><th>ACOS</th><th>TACOS</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>$600</td><td>$2,000</td><td>$500</td><td>$2,500</td><td>30.0%</td><td>24.0%</td></tr>
+        <tr><td>3</td><td>$600</td><td>$2,000</td><td>$2,000</td><td>$4,000</td><td>30.0%</td><td>15.0%</td></tr>
+        <tr><td>6</td><td>$600</td><td>$2,000</td><td>$4,000</td><td>$6,000</td><td>30.0%</td><td>10.0%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>El ACOS es 30.0% en los tres meses y reporta que nada cambi&oacute;. El TACOS baja de 24.0% a 10.0% y reporta que el negocio se volvi&oacute; mucho menos dependiente de la publicidad.</p>
+  <!-- FIGURE GOES HERE. Drop the image in as assets/img/fig-acos-tacos-and-your-margin-1.webp, uncomment:
+<figure class="art-figure">
+  <img src="/assets/img/fig-acos-tacos-and-your-margin-1.webp"
+       alt="El ACOS se mantiene plano mientras el TACOS baja a medida que las ventas org&aacute;nicas crecen a lo largo de seis meses"
+       loading="lazy" decoding="async">
+</figure>
+-->
+  <p>Un TACOS al alza en un producto maduro es una advertencia, incluso cuando el ACOS no se ha movido. Toma el mismo producto tres meses despu&eacute;s de esa fila del mes 6.</p>
+  <div class="fixbox">
+    <span class="fixbox-k">Ejemplo pr&aacute;ctico</span>
+    <p>Mes 9 &mdash; inversi&oacute;n publicitaria | $900 Mes 9 &mdash; ventas atribuidas al anuncio | $3,000 Mes 9 &mdash; ventas org&aacute;nicas | $1,800 Mes 9 &mdash; ventas totales | $4,800 Mes 9 &mdash; ACOS | 30.0% Mes 9 &mdash; TACOS | 18.75%</p>
+  </div>
+  <p>El ACOS es 30.0% en el mes 9, exactamente como en el mes 6. Pero las ventas org&aacute;nicas cayeron de $4,000 a $1,800 y el negocio las reemplaz&oacute; comprando publicidad: las ventas totales bajaron de $6,000 a $4,800 mientras la factura de anuncios subi&oacute; de $600 a $900. El TACOS es el &uacute;nico de los dos que lo muestra.</p>
+  <div class="fixbox">
+    <span class="fixbox-k">Qu&eacute; hacer</span>
+    <p>Durante un lanzamiento, espera un TACOS alto y m&iacute;ralo bajar mes a mes. En un producto maduro, si el TACOS sube mientras las ventas totales est&aacute;n planas o cayendo, deja de ajustar pujas y averigua por qu&eacute; est&aacute;n bajando las ventas org&aacute;nicas &mdash; un movimiento de precio de un competidor, una ca&iacute;da en la posici&oacute;n org&aacute;nica, un quiebre de stock que rompi&oacute; tu posicionamiento, o un cambio en el listing.</p>
+  </div>
+  <h2 id="s8"><span class="num">08</span>&iquest;De d&oacute;nde salen estos n&uacute;meros, y cubren lo mismo?</h2>
+  <p>Las dos mitades del TACOS vienen de lugares distintos y no se alinean autom&aacute;ticamente.</p>
+  <p>La inversi&oacute;n publicitaria y las ventas atribuidas al anuncio vienen de Campaign Manager, en las columnas llamadas Spend y Sales. Las dos cubren solo tr&aacute;fico de anuncios, para las campa&ntilde;as y el rango de fechas que hayas seleccionado. Sales cuenta lo que Amazon acredita a los clics en esos anuncios dentro de la ventana de atribuci&oacute;n &mdash; para un vendedor que corre Sponsored Products esa ventana es de 7 d&iacute;as desde el clic; para Sponsored Brands y Sponsored Display es de 14 d&iacute;as. Los pedidos se siguen completando despu&eacute;s del clic, as&iacute; que un rango que termina hoy est&aacute; incompleto y va a subir en los d&iacute;as siguientes.</p>
+  <p>Las ventas totales &mdash; el denominador del TACOS &mdash; no vienen de Campaign Manager, que no puede ver ventas que no fueron acreditadas a un anuncio. Esa cifra vive en Seller Central, en Reports, luego Business Reports, luego Detail Page Sales and Traffic by Child Item, en la columna llamada Ordered Product Sales. Cubre todos los pedidos de ese ASIN hijo en el rango de fechas, de todas las fuentes de tr&aacute;fico, valuados en el momento en que se hizo el pedido.</p>
+  <div class="fixbox">
+    <span class="fixbox-k">El l&iacute;mite</span>
+    <p>Ordered Product Sales se registra cuando se hace el pedido, as&iacute; que un pedido cancelado o reembolsado despu&eacute;s igual se cont&oacute; el d&iacute;a en que se hizo. Es una cifra de ventas de l&iacute;nea superior: no son ingresos despu&eacute;s de devoluciones, ni un pago, porque tampoco se le descuentan las tarifas de Amazon. &Uacute;sala estrictamente como el denominador del TACOS y toma el dinero liquidado de tus reportes de pagos.</p>
+  </div>
+  <div class="fixbox">
+    <span class="fixbox-k">Qu&eacute; hacer</span>
+    <p>Usa el mismo rango de fechas en las dos pantallas, terminando al menos una semana atr&aacute;s para que la ventana de atribuci&oacute;n haya terminado de completarse. Filtra Campaign Manager a las campa&ntilde;as que publicitan un ASIN y saca Ordered Product Sales para ese mismo ASIN hijo &mdash; un TACOS que mezcla la inversi&oacute;n publicitaria de un producto con las ventas de toda la cuenta no significa nada. Las dos son cifras de ventas al momento del pedido y no cifras de pago, que es lo que hace que dividir una entre la otra tenga sentido.</p>
+  </div>
+  <p>Las cifras de tarifas necesitan el mismo cuidado. Las comisiones por referencia var&iacute;an por categor&iacute;a y las tarifas de fulfillment var&iacute;an por tama&ntilde;o y peso, as&iacute; que ning&uacute;n porcentaje &uacute;nico es correcto para todos, y el 15% de arriba es solo la categor&iacute;a de este ejemplo. Las dos vienen del Revenue Calculator de Amazon para tu propio ASIN y tu precio. Llegas a &eacute;l haciendo clic en la cifra de tarifa estimada que aparece junto a tu listing, y no desde un men&uacute;, y desglosa los cargos l&iacute;nea por l&iacute;nea &mdash; la comisi&oacute;n por referencia y las tarifas de cierre por separado del costo de fulfillment &mdash; para que puedas leer las dos cifras que este c&aacute;lculo necesita en lugar de un solo n&uacute;mero combinado.</p>
+  <h2 id="faq">Preguntas frecuentes</h2>
+  <div class="faq">
+    <details>
+      <summary>&iquest;Es realista un ACOS de 10%?</summary>
+      <p>Para algunos productos maduros en algunas categor&iacute;as, s&iacute;. Como objetivo general, no. Si un producto llega al equilibrio cerca de 40%, perseguir 10% te tiene bajando pujas en publicidad que estaba ganando dinero.</p>
+    </details>
+    <details>
+      <summary>Mi ACOS est&aacute; por encima del equilibrio. &iquest;Deber&iacute;a pausar las campa&ntilde;as?</summary>
+      <p>No autom&aacute;ticamente. Si est&aacute;s lanzando, con un monto planeado y una recuperaci&oacute;n esperada, sigue y vigila la posici&oacute;n org&aacute;nica. Si el producto es maduro y no hay plan, esa inversi&oacute;n est&aacute; perdiendo dinero por unidad y hay que recortarla.</p>
+    </details>
+    <details>
+      <summary>&iquest;Puedo calcular el ACOS de equilibrio mientras corro un cup&oacute;n?</summary>
+      <p>Usa el precio que los clientes pagan de verdad, no el precio de lista, y mete el costo del cup&oacute;n en la pila de costos. Un ACOS de equilibrio construido sobre un precio que nadie paga es demasiado generoso, en la direcci&oacute;n que fomenta m&aacute;s gasto.</p>
+    </details>
+  </div>
+  <section class="sec">
+    <h2>Para cerrar</h2>
+    <p>La cifra de 10% que circula es la aritm&eacute;tica de alguien m&aacute;s, repetida hasta que son&oacute; como una regla. Tu propio ACOS de equilibrio toma diez minutos de construir a partir de tus tarifas reales, tu costo puesto en destino real y una provisi&oacute;n prudente de reembolsos. Tr&aacute;talo como un punto de referencia y no como un objetivo: en el lanzamiento vas a gastar por encima de &eacute;l, en una fase de utilidad bastante por debajo.</p>
+    <p>Mant&eacute;n el TACOS a la vista junto a &eacute;l, porque el ACOS puede verse perfecto en un producto que se est&aacute; muriendo en silencio. Un TACOS que baja mes tras mes es la se&ntilde;al &uacute;nica m&aacute;s clara de que la publicidad est&aacute; haciendo el trabajo que le toca hacer: comprar su propio reemplazo.</p>
+  </section>
+</main>
+
+<aside class="rail" aria-label="Key figures from this article">
+  <div class="rail-card">
+    <span class="rail-k">Mismo ACOS, resultado opuesto</span>
+    <span class="rail-v">$12 vs $8</span>
+    <p>Si el primero se queda con $12 por unidad despu&eacute;s de tarifas y costos, eso es rentable. Si el segundo se queda con $8, cada unidad pierde dinero.</p>
+  </div>
+  <div class="rail-card">
+    <span class="rail-k">Tu propio ACOS de equilibrio</span>
+    <span class="rail-v">39.98%</span>
+    <p>Este producto llega al equilibrio en 39.98%, no en 10%. Un vendedor que lo opera a 30% de ACOS y se preocupa est&aacute; ganando dinero y preocup&aacute;ndose de todos modos.</p>
+  </div>
+  <div class="rail-card">
+    <span class="rail-k">P&eacute;rdida por unidad al 55%</span>
+    <span class="rail-v is-amber">-$4.50</span>
+    <p>Con 55% de ACOS este producto pierde $4.50 en cada unidad que vende la publicidad, y vender m&aacute;s unidades hace la p&eacute;rdida m&aacute;s grande, no m&aacute;s peque&ntilde;a.</p>
+  </div>
+  <div class="rail-card">
+    <span class="rail-k">Lo que muestra el TACOS</span>
+    <span class="rail-v is-violet">24.0% &rarr; 10.0%</span>
+    <p>El ACOS es 30.0% en los tres meses y reporta que nada cambi&oacute;. El TACOS baja de 24.0% a 10.0% y reporta que el negocio se volvi&oacute; mucho menos dependiente de la publicidad.</p>
+  </div>
+  <p class="rail-src">Cifras de los ejemplos trabajados de este art&iacute;culo, no de un estudio de mercado.</p>
+</aside>
+
+</div><!-- /.shell -->
+
+</div><!-- /.wrap -->
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+  <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"  stop-color="#5B4FE6"/>
+    <stop offset="100%" stop-color="#A93BF1"/>
+  </linearGradient>
+  <symbol id="i-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12.5 17v-4a2.5 2.5 0 015 0v4"/></symbol>
+  <symbol id="i-tw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M20 4L4 20"/></symbol>
+  <symbol id="i-gh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4 1.4-4-2.2-5.6-2.6M15 21v-3.4a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 2.6 5.5 2.9 5.5 2.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 9.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></symbol>
+</defs>
+</svg>
+
+<footer class="footer">
+<div class="container">
+
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/es/" class="brand" aria-label="Inicio de AmazeBase">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 3.2 29 27.5h-6.4L16 14.1 9.4 27.5H3z" fill="url(#markGrad)"/>
+        </svg>
+        <span data-brand>AmazeBase</span>
+      </a>
+      <p>El sistema operativo para vendedores de Amazon. Todo conectado, todo sincronizado.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Producto</h4>
+      <a href="/es/producto.html#modules">Producto</a>
+      <a href="/es/#pricing">Precios</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Recursos</h4>
+      <a href="/es/recursos.html">Centro de Conocimiento</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <a href="/es/nosotros.html">Nosotros</a>
+      <a href="/es/contacto.html">Contacto</a>
+      <a href="/es/privacidad.html">Privacidad</a>
+      <a href="/es/terminos.html">T&eacute;rminos</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>&copy; 2026 <span data-brand>AmazeBase</span>. Todos los derechos reservados.</span>
+    <div class="footer-social">
+      <a href="#" aria-label="LinkedIn"><svg class="icon-sm"><use href="#i-in"/></svg></a>
+      <a href="#" aria-label="X"><svg class="icon-sm"><use href="#i-tw"/></svg></a>
+      <a href="#" aria-label="GitHub"><svg class="icon-sm"><use href="#i-gh"/></svg></a>
+    </div>
+  </div>
+
+</div>
+</footer>
+
+<script src="/js/main.js" defer></script>
+</body>
+</html>

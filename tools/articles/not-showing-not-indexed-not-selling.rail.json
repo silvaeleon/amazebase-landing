@@ -1,0 +1,27 @@
+{
+ "_note": "The rail's key-figure cards, drafted 2026-09-12 for Leon's review: the content-first source format has no rail, and every number and every sentence below is taken verbatim from tools/articles/not-showing-not-indexed-not-selling.md, only the short 'k' labels are new. This article is figure-light, so two cards carry a short phrase instead of a number. build_article.py asserts each card's 'p' is in the article body and verify refuses a rail number the article does not contain.",
+ "cards": [
+  {
+   "k": "Problems in one sentence",
+   "v": "4",
+   "p": "Because \"I cannot find my product\" covers four separate problems that produce the same empty screen."
+  },
+  {
+   "k": "The expensive mistake",
+   "v": "Not for sale",
+   "tone": "amber",
+   "p": "The expensive mistake is to meet an organic ranking problem by raising bids: a higher bid cannot put you in the organic results, because organic position is not for sale."
+  },
+  {
+   "k": "Proof of delivery",
+   "v": "$0.00",
+   "p": "In Campaign Manager, set the date range to the last 7 days and look at Spend. If Spend is above $0.00, the ad was served in that period."
+  },
+  {
+   "k": "What to check first",
+   "v": "Featured offer",
+   "tone": "violet",
+   "p": "Amazon's advertising documentation states that an ad for a listing not eligible for the featured offer will not display to shoppers, and that ineligible ads are flagged in Campaign Manager."
+  }
+ ]
+}

@@ -1,0 +1,27 @@
+{
+ "_note": "The rail's key-figure cards. The content-first source format has no rail, so these were drafted 2026-09-12 for Leon's review: every number and every sentence below is taken verbatim from tools/articles/acos-tacos-and-your-margin.md, and only the short 'k' labels are new. build_article.py asserts each 'p' is in the article body and verify() refuses a rail number the article does not contain.",
+ "cards": [
+  {
+   "k": "Same ACOS, opposite result",
+   "v": "$12 vs $8",
+   "p": "If the first keeps $12 per unit after fees and costs, that is profitable. If the second keeps $8, every unit loses money."
+  },
+  {
+   "k": "Your own break-even",
+   "v": "39.98%",
+   "p": "This product breaks even at 39.98%, not at 10%. A seller running it at 30% ACOS and worrying is making money and worrying anyway."
+  },
+  {
+   "k": "Loss per unit at 55%",
+   "v": "-$4.50",
+   "tone": "amber",
+   "p": "At 55% ACOS this product loses $4.50 on every unit advertising sells, and selling more units makes the loss larger, not smaller."
+  },
+  {
+   "k": "What TACOS shows",
+   "v": "24.0% → 10.0%",
+   "tone": "violet",
+   "p": "ACOS is 30.0% in all three months and reports that nothing changed. TACOS falls from 24.0% to 10.0% and reports that the business became far less dependent on advertising."
+  }
+ ]
+}

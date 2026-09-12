@@ -1,0 +1,27 @@
+{
+ "_note": "The rail's key-figure cards. The content-first source format has no rail, so these were drafted 2026-09-12 for Leon's review from the PORTUGUESE source: every number and every sentence below is taken verbatim from tools/articles/qual-acos-voce-deve-buscar.md, quoting the same four places as the English rail, and only the short 'k' labels are new. build_article.py asserts each 'p' is in the article body and verify() refuses a rail number the article does not contain.",
+ "cards": [
+  {
+   "k": "Mesmo ACOS, resultado oposto",
+   "v": "$12 vs $8",
+   "p": "Se o primeiro fica com $12 por unidade depois das taxas e dos custos, isso é lucrativo. Se o segundo fica com $8, cada unidade perde dinheiro."
+  },
+  {
+   "k": "O seu ACOS de equilíbrio",
+   "v": "39.98%",
+   "p": "Este produto fica no equilíbrio em 39.98%, não em 10%. Um vendedor que o roda a 30% de ACOS e fica preocupado está ganhando dinheiro e preocupado do mesmo jeito."
+  },
+  {
+   "k": "Perda por unidade a 55%",
+   "v": "-$4.50",
+   "tone": "amber",
+   "p": "A 55% de ACOS este produto perde $4.50 em cada unidade que a publicidade vende, e vender mais unidades aumenta a perda, não diminui."
+  },
+  {
+   "k": "O que o TACOS mostra",
+   "v": "24.0% → 10.0%",
+   "tone": "violet",
+   "p": "O ACOS é 30.0% nos três meses e reporta que nada mudou. O TACOS cai de 24.0% para 10.0% e reporta que o negócio ficou bem menos dependente de publicidade."
+  }
+ ]
+}

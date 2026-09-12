@@ -1,0 +1,27 @@
+{
+ "_note": "The rail's key-figure cards. The content-first source format has no rail, so these were drafted 2026-09-12 for Leon's review: every number and every sentence below is taken verbatim from tools/articles/when-to-negate-a-keyword.md, and only the short 'k' labels are new.",
+ "cards": [
+  {
+   "k": "The relevance gate",
+   "v": "No clicks",
+   "p": "If the honest answer is no, the term is irrelevant. Negate it now."
+  },
+  {
+   "k": "When zero sales counts",
+   "v": "22 clicks",
+   "p": "At that rate, a perfectly normal search term still produces zero orders after 22 clicks less than 10% of the time."
+  },
+  {
+   "k": "When your rate is lower",
+   "v": "45 clicks at 5%",
+   "tone": "amber",
+   "p": "Halve the rate and you roughly double the clicks needed: at 5%, about 45."
+  },
+  {
+   "k": "High ACOS on a core term",
+   "v": "125% ACOS",
+   "tone": "violet",
+   "p": "If a search term is central to what you sell, a poor result is a conversion problem, not a targeting problem."
+  }
+ ]
+}

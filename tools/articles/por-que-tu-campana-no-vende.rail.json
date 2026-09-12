@@ -1,0 +1,27 @@
+{
+ "_note": "The rail's key-figure cards. The content-first source format has no rail, so these were drafted 2026-09-12 for Leon's review from the SPANISH source, and every number and every sentence in them is taken verbatim from tools/articles/por-que-tu-campana-no-vende.md; only the short 'k' labels are new.",
+ "cards": [
+  {
+   "k": "La cadena",
+   "v": "Tres eslabones",
+   "tone": "violet",
+   "p": "Una campaña publicitaria es una cadena: Amazon muestra tu anuncio y eso produce impresiones; algunos compradores hacen clic; algunos clics se convierten en pedidos."
+  },
+  {
+   "k": "El CTR contra el tuyo",
+   "v": "0.30% vs 0.70%",
+   "p": "Su CTR es 0.30% frente a un CTR de cuenta de 0.70%, menos de la mitad."
+  },
+  {
+   "k": "Cuándo el cero significa algo",
+   "v": "22",
+   "tone": "amber",
+   "p": "Con una tasa de conversión de anuncios del 10%, 22 clics sin venta es el primer punto en el que el cero deja de ser un resultado ordinario."
+  },
+  {
+   "k": "Cosas por trabajar",
+   "v": "Seis",
+   "p": "Seis cosas las puedes trabajar en una semana. Veinte no."
+  }
+ ]
+}

@@ -1,0 +1,13 @@
+{
+ "_note": "Drafted 2026-09-12 for Leon's review: every number and every sentence below is taken verbatim from tools/articles/presupuesto-diario-se-acaba-al-mediodia.md, and only the short 'k' labels are new.",
+ "cards": [
+  {"k": "Utilidad a 30 días", "v": "$148.00",
+   "p": "Un pedido cuesta $8.00 frente a los $10.00 que puedes pagar, así que cada uno deja $2.00. En 30 días eso es 74 × $2.00 = $148.00 de utilidad, ganada mientras la campaña se quedaba sin presupuesto todas las tardes."},
+  {"k": "Clics antes de una lectura", "v": "63 clics", "tone": "amber",
+   "p": "Cinco pedidos equivalen a 5 × 12.5 = 62.5, o sea 63 clics. Por debajo de eso tienes un número, no una lectura."},
+  {"k": "El techo mensual", "v": "$600.00",
+   "p": "Con un presupuesto diario de $20.00 en un mes de 30 días, el mes queda topado en $20.00 × 30 = $600.00 en cualquiera de los dos casos. Con la opción de 25% un día puede llegar a $25.00; con la de 100%, a $40.00."},
+  {"k": "Lo que cuesta repartir", "v": "15 clics", "tone": "violet",
+   "p": "No puedes distinguir una palabra clave que convierte al 4% de una que convierte al 12% con 15 clics. Pagaste $12.00 por el mes de esa palabra clave y no aprendiste nada."}
+ ]
+}

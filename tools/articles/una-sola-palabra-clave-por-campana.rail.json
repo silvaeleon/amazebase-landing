@@ -1,0 +1,13 @@
+{
+ "_note": "The rail's key-figure cards. The content-first source format has no rail, so these were drafted 2026-09-12 from the SPANISH source for Leon's review, and each number and each sentence on a card is taken verbatim from that article; only the short 'k' labels are new.",
+ "cards": [
+  {"k": "Más datos al dividir", "v": "No",
+   "p": "Tu presupuesto compra cierta cantidad de clics por día. Repartir ese presupuesto entre diez campañas no compra más clics."},
+  {"k": "Días hasta una decisión", "v": "9 vs 4 días", "tone": "amber",
+   "p": "La cuenta compra los mismos 25 clics por día en los dos casos. Repartida entre diez campañas, cada palabra clave tarda unos 9 días en llegar a una decisión; entre cuatro, tarda unos 4 días."},
+  {"k": "Pujas contra ti mismo", "v": "CPC más alto",
+   "p": "Son tus campañas, pujando una contra la otra, y el efecto normalmente es un costo por clic más alto por la misma venta."},
+  {"k": "No una estructura de arranque", "v": "Un ascenso", "tone": "violet",
+   "p": "Trátalo como un ascenso, no como una estructura de arranque. Una palabra clave se gana su propia campaña convirtiendo."}
+ ]
+}

@@ -1,0 +1,13 @@
+{
+ "_note": "The rail's key-figure cards. The content-first source format has no rail, so these were drafted 2026-09-12 from the PORTUGUESE source for Leon's review, and each number and each sentence on a card is taken verbatim from that article; only the short 'k' labels are new.",
+ "cards": [
+  {"k": "Mais dados ao dividir", "v": "Não",
+   "p": "O seu orçamento compra uma certa quantidade de cliques por dia. Dividir esse orçamento entre dez campanhas não compra mais cliques."},
+  {"k": "Dias até uma decisão", "v": "9 vs 4 dias", "tone": "amber",
+   "p": "A conta compra os mesmos 25 cliques por dia nos dois casos. Entre dez campanhas, cada palavra-chave leva uns 9 dias para chegar a uma decisão; entre quatro, leva uns 4 dias."},
+  {"k": "Você dá lances contra você", "v": "CPC mais alto",
+   "p": "São as suas campanhas, dando lances uma contra a outra, e o efeito normalmente é um custo por clique mais alto pela mesma venda."},
+  {"k": "Não uma estrutura de partida", "v": "Uma promoção", "tone": "violet",
+   "p": "Trate isso como uma promoção, não como uma estrutura de partida. Uma palavra-chave ganha a campanha dela convertendo."}
+ ]
+}

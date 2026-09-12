@@ -1,0 +1,27 @@
+{
+ "_note": "The rail's key-figure cards. The content-first source format has no rail, so these were drafted 2026-09-12 for Leon's review from the SPANISH source: every number and every sentence below is taken verbatim from tools/articles/a-que-acos-deberias-apuntar.md, quoting the same four places as the English rail, and only the short 'k' labels are new. build_article.py asserts each 'p' is in the article body and verify() refuses a rail number the article does not contain.",
+ "cards": [
+  {
+   "k": "Mismo ACOS, resultado opuesto",
+   "v": "$12 vs $8",
+   "p": "Si el primero se queda con $12 por unidad después de tarifas y costos, eso es rentable. Si el segundo se queda con $8, cada unidad pierde dinero."
+  },
+  {
+   "k": "Tu propio ACOS de equilibrio",
+   "v": "39.98%",
+   "p": "Este producto llega al equilibrio en 39.98%, no en 10%. Un vendedor que lo opera a 30% de ACOS y se preocupa está ganando dinero y preocupándose de todos modos."
+  },
+  {
+   "k": "Pérdida por unidad al 55%",
+   "v": "-$4.50",
+   "tone": "amber",
+   "p": "Con 55% de ACOS este producto pierde $4.50 en cada unidad que vende la publicidad, y vender más unidades hace la pérdida más grande, no más pequeña."
+  },
+  {
+   "k": "Lo que muestra el TACOS",
+   "v": "24.0% → 10.0%",
+   "tone": "violet",
+   "p": "El ACOS es 30.0% en los tres meses y reporta que nada cambió. El TACOS baja de 24.0% a 10.0% y reporta que el negocio se volvió mucho menos dependiente de la publicidad."
+  }
+ ]
+}

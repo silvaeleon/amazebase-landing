@@ -1,0 +1,13 @@
+{
+ "_note": "The rail's key-figure cards. The content-first source format has no rail, so these were drafted 2026-09-12 for Leon's review; every number and every sentence below is taken verbatim from tools/articles/ppc-day-one-or-wait-for-reviews.md, and only the short 'k' labels are new. build_article.py verify refuses a rail number the article does not contain.",
+ "cards": [
+  {"k": "Clicks either way", "v": "300 clicks",
+   "p": "The same budget buys the same 300 clicks both times. What changes is how many the listing can hold."},
+  {"k": "Cost of starting early", "v": "$162.00", "tone": "amber",
+   "p": "The early run loses $219.00 and produces 9 sales; the later run loses $57.00 and produces 27 sales. The difference is $162.00 and 18 sales."},
+  {"k": "Cost of waiting", "v": "18 sales", "tone": "violet",
+   "p": "The starting camp sees 18 sales of ranking the waiting seller never got, in the weeks when a new listing may be cheapest to rank."},
+  {"k": "Days of supply", "v": "25 days",
+   "p": "Suppose you have 200 units and your campaigns drive 8 units a day. That is 25 days of supply."}
+ ]
+}

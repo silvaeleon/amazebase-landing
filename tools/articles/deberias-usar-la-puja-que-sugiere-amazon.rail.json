@@ -1,0 +1,13 @@
+{
+ "_note": "The rail's key-figure cards. The content-first source format has no rail, so these were drafted 2026-09-12 from the SPANISH source for Leon's review, and every number and every sentence below is taken verbatim from tools/articles/deberias-usar-la-puja-que-sugiere-amazon.md; only the short 'k' labels are new.",
+ "cards": [
+  {"k": "Lo que puedes pagar", "v": "$0.50",
+   "p": "Si la publicidad puede llevarse la mitad de la contribución, tu techo es $0.50 por clic: $6.25 de inversión publicitaria por venta y $6.25 de utilidad."},
+  {"k": "El precio de la sugerencia", "v": "$4.38", "tone": "amber",
+   "p": "Si en cambio pagas la sugerencia de $1.35, una venta cuesta $1.35 multiplicado por 12.5 clics, o sea $16.88 contra $12.50 de contribución: una pérdida de $4.38 por unidad."},
+  {"k": "Hasta dónde puede subir Amazon", "v": "100%",
+   "p": "El límite que Amazon publica para up and down es el 100% de esa tabla. Por eso una puja de $0.50 puede competir hasta en $1.00 — el precio de equilibrio de arriba, y el doble del techo que fijaste."},
+  {"k": "Multiplicador en una ubicación", "v": "900%", "tone": "violet",
+   "p": "Amazon permite un ajuste de hasta 900% en cada una, para todos los tipos de segmentación y todas las estrategias de puja. Multiplica la puja que ingresaste, solo para esa ubicación."}
+ ]
+}

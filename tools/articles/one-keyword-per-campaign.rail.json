@@ -1,0 +1,13 @@
+{
+ "_note": "The rail's key-figure cards. The content-first source format has no rail, so these were drafted 2026-09-12 from the ENGLISH source for Leon's review, and each number and each sentence on a card is taken verbatim from that article; only the short 'k' labels are new.",
+ "cards": [
+  {"k": "More data from splitting", "v": "No",
+   "p": "Your budget buys a certain number of clicks per day. Dividing that budget across ten campaigns does not buy more clicks."},
+  {"k": "Days to a decision", "v": "9 vs 4 days", "tone": "amber",
+   "p": "The account buys the same 25 clicks per day in both cases. Across ten campaigns each keyword takes about 9 days to reach a decision; across four it takes about 4 days."},
+  {"k": "You bid against yourself", "v": "Higher CPC",
+   "p": "They are your campaigns, bidding against each other, and the effect is usually a higher cost per click for the same sale."},
+  {"k": "Not a starting structure", "v": "A promotion", "tone": "violet",
+   "p": "Treat it as a promotion, not a starting structure. A keyword earns its own campaign by converting."}
+ ]
+}

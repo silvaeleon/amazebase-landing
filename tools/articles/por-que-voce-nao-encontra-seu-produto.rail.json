@@ -1,0 +1,27 @@
+{
+ "_note": "The rail's key-figure cards, drafted 2026-09-12 for Leon's review: the content-first source format has no rail, and every number and every sentence below is taken verbatim from tools/articles/por-que-voce-nao-encontra-seu-produto.md, only the short 'k' labels are new. Redigidas a partir da fonte PORTUGUESA, nao traduzidas do rail ingles; o artigo tem poucos numeros, entao dois cards levam uma frase curta em vez de um numero. build_article.py asserts each card's 'p' is in the article body and verify refuses a rail number the article does not contain.",
+ "cards": [
+  {
+   "k": "Problemas em uma frase só",
+   "v": "4",
+   "p": "Porque “não encontro o meu produto” cobre quatro problemas separados que produzem a mesma tela vazia."
+  },
+  {
+   "k": "O erro caro",
+   "v": "Não está à venda",
+   "tone": "amber",
+   "p": "O erro caro é responder a um problema de ranqueamento orgânico subindo lances: um lance mais alto não consegue colocar você nos resultados orgânicos, porque posição orgânica não está à venda."
+  },
+  {
+   "k": "Prova de veiculação",
+   "v": "$0.00",
+   "p": "No Campaign Manager, coloque o intervalo de datas nos últimos 7 dias e olhe o gasto. Se o gasto estiver acima de $0.00, o anúncio foi veiculado nesse período."
+  },
+  {
+   "k": "O que verificar primeiro",
+   "v": "Featured offer",
+   "tone": "violet",
+   "p": "A documentação de publicidade da Amazon diz que um anúncio de um listing que não é elegível para o featured offer não será exibido para os compradores, e que anúncios não elegíveis ficam sinalizados no Campaign Manager."
+  }
+ ]
+}

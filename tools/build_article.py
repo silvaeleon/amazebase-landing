@@ -20,8 +20,8 @@ content-first article.
 
 Two things are deliberately NOT translated: the hero and figure FILES (one
 picture serves all three languages, named for the English slug, only the alt
-text changes) and the "## New terms" appendix marker (a working note for Leon,
-never page content)
+text changes) and the "## New terms" and "## Sources" appendix markers (working
+notes for Leon, never page content)
 
 The source lives in version control: tools/articles/<slug>.md (tools/ is not
 served, see the Caddyfile). The first article authored this way is
@@ -47,7 +47,7 @@ THE SOURCE FORMAT
   ## Final thoughts                       section.sec, the closing section
   the figures-disclaimer sentence         the rail's p.rail-src
   ## New terms                            NOT PUBLISHED: a working appendix; it
-                                          stays in the source, never the page
+  ## Sources                              stays in the source, never the page
   [[SEE: slug]]                           refused: a link to an article that
                                           must exist (resolve it in the source)
 
@@ -198,6 +198,24 @@ def inline(t):
     return t
 
 
+# The working appendices. They live in the source and never reach the page:
+# "## New terms" is the translator's vocabulary note, "## Sources" the
+# fact-check trail (it names Leon, cites screenshots, and records "matches the
+# claim: yes"). Named once, because three call sites read the published part and
+# a fourth checks the page for leakage; when the list lived at each site as a
+# literal, adding Sources meant finding all of them, and the contents block
+# silently counted it as a section (the article then had N+1 sections for N
+# contents items, which is how it was found, 2026-09-12).
+APPENDICES = ("\n## New terms", "\n## Sources")
+
+
+def published_part(text):
+    """The source with every working appendix cut off."""
+    for a in APPENDICES:
+        text = text.split(a, 1)[0]
+    return text
+
+
 def language_of(meta, slug):
     """Which language a source builds into, and the slug of its English source.
 
@@ -231,7 +249,7 @@ def parse(slug):
         k, v = line.split(":", 1)
         meta[k.strip()] = v.strip()
     assert meta["slug"] == slug, "slug %r != file %r" % (meta["slug"], slug)
-    body = body.split("\n## New terms", 1)[0]          # the working appendix is never published
+    body = published_part(body)                        # working appendices are never published
     assert "[[SEE:" not in body, "[[SEE:]] left in the source: resolve or remove it first"
     parts = re.split(r"^## (.+)$", body, flags=re.M)
     intro, sections = parts[0], list(zip(parts[1::2], parts[2::2]))
@@ -284,6 +302,12 @@ def render_block(b, section):
                    "\n".join("        <tr>%s</tr>" % "".join("<td>%s</td>" % inline(c) for c in r) for r in rows)))
     if all(re.match(r"\d+\. ", l) for l in lines):
         return "<ol>\n%s\n  </ol>" % "\n".join("    <li>%s</li>" % inline(re.sub(r"^\d+\. ", "", l)) for l in lines)
+    # A bullet list. Bare <ul>, as 107 body lists in the shipped corpus are;
+    # the classed variants (ul.spec, ul.tradeoff) are hand-written pages and are
+    # not something a source can ask for. Only OUTSIDE the contents block --
+    # build_main takes that section before any block reaches here.
+    if all(l.startswith("- ") for l in lines):
+        return "<ul>\n%s\n  </ul>" % "\n".join("    <li>%s</li>" % inline(l[2:]) for l in lines)
     assert not any(l.startswith(("|", "[[", "- ", "#")) for l in lines), "unplaceable block: %r" % b[:80]
     return "<p>%s</p>" % inline(" ".join(lines))
 
@@ -421,17 +445,42 @@ def split_title(t):
     return " ".join(words[:best]), " ".join(words[best:])
 
 
-def category(label):
-    """The hub category whose English label the source names. Refused, not
-    guessed, when it is not exactly one of them."""
+def categories(spec):
+    """Every hub category the source names, in order. `categories:` holds one
+    English hub label or several separated by commas -- the taxonomy key, named
+    in English on a page of any language. Refused, never guessed, when a name is
+    not exactly one of them.
+
+    More than one is allowed because data/resources.json has always carried the
+    plural `categories` list (hubrows.english_row builds it and sets the older
+    singular `category` to its first entry), and four of the PPC articles
+    genuinely sit in two or three. Before 2026-09-12 this function took the
+    whole field as one label, so a source naming two was refused with
+    "'PPC & Advertising, Profit & Finances' is not one hub category" -- which
+    read as an invalid category rather than as a builder that could not count.
+    """
     data = json.load(io.open(os.path.join(ROOT, "data", "resources.json"), encoding="utf-8"))
-    hits = [c for c in data["categories"] if c["label"] == label]
-    assert len(hits) == 1, "category %r is not one hub category" % label
-    return hits[0]
+    known = dict((c["label"], c) for c in data["categories"])
+    names = [n.strip() for n in spec.split(",") if n.strip()]
+    assert names, "categories is empty"
+    bad = [n for n in names if n not in known]
+    assert not bad, ("%s is not a hub category. The categories are: %s"
+                     % (", ".join(repr(b) for b in bad), ", ".join(sorted(known))))
+    return [known[n] for n in names]
 
 
-def category_id(label):
-    return category(label)["id"]
+def category(spec):
+    """The PRIMARY category: the first one named. It is the page eyebrow and the
+    singular `category` field of the hub row."""
+    return categories(spec)[0]
+
+
+def category_id(spec):
+    return category(spec)["id"]
+
+
+def category_ids(spec):
+    return [c["id"] for c in categories(spec)]
 
 
 def category_label(label, lang):
@@ -494,7 +543,7 @@ def build(slug, published):
     L = LANGS[lang]
     main, labels, disclaimer = build_main(meta, intro, sections, lang, en_slug)
     src = io.open(os.path.join(SRC, slug + ".md"), encoding="utf-8", newline="").read()
-    rail = build_rail(slug, disclaimer, lang, src.split("\n## New terms", 1)[0])
+    rail = build_rail(slug, disclaimer, lang, published_part(src))
     y, m, d = (int(x) for x in published.split("-"))
     s = io.open(os.path.join(ROOT, L["donor"]), encoding="utf-8", newline="").read()
     assert "\r" not in s
@@ -676,6 +725,8 @@ def verify(slug):
     main = re.search(r'<main id="main" class="article">.*?</main>', live, re.S).group(0)
     donor_slug = os.path.basename(L["donor"])[:-5]
     for bad, why in (("[[", "a source marker"), ("New terms", "the unpublished appendix"),
+                     ("Sources", "the unpublished appendix"),
+                     ("matches the claim", "the unpublished appendix"),
                      ("Everyday phrase", "the unpublished appendix"), (donor_slug, "the donor")):
         if bad in live:
             P.append("%s survived into the page: %r" % (why, bad))
@@ -754,8 +805,15 @@ def verify(slug):
     if hb[:4] != b"RIFF" or hb[8:12] != b"WEBP":
         P.append("%s missing or not a WebP" % hero)
     alt = re.search(r'<figure class="hero-shot">\s*<img[^>]*alt="([^"]*)"', live, re.S)
-    if not alt or html.unescape(alt.group(1)) != meta["hero_alt"]:
-        P.append("hero alt is not the source's hero_alt")
+    # Compare what a READER sees, not the bytes. inline() turns a source
+    # apostrophe into &rsquo; (and " into &ldquo;, -- into &mdash;), so the page
+    # attribute unescapes to a curly apostrophe while the source holds a
+    # straight one -- and this check could never pass for a hero_alt containing
+    # one. Found 2026-09-12: the PPC batch held the first two in the corpus.
+    want_alt = html.unescape(inline(meta["hero_alt"]))
+    if not alt or html.unescape(alt.group(1)) != want_alt:
+        P.append("hero alt is not the source's hero_alt: page %r, source %r"
+                 % (html.unescape(alt.group(1)) if alt else None, want_alt))
     facts.append("hero: %s (%d bytes, WebP), alt = source hero_alt, %d words" % (hero, len(hb), len(meta["hero_alt"].split())))
     if "HERO IMAGE PLACEHOLDER" not in s:
         P.append("the hero is not marked as a placeholder")
@@ -763,9 +821,15 @@ def verify(slug):
     if scripts:
         P.append("%d inline scripts (the CSP allows none on articles)" % len(scripts))
     # head, once seo.py and langlinks.py have run
+    # og:image:alt is compared unescaped for the same reason, and for a second
+    # one: seo.py writes English heads with RAW non-ascii (measured 2026-09-12:
+    # 24 English pages already carry it) while seo_twins.py writes entities into
+    # the 88 translated heads. Both render the same text; only a byte comparison
+    # sees a difference, and it saw one the moment an English alt first carried
+    # an apostrophe.
     for pat, want in ((r'<link rel="canonical" href="([^"]*)"', "%s/%s" % (SITE, rel)),
-                      (r'<meta property="og:image:alt" content="([^"]*)"', inline(meta["hero_alt"]))):
-        got = re.findall(pat, s)
+                      (r'<meta property="og:image:alt" content="([^"]*)"', want_alt)):
+        got = [html.unescape(g) for g in re.findall(pat, s)]
         if got != [want]:
             P.append("%s is %s, want %s" % (pat[:40], got, want))
     facts.append("head: canonical, og:image:alt = hero alt (seo.py)")

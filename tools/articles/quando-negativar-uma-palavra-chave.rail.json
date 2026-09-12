@@ -1,0 +1,27 @@
+{
+ "_note": "The rail's key-figure cards. The content-first source format has no rail, so these were drafted 2026-09-12 for Leon's review: every number and every sentence below is taken verbatim from tools/articles/quando-negativar-uma-palavra-chave.md, and only the short 'k' labels are new.",
+ "cards": [
+  {
+   "k": "O filtro de relevância",
+   "v": "Sem cliques",
+   "p": "Se a resposta honesta for não, o termo é irrelevante. Negative agora."
+  },
+  {
+   "k": "Quando zero vendas conta",
+   "v": "22 cliques",
+   "p": "A essa taxa, um termo de pesquisa perfeitamente normal ainda produz zero pedidos depois de 22 cliques em menos de 10% das vezes."
+  },
+  {
+   "k": "Quando a sua taxa é mais baixa",
+   "v": "45 cliques a 5%",
+   "tone": "amber",
+   "p": "Corte a taxa pela metade e os cliques necessários mais ou menos dobram: a 5%, uns 45."
+  },
+  {
+   "k": "ACOS alto em um termo central",
+   "v": "ACOS de 125%",
+   "tone": "violet",
+   "p": "Se um termo de pesquisa é central para o que você vende, um resultado ruim é um problema de conversão, não um problema de segmentação."
+  }
+ ]
+}

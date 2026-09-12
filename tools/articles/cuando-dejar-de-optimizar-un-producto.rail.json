@@ -1,0 +1,27 @@
+{
+ "_note": "The rail's key-figure cards. The content-first source format has no rail, so these were drafted 2026-09-12 from the SPANISH source for Leon's review: every number and every sentence below is taken VERBATIM from tools/articles/cuando-dejar-de-optimizar-un-producto.md, and only the short 'k' labels are new.",
+ "cards": [
+  {
+   "k": "Lo que deja una venta",
+   "v": "$6.39",
+   "p": "Esos $6.39 son todo el presupuesto dentro del cual tiene que caber la publicidad."
+  },
+  {
+   "k": "La tasa que exige",
+   "v": "14.1%",
+   "tone": "amber",
+   "p": "Sobre 400 clics son 10 pedidos, donde el 14.1% requerido habría producido unos 56. Esa brecha es demasiado grande para ser azar."
+  },
+  {
+   "k": "Tres meses de diferencia",
+   "v": "$3,286.71",
+   "p": "Ahora el mismo dinero en dos lugares. Toma $4,000 que todavía no has gastado, y tres meses."
+  },
+  {
+   "k": "El costo de seguir",
+   "v": "−$29.61",
+   "tone": "violet",
+   "p": "Lo que esos $4,000 ganen en el siguiente producto es desconocido. Pero está disponible, y no se está gastando con una pérdida conocida de $29.61 por venta."
+  }
+ ]
+}
