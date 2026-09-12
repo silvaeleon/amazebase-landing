@@ -107,13 +107,18 @@ CSP_NEEDS = {
     "script-src": ["https://www.googletagmanager.com",
                    "https://www.googleadservices.com",
                    "https://googleads.g.doubleclick.net"],
+    # pagead2.googlesyndication.com was NOT in the first version of this policy
+    # and the Ads tag calls it on every page load (ccm/collect). Seen live on
+    # 2026-09-12.
     "connect-src": ["https://*.google-analytics.com", "https://*.analytics.google.com",
                     "https://*.googletagmanager.com",
                     "https://www.googleadservices.com",
-                    "https://googleads.g.doubleclick.net", "https://www.google.com"],
+                    "https://googleads.g.doubleclick.net", "https://www.google.com",
+                    "https://pagead2.googlesyndication.com"],
     "img-src": ["https://*.google-analytics.com", "https://*.googletagmanager.com",
                 "https://www.googleadservices.com",
-                "https://googleads.g.doubleclick.net", "https://www.google.com"],
+                "https://googleads.g.doubleclick.net", "https://www.google.com",
+                "https://pagead2.googlesyndication.com"],
     # Ads writes a hidden iframe to doubleclick to join a click to a
     # conversion. default-src 'self' would otherwise refuse it and the
     # conversion would be attributed to nobody.
@@ -147,8 +152,15 @@ class Tree:
         return io.open(p, encoding="utf-8", newline="").read() if os.path.exists(p) else None
 
     def pages(self):
+        """Live pages that must carry the tag.
+
+        google<hex>.html is Google Search Console's ownership file. It is a
+        one-line text file Google fetches directly, not a page anyone reads,
+        and tagging it would make this check fail forever. Search Console
+        stops trusting the site if it is deleted, so it stays in the repo.
+        """
         return sorted(p for p in self.files if p.endswith(".html")
-                      and not re.match(r"(_|index-|editor|graphify-out/|assets/)", p))
+                      and not re.match(r"(_|index-|editor|graphify-out/|assets/|google[0-9a-f]{16}\.html$)", p))
 
 
 def csp_directives(caddyfile):
