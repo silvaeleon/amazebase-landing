@@ -8,14 +8,15 @@
    we are keeping it that way -- see tools/analytics.py for the whole story.
 
    CONSENT
-   Consent Mode v2 defaults are set below, before any measurement command.
-   gtag.js processes the dataLayer queue in order, so it sees consent first
-   whichever of the two scripts finishes loading first. Advertising storage is
-   denied everywhere. Analytics storage is denied in the EEA, the UK and
-   Switzerland -- those visits are still counted, cookielessly and modelled --
-   and granted everywhere else. There is no cookie banner on the site; if one
-   is added it calls gtag('consent', 'update', ...) on accept and nothing here
-   changes.
+   Nothing is granted by default. A first-time visitor is measured with every
+   storage type DENIED, which under Consent Mode means Google counts the visit
+   but writes no cookie and keeps no identifier, until they answer the banner
+   in js/consent.js. That file is loaded at the bottom of this one.
+
+   A RETURNING visitor's stored answer is read below and becomes the DEFAULT,
+   not an update. This matters: an update arriving after the config commands
+   would leave the first page view of every session measured under the wrong
+   consent state. Reading it here closes that gap.
 
    WHAT IS CONFIGURED
        G-M8R4ZTFM6H     Google Analytics 4, property "amazebase.pro"
@@ -25,26 +26,39 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 
+var abConsent = null;
+try {
+  var abRaw = window.localStorage.getItem('ab_consent_v1');
+  if (abRaw) {
+    var abSaved = JSON.parse(abRaw);
+    if (abSaved && typeof abSaved.analytics === 'boolean'
+        && typeof abSaved.ads === 'boolean' && abSaved.at
+        && (Date.now() - abSaved.at) < 31536000000) {
+      abConsent = abSaved;
+    }
+  }
+} catch (e) {
+  abConsent = null;
+}
+
 gtag('consent', 'default', {
-  ad_storage: 'denied',
-  ad_user_data: 'denied',
-  ad_personalization: 'denied',
-  analytics_storage: 'granted',
+  analytics_storage:  abConsent && abConsent.analytics ? 'granted' : 'denied',
+  ad_storage:         abConsent && abConsent.ads ? 'granted' : 'denied',
+  ad_user_data:       abConsent && abConsent.ads ? 'granted' : 'denied',
+  ad_personalization: abConsent && abConsent.ads ? 'granted' : 'denied',
   wait_for_update: 500
 });
-gtag('consent', 'default', {
-  region: ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU',
-           'IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES',
-           'SE','IS','LI','NO','GB','CH'],
-  ad_storage: 'denied',
-  ad_user_data: 'denied',
-  ad_personalization: 'denied',
-  analytics_storage: 'denied',
-  wait_for_update: 500
-});
+
 gtag('set', 'url_passthrough', true);
 gtag('set', 'ads_data_redaction', true);
 
 gtag('js', new Date());
 gtag('config', 'G-M8R4ZTFM6H');
 gtag('config', 'AW-11127271562');
+
+(function () {
+  var s = document.createElement('script');
+  s.src = '/js/consent.js';
+  s.defer = true;
+  (document.head || document.documentElement).appendChild(s);
+})();

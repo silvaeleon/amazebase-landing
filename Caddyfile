@@ -87,6 +87,11 @@
 		#               www.google.com is listed, so expect a console warning
 		#               for those. The conversion itself goes to
 		#               googleadservices.com and is not affected.
+		#               www.clarity.ms is Microsoft Clarity, and *.clarity.ms
+		#               plus c.bing.com are where it sends recordings. It is
+		#               loaded by js/consent.js and ONLY for a visitor who
+		#               accepted analytics, so these origins are contacted on
+		#               no other page view.
 		#   frame-src   Ads writes a hidden iframe to doubleclick to join a
 		#               click to a conversion. default-src 'self' would
 		#               otherwise refuse it and the conversion would be
@@ -106,7 +111,7 @@
 		#   frame-ancestors 'none' -> the clickjacking rule above
 		#   object-src 'none' -> no Flash/Java/embed legacy plugins
 		#   base-uri 'self' -> an injected <base> tag can't redirect our URLs
-		Content-Security-Policy "default-src 'self'; script-src 'self' 'sha256-C3Lmc3qMncd1P492JzpHzLfTKaMxj+oxEm1lWKQnQng=' https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://pagead2.googlesyndication.com; media-src 'self'; connect-src 'self' https://analytics.amazebase.pro https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://pagead2.googlesyndication.com; frame-src https://td.doubleclick.net https://googleads.g.doubleclick.net; form-action 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests"
+		Content-Security-Policy "default-src 'self'; script-src 'self' 'sha256-C3Lmc3qMncd1P492JzpHzLfTKaMxj+oxEm1lWKQnQng=' https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.clarity.ms; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://pagead2.googlesyndication.com; media-src 'self'; connect-src 'self' https://analytics.amazebase.pro https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://pagead2.googlesyndication.com https://*.clarity.ms https://c.bing.com; frame-src https://td.doubleclick.net https://googleads.g.doubleclick.net; form-action 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests"
 
 		# Don't advertise the server software.
 		-Server

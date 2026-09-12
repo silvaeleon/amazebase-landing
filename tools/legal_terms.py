@@ -38,7 +38,9 @@ COMMON = {"AmazeBase", "Silbros Trading LLC", "LLC", "Amazon", "Internet", "Albu
           "PL", "Mountain Road", "Stripe", "Google", "Seller Central", "Amazon Seller Central",
           "Amazon Advertising", "GDPR", "CCPA", "I", "Mountain Road PL NE", "Helium",
           # the analytics disclosure, added with GA4 (2026-09-11)
-          "Google Analytics", "Google Analytics 4", "Google Ads", "Google Consent Mode"}
+          "Google Analytics", "Google Analytics 4", "Google Ads", "Google Consent Mode",
+          # the session-recording disclosure, added with Clarity (2026-09-12)
+          "Microsoft", "Microsoft Clarity", "Microsoft Corporation"}
 NAMES = {
     "en": COMMON | {"New Mexico", "United States", "State of New Mexico", "European Union",
                     "European Economic Area", "California", "AS IS", "AS AVAILABLE",
