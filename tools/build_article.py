@@ -72,6 +72,11 @@ import html, io, json, os, re, sys
 from html.entities import codepoint2name as NAME
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# gate.py owns the FIXED-LABELS tables, and the builder reads the figures
+# disclaimer from them rather than keeping a second list of its own
+sys.path.insert(0, os.path.join(ROOT, "tools", "i18n"))
+import gate
+
 SRC = os.path.join(ROOT, "tools", "articles")
 SITE = "https://amazebase.pro"
 
@@ -283,6 +288,41 @@ def render_block(b, section):
     return "<p>%s</p>" % inline(" ".join(lines))
 
 
+# The figures disclaimer is a FAMILY, not one sentence. Three English forms are
+# in use and all are legitimate: the plural "worked examples" (8 content-first
+# sources), the singular "own worked example" (3), and "Examples from this
+# article" (2 older shipped articles). Every form has a translation in each
+# language's FIXED-LABELS table, which is where variants belong -- gate.py
+# already checks a built page against that table, so the builder reading the
+# same table is the two agreeing rather than a second list to keep in step.
+# LANGS[lang]["disclaimer"] stays: it is the form a NEW source should prefer.
+DISCLAIMER_TAIL = "not an industry survey."
+
+
+def disclaimer_of(line, lang):
+    """`line` if it is a recognised figures disclaimer for this language, else
+    None.
+
+    The table is keyed by English, so English matches the rule's pattern and a
+    translation matches its right-hand side. The rules are written for RENDERED
+    text, where inline() has already turned a source's straight apostrophe into
+    &rsquo;, so the source line is curled before it is compared -- without that
+    every English article fails, the rules carrying U+2019 and the sources
+    U+0027.
+    """
+    _, rules = gate.load_labels("es" if lang == "en" else lang)
+    found = False
+    for r, tr in rules:
+        if not r.pattern.rstrip("$").replace("\\.", ".").endswith(DISCLAIMER_TAIL):
+            continue
+        found = True
+        if r.fullmatch(line.replace("'", "’")) if lang == "en" else line == tr:
+            return line
+    assert found, ("no figures-disclaimer rule in the %s FIXED-LABELS table -- the "
+                   "variants live there, so an empty family means the table is broken" % lang)
+    return None
+
+
 def build_main(meta, intro, sections, lang, en_slug):
     L = LANGS[lang]
     state = {"slug": meta["slug"], "en_slug": en_slug, "assets": L["assets"], "labels": []}
@@ -337,7 +377,7 @@ def build_main(meta, intro, sections, lang, en_slug):
     disclaimer = None
     if final:
         bs = blocks(final[1])
-        if bs and bs[-1].strip() == L["disclaimer"]:
+        if bs and disclaimer_of(bs[-1].strip(), lang):
             disclaimer = bs.pop()
         out.append('  <section class="sec">')
         out.append("    <h2>%s</h2>" % inline(final[0]))
@@ -364,9 +404,10 @@ def build_rail(slug, disclaimer, lang, body=None):
         cls = "rail-v" + (" is-%s" % c["tone"] if c.get("tone") else "")
         out += ['  <div class="rail-card">', '    <span class="rail-k">%s</span>' % inline(c["k"]),
                 '    <span class="%s">%s</span>' % (cls, inline(c["v"])), "    <p>%s</p>" % inline(c["p"]), "  </div>"]
-    assert disclaimer == LANGS[lang]["disclaimer"], \
-        "the source must end its closing section with the %s figures disclaimer:\n  want %r\n  got  %r" \
-        % (lang, LANGS[lang]["disclaimer"], disclaimer)
+    assert disclaimer and disclaimer_of(disclaimer, lang), \
+        "the source must end its closing section with a recognised %s figures disclaimer.\n" \
+        "  got  %r\n  one of the FIXED-LABELS variants is required; the usual one is\n  %r" \
+        % (lang, disclaimer, LANGS[lang]["disclaimer"])
     out.append('  <p class="rail-src">%s</p>' % inline(disclaimer))
     out.append("</aside>")
     return "\n".join(out)
@@ -675,7 +716,11 @@ def verify(slug):
     body_src = intro + "\n".join("\n" + c for t, c in sections
                                  if not any(t.startswith(x) for x in L["toc"]))
     body_src = re.sub(r"^\d+\. ", "", re.sub(r"\[\[FIGURE:.*?\]\]", "", body_src), flags=re.M)
-    src_nums = gate.nums(html.escape(body_src.replace(L["disclaimer"], "")))
+    # the disclaimer is the rail's source line, not body prose: strip whichever
+    # recognised variant THIS source ends with, not the language's usual one
+    final_bs = blocks(next((c for t, c in sections if t == L["final"]), ""))
+    disc = disclaimer_of(final_bs[-1].strip(), lang) if final_bs else None
+    src_nums = gate.nums(html.escape(body_src.replace(disc or L["disclaimer"], "")))
     page_main = re.sub(r'<nav class="toc".*?</nav>|<span class="num">\d+</span>', " ", main, flags=re.S)
     page_nums = gate.nums(page_main)
     rail = re.search(r'<aside class="rail".*?</aside>', live, re.S).group(0)
