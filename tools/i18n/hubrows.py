@@ -154,6 +154,18 @@ def hubs(root, data):
         want = sorted(r["url"].lstrip("/") for r in data["resources"] if r.get("language") == code)
         s = io.open(p, encoding="utf-8").read()
         cards = sorted(h.lstrip("/") for h in re.findall(r'<a class="hub-row" href="([^"]+)"', s))
+        # Each card's picture, too. The same staleness hid here on 2026-09-13:
+        # 18 rows gained a `thumb` and the generated cards would have kept none
+        # until each hub was regenerated. A card lists its thumb or nothing,
+        # so the card's picture must be exactly its row's.
+        row_thumb = dict((r["url"].lstrip("/"), r.get("thumb")) for r in data["resources"]
+                         if r.get("language") == code)
+        for href, body in re.findall(r'<a class="hub-row" href="([^"]+)">(.*?)</a>', s, re.S):
+            img = re.search(r'<span class="hub-row-thumb"><img src="([^"]+)"', body)
+            have_t, want_t = img.group(1).lstrip("/") if img else None, row_thumb.get(href.lstrip("/"))
+            if href.lstrip("/") in row_thumb and have_t != want_t:
+                problems.append("%s (%s): card %s shows %s, its row's thumb is %s"
+                                % (rel, code, href, have_t, want_t))
         m = re.search(r'<script type="application/ld\+json">(.*?)</script>', s, re.S)
         cp = [n for n in json.loads(m.group(1))["@graph"]
               if n.get("@type") == "CollectionPage"] if m else []
@@ -191,4 +203,4 @@ if __name__ == "__main__":
             print("  " + p)
         raise SystemExit(1)
     print("\nCHECK PASSED: every translated row carries its English source's taxonomy exactly,\n"
-          "and every language's hub lists exactly that language's rows.")
+          "and every language's hub lists exactly that language's rows, each card with its row's thumb.")

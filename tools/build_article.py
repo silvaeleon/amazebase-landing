@@ -152,8 +152,11 @@ LANGS = {
 # languages. Only these pages carry the "HERO IMAGE PLACEHOLDER" comment, and
 # verify() requires the comment on exactly these and refuses it everywhere else:
 # a page whose real picture has arrived must not still say it is waiting for
-# one. When a real hero lands, overwrite the file, take its slug out of this
-# set, rebuild the three pages and run tools/build_og.py.
+# one. The hub thumbnail made from a stand-in is a stand-in too
+# (tools/build_thumbs.py labels it). When a real hero lands, overwrite the file,
+# take its slug out of this set, rebuild the three pages, and run
+# tools/build_og.py and tools/build_thumbs.py. build_thumbs.py --check fails
+# until the thumb is rebuilt.
 #
 # Ten slugs left it 2026-09-13, when the PPC batch's real pictures arrived.
 STANDIN_HEROES = {"when-to-stop-optimizing-a-product"}

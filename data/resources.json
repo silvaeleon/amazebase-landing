@@ -206,6 +206,8 @@
       "published": "2026-09-12",
       "minutes": 7,
       "url": "articles/how-amazon-ads-bills-you.html",
+      "thumb": "assets/img/thumb-how-amazon-ads-bills-you.webp",
+      "hero": "assets/img/hero-how-amazon-ads-bills-you.webp",
       "topics": [
         "Campaign Strategy",
         "Cash Flow",
@@ -229,6 +231,8 @@
       "published": "2026-09-12",
       "minutes": 7,
       "url": "articles/acos-tacos-and-your-margin.html",
+      "thumb": "assets/img/thumb-acos-tacos-and-your-margin.webp",
+      "hero": "assets/img/hero-acos-tacos-and-your-margin.webp",
       "topics": [
         "ACOS",
         "Margin",
@@ -251,6 +255,8 @@
       "published": "2026-09-12",
       "minutes": 7,
       "url": "articles/amazon-suggested-bid-and-down-only.html",
+      "thumb": "assets/img/thumb-amazon-suggested-bid-and-down-only.webp",
+      "hero": "assets/img/hero-amazon-suggested-bid-and-down-only.webp",
       "topics": [
         "Campaign Strategy",
         "Margin",
@@ -272,6 +278,8 @@
       "published": "2026-09-12",
       "minutes": 6,
       "url": "articles/campaign-not-selling-where-it-breaks.html",
+      "thumb": "assets/img/thumb-campaign-not-selling-where-it-breaks.webp",
+      "hero": "assets/img/hero-campaign-not-selling-where-it-breaks.webp",
       "topics": [
         "Campaign Strategy",
         "Root Cause",
@@ -294,6 +302,8 @@
       "published": "2026-09-12",
       "minutes": 8,
       "url": "articles/daily-budget-runs-out-by-midday.html",
+      "thumb": "assets/img/thumb-daily-budget-runs-out-by-midday.webp",
+      "hero": "assets/img/hero-daily-budget-runs-out-by-midday.webp",
       "topics": [
         "Campaign Strategy",
         "Decision Making",
@@ -316,6 +326,8 @@
       "published": "2026-09-12",
       "minutes": 7,
       "url": "articles/not-showing-not-indexed-not-selling.html",
+      "thumb": "assets/img/thumb-not-showing-not-indexed-not-selling.webp",
+      "hero": "assets/img/hero-not-showing-not-indexed-not-selling.webp",
       "topics": [
         "Organic Ranking",
         "Campaign Strategy",
@@ -338,6 +350,8 @@
       "published": "2026-09-12",
       "minutes": 8,
       "url": "articles/one-keyword-per-campaign.html",
+      "thumb": "assets/img/thumb-one-keyword-per-campaign.webp",
+      "hero": "assets/img/hero-one-keyword-per-campaign.webp",
       "topics": [
         "Campaign Strategy",
         "Keyword Overlap",
@@ -361,6 +375,8 @@
       "published": "2026-09-12",
       "minutes": 7,
       "url": "articles/ppc-day-one-or-wait-for-reviews.html",
+      "thumb": "assets/img/thumb-ppc-day-one-or-wait-for-reviews.webp",
+      "hero": "assets/img/hero-ppc-day-one-or-wait-for-reviews.webp",
       "topics": [
         "Product Launch",
         "Organic Ranking",
@@ -383,6 +399,8 @@
       "published": "2026-09-12",
       "minutes": 7,
       "url": "articles/when-to-negate-a-keyword.html",
+      "thumb": "assets/img/thumb-when-to-negate-a-keyword.webp",
+      "hero": "assets/img/hero-when-to-negate-a-keyword.webp",
       "topics": [
         "Campaign Strategy",
         "Keyword Overlap",
@@ -406,6 +424,8 @@
       "published": "2026-09-12",
       "minutes": 7,
       "url": "articles/when-to-stop-optimizing-a-product.html",
+      "thumb": "assets/img/thumb-when-to-stop-optimizing-a-product.webp",
+      "hero": "assets/img/hero-when-to-stop-optimizing-a-product.webp",
       "topics": [
         "Opportunity Cost",
         "Capital Allocation",
@@ -428,6 +448,8 @@
       "published": "2026-09-11",
       "minutes": 7,
       "url": "articles/how-much-data-before-changing-a-campaign.html",
+      "thumb": "assets/img/thumb-how-much-data-before-changing-a-campaign.webp",
+      "hero": "assets/img/hero-how-much-data-before-changing-a-campaign.webp",
       "topics": [
         "Campaign Strategy",
         "Decision Making",
@@ -447,6 +469,8 @@
       "published": "2026-09-10",
       "minutes": 12,
       "url": "articles/fba-reorder-date-velocity.html",
+      "thumb": "assets/img/thumb-fba-reorder-date-velocity.webp",
+      "hero": "assets/img/hero-fba-reorder-date-velocity.webp",
       "topics": [
         "Inventory Forecasting",
         "Reorder Point",
@@ -468,6 +492,8 @@
       "published": "2026-09-09",
       "minutes": 13,
       "url": "articles/supplier-payment-schedules-margins.html",
+      "thumb": "assets/img/thumb-supplier-payment-schedules-margins.webp",
+      "hero": "assets/img/hero-supplier-payment-schedules-margins.webp",
       "topics": [
         "Cash Flow",
         "Landed Cost",
@@ -489,6 +515,8 @@
       "published": "2026-09-08",
       "minutes": 13,
       "url": "articles/true-product-margin-after-ads.html",
+      "thumb": "assets/img/thumb-true-product-margin-after-ads.webp",
+      "hero": "assets/img/hero-true-product-margin-after-ads.webp",
       "topics": [
         "Landed Cost",
         "Capital Allocation",
@@ -510,6 +538,8 @@
       "published": "2026-09-07",
       "minutes": 12,
       "url": "articles/automate-cash-flow-inventory.html",
+      "thumb": "assets/img/thumb-automate-cash-flow-inventory.webp",
+      "hero": "assets/img/hero-automate-cash-flow-inventory.webp",
       "topics": [
         "Inventory Forecasting",
         "Cash Flow",
@@ -531,6 +561,8 @@
       "published": "2026-09-06",
       "minutes": 12,
       "url": "articles/data-gaps-seep-everywhere.html",
+      "thumb": "assets/img/thumb-data-gaps-seep-everywhere.webp",
+      "hero": "assets/img/hero-data-gaps-seep-everywhere.webp",
       "topics": [
         "Data Quality",
         "Landed Cost",
@@ -551,6 +583,8 @@
       "published": "2026-09-05",
       "minutes": 11,
       "url": "articles/first-product-succeeds-cash.html",
+      "thumb": "assets/img/thumb-first-product-succeeds-cash.webp",
+      "hero": "assets/img/hero-first-product-succeeds-cash.webp",
       "topics": [
         "Cash Flow",
         "Scaling",
@@ -571,6 +605,8 @@
       "published": "2026-09-04",
       "minutes": 9,
       "url": "articles/invented-numbers-amazon-analytics.html",
+      "thumb": "assets/img/thumb-invented-numbers-amazon-analytics.webp",
+      "hero": "assets/img/hero-invented-numbers-amazon-analytics.webp",
       "topics": [
         "Decision Making",
         "Data Quality",
@@ -1691,6 +1727,8 @@
       "published": "2026-09-12",
       "minutes": 7,
       "url": "es/articulos/cuando-te-cobra-amazon-la-publicidad.html",
+      "thumb": "assets/img/thumb-how-amazon-ads-bills-you.webp",
+      "hero": "assets/img/hero-how-amazon-ads-bills-you.webp",
       "topics": [
         "Estrategia de campañas",
         "Flujo de caja",
@@ -1715,6 +1753,8 @@
       "published": "2026-09-12",
       "minutes": 7,
       "url": "es/articulos/a-que-acos-deberias-apuntar.html",
+      "thumb": "assets/img/thumb-acos-tacos-and-your-margin.webp",
+      "hero": "assets/img/hero-acos-tacos-and-your-margin.webp",
       "topics": [
         "ACOS",
         "Margen",
@@ -1738,6 +1778,8 @@
       "published": "2026-09-12",
       "minutes": 7,
       "url": "es/articulos/deberias-usar-la-puja-que-sugiere-amazon.html",
+      "thumb": "assets/img/thumb-amazon-suggested-bid-and-down-only.webp",
+      "hero": "assets/img/hero-amazon-suggested-bid-and-down-only.webp",
       "topics": [
         "Estrategia de campañas",
         "Margen",
@@ -1760,6 +1802,8 @@
       "published": "2026-09-12",
       "minutes": 6,
       "url": "es/articulos/por-que-tu-campana-no-vende.html",
+      "thumb": "assets/img/thumb-campaign-not-selling-where-it-breaks.webp",
+      "hero": "assets/img/hero-campaign-not-selling-where-it-breaks.webp",
       "topics": [
         "Estrategia de campañas",
         "Causa raíz",
@@ -1783,6 +1827,8 @@
       "published": "2026-09-12",
       "minutes": 8,
       "url": "es/articulos/presupuesto-diario-se-acaba-al-mediodia.html",
+      "thumb": "assets/img/thumb-daily-budget-runs-out-by-midday.webp",
+      "hero": "assets/img/hero-daily-budget-runs-out-by-midday.webp",
       "topics": [
         "Estrategia de campañas",
         "Toma de decisiones",
@@ -1806,6 +1852,8 @@
       "published": "2026-09-12",
       "minutes": 7,
       "url": "es/articulos/por-que-no-encuentras-tu-propio-producto.html",
+      "thumb": "assets/img/thumb-not-showing-not-indexed-not-selling.webp",
+      "hero": "assets/img/hero-not-showing-not-indexed-not-selling.webp",
       "topics": [
         "Posicionamiento orgánico",
         "Estrategia de campañas",
@@ -1829,6 +1877,8 @@
       "published": "2026-09-12",
       "minutes": 8,
       "url": "es/articulos/una-sola-palabra-clave-por-campana.html",
+      "thumb": "assets/img/thumb-one-keyword-per-campaign.webp",
+      "hero": "assets/img/hero-one-keyword-per-campaign.webp",
       "topics": [
         "Estrategia de campañas",
         "Traslape de palabras clave",
@@ -1853,6 +1903,8 @@
       "published": "2026-09-12",
       "minutes": 7,
       "url": "es/articulos/anunciar-el-dia-uno-o-esperar-resenas.html",
+      "thumb": "assets/img/thumb-ppc-day-one-or-wait-for-reviews.webp",
+      "hero": "assets/img/hero-ppc-day-one-or-wait-for-reviews.webp",
       "topics": [
         "Lanzamiento de producto",
         "Posicionamiento orgánico",
@@ -1876,6 +1928,8 @@
       "published": "2026-09-12",
       "minutes": 7,
       "url": "es/articulos/cuando-deberias-negativizar-una-palabra-clave.html",
+      "thumb": "assets/img/thumb-when-to-negate-a-keyword.webp",
+      "hero": "assets/img/hero-when-to-negate-a-keyword.webp",
       "topics": [
         "Estrategia de campañas",
         "Traslape de palabras clave",
@@ -1900,6 +1954,8 @@
       "published": "2026-09-12",
       "minutes": 7,
       "url": "es/articulos/cuando-dejar-de-optimizar-un-producto.html",
+      "thumb": "assets/img/thumb-when-to-stop-optimizing-a-product.webp",
+      "hero": "assets/img/hero-when-to-stop-optimizing-a-product.webp",
       "topics": [
         "Costo de oportunidad",
         "Asignación de capital",
@@ -1970,6 +2026,8 @@
       "published": "2026-09-05",
       "minutes": 11,
       "url": "es/articulos/y-si-tu-primer-producto-funciona.html",
+      "thumb": "assets/img/thumb-first-product-succeeds-cash.webp",
+      "hero": "assets/img/hero-first-product-succeeds-cash.webp",
       "topics": [
         "Flujo de caja",
         "Escalar",
@@ -2177,6 +2235,8 @@
       "published": "2026-09-07",
       "minutes": 12,
       "url": "es/articulos/automatizar-flujo-de-caja-e-inventario.html",
+      "thumb": "assets/img/thumb-automate-cash-flow-inventory.webp",
+      "hero": "assets/img/hero-automate-cash-flow-inventory.webp",
       "topics": [
         "Inventory Forecasting",
         "Cash Flow",
@@ -2431,6 +2491,8 @@
       "published": "2026-09-06",
       "minutes": 12,
       "url": "es/articulos/una-factura-que-falta.html",
+      "thumb": "assets/img/thumb-data-gaps-seep-everywhere.webp",
+      "hero": "assets/img/hero-data-gaps-seep-everywhere.webp",
       "topics": [
         "Data Quality",
         "Landed Cost",
@@ -2503,6 +2565,8 @@
       "published": "2026-09-10",
       "minutes": 12,
       "url": "es/articulos/cuando-debo-reponer-este-asin.html",
+      "thumb": "assets/img/thumb-fba-reorder-date-velocity.webp",
+      "hero": "assets/img/hero-fba-reorder-date-velocity.webp",
       "topics": [
         "Inventory Forecasting",
         "Reorder Point",
@@ -2629,6 +2693,8 @@
       "published": "2026-09-04",
       "minutes": 9,
       "url": "es/articulos/numeros-que-tu-software-invento.html",
+      "thumb": "assets/img/thumb-invented-numbers-amazon-analytics.webp",
+      "hero": "assets/img/hero-invented-numbers-amazon-analytics.webp",
       "topics": [
         "Decision Making",
         "Data Quality",
@@ -3037,6 +3103,8 @@
       "published": "2026-09-09",
       "minutes": 13,
       "url": "es/articulos/una-orden-de-compra-son-dos-objetos.html",
+      "thumb": "assets/img/thumb-supplier-payment-schedules-margins.webp",
+      "hero": "assets/img/hero-supplier-payment-schedules-margins.webp",
       "topics": [
         "Cash Flow",
         "Landed Cost",
@@ -3114,6 +3182,8 @@
       "published": "2026-09-08",
       "minutes": 13,
       "url": "es/articulos/los-cinco-margenes-de-un-producto.html",
+      "thumb": "assets/img/thumb-true-product-margin-after-ads.webp",
+      "hero": "assets/img/hero-true-product-margin-after-ads.webp",
       "topics": [
         "Landed Cost",
         "Capital Allocation",
@@ -3214,6 +3284,8 @@
       "published": "2026-09-11",
       "minutes": 7,
       "url": "es/articulos/cuantos-datos-antes-de-cambiar-campana.html",
+      "thumb": "assets/img/thumb-how-much-data-before-changing-a-campaign.webp",
+      "hero": "assets/img/hero-how-much-data-before-changing-a-campaign.webp",
       "topics": [
         "Estrategia de campañas",
         "Toma de decisiones",
@@ -3238,6 +3310,8 @@
       "published": "2026-09-12",
       "minutes": 7,
       "url": "pt/artigos/quando-a-amazon-cobra-pela-publicidade.html",
+      "thumb": "assets/img/thumb-how-amazon-ads-bills-you.webp",
+      "hero": "assets/img/hero-how-amazon-ads-bills-you.webp",
       "topics": [
         "Estratégia de campanhas",
         "Fluxo de caixa",
@@ -3262,6 +3336,8 @@
       "published": "2026-09-12",
       "minutes": 7,
       "url": "pt/artigos/qual-acos-voce-deve-buscar.html",
+      "thumb": "assets/img/thumb-acos-tacos-and-your-margin.webp",
+      "hero": "assets/img/hero-acos-tacos-and-your-margin.webp",
       "topics": [
         "ACOS",
         "Margem",
@@ -3285,6 +3361,8 @@
       "published": "2026-09-12",
       "minutes": 7,
       "url": "pt/artigos/usar-o-lance-que-a-amazon-sugere.html",
+      "thumb": "assets/img/thumb-amazon-suggested-bid-and-down-only.webp",
+      "hero": "assets/img/hero-amazon-suggested-bid-and-down-only.webp",
       "topics": [
         "Estratégia de campanhas",
         "Margem",
@@ -3307,6 +3385,8 @@
       "published": "2026-09-12",
       "minutes": 6,
       "url": "pt/artigos/por-que-sua-campanha-nao-vende.html",
+      "thumb": "assets/img/thumb-campaign-not-selling-where-it-breaks.webp",
+      "hero": "assets/img/hero-campaign-not-selling-where-it-breaks.webp",
       "topics": [
         "Estratégia de campanhas",
         "Causa raiz",
@@ -3330,6 +3410,8 @@
       "published": "2026-09-12",
       "minutes": 8,
       "url": "pt/artigos/orcamento-diario-acaba-ao-meio-dia.html",
+      "thumb": "assets/img/thumb-daily-budget-runs-out-by-midday.webp",
+      "hero": "assets/img/hero-daily-budget-runs-out-by-midday.webp",
       "topics": [
         "Estratégia de campanhas",
         "Tomada de decisão",
@@ -3353,6 +3435,8 @@
       "published": "2026-09-12",
       "minutes": 7,
       "url": "pt/artigos/por-que-voce-nao-encontra-seu-produto.html",
+      "thumb": "assets/img/thumb-not-showing-not-indexed-not-selling.webp",
+      "hero": "assets/img/hero-not-showing-not-indexed-not-selling.webp",
       "topics": [
         "Ranqueamento orgânico",
         "Estratégia de campanhas",
@@ -3376,6 +3460,8 @@
       "published": "2026-09-12",
       "minutes": 8,
       "url": "pt/artigos/uma-palavra-chave-por-campanha.html",
+      "thumb": "assets/img/thumb-one-keyword-per-campaign.webp",
+      "hero": "assets/img/hero-one-keyword-per-campaign.webp",
       "topics": [
         "Estratégia de campanhas",
         "Sobreposição de palavras-chave",
@@ -3400,6 +3486,8 @@
       "published": "2026-09-12",
       "minutes": 7,
       "url": "pt/artigos/anunciar-no-primeiro-dia-ou-esperar-avaliacoes.html",
+      "thumb": "assets/img/thumb-ppc-day-one-or-wait-for-reviews.webp",
+      "hero": "assets/img/hero-ppc-day-one-or-wait-for-reviews.webp",
       "topics": [
         "Lançamento de produto",
         "Ranqueamento orgânico",
@@ -3423,6 +3511,8 @@
       "published": "2026-09-12",
       "minutes": 7,
       "url": "pt/artigos/quando-negativar-uma-palavra-chave.html",
+      "thumb": "assets/img/thumb-when-to-negate-a-keyword.webp",
+      "hero": "assets/img/hero-when-to-negate-a-keyword.webp",
       "topics": [
         "Estratégia de campanhas",
         "Sobreposição de palavras-chave",
@@ -3447,6 +3537,8 @@
       "published": "2026-09-12",
       "minutes": 7,
       "url": "pt/artigos/quando-parar-de-otimizar-um-produto.html",
+      "thumb": "assets/img/thumb-when-to-stop-optimizing-a-product.webp",
+      "hero": "assets/img/hero-when-to-stop-optimizing-a-product.webp",
       "topics": [
         "Custo de oportunidade",
         "Alocação de capital",
@@ -3467,6 +3559,8 @@
       "published": "2026-09-10",
       "minutes": 12,
       "url": "pt/artigos/quando-devo-repor-este-asin.html",
+      "thumb": "assets/img/thumb-fba-reorder-date-velocity.webp",
+      "hero": "assets/img/hero-fba-reorder-date-velocity.webp",
       "topics": [
         "Previsão de estoque",
         "Ponto de reposição",
@@ -3492,6 +3586,8 @@
       "published": "2026-09-09",
       "minutes": 13,
       "url": "pt/artigos/pedido-de-compra-sao-dois-objetos.html",
+      "thumb": "assets/img/thumb-supplier-payment-schedules-margins.webp",
+      "hero": "assets/img/hero-supplier-payment-schedules-margins.webp",
       "topics": [
         "Fluxo de caixa",
         "Custo total por unidade (landed cost)",
@@ -3517,6 +3613,8 @@
       "published": "2026-09-08",
       "minutes": 13,
       "url": "pt/artigos/as-cinco-margens-de-um-produto.html",
+      "thumb": "assets/img/thumb-true-product-margin-after-ads.webp",
+      "hero": "assets/img/hero-true-product-margin-after-ads.webp",
       "topics": [
         "Custo total por unidade (landed cost)",
         "Alocação de capital",
@@ -3542,6 +3640,8 @@
       "published": "2026-09-07",
       "minutes": 12,
       "url": "pt/artigos/automatizar-a-previsao-de-fluxo-de-caixa.html",
+      "thumb": "assets/img/thumb-automate-cash-flow-inventory.webp",
+      "hero": "assets/img/hero-automate-cash-flow-inventory.webp",
       "topics": [
         "Previsão de estoque",
         "Fluxo de caixa",
@@ -3567,6 +3667,8 @@
       "published": "2026-09-06",
       "minutes": 12,
       "url": "pt/artigos/uma-fatura-esquecida.html",
+      "thumb": "assets/img/thumb-data-gaps-seep-everywhere.webp",
+      "hero": "assets/img/hero-data-gaps-seep-everywhere.webp",
       "topics": [
         "Qualidade dos dados",
         "Custo total por unidade (landed cost)",
@@ -3591,6 +3693,8 @@
       "published": "2026-09-05",
       "minutes": 11,
       "url": "pt/artigos/e-se-seu-primeiro-produto-der-certo.html",
+      "thumb": "assets/img/thumb-first-product-succeeds-cash.webp",
+      "hero": "assets/img/hero-first-product-succeeds-cash.webp",
       "topics": [
         "Fluxo de caixa",
         "Escala",
@@ -3612,6 +3716,8 @@
       "published": "2026-09-04",
       "minutes": 9,
       "url": "pt/artigos/numeros-que-seu-software-para-amazon-inventou.html",
+      "thumb": "assets/img/thumb-invented-numbers-amazon-analytics.webp",
+      "hero": "assets/img/hero-invented-numbers-amazon-analytics.webp",
       "topics": [
         "Tomada de decisão",
         "Qualidade dos dados",
@@ -4776,6 +4882,8 @@
       "published": "2026-09-11",
       "minutes": 7,
       "url": "pt/artigos/quantos-dados-antes-de-mudar-campanha.html",
+      "thumb": "assets/img/thumb-how-much-data-before-changing-a-campaign.webp",
+      "hero": "assets/img/hero-how-much-data-before-changing-a-campaign.webp",
       "topics": [
         "Estratégia de campanhas",
         "Tomada de decisão",
