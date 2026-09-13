@@ -122,6 +122,11 @@ def main():
         resources = json.load(f)["resources"]
 
     for r in resources:
+        # A translated article shares its English original's share image (its
+        # og:image names the English slug), so it gets no file of its own. Before
+        # 2026-09-13 this built one per translated slug: 88 JPEGs nothing linked.
+        if r.get("translationOf"):
+            continue
         slug = r["url"].rsplit("/", 1)[-1].replace(".html", "")
         hero = r.get("hero") or ("assets/img/hero-%s.webp" % slug)
         src = hero.split("assets/img/")[-1]

@@ -2,7 +2,7 @@ title:        Should You Use the Bid Amazon Suggests?
 slug:         amazon-suggested-bid-and-down-only
 summary:      Amazon's suggested bid tells you what other advertisers pay. Your own costs and ad conversion rate tell you what you can afford.
 categories:   PPC & Advertising
-hero_alt:     A seller comparing Amazon's suggested bid with a ceiling computed from their own numbers
+hero_alt: A suggested bid beamed at an auction beside the mechanism that raises it
 reading_time: 7
 
 When you add a keyword to a Sponsored Products campaign, Amazon shows a number beside it and calls it a suggested bid. Most new sellers use it, because the screen offers no alternative.

@@ -3,7 +3,7 @@ slug:         anunciar-no-primeiro-dia-ou-esperar-avaliacoes
 translation_of: ppc-day-one-or-wait-for-reviews
 summary:      Vendedores experientes discordam. Aqui estão os dois casos, mais uma regra de decisão baseada no seu estoque, na sua margem e no que você pode perder.
 categories:   PPC & Advertising, Growth Playbook
-hero_alt:     Um vendedor pesa gastar com anúncios no primeiro dia contra esperar as primeiras avaliações
+hero_alt: Dois caminhos para o mesmo pico: anunciar já ou esperar sob o vidro
 reading_time: 7
 
 Pergunte a vendedores experientes da Amazon se vale ligar o Sponsored Products no dia em que um listing entra no ar e você recebe duas respostas igualmente confiantes. Anuncie na hora, diz um grupo: um listing novo não tem ranqueamento orgânico, então os anúncios são o único tráfego que você pode comprar. Espere pelas avaliações, diz o outro: os mesmos cliques convertem pior quando não há nada embaixo da nota em estrelas.

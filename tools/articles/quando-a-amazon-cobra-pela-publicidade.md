@@ -3,7 +3,7 @@ slug:         quando-a-amazon-cobra-pela-publicidade
 translation_of: how-amazon-ads-bills-you
 summary:      O que dispara uma cobrança de publicidade, por que o gasto reportado fica mudando, e por que o console nunca bate com o repasse.
 categories:   PPC & Advertising, Profit & Finances
-hero_alt:     Um vendedor compara o gasto do console de publicidade com a cobrança no repasse
+hero_alt: Cliques se acumulando em um relógio e virando cobranças com data em outro
 reading_time: 7
 
 Quase todo pânico inicial com a publicidade da Amazon não é sobre desempenho. É sobre encanamento: a cobrança cai em um dia que você não esperava, por um valor que não corresponde a nada na sua tela, e os números de ontem mudaram em silêncio desde a última vez que você olhou.

@@ -3,7 +3,7 @@ slug:         orcamento-diario-acaba-ao-meio-dia
 translation_of: daily-budget-runs-out-by-midday
 summary:      Ficar sem orçamento diário significa duas coisas opostas, dependendo de a campanha converter com lucro ou não; confira primeiro, depois aumente o orçamento ou pare de gastar.
 categories:   PPC & Advertising
-hero_alt:     Uma campanha lucrativa parada ao meio-dia enquanto os pedidos vão para os concorrentes
+hero_alt: O resto do orçamento escorrendo para uma comporta fechada, e os pedidos param
 reading_time: 8
 
 Você abre o Campaign Manager à tarde e a campanha está sem orçamento. Ela está sem orçamento desde antes do meio-dia. Amanhã vai acontecer de novo.

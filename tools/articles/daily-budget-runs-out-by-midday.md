@@ -2,7 +2,7 @@ title: Your Daily Budget Runs Out by Midday. Now What?
 slug: daily-budget-runs-out-by-midday
 summary: Running out of daily budget means two opposite things depending on whether the campaign converts profitably; check first, then add budget or stop spending.
 categories: PPC & Advertising
-hero_alt: A converting campaign halted at midday while affordable orders go to competitors
+hero_alt: The last of the budget draining into a closed gate, orders stopping
 reading_time: 8
 
 You open Campaign Manager in the afternoon and the campaign is out of budget. It has been out of budget since before midday. Tomorrow it will happen again.

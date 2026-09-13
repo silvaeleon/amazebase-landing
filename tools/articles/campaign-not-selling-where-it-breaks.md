@@ -2,7 +2,7 @@ title:        Why Is Your Campaign Not Selling?
 slug:         campaign-not-selling-where-it-breaks
 summary:      A campaign that is not selling is broken at one of three points, and each break has a different repair.
 categories:   PPC & Advertising
-hero_alt:     A seller tracing one advertising campaign from impressions through clicks to orders
+hero_alt: Impressions flowing through three chambers, the middle one shattered and leaking clicks
 reading_time: 6
 
 A campaign that is not selling feels like one problem. It is one of three, and they share nothing but the symptom.

@@ -147,6 +147,25 @@ LANGS = {
     },
 }
 
+# The heroes that are still a STAND-IN (the logo on the site background, from
+# `logohero`), keyed by ENGLISH slug because one file serves all three
+# languages. Only these pages carry the "HERO IMAGE PLACEHOLDER" comment, and
+# verify() requires the comment on exactly these and refuses it everywhere else:
+# a page whose real picture has arrived must not still say it is waiting for
+# one. When a real hero lands, overwrite the file, take its slug out of this
+# set, rebuild the three pages and run tools/build_og.py.
+#
+# Ten slugs left it 2026-09-13, when the PPC batch's real pictures arrived.
+STANDIN_HEROES = {"when-to-stop-optimizing-a-product"}
+
+# A page's hero, wherever it is in its life: a live <figure> (with the stand-in
+# comment above it, or without), or the commented-out slot the older articles
+# carry. The live form is listed first but the regex still matches the EARLIEST
+# position, and a commented slot begins at its "<!--", before the <figure> text
+# inside it, so a commented slot is always taken whole.
+HERO_REGION = (r'(?:<!-- HERO IMAGE PLACEHOLDER\..*?-->\n)?<figure class="hero-shot">.*?</figure>'
+               r'|<!-- HERO IMAGE GOES HERE\..*?-->')
+
 EXTRA_CSS = """
 /* ── WORKED-SUM ROWS: labelled rows, one per line, value right-aligned.
    Copied from attribution-vs-incrementality.html (.report / .report-rows);
@@ -664,17 +683,18 @@ def build(slug, published):
     # picture is the same picture and only the alt text is translated, so a
     # replacement drops in once instead of three times.
     hero_file = "hero-%s.webp" % en_slug
-    hero = ("<!-- HERO IMAGE PLACEHOLDER. assets/img/%s is a stand-in at 1672x941 until the real\n"
-            "     picture exists: replace that file, keep the name and this alt text, then run tools/build_og.py.\n"
-            "     Tracked with the other awaiting-replacement heroes in HANDOVER.md section 6 item 7. -->\n"
-            '<figure class="hero-shot">\n'
+    hero = ('<figure class="hero-shot">\n'
             '  <img src="%s%s"\n'
             '       alt="%s"\n'
             '       width="1672" height="941" loading="eager" decoding="async">\n'
-            "</figure>") % (hero_file, L["assets"], hero_file, inline(meta["hero_alt"]))
-    # the English donor still has an empty hero slot; the translated donors were
-    # built with the hero already commented out around a <figure>
-    rep(r"<!-- HERO IMAGE (?:GOES HERE|PLACEHOLDER)\..*?-->", hero)
+            "</figure>") % (L["assets"], hero_file, inline(meta["hero_alt"]))
+    if en_slug in STANDIN_HEROES:
+        hero = ("<!-- HERO IMAGE PLACEHOLDER. assets/img/%s is a stand-in at 1672x941 until the real\n"
+                "     picture exists: replace that file, keep the name and this alt text, then run tools/build_og.py.\n"
+                "     Tracked with the other awaiting-replacement heroes in HANDOVER.md section 6 item 7. -->\n"
+                % hero_file) + hero
+    # the donor's hero, live or still a commented slot (HERO_REGION)
+    rep(HERO_REGION, hero)
     rep(r'<main id="main" class="article">.*?</main>', main)
     rep(r'<aside class="rail".*?</aside>', rail)
     rep(r"\n</style>", EXTRA_CSS.rstrip("\n") + "\n</style>")
@@ -898,8 +918,13 @@ def verify(slug):
         P.append("hero alt is not the source's hero_alt: page %r, source %r"
                  % (html.unescape(alt.group(1)) if alt else None, want_alt))
     facts.append("hero: %s (%d bytes, WebP), alt = source hero_alt, %d words" % (hero, len(hb), len(meta["hero_alt"].split())))
-    if "HERO IMAGE PLACEHOLDER" not in s:
-        P.append("the hero is not marked as a placeholder")
+    marked = "HERO IMAGE PLACEHOLDER" in s
+    if en_slug in STANDIN_HEROES and not marked:
+        P.append("the hero is a stand-in (STANDIN_HEROES) but is not marked as a placeholder")
+    elif en_slug not in STANDIN_HEROES and marked:
+        P.append("the hero is marked as a placeholder, but its real picture is in place "
+                 "(not in STANDIN_HEROES): rebuild the page")
+    facts.append("hero: %s" % ("stand-in, marked HERO IMAGE PLACEHOLDER" if marked else "real picture, no placeholder marker"))
     scripts = re.findall(r"<script(?![^>]*\bsrc=)(?![^>]*application/ld\+json)[^>]*>", s)
     if scripts:
         P.append("%d inline scripts (the CSP allows none on articles)" % len(scripts))

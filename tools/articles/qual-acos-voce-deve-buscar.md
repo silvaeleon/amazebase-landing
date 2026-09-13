@@ -3,7 +3,7 @@ slug:         qual-acos-voce-deve-buscar
 translation_of: acos-tacos-and-your-margin
 summary:      Não existe uma meta universal de ACOS. Calcule o seu próprio ACOS de equilíbrio a partir das suas taxas e custos, e use TACOS para ver o progresso real.
 categories:   PPC & Advertising, Profit & Finances
-hero_alt:     ACOS de equilíbrio calculado com as taxas e o custo de um produto
+hero_alt: Dois produtos com o mesmo ACOS: um se mantém e o outro afunda
 reading_time: 7
 
 Um número circula entre os vendedores novos da Amazon: 10% de ACOS. Ele é repetido até soar como um padrão, e todo vendedor que reporta 45% ou 70% conclui que está sendo reprovado em uma prova.

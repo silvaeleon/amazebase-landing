@@ -3,7 +3,7 @@ slug:         presupuesto-diario-se-acaba-al-mediodia
 translation_of: daily-budget-runs-out-by-midday
 summary:      Quedarte sin presupuesto diario significa dos cosas opuestas según si la campaña convierte con utilidad; revisa primero, y después sube el presupuesto o deja de gastar.
 categories:   PPC & Advertising
-hero_alt:     Una campaña rentable detenida al mediodía mientras los pedidos van a la competencia
+hero_alt: Lo último del presupuesto escurriéndose hacia una compuerta cerrada, sin más pedidos
 reading_time: 8
 
 Abres Campaign Manager por la tarde y la campaña está sin presupuesto. Lleva sin presupuesto desde antes del mediodía. Mañana va a pasar de nuevo.

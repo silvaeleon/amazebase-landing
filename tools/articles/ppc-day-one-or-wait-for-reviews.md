@@ -2,7 +2,7 @@ title:        Should You Start Advertising on Day One or Wait for Reviews?
 slug:         ppc-day-one-or-wait-for-reviews
 summary:      Experienced sellers disagree. Here are both cases, plus a decision rule based on your stock, your margin, and what you can afford to lose.
 categories:   PPC & Advertising, Growth Playbook
-hero_alt:     A seller weighing early ad spend against waiting for the first reviews
+hero_alt: Two routes to the same peak: advertise immediately, or wait under glass
 reading_time: 7
 
 Ask experienced Amazon sellers whether to switch on Sponsored Products the day a listing goes live and you get two confident answers. Advertise immediately, says one group: a new listing has no organic ranking, so ads are the only traffic you can buy. Wait for reviews, says the other: the same clicks convert worse with nothing under the star rating.

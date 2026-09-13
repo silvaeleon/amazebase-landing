@@ -3,7 +3,7 @@ slug:         usar-o-lance-que-a-amazon-sugere
 translation_of: amazon-suggested-bid-and-down-only
 summary:      O lance sugerido da Amazon diz o que outros anunciantes pagam. Os seus próprios custos e a sua taxa de conversão de anúncios dizem o que você pode pagar.
 categories:   PPC & Advertising
-hero_alt:     Um vendedor compara o lance sugerido da Amazon com seu próprio teto calculado
+hero_alt: Um lance sugerido projetado sobre um leilão ao lado do mecanismo que o aumenta
 reading_time: 7
 
 Quando você adiciona uma palavra-chave a uma campanha de Sponsored Products, a Amazon mostra um número ao lado dela e chama isso de lance sugerido. A maioria dos vendedores novos usa esse número, porque a tela não oferece alternativa.

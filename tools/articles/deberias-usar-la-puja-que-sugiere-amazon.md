@@ -3,7 +3,7 @@ slug:         deberias-usar-la-puja-que-sugiere-amazon
 translation_of: amazon-suggested-bid-and-down-only
 summary:      La puja sugerida de Amazon te dice lo que pagan otros anunciantes. Tus propios costos y tu tasa de conversión de anuncios te dicen lo que puedes pagar tú.
 categories:   PPC & Advertising
-hero_alt:     Un vendedor compara la puja sugerida de Amazon con su propio techo calculado
+hero_alt: Una puja sugerida proyectada hacia una subasta junto al mecanismo que la sube
 reading_time: 7
 
 Cuando agregas una palabra clave a una campaña de Sponsored Products, Amazon muestra un número junto a ella y lo llama puja sugerida. La mayoría de los vendedores nuevos la usa, porque la pantalla no ofrece otra alternativa.

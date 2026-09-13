@@ -2,7 +2,7 @@ title:        How Much Data Do You Need Before You Change a Campaign?
 slug:         how-much-data-before-changing-a-campaign
 summary:      Zero sales on a keyword means nothing until you have enough clicks. Here is how many, and how to count them correctly.
 categories:   PPC & Advertising
-hero_alt:     A seller counting clicks on one keyword before deciding whether to change it
+hero_alt: Clicks filling a chamber until they cross a threshold and move a gauge
 reading_time: 7
 
 Most new sellers change their campaigns too early. They see a keyword with clicks and no sales, decide it is a bad keyword, and turn it off. A week later they do the same thing to another keyword. After a month they have changed so many things that nothing in the account can be explained.

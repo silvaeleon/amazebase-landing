@@ -2,7 +2,7 @@ title:        How and When Does Amazon Charge You for Advertising?
 slug:         how-amazon-ads-bills-you
 summary:      What triggers an advertising charge, why reported spend keeps moving, and why the console never matches the payout.
 categories:   PPC & Advertising, Profit & Finances
-hero_alt:     A seller comparing advertising console spend against the advertising charge on a payout statement
+hero_alt: Clicks accumulating on one clock, settling into dated charges on another
 reading_time: 7
 
 Most early panic about Amazon advertising is not about performance. It is about plumbing: the charge lands on a day you did not expect, for an amount matching nothing on your screen, and yesterday's figures have quietly changed since you looked.

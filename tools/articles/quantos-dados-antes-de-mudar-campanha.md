@@ -3,7 +3,7 @@ slug:         quantos-dados-antes-de-mudar-campanha
 translation_of: how-much-data-before-changing-a-campaign
 summary:      Zero vendas em uma palavra-chave não significa nada até você ter cliques suficientes. Aqui está quantos, e como contá-los corretamente.
 categories:   PPC & Advertising
-hero_alt:     Um vendedor conta os cliques de uma palavra-chave antes de decidir se muda
+hero_alt: Cliques enchendo uma câmara até cruzar um limite e mover um medidor
 reading_time: 7
 
 A maioria dos vendedores novos muda as campanhas cedo demais. Eles veem uma palavra-chave com cliques e sem vendas, decidem que é uma palavra-chave ruim e a desligam. Uma semana depois fazem o mesmo com outra. Ao fim de um mês mudaram tanta coisa que nada na conta pode mais ser explicado.

@@ -3,7 +3,7 @@ slug:         cuando-te-cobra-amazon-la-publicidad
 translation_of: how-amazon-ads-bills-you
 summary:      Qué dispara un cargo de publicidad, por qué la inversión reportada sigue moviéndose, y por qué la consola nunca cuadra con el pago.
 categories:   PPC & Advertising, Profit & Finances
-hero_alt:     Un vendedor compara el gasto de la consola publicitaria con el cargo del pago
+hero_alt: Clics acumulándose en un reloj y convirtiéndose en cargos con fecha en otro
 reading_time: 7
 
 Casi todo el pánico temprano con la publicidad de Amazon no es por el rendimiento. Es por la plomería: el cargo llega un día que no esperabas, por un monto que no coincide con nada de tu pantalla, y las cifras de ayer cambiaron en silencio desde la última vez que las miraste.

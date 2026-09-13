@@ -3,7 +3,7 @@ slug:         a-que-acos-deberias-apuntar
 translation_of: acos-tacos-and-your-margin
 summary:      No existe un ACOS objetivo universal. Calcula tu propio ACOS de equilibrio a partir de tus tarifas y costos, y usa TACOS para ver el avance real.
 categories:   PPC & Advertising, Profit & Finances
-hero_alt:     ACOS de equilibrio calculado con las tarifas y el costo de un producto
+hero_alt: Dos productos con el mismo ACOS: uno se mantiene y el otro se hunde
 reading_time: 7
 
 Un número circula entre los vendedores nuevos de Amazon: 10% de ACOS. Se repite hasta que suena como un estándar, y cada vendedor que reporta 45% o 70% concluye que está reprobando un examen.

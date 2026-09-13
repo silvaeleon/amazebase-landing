@@ -3,7 +3,7 @@ slug:         por-que-tu-campana-no-vende
 translation_of: campaign-not-selling-where-it-breaks
 summary:      Una campaña que no vende está rota en uno de tres puntos, y cada rotura tiene una reparación distinta.
 categories:   PPC & Advertising
-hero_alt:     Un vendedor revisa eslabón por eslabón una campaña con clics y sin pedidos
+hero_alt: Impresiones que pasan por tres cámaras, la del medio rota y perdiendo clics
 reading_time: 6
 
 Una campaña que no vende se siente como un solo problema. En realidad es uno de tres, y no comparten nada más que el síntoma.

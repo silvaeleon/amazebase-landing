@@ -2,7 +2,7 @@ title:        What ACOS Should You Be Aiming For?
 slug:         acos-tacos-and-your-margin
 summary:      There is no universal ACOS target. Calculate your own break-even ACOS from your fees and costs, then use TACOS to see real progress.
 categories:   PPC & Advertising, Profit & Finances
-hero_alt:     A break-even ACOS calculated from one product's own fees and landed cost
+hero_alt: Two products at the same ACOS, one holding level, one sinking
 reading_time: 7
 
 A number circulates among new Amazon sellers: 10% ACOS. It gets repeated until it sounds like a standard, and every seller reporting 45% or 70% concludes they are failing an exam.

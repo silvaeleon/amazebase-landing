@@ -3,7 +3,7 @@ slug:         anunciar-el-dia-uno-o-esperar-resenas
 translation_of: ppc-day-one-or-wait-for-reviews
 summary:      Los vendedores con experiencia no se ponen de acuerdo. Aquí están los dos casos, más una regla de decisión basada en tu stock, tu margen y lo que puedes permitirte perder.
 categories:   PPC & Advertising, Growth Playbook
-hero_alt:     Un vendedor pesa la inversión publicitaria temprana frente a esperar las primeras reseñas
+hero_alt: Dos caminos a la misma cima: anunciar de inmediato o esperar bajo vidrio
 reading_time: 7
 
 Pregúntales a vendedores de Amazon con experiencia si conviene encender Sponsored Products el día en que un listing sale a la venta y te van a dar dos respuestas igual de seguras. Anuncia de inmediato, dice un grupo: un listing nuevo no tiene posicionamiento orgánico, así que los anuncios son el único tráfico que puedes comprar. Espera a las reseñas, dice el otro: los mismos clics convierten peor cuando no hay nada debajo de la calificación en estrellas.
