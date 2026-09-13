@@ -158,8 +158,11 @@ LANGS = {
 # tools/build_og.py and tools/build_thumbs.py. build_thumbs.py --check fails
 # until the thumb is rebuilt.
 #
-# Ten slugs left it 2026-09-13, when the PPC batch's real pictures arrived.
-STANDIN_HEROES = {"when-to-stop-optimizing-a-product"}
+# Ten slugs left it 2026-09-13, when the PPC batch's real pictures arrived, and
+# the last one (when-to-stop-optimizing-a-product) the same day. Empty now, so
+# verify() requires the marker on no page and fails any page that still has one.
+# set(), not {}: that would be a dict, and `in` would still work on it silently.
+STANDIN_HEROES = set()
 
 # A page's hero, wherever it is in its life: a live <figure> (with the stand-in
 # comment above it, or without), or the commented-out slot the older articles
